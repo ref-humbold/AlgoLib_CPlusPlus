@@ -28,10 +28,9 @@ namespace algolib
     Iteracyjne szybkie potęgowanie binarne modulowane.
     @param base podstawa
     @param exponent wykładnik
-    @param modulo modulo
     @return wynik potęgowania wzięty modulo
     */
-    double powerI(double base, long long int exponent, double modulo=0.0);
+    double powerI(double base, long long int exponent);
 
     /**
     Iteracyjne szybkie potęgowanie binarne modulowane.
@@ -46,10 +45,9 @@ namespace algolib
     Rekurencyjne szybkie potęgowanie binarne modulowane.
     @param base podstawa
     @param exponent wykładnik
-    @param modulo modulo
     @return wynik potęgowania wzięty modulo
     */
-    double powerR(double base, long long int exponent, double modulo=0.0);
+    double powerR(double base, long long int exponent);
 
     /**
     Rekurencyjne szybkie potęgowanie binarne modulowane.
@@ -64,10 +62,9 @@ namespace algolib
     Iteracyjne mnożenie binarne modulowane.
     @param factor1 mnnożna
     @param factor2 mnożnik
-    @param modulo modulo
     @return wynik mnożenia wzięty modulo
     */
-    double multI(double factor1, long long int factor2, double modulo=0.0);
+    double multI(double factor1, long long int factor2);
 
     /**
     Iteracyjne mnożenie binarne modulowane.
@@ -83,10 +80,9 @@ namespace algolib
     Rekurencyjne mnożenie binarne modulowane.
     @param factor1 mnnożna
     @param factor2 mnożnik
-    @param modulo modulo
     @return wynik mnożenia wzięty modulo
     */
-    double multR(double factor1, long long int factor2, double modulo=0.0);
+    double multR(double factor1, long long int factor2);
 
     /**
     Rekurencyjne mnożenie binarne modulowane.

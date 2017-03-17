@@ -7,7 +7,7 @@ void details::dfsR_step(const graph & gr, int vertex, std::vector<bool> & is_vis
 {
     is_visited[vertex] = true;
 
-    for( const int & neighbour : gr.neighbours(vertex) )
+    for( const int & neighbour : gr.get_neighbours(vertex) )
         if(!is_visited[neighbour])
             dfsR_step(gr, neighbour, is_visited);
 }
@@ -26,7 +26,7 @@ std::vector<bool> algolib::bfs(const graph & gr, int root)
 
         vertex_queue.pop();
 
-        for( const int & nb : gr.neighbours(v) )
+        for( const int & nb : gr.get_neighbours(v) )
             if(!is_visited[nb])
             {
                 is_visited[nb] = true;
@@ -54,7 +54,7 @@ std::vector<bool> algolib::dfsI(const graph & gr, int root)
         {
             is_visited[v] = true;
 
-            for( const int & nb : gr.neighbours(v) )
+            for( const int & nb : gr.get_neighbours(v) )
                 if(!is_visited[nb])
                     vertex_stack.push(nb);
         }

@@ -6,6 +6,7 @@
 #include <initializer_list>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 namespace algolib
 {
@@ -18,6 +19,12 @@ namespace algolib
 
         public:
         explicit disjoint_sets(std::initializer_list<E> universe)
+        {
+            for(E e : universe)
+                represents.insert( std::make_pair(e, e) );
+        }
+
+        explicit disjoint_sets(std::vector<E> universe)
         {
             for(E e : universe)
                 represents.insert( std::make_pair(e, e) );

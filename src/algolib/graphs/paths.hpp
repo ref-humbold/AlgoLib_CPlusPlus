@@ -1,5 +1,5 @@
 // ALGORYTMY WYLICZANIA NAJKRÓTSZYCH ŚCIEŻEK W GRAFIE WAŻONYM
-#ifdef PATHS_HPP
+#ifndef PATHS_HPP
 #define PATHS_HPP
 
 #include <cstdlib>
@@ -26,7 +26,7 @@ namespace algolib
     @param source wierzchołek początkowy
     @return lista odległości wierzchołków
     */
-    std::vector<double> bellman_ford(weighted_graph wgraph, int source);
+    std::vector<double> bellman_ford(const weighted_graph & wgraph, int source);
 
     /**
     Algorytm Dijkstry.
@@ -34,14 +34,14 @@ namespace algolib
     @param source wierzchołek początkowy
     @return lista odległości wierzchołków
     */
-    std::vector<double> dijkstra(weighted_graph wgraph, int source);
+    std::vector<double> dijkstra(const weighted_graph & wgraph, int source);
 
     /**
     Algorytm Floyda-Warshalla.
     @param wgraph graf ważony
     @return macierz odległości
     */
-    std::vector< std::vector<double> > floyd_warshall(weighted_graph wgraph);
+    std::vector< std::vector<double> > floyd_warshall(const weighted_graph & wgraph);
 }
 
 #endif

@@ -1,24 +1,18 @@
 // ALGORYTMY WYZNACZAJĄCE MINIMALNE DRZEWO SPINAJĄCE
-#include <cstdlib>
-#include <tuple>
-#include <vector>
-#include <queue>
-#include <algorithm>
-
 #include "mst.hpp"
 
-double algolib::kruskal(weighted_graph wgraph)
+double algolib::kruskal(const weighted_graph & wgraph)
 {
     double size_MST = 0.0;
-    int components = num_vertex;
+    int components = wgraph.get_vertices_number();
     std::priority_queue< std::tuple<double, int, int> > edge_queue;
 
-    disjoint_sets<int> * vertex_sets = new disjoint_sets<int>(wgraph.vertices());
+    disjoint_sets<int> * vertex_sets = new disjoint_sets<int>(wgraph.get_vertices());
 
-    for(const auto & we : wgraph.weighted_edges())
+    for(const auto & we : wgraph.get_weighted_edges())
         edge_queue.push( std::make_tuple( -std::get<2>(we), std::get<0>(we), std::get<1>(we) ) );
 
-    while(components > 1 && !edgequeue.empty())
+    while(components > 1 && !edge_queue.empty())
     {
         double edge_weight;
         int edge_vert1, edge_vert2;
@@ -38,9 +32,10 @@ double algolib::kruskal(weighted_graph wgraph)
     return size_MST;
 }
 
-double algolib::prim(weighted_graph wgraph, int source)
+double algolib::prim(const weighted_graph & wgraph, int source)
 {
     double size_MST = 0.0;
+    std::vector<bool> is_visited(wgraph.get_vertices_number(), false);
     std::priority_queue< std::pair<double, int> > vertex_queue;
 
     vertex_queue.push( std::make_pair(0.0, source) );
@@ -57,7 +52,7 @@ double algolib::prim(weighted_graph wgraph, int source)
             is_visited[v] = true;
             size_MST += edge_weight;
 
-            for( const auto & wnb : wgraph.weighted_neighbours(v) )
+            for( const auto & wnb : wgraph.get_weighted_neighbours(v) )
             {
                 int nb;
                 double wg;

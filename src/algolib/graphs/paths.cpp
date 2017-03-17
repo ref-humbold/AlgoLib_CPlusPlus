@@ -1,35 +1,27 @@
 // ALGORYTMY WYLICZANIA NAJKRÓTSZYCH ŚCIEŻEK W GRAFIE WAŻONYM
-#include <cstdlib>
-#include <exception>
-#include <stdexcept>
-#include <tuple>
-#include <vector>
-#include <queue>
-#include <algorithm>
-
 #include "paths.hpp"
 
 namespace details = algolib::detail;
 
-std::vector<double> algolib::belford(weighted_graph wgraph, int source)
+std::vector<double> algolib::bellman_ford(const weighted_graph & wgraph, int source)
 {
     std::vector<double> distances(wgraph.get_vertices_number(), details::INF);
 
     distances[source] = 0.0;
 
-    for(int u = 1; u < wgraph.get_vertices_number()-1; ++u)
-        for(const int & v : wgraph.vertices())
-            for( const auto & e : wgraph.weighted_graph(v) )
+    for(size_t u = 1; u < wgraph.get_vertices_number()-1; ++u)
+        for(const int & v : wgraph.get_vertices())
+            for( const auto & e : wgraph.get_weighted_neighbours(v) )
             {
                 int nb;
                 double wg;
 
                 std::tie(nb, wg) = e;
-                distances[nb] = min(distances[nb], distances[v]+wg);
+                distances[nb] = std::min(distances[nb], distances[v]+wg);
             }
 
-    for(const int & v : wgraph.vertices())
-        for( const auto & e : wgraph.weighted_graph(v) )
+    for(const int & v : wgraph.get_vertices())
+        for( const auto & e : wgraph.get_weighted_neighbours(v) )
         {
             int nb;
             double wg;
@@ -43,9 +35,10 @@ std::vector<double> algolib::belford(weighted_graph wgraph, int source)
     return distances;
 }
 
-std::vector<double> algolib::dijkstra(weighted_graph wgraph, int source)
+std::vector<double> algolib::dijkstra(const weighted_graph & wgraph, int source)
 {
     std::vector<double> distances(wgraph.get_vertices_number(), details::INF);
+    std::vector<bool> is_visited(wgraph.get_vertices_number(), false);
     std::priority_queue< std::pair<double, int> > vertex_queue;
 
     distances[source] = 0.0;
@@ -61,7 +54,7 @@ std::vector<double> algolib::dijkstra(weighted_graph wgraph, int source)
         {
             is_visited[v] = true;
 
-            for( const auto & e : wgraph.weighted_graph(v) )
+            for( const auto & e : wgraph.get_weighted_neighbours(v) )
             {
                 int nb;
                 double wg;
@@ -83,14 +76,14 @@ std::vector<double> algolib::dijkstra(weighted_graph wgraph, int source)
     return distances;
 }
 
-std::vector< std::vector<double> > algolib::floyd_warshall(weighted_graph wgraph)
+std::vector< std::vector<double> > algolib::floyd_warshall(const weighted_graph & wgraph)
 {
-    std::vector< std::vector<double> > distances = wgraph.adjacency_matrix();
+    std::vector< std::vector<double> > distances = wgraph.get_adjacency_matrix();
 
-    for(const int & w : wgraph.vertices())
-        for(const int & v : wgraph.vertices())
-            for(const int & u : wgraph.vertices())
-                distances[w][u] = min(distances[w][u], distances[w][x]+distances[x][u]);
+    for(const int & w : wgraph.get_vertices())
+        for(const int & v : wgraph.get_vertices())
+            for(const int & u : wgraph.get_vertices())
+                distances[w][v] = std::min(distances[w][v], distances[w][u]+distances[u][v]);
 
     return distances;
 }

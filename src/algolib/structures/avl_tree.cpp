@@ -1,13 +1,10 @@
 // DRZEWO AVL
-#include <cstdlib>
-#include <cmath>
-#include <algorithm>
-
+#include <iostream>
 #include "avl_tree.hpp"
 
 template<typename E>
 algolib::avl_tree<E>::avl_tree(std::initializer_list<E> init_list) :
-    tree{nullptr},
+    tree{node_sptr()},
     elems{init_list.size()}
 {
     for(auto i : init_list)
@@ -17,10 +14,7 @@ algolib::avl_tree<E>::avl_tree(std::initializer_list<E> init_list) :
 template<typename E>
 algolib::avl_tree<E> & algolib::avl_tree<E>::operator=(const algolib::avl_tree<E> & avl)
 {
-    avl_node * new_tree = new avl_node(*avl.tree);
-
-    delete this->tree;
-    this->tree = new_tree;
+    this->tree = std::make_shared<avl_node>(*avl.tree);
     this->elems = avl.elems;
 
     return *this;
@@ -36,27 +30,27 @@ algolib::avl_tree<E> & algolib::avl_tree<E>::operator=(algolib::avl_tree<E> && a
 }
 
 template<typename E>
-typename algolib::avl_tree<E>::iterator algolib::avl_tree<E>::begin()
+typename algolib::avl_tree<E>::iterator algolib::avl_tree<E>::begin() const
 {
-    return iterator( tree->minimum() );
+    return iterator(tree->minimum());
 }
 
 template<typename E>
-typename algolib::avl_tree<E>::iterator algolib::avl_tree<E>::end()
+typename algolib::avl_tree<E>::iterator algolib::avl_tree<E>::end() const
 {
-    return iterator(nullptr);
+    return iterator(node_sptr());
 }
 
 template<typename E>
-typename algolib::avl_tree<E>::reverse_iterator algolib::avl_tree<E>::rbegin()
+typename algolib::avl_tree<E>::reverse_iterator algolib::avl_tree<E>::rbegin() const
 {
     return reverse_iterator( tree->maximum() );
 }
 
 template<typename E>
-typename algolib::avl_tree<E>::reverse_iterator algolib::avl_tree<E>::rend()
+typename algolib::avl_tree<E>::reverse_iterator algolib::avl_tree<E>::rend() const
 {
-    return reverse_iterator(nullptr);
+    return reverse_iterator(node_sptr());
 }
 
 template<typename E>
@@ -65,29 +59,29 @@ typename algolib::avl_tree<E>::iterator algolib::avl_tree<E>::find(const E & ele
     if(tree == nullptr)
         return end();
 
-    algolib::avl_tree<E>::avl_node * node_parent = find_node_parent(element);
+    algolib::avl_tree<E>::node_sptr node_parent = find_node_parent(element);
 
     if(node_parent == nullptr)
         return iterator(tree);
 
-    algolib::avl_tree<E>::avl_node * the_node = node_parent->get_subtree(element);
+    algolib::avl_tree<E>::node_sptr the_node = node_parent->get_subtree(element);
 
     if(the_node == nullptr)
         return end();
 
-    return iterator(the_node);
+    return iterator( std::move(the_node) );
 }
 
 template<typename E>
 std::pair<typename algolib::avl_tree<E>::iterator, bool> algolib::avl_tree<E>::insert(const E & element)
 {
-    algolib::avl_tree<E>::avl_node * node_parent = find_node_parent(element);
-    algolib::avl_tree<E>::avl_node * the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
+    algolib::avl_tree<E>::node_sptr node_parent = find_node_parent(element);
+    algolib::avl_tree<E>::node_sptr the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
 
     if(the_node != nullptr)
         return std::make_pair(iterator(the_node), false);
 
-    algolib::avl_tree<E>::avl_node * new_node = new algolib::avl_tree<E>::avl_node(element);
+    algolib::avl_tree<E>::node_sptr new_node = std::make_shared<avl_node>(element);
 
     if(node_parent != nullptr)
     {
@@ -96,44 +90,43 @@ std::pair<typename algolib::avl_tree<E>::iterator, bool> algolib::avl_tree<E>::i
         else
             node_parent->set_left(new_node);
 
-        rebalance(node_parent);
+        rebalance( std::move(node_parent) );
     }
     else
         tree = new_node;
 
     ++elems;
 
-    return std::make_pair(iterator(new_node), true);
+    return std::make_pair(iterator( std::move(new_node) ), true);
 }
 
 template<typename E>
 void algolib::avl_tree<E>::erase(const E & element)
 {
-    algolib::avl_tree<E>::avl_node * node_parent = find_node_parent(element);
-    algolib::avl_tree<E>::avl_node * the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
+    algolib::avl_tree<E>::node_sptr node_parent = find_node_parent(element);
+    algolib::avl_tree<E>::node_sptr the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
 
     if(the_node == nullptr)
         return;
 
     if(node_parent == nullptr)
-        delete_root(the_node);
+        delete_root( std::move(the_node) );
     else
-        delete_node(the_node);
+        delete_node( std::move(the_node) );
 }
 
 template<typename E>
 void algolib::avl_tree<E>::clear()
 {
-    delete tree;
-    tree = nullptr;
+    tree.reset();
     elems = 0;
 }
 
 template<typename E>
-typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::find_node_parent(const E & element) const
+typename algolib::avl_tree<E>::node_sptr algolib::avl_tree<E>::find_node_parent(const E & element) const
 {
-    typename algolib::avl_tree<E>::avl_node * tree_iter = tree;
-    typename algolib::avl_tree<E>::avl_node * iter_parent = nullptr;
+    typename algolib::avl_tree<E>::node_sptr tree_iter = tree;
+    typename algolib::avl_tree<E>::node_sptr iter_parent = std::shared_ptr<avl_node>(nullptr);
 
     while(tree_iter != nullptr)
         if(tree_iter->element == element)
@@ -148,116 +141,121 @@ typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::find_node_parent
 }
 
 template<typename E>
-void algolib::avl_tree<E>::delete_root(algolib::avl_tree<E>::avl_node * root)
+void algolib::avl_tree<E>::delete_root(algolib::avl_tree<E>::node_sptr root)
 {
     if(root->get_left() != nullptr && root->get_right() != nullptr)
         delete_node(root);
     else if(root->get_left() != nullptr && root->get_right() == nullptr)
     {
-        swap(root->get_left()->element, root->element);
-        root->get_left()->parent = nullptr;
+        std::swap(root->get_left()->element, root->element);
+        root->get_left()->set_parent(node_wptr());
         root->set_left(nullptr);
         --elems;
-        delete root->get_left();
+        root->get_left().reset();
     }
     else if(root->get_left() == nullptr && root->get_right() != nullptr)
     {
-        swap(root->get_right()->element, root->element);
-        root->get_right()->parent = nullptr;
+        std::swap(root->get_right()->element, root->element);
+        root->get_right()->set_parent(node_wptr());
         root->set_right(nullptr);
         --elems;
-        delete root->get_right();
+        root->get_right().reset();
     }
     else
         clear();
 }
 
 template<typename E>
-void algolib::avl_tree<E>::delete_node(algolib::avl_tree<E>::avl_node * node)
+void algolib::avl_tree<E>::delete_node(algolib::avl_tree<E>::node_sptr node)
 {
     if(node->get_left() != nullptr && node->get_right() != nullptr)
     {
-        algolib::avl_tree<E>::avl_node * succ = node->successor();
+        algolib::avl_tree<E>::node_sptr succ = node->successor();
 
-        swap(succ->element, node->element);
+        std::swap(succ->element, node->element);
         delete_node(succ);
     }
     else
     {
-        algolib::avl_tree<E>::avl_node * son = node->getLeft() != nullptr ? node->getLeft() : node->getRight();
-        algolib::avl_tree<E>::avl_node * node_parent = node->parent;
+        algolib::avl_tree<E>::node_sptr son = node->get_left() != nullptr ? node->get_left() : node->get_right();
+        algolib::avl_tree<E>::node_sptr node_parent = node->get_parent();
 
         replace_subtree(node, son);
-        rebalance(node_parent);
+        rebalance( std::move(node_parent) );
         --elems;
-        delete node;
+        node.reset();
     }
 }
 
 template<typename E>
-void algolib::avl_tree<E>::replace_subtree(algolib::avl_tree<E>::avl_node * node, algolib::avl_tree<E>::avl_node * root)
+void algolib::avl_tree<E>::replace_subtree(algolib::avl_tree<E>::node_sptr node, algolib::avl_tree<E>::node_sptr root)
 {
-    if(node->parent != nullptr)
+    if(node->is_root())
     {
-        if(node->is_left_son())
-            node->parent->set_left(root);
-        else
-            node->parent->set_right(root);
-
-        node->parent = nullptr;
+        tree = root;
+        root.set_parent(node_wptr());
     }
+    else if(node->is_left_son())
+        node->get_parent()->set_left(root);
+    else
+        node->get_parent()->set_right(root);
+
+    node->set_parent(node_wptr());
 }
 
 template<typename E>
-void algolib::avl_tree<E>::rotate(algolib::avl_tree<E>::avl_node * node)
+void algolib::avl_tree<E>::rotate(algolib::avl_tree<E>::node_sptr node)
 {
-    algolib::avl_tree<E>::avl_node * node_parent = node->parent;
+    if(node->is_root())
+        return;
 
-    replace_subtree(node_parent, node);
+    algolib::avl_tree<E>::node_sptr upper_node = node->get_parent();
 
     if(node->is_left_son())
     {
-        node_parent->set_right(node->get_left());
-        node->set_left(node_parent);
+        upper_node->set_right(node->get_left());
+        replace_subtree(upper_node, node);
+        node->set_left(upper_node);
     }
     else if(node->is_right_son())
     {
-        node_parent->set_left(node->get_right());
-        node->set_right(node_parent);
+        upper_node->set_left(node->get_right());
+        replace_subtree(upper_node, node);
+        node->set_right(upper_node);
     }
 }
 
 template<typename E>
-void algolib::avl_tree<E>::rebalance(algolib::avl_tree<E>::avl_node * node)
+void algolib::avl_tree<E>::rebalance(algolib::avl_tree<E>::node_sptr node)
 {
-    node->count_height();
-
-    int new_balance = node->get_balance();
-
-    while(node != nullptr && node->parent != nullptr)
+    while(node != nullptr)
     {
+        node->count_height();
+
+        int new_balance = node->get_balance();
+
         if(new_balance >= 2)
         {
-            if(node->getLeft()->get_balance() > 0)
-                rotate(node->getLeft());
-            else if(node->getLeft()->get_balance() < 0)
+            if(node->get_left()->get_balance() > 0)
+                rotate(node->get_left());
+            else if(node->get_left()->get_balance() < 0)
             {
-                rotate(node->getLeft()->getRight());
-                rotate(node->getLeft());
+                rotate(node->get_left()->get_right());
+                rotate(node->get_left());
             }
         }
         else if(new_balance <= -2)
         {
-            if(node->getRight()->get_balance() < 0)
-                rotate(node->getRight());
-            else if(node->getRight()->get_balance() > 0)
+            if(node->get_right()->get_balance() < 0)
+                rotate(node->get_right());
+            else if(node->get_right()->get_balance() > 0)
             {
-                rotate(node->getRight()->getLeft());
-                rotate(node->getRight());
+                rotate(node->get_right()->get_left());
+                rotate(node->get_right());
             }
         }
 
-        node = node->parent;
+        node = node->get_parent();
     }
 }
 
@@ -265,28 +263,58 @@ void algolib::avl_tree<E>::rebalance(algolib::avl_tree<E>::avl_node * node)
 template<typename E>
 algolib::avl_tree<E>::avl_node::~avl_node()
 {
-    if(parent != nullptr)
+    if(!is_root())
     {
         if(is_left_son())
-            parent->left = nullptr;
+            parent.lock()->left.reset();
         else
-            parent->right = nullptr;
+            parent.lock()->right.reset();
+    }
+}
+
+template<typename E>
+algolib::avl_tree<E>::avl_node::avl_node(const algolib::avl_tree<E>::avl_node & node) :
+    std::enable_shared_from_this<avl_node>(),
+    element{node.element},
+    height{node.height}
+{
+    if(node.left != nullptr)
+    {
+        left = std::make_shared<avl_node>(*node.left);
+        left->parent = get_this();
     }
 
-    delete left;
-    delete right;
+    if(node.right != nullptr)
+    {
+        right = std::make_shared<avl_node>(*node.right);
+        right->parent = get_this();
+    }
+}
+
+template<typename E>
+algolib::avl_tree<E>::avl_node::avl_node(algolib::avl_tree<E>::avl_node && node) :
+    std::enable_shared_from_this<avl_node>(),
+    element{std::move(node.element)},
+    height{std::move(node.height)}
+{
+    std::swap(this->left, node.left);
+    std::swap(this->right, node.right);
+
+    if(left != nullptr)
+        left->parent = get_this();
+
+    if(right != nullptr)
+        right->parent = get_this();
 }
 
 template<typename E>
 typename algolib::avl_tree<E>::avl_node & algolib::avl_tree<E>::avl_node::operator=(const algolib::avl_tree<E>::avl_node & node)
 {
-    algolib::avl_tree<E>::avl_node * new_left = new avl_node(*node.left);
-    algolib::avl_tree<E>::avl_node * new_right = new avl_node(*node.right);
+    algolib::avl_tree<E>::node_sptr new_left = std::shared_ptr<avl_node>(*node.left);
+    algolib::avl_tree<E>::node_sptr new_right = std::shared_ptr<avl_node>(*node.right);
 
     this->height = node.height;
     this->element = node.element;
-    delete this->left;
-    delete this->right;
     this->set_left(new_left);
     this->set_right(new_right);
 
@@ -300,8 +328,8 @@ typename algolib::avl_tree<E>::avl_node & algolib::avl_tree<E>::avl_node::operat
     std::swap(this->element, node.element);
     std::swap(this->left, node.left);
     std::swap(this->right, node.right);
-    this->left->parent = this;
-    this->right->parent = this;
+    this->left->parent = get_this();
+    this->right->parent = get_this();
 
     return *this;
 }
@@ -316,10 +344,10 @@ void algolib::avl_tree<E>::avl_node::count_height()
 }
 
 template<typename E>
-typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::avl_node::get_subtree(const E & element)
+typename algolib::avl_tree<E>::node_sptr algolib::avl_tree<E>::avl_node::get_subtree(const E & element)
 {
     if(element == this->element)
-        return this;
+        return get_this();
     else if(element < this->element)
         return left;
     else
@@ -327,23 +355,9 @@ typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::avl_node::get_su
 }
 
 template<typename E>
-typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::avl_node::successor()
+typename algolib::avl_tree<E>::node_sptr algolib::avl_tree<E>::avl_node::minimum()
 {
-    algolib::avl_tree<E>::avl_node * succ = this;
-
-    if(right != nullptr)
-        return right->minimum();
-
-    while(succ != nullptr && succ->element <= this->element)
-        succ = succ->parent;
-
-    return succ;
-}
-
-template<typename E>
-typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::avl_node::minimum()
-{
-    algolib::avl_tree<E>::avl_node * tree_iter = this;
+    algolib::avl_tree<E>::node_sptr tree_iter = get_this();
 
     while(tree_iter != nullptr && tree_iter->left != nullptr)
         tree_iter = tree_iter->left;
@@ -352,9 +366,9 @@ typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::avl_node::minimu
 }
 
 template<typename E>
-typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::avl_node::maximum()
+typename algolib::avl_tree<E>::node_sptr algolib::avl_tree<E>::avl_node::maximum()
 {
-    algolib::avl_tree<E>::avl_node * tree_iter = this;
+    algolib::avl_tree<E>::node_sptr tree_iter = get_this();
 
     while(tree_iter != nullptr && tree_iter->right != nullptr)
         tree_iter = tree_iter->right;
@@ -363,15 +377,29 @@ typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::avl_node::maximu
 }
 
 template<typename E>
-typename algolib::avl_tree<E>::avl_node * algolib::avl_tree<E>::avl_node::predecessor()
+typename algolib::avl_tree<E>::node_sptr algolib::avl_tree<E>::avl_node::successor()
 {
-    algolib::avl_tree<E>::avl_node * pred = this->parent;
+    algolib::avl_tree<E>::node_sptr succ = get_this();
+
+    if(right != nullptr)
+        return right->minimum();
+
+    while(succ != nullptr && succ->element <= this->element)
+        succ = succ->get_parent();
+
+    return succ;
+}
+
+template<typename E>
+typename algolib::avl_tree<E>::node_sptr algolib::avl_tree<E>::avl_node::predecessor()
+{
+    algolib::avl_tree<E>::node_sptr pred = this->get_parent();
 
     if(left != nullptr)
         return left->maximum();
 
     while(pred != nullptr && pred->element >= this->element)
-        pred = pred->parent;
+        pred = pred->get_parent();
 
     return pred;
 }

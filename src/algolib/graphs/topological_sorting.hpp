@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <vector>
 #include <queue>
+#include <algorithm>
 
 #include "graph.hpp"
 
@@ -21,7 +22,7 @@ namespace algolib
         @param order aktualny porządek topologiczny
         @param visited czy wierzchołek odwiedzony
         */
-        void dfs(int vertex, graph digraph, std::vector<int> & order,
+        void dfs(int vertex, const graph & digraph, std::vector<int> & order,
             std::vector<bool> & is_visited);
     }
 
@@ -30,14 +31,14 @@ namespace algolib
     @param digraph graf skierowany
     @return porządek topologiczny wierzchołków
     */
-    std::vector<int> sort_topological1(graph digraph);
+    std::vector<int> sort_topological1(const graph & digraph);
 
     /**
     Sortowanie topologiczne z użyciem DFS.
     @param digraph graf skierowany
     @return porządek topologiczny wierzchołków
     */
-    std::vector<int> sort_topological2(graph digraph);
+    std::vector<int> sort_topological2(const graph & digraph);
 };
 
 #endif

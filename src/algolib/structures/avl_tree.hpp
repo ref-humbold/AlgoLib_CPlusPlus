@@ -4,6 +4,8 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <initializer_list>
+#include <memory>
 #include <algorithm>
 #include <iterator>
 
@@ -15,68 +17,68 @@ namespace algolib
         protected:
         class avl_node;
 
+        using node_sptr = std::shared_ptr<avl_node>;
+        using node_wptr = std::weak_ptr<avl_node>;
+
         public:
         class iterator;
         class reverse_iterator;
 
         private:
         /** Korzeń drzewa. */
-        avl_node * tree = nullptr;
+        node_sptr tree = node_sptr();
 
         /** Liczba elementów drzewa. */
         size_t elems = 0;
 
+        public:
         avl_tree()
         {
         }
 
-        explicit avl_tree(std::initializer_list<E> init_list);
+        avl_tree(std::initializer_list<E> init_list);
 
         ~avl_tree()
         {
-            delete tree;
-            tree = nullptr;
+            tree.reset();
         }
 
-        avl_tree(const avl_tree & avl) :
-            tree{new avl_node(*avl.tree)},
-            elems{avl.elems}
+        avl_tree(const avl_tree & avl) : elems{avl.elems}
         {
+            tree = avl.tree != nullptr ? std::make_shared<avl_node>(*avl.tree) : nullptr;
         }
 
-        avl_tree(avl_tree && avl) :
-            tree{std::move(avl.tree)},
-            elems{std::move(avl.elems)}
+        avl_tree(avl_tree && avl) : elems{std::move(avl.elems)}
         {
+            std::swap(this->tree, avl.tree);
         }
 
         avl_tree<E> & operator=(const avl_tree<E> & avl);
-
         avl_tree<E> & operator=(avl_tree<E> && avl);
 
         /**
         Ustawia iterator na początek.
         @return iterator na najniższym elemencie
         */
-        iterator begin();
+        iterator begin() const;
 
         /**
         Ustawia iterator na koniec.
         @return iterator poza drzewem
         */
-        iterator end();
+        iterator end() const;
 
         /**
         Ustawia odwrócony iterator na odwrócony początek.
         @return iterator na nawyższym elemencie
         */
-        reverse_iterator rbegin();
+        reverse_iterator rbegin() const;
 
         /**
         Ustawia odwrócony iterator na odwrócony koniec.
         @return iterator poza drzewem
         */
-        reverse_iterator rend();
+        reverse_iterator rend() const;
 
         /**
         Określanie pustości drzewa.
@@ -125,134 +127,116 @@ namespace algolib
         @param element wartość do znalezienia
         @return ojciec węzła z wartością
         */
-        avl_node * find_node_parent(const E & element) const;
+        node_sptr find_node_parent(const E & element) const;
 
         /**
         Usuwanie elementu z korzenia drzewa.
         @param root korzeń drzewa
         */
-        void delete_root(avl_node * root);
+        void delete_root(node_sptr root);
 
         /**
         Usuwanie elementu z węzła wewnętrznego drzewa.
         @param node węzeł do usunięcia
         */
-        void delete_node(avl_node * node);
+        void delete_node(node_sptr node);
 
         /**
         Zamiana poddrzewa ukorzenionego w danym węźle.
         @param node węzeł do zamiany
         @param root korzeń nowego poddrzewa
         */
-        void replace_subtree(avl_node * node, avl_node * root);
+        void replace_subtree(node_sptr node, node_sptr root);
 
         /**
         Rotowanie węzła wzdłuż krawędzi z jego ojcem.
         @param node węzeł do rotacji
         */
-        void rotate(avl_node * node);
+        void rotate(node_sptr node);
 
         /**
         Przywracanie balansowania na ścieżce od wierzchołka do korzenia.
         @param node wierzchołek początkowy
         */
-        void rebalance(avl_node * node);
+        void rebalance(node_sptr node);
     };
 
     template<typename E>
-    class avl_tree<E>::avl_node
+    class avl_tree<E>::avl_node : public std::enable_shared_from_this<avl_node>
     {
+        public:
+        /** Wartość w węźle. */
+        E element;
+
         private:
         /** Wysokość węzła. */
         int height = 0;
 
         /** Lewy syn węzła. */
-        avl_node * left = nullptr;
+        node_sptr left = node_sptr(nullptr);
 
         /** Prawy syn węzła. */
-        avl_node * right = nullptr;
-
-        public:
-        /** Wartość w węźle. */
-        E element;
+        node_sptr right = node_sptr(nullptr);
 
         /** Ojciec węzła. */
-        avl_node * parent = nullptr;
+        node_wptr parent = node_wptr();
 
-        avl_node(const E & elem) : element{elem}
+        public:
+        avl_node(const E & elem) :
+            std::enable_shared_from_this<avl_node>(),
+            element{elem}
         {
         }
 
         ~avl_node();
-
-        avl_node(const avl_node & node) :
-            height{node.height},
-            element{node.element},
-            left{new avl_node(*node.left)},
-            right{new avl_node(*node.right)}
-        {
-            left->parent = this;
-            right->parent = this;
-        }
-
-        avl_node(avl_node && node) :
-            height{std::move(node.height)},
-            element{std::move(node.element)},
-            left{new avl_node( std::move(*node.left) )},
-            right{new avl_node( std::move(*node.right) )}
-        {
-            left->parent = this;
-            right->parent = this;
-        }
-
+        avl_node(const avl_node & node);
+        avl_node(avl_node && node);
         avl_node & operator=(const avl_node & node);
-
         avl_node & operator=(avl_node && node);
 
-        /** Getter dla lewego syna węzła. */
-        avl_node * get_left()
+        node_sptr get_this()
+        {
+            return this->shared_from_this();
+        }
+
+        node_sptr get_left()
         {
             return left;
         }
 
-        /**
-        Setter dla lewego syna węzła.
-        @param node nowy syn węzła
-        */
-        void set_left(avl_node * node)
+        void set_left(node_sptr node)
         {
             left = node;
 
             if(left != nullptr)
-                left->parent = this;
+                left->parent = get_this();
 
             count_height();
         }
 
-        /** Getter dla prawego syna węzła. */
-        avl_node * get_right()
+        node_sptr get_right()
         {
             return right;
         }
 
-        /**
-        Setter dla prawego syna węzła.
-        @param node nowy syn węzła
-        */
-        void set_right(avl_node * node)
+        void set_right(node_sptr node)
         {
             right = node;
 
             if(right != nullptr)
-                right->parent = this;
+                right->parent = get_this();
 
             count_height();
         }
 
-        /** Getter dla wysokości węzła. */
-        int get_height()
+        node_sptr get_parent()
         {
-            return height;
+            return parent.lock();
+        }
+
+        void set_parent(node_wptr node)
+        {
+            parent = node;
         }
 
         /**
@@ -273,7 +257,7 @@ namespace algolib
         */
         bool is_root()
         {
-            return parent == nullptr;
+            return parent.expired();
         }
 
         /**
@@ -282,7 +266,7 @@ namespace algolib
         */
         bool is_left_son()
         {
-            return is_root() ? false : parent->left == this;
+            return is_root() ? false : parent.lock()->left.get() == this;
         }
 
         /**
@@ -291,7 +275,7 @@ namespace algolib
         */
         bool is_right_son()
         {
-            return is_root() ? false : parent->right == this;
+            return is_root() ? false : parent.lock()->right.get() == this;
         }
 
         /** Wylicza wysokość wierzchołka. */
@@ -302,31 +286,31 @@ namespace algolib
         @param element poszukiwana wartość
         @return korzeń poddrzewa z elementem
         */
-        avl_node * get_subtree(const E & element);
+        node_sptr get_subtree(const E & element);
 
         /**
         Wyszukiwanie minimum w poddrzewie.
         @return węzeł z minimalną wartością w poddrzewie
         */
-        avl_node * minimum();
+        node_sptr minimum();
 
         /**
         Wyszukiwanie maksimum w ukorzenionym poddrzewie.
         @return węzeł z maksymalną wartością w poddrzewie
         */
-        avl_node * maximum();
+        node_sptr maximum();
 
         /**
         Wyznaczanie następnika węzła w drzewie.
         @return węzeł z następną wartością
         */
-        avl_node * successor();
+        node_sptr successor();
 
         /**
         Wyznaczanie poprzednika węzła w drzewie.
         @return węzeł z poprzednią wartością
         */
-        avl_node * predecessor();
+        node_sptr predecessor();
     };
 
     template<typename E>
@@ -334,10 +318,10 @@ namespace algolib
     {
         private:
         /** Aktualny węzeł. */
-        avl_tree<E>::avl_node * current_node;
+        avl_tree<E>::node_sptr current_node;
 
         public:
-        iterator(avl_tree<E>::avl_node * node) : current_node{node}
+        iterator(avl_tree<E>::node_sptr node) : current_node{node}
         {
         }
 
@@ -389,10 +373,10 @@ namespace algolib
     {
         private:
         /** Aktualny węzeł. */
-        avl_tree<E>::avl_node * current_node;
+        avl_tree<E>::node_sptr current_node;
 
         public:
-        reverse_iterator(avl_tree<E>::avl_node * node) : current_node{node}
+        reverse_iterator(avl_tree<E>::node_sptr node) : current_node{node}
         {
         }
 

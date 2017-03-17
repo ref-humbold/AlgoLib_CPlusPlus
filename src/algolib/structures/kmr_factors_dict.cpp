@@ -1,27 +1,17 @@
 // SŁOWNIK PODSŁÓW BAZOWYCH Z ALGORYTMEM KARPA-MILLERA-ROSENBERGA
-#include <cstdlib>
-#include <string>
-#include <tuple>
-#include <vector>
-#include <map>
-#include <algorithm>
-
 #include "kmr_factors_dict.hpp"
 
-std::map<std::string, int> algolib::kmr_factors_dict::get_factors()
+algolib::kmr_factors_dict::kmr_factors_dict(std::string s) : text{s}
 {
-    if(factors.size() == 0)
-        kmr();
-
-    return factors;
+    kmr();
 }
 
 void algolib::kmr_factors_dict::kmr()
 {
     sign_letters();
 
-    for(size_t ln = 2; ln <= text.size(); ln <<= 1)
-        double_length(ln);
+    for(size_t lngt = 2; lngt <= text.size(); lngt <<= 1)
+        double_length(lngt);
 }
 
 void algolib::kmr_factors_dict::sign_letters()

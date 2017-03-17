@@ -6,6 +6,7 @@
 #include <tuple>
 #include <vector>
 #include <limits>
+#include <algorithm>
 
 namespace algolib
 {
@@ -32,34 +33,42 @@ namespace algolib
         Wszystkie wierzchołki.
         @return wektor wierzchołków
         */
-        virtual std::vector<int> vertices() const = 0;
+        virtual std::vector<int> get_vertices() const
+        {
+            std::vector<int> vertices;
+
+            for(size_t i = 0; i < get_vertices_number(); ++i)
+                vertices.push_back(i);
+
+            return vertices;
+        }
 
         /**
         Wszystkie krawędzie.
         @return wektor krawędzi
         */
-        virtual std::vector< std::tuple<int, int> > edges() const = 0;
+        virtual std::vector< std::tuple<int, int> > get_edges() const = 0;
 
         /**
         Sąsiedzi wierzchołka.
         @param v numer wierzchołka
         @return wektor sąsiadów wierzchołka
         */
-        virtual std::vector<int> neighbours(int v) const = 0;
+        virtual std::vector<int> get_neighbours(int v) const = 0;
 
         /**
         Stopień wyjściowy wierzchołka.
         @param v numer wierzchołka
         @return wartość stopnia wyjściowego wierzchołka
         */
-        virtual size_t degree_out(int v) const = 0;
+        virtual size_t get_outdegree(int v) const = 0;
 
         /**
         Stopień wejściowy wierzchołka.
         @param v numer wierzchołka
         @return wartość stopnia wejściowego wierzchołka
         */
-        virtual size_t degree_in(int v) const = 0;
+        virtual size_t get_indegree(int v) const = 0;
     };
 
     class simple_graph : public graph
@@ -81,16 +90,22 @@ namespace algolib
         }
 
         /** @see graph#neighbours */
-        std::vector<int> neighbours(int v) const override
+        std::vector<int> get_neighbours(int v) const override
         {
             return graphrepr[v];
+        }
+
+        /** @see graph#get_outdegree */
+        size_t get_outdegree(int v) const override
+        {
+            return graphrepr[v].size();
         }
 
         /**
         Wyznaczanie listy sąsiedztwa grafu.
         @return lista sąsiedztwa
         */
-        std::vector< std::vector<int> > adjacency_list() const
+        std::vector< std::vector<int> > get_adjacency_list() const
         {
             return graphrepr;
         }
@@ -99,7 +114,7 @@ namespace algolib
         Wyznaczanie macierzy sąsiedztwa grafu.
         @return macierz sąsiedztwa
         */
-        std::vector< std::vector<bool> > adjacency_matrix() const;
+        std::vector< std::vector<bool> > get_adjacency_matrix() const;
     };
 
     class directed_simple_graph : public simple_graph
@@ -125,16 +140,10 @@ namespace algolib
         size_t get_edges_number() const override;
 
         /** @see graph#edges */
-        std::vector< std::tuple<int, int> > edges() const override;
+        std::vector< std::tuple<int, int> > get_edges() const override;
 
-        /** @see graph#degree_out */
-        size_t degree_out(int v) const override
-        {
-            return graphrepr[v].size();
-        }
-
-        /** @see graph#degree_in */
-        size_t degree_in(int v) const override;
+        /** @see graph#get_indegree */
+        size_t get_indegree(int v) const override;
     };
 
     class undirected_simple_graph : public simple_graph
@@ -168,18 +177,12 @@ namespace algolib
         size_t get_edges_number() const override;
 
         /** @see graph#edges */
-        std::vector< std::tuple<int, int> > edges() const override;
+        std::vector< std::tuple<int, int> > get_edges() const override;
 
-        /** @see graph#degree_out */
-        size_t degree_out(int v) const override
+        /** @see graph#get_indegree */
+        size_t get_indegree(int v) const override
         {
-            return graphrepr[v].size();
-        }
-
-        /** @see graph#degree_in */
-        size_t degree_in(int v) const override
-        {
-            return degree_out(v);
+            return get_outdegree(v);
         }
     };
 
@@ -208,26 +211,32 @@ namespace algolib
         Wszystkie krawędzie wraz z wagami.
         @return lista krawędzi z ich wagami
         */
-        virtual std::vector< std::tuple<int, int, double> > weighted_edges() const = 0;
+        virtual std::vector< std::tuple<int, int, double> > get_weighted_edges() const = 0;
 
         /** @see graph#neighbours */
-        std::vector<int> neighbours(int v) const override;
+        std::vector<int> get_neighbours(int v) const override;
 
         /**
         Sąsiedzi wierzchołka wraz z wagami.
         @param v numer wierzchołka
         @return lista sąsiadów wierzchołka wraz z wagami krawędzi
         */
-        std::vector< std::tuple<int, double> > weighted_neighbours(int v) const
+        std::vector< std::tuple<int, double> > get_weighted_neighbours(int v) const
         {
             return graphrepr[v];
+        }
+
+        /** @see graph#get_outdegree */
+        size_t get_outdegree(int v) const override
+        {
+            return graphrepr[v].size();
         }
 
         /**
         Wyznaczanie listy sąsiedztwa grafu.
         @return lista sąsiedztwa
         */
-        std::vector< std::vector< std::tuple<int, double> > > adjacency_list() const
+        std::vector< std::vector< std::tuple<int, double> > > get_adjacency_list() const
         {
             return graphrepr;
         }
@@ -236,7 +245,7 @@ namespace algolib
         Wyznaczanie macierzy sąsiedztwa grafu.
         @return macierz sąsiedztwa
         */
-        std::vector< std::vector<double> > adjacency_matrix() const;
+        std::vector< std::vector<double> > get_adjacency_matrix() const;
     };
 
     class directed_weighted_graph : public weighted_graph
@@ -257,20 +266,20 @@ namespace algolib
         /** @see graph#get_edges_number */
         size_t get_edges_number() const override;
 
-        /** @see graph#degree_out */
-        size_t degree_out(int v) const override
+        /** @see graph#get_outdegree */
+        size_t get_outdegree(int v) const override
         {
             return graphrepr[v].size();
         }
 
-        /** @see graph#degree_in */
-        size_t degree_in(int v) const override;
+        /** @see graph#get_indegree */
+        size_t get_indegree(int v) const override;
 
         /** @see graph#edges */
-        std::vector< std::tuple<int, int> > edges() const override;
+        std::vector< std::tuple<int, int> > get_edges() const override;
 
         /** @see weighted_graph#weighted_edges */
-        std::vector< std::tuple<int, int, double> > weighted_edges() const override;
+        std::vector< std::tuple<int, int, double> > get_weighted_edges() const override;
     };
 
     class undirected_weighted_graph : public weighted_graph
@@ -295,23 +304,17 @@ namespace algolib
         /** @see graph#get_edges_number */
         size_t get_edges_number() const override;
 
-        /** @see graph#degree_out */
-        size_t degree_out(int v) const override
+        /** @see graph#get_indegree */
+        size_t get_indegree(int v) const override
         {
-            return graphrepr[v].size();
-        }
-
-        /** @see graph#degree_in */
-        size_t degree_in(int v) const override
-        {
-            return degree_out(v);
+            return get_outdegree(v);
         }
 
         /** @see graph#edges */
-        std::vector< std::tuple<int, int> > edges() const override;
+        std::vector< std::tuple<int, int> > get_edges() const override;
 
         /** @see weighted_graph#weighted_edges */
-        std::vector< std::tuple<int, int, double> > weighted_edges() const override;
+        std::vector< std::tuple<int, int, double> > get_weighted_edges() const override;
     };
 }
 

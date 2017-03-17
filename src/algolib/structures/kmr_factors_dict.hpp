@@ -5,6 +5,8 @@
 
 #include <cstdlib>
 #include <string>
+#include <tuple>
+#include <vector>
 #include <map>
 #include <algorithm>
 
@@ -20,9 +22,7 @@ namespace algolib
         std::map<std::string, int> factors;
 
         public:
-        explicit kmr_factors_dict(std::string txt) : text{txt}
-        {
-        }
+        explicit kmr_factors_dict(std::string s);
 
         ~kmr_factors_dict() = default;
         kmr_factors_dict(const kmr_factors_dict & kmrfd) = default;
@@ -43,7 +43,10 @@ namespace algolib
         Getter dla słownika.
         @return słownik podsłów bazowych
         */
-        std::map<std::string, int> get_factors();
+        std::map<std::string, int> get_factors()
+        {
+            return factors;
+        }
 
         /** Budowa słownika podsłów bazowych. */
         void kmr();
