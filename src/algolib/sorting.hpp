@@ -8,52 +8,52 @@
 #include <vector>
 #include <algorithm>
 
-using point2D = std::pair<double, double>;
+using point2D_t = std::pair<double, double>;
+
+namespace detail
+{
+    /**
+    Przywracanie własności kopca.
+    @param heap kopiec
+    @param vertex wierzchołek kopca
+    @param index_begin początkowy indeks kopca
+    @param index_end końcowy indeks kopca
+    */
+    template<typename T>
+    void move_down(std::vector<T> & heap, int vertex, int index_begin, int index_end);
+
+    /**
+    Scalanie dwóch uporządkowanych fragmentów ciągu.
+    @param sequence ciąg
+    @param index_begin początek fragmentu
+    @param index_middle środek fragmentu
+    @param index_end koniec fragmentu
+    */
+    template<typename T>
+    void merge(std::vector<T> & sequence, int index_begin, int index_middle, int index_end);
+
+    /**
+    Losowanie piwota.
+    @param size liczba elementów
+    @return indeks piwota
+    */
+    int choose_pivot(int size);
+}
 
 namespace algolib
 {
-    namespace detail
-    {
-        /**
-        Przywracanie własności kopca.
-        @param heap kopiec
-        @param vertex wierzchołek kopca
-        @param index_begin początkowy indeks kopca
-        @param index_end końcowy indeks kopca
-        */
-        template<typename T>
-        void move_down(std::vector<T> & heap, int vertex, int index_begin, int index_end);
-
-        /**
-        Scalanie dwóch uporządkowanych fragmentów ciągu.
-        @param sequence ciąg
-        @param index_begin początek fragmentu
-        @param index_middle środek fragmentu
-        @param index_end koniec fragmentu
-        */
-        template<typename T>
-        void merge(std::vector<T> & sequence, int index_begin, int index_middle, int index_end);
-
-        /**
-        Losowanie piwota.
-        @param size liczba elementów
-        @return indeks piwota
-        */
-        int choose_pivot(int size);
-    }
-
     /**
     Mutowalne sortowanie kątowe punktów na płaszczyźnie.
     @param points lista punktów
     */
-    void angle_sort(std::vector<point2D> & points);
+    void angle_sort(std::vector<point2D_t> & points);
 
     /**
     Niemutowalne sortowanie kątowe punktów na płaszczyźnie.
     @param points lista punktów
     @return lista punktów posortowana względem kąta
     */
-    std::vector<point2D> angle_sorted(std::vector<point2D> points);
+    std::vector<point2D_t> angle_sorted(std::vector<point2D_t> points);
 
     /**
     Mutowalne sortowanie ciągu przez kopcowanie.

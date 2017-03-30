@@ -8,7 +8,7 @@
 
 class graph
 {
-    private:
+private:
     /** onaczenie braku głębokości (nieodwiedzenia) w drzewie DFS */
     static const int NO_DEPTH = -1;
 
@@ -27,12 +27,13 @@ class graph
     /** lista sąsiedztwa grafu */
     std::vector< std::vector<int> > graphrepr;
 
-    public:
+public:
     /**
     KONSTRUKTOR PARAMETRYCZNY
     @param n liczba wierzchołków
     */
-    graph(int n) : num_vertex{n}
+    graph(int n) :
+        num_vertex{n}
     {
         graphrepr.resize(n+1);
     }
@@ -43,7 +44,7 @@ class graph
     */
     std::vector< std::pair<int, int> > find_bridges();
 
-    private:
+private:
     /**
     ALGORYTM DFS WYLICZAJĄCY FUNKCJĘ LOW
     @param vertex aktualny wierzchołek

@@ -72,7 +72,7 @@ double flow_graph::dfs(int vertex, int target, double blocking_flow)
     for(int i = 0; i < layer_graph[vertex].size() && blocking_flow != 0.0; ++i)
     {
         int neighbour = layer_graph[vertex][i];
-        double flow_add = dfs( neighbour, target, min(capacities[vertex][neighbour], blocking_flow) );
+        double flow_add = dfs(neighbour, target, min(capacities[vertex][neighbour], blocking_flow));
 
         blocking_flow -= flow_add;
         new_blocking_flow += flow_add;

@@ -11,34 +11,37 @@
 
 #include "graph.hpp"
 
+namespace detail
+{
+    /**
+    Algorytm DFS wyznaczający kolejność wierzchołków.
+    @param vertex aktualny wierzchołek
+    @param digraph graf skierowany
+    @param order aktualny porządek topologiczny
+    @param visited czy wierzchołek odwiedzony
+    */
+    void dfs(int vertex, const algolib::graphs::directed_graph & digraph, std::vector<int> & order,
+        std::vector<bool> & is_visited);
+}
+
 namespace algolib
 {
-    namespace detail
+    namespace graphs
     {
         /**
-        Algorytm DFS wyznaczający kolejność wierzchołków.
-        @param vertex aktualny wierzchołek
+        Sortowanie topologiczne przez liczenie poprzedników.
         @param digraph graf skierowany
-        @param order aktualny porządek topologiczny
-        @param visited czy wierzchołek odwiedzony
+        @return porządek topologiczny wierzchołków
         */
-        void dfs(int vertex, const graph & digraph, std::vector<int> & order,
-            std::vector<bool> & is_visited);
+        std::vector<int> sort_topological1(const directed_graph & digraph);
+
+        /**
+        Sortowanie topologiczne z użyciem DFS.
+        @param digraph graf skierowany
+        @return porządek topologiczny wierzchołków
+        */
+        std::vector<int> sort_topological2(const directed_graph & digraph);
     }
-
-    /**
-    Sortowanie topologiczne przez liczenie poprzedników.
-    @param digraph graf skierowany
-    @return porządek topologiczny wierzchołków
-    */
-    std::vector<int> sort_topological1(const graph & digraph);
-
-    /**
-    Sortowanie topologiczne z użyciem DFS.
-    @param digraph graf skierowany
-    @return porządek topologiczny wierzchołków
-    */
-    std::vector<int> sort_topological2(const graph & digraph);
 };
 
 #endif

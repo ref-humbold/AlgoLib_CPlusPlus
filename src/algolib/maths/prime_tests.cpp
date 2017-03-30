@@ -1,9 +1,7 @@
 // ALGORYTMY TESTOWANIA PIERWSZOŚCI
 #include "prime_tests.hpp"
 
-namespace details = algolib::detail;
-
-std::pair<long long int, long long int> details::distribute(long long int number)
+std::pair<long long int, long long int> detail::distribute(long long int number)
 {
     long long int power = 2LL, exponent = 1LL;
 
@@ -15,10 +13,10 @@ std::pair<long long int, long long int> details::distribute(long long int number
 
     --exponent;
 
-    return std::make_pair( exponent, number/(1<<exponent) );
+    return std::make_pair(exponent, number/(1<<exponent));
 }
 
-bool algolib::fermat_prime(long long int number)
+bool algolib::maths::fermat_prime(long long int number)
 {
     for(int i = 0; i < 10; ++i)
     {
@@ -34,9 +32,9 @@ bool algolib::fermat_prime(long long int number)
     return true;
 }
 
-bool algolib::miller_prime(long long int number)
+bool algolib::maths::miller_prime(long long int number)
 {
-    std::pair<long long int, long long int> distribution = details::distribute(number-1);
+    std::pair<long long int, long long int> distribution = detail::distribute(number-1);
 
     for(int i = 0; i < 10; ++i)
     {

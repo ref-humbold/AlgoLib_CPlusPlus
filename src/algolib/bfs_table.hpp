@@ -8,7 +8,7 @@
 
 class table
 {
-    private:
+private:
     /** oznaczenie pustej komórki */
     static const int EMPTY_CELL = -1;
 
@@ -21,13 +21,15 @@ class table
     /** tablica */
     std::vector< std::vector<int> > celltable;
 
-    public:
+public:
     /**
     KONSTRUKTOR PARAMTERYCZNY
     @param n liczba wierszy
     @param m liczba kolumn
     */
-    table(int n, int m) : num_rows{n}, num_columns{m}
+    table(int n, int m) :
+        num_rows{n},
+        num_columns{m}
     {
         celltable.resize(n);
 

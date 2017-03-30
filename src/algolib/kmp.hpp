@@ -7,18 +7,18 @@
 #include <vector>
 #include <algorithm>
 
+namespace detail
+{
+    /**
+    Funkcja prefiksowa pi Knutha.
+    @param pattern wzorzec
+    @return wartości funkcji prefiksowej
+    */
+    std::vector<int> prefixes(const std::string & pattern);
+}
+
 namespace algolib
 {
-    namespace detail
-    {
-        /**
-        Funkcja prefiksowa pi Knutha.
-        @param pattern wzorzec
-        @return wartości funkcji prefiksowej
-        */
-        std::vector<int> prefixes(const std::string & pattern);
-    }
-
     /**
     Algorytm Knutha-Morrisa-Pratta.
     @param text słowo

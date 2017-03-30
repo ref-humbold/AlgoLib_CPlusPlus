@@ -1,10 +1,8 @@
 // ALGORYTMY SORTOWANIA
 #include "sorting.hpp"
 
-namespace details = algolib::detail;
-
 template<typename T>
-void details::move_down(std::vector<T> & heap, int vertex, int index_begin, int index_end)
+void detail::move_down(std::vector<T> & heap, int vertex, int index_begin, int index_end)
 {
     int next_vertex = -1, left_vertex = (vertex<<1)-index_begin+1, right_vertex = (vertex<<1)-index_begin+2;
 
@@ -16,74 +14,74 @@ void details::move_down(std::vector<T> & heap, int vertex, int index_begin, int 
 
     if(next_vertex >= 0)
     {
-        if( heap[next_vertex] > heap[vertex] )
-            swap( heap[next_vertex], heap[vertex] );
+        if(heap[next_vertex] > heap[vertex])
+            swap(heap[next_vertex], heap[vertex]);
 
         move_down(heap, next_vertex, index_begin, index_end);
     }
 }
 
 template<typename T>
-void details::merge(std::vector<T> & sequence, int index_begin, int index_middle, int index_end)
+void detail::merge(std::vector<T> & sequence, int index_begin, int index_middle, int index_end)
 {
     std::vector<T> ordered;
     int iter1 = index_begin, iter2 = index_middle+1;
 
      while(iter1 <= index_middle && iter2 <= index_end)
-        if( sequence[iter1] < sequence[iter2] )
+        if(sequence[iter1] < sequence[iter2])
         {
-            ordered.push_back( sequence[iter1] );
+            ordered.push_back(sequence[iter1]);
             ++iter1;
         }
         else
         {
-            ordered.push_back( sequence[iter2] );
+            ordered.push_back(sequence[iter2]);
             ++iter2;
         }
 
     if(iter1 <= index_middle)
         for(int i = iter1; i <= index_middle; ++i)
-            ordered.push_back( sequence[i] );
+            ordered.push_back(sequence[i]);
 
     if(iter2 <= index_end)
         for(int i = iter2; i <= index_end; ++i)
-            ordered.push_back( sequence[i] );
+            ordered.push_back(sequence[i]);
 
     for(int i = 0; i < ordered.size(); ++i)
         sequence[index_begin+i] = ordered[i];
 }
 
-int details::choose_pivot(int size)
+int detail::choose_pivot(int size)
 {
-    srand( time(0) );
+    srand(time(0));
 
     int candidate1 = rand()%size, candidate2 = rand()%size, candidate3 = rand()%size;
 
-    if( std::min(candidate2, candidate3) <= candidate1
-        && candidate1 <= std::max(candidate2, candidate3) )
+    if(std::min(candidate2, candidate3) <= candidate1
+        && candidate1 <= std::max(candidate2, candidate3))
         return candidate2;
-    else if( std::min(candidate1, candidate3) <= candidate2
-             && candidate2 <= std::max(candidate1, candidate3) )
+    else if(std::min(candidate1, candidate3) <= candidate2
+             && candidate2 <= std::max(candidate1, candidate3))
         return candidate2;
     else
         return candidate3;
 }
 
-void algolib::angle_sort(std::vector<point2D> & points)
+void algolib::angle_sort(std::vector<point2D_t> & points)
 {
-    auto angle = [](const point2D & pt)
+    auto angle = [](const point2D_t & pt)
         {
             double ang = atan2(pt.second, pt.first)*90/acos(0);
 
             return pt.second >= 0.0 ? ang : ang+360.0;
         };
 
-    auto radius = [](const point2D & pt)
+    auto radius = [](const point2D_t & pt)
         {
            return pt.first*pt.first+pt.second*pt.second;
         };
 
-    auto comparator = [=](const point2D & pt1, const point2D & pt2) -> bool
+    auto comparator = [=](const point2D_t & pt1, const point2D_t & pt2) -> bool
         {
             double angle1 = angle(pt1), angle2 = angle(pt2);
 
@@ -93,7 +91,7 @@ void algolib::angle_sort(std::vector<point2D> & points)
     sort(points.begin(), points.end(), comparator);
 }
 
-std::vector<point2D> algolib::angle_sorted(std::vector<point2D> points)
+std::vector<point2D_t> algolib::angle_sorted(std::vector<point2D_t> points)
 {
     angle_sort(points);
 
@@ -109,14 +107,14 @@ void algolib::heap_sort(std::vector<T> & sequence, int index_begin, int index_en
     int heap_size = index_end-index_begin;
 
      for(int i = index_begin+heap_size/2; i >= index_begin; --i)
-        details::move_down(sequence, i, index_begin, index_end);
+        detail::move_down(sequence, i, index_begin, index_end);
 
     while(heap_size > 1)
     {
         int index_heap = index_begin+heap_size;
 
-        std::swap( sequence[index_heap], sequence[index_begin] );
-        details::move_down(sequence, index_begin, index_begin, index_heap-1);
+        std::swap(sequence[index_heap], sequence[index_begin]);
+        detail::move_down(sequence, index_begin, index_begin, index_heap-1);
     }
 }
 
@@ -140,7 +138,7 @@ void algolib::merge_sort(std::vector<T> & sequence, int index_begin, int index_e
 
         merge_sort(sequence, index_begin, index_middle);
         merge_sort(sequence, index_middle+1, index_end);
-        details::merge(sequence, index_begin, index_middle, index_end);
+        detail::merge(sequence, index_begin, index_middle, index_end);
     }
 }
 
@@ -161,20 +159,20 @@ void algolib::quick_sort(std::vector<T> & sequence, int index_begin, int index_e
     if(index_begin < index_end)
     {
         int index_pivot = index_begin, index_front = index_begin+1, index_back = index_end;
-        int rdpv = index_begin+details::choose_pivot(index_end-index_begin+1);
+        int rdpv = index_begin+detail::choose_pivot(index_end-index_begin+1);
 
-        std::swap( sequence[index_pivot], sequence[rdpv] );
+        std::swap(sequence[index_pivot], sequence[rdpv]);
 
         while(index_pivot < index_back)
-            if( sequence[index_front] < sequence[index_pivot] )
+            if(sequence[index_front] < sequence[index_pivot])
             {
-                std::swap( sequence[index_front], sequence[index_pivot] );
+                std::swap(sequence[index_front], sequence[index_pivot]);
                 index_pivot = index_front;
                 ++index_front;
             }
             else
             {
-                swap( sequence[index_front], sequence[index_back] );
+                swap(sequence[index_front], sequence[index_back]);
                 --index_back;
             }
 

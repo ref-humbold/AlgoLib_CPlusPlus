@@ -1,17 +1,13 @@
 // SITO ERASTOTENESA: WYZNACZANIE LICZB PIERWSZYCH
-#include <cstdlib>
-#include <cmath>
-#include <vector>
-
 #include "sieve.hpp"
 
-std::vector<int> algolib::find_primes(int max_number)
+std::vector<int> algolib::maths::find_primes(int max_number)
 {
     std::vector<int> primes;
     std::vector<bool> is_prime;
 
      for(int i = 0; i <= max_number; ++i)
-         is_prime.push_back( i == 2 || (i > 2 && i%2 == 1) );
+         is_prime.push_back(i == 2 || (i > 2 && i%2 == 1));
 
     for(int i = 3; i <= sqrt(is_prime.size()); i += 2)
         if(is_prime[i])
@@ -25,17 +21,17 @@ std::vector<int> algolib::find_primes(int max_number)
     return primes;
 }
 
-std::vector<int> algolib::find_primes(int min_number, int max_number)
+std::vector<int> algolib::maths::find_primes(int min_number, int max_number)
 {
     std::vector<int> primes;
     std::vector<bool> is_prime, base_primes;
     int diff = max_number-min_number;
 
     for(int i = 0; i <= sqrt(max_number); ++i)
-        base_primes.push_back( i == 2 || (i > 2 && i%2 == 1) );
+        base_primes.push_back(i == 2 || (i > 2 && i%2 == 1));
 
     for(int i = 0; i <= diff; ++i)
-        is_prime.push_back( (min_number+i)%2 == 0 );
+        is_prime.push_back((min_number+i)%2 == 0);
 
     for(size_t i = 3; i < base_primes.size(); i += 2)
         if(base_primes[i])

@@ -14,7 +14,7 @@ int tree_graph::find_lca(int vertex1, int vertex2, int root = 1)
 
     for(int i = 1; i <= log2(num_vertex)+2; ++i)
         for(int w = 1; w <= num_vertex; ++w)
-            paths[w].push_back(paths[ paths[w][i-1] ][i-1]);
+            paths[w].push_back(paths[paths[w][i-1]][i-1]);
 
     return search_lca(vertex1, vertex2);
 }
@@ -48,17 +48,17 @@ int tree_graph::serach_lca(int vertex1, int vertex2)
                 && this->pre_post_times[vertex1].second <= this->pre_post_times[vertex2].second;
         };
 
-    if( is_offspring(vertex1, vertex2) )
+    if(is_offspring(vertex1, vertex2))
         return vertex2;
 
-    if( is_offspring(vertex2, vertex1) )
+    if(is_offspring(vertex2, vertex1))
         return vertex1;
 
     for(int i = paths[vertex1].size()-1; i > 0; --i)
     {
         int candidate = paths[vertex1][i];
 
-        if( !is_offspring(vertex2, candidate) )
+        if(!is_offspring(vertex2, candidate))
             return search_lca(candidate, vertex2);
     }
 

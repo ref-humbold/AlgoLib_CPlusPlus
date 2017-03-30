@@ -45,9 +45,9 @@ void bipartite_graph::bfs()
         {
             int s = graphrepr[w][i];
 
-            if(matchings[s] != NO_MATCH && distances[ matchings[s] ] == INF)
+            if(matchings[s] != NO_MATCH && distances[matchings[s]] == INF)
             {
-                distances[ matchings[s] ] = distances[w]+1;
+                distances[matchings[s]] = distances[w]+1;
                 vertex_queue.push(matchings[s]);
             }
         }
@@ -59,7 +59,7 @@ int bipartite_graph::augment_match()
     int match_added = 0;
 
     for(int w = 1; w <= num_vertex; ++w)
-        if( is_first_set[w] && dfs(w) )
+        if(is_first_set[w] && dfs(w))
             ++match_added;
 
     return match_added;
@@ -84,7 +84,7 @@ bool bipartite_graph::dfs(int vertex)
         {
             int mtc = matchings[neighbour];
 
-            if( distances[mtc] == distances[vertex]+1 && !is_visited[mtc] && dfs(mtc) )
+            if(distances[mtc] == distances[vertex]+1 && !is_visited[mtc] && dfs(mtc))
             {
                 matchings[vertex] = neighbour;
                 matchings[neighbour] = vertex;

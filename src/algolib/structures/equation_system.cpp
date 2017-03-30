@@ -1,14 +1,25 @@
 // STRUKTURA UKŁADÓW RÓWNAŃ LINIOWYCH Z ALGORYTMEM ELIMINACJI GAUSSA
-#include <cstdlib>
-#include <cmath>
-#include <exception>
-#include <stdexcept>
-#include <vector>
-#include <algorithm>
-
 #include "equation_system.hpp"
 
-std::vector<double> algolib::equation_system::solve()
+algolib::structures::equation_system::equation_system(std::initializer_list< std::initializer_list<double> > init_list) :
+    equations{init_list.size()}
+{
+    coeffs.reserve(equations);
+    free_terms.reserve(equations);
+
+    for(auto it : init_list)
+        if(it.size() != equations+1)
+            throw std::runtime_error("Incorrect initilization of equation system.");
+
+    for(auto it : init_list)
+    {
+        coeffs.push_back(it);
+        free_terms.push_back(coeffs.back().back());
+        coeffs.pop_back();
+    }
+}
+
+std::vector<double> algolib::structures::equation_system::solve()
 {
     gaussian_reduce();
 
@@ -36,12 +47,12 @@ std::vector<double> algolib::equation_system::solve()
         solution.push_back(value/coeffs[equ][equ]);
     }
 
-    reverse(solution.begin(), solution.end());
+    std::reverse(solution.begin(), solution.end());
 
     return solution;
 }
 
-void algolib::equation_system::gaussian_reduce()
+void algolib::structures::equation_system::gaussian_reduce()
 {
     for(size_t equ = 0; equ < equations-1; ++equ)
     {
@@ -52,7 +63,7 @@ void algolib::equation_system::gaussian_reduce()
             double min_coef = coeffs[index_min][equ];
             double act_coef = coeffs[i][equ];
 
-            if( act_coef != 0 && ( min_coef == 0 || std::abs(act_coef) < std::abs(min_coef) ) )
+            if(act_coef != 0 && (min_coef == 0 || std::abs(act_coef) < std::abs(min_coef)))
                 index_min = i;
         }
 
@@ -70,7 +81,7 @@ void algolib::equation_system::gaussian_reduce()
     }
 }
 
-void algolib::equation_system::change(int equ1, int equ2)
+void algolib::structures::equation_system::change(int equ1, int equ2)
 {
     for(size_t i = 0; i < equations; ++i)
         std::swap(coeffs[equ1][i], coeffs[equ2][i]);
@@ -78,7 +89,7 @@ void algolib::equation_system::change(int equ1, int equ2)
     std::swap(free_terms[equ1], free_terms[equ2]);
 }
 
-void algolib::equation_system::linear_comb(int equ1, int equ2, double cst)
+void algolib::structures::equation_system::linear_comb(int equ1, int equ2, double cst)
 {
     for(size_t i = 0; i < equations; ++i)
         coeffs[equ1][i] += cst*coeffs[equ2][i];

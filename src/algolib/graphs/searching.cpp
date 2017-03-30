@@ -1,32 +1,31 @@
 // ALGORYTMY PRZESZUKIWANIA GRAFU
 #include "searching.hpp"
 
-namespace details = algolib::detail;
-
-void details::dfsR_step(const graph & gr, int vertex, std::vector<bool> & is_visited)
+void detail::dfsR_step(const algolib::graphs::graph & gr, vertex_t vertex,
+    std::vector<bool> & is_visited)
 {
     is_visited[vertex] = true;
 
-    for( const int & neighbour : gr.get_neighbours(vertex) )
+    for(const auto & neighbour : gr.get_neighbours(vertex))
         if(!is_visited[neighbour])
             dfsR_step(gr, neighbour, is_visited);
 }
 
-std::vector<bool> algolib::bfs(const graph & gr, int root)
+std::vector<bool> algolib::graphs::bfs(const graph & gr, vertex_t root)
 {
     std::vector<bool> is_visited(gr.get_vertices_number(), false);
-    std::queue<int> vertex_queue;
+    std::queue<vertex_t> vertex_queue;
 
     vertex_queue.push(root);
     is_visited[root] = true;
 
     while(!vertex_queue.empty())
     {
-        int v = vertex_queue.front();
+        vertex_t v = vertex_queue.front();
 
         vertex_queue.pop();
 
-        for( const int & nb : gr.get_neighbours(v) )
+        for(const auto & nb : gr.get_neighbours(v))
             if(!is_visited[nb])
             {
                 is_visited[nb] = true;
@@ -37,16 +36,16 @@ std::vector<bool> algolib::bfs(const graph & gr, int root)
     return is_visited;
 }
 
-std::vector<bool> algolib::dfsI(const graph & gr, int root)
+std::vector<bool> algolib::graphs::dfsI(const graph & gr, vertex_t root)
 {
     std::vector<bool> is_visited(gr.get_vertices_number(), false);
-    std::stack<int> vertex_stack;
+    std::stack<vertex_t> vertex_stack;
 
     vertex_stack.push(root);
 
     while(!vertex_stack.empty())
     {
-        int v = vertex_stack.top();
+        vertex_t v = vertex_stack.top();
 
         vertex_stack.pop();
 
@@ -54,7 +53,7 @@ std::vector<bool> algolib::dfsI(const graph & gr, int root)
         {
             is_visited[v] = true;
 
-            for( const int & nb : gr.get_neighbours(v) )
+            for(const auto & nb : gr.get_neighbours(v))
                 if(!is_visited[nb])
                     vertex_stack.push(nb);
         }
@@ -63,11 +62,11 @@ std::vector<bool> algolib::dfsI(const graph & gr, int root)
     return is_visited;
 }
 
-std::vector<bool> algolib::dfsR(const graph & gr, int root)
+std::vector<bool> algolib::graphs::dfsR(const graph & gr, vertex_t root)
 {
     std::vector<bool> is_visited(gr.get_vertices_number(), false);
 
-    details::dfsR_step(gr, root, is_visited);
+    detail::dfsR_step(gr, root, is_visited);
 
     return is_visited;
 }

@@ -24,14 +24,14 @@ std::vector<int> graph::find_vertex_separator()
                 return dfs_childs[vertex].size() > 1;
 
             for(int i = 0; i < dfs_childs[vertex].size(); ++i)
-                if(low_values[ dfs_childs[vertex][i] ] >= dfs_depths[vertex])
+                if(low_values[dfs_childs[vertex][i]] >= dfs_depths[vertex])
                     return true;
 
             return false;
         };
 
     for(int w = 1; w <= num_vertex; ++w)
-        if( is_separator(w) )
+        if(is_separator(w))
             separators.push_back(w);
 
     return separators;

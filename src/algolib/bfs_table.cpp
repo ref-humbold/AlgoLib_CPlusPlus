@@ -22,25 +22,25 @@ void table::bfs(std::pair<int, int> source)
         if(cellX > 0 && celltable[cellX-1][cellY] == EMPTY_CELL)
         {
             celltable[cellX-1][cellY] = celltable[cellX][cellY]+1;
-            cell_queue.push( std::make_pair(cellX-1, cellY) );
+            cell_queue.push(std::make_pair(cellX-1, cellY));
         }
 
         if(cellX < num_rows-1 && celltable[cellX+1][cellY] == EMPTY_CELL)
         {
             celltable[cellX+1][cellY] = celltable[cellX][cellY]+1;
-            cell_queue.push( std::make_pair(cellX+1, cellY) );
+            cell_queue.push(std::make_pair(cellX+1, cellY));
         }
 
         if(cellY > 0 && celltable[cellX][cellY-1] == EMPTY_CELL)
         {
             celltable[cellX][cellY-1] = celltable[cellX][cellY]+1;
-            cell_queue.push( std::make_pair(cellX, cellY-1) );
+            cell_queue.push(std::make_pair(cellX, cellY-1));
         }
 
         if(cellY < num_columns-1 && celltable[cellX][cellY+1] == EMPTY_CELL)
         {
             celltable[cellX][cellY+1] = celltable[cellX][cellY]+1;
-            cell_queue.push( std::make_pair(cellX, cellY+1) );
+            cell_queue.push(std::make_pair(cellX, cellY+1));
         }
     }
 }

@@ -14,7 +14,7 @@ int flow_graph::count_flow(int source, int target)
     while(is_flow_added)
     {
         augmenting_paths.clear();
-        augmenting_paths.resize( num_vertex+1, makepair(-1, INF) );
+        augmenting_paths.resize(num_vertex+1, makepair(-1, INF));
         is_flow_added = bfs(source, target);
 
         if(is_flow_added)
@@ -46,7 +46,7 @@ std::pair<int, bool> flow_graph::bfs(int source, int target)
 
             if(capacities[w][s] > 0 && augmenting_paths[s].first == -1)
             {
-                augmenting_paths[s] = std::make_pair( w, min(capacities[w][s], augmenting_paths[w].second) );
+                augmenting_paths[s] = std::make_pair(w, min(capacities[w][s], augmenting_paths[w].second));
                 vertex_queue.push(s);
             }
         }

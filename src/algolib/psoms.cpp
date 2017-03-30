@@ -53,9 +53,9 @@ double algolib::find_maxsum_subseq2(const std::vector<double> & sequence)
         {
             int index_left = index+index, index_right = index+index+1;
 
-            interval_sums[index] = std::max( std::max( interval_sums[index_right], interval_sums[index_left] ), suffix_sums[index_right]+prefix_sums[index_left] );
-            prefix_sums[index] = std::max( prefix_sums[index_right], all_sums[index_right]+prefix_sums[index_left] );
-            suffix_sums[index] = std::max( suffix_sums[index_left], suffix_sums[index_right]+all_sums[index_left] );
+            interval_sums[index] = std::max(std::max(interval_sums[index_right], interval_sums[index_left]), suffix_sums[index_right]+prefix_sums[index_left]);
+            prefix_sums[index] = std::max(prefix_sums[index_right], all_sums[index_right]+prefix_sums[index_left]);
+            suffix_sums[index] = std::max(suffix_sums[index_left], suffix_sums[index_right]+all_sums[index_left]);
             all_sums[index] = all_sums[index_right]+all_sums[index_left];
             index >>= 1;
         }

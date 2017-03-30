@@ -9,7 +9,7 @@
 
 class bipartite_graph
 {
-    private:
+private:
     /** Oznaczenie braku skojarzenia. */
     static const int NO_MATCH = -1;
 
@@ -34,8 +34,9 @@ class bipartite_graph
     /** Skojarzenia wierzchołków. */
     std::vector<int> matchings;
 
-    public:
-    bipartite_graph(int n, const std::vector<int> & first_set) : num_vertex{n}
+public:
+    bipartite_graph(int n, const std::vector<int> & first_set) :
+        num_vertex{n}
     {
         graphrepr.resize(n+1);
         matchings.resize(n+1, NO_MATCH);
@@ -52,7 +53,7 @@ class bipartite_graph
     */
     int match();
 
-    private:
+private:
     /** Algorytm BFS wyliczający numery wierzchołków */
     void bfs();
 
@@ -71,4 +72,3 @@ class bipartite_graph
 };
 
 #endif
-

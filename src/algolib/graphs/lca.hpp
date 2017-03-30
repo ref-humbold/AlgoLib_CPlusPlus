@@ -9,7 +9,7 @@
 
 class tree_graph
 {
-    private:
+private:
     /** skompresowane ścieżki do korzenia drzewa */
     std::vector< std::vector<int> > paths;
 
@@ -25,12 +25,13 @@ class tree_graph
     /** lista sąsiedztwa grafu */
     std::vector< std::vector<int> > graphrepr;
 
-    public:
+public:
     /**
     KONSTRUKTOR PARAMETRYCZNY
     @param n liczba wierzchołków
     */
-    tree_graph(int n) : num_vertex{n}
+    tree_graph(int n) :
+        num_vertex{n}
     {
         is_visited.resize(n+1, false);
         graphrepr.resize(n+1);
@@ -45,7 +46,7 @@ class tree_graph
     */
     int find_lca(int vertex1, int vertex2, int root = 1);
 
-    private:
+private:
     /**
     ALGORYTM DFS Z LICZNIKIEM CZASU WYZNACZAJĄCY KOLEJNE WIERZCHOŁKI NA ŚCIEŻCE DO KORZENIA
     @param vertex aktualny wierzchołek

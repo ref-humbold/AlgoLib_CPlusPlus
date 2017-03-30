@@ -1,14 +1,8 @@
 // NAJMNIEJSZY LEKSYKOGRAFICZNIE NAJDŁUŻSZY PODCIĄG ROSNĄCY
-#include <cstdlib>
-#include <vector>
-#include <algorithm>
-
 #include "lis.hpp"
 
-namespace details = algolib::detail;
-
 template<typename T>
-int details::binary_search(const std::vector<T> & sequence, const std::vector<int> & subseq_last,
+int detail::search(const std::vector<T> & sequence, const std::vector<int> & subseq_last,
     int index_begin, int index_end, int element)
 {
     if(index_begin == index_end)
@@ -16,10 +10,10 @@ int details::binary_search(const std::vector<T> & sequence, const std::vector<in
 
     int index_middle = (index_begin+index_end)/2;
 
-    if(sequence[element] > sequence[ subseq_last[index_middle] ])
-        return binary_search(sequence, subseq_last, index_middle+1, index_end, element);
+    if(sequence[element] > sequence[subseq_last[index_middle]])
+        return search(sequence, subseq_last, index_middle+1, index_end, element);
     else
-        return binary_search(sequence, subseq_last, index_begin, index_middle, element);
+        return search(sequence, subseq_last, index_begin, index_middle, element);
 }
 
 template<typename T>
@@ -37,7 +31,7 @@ std::vector<T> algolib::find_lis(const std::vector<T> & sequence)
         }
         else
         {
-            int index = details::binary_search(sequence, subseq_last, 0, subseq_last.size()-1, i);
+            int index = detail::search(sequence, subseq_last, 0, subseq_last.size()-1, i);
 
             subseq_last[index] = i;
             previous_elems[i] = index > 0 ? subseq_last[index-1] : -1;

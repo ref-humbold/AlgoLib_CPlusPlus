@@ -9,7 +9,7 @@
 
 class flow_graph
 {
-    private:
+private:
     /** oznaczenie nieskończoności */
     static const double INF = 1<<30;
 
@@ -25,12 +25,13 @@ class flow_graph
     /** macierz przeputowości */
     std::vector< std::vector<double> > capacities;
 
-    public:
+public:
     /**
     KONSTRUKTOR PARAMETRYCZNY
     @param n liczba wierzchołków
     */
-    flow_graph(int n) : num_vertex{n}
+    flow_graph(int n) :
+        num_vertex{n}
     {
         graphrepr.resize(n+1);
         capacities.resize(n+1);
@@ -47,7 +48,7 @@ class flow_graph
     */
     int count_flow(int source, int target);
 
-    private:
+private:
     /**
     ALGORYTM BFS ZNAJDUJĄCY ŚCIEŻKĘ POWIĘKSZAJĄCĄ
     @param source źródło

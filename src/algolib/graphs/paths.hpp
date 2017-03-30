@@ -3,45 +3,43 @@
 #define PATHS_HPP
 
 #include <cstdlib>
-#include <exception>
 #include <stdexcept>
+#include <exception>
+#include <limits>
 #include <tuple>
 #include <vector>
 #include <queue>
 #include <algorithm>
-#include <limits>
 
 #include "graph.hpp"
 
 namespace algolib
 {
-    namespace detail
+    namespace graphs
     {
-        constexpr double INF = std::numeric_limits<double>::infinity();
+        /**
+        Algorytm Bellmana-Forda.
+        @param wgraph graf ważony
+        @param source wierzchołek początkowy
+        @return lista odległości wierzchołków
+        */
+        std::vector<weight_t> bellman_ford(const weighted_graph & wgraph, vertex_t source);
+
+        /**
+        Algorytm Dijkstry.
+        @param wgraph graf ważony
+        @param source wierzchołek początkowy
+        @return lista odległości wierzchołków
+        */
+        std::vector<weight_t> dijkstra(const weighted_graph & wgraph, vertex_t source);
+
+        /**
+        Algorytm Floyda-Warshalla.
+        @param wgraph graf ważony
+        @return macierz odległości
+        */
+        std::vector< std::vector<weight_t> > floyd_warshall(const weighted_graph & wgraph);
     }
-
-    /**
-    Algorytm Belllmana-Forda
-    @param wgraph graf ważony
-    @param source wierzchołek początkowy
-    @return lista odległości wierzchołków
-    */
-    std::vector<double> bellman_ford(const weighted_graph & wgraph, int source);
-
-    /**
-    Algorytm Dijkstry.
-    @param wgraph graf ważony
-    @param source wierzchołek początkowy
-    @return lista odległości wierzchołków
-    */
-    std::vector<double> dijkstra(const weighted_graph & wgraph, int source);
-
-    /**
-    Algorytm Floyda-Warshalla.
-    @param wgraph graf ważony
-    @return macierz odległości
-    */
-    std::vector< std::vector<double> > floyd_warshall(const weighted_graph & wgraph);
 }
 
 #endif

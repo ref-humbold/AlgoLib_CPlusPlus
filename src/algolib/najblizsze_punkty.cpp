@@ -1,15 +1,13 @@
 // ALGORYTM WYZNACZANIA NAJBLIŻSZEJ PARY PUNKTÓW NA PŁASZCZYŹNIE
 #include "najblizsze_punkty.hpp"
 
-namespace details = algolib::detail;
-
-std::pair<point2D, point2D> details::search_closest(std::vector<point2D> & pointsX,
-    std::vector< std::pair<point2D, int> > & pointsY, int index_begin, int index_end)
+std::pair<point2D_t, point2D_t> detail::search_closest(std::vector<point2D_t> & pointsX,
+    std::vector< std::pair<point2D_t, int> > & pointsY, int index_begin, int index_end)
 {
     index_begin = (index_begin+pointsX.size())%pointsX.size();
     index_end = (index_end+pointsX.size())%pointsX.size();
 
-    auto distance = [](const point2D & pt1, const point2D & pt2)
+    auto distance = [](const point2D_t & pt1, const point2D_t & pt2)
         {
             double dx = pt1.first-pt2.first, dy = pt1.second-pt2.second;
 
@@ -38,7 +36,7 @@ std::pair<point2D, point2D> details::search_closest(std::vector<point2D> & point
 
     int index_middle = (index_begin+index_end)/2;
     double middleX = (pointsX[index_middle].first+pointsX[index_middle+1].first)/2;
-    std::vector< std::pair<point2D, int> > pointsYL, pointsYR;
+    std::vector< std::pair<point2D_t, int> > pointsYL, pointsYR;
     std::vector< std::pair<int, bool> > belt_points;
 
     for(size_t i = 0; i < pointsY.size(); ++i)
@@ -47,26 +45,26 @@ std::pair<point2D, point2D> details::search_closest(std::vector<point2D> & point
         else
             pointsYR.push_back(pointsY[i]);
 
-    std::pair<point2D, point2D> closest_points;
-    std::pair<point2D, point2D> closestL =
+    std::pair<point2D_t, point2D_t> closest_points;
+    std::pair<point2D_t, point2D_t> closestL =
         search_closest(pointsX, pointsYL, index_begin, index_middle);
-    std::pair<point2D, point2D> closestR =
+    std::pair<point2D_t, point2D_t> closestR =
         search_closest(pointsX, pointsYR, index_middle+1, index_end);
 
-    double min_distance = std::min( distance(closestL.first, closestL.second),
-        distance(closestR.first, closestR.second) );
+    double min_distance = std::min(distance(closestL.first, closestL.second),
+        distance(closestR.first, closestR.second));
     double belt_width = min_distance;
 
     for(size_t i = 0; i < pointsY.size(); ++i)
         if(pointsY[i].first.first >= middleX-belt_width && pointsY[i].first.first <= middleX+belt_width)
-            belt_points.push_back( std::make_pair(i, pointsY[i].second <= index_middle) );
+            belt_points.push_back(std::make_pair(i, pointsY[i].second <= index_middle));
 
     for(size_t i = 1; i < belt_points.size(); ++i)
         for(int j = i-1; j >= 0; --j)
             if(belt_points[i].second != belt_points[j].second)
             {
-                point2D pt1 = pointsY[belt_points[i].first].first;
-                point2D pt2 = pointsY[belt_points[j].first].first;
+                point2D_t pt1 = pointsY[belt_points[i].first].first;
+                point2D_t pt2 = pointsY[belt_points[j].first].first;
 
                 if(pt1.second <= pt2.second+belt_width)
                     break;
@@ -83,22 +81,22 @@ std::pair<point2D, point2D> details::search_closest(std::vector<point2D> & point
     return closest_points;
 }
 
-std::pair<point2D, point2D> algolib::find_closest_points(const std::vector<point2D> & points)
+std::pair<point2D_t, point2D_t> algolib::find_closest_points(const std::vector<point2D_t> & points)
 {
-    std::vector<point2D> pointsX = points;
-    std::vector< std::pair<point2D, int> > pointsY;
+    std::vector<point2D_t> pointsX = points;
+    std::vector< std::pair<point2D_t, int> > pointsY;
 
     std::sort(pointsX.begin(), pointsX.end());
 
     for(size_t i = 0; i < pointsX.size(); ++i)
-        pointsY.push_back( std::make_pair(
-            std::make_pair(pointsY[i].first.second, pointsY[i].first.first), i) );
+        pointsY.push_back(std::make_pair(
+            std::make_pair(pointsY[i].first.second, pointsY[i].first.first), i));
 
     std::sort(pointsY.rbegin(), pointsY.rend());
 
     for(size_t i = 0; i < pointsY.size(); ++i)
         std::swap(pointsY[i].first.first, pointsY[i].first.second);
 
-    return details::search_closest(pointsX, pointsY);
+    return detail::search_closest(pointsX, pointsY);
 }
 

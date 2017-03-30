@@ -9,7 +9,7 @@
 
 class flow_graph
 {
-    private:
+private:
     /**oznaczenie nieskończoności */
     static const double INF = 1<<30;
 
@@ -25,12 +25,13 @@ class flow_graph
     /** macierz przeputowości */
     std::vector< std::vector<double> > capacities;
 
-    public:
+public:
     /**
     KONSTRUKTOR PARAMETRYCZNY
     @param n liczba wierzchołków
     */
-    flow_graph(int n) : num_vertex{n}
+    flow_graph(int n) :
+        num_vertex{n}
     {
         graphrepr.resize(n+1);
         capacities.resize(n+1);
@@ -47,14 +48,14 @@ class flow_graph
     */
     double count_flow(int source, int target);
 
-    private:
+private:
     /**
     ALGORYTM BFS TWORZĄCY GRAF WARSTWOWY
     @param source źródło
     @param target ujście
     @return czy uda się powiększyć przepływ
     */
-    bool bfs(int source, int target)
+    bool bfs(int source, int target);
 
     /**
     ALGORYTM DFS NA GRAFIE WARSTWOWYM WYZNACZAJĄCY PRZEPŁYW BLOKUJĄCY DLA ŚCIEŻEK
@@ -63,7 +64,7 @@ class flow_graph
     @param blocking_flow stary przepływ blokujący
     @return nowy przepływ blokujący
     */
-    double dfs(int vertex, int target, double blocking_flow)
+    double dfs(int vertex, int target, double blocking_flow);
 };
 
 #endif

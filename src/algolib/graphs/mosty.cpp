@@ -23,14 +23,14 @@ std::vector< std::pair<int, int> > graph::find_bridges()
 
     for(int w = 1; w <= num_vertex; ++w)
         if(low_values[w] == dfs_depths[w] && dfs_parents[w] > 0)
-            bridges.push_back( std::make_pair(w, dfs_parents[w]) );
+            bridges.push_back(std::make_pair(w, dfs_parents[w]));
 
     return bridges;
 }
 
 void graph::dfs(int vertex)
 {
-    dfs_depths[vertex] = dfs_depths[ dfs_parents[vertex] ]+1;
+    dfs_depths[vertex] = dfs_depths[dfs_parents[vertex]]+1;
     low_values[vertex] = dfs_depths[vertex];
 
     for(int i = 0; i < graphrepr[w].size(); ++i)
