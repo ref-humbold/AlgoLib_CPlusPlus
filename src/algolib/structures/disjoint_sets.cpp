@@ -13,7 +13,8 @@ E algolib::structures::disjoint_sets<E>::find_set(E element)
 template<typename E>
 void algolib::structures::disjoint_sets<E>::union_set(E element1, E element2)
 {
-    represents[find_set(element1)] = find_set(element2);
+    if(is_set_different(element1, element2))
+        represents[find_set(element1)] = find_set(element2);
 }
 
 template<typename E>

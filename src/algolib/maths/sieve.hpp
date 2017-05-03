@@ -11,19 +11,19 @@ namespace algolib
     namespace maths
     {
         /**
-        WYZNACZANIE LICZB PIERWSZYCH OD 0
-        @param max_number górna granica od zera
-        @return lista liczb pierwszych
-        */
-        std::vector<int> find_primes(int max_number);
+         * Wyznaczanie liczb pierwszych od zera.
+         * @param max_number górna granica
+         * @return lista liczb pierwszych
+         */
+        std::vector<int> find_primes(unsigned int max_number);
 
         /**
-        WYZNACZANIE LICZB PIERWSZYCH NA PRZEDZIALE DOMKNIĘTYM
-        @param min_number dolna granica przedziału
-        @param max_number górna granica przedziału
-        @return lista liczb pierwszych
-        */
-        std::vector<int> find_primes(int min_number, int max_number);
+         * Wyznaczanie liczb pierwszych na przedziale domkniętym.
+         * @param min_number dolna granica przedziału
+         * @param max_number górna granica przedziału
+         * @return lista liczb pierwszych
+         */
+        std::vector<int> find_primes(unsigned int min_number, unsigned int max_number);
     }
 }
 

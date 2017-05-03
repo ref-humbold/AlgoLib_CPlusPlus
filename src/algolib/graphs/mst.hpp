@@ -16,19 +16,19 @@ namespace algolib
     namespace graphs
     {
         /**
-        Algorytm Kruskala wyliczający długość MST.
-        @param wgraph graf ważony
-        @return długość minimalnego drzewa spinającego
-        */
+         * Algorytm Kruskala wyliczający długość MST.
+         * @param wgraph graf ważony
+         * @return długość minimalnego drzewa spinającego
+         */
         double kruskal(const weighted_graph & wgraph);
 
         /**
-        Algorytm Prima wyliczający długość MST.
-        @param wgraph graf ważony
-        @param source początkowy wierzchołek
-        @return długość minimalnego drzewa spinającego
-        */
-        double prim(const weighted_graph & wgraph, vertex_t source);
+         * Algorytm Prima wyliczający długość MST.
+         * @param wgraph graf ważony
+         * @param source początkowy wierzchołek
+         * @return długość minimalnego drzewa spinającego
+         */
+        double prim(const weighted_graph & wgraph, vertex_type source);
     }
 }
 

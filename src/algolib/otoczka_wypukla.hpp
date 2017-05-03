@@ -6,16 +6,16 @@
 #include <vector>
 #include <algorithm>
 
-using point2D_t = std::pair<double, double>;
+using point2D_type = std::pair<double, double>;
 
 namespace algolib
 {
     /**
-    WYZNACZA OTOCZKĘ WYPUKŁĄ
-    @param points lista punktów na płaszczyźnie
-    @return lista punktów otoczki
-    */
-    std::vector<point2D_t> find_convex_hull(std::vector<point2D_t> points);
+     * Wyznacza otoczkę wypukłą.
+     * @param points lista punktów na płaszczyźnie
+     * @return lista punktów otoczki
+     */
+    std::vector<point2D_type> find_convex_hull(std::vector<point2D_type> points);
 }
 
 #endif

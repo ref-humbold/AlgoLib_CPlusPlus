@@ -1,8 +1,8 @@
 // ALGORYTMY SORTOWANIA TOPOLOGICZNEGO
 #include "topological_sorting.hpp"
 
-void detail::dfs(vertex_t vertex, const algolib::graphs::directed_graph & digraph,
-    std::vector<vertex_t> & order, std::vector<bool> & is_visited)
+void detail::dfs(vertex_type vertex, const algolib::graphs::directed_graph & digraph,
+    std::vector<vertex_type> & order, std::vector<bool> & is_visited)
 {
     is_visited[vertex] = true;
 
@@ -13,10 +13,10 @@ void detail::dfs(vertex_t vertex, const algolib::graphs::directed_graph & digrap
     order.push_back(vertex);
 }
 
-std::vector<vertex_t> algolib::graphs::sort_topological1(const directed_graph & digraph)
+std::vector<vertex_type> algolib::graphs::sort_topological1(const directed_graph & digraph)
 {
-    std::vector<vertex_t> order, indegs(digraph.get_vertices_number(), 0);
-    std::queue<vertex_t> vertex_queue;
+    std::vector<vertex_type> order, indegs(digraph.get_vertices_number(), 0);
+    std::queue<vertex_type> vertex_queue;
 
     for(const auto & e : digraph.get_edges())
         ++indegs[std::get<1>(e)];
@@ -27,7 +27,7 @@ std::vector<vertex_t> algolib::graphs::sort_topological1(const directed_graph & 
 
     while(!vertex_queue.empty())
     {
-        vertex_t v = vertex_queue.front();
+        vertex_type v = vertex_queue.front();
 
         vertex_queue.pop();
         order.push_back(v);
@@ -48,9 +48,9 @@ std::vector<vertex_t> algolib::graphs::sort_topological1(const directed_graph & 
     return order;
 }
 
-std::vector<vertex_t> algolib::graphs::sort_topological2(const directed_graph & digraph)
+std::vector<vertex_type> algolib::graphs::sort_topological2(const directed_graph & digraph)
 {
-    std::vector<vertex_t> order;
+    std::vector<vertex_type> order;
     std::vector<bool> is_visited(digraph.get_vertices_number(), false);
 
     for(const auto & v : digraph.get_vertices())

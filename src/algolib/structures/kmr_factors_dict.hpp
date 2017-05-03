@@ -31,19 +31,11 @@ namespace algolib
             kmr_factors_dict& operator=(const kmr_factors_dict & kmrfd) = default;
             kmr_factors_dict& operator=(kmr_factors_dict && kmrfd) = default;
 
-            /**
-            Getter dla słowa.
-            @return słowo
-            */
             std::string get_text() const
             {
                 return text;
             }
 
-            /**
-            Getter dla słownika.
-            @return słownik podsłów bazowych
-            */
             std::map<std::string, int> get_factors()
             {
                 return factors;
@@ -57,9 +49,9 @@ namespace algolib
             void sign_letters();
 
             /**
-            Budowa nowych podsłów o podwojonej długości.
-            @param new_length nowa długość podsłów
-            */
+             * Budowa nowych podsłów o podwojonej długości.
+             * @param new_length nowa długość podsłów
+             */
             void double_length(int new_length);
         };
     }

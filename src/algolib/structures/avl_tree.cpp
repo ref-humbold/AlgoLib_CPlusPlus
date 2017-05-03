@@ -1,11 +1,15 @@
 // DRZEWO AVL
 #include "avl_tree.hpp"
 
+namespace alst = algolib::structures;
+
+//
 // avl_tree
+//
 
 template<typename E>
-algolib::structures::avl_tree<E>::avl_tree(std::initializer_list<E> init_list) :
-    tree{node_sptr()},
+alst::avl_tree<E>::avl_tree(std::initializer_list<E> init_list) :
+    tree{nullptr},
     elems{init_list.size()}
 {
     for(auto i : init_list)
@@ -13,16 +17,19 @@ algolib::structures::avl_tree<E>::avl_tree(std::initializer_list<E> init_list) :
 }
 
 template<typename E>
-algolib::structures::avl_tree<E> & algolib::structures::avl_tree<E>::operator=(const algolib::structures::avl_tree<E> & avl)
+alst::avl_tree<E> & alst::avl_tree<E>::operator =(const alst::avl_tree<E> & avl)
 {
-    this->tree = std::make_shared<avl_node>(*avl.tree);
+    node_pointer temp = this->tree;
+
+    this->tree = new node(*avl.tree);
     this->elems = avl.elems;
+    delete temp;
 
     return *this;
 }
 
 template<typename E>
-algolib::structures::avl_tree<E> & algolib::structures::avl_tree<E>::operator=(algolib::structures::avl_tree<E> && avl)
+alst::avl_tree<E> & alst::avl_tree<E>::operator =(alst::avl_tree<E> && avl)
 {
     std::swap(this->tree, avl.tree);
     std::swap(this->elems, avl.elems);
@@ -31,58 +38,58 @@ algolib::structures::avl_tree<E> & algolib::structures::avl_tree<E>::operator=(a
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::iterator algolib::structures::avl_tree<E>::begin() const
+typename alst::avl_tree<E>::iterator alst::avl_tree<E>::begin() const
 {
     return iterator(tree->minimum());
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::iterator algolib::structures::avl_tree<E>::end() const
+typename alst::avl_tree<E>::iterator alst::avl_tree<E>::end() const
 {
-    return iterator(node_sptr());
+    return iterator(nullptr);
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::reverse_iterator algolib::structures::avl_tree<E>::rbegin() const
+typename alst::avl_tree<E>::reverse_iterator alst::avl_tree<E>::rbegin() const
 {
     return reverse_iterator(tree->maximum());
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::reverse_iterator algolib::structures::avl_tree<E>::rend() const
+typename alst::avl_tree<E>::reverse_iterator alst::avl_tree<E>::rend() const
 {
-    return reverse_iterator(node_sptr());
+    return reverse_iterator(nullptr);
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::iterator algolib::structures::avl_tree<E>::find(const E & element) const
+typename alst::avl_tree<E>::iterator alst::avl_tree<E>::find(const E & element) const
 {
     if(tree == nullptr)
         return end();
 
-    algolib::structures::avl_tree<E>::node_sptr node_parent = find_node_parent(element);
+    alst::avl_tree<E>::node_pointer node_parent = find_node_parent(element);
 
     if(node_parent == nullptr)
         return iterator(tree);
 
-    algolib::structures::avl_tree<E>::node_sptr the_node = node_parent->get_subtree(element);
+    alst::avl_tree<E>::node_pointer the_node = node_parent->get_subtree(element);
 
     if(the_node == nullptr)
         return end();
 
-    return iterator(std::move(the_node));
+    return iterator(the_node);
 }
 
 template<typename E>
-std::pair<typename algolib::structures::avl_tree<E>::iterator, bool> algolib::structures::avl_tree<E>::insert(const E & element)
+std::pair<typename alst::avl_tree<E>::iterator, bool> alst::avl_tree<E>::insert(const E & element)
 {
-    algolib::structures::avl_tree<E>::node_sptr node_parent = find_node_parent(element);
-    algolib::structures::avl_tree<E>::node_sptr the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
+    alst::avl_tree<E>::node_pointer node_parent = find_node_parent(element);
+    alst::avl_tree<E>::node_pointer the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
 
     if(the_node != nullptr)
         return std::make_pair(iterator(the_node), false);
 
-    algolib::structures::avl_tree<E>::node_sptr new_node = std::make_shared<avl_node>(element);
+    alst::avl_tree<E>::node_pointer new_node = new node(element);
 
     if(node_parent != nullptr)
     {
@@ -91,43 +98,43 @@ std::pair<typename algolib::structures::avl_tree<E>::iterator, bool> algolib::st
         else
             node_parent->set_left(new_node);
 
-        rebalance(std::move(node_parent));
+        rebalance(node_parent);
     }
     else
         tree = new_node;
 
     ++elems;
 
-    return std::make_pair(iterator(std::move(new_node)), true);
+    return std::make_pair(iterator(new_node), true);
 }
 
 template<typename E>
-void algolib::structures::avl_tree<E>::erase(const E & element)
+void alst::avl_tree<E>::erase(const E & element)
 {
-    algolib::structures::avl_tree<E>::node_sptr node_parent = find_node_parent(element);
-    algolib::structures::avl_tree<E>::node_sptr the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
+    alst::avl_tree<E>::node_pointer node_parent = find_node_parent(element);
+    alst::avl_tree<E>::node_pointer the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
 
     if(the_node == nullptr)
         return;
 
     if(node_parent == nullptr)
-        delete_root(std::move(the_node));
+        delete_root(the_node);
     else
-        delete_node(std::move(the_node));
+        delete_node(the_node);
 }
 
 template<typename E>
-void algolib::structures::avl_tree<E>::clear()
+void alst::avl_tree<E>::clear()
 {
-    tree.reset();
+    delete tree;
     elems = 0;
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tree<E>::find_node_parent(const E & element) const
+typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::find_node_parent(const E & element) const
 {
-    typename algolib::structures::avl_tree<E>::node_sptr tree_iter = tree;
-    typename algolib::structures::avl_tree<E>::node_sptr iter_parent = std::shared_ptr<avl_node>(nullptr);
+    typename alst::avl_tree<E>::node_pointer tree_iter = tree;
+    typename alst::avl_tree<E>::node_pointer iter_parent = nullptr;
 
     while(tree_iter != nullptr)
         if(tree_iter->element == element)
@@ -142,14 +149,14 @@ typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tr
 }
 
 template<typename E>
-void algolib::structures::avl_tree<E>::delete_root(algolib::structures::avl_tree<E>::node_sptr root)
+void alst::avl_tree<E>::delete_root(alst::avl_tree<E>::node_pointer root)
 {
     if(root->get_left() != nullptr && root->get_right() != nullptr)
         delete_node(root);
     else if(root->get_left() != nullptr && root->get_right() == nullptr)
     {
         std::swap(root->get_left()->element, root->element);
-        root->get_left()->set_parent(node_wptr());
+        root->get_left()->set_parent(nullptr);
         root->set_left(nullptr);
         --elems;
         root->get_left().reset();
@@ -157,7 +164,7 @@ void algolib::structures::avl_tree<E>::delete_root(algolib::structures::avl_tree
     else if(root->get_left() == nullptr && root->get_right() != nullptr)
     {
         std::swap(root->get_right()->element, root->element);
-        root->get_right()->set_parent(node_wptr());
+        root->get_right()->set_parent(nullptr);
         root->set_right(nullptr);
         --elems;
         root->get_right().reset();
@@ -167,50 +174,50 @@ void algolib::structures::avl_tree<E>::delete_root(algolib::structures::avl_tree
 }
 
 template<typename E>
-void algolib::structures::avl_tree<E>::delete_node(algolib::structures::avl_tree<E>::node_sptr node)
+void alst::avl_tree<E>::delete_node(alst::avl_tree<E>::node_pointer node)
 {
     if(node->get_left() != nullptr && node->get_right() != nullptr)
     {
-        algolib::structures::avl_tree<E>::node_sptr succ = node->successor();
+        alst::avl_tree<E>::node_pointer succ = node->successor();
 
         std::swap(succ->element, node->element);
         delete_node(succ);
     }
     else
     {
-        algolib::structures::avl_tree<E>::node_sptr son = node->get_left() != nullptr ? node->get_left() : node->get_right();
-        algolib::structures::avl_tree<E>::node_sptr node_parent = node->get_parent();
+        alst::avl_tree<E>::node_pointer son = node->get_left() != nullptr ? node->get_left() : node->get_right();
+        alst::avl_tree<E>::node_pointer node_parent = node->get_parent();
 
         replace_subtree(node, son);
-        rebalance(std::move(node_parent));
+        rebalance(node_parent);
         --elems;
-        node.reset();
+        delete node;
     }
 }
 
 template<typename E>
-void algolib::structures::avl_tree<E>::replace_subtree(algolib::structures::avl_tree<E>::node_sptr node, algolib::structures::avl_tree<E>::node_sptr root)
+void alst::avl_tree<E>::replace_subtree(alst::avl_tree<E>::node_pointer node, alst::avl_tree<E>::node_pointer root)
 {
     if(node->is_root())
     {
         tree = root;
-        root.set_parent(node_wptr());
+        root->set_parent(nullptr);
     }
     else if(node->is_left_son())
         node->get_parent()->set_left(root);
     else
         node->get_parent()->set_right(root);
 
-    node->set_parent(node_wptr());
+    node->set_parent(nullptr);
 }
 
 template<typename E>
-void algolib::structures::avl_tree<E>::rotate(algolib::structures::avl_tree<E>::node_sptr node)
+void alst::avl_tree<E>::rotate(alst::avl_tree<E>::node_pointer node)
 {
     if(node->is_root())
         return;
 
-    algolib::structures::avl_tree<E>::node_sptr upper_node = node->get_parent();
+    alst::avl_tree<E>::node_pointer upper_node = node->get_parent();
 
     if(node->is_left_son())
     {
@@ -227,7 +234,7 @@ void algolib::structures::avl_tree<E>::rotate(algolib::structures::avl_tree<E>::
 }
 
 template<typename E>
-void algolib::structures::avl_tree<E>::rebalance(algolib::structures::avl_tree<E>::node_sptr node)
+void alst::avl_tree<E>::rebalance(alst::avl_tree<E>::node_pointer node)
 {
     while(node != nullptr)
     {
@@ -260,60 +267,45 @@ void algolib::structures::avl_tree<E>::rebalance(algolib::structures::avl_tree<E
     }
 }
 
+//
 // avl_node
+//
 
 template<typename E>
-algolib::structures::avl_tree<E>::avl_node::~avl_node()
+alst::avl_tree<E>::avl_node::~avl_node()
 {
     if(!is_root())
     {
         if(is_left_son())
-            parent.lock()->left.reset();
+            parent->left.reset();
         else
-            parent.lock()->right.reset();
+            parent->right.reset();
     }
 }
 
 template<typename E>
-algolib::structures::avl_tree<E>::avl_node::avl_node(const algolib::structures::avl_tree<E>::avl_node & node) :
-    std::enable_shared_from_this<avl_node>(),
+alst::avl_tree<E>::avl_node::avl_node(const alst::avl_tree<E>::avl_node & node) :
     element{node.element},
     height{node.height}
 {
     if(node.left != nullptr)
     {
-        left = std::make_shared<avl_node>(*node.left);
-        left->parent = get_this();
+        left = new avl_node(*node.left);
+        left->parent = this;
     }
 
     if(node.right != nullptr)
     {
-        right = std::make_shared<avl_node>(*node.right);
-        right->parent = get_this();
+        right = new avl_node(*node.right);
+        right->parent = this;
     }
 }
 
 template<typename E>
-algolib::structures::avl_tree<E>::avl_node::avl_node(algolib::structures::avl_tree<E>::avl_node && node) :
-    std::enable_shared_from_this<avl_node>(),
-    element{std::move(node.element)},
-    height{std::move(node.height)}
+typename alst::avl_tree<E>::avl_node & alst::avl_tree<E>::avl_node::operator =(const alst::avl_tree<E>::avl_node & node)
 {
-    std::swap(this->left, node.left);
-    std::swap(this->right, node.right);
-
-    if(left != nullptr)
-        left->parent = get_this();
-
-    if(right != nullptr)
-        right->parent = get_this();
-}
-
-template<typename E>
-typename algolib::structures::avl_tree<E>::avl_node & algolib::structures::avl_tree<E>::avl_node::operator=(const algolib::structures::avl_tree<E>::avl_node & node)
-{
-    algolib::structures::avl_tree<E>::node_sptr new_left = std::shared_ptr<avl_node>(*node.left);
-    algolib::structures::avl_tree<E>::node_sptr new_right = std::shared_ptr<avl_node>(*node.right);
+    alst::avl_tree<E>::node_pointer new_left = new avl_node(*node.left);
+    alst::avl_tree<E>::node_pointer new_right = new avl_node(*node.right);
 
     this->height = node.height;
     this->element = node.element;
@@ -324,20 +316,7 @@ typename algolib::structures::avl_tree<E>::avl_node & algolib::structures::avl_t
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::avl_node & algolib::structures::avl_tree<E>::avl_node::operator=(algolib::structures::avl_tree<E>::avl_node && node)
-{
-    std::swap(this->height, node.height);
-    std::swap(this->element, node.element);
-    std::swap(this->left, node.left);
-    std::swap(this->right, node.right);
-    this->left->parent = get_this();
-    this->right->parent = get_this();
-
-    return *this;
-}
-
-template<typename E>
-void algolib::structures::avl_tree<E>::avl_node::count_height()
+void alst::avl_tree<E>::avl_node::count_height()
 {
     int left_height = left == nullptr ? -1 : left->height;
     int right_height = right == nullptr ? -1 : right->height;
@@ -346,10 +325,10 @@ void algolib::structures::avl_tree<E>::avl_node::count_height()
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tree<E>::avl_node::get_subtree(const E & element)
+typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::get_subtree(const E & element)
 {
     if(element == this->element)
-        return get_this();
+        return this;
     else if(element < this->element)
         return left;
     else
@@ -357,9 +336,9 @@ typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tr
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tree<E>::avl_node::minimum()
+typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::minimum()
 {
-    algolib::structures::avl_tree<E>::node_sptr tree_iter = get_this();
+    alst::avl_tree<E>::node_pointer tree_iter = this;
 
     while(tree_iter != nullptr && tree_iter->left != nullptr)
         tree_iter = tree_iter->left;
@@ -368,9 +347,9 @@ typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tr
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tree<E>::avl_node::maximum()
+typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::maximum()
 {
-    algolib::structures::avl_tree<E>::node_sptr tree_iter = get_this();
+    alst::avl_tree<E>::node_pointer tree_iter = this;
 
     while(tree_iter != nullptr && tree_iter->right != nullptr)
         tree_iter = tree_iter->right;
@@ -379,9 +358,9 @@ typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tr
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tree<E>::avl_node::successor()
+typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::successor()
 {
-    algolib::structures::avl_tree<E>::node_sptr succ = get_this();
+    alst::avl_tree<E>::node_pointer succ = this;
 
     if(right != nullptr)
         return right->minimum();
@@ -393,9 +372,9 @@ typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tr
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tree<E>::avl_node::predecessor()
+typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::predecessor()
 {
-    algolib::structures::avl_tree<E>::node_sptr pred = this->get_parent();
+    alst::avl_tree<E>::node_pointer pred = this->get_parent();
 
     if(left != nullptr)
         return left->maximum();
@@ -406,16 +385,18 @@ typename algolib::structures::avl_tree<E>::node_sptr algolib::structures::avl_tr
     return pred;
 }
 
-// iterator
+//
+// avl_iterator
+//
 
 template<typename E>
-E & algolib::structures::avl_tree<E>::iterator::operator *() const
+E & alst::avl_tree<E>::avl_iterator::operator *() const
 {
     return current_node->element;
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::iterator & algolib::structures::avl_tree<E>::iterator::operator ++()
+typename alst::avl_tree<E>::avl_iterator & alst::avl_tree<E>::avl_iterator::operator ++()
 {
     if(current_node != nullptr)
         current_node = current_node->successor();
@@ -424,9 +405,9 @@ typename algolib::structures::avl_tree<E>::iterator & algolib::structures::avl_t
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::iterator algolib::structures::avl_tree<E>::iterator::operator ++(int i)
+typename alst::avl_tree<E>::avl_iterator alst::avl_tree<E>::avl_iterator::operator ++(int i)
 {
-    algolib::structures::avl_tree<E>::iterator result = *this;
+    alst::avl_tree<E>::avl_iterator result = *this;
 
     if(current_node != nullptr)
         current_node = current_node->successor();
@@ -435,7 +416,7 @@ typename algolib::structures::avl_tree<E>::iterator algolib::structures::avl_tre
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::iterator & algolib::structures::avl_tree<E>::iterator::operator --()
+typename alst::avl_tree<E>::avl_iterator & alst::avl_tree<E>::avl_iterator::operator --()
 {
     if(current_node != nullptr)
         current_node = current_node->predecessor();
@@ -444,9 +425,9 @@ typename algolib::structures::avl_tree<E>::iterator & algolib::structures::avl_t
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::iterator algolib::structures::avl_tree<E>::iterator::operator --(int i)
+typename alst::avl_tree<E>::avl_iterator alst::avl_tree<E>::avl_iterator::operator --(int i)
 {
-    algolib::structures::avl_tree<E>::iterator result = *this;
+    alst::avl_tree<E>::avl_iterator result = *this;
 
     if(current_node != nullptr)
         current_node = current_node->predecessor();
@@ -455,26 +436,29 @@ typename algolib::structures::avl_tree<E>::iterator algolib::structures::avl_tre
 }
 
 template<typename E>
-bool algolib::structures::avl_tree<E>::iterator::operator==(const algolib::structures::avl_tree<E>::iterator & it) const
+bool alst::avl_tree<E>::avl_iterator::operator ==(const alst::avl_tree<E>::avl_iterator & it) const
 {
     return this->current_node == it.current_node;
 }
 
 template<typename E>
-bool algolib::structures::avl_tree<E>::iterator::operator !=(const algolib::structures::avl_tree<E>::iterator & it) const
+bool alst::avl_tree<E>::avl_iterator::operator !=(const alst::avl_tree<E>::avl_iterator & it) const
 {
     return this->current_node != it.current_node;
 }
 
+//
+// avl_rev_iterator
+//
 
 template<typename E>
-E & algolib::structures::avl_tree<E>::reverse_iterator::operator *() const
+E & alst::avl_tree<E>::avl_rev_iterator::operator *() const
 {
     return current_node->element;
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::reverse_iterator & algolib::structures::avl_tree<E>::reverse_iterator::operator ++()
+typename alst::avl_tree<E>::avl_rev_iterator & alst::avl_tree<E>::avl_rev_iterator::operator ++()
 {
     if(current_node != nullptr)
         current_node = current_node->predecessor();
@@ -483,9 +467,9 @@ typename algolib::structures::avl_tree<E>::reverse_iterator & algolib::structure
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::reverse_iterator algolib::structures::avl_tree<E>::reverse_iterator::operator ++(int i)
+typename alst::avl_tree<E>::avl_rev_iterator alst::avl_tree<E>::avl_rev_iterator::operator ++(int i)
 {
-    algolib::structures::avl_tree<E>::reverse_iterator result = *this;
+    alst::avl_tree<E>::avl_rev_iterator result = *this;
 
     if(current_node != nullptr)
         current_node = current_node->predecessor();
@@ -494,7 +478,7 @@ typename algolib::structures::avl_tree<E>::reverse_iterator algolib::structures:
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::reverse_iterator & algolib::structures::avl_tree<E>::reverse_iterator::operator --()
+typename alst::avl_tree<E>::avl_rev_iterator & alst::avl_tree<E>::avl_rev_iterator::operator --()
 {
     if(current_node != nullptr)
         current_node = current_node->successor();
@@ -503,9 +487,9 @@ typename algolib::structures::avl_tree<E>::reverse_iterator & algolib::structure
 }
 
 template<typename E>
-typename algolib::structures::avl_tree<E>::reverse_iterator algolib::structures::avl_tree<E>::reverse_iterator::operator --(int i)
+typename alst::avl_tree<E>::avl_rev_iterator alst::avl_tree<E>::avl_rev_iterator::operator --(int i)
 {
-    algolib::structures::avl_tree<E>::reverse_iterator result = *this;
+    alst::avl_tree<E>::avl_rev_iterator result = *this;
 
     if(current_node != nullptr)
         current_node = current_node->successor();
@@ -514,13 +498,13 @@ typename algolib::structures::avl_tree<E>::reverse_iterator algolib::structures:
 }
 
 template<typename E>
-bool algolib::structures::avl_tree<E>::reverse_iterator::operator==(const algolib::structures::avl_tree<E>::reverse_iterator & rev_it) const
+bool alst::avl_tree<E>::avl_rev_iterator::operator ==(const alst::avl_tree<E>::avl_rev_iterator & rev_it) const
 {
     return this->current_node == rev_it.current_node;
 }
 
 template<typename E>
-bool algolib::structures::avl_tree<E>::reverse_iterator::operator !=(const algolib::structures::avl_tree<E>::reverse_iterator & rev_it) const
+bool alst::avl_tree<E>::avl_rev_iterator::operator !=(const alst::avl_tree<E>::avl_rev_iterator & rev_it) const
 {
     return this->current_node != rev_it.current_node;
 }

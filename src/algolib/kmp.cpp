@@ -36,7 +36,7 @@ std::vector<int> algolib::kmp(const std::string & text, const std::string & patt
 
         if(pos == pattern.size())
         {
-            places.push_back(i-pattern.size()+1);
+            places.push_back(i - pattern.size() + 1);
             pos = pi[pos-1];
         }
     }

@@ -10,21 +10,21 @@
 namespace detail
 {
     /**
-    Funkcja prefiksowa pi Knutha.
-    @param pattern wzorzec
-    @return wartości funkcji prefiksowej
-    */
+     * Funkcja prefiksowa pi Knutha.
+     * @param pattern wzorzec
+     * @return wartości funkcji prefiksowej
+     */
     std::vector<int> prefixes(const std::string & pattern);
 }
 
 namespace algolib
 {
     /**
-    Algorytm Knutha-Morrisa-Pratta.
-    @param text słowo
-    @param pattern wzorzec
-    @return lista pozycji wystąpień wzorca w słowie
-    */
+     * Algorytm Knutha-Morrisa-Pratta.
+     * @param text słowo
+     * @param pattern wzorzec
+     * @return lista pozycji wystąpień wzorca w słowie
+     */
     std::vector<int> kmp(const std::string & text, const std::string & pattern);
 }
 

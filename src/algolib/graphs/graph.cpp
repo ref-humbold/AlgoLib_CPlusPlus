@@ -1,13 +1,15 @@
 // STRUKTURY GRAFÓW
 #include "graph.hpp"
 
-constexpr double algolib::graphs::weighted_graph::INF;
+namespace algr = algolib::graphs;
 
-// graph
+//
+// simple_graph
+//
 
-std::vector<vertex_t> algolib::graphs::graph::get_vertices() const
+std::vector<vertex_type> algr::simple_graph::get_vertices() const
 {
-    std::vector<vertex_t> vertices;
+    std::vector<vertex_type> vertices;
 
     for(size_t i = 0; i < get_vertices_number(); ++i)
         vertices.push_back(i);
@@ -15,54 +17,28 @@ std::vector<vertex_t> algolib::graphs::graph::get_vertices() const
     return vertices;
 }
 
-// simple_graph
-
-std::vector< std::vector<bool> > algolib::graphs::simple_graph::get_adjacency_matrix() const
+vertex_type algr::simple_graph::add_vertex()
 {
-    std::vector< std::vector<bool> > matrix(get_vertices_number());
+    graphrepr.emplace_back();
 
-    for(unsigned int i = 0; i < matrix.size(); ++i)
-        matrix[i].resize(get_vertices_number(), false);
-
-    for(const auto & v : get_vertices())
-        for(const auto & u : get_neighbours(v))
-            matrix[v][u] = true;
-
-    return matrix;
+    return graphrepr.size() - 1;
 }
 
-// weighted graph
-
-std::vector<vertex_t> algolib::graphs::weighted_graph::get_neighbours(vertex_t v) const
+std::vector<vertex_type> algr::simple_graph::get_neighbours(vertex_type v) const
 {
-    std::vector<vertex_t> neighbours;
+    std::vector<vertex_type> neibs(graphrepr[v].size());
 
-    for(const auto & e : graphrepr[v])
-        neighbours.push_back(std::get<0>(e));
+    std::transform(graphrepr[v].begin(), graphrepr[v].end(), neibs.begin(),
+                   [](wvertex_type wv){ return std::get<0>(wv); });
 
-    return neighbours;
+    return neibs;
 }
 
-std::vector< std::vector<double> > algolib::graphs::weighted_graph::get_adjacency_matrix() const
-{
-    std::vector< std::vector<double> > matrix(get_vertices_number());
+//
+// directed_graph
+//
 
-    for(unsigned int i = 0; i < matrix.size(); ++i)
-    {
-        matrix[i].resize(get_vertices_number(), INF);
-        matrix[i][i] = 0.0;
-    }
-
-    for(const auto & v : get_vertices())
-        for(const auto & uwg : get_weighted_neighbours(v))
-            matrix[v][std::get<0>(uwg)] = std::get<1>(uwg);
-
-    return matrix;
-}
-
-// directed_simple_graph
-
-size_t algolib::graphs::directed_simple_graph::get_edges_number() const
+size_t algr::directed_graph::get_edges_number() const
 {
     size_t edges_number = 0;
 
@@ -72,131 +48,152 @@ size_t algolib::graphs::directed_simple_graph::get_edges_number() const
     return edges_number;
 }
 
-std::vector<edge_t> algolib::graphs::directed_simple_graph::get_edges() const
+std::vector<edge_type> algr::directed_graph::get_edges() const
 {
-    std::vector<edge_t> edges;
+    std::vector<edge_type> edges;
 
     for(const auto & v : get_vertices())
         for(const auto & u : get_neighbours(v))
-            edges.push_back(std::make_tuple(v, u));
+            edges.emplace_back(v, u);
 
     return edges;
 }
 
-size_t algolib::graphs::directed_simple_graph::get_indegree(vertex_t v) const
+void algr::directed_graph::add_edge(vertex_type v, vertex_type u)
 {
-    size_t indeg = 0;
+    if(v > get_vertices_number() || u > get_vertices_number())
+        throw std::invalid_argument("No such vertex.");
 
-    for(const int & w : get_vertices())
-        for(const int & u : get_neighbours(w))
-            if(u == v)
-                ++indeg;
-
-    return indeg;
+    graphrepr[v].emplace(u, DEFAULT_WEIGHT);
 }
 
-// undirected_simple_graph
-
-size_t algolib::graphs::undirected_simple_graph::get_edges_number() const
+size_t algr::directed_graph::get_indegree(vertex_type v) const
 {
-    size_t edges_number = 0;
+    std::vector<edge_type> edges = get_edges();
 
-    for(const auto & v : get_vertices())
-        edges_number += get_outdegree(v);
-
-    return edges_number>>1;
+    return std::accumulate(edges.begin(), edges.end(), 0,
+        [=](size_t total, edge_type e){ return std::get<1>(e) == v ? total + 1 : total; });
 }
 
-std::vector<edge_t> algolib::graphs::undirected_simple_graph::get_edges() const
+void algr::directed_graph::reverse()
 {
-    std::vector<edge_t> edges;
+    std::vector<std::set<wvertex_type>> revgraph(get_vertices_number(), std::set<wvertex_type>());
 
-    for(const auto & v : get_vertices())
-        for(const auto & u : get_neighbours(v))
-            if(u > v)
-                edges.push_back(std::make_tuple(v, u));
+    for(auto e : get_edges())
+        revgraph[std::get<1>(e)].emplace(std::get<0>(e), DEFAULT_WEIGHT);
 
-    return edges;
+    graphrepr = std::move(revgraph);
 }
 
+//
 // directed_weighted_graph
+//
 
-size_t algolib::graphs::directed_weighted_graph::get_edges_number() const
+std::vector<wedge_type> algr::directed_weighted_graph::get_weighted_edges() const
 {
-    size_t edges_number = 0;
-
-    for(const auto & v : get_vertices())
-        edges_number += get_outdegree(v);
-
-    return edges_number;
-}
-
-std::vector<edge_t> algolib::graphs::directed_weighted_graph::get_edges() const
-{
-    std::vector<edge_t> edges;
-
-    for(const auto & v : get_vertices())
-        for(const auto & u : get_neighbours(v))
-            edges.push_back(std::make_tuple(v, u));
-
-    return edges;
-}
-
-std::vector<wedge_t> algolib::graphs::directed_weighted_graph::get_weighted_edges() const
-{
-    std::vector<wedge_t> wedges;
+    std::vector<wedge_type> wedges;
 
     for(const auto & v : get_vertices())
         for(const auto & u : get_weighted_neighbours(v))
-            wedges.push_back(std::make_tuple(v, std::get<0>(u), std::get<1>(u)));
+            wedges.emplace_back(v, std::get<0>(u), std::get<1>(u));
 
     return wedges;
 }
 
-size_t algolib::graphs::directed_weighted_graph::get_indegree(vertex_t v) const
+void algr::directed_weighted_graph::add_weighted_edge(vertex_type v, vertex_type u, weight_type wg)
 {
-    size_t indeg = 0;
+    if(v > get_vertices_number() || u > get_vertices_number())
+        throw std::invalid_argument("No such vertex.");
 
-    for(const int & w : get_vertices())
-        for(const int & u : get_neighbours(w))
-            if(u == v)
-                ++indeg;
-
-    return indeg;
+    graphrepr[v].emplace(u, wg);
 }
 
-// undirected_weighted_graph
+void algr::directed_weighted_graph::reverse()
+{
+    std::vector<std::set<wvertex_type>> revgraph(get_vertices_number(), std::set<wvertex_type>());
 
-size_t algolib::graphs::undirected_weighted_graph::get_edges_number() const
+    for(auto e : get_weighted_edges())
+        revgraph[std::get<1>(e)].emplace(std::get<0>(e), std::get<2>(e));
+
+    graphrepr = std::move(revgraph);
+}
+
+//
+// undirected_graph
+//
+
+size_t algr::undirected_graph::get_edges_number() const
 {
     size_t edges_number = 0;
 
     for(const auto & v : get_vertices())
         edges_number += get_outdegree(v);
 
-    return edges_number>>1;
+    return edges_number >> 1;
 }
 
-std::vector<edge_t> algolib::graphs::undirected_weighted_graph::get_edges() const
+std::vector<edge_type> algr::undirected_graph::get_edges() const
 {
-    std::vector<edge_t> edges;
+    std::vector<edge_type> edges;
 
     for(const auto & v : get_vertices())
         for(const auto & u : get_neighbours(v))
             if(u > v)
-                edges.push_back(std::make_tuple(v, u));
+                edges.emplace_back(v, u);
 
     return edges;
 }
 
-std::vector<wedge_t> algolib::graphs::undirected_weighted_graph::get_weighted_edges() const
+void algr::undirected_graph::add_edge(vertex_type v, vertex_type u)
 {
-    std::vector<wedge_t> wedges;
+    if(v > get_vertices_number() || u > get_vertices_number())
+        throw std::invalid_argument("No such vertex.");
+
+    graphrepr[v].emplace(u, DEFAULT_WEIGHT);
+    graphrepr[u].emplace(v, DEFAULT_WEIGHT);
+}
+
+algr::undirected_graph::operator directed_graph() const
+{
+    std::vector<edge_type> diedges = get_edges();
+
+    for(auto e : get_edges())
+        diedges.emplace_back(std::get<1>(e), std::get<0>(e), DEFAULT_WEIGHT);
+
+    return directed_graph(get_vertices_number(), diedges);
+}
+
+//
+// undirected_weighted_graph
+//
+
+std::vector<wedge_type> algr::undirected_weighted_graph::get_weighted_edges() const
+{
+    std::vector<wedge_type> wedges;
 
     for(const auto & v : get_vertices())
         for(const auto & u : get_weighted_neighbours(v))
             if(std::get<0>(u) > v)
-                wedges.push_back(std::make_tuple(v, std::get<0>(u), std::get<1>(u)));
+                wedges.emplace_back(v, std::get<0>(u), std::get<1>(u));
 
     return wedges;
+}
+
+void algr::undirected_weighted_graph::add_weighted_edge(vertex_type v, vertex_type u, weight_type wg)
+{
+    if(v > get_vertices_number() || u > get_vertices_number())
+        throw std::invalid_argument("No such vertex.");
+
+    graphrepr[v].emplace(u, wg);
+    graphrepr[u].emplace(v, wg);
+}
+
+algr::undirected_weighted_graph::operator directed_weighted_graph() const
+{
+    std::vector<wedge_type> diwedges = get_weighted_edges();
+
+    for(auto e : get_weighted_edges())
+        diwedges.emplace_back(std::get<1>(e), std::get<0>(e), std::get<2>(e));
+
+    return directed_weighted_graph(get_vertices_number(), diwedges);
 }

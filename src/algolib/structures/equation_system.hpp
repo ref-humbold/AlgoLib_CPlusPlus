@@ -46,9 +46,9 @@ namespace algolib
             equation_system & operator=(equation_system && eqsys) = default;
 
             /**
-            Wyliczanie rozwiązań układu równań liniowych.
-            @return wektor wyniku równania
-            */
+             * Wyliczanie rozwiązań układu równań liniowych.
+             * @return wektor wyniku równania
+             */
             std::vector<double> solve();
 
             /** Algorytm eliminacji Gaussa. */
@@ -56,18 +56,18 @@ namespace algolib
 
         private:
             /**
-            Zamiana równań miejscami.
-            @param eq1 numer pierwszego równania
-            @param eq2 numer drugiego równania
-            */
+             * Zamiana równań miejscami.
+             * @param eq1 numer pierwszego równania
+             * @param eq2 numer drugiego równania
+             */
             void change(int equ1, int equ2);
 
             /**
-            Przekształcenie równania przez kombinację liniową z innym równaniem.
-            @param eq1 numer równania przekształcanego
-            @param eq2 numer drugiego równania
-            @param cst stała kombinacji liniowej
-            */
+             * Przekształcenie równania przez kombinację liniową z innym równaniem.
+             * @param eq1 numer równania przekształcanego
+             * @param eq2 numer drugiego równania
+             * @param cst stała kombinacji liniowej
+             */
             void linear_comb(int equ1, int equ2, double cst);
         };
     }

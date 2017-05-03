@@ -1,12 +1,7 @@
-// ALGORYTM DINICA: MAKSYMALNY PRZEP�YW
-#include <cstdlib>
-#include <vector>
-#include <queue>
-#include <algorithm>
-
+// ALGORYTM DINICA: MAKSYMALNY PRZEPŁYW
 #include "dinic.hpp"
 
-int flow_graph::count_flow(int source, int target)
+double flow_graph::count_flow(int source, int target)
 {
     double max_flow = 0.0;
     bool is_flow_added = true;
@@ -41,7 +36,7 @@ bool flow_graph::bfs(int source, int target)
         if(v == target)
             return true;
 
-        for(int i = 0; i < graphrepr[v].size(); ++i)
+        for(size_t i = 0; i < graphrepr[v].size(); ++i)
         {
             int nb = graphrepr[v][i];
 
@@ -69,10 +64,10 @@ double flow_graph::dfs(int vertex, int target, double blocking_flow)
 
     double new_blocking_flow = 0.0;
 
-    for(int i = 0; i < layer_graph[vertex].size() && blocking_flow != 0.0; ++i)
+    for(size_t i = 0; i < layer_graph[vertex].size() && blocking_flow != 0.0; ++i)
     {
         int neighbour = layer_graph[vertex][i];
-        double flow_add = dfs(neighbour, target, min(capacities[vertex][neighbour], blocking_flow));
+        double flow_add = dfs(neighbour, target, std::min(capacities[vertex][neighbour], blocking_flow));
 
         blocking_flow -= flow_add;
         new_blocking_flow += flow_add;

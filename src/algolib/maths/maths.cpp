@@ -19,79 +19,25 @@ long long int algolib::maths::lcm(long long int number1, long long int number2)
     return max_number/gcd(number1, number2)*min_number;
 }
 
-double algolib::maths::powerI(double base, long long int exponent)
-{
-    double result = 1.0;
-
-    while(exponent > 0)
-    {
-        if((exponent&1) == 1)
-            result *= base;
-
-        base *= base;
-        exponent >>= 1;
-    }
-
-    return result;
-}
-
-long long int algolib::maths::powerI(long long int base, long long int exponent, long long int modulo)
+long long int algolib::maths::power(long long int base, long long int exponent,
+                                    long long int modulo)
 {
     long long int result = 1;
 
     while(exponent > 0)
     {
         if((exponent&1) == 1)
-            result = multI(result, base, modulo);
+            result = mult(result, base, modulo);
 
-        base = multI(base, base, modulo);
+        base = mult(base, base, modulo);
         exponent >>= 1;
-    }
-
-    return modulo = 0.0 ? result : result%modulo;
-}
-
-double algolib::maths::powerR(double base, long long int exponent)
-{
-    double result = 1.0;
-
-     if(exponent > 0)
-        result = powerR(base*base, exponent>>1);
-
-    return (exponent&1) == 1 ? base*result : result;
-}
-
-long long int algolib::maths::powerR(long long int base, long long int exponent, long long int modulo)
-{
-    long long int result = 1;
-
-     if(exponent > 0)
-        result = powerR(multI(base, base, modulo), exponent>>1, modulo);
-
-    if((exponent&1) == 1)
-        return multI(base, result, modulo);
-    else
-        return modulo = 0.0 ? result : result%modulo;
-}
-
-double algolib::maths::multI(double factor1, long long int factor2)
-{
-    double result = 0.0;
-
-    while(factor2 > 0)
-    {
-        if((factor2&1) == 1)
-            result += factor1;
-
-        factor1 += factor1;
-        factor2 >>= 1;
     }
 
     return result;
 }
 
-long long int algolib::maths::multI(long long int factor1, long long int factor2,
-                             long long int modulo)
+long long int algolib::maths::mult(long long int factor1, long long int factor2,
+                                   long long int modulo)
 {
     long long int result = 0;
 
@@ -104,35 +50,5 @@ long long int algolib::maths::multI(long long int factor1, long long int factor2
         factor2 >>= 1;
     }
 
-    return modulo == 0.0 ? result : result%modulo;
-}
-
-double algolib::maths::multR(double factor1, long long int factor2)
-{
-    double result = 0.0;
-
-     if(factor2 > 0)
-        result = multR(factor1+factor1, factor2>>1);
-
-    return (factor2&1) == 1 ? factor1+result : result;
-}
-
-long long int algolib::maths::multR(long long int factor1, long long int factor2,
-                             long long int modulo)
-{
-    long long int result = 0;
-
-     if(factor2 > 0)
-     {
-        long long int multpl = modulo == 0.0 ?
-                               factor1+factor1 :
-                               (factor1+factor1)%modulo;
-
-        result = multR(multpl, factor2>>1, modulo);
-     }
-
-    if((factor2&1) == 1)
-        return modulo == 0.0 ? factor1+result : (factor1+result)%modulo;
-    else
-        return modulo == 0.0 ? result : result%modulo;
+    return result;
 }
