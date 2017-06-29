@@ -14,7 +14,7 @@ namespace detail
      * @param pattern wzorzec
      * @return wartości funkcji prefiksowej
      */
-    std::vector<int> prefixes(const std::string & pattern);
+    std::vector<size_t> prefixes(const std::string & pattern);
 }
 
 namespace algolib
@@ -25,7 +25,7 @@ namespace algolib
      * @param pattern wzorzec
      * @return lista pozycji wystąpień wzorca w słowie
      */
-    std::vector<int> kmp(const std::string & text, const std::string & pattern);
+    std::vector<size_t> kmp(const std::string & text, const std::string & pattern);
 }
 
 #endif
