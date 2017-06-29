@@ -8,7 +8,7 @@ TEST(KMPTest, testKMPWhenPatternFoundOnce)
 
     std::vector<size_t> result = algolib::kmp(text, pattern);
 
-    ASSERT_EQ(std::vector<size_t>({0}), result);
+    EXPECT_EQ(std::vector<size_t>({0}), result);
 }
 
 TEST(KMPTest, testKMPWhenPatternFoundTwice)
@@ -18,7 +18,7 @@ TEST(KMPTest, testKMPWhenPatternFoundTwice)
 
     std::vector<size_t> result = algolib::kmp(text, pattern);
 
-    ASSERT_EQ(std::vector<size_t>({0, 4}), result);
+    EXPECT_EQ(std::vector<size_t>({0, 4}), result);
 }
 
 TEST(KMPTest, testKMPWhenPatternFoundTwiceAndIntersects)
@@ -28,7 +28,7 @@ TEST(KMPTest, testKMPWhenPatternFoundTwiceAndIntersects)
 
     std::vector<size_t> result = algolib::kmp(text, pattern);
 
-    ASSERT_EQ(std::vector<size_t>({0, 1}), result);
+    EXPECT_EQ(std::vector<size_t>({0, 1}), result);
 }
 
 TEST(KMPTest, testKMPWhenPatternNotFound)
@@ -38,7 +38,7 @@ TEST(KMPTest, testKMPWhenPatternNotFound)
 
     std::vector<size_t> result = algolib::kmp(text, pattern);
 
-    ASSERT_EQ(std::vector<size_t>(), result);
+    EXPECT_EQ(std::vector<size_t>(), result);
 }
 
 TEST(KMPTest, testKMPWhenPatternIsEmptyString)
@@ -48,7 +48,7 @@ TEST(KMPTest, testKMPWhenPatternIsEmptyString)
 
     std::vector<size_t> result = algolib::kmp(text, pattern);
 
-    ASSERT_EQ(std::vector<size_t>(), result);
+    EXPECT_EQ(std::vector<size_t>(), result);
 }
 
 TEST(KMPTest, testKMPWhenTextIsEmptyString)
@@ -58,5 +58,5 @@ TEST(KMPTest, testKMPWhenTextIsEmptyString)
 
     std::vector<size_t> result = algolib::kmp(text, pattern);
 
-    ASSERT_EQ(std::vector<size_t>(), result);
+    EXPECT_EQ(std::vector<size_t>(), result);
 }

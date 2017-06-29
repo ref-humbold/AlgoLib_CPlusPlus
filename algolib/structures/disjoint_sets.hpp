@@ -6,6 +6,8 @@
 #define DISJOINT_SETS_HPP
 
 #include <cstdlib>
+#include <exception>
+#include <stdexcept>
 #include <algorithm>
 #include <initializer_list>
 #include <map>
@@ -52,7 +54,7 @@ namespace algolib
              * @param element element
              * @return czy element w jednym ze zbiorów
              */
-            bool contains(E element);
+            bool contains(E element) const;
 
             /**
              * Tworzenie nowego zbioru jednoelementowego.
@@ -80,8 +82,56 @@ namespace algolib
              * @param element2 element drugiego zbioru
              * @return czy elementy znajdują się w różnych składowych
              */
-            bool is_same_set(E element1, E element2) const;
+            bool is_same_set(E element1, E element2);
         };
+
+        template <typename E>
+        size_t disjoint_sets<E>::size()
+        {
+            std::set<E> reprs;
+
+            for(auto e : represents)
+                reprs.insert(find_set(e.first));
+
+            return reprs.size();
+        }
+
+        template <typename E>
+        bool disjoint_sets<E>::contains(E element) const
+        {
+            return represents.find(element) != represents.end();
+        }
+
+        template <typename E>
+        void disjoint_sets<E>::make_set(E element)
+        {
+            if(contains(element))
+                throw std::invalid_argument("Value already present.");
+
+            represents.emplace(element, element);
+        }
+
+        template <typename E>
+        E disjoint_sets<E>::find_set(E element)
+        {
+            if(represents[element] != element)
+                represents[element] = find_set(represents[element]);
+
+            return represents[element];
+        }
+
+        template <typename E>
+        void disjoint_sets<E>::union_set(E element1, E element2)
+        {
+            if(!is_same_set(element1, element2))
+                represents[find_set(element1)] = find_set(element2);
+        }
+
+        template <typename E>
+        bool disjoint_sets<E>::is_same_set(E element1, E element2)
+        {
+            return find_set(element1) == find_set(element2);
+        }
     }
 }
 
