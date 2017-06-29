@@ -3,9 +3,9 @@
 #define KMP_HPP
 
 #include <cstdlib>
+#include <algorithm>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 namespace detail
 {

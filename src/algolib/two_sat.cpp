@@ -1,25 +1,24 @@
 #include "two_sat.hpp"
 
-int detail::count_variables(const formula_type & formula)
+namespace algr = algolib::graphs;
+
+int detail::count_variables(const formula_t & formula)
 {
-    return std::accumulate(formula.begin(), formula.end(), 0,
-                           [](int maximum, clause_type clause)
-                           {
-                               return std::max(maximum, std::max(std::abs(clause.first),
-                                                                 std::abs(clause.second)));
-                           });
+    return std::accumulate(formula.begin(), formula.end(), 0, [](int maximum, clause_t clause) {
+        return std::max(maximum, std::max(std::abs(clause.first), std::abs(clause.second)));
+    });
 }
 
-size_t detail::vertex(literal_type literal)
+size_t detail::vertex(literal_t literal)
 {
     return literal > 0 ? 2 * literal - 2 : 2 * (-literal) - 1;
 }
 
-algolib::graphs::directed_graph detail::make_graph(const formula_type & formula)
+algr::directed_simple_graph detail::make_graph(const formula_t & formula)
 {
-    algolib::graphs::directed_graph digraph(2 * count_variables(formula));
+    algr::directed_simple_graph digraph(2 * count_variables(formula));
 
-    for(clause_type clause : formula)
+    for(clause_t clause : formula)
     {
         digraph.add_edge(vertex(-clause.first), vertex(clause.second));
         digraph.add_edge(vertex(-clause.second), vertex(clause.first));
@@ -28,9 +27,9 @@ algolib::graphs::directed_graph detail::make_graph(const formula_type & formula)
     return digraph;
 }
 
-bool algolib::is_satisfiable(const formula_type & formula)
+bool algolib::is_satisfiable(const formula_t & formula)
 {
-    algolib::graphs::directed_graph digraph = detail::make_graph(formula);
+    algolib::graphs::directed_simple_graph digraph = detail::make_graph(formula);
 
     return false;
 }

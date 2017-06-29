@@ -9,7 +9,7 @@ std::vector<int> detail::prefixes(const std::string & pattern)
     for(const char & ltr : pattern)
     {
         while(pos > 0 && pattern[pos] != ltr)
-            pos = pi[pos-1];
+            pos = pi[pos - 1];
 
         if(pattern[pos] == ltr)
             ++pos;
@@ -29,7 +29,7 @@ std::vector<int> algolib::kmp(const std::string & text, const std::string & patt
     for(size_t i = 0; i < text.size(); ++i)
     {
         while(pos > 0 && pattern[pos] != text[i])
-            pos = pi[pos-1];
+            pos = pi[pos - 1];
 
         if(pattern[pos] == text[i])
             ++pos;
@@ -37,7 +37,7 @@ std::vector<int> algolib::kmp(const std::string & text, const std::string & patt
         if(pos == pattern.size())
         {
             places.push_back(i - pattern.size() + 1);
-            pos = pi[pos-1];
+            pos = pi[pos - 1];
         }
     }
 

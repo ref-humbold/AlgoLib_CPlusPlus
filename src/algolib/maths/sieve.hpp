@@ -15,7 +15,7 @@ namespace algolib
          * @param max_number górna granica
          * @return lista liczb pierwszych
          */
-        std::vector<int> find_primes(unsigned int max_number);
+        std::vector<int> find_primes(size_t max_number);
 
         /**
          * Wyznaczanie liczb pierwszych na przedziale domkniętym.
@@ -23,7 +23,7 @@ namespace algolib
          * @param max_number górna granica przedziału
          * @return lista liczb pierwszych
          */
-        std::vector<int> find_primes(unsigned int min_number, unsigned int max_number);
+        std::vector<int> find_primes(size_t min_number, size_t max_number);
     }
 }
 

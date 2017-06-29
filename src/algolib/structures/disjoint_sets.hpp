@@ -1,22 +1,26 @@
-// STRUKTURA ZBIORÓW ROZŁĄCZNYCH UNION-FIND
+/**
+ * @file disjoint_sets.hpp
+ * STRUKTURA ZBIORÓW ROZŁĄCZNYCH UNION-FIND
+ */
 #ifndef DISJOINT_SETS_HPP
 #define DISJOINT_SETS_HPP
 
 #include <cstdlib>
-#include <initializer_list>
-#include <vector>
-#include <map>
 #include <algorithm>
+#include <initializer_list>
+#include <map>
+#include <set>
+#include <vector>
 
 namespace algolib
 {
     namespace structures
     {
-        template<typename E>
+        template <typename E>
         class disjoint_sets
         {
         private:
-            /** mapa reprezentantów elementów */
+            /// Mapa reprezentantów elementów.
             std::map<E, E> represents;
 
         public:
@@ -35,33 +39,50 @@ namespace algolib
             ~disjoint_sets() = default;
             disjoint_sets(const disjoint_sets & ds) = default;
             disjoint_sets(disjoint_sets && ds) = default;
-            disjoint_sets& operator=(const disjoint_sets & ds) = default;
-            disjoint_sets& operator=(disjoint_sets && ds) = default;
+            disjoint_sets & operator=(const disjoint_sets & ds) = default;
+            disjoint_sets & operator=(disjoint_sets && ds) = default;
 
             /**
-             * Ustala reprezentanta składowej.
-             * @param element element ze składowej
+             * @return liczba zbiorów
+             */
+            size_t size();
+
+            /**
+             * Należenie do dowolnego zbioru.
+             * @param element element
+             * @return czy element w jednym ze zbiorów
+             */
+            bool contains(E element);
+
+            /**
+             * Tworzenie nowego zbioru jednoelementowego.
+             * @param element nowy element
+             */
+            void make_set(E element);
+
+            /**
+             * Ustalanie reprezentanta zbioru.
+             * @param element element ze zbioru
              * @return reprezentant elementu
              */
             E find_set(E element);
 
             /**
-             * Scala dwie składowe.
-             * @param element1 element pierwszej składowej
-             * @param element2 element drugiej składowej
+             * Scalanie dwóch zbiorów.
+             * @param element1 element pierwszego zbioru
+             * @param element2 element drugiego zbioru
              */
             void union_set(E element1, E element2);
 
             /**
-             * Sprawdza, czy elementy są w różnych składowych.
-             * @param element1 element pierwszej składowej
-             * @param element2 element drugiej składowej
+             * Sprawdzanie, czy elementy należą do tego samego zbioru.
+             * @param element1 element pierwszego zbioru
+             * @param element2 element drugiego zbioru
              * @return czy elementy znajdują się w różnych składowych
              */
-            bool is_set_different(E element1, E element2) const;
+            bool is_same_set(E element1, E element2) const;
         };
     }
 }
 
 #endif
-

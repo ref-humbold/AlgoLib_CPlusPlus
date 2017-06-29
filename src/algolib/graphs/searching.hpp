@@ -1,12 +1,15 @@
-// ALGORYTMY PRZESZUKIWANIA GRAFU
+/**
+ * @file searching.hpp
+ * ALGORYTMY PRZESZUKIWANIA GRAFU
+ */
 #ifndef SEARCHING_HPP
 #define SEARCHING_HPP
 
 #include <cstdlib>
-#include <vector>
+#include <algorithm>
 #include <queue>
 #include <stack>
-#include <algorithm>
+#include <vector>
 
 #include "graph.hpp"
 
@@ -18,8 +21,8 @@ namespace detail
      * @param vertex aktualny wierzchołek
      * @param is_visited lista odwiedzonych wierzchołków
      */
-    void dfsR_step(const algolib::graphs::graph & gr, vertex_type vertex,
-        std::vector<bool> & is_visited);
+    void dfsR_step(const algolib::graphs::graph & gr, vertex_t vertex,
+                   std::vector<bool> & is_visited);
 }
 
 namespace algolib
@@ -32,7 +35,7 @@ namespace algolib
          * @param root wierzchołek początkowy
          * @return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> bfs(const graph & gr, vertex_type root);
+        std::vector<bool> bfs(const graph & gr, vertex_t root);
 
         /**
          * Iteracyjny algorytm DFS.
@@ -40,7 +43,7 @@ namespace algolib
          * @param root wierzchołek początkowy
          * @return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> dfsI(const graph & gr, vertex_type root);
+        std::vector<bool> dfsI(const graph & gr, vertex_t root);
 
         /**
          * Rekurencyjny algorytm DFS.
@@ -48,7 +51,7 @@ namespace algolib
          * @param root wierzchołek początkowy
          * @return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> dfsR(const graph & gr, vertex_type root);
+        std::vector<bool> dfsR(const graph & gr, vertex_t root);
     }
 }
 

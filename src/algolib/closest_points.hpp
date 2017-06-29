@@ -4,10 +4,10 @@
 
 #include <cstdlib>
 #include <cmath>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
-using point2D_type = std::pair<double, double>;
+using point2D_t = std::pair<double, double>;
 
 namespace detail
 {
@@ -19,8 +19,9 @@ namespace detail
      * @param index_end koniec fragmentu listy punktów po x
      * @return para najbliższych punktów
      */
-    std::pair<point2D_type, point2D_type> search_closest(std::vector<point2D_type> & pointsX,
-        std::vector< std::pair<point2D_type, int> > & pointsY, int index_begin=0, int index_end=-1);
+    std::pair<point2D_t, point2D_t> search_closest(std::vector<point2D_t> & pointsX,
+                                                   std::vector<std::pair<point2D_t, int>> & pointsY,
+                                                   int index_begin = 0, int index_end = -1);
 }
 
 namespace algolib
@@ -30,8 +31,7 @@ namespace algolib
      * @param points lista punktów
      * @return para najbliższych punktów
      */
-    std::pair<point2D_type, point2D_type> find_closest_points(const std::vector<point2D_type> & points);
+    std::pair<point2D_t, point2D_t> find_closest_points(const std::vector<point2D_t> & points);
 }
 
 #endif
-

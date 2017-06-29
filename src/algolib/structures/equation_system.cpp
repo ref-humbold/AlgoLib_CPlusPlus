@@ -1,15 +1,18 @@
 // STRUKTURA UKŁADÓW RÓWNAŃ LINIOWYCH Z ALGORYTMEM ELIMINACJI GAUSSA
 #include "equation_system.hpp"
 
-algolib::structures::equation_system::equation_system(std::initializer_list< std::initializer_list<double> > init_list) :
-    equations{init_list.size()}
+namespace alst = algolib::structures;
+
+alst::equation_system::equation_system(
+    std::initializer_list<std::initializer_list<double>> init_list)
+    : equations{init_list.size()}
 {
     coeffs.reserve(equations);
     free_terms.reserve(equations);
 
     for(auto it : init_list)
-        if(it.size() != equations+1)
-            throw std::runtime_error("Incorrect initilization of equation system.");
+        if(it.size() != equations + 1)
+            throw std::length_error("Initializer matrix is not a square matrix.");
 
     for(auto it : init_list)
     {
@@ -19,46 +22,40 @@ algolib::structures::equation_system::equation_system(std::initializer_list< std
     }
 }
 
-std::vector<double> algolib::structures::equation_system::solve()
+std::vector<double> alst::equation_system::solve()
 {
     gaussian_reduce();
 
     if(coeffs.back().back() == 0 && free_terms.back() == 0)
-        throw std::runtime_error("System of equations has got infinitely many solutions.\n");
+        throw infinite_solutions_exception("");
 
     if(coeffs.back().back() == 0 && free_terms.back() != 0)
-        throw std::runtime_error("System of equations has got no solution.\n");
+        throw no_solution_exception("");
 
-    std::vector<double> solution;
+    std::vector<double> solution(equations);
 
-    solution.push_back(free_terms.back()/coeffs.back().back());
+    solution.back() = free_terms.back() / coeffs.back().back();
 
-    for(int equ = equations-2; equ >= 0; --equ)
+    for(int equ = equations - 2; equ >= 0; --equ)
     {
         double value = free_terms[equ];
 
-        for(size_t i = 0; i < solution.size(); ++i)
-        {
-            int pos = equations-1-i;
+        for(int i = equations - 1; i > equ; --i)
+            value -= coeffs[equ][i] * solution[i];
 
-            value -= coeffs[equ][pos]*solution[i];
-        }
-
-        solution.push_back(value/coeffs[equ][equ]);
+        solution[equ] = value / coeffs[equ][equ];
     }
-
-    std::reverse(solution.begin(), solution.end());
 
     return solution;
 }
 
-void algolib::structures::equation_system::gaussian_reduce()
+void alst::equation_system::gaussian_reduce()
 {
-    for(size_t equ = 0; equ < equations-1; ++equ)
+    for(size_t equ = 0; equ < equations - 1; ++equ)
     {
         int index_min = equ;
 
-        for(size_t i = equ+1; i < equations; ++i)
+        for(size_t i = equ + 1; i < equations; ++i)
         {
             double min_coef = coeffs[index_min][equ];
             double act_coef = coeffs[i][equ];
@@ -71,9 +68,9 @@ void algolib::structures::equation_system::gaussian_reduce()
         {
             change(equ, index_min);
 
-            for(size_t i = equ+1; i < equations; ++i)
+            for(size_t i = equ + 1; i < equations; ++i)
             {
-                double param = coeffs[i][equ]/coeffs[equ][equ];
+                double param = coeffs[i][equ] / coeffs[equ][equ];
 
                 linear_comb(i, equ, -param);
             }
@@ -81,7 +78,7 @@ void algolib::structures::equation_system::gaussian_reduce()
     }
 }
 
-void algolib::structures::equation_system::change(int equ1, int equ2)
+void alst::equation_system::change(int equ1, int equ2)
 {
     for(size_t i = 0; i < equations; ++i)
         std::swap(coeffs[equ1][i], coeffs[equ2][i]);
@@ -89,10 +86,10 @@ void algolib::structures::equation_system::change(int equ1, int equ2)
     std::swap(free_terms[equ1], free_terms[equ2]);
 }
 
-void algolib::structures::equation_system::linear_comb(int equ1, int equ2, double cst)
+void alst::equation_system::linear_comb(int equ1, int equ2, double cst)
 {
     for(size_t i = 0; i < equations; ++i)
-        coeffs[equ1][i] += cst*coeffs[equ2][i];
+        coeffs[equ1][i] += cst * coeffs[equ2][i];
 
-    free_terms[equ1] += cst*free_terms[equ2];
+    free_terms[equ1] += cst * free_terms[equ2];
 }

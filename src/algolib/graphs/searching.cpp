@@ -1,8 +1,9 @@
 // ALGORYTMY PRZESZUKIWANIA GRAFU
 #include "searching.hpp"
 
-void detail::dfsR_step(const algolib::graphs::graph & gr, vertex_type vertex,
-    std::vector<bool> & is_visited)
+namespace algr = algolib::graphs;
+
+void detail::dfsR_step(const algr::graph & gr, vertex_t vertex, std::vector<bool> & is_visited)
 {
     is_visited[vertex] = true;
 
@@ -11,17 +12,17 @@ void detail::dfsR_step(const algolib::graphs::graph & gr, vertex_type vertex,
             dfsR_step(gr, neighbour, is_visited);
 }
 
-std::vector<bool> algolib::graphs::bfs(const graph & gr, vertex_type root)
+std::vector<bool> algr::bfs(const graph & gr, vertex_t root)
 {
     std::vector<bool> is_visited(gr.get_vertices_number(), false);
-    std::queue<vertex_type> vertex_queue;
+    std::queue<vertex_t> vertex_queue;
 
     vertex_queue.push(root);
     is_visited[root] = true;
 
     while(!vertex_queue.empty())
     {
-        vertex_type v = vertex_queue.front();
+        vertex_t v = vertex_queue.front();
 
         vertex_queue.pop();
 
@@ -36,16 +37,16 @@ std::vector<bool> algolib::graphs::bfs(const graph & gr, vertex_type root)
     return is_visited;
 }
 
-std::vector<bool> algolib::graphs::dfsI(const graph & gr, vertex_type root)
+std::vector<bool> algr::dfsI(const graph & gr, vertex_t root)
 {
     std::vector<bool> is_visited(gr.get_vertices_number(), false);
-    std::stack<vertex_type> vertex_stack;
+    std::stack<vertex_t> vertex_stack;
 
     vertex_stack.push(root);
 
     while(!vertex_stack.empty())
     {
-        vertex_type v = vertex_stack.top();
+        vertex_t v = vertex_stack.top();
 
         vertex_stack.pop();
 
@@ -62,7 +63,7 @@ std::vector<bool> algolib::graphs::dfsI(const graph & gr, vertex_type root)
     return is_visited;
 }
 
-std::vector<bool> algolib::graphs::dfsR(const graph & gr, vertex_type root)
+std::vector<bool> algr::dfsR(const graph & gr, vertex_t root)
 {
     std::vector<bool> is_visited(gr.get_vertices_number(), false);
 

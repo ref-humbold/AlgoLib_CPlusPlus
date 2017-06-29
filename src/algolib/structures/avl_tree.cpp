@@ -3,33 +3,20 @@
 
 namespace alst = algolib::structures;
 
-//
 // avl_tree
-//
 
-template<typename E>
-alst::avl_tree<E>::avl_tree(std::initializer_list<E> init_list) :
-    tree{nullptr},
-    elems{init_list.size()}
+template <typename E>
+alst::avl_tree<E> & alst::avl_tree<E>::operator=(const alst::avl_tree<E> & avl)
 {
-    for(auto i : init_list)
-        insert(i);
-}
-
-template<typename E>
-alst::avl_tree<E> & alst::avl_tree<E>::operator =(const alst::avl_tree<E> & avl)
-{
-    node_pointer temp = this->tree;
-
+    delete this->tree;
     this->tree = new node(*avl.tree);
     this->elems = avl.elems;
-    delete temp;
 
     return *this;
 }
 
-template<typename E>
-alst::avl_tree<E> & alst::avl_tree<E>::operator =(alst::avl_tree<E> && avl)
+template <typename E>
+alst::avl_tree<E> & alst::avl_tree<E>::operator=(alst::avl_tree<E> && avl)
 {
     std::swap(this->tree, avl.tree);
     std::swap(this->elems, avl.elems);
@@ -37,31 +24,31 @@ alst::avl_tree<E> & alst::avl_tree<E>::operator =(alst::avl_tree<E> && avl)
     return *this;
 }
 
-template<typename E>
+template <typename E>
 typename alst::avl_tree<E>::iterator alst::avl_tree<E>::begin() const
 {
     return iterator(tree->minimum());
 }
 
-template<typename E>
+template <typename E>
 typename alst::avl_tree<E>::iterator alst::avl_tree<E>::end() const
 {
     return iterator(nullptr);
 }
 
-template<typename E>
+template <typename E>
 typename alst::avl_tree<E>::reverse_iterator alst::avl_tree<E>::rbegin() const
 {
     return reverse_iterator(tree->maximum());
 }
 
-template<typename E>
+template <typename E>
 typename alst::avl_tree<E>::reverse_iterator alst::avl_tree<E>::rend() const
 {
     return reverse_iterator(nullptr);
 }
 
-template<typename E>
+template <typename E>
 typename alst::avl_tree<E>::iterator alst::avl_tree<E>::find(const E & element) const
 {
     if(tree == nullptr)
@@ -80,11 +67,12 @@ typename alst::avl_tree<E>::iterator alst::avl_tree<E>::find(const E & element) 
     return iterator(the_node);
 }
 
-template<typename E>
+template <typename E>
 std::pair<typename alst::avl_tree<E>::iterator, bool> alst::avl_tree<E>::insert(const E & element)
 {
     alst::avl_tree<E>::node_pointer node_parent = find_node_parent(element);
-    alst::avl_tree<E>::node_pointer the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
+    alst::avl_tree<E>::node_pointer the_node =
+        node_parent == nullptr ? tree : node_parent->get_subtree(element);
 
     if(the_node != nullptr)
         return std::make_pair(iterator(the_node), false);
@@ -108,11 +96,12 @@ std::pair<typename alst::avl_tree<E>::iterator, bool> alst::avl_tree<E>::insert(
     return std::make_pair(iterator(new_node), true);
 }
 
-template<typename E>
+template <typename E>
 void alst::avl_tree<E>::erase(const E & element)
 {
     alst::avl_tree<E>::node_pointer node_parent = find_node_parent(element);
-    alst::avl_tree<E>::node_pointer the_node = node_parent == nullptr ? tree : node_parent->get_subtree(element);
+    alst::avl_tree<E>::node_pointer the_node =
+        node_parent == nullptr ? tree : node_parent->get_subtree(element);
 
     if(the_node == nullptr)
         return;
@@ -123,15 +112,28 @@ void alst::avl_tree<E>::erase(const E & element)
         delete_node(the_node);
 }
 
-template<typename E>
+template <typename E>
 void alst::avl_tree<E>::clear()
 {
     delete tree;
     elems = 0;
 }
 
-template<typename E>
-typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::find_node_parent(const E & element) const
+template <typename E>
+typename alst::avl_tree<E>::node_pointer
+    alst::avl_tree<E>::get_subtree(alst::avl_tree<E>::node_pointer node, const E & element)
+{
+    if(element == node->element)
+        return node;
+    else if(element < node->element)
+        return node->left;
+    else
+        return node->right;
+}
+
+template <typename E>
+typename alst::avl_tree<E>::node_pointer
+    alst::avl_tree<E>::find_node_parent(const E & element) const
 {
     typename alst::avl_tree<E>::node_pointer tree_iter = tree;
     typename alst::avl_tree<E>::node_pointer iter_parent = nullptr;
@@ -148,7 +150,7 @@ typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::find_node_parent(con
     return iter_parent;
 }
 
-template<typename E>
+template <typename E>
 void alst::avl_tree<E>::delete_root(alst::avl_tree<E>::node_pointer root)
 {
     if(root->get_left() != nullptr && root->get_right() != nullptr)
@@ -173,19 +175,20 @@ void alst::avl_tree<E>::delete_root(alst::avl_tree<E>::node_pointer root)
         clear();
 }
 
-template<typename E>
+template <typename E>
 void alst::avl_tree<E>::delete_node(alst::avl_tree<E>::node_pointer node)
 {
     if(node->get_left() != nullptr && node->get_right() != nullptr)
     {
-        alst::avl_tree<E>::node_pointer succ = node->successor();
+        alst::avl_tree<E>::node_pointer succ = node->get_right()->minimum();
 
         std::swap(succ->element, node->element);
         delete_node(succ);
     }
     else
     {
-        alst::avl_tree<E>::node_pointer son = node->get_left() != nullptr ? node->get_left() : node->get_right();
+        alst::avl_tree<E>::node_pointer son =
+            node->get_left() != nullptr ? node->get_left() : node->get_right();
         alst::avl_tree<E>::node_pointer node_parent = node->get_parent();
 
         replace_subtree(node, son);
@@ -195,26 +198,27 @@ void alst::avl_tree<E>::delete_node(alst::avl_tree<E>::node_pointer node)
     }
 }
 
-template<typename E>
-void alst::avl_tree<E>::replace_subtree(alst::avl_tree<E>::node_pointer node, alst::avl_tree<E>::node_pointer root)
+template <typename E>
+void alst::avl_tree<E>::replace_subtree(alst::avl_tree<E>::node_pointer node1,
+                                        alst::avl_tree<E>::node_pointer node2)
 {
-    if(node->is_root())
+    if(is_root(node1))
     {
-        tree = root;
-        root->set_parent(nullptr);
+        tree = node2;
+        node2->set_parent(nullptr);
     }
-    else if(node->is_left_son())
-        node->get_parent()->set_left(root);
-    else
-        node->get_parent()->set_right(root);
+    else if(is_left_son(node1))
+        node1->get_parent()->set_left(node2);
+    else if(is_right_son(node1))
+        node1->get_parent()->set_right(node2);
 
-    node->set_parent(nullptr);
+    node1->set_parent(nullptr);
 }
 
-template<typename E>
+template <typename E>
 void alst::avl_tree<E>::rotate(alst::avl_tree<E>::node_pointer node)
 {
-    if(node->is_root())
+    if(is_root(node))
         return;
 
     alst::avl_tree<E>::node_pointer upper_node = node->get_parent();
@@ -233,20 +237,20 @@ void alst::avl_tree<E>::rotate(alst::avl_tree<E>::node_pointer node)
     }
 }
 
-template<typename E>
+template <typename E>
 void alst::avl_tree<E>::rebalance(alst::avl_tree<E>::node_pointer node)
 {
     while(node != nullptr)
     {
-        node->count_height();
+        node->recount_height();
 
-        int new_balance = node->get_balance();
+        int new_balance = node->count_balance();
 
         if(new_balance >= 2)
         {
-            if(node->get_left()->get_balance() > 0)
+            if(node->get_left()->count_balance() > 0)
                 rotate(node->get_left());
-            else if(node->get_left()->get_balance() < 0)
+            else if(node->get_left()->count_balance() < 0)
             {
                 rotate(node->get_left()->get_right());
                 rotate(node->get_left());
@@ -254,9 +258,9 @@ void alst::avl_tree<E>::rebalance(alst::avl_tree<E>::node_pointer node)
         }
         else if(new_balance <= -2)
         {
-            if(node->get_right()->get_balance() < 0)
+            if(node->get_right()->count_balance() < 0)
                 rotate(node->get_right());
-            else if(node->get_right()->get_balance() > 0)
+            else if(node->get_right()->count_balance() > 0)
             {
                 rotate(node->get_right()->get_left());
                 rotate(node->get_right());
@@ -267,244 +271,202 @@ void alst::avl_tree<E>::rebalance(alst::avl_tree<E>::node_pointer node)
     }
 }
 
-//
 // avl_node
-//
 
-template<typename E>
+template <typename E>
 alst::avl_tree<E>::avl_node::~avl_node()
 {
-    if(!is_root())
-    {
-        if(is_left_son())
-            parent->left.reset();
-        else
-            parent->right.reset();
-    }
+    if(left != nullptr)
+        delete left;
+
+    if(right != nullptr)
+        delete right;
 }
 
-template<typename E>
-alst::avl_tree<E>::avl_node::avl_node(const alst::avl_tree<E>::avl_node & node) :
-    element{node.element},
-    height{node.height}
+template <typename E>
+alst::avl_tree<E>::avl_node::avl_node(const alst::avl_tree<E>::avl_node & node)
+    : element{node.element}, height{node.height}
 {
-    if(node.left != nullptr)
-    {
-        left = new avl_node(*node.left);
-        left->parent = this;
-    }
-
-    if(node.right != nullptr)
-    {
-        right = new avl_node(*node.right);
-        right->parent = this;
-    }
+    this->set_left(new avl_node(*node.left));
+    this->set_right(new avl_node(*node.right));
 }
 
-template<typename E>
-typename alst::avl_tree<E>::avl_node & alst::avl_tree<E>::avl_node::operator =(const alst::avl_tree<E>::avl_node & node)
+template <typename E>
+typename alst::avl_tree<E>::avl_node & alst::avl_tree<E>::avl_node::
+    operator=(const alst::avl_tree<E>::avl_node & node)
 {
-    alst::avl_tree<E>::node_pointer new_left = new avl_node(*node.left);
-    alst::avl_tree<E>::node_pointer new_right = new avl_node(*node.right);
-
-    this->height = node.height;
     this->element = node.element;
-    this->set_left(new_left);
-    this->set_right(new_right);
+    this->height = node.height;
+    delete this->left;
+    this->set_left(new avl_node(*node.left));
+    delete this->right;
+    this->set_right(new avl_node(*node.right));
 
     return *this;
 }
 
-template<typename E>
-void alst::avl_tree<E>::avl_node::count_height()
+template <typename E>
+int alst::avl_tree<E>::avl_node::count_balance()
+{
+    int left_height = left == nullptr ? 0 : left->height;
+    int right_height = right == nullptr ? 0 : right->height;
+
+    return left_height - right_height;
+}
+
+template <typename E>
+void alst::avl_tree<E>::avl_node::recount_height()
 {
     int left_height = left == nullptr ? -1 : left->height;
     int right_height = right == nullptr ? -1 : right->height;
 
-    height = std::max(left_height, right_height)+1;
+    height = std::max(left_height, right_height) + 1;
 }
 
-template<typename E>
-typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::get_subtree(const E & element)
-{
-    if(element == this->element)
-        return this;
-    else if(element < this->element)
-        return left;
-    else
-        return right;
-}
-
-template<typename E>
+template <typename E>
 typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::minimum()
 {
-    alst::avl_tree<E>::node_pointer tree_iter = this;
-
-    while(tree_iter != nullptr && tree_iter->left != nullptr)
-        tree_iter = tree_iter->left;
-
-    return tree_iter;
+    return left == nullptr ? this : left->minimum();
 }
 
-template<typename E>
+template <typename E>
 typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::maximum()
 {
-    alst::avl_tree<E>::node_pointer tree_iter = this;
-
-    while(tree_iter != nullptr && tree_iter->right != nullptr)
-        tree_iter = tree_iter->right;
-
-    return tree_iter;
+    return right == nullptr ? this : right->maximum();
 }
 
-template<typename E>
-typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::successor()
+// avl_iterator
+
+template <typename E>
+E & alst::avl_tree<E>::avl_iterator::operator*() const
 {
-    alst::avl_tree<E>::node_pointer succ = this;
+    return this->current_node->element;
+}
 
-    if(right != nullptr)
-        return right->minimum();
+template <typename E>
+E * alst::avl_tree<E>::avl_iterator::operator->() const
+{
+    return &this->current_node->element;
+}
 
-    while(succ != nullptr && succ->element <= this->element)
+template <typename E>
+bool alst::avl_tree<E>::avl_iterator::operator==(const alst::avl_tree<E>::avl_iterator & it) const
+{
+    return this->current_node == it.current_node;
+}
+
+template <typename E>
+bool alst::avl_tree<E>::avl_iterator::operator!=(const alst::avl_tree<E>::avl_iterator & it) const
+{
+    return this->current_node != it.current_node;
+}
+
+template <typename E>
+typename alst::avl_tree<E>::node_pointer
+    alst::avl_tree<E>::avl_iterator::successor(avl_tree<E>::node_pointer node)
+{
+    alst::avl_tree<E>::node_pointer succ = node;
+
+    if(node->get_right() != nullptr)
+        return node->get_right()->minimum();
+
+    while(succ->height >= 0 && succ->element <= node->element)
         succ = succ->get_parent();
 
     return succ;
 }
 
-template<typename E>
-typename alst::avl_tree<E>::node_pointer alst::avl_tree<E>::avl_node::predecessor()
+template <typename E>
+typename alst::avl_tree<E>::node_pointer
+    alst::avl_tree<E>::avl_iterator::predecessor(avl_tree<E>::node_pointer node)
 {
-    alst::avl_tree<E>::node_pointer pred = this->get_parent();
+    alst::avl_tree<E>::node_pointer pred = node;
 
-    if(left != nullptr)
-        return left->maximum();
+    if(node->get_left() != nullptr)
+        return node->get_left()->maximum();
 
-    while(pred != nullptr && pred->element >= this->element)
+    while(pred->height >= 0 && pred->element >= node->element)
         pred = pred->get_parent();
 
     return pred;
 }
 
-//
-// avl_iterator
-//
+// avl_fwd_iterator
 
-template<typename E>
-E & alst::avl_tree<E>::avl_iterator::operator *() const
+template <typename E>
+typename alst::avl_tree<E>::avl_fwd_iterator & alst::avl_tree<E>::avl_fwd_iterator::operator++()
 {
-    return current_node->element;
-}
-
-template<typename E>
-typename alst::avl_tree<E>::avl_iterator & alst::avl_tree<E>::avl_iterator::operator ++()
-{
-    if(current_node != nullptr)
-        current_node = current_node->successor();
+    if(this->current_node != nullptr)
+        this->current_node = successor(this->current_node);
 
     return *this;
 }
 
-template<typename E>
-typename alst::avl_tree<E>::avl_iterator alst::avl_tree<E>::avl_iterator::operator ++(int i)
+template <typename E>
+typename alst::avl_tree<E>::avl_fwd_iterator alst::avl_tree<E>::avl_fwd_iterator::operator++(int)
 {
-    alst::avl_tree<E>::avl_iterator result = *this;
+    alst::avl_tree<E>::avl_fwd_iterator result = *this;
 
-    if(current_node != nullptr)
-        current_node = current_node->successor();
+    ++(*this);
 
     return result;
 }
 
-template<typename E>
-typename alst::avl_tree<E>::avl_iterator & alst::avl_tree<E>::avl_iterator::operator --()
+template <typename E>
+typename alst::avl_tree<E>::avl_fwd_iterator & alst::avl_tree<E>::avl_fwd_iterator::operator--()
 {
-    if(current_node != nullptr)
-        current_node = current_node->predecessor();
+    if(this->current_node != nullptr)
+        this->current_node = predecessor(this->current_node);
 
     return *this;
 }
 
-template<typename E>
-typename alst::avl_tree<E>::avl_iterator alst::avl_tree<E>::avl_iterator::operator --(int i)
+template <typename E>
+typename alst::avl_tree<E>::avl_fwd_iterator alst::avl_tree<E>::avl_fwd_iterator::operator--(int)
 {
     alst::avl_tree<E>::avl_iterator result = *this;
 
-    if(current_node != nullptr)
-        current_node = current_node->predecessor();
+    --(*this);
 
     return result;
 }
 
-template<typename E>
-bool alst::avl_tree<E>::avl_iterator::operator ==(const alst::avl_tree<E>::avl_iterator & it) const
-{
-    return this->current_node == it.current_node;
-}
-
-template<typename E>
-bool alst::avl_tree<E>::avl_iterator::operator !=(const alst::avl_tree<E>::avl_iterator & it) const
-{
-    return this->current_node != it.current_node;
-}
-
-//
 // avl_rev_iterator
-//
 
-template<typename E>
-E & alst::avl_tree<E>::avl_rev_iterator::operator *() const
+template <typename E>
+typename alst::avl_tree<E>::avl_rev_iterator & alst::avl_tree<E>::avl_rev_iterator::operator++()
 {
-    return current_node->element;
-}
-
-template<typename E>
-typename alst::avl_tree<E>::avl_rev_iterator & alst::avl_tree<E>::avl_rev_iterator::operator ++()
-{
-    if(current_node != nullptr)
-        current_node = current_node->predecessor();
+    if(this->current_node != nullptr)
+        this->current_node = predecessor(this->current_node);
 
     return *this;
 }
 
-template<typename E>
-typename alst::avl_tree<E>::avl_rev_iterator alst::avl_tree<E>::avl_rev_iterator::operator ++(int i)
+template <typename E>
+typename alst::avl_tree<E>::avl_rev_iterator alst::avl_tree<E>::avl_rev_iterator::operator++(int)
 {
     alst::avl_tree<E>::avl_rev_iterator result = *this;
 
-    if(current_node != nullptr)
-        current_node = current_node->predecessor();
+    ++(*this);
 
     return result;
 }
 
-template<typename E>
-typename alst::avl_tree<E>::avl_rev_iterator & alst::avl_tree<E>::avl_rev_iterator::operator --()
+template <typename E>
+typename alst::avl_tree<E>::avl_rev_iterator & alst::avl_tree<E>::avl_rev_iterator::operator--()
 {
-    if(current_node != nullptr)
-        current_node = current_node->successor();
+    if(this->current_node != nullptr)
+        this->current_node = successor(this->current_node);
 
     return *this;
 }
 
-template<typename E>
-typename alst::avl_tree<E>::avl_rev_iterator alst::avl_tree<E>::avl_rev_iterator::operator --(int i)
+template <typename E>
+typename alst::avl_tree<E>::avl_rev_iterator alst::avl_tree<E>::avl_rev_iterator::operator--(int)
 {
     alst::avl_tree<E>::avl_rev_iterator result = *this;
 
-    if(current_node != nullptr)
-        current_node = current_node->successor();
+    --(*this);
 
     return result;
-}
-
-template<typename E>
-bool alst::avl_tree<E>::avl_rev_iterator::operator ==(const alst::avl_tree<E>::avl_rev_iterator & rev_it) const
-{
-    return this->current_node == rev_it.current_node;
-}
-
-template<typename E>
-bool alst::avl_tree<E>::avl_rev_iterator::operator !=(const alst::avl_tree<E>::avl_rev_iterator & rev_it) const
-{
-    return this->current_node != rev_it.current_node;
 }

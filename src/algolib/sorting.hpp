@@ -8,7 +8,7 @@
 #include <vector>
 #include <algorithm>
 
-using point2D_type = std::pair<double, double>;
+using point2D_t = std::pair<double, double>;
 
 namespace detail
 {
@@ -46,14 +46,14 @@ namespace algolib
      * Mutowalne sortowanie kątowe punktów na płaszczyźnie.
      * @param points lista punktów
      */
-    void angle_sort(std::vector<point2D_type> & points);
+    void angle_sort(std::vector<point2D_t> & points);
 
     /**
      * Niemutowalne sortowanie kątowe punktów na płaszczyźnie.
      * @param points lista punktów
      * @return lista punktów posortowana względem kąta
      */
-    std::vector<point2D_type> angle_sorted(std::vector<point2D_type> points);
+    std::vector<point2D_t> angle_sorted(std::vector<point2D_t> points);
 
     /**
      * Mutowalne sortowanie ciągu przez kopcowanie.

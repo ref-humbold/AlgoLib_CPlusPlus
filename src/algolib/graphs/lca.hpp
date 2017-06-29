@@ -4,17 +4,17 @@
 
 #include <cstdlib>
 #include <cmath>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 class tree_graph
 {
 private:
     /** skompresowane ścieżki do korzenia drzewa */
-    std::vector< std::vector<int> > paths;
+    std::vector<std::vector<int>> paths;
 
     /** tablica czasów wejścia i wyjścia dla wierzchołka */
-    std::vector< std::pair<int, int> > pre_post_times;
+    std::vector<std::pair<int, int>> pre_post_times;
 
     /** liczba wierzchołków grafu */
     int num_vertex;
@@ -23,18 +23,17 @@ private:
     std::vector<bool> is_visited;
 
     /** lista sąsiedztwa grafu */
-    std::vector< std::vector<int> > graphrepr;
+    std::vector<std::vector<int>> graphrepr;
 
 public:
     /**
     KONSTRUKTOR PARAMETRYCZNY
     @param n liczba wierzchołków
     */
-    tree_graph(int n) :
-        num_vertex{n}
+    explicit tree_graph(int n) : num_vertex{n}
     {
-        is_visited.resize(n+1, false);
-        graphrepr.resize(n+1);
+        is_visited.resize(n + 1, false);
+        graphrepr.resize(n + 1);
     }
 
     /**
@@ -66,4 +65,3 @@ private:
 };
 
 #endif
-

@@ -7,11 +7,11 @@
 #include <numeric>
 #include <vector>
 
-#include "graphs/graph.hpp"
+#include "graphs/directed_graph.hpp"
 
-using literal_type = int;
-using clause_type = std::pair<literal_type, literal_type>;
-using formula_type = std::vector<clause_type>;
+using literal_t = int;
+using clause_t = std::pair<literal_t, literal_t>;
+using formula_t = std::vector<clause_t>;
 
 namespace detail
 {
@@ -20,21 +20,21 @@ namespace detail
      * @param formula lista klauzul
      * @return liczba zmiennych
      */
-    int count_variables(const formula_type & formula);
+    int count_variables(const formula_t & formula);
 
     /**
      * Wyliczanie numeru wierzchołka literału.
      * @param literal literał
      * @return numer wierzchołka odpowiadający literałowi
      */
-    size_t vertex(literal_type literal);
+    size_t vertex(literal_t literal);
 
     /**
      * Wyznaczanie grafu implikacji formuły 2-CNF.
      * @param formula lista klauzul
      * @return skierowany graf implikacji
      */
-    algolib::graphs::directed_graph make_graph(const formula_type & formula);
+    algolib::graphs::directed_simple_graph make_graph(const formula_t & formula);
 }
 
 namespace algolib
@@ -44,7 +44,7 @@ namespace algolib
      * @param formula lista klauzul
      * @return czy formuła spełnialna
      */
-    bool is_satisfiable(const formula_type & formula);
+    bool is_satisfiable(const formula_t & formula);
 }
 
 #endif

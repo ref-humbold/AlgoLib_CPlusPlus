@@ -9,7 +9,7 @@ double flow_graph::count_flow(int source, int target)
     while(is_flow_added)
     {
         layer_graph.clear();
-        layer_graph.resize(num_vertex+1);
+        layer_graph.resize(num_vertex + 1);
         is_flow_added = bfs(source, target);
 
         if(is_flow_added)
@@ -21,7 +21,7 @@ double flow_graph::count_flow(int source, int target)
 
 bool flow_graph::bfs(int source, int target)
 {
-    std::vector<int> vertex_layer(num_vertex+1, -1);
+    std::vector<int> vertex_layer(num_vertex + 1, -1);
     std::queue<int> vertex_queue;
 
     vertex_layer[source] = 0;
@@ -44,11 +44,11 @@ bool flow_graph::bfs(int source, int target)
             {
                 if(vertex_layer[nb] == -1)
                 {
-                    vertex_layer[nb] = vertex_layer[v]+1;
+                    vertex_layer[nb] = vertex_layer[v] + 1;
                     vertex_queue.push(nb);
                 }
 
-                if(vertex_layer[nb] == vertex_layer[v]+1)
+                if(vertex_layer[nb] == vertex_layer[v] + 1)
                     layer_graph[v].push_back(nb);
             }
         }
@@ -67,7 +67,8 @@ double flow_graph::dfs(int vertex, int target, double blocking_flow)
     for(size_t i = 0; i < layer_graph[vertex].size() && blocking_flow != 0.0; ++i)
     {
         int neighbour = layer_graph[vertex][i];
-        double flow_add = dfs(neighbour, target, std::min(capacities[vertex][neighbour], blocking_flow));
+        double flow_add =
+            dfs(neighbour, target, std::min(capacities[vertex][neighbour], blocking_flow));
 
         blocking_flow -= flow_add;
         new_blocking_flow += flow_add;
@@ -77,4 +78,3 @@ double flow_graph::dfs(int vertex, int target, double blocking_flow)
 
     return new_blocking_flow;
 }
-

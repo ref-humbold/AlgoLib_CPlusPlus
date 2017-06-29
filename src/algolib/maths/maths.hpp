@@ -4,6 +4,8 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <exception>
+#include <stdexcept>
 #include <algorithm>
 
 namespace algolib
@@ -33,7 +35,7 @@ namespace algolib
          * @param modulo modulo
          * @return wynik potęgowania wzięty modulo
          */
-        long long int power(long long int base, long long int exponent, long long int modulo=0LL);
+        long long int power_mod(long long int base, long long int exponent, long long int modulo);
 
         /**
          * Szybkie mnożenie binarne modulowane.
@@ -42,7 +44,7 @@ namespace algolib
          * @param modulo modulo
          * @return wynik mnożenia wzięty modulo
          */
-        long long int mult(long long int factor1, long long int factor2, long long int modulo=0LL);
+        long long int mult_mod(long long int factor1, long long int factor2, long long int modulo);
     }
 }
 

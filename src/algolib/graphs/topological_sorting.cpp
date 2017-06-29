@@ -1,25 +1,31 @@
 // ALGORYTMY SORTOWANIA TOPOLOGICZNEGO
 #include "topological_sorting.hpp"
 
-void detail::dfs(vertex_type vertex, const algolib::graphs::directed_graph & digraph,
-    std::vector<vertex_type> & order, std::vector<bool> & is_visited)
+namespace algr = algolib::graphs;
+
+void detail::dfs(vertex_t vertex, vertex_t index, const algr::directed_graph & digraph,
+                 std::vector<vertex_t> & order, std::vector<std::pair<vertex_t, bool>> & indices)
 {
-    is_visited[vertex] = true;
+    indices[vertex] = std::make_pair(index, true);
 
     for(const auto & neighbour : digraph.get_neighbours(vertex))
-        if(!is_visited[neighbour])
-            dfs(neighbour, digraph, order, is_visited);
+        if(indices[vertex].first == digraph.get_vertices_number())
+            dfs(neighbour, index, digraph, order, indices);
+        else if(indices[neighbour] == std::make_pair(index, true))
+            throw algr::directed_cyclic_graph_exception();
 
     order.push_back(vertex);
+    indices[vertex].second = false;
 }
 
-std::vector<vertex_type> algolib::graphs::sort_topological1(const directed_graph & digraph)
+std::vector<vertex_t> algr::sort_topological1(const directed_graph & digraph)
 {
-    std::vector<vertex_type> order, indegs(digraph.get_vertices_number(), 0);
-    std::queue<vertex_type> vertex_queue;
+    std::vector<vertex_t> order;
+    std::vector<size_t> indegs(digraph.get_vertices_number());
+    std::priority_queue<vertex_t, std::vector<vertex_t>, std::greater<vertex_t>> vertex_queue;
 
-    for(const auto & e : digraph.get_edges())
-        ++indegs[std::get<1>(e)];
+    std::transform(digraph.get_vertices().begin(), digraph.get_vertices().end(), indegs.begin(),
+                   [&](vertex_t v) { return digraph.get_indegree(v); });
 
     for(const auto & v : digraph.get_vertices())
         if(indegs[v] == 0)
@@ -27,7 +33,7 @@ std::vector<vertex_type> algolib::graphs::sort_topological1(const directed_graph
 
     while(!vertex_queue.empty())
     {
-        vertex_type v = vertex_queue.front();
+        vertex_t v = vertex_queue.top();
 
         vertex_queue.pop();
         order.push_back(v);
@@ -35,7 +41,7 @@ std::vector<vertex_type> algolib::graphs::sort_topological1(const directed_graph
 
         for(const auto & nb : digraph.get_neighbours(v))
         {
-             --indegs[nb];
+            --indegs[nb];
 
             if(indegs[nb] == 0)
                 vertex_queue.push(nb);
@@ -43,24 +49,25 @@ std::vector<vertex_type> algolib::graphs::sort_topological1(const directed_graph
     }
 
     if(order.size() != digraph.get_vertices_number())
-        throw std::runtime_error("graph contains a cycle, so it cannot be sorted topologically.");
+        throw directed_cyclic_graph_exception();
 
     return order;
 }
 
-std::vector<vertex_type> algolib::graphs::sort_topological2(const directed_graph & digraph)
+std::vector<vertex_t> algr::sort_topological2(const directed_graph & digraph)
 {
-    std::vector<vertex_type> order;
-    std::vector<bool> is_visited(digraph.get_vertices_number(), false);
+    std::vector<vertex_t> order;
+    std::vector<std::pair<vertex_t, bool>> indices(
+        digraph.get_vertices_number(), std::make_pair(digraph.get_vertices_number(), false));
+    std::vector<vertex_t> vertices = digraph.get_vertices();
 
-    for(const auto & v : digraph.get_vertices())
-        if(!is_visited[v])
-            detail::dfs(v, digraph, order, is_visited);
+    std::sort(vertices.rbegin(), vertices.rend());
+
+    for(const auto & v : vertices)
+        if(indices[v].first == digraph.get_vertices_number())
+            detail::dfs(v, v, digraph, order, indices);
 
     std::reverse(order.begin(), order.end());
-
-    if(order.size() != digraph.get_vertices_number())
-        throw std::runtime_error("graph contains a cycle, so it cannot be sorted topologically.");
 
     return order;
 }

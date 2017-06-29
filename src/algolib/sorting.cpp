@@ -1,12 +1,12 @@
 // ALGORYTMY SORTOWANIA
 #include "sorting.hpp"
 
-template<typename T>
+template <typename T>
 void detail::move_down(std::vector<T> & heap, int vertex, int index_begin, int index_end)
 {
     int next_vertex = -1;
-    int left_vertex = (vertex << 1) - index_begin + 1;
-    int right_vertex = (vertex << 1)-index_begin + 2;
+    int left_vertex = (vertex * 2) - index_begin + 1;
+    int right_vertex = (vertex * 2) - index_begin + 2;
 
     if(right_vertex <= index_end)
         next_vertex = heap[right_vertex] < heap[left_vertex] ? left_vertex : right_vertex;
@@ -23,13 +23,13 @@ void detail::move_down(std::vector<T> & heap, int vertex, int index_begin, int i
     move_down(heap, next_vertex, index_begin, index_end);
 }
 
-template<typename T>
+template <typename T>
 void detail::merge(std::vector<T> & sequence, int index_begin, int index_middle, int index_end)
 {
     std::vector<T> ordered;
     int iter1 = index_begin, iter2 = index_middle + 1;
 
-     while(iter1 <= index_middle && iter2 <= index_end)
+    while(iter1 <= index_middle && iter2 <= index_end)
         if(sequence[iter1] < sequence[iter2])
         {
             ordered.push_back(sequence[iter1]);
@@ -57,7 +57,7 @@ int detail::choose_pivot(int size)
 {
     srand(time(0));
 
-    int candidate1 = rand()%size, candidate2 = rand()%size, candidate3 = rand()%size;
+    int candidate1 = rand() % size, candidate2 = rand() % size, candidate3 = rand() % size;
 
     if(std::min(candidate2, candidate3) <= candidate1
        && candidate1 <= std::max(candidate2, candidate3))
@@ -69,46 +69,43 @@ int detail::choose_pivot(int size)
         return candidate3;
 }
 
-void algolib::angle_sort(std::vector<point2D_type> & points)
+void algolib::angle_sort(std::vector<point2D_t> & points)
 {
-    auto angle = [](const point2D_type & pt)
-        {
-            double ang = atan2(pt.second, pt.first) * 180.0 / M_PI;
+    auto angle = [](const point2D_t & pt) {
+        double ang = atan2(pt.second, pt.first) * 180.0 / M_PI;
 
-            return pt.second >= 0.0 ? ang : ang + 360.0;
-        };
+        return pt.second >= 0.0 ? ang : ang + 360.0;
+    };
 
-    auto radius = [](const point2D_type & pt)
-        {
-           return pt.first * pt.first + pt.second * pt.second;
-        };
+    auto radius = [](const point2D_t & pt) {
+        return pt.first * pt.first + pt.second * pt.second;
+    };
 
-    auto comparator = [=](const point2D_type & pt1, const point2D_type & pt2) -> bool
-        {
-            double angle1 = angle(pt1), angle2 = angle(pt2);
+    auto comparator = [&](const point2D_t & pt1, const point2D_t & pt2) -> bool {
+        double angle1 = angle(pt1), angle2 = angle(pt2);
 
-            return angle1 != angle2 ? angle1 < angle2 : radius(pt1) <= radius(pt2);
-        };
+        return angle1 != angle2 ? angle1 < angle2 : radius(pt1) <= radius(pt2);
+    };
 
     sort(points.begin(), points.end(), comparator);
 }
 
-std::vector<point2D_type> algolib::angle_sorted(std::vector<point2D_type> points)
+std::vector<point2D_t> algolib::angle_sorted(std::vector<point2D_t> points)
 {
     angle_sort(points);
 
     return points;
 }
 
-template<typename T>
+template <typename T>
 void algolib::heap_sort(std::vector<T> & sequence, int index_begin, int index_end)
 {
-    index_begin = (index_begin + sequence.size())%sequence.size();
-    index_end = (index_end + sequence.size())%sequence.size();
+    index_begin = (index_begin + sequence.size()) % sequence.size();
+    index_end = (index_end + sequence.size()) % sequence.size();
 
     int heap_size = index_end - index_begin;
 
-     for(int i = index_begin + heap_size/2; i >= index_begin; --i)
+    for(int i = index_begin + heap_size / 2; i >= index_begin; --i)
         detail::move_down(sequence, i, index_begin, index_end);
 
     while(heap_size > 1)
@@ -120,7 +117,7 @@ void algolib::heap_sort(std::vector<T> & sequence, int index_begin, int index_en
     }
 }
 
-template<typename T>
+template <typename T>
 std::vector<T> algolib::heap_sorted(std::vector<T> sequence, int index_begin, int index_end)
 {
     heap_sort(sequence, index_begin, index_end);
@@ -128,13 +125,13 @@ std::vector<T> algolib::heap_sorted(std::vector<T> sequence, int index_begin, in
     return sequence;
 }
 
-template<typename T>
+template <typename T>
 void algolib::merge_sort(std::vector<T> & sequence, int index_begin, int index_end)
 {
-    index_begin = (index_begin + sequence.size())%sequence.size();
-    index_end = (index_end + sequence.size())%sequence.size();
+    index_begin = (index_begin + sequence.size()) % sequence.size();
+    index_end = (index_end + sequence.size()) % sequence.size();
 
-     if(index_begin >= index_end)
+    if(index_begin >= index_end)
         return;
 
     int index_middle = (index_begin + index_end) / 2;
@@ -144,7 +141,7 @@ void algolib::merge_sort(std::vector<T> & sequence, int index_begin, int index_e
     detail::merge(sequence, index_begin, index_middle, index_end);
 }
 
-template<typename T>
+template <typename T>
 std::vector<T> algolib::merge_sorted(std::vector<T> sequence, int index_begin, int index_end)
 {
     merge_sort(sequence, index_begin, index_end);
@@ -152,11 +149,11 @@ std::vector<T> algolib::merge_sorted(std::vector<T> sequence, int index_begin, i
     return sequence;
 }
 
-template<typename T>
+template <typename T>
 void algolib::quick_sort(std::vector<T> & sequence, int index_begin, int index_end)
 {
-    index_begin = (index_begin+sequence.size())%sequence.size();
-    index_end = (index_end+sequence.size())%sequence.size();
+    index_begin = (index_begin + sequence.size()) % sequence.size();
+    index_end = (index_end + sequence.size()) % sequence.size();
 
     if(index_begin >= index_end)
         return;
@@ -181,10 +178,9 @@ void algolib::quick_sort(std::vector<T> & sequence, int index_begin, int index_e
 
     quick_sort(sequence, index_begin, index_pivot - 1);
     quick_sort(sequence, index_pivot + 1, index_end);
-
 }
 
-template<typename T>
+template <typename T>
 std::vector<T> algolib::quick_sorted(std::vector<T> sequence, int index_begin, int index_end)
 {
     quick_sort(sequence, index_begin, index_end);

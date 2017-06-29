@@ -1,8 +1,8 @@
 // ALGORYTM HOPCROFTA-KARPA: SKOJARZENIA W GRAFIE DWUDZIELNYM
 #include <cstdlib>
 #include <cmath>
-#include <vector>
 #include <queue>
+#include <vector>
 
 #include "hopcroft.hpp"
 
@@ -13,9 +13,9 @@ int bipartite_graph::match()
     while(match_added > 0)
     {
         distances.clear();
-        distances.resize(num_vertex+1, INF);
+        distances.resize(num_vertex + 1, INF);
         is_visited.clear();
-        is_visited.resize(num_vertex+1, false);
+        is_visited.resize(num_vertex + 1, false);
         bfs();
         match_added = augment_match();
         max_match_size += match_added;
@@ -47,7 +47,7 @@ void bipartite_graph::bfs()
 
             if(matchings[s] != NO_MATCH && distances[matchings[s]] == INF)
             {
-                distances[matchings[s]] = distances[w]+1;
+                distances[matchings[s]] = distances[w] + 1;
                 vertex_queue.push(matchings[s]);
             }
         }
@@ -69,11 +69,11 @@ bool bipartite_graph::dfs(int vertex)
 {
     is_visited[vertex] = true;
 
-    for(int i = 0; i < graphrepr[vertex].size(); ++i)
+    for(size_t i = 0; i < graphrepr[vertex].size(); ++i)
     {
         int neighbour = graphrepr[vertex][i];
 
-        if(matchings[neighbour] == NO_MATCH_)
+        if(matchings[neighbour] == NO_MATCH)
         {
             matchings[vertex] = neighbour;
             matchings[neighbour] = vertex;
@@ -84,7 +84,7 @@ bool bipartite_graph::dfs(int vertex)
         {
             int mtc = matchings[neighbour];
 
-            if(distances[mtc] == distances[vertex]+1 && !is_visited[mtc] && dfs(mtc))
+            if(distances[mtc] == distances[vertex] + 1 && !is_visited[mtc] && dfs(mtc))
             {
                 matchings[vertex] = neighbour;
                 matchings[neighbour] = vertex;
@@ -96,4 +96,3 @@ bool bipartite_graph::dfs(int vertex)
 
     return false;
 }
-

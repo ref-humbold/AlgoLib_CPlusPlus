@@ -3,41 +3,40 @@
 #define DINIC_HPP
 
 #include <cstdlib>
-#include <vector>
-#include <queue>
 #include <algorithm>
+#include <queue>
+#include <vector>
 
 class flow_graph
 {
 private:
     /**oznaczenie nieskończoności */
-    static const double INF = 1<<30;
+    static constexpr double INF = 1 << 30;
 
     /** lista sąsiedztwa grafu warstwowego */
-    std::vector< std::vector<int> > layer_graph;
+    std::vector<std::vector<int>> layer_graph;
 
     /** liczba wierzchołków grafu */
     int num_vertex;
 
     /** lista sąsiedztwa grafu przepływowego */
-    std::vector< std::vector<int> > graphrepr;
+    std::vector<std::vector<int>> graphrepr;
 
     /** macierz przeputowości */
-    std::vector< std::vector<double> > capacities;
+    std::vector<std::vector<double>> capacities;
 
 public:
     /**
     KONSTRUKTOR PARAMETRYCZNY
     @param n liczba wierzchołków
     */
-    flow_graph(int n) :
-        num_vertex{n}
+    explicit flow_graph(int n) : num_vertex{n}
     {
-        graphrepr.resize(n+1);
-        capacities.resize(n+1);
+        graphrepr.resize(n + 1);
+        capacities.resize(n + 1);
 
-        for(int i = 0; i < capacities.size(); ++i)
-            capacities_[i].resize(n+1, INF);
+        for(size_t i = 0; i < capacities.size(); ++i)
+            capacities[i].resize(n + 1, INF);
     }
 
     /**
@@ -68,4 +67,3 @@ private:
 };
 
 #endif
-
