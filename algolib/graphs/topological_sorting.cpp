@@ -9,7 +9,7 @@ void detail::dfs(vertex_t vertex, vertex_t index, const algr::directed_graph & d
     indices[vertex] = std::make_pair(index, true);
 
     for(const auto & neighbour : digraph.get_neighbours(vertex))
-        if(indices[vertex].first == digraph.get_vertices_number())
+        if(indices[neighbour].first == digraph.get_vertices_number())
             dfs(neighbour, index, digraph, order, indices);
         else if(indices[neighbour] == std::make_pair(index, true))
             throw algr::directed_cyclic_graph_exception();
@@ -23,11 +23,12 @@ std::vector<vertex_t> algr::sort_topological1(const directed_graph & digraph)
     std::vector<vertex_t> order;
     std::vector<size_t> indegs(digraph.get_vertices_number());
     std::priority_queue<vertex_t, std::vector<vertex_t>, std::greater<vertex_t>> vertex_queue;
+    const std::vector<vertex_t> vertices = digraph.get_vertices();
 
-    std::transform(digraph.get_vertices().begin(), digraph.get_vertices().end(), indegs.begin(),
+    std::transform(vertices.begin(), vertices.end(), indegs.begin(),
                    [&](vertex_t v) { return digraph.get_indegree(v); });
 
-    for(const auto & v : digraph.get_vertices())
+    for(const auto & v : vertices)
         if(indegs[v] == 0)
             vertex_queue.push(v);
 

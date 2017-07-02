@@ -36,7 +36,7 @@ namespace algolib
                 : simple_graph(n)
             {
                 for(const auto & e : edges)
-                    graphrepr[std::get<0>(e)].emplace(std::get<1>(e), DEFAULT_WEIGHT);
+                    add_edge(std::get<0>(e), std::get<1>(e));
             }
 
             virtual ~directed_simple_graph() = default;
@@ -70,7 +70,7 @@ namespace algolib
                 : directed_simple_graph(n)
             {
                 for(const auto & e : edges)
-                    graphrepr[std::get<0>(e)].emplace(std::get<1>(e), std::get<2>(e));
+                    add_weighted_edge(std::get<0>(e), std::get<1>(e), std::get<2>(e));
             }
 
             virtual ~directed_weighted_simple_graph() = default;

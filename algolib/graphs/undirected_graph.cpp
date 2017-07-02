@@ -29,7 +29,7 @@ std::vector<edge_t> algr::undirected_simple_graph::get_edges() const
 
     for(const auto & v : get_vertices())
         for(const auto & u : get_neighbours(v))
-            if(u > v)
+            if(u >= v)
                 edges.emplace_back(v, u);
 
     return edges;
@@ -62,7 +62,7 @@ std::vector<wedge_t> algr::undirected_weighted_simple_graph::get_weighted_edges(
 
     for(const auto & v : get_vertices())
         for(const auto & u : get_weighted_neighbours(v))
-            if(std::get<0>(u) > v)
+            if(std::get<0>(u) >= v)
                 wedges.emplace_back(v, std::get<0>(u), std::get<1>(u));
 
     return wedges;

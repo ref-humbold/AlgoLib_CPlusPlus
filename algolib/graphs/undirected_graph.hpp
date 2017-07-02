@@ -39,10 +39,7 @@ namespace algolib
                 : simple_graph(n)
             {
                 for(const auto & e : edges)
-                {
-                    graphrepr[std::get<0>(e)].emplace(std::get<1>(e), DEFAULT_WEIGHT);
-                    graphrepr[std::get<1>(e)].emplace(std::get<0>(e), DEFAULT_WEIGHT);
-                }
+                    add_edge(std::get<0>(e), std::get<1>(e));
             }
 
             virtual ~undirected_simple_graph() = default;
@@ -79,10 +76,7 @@ namespace algolib
                 : undirected_simple_graph(n)
             {
                 for(const auto & e : edges)
-                {
-                    graphrepr[std::get<0>(e)].emplace(std::get<1>(e), std::get<2>(e));
-                    graphrepr[std::get<1>(e)].emplace(std::get<0>(e), std::get<2>(e));
-                }
+                    add_weighted_edge(std::get<0>(e), std::get<1>(e), std::get<2>(e));
             }
 
             virtual ~undirected_weighted_simple_graph() = default;

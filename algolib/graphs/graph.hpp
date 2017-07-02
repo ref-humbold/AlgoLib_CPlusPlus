@@ -37,25 +37,25 @@ namespace algolib
             virtual size_t get_vertices_number() const = 0;
 
             /**
-             * @return liczba krawędzi
-             */
-            virtual size_t get_edges_number() const = 0;
-
-            /**
              * @return wektor wierzchołków
              */
             virtual std::vector<vertex_t> get_vertices() const = 0;
-
-            /**
-             * @return wektor krawędzi
-             */
-            virtual std::vector<edge_t> get_edges() const = 0;
 
             /**
              * Dodawanie nowego wierzchołka.
              * @return oznaczenie wierzchołka
              */
             virtual vertex_t add_vertex() = 0;
+
+            /**
+             * @return liczba krawędzi
+             */
+            virtual size_t get_edges_number() const = 0;
+
+            /**
+             * @return wektor krawędzi
+             */
+            virtual std::vector<edge_t> get_edges() const = 0;
 
             /**
              * Dodawanie nowej krawędzi.

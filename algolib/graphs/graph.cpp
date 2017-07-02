@@ -3,7 +3,13 @@
 
 namespace algr = algolib::graphs;
 
+// graph
+
+constexpr weight_t algr::graph::INF;
+
 // simple_graph
+
+constexpr weight_t algr::simple_graph::DEFAULT_WEIGHT;
 
 std::vector<vertex_t> algr::simple_graph::get_vertices() const
 {

@@ -12,6 +12,8 @@
 #include <queue>
 #include <string>
 #include <vector>
+#include <functional>
+
 
 #include "directed_graph.hpp"
 
