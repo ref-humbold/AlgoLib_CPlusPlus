@@ -11,12 +11,15 @@ STRUCTURES = $(ALGOLIB)/structures
 OBJALGOLIB = $(OBJ)/$(ALGOLIB)
 OBJTEST = $(OBJ)/$(TEST)
 
+all : prepare srcDir testDir
 
-all: algolibDir graphsDir mathsDir structuresDir
+src : prepare srcDir
 
-test : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test mst_test topological_sorting_test undirected_graph_test
+test : prepare testDir
 
-alltest : all test
+prepare :
+	mkdir -p $(OBJALGOLIB)
+	mkdir -p $(OBJTEST)
 
 clean :
 	rm -f *.o
@@ -26,6 +29,10 @@ clean :
 refresh : clean all
 
 refreshtest : clean alltest
+
+testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test mst_test topological_sorting_test undirected_graph_test
+
+srcDir: algolibDir graphsDir mathsDir structuresDir
 
 algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o sorting.o two_sat.o
 
