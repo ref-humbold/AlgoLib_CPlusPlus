@@ -38,7 +38,7 @@ algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o
 
 graphsDir : cutting.o directed_graph.o graph.o mst.o paths.o searching.o topological_sorting.o undirected_graph.o
 
-mathsDir : maths.o prime_tests.o sieve.o
+mathsDir : maths.o prime_checking.o sieve.o
 
 structuresDir : avl_tree.o disjoint_sets.o equation_system.o
 
@@ -147,8 +147,8 @@ maths_test : maths.o maths_test.o
 	$(CMPL) $(OBJALGOLIB)/maths.o $(OBJTEST)/maths_test.o -o $(TEST)/maths_test $(GTEST)
 
 
-prime_tests.o : $(MATHS)/prime_tests.cpp
-	$(CMPL) -c $(MATHS)/prime_tests.cpp -o $(OBJALGOLIB)/prime_tests.o
+prime_checking.o : $(MATHS)/prime_checking.cpp
+	$(CMPL) -c $(MATHS)/prime_checking.cpp -o $(OBJALGOLIB)/prime_checking.o
 
 
 sieve.o : $(MATHS)/sieve.cpp
