@@ -14,11 +14,12 @@ OBJTEST = $(OBJ)/$(TEST)
 
 all: algolibDir graphsDir mathsDir structuresDir
 
-test : avl_tree_test directed_graph_test disjoint_sets_test kmp_test mst_test topological_sorting_test undirected_graph_test
+test : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test mst_test topological_sorting_test undirected_graph_test
 
 alltest : all test
 
 clean :
+	rm -f *.o
 	rm -f $(OBJALGOLIB)/*.o
 	rm -f $(OBJTEST)/*.o
 
@@ -131,6 +132,12 @@ undirected_graph_test : graph.o directed_graph.o undirected_graph.o undirected_g
 
 maths.o : $(MATHS)/maths.cpp
 	$(CMPL) -c $(MATHS)/maths.cpp -o $(OBJALGOLIB)/maths.o
+
+maths_test.o : $(TEST)/maths_test.cpp
+	$(CMPL) -c $(TEST)/maths_test.cpp -o $(OBJTEST)/maths_test.o
+
+maths_test : maths.o maths_test.o
+	$(CMPL) $(OBJALGOLIB)/maths.o $(OBJTEST)/maths_test.o -o $(TEST)/maths_test $(GTEST)
 
 
 prime_tests.o : $(MATHS)/prime_tests.cpp
