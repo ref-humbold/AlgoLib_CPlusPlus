@@ -1,6 +1,6 @@
 // ALGORYTMY TESTOWANIA PIERWSZOŚCI
-#ifndef PRIME_TESTS_HPP
-#define PRIME_TESTS_HPP
+#ifndef PRIME_CHECKING_HPP
+#define PRIME_CHECKING_HPP
 
 #include <cstdlib>
 #include <ctime>

@@ -28,6 +28,9 @@ long long int alma::power_mod(long long int base, long long int exponent, long l
     if(exponent < 0)
         throw std::domain_error("Negative exponent.");
 
+    if(modulo < 0)
+        throw std::domain_error("Negative modulo.");
+
     if(base == 0 && exponent == 0)
         throw std::domain_error("Zero to the power of zero is NaN.");
 
@@ -47,15 +50,24 @@ long long int alma::mult_mod(long long int factor1, long long int factor2, long 
 {
     long long int result = 0;
 
+    if(modulo < 0)
+        throw std::domain_error("Negative modulo.");
+
+    if(factor1 < 0 && factor2 < 0)
+        return mult_mod(-factor1, -factor2, modulo);
+
+    if(factor1 < 0)
+        return modulo - mult_mod(-factor1, factor2, modulo);
+
     if(factor2 < 0)
         return modulo - mult_mod(factor1, -factor2, modulo);
 
     while(factor2 > 0)
     {
         if((factor2 & 1) == 1)
-            result = modulo == 0.0 ? result + factor1 : (result + factor1) % modulo;
+            result = modulo == 0 ? result + factor1 : (result + factor1) % modulo;
 
-        factor1 = modulo == 0.0 ? factor1 + factor1 : (factor1 + factor1) % modulo;
+        factor1 = modulo == 0 ? factor1 + factor1 : (factor1 + factor1) % modulo;
         factor2 >>= 1;
     }
 

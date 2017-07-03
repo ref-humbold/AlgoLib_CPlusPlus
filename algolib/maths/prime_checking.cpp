@@ -1,5 +1,5 @@
 // ALGORYTMY TESTOWANIA PIERWSZOŚCI
-#include "prime_tests.hpp"
+#include "prime_checking.hpp"
 
 namespace alma = algolib::maths;
 
