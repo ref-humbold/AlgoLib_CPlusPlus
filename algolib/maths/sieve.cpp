@@ -1,6 +1,5 @@
 // SITO ERASTOTENESA: WYZNACZANIE LICZB PIERWSZYCH
 #include "sieve.hpp"
-#include <iostream>
 
 namespace alma = algolib::maths;
 
@@ -12,7 +11,7 @@ std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
 
     std::vector<size_t> primes;
     std::vector<bool> is_prime;
-    std::vector<bool> base_primes(sqrt(max_number) / 2, true);
+    std::vector<bool> base_primes(static_cast<int>(sqrt(max_number) / 2), true);
 
     for(size_t i = min_number; i <= max_number; ++i)
         is_prime.push_back(i == 2 || (i > 2 && i % 2 != 0));
@@ -22,8 +21,8 @@ std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
         size_t p = 2 * i + 3;
         size_t begin = min_number < p * p ? p * p - min_number : (p - min_number % p) % p;
 
-        for(size_t j = p * p; j < base_primes.size(); j += 2 * p)
-            base_primes[(j - 3) / 2] = false;
+        for(size_t j = (p * p - 3) / 2; j < base_primes.size(); j += p)
+            base_primes[j] = false;
 
         for(size_t j = begin; j < is_prime.size(); j += p)
             is_prime[j] = false;
