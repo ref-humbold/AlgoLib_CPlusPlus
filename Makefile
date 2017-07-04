@@ -30,7 +30,7 @@ refresh : clean all
 
 refreshtest : clean alltest
 
-testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test mst_test topological_sorting_test undirected_graph_test
+testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test mst_test sieve_test topological_sorting_test undirected_graph_test
 
 srcDir: algolibDir graphsDir mathsDir structuresDir
 
@@ -153,6 +153,12 @@ prime_checking.o : $(MATHS)/prime_checking.cpp
 
 sieve.o : $(MATHS)/sieve.cpp
 	$(CMPL) -c $(MATHS)/sieve.cpp -o $(OBJALGOLIB)/sieve.o
+
+sieve_test.o : $(TEST)/sieve_test.cpp
+	$(CMPL) -c $(TEST)/sieve_test.cpp -o $(OBJTEST)/sieve_test.o
+
+sieve_test : sieve.o sieve_test.o
+	$(CMPL) $(OBJALGOLIB)/sieve.o $(OBJTEST)/sieve_test.o -o $(TEST)/sieve_test $(GTEST)
 
 
 avl_tree.o : $(STRUCTURES)/avl_tree.cpp
