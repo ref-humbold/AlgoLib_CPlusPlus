@@ -6,323 +6,305 @@ namespace alma = algolib::maths;
 
 TEST(MathsTest, testGCDWhenNumbersAreComposite)
 {
-    int number1 = 161;
-    int number2 = 46;
+    long long int number1 = 161LL;
+    long long int number2 = 46LL;
 
-    int result = alma::gcd(number1, number2);
+    long long int result = alma::gcd(number1, number2);
 
-    EXPECT_EQ(23, result);
+    EXPECT_EQ(23LL, result);
 }
 
 TEST(MathsTest, testGCDWhenNumbersArePrime)
 {
-    int number1 = 127;
-    int number2 = 41;
+    long long int number1 = 127LL;
+    long long int number2 = 41LL;
 
-    int result = alma::gcd(number1, number2);
+    long long int result = alma::gcd(number1, number2);
 
-    EXPECT_EQ(1, result);
+    EXPECT_EQ(1LL, result);
 }
 
 TEST(MathsTest, testGCDWhenNumbersAreMutuallyPrime)
 {
-    int number1 = 119;
-    int number2 = 57;
+    long long int number1 = 119LL;
+    long long int number2 = 57LL;
 
-    int result = alma::gcd(number1, number2);
+    long long int result = alma::gcd(number1, number2);
 
-    EXPECT_EQ(1, result);
+    EXPECT_EQ(1LL, result);
 }
 
 TEST(MathsTest, testGCDWhenOneOfNumbersIsMultipleOfAnother)
 {
-    int number1 = 272;
-    int number2 = 34;
+    long long int number1 = 272LL;
+    long long int number2 = 34LL;
 
-    int result = alma::gcd(number1, number2);
+    long long int result = alma::gcd(number1, number2);
 
     EXPECT_EQ(number2, result);
 }
 
 TEST(MathsTest, testGCDWhenOneOfNumbersIsZero)
 {
-    int number1 = 96;
-    int number2 = 0;
+    long long int number1 = 96LL;
+    long long int number2 = 0LL;
 
-    int result = alma::gcd(number1, number2);
+    long long int result = alma::gcd(number1, number2);
 
     EXPECT_EQ(number1, result);
 }
 
 TEST(MathsTest, testLCMWhenNumbersAreComposite)
 {
-    int number1 = 161;
-    int number2 = 46;
+    long long int number1 = 161LL;
+    long long int number2 = 46LL;
 
-    int result = alma::lcm(number1, number2);
+    long long int result = alma::lcm(number1, number2);
 
-    EXPECT_EQ(322, result);
+    EXPECT_EQ(322LL, result);
 }
 
 TEST(MathsTest, testLCMWhenNumbersArePrime)
 {
-    int number1 = 127;
-    int number2 = 41;
+    long long int number1 = 127LL;
+    long long int number2 = 41LL;
 
-    int result = alma::lcm(number1, number2);
+    long long int result = alma::lcm(number1, number2);
 
-    EXPECT_EQ(5207, result);
+    EXPECT_EQ(5207LL, result);
 }
 
 TEST(MathsTest, testLCMWhenNumbersAreMutuallyPrime)
 {
-    int number1 = 119;
-    int number2 = 57;
+    long long int number1 = 119LL;
+    long long int number2 = 57LL;
 
-    int result = alma::lcm(number1, number2);
+    long long int result = alma::lcm(number1, number2);
 
-    EXPECT_EQ(6783, result);
+    EXPECT_EQ(6783LL, result);
 }
 
 TEST(MathsTest, testLCMWhenOneOfNumbersIsMultipleOfAnother)
 {
-    int number1 = 272;
-    int number2 = 34;
+    long long int number1 = 272LL;
+    long long int number2 = 34LL;
 
-    int result = alma::lcm(number1, number2);
+    long long int result = alma::lcm(number1, number2);
 
     EXPECT_EQ(number1, result);
 }
 
 TEST(MathsTest, testLCMWhenOneOfNumbersIsZero)
 {
-    int number1 = 96;
-    int number2 = 0;
+    long long int number1 = 96LL;
+    long long int number2 = 0LL;
 
-    int result = alma::lcm(number1, number2);
+    long long int result = alma::lcm(number1, number2);
 
     EXPECT_EQ(number2, result);
 }
 
 TEST(MathsTest, testPowerModWhenBaseIsZero)
 {
-    int number1 = 0;
-    int number2 = 14;
-    int number3 = 0;
+    long long int number1 = 0LL;
+    long long int number2 = 14LL;
+    long long int number3 = 0LL;
 
-    int result = alma::power_mod(number1, number2, number3);
+    long long int result = alma::power_mod(number1, number2, number3);
 
     EXPECT_EQ(number1, result);
 }
 
 TEST(MathsTest, testPowerModWhenExponentIsZero)
 {
-    int number1 = 14;
-    int number2 = 0;
-    int number3 = 0;
+    long long int number1 = 14LL;
+    long long int number2 = 0LL;
+    long long int number3 = 0LL;
 
-    int result = alma::power_mod(number1, number2, number3);
+    long long int result = alma::power_mod(number1, number2, number3);
 
-    EXPECT_EQ(1, result);
+    EXPECT_EQ(1LL, result);
 }
 
 TEST(MathsTest, testPowerModWhenBaseAndExponentAreZero)
 {
-    int number1 = 0;
-    int number2 = 0;
-    int number3 = 0;
+    long long int number1 = 0LL;
+    long long int number2 = 0LL;
+    long long int number3 = 0LL;
 
     EXPECT_THROW(alma::power_mod(number1, number2, number3), std::domain_error);
 }
 
 TEST(MathsTest, testPowerModWhenBaseAndExponentArePositive)
 {
-    int number1 = 3;
-    int number2 = 10;
-    int number3 = 0;
+    long long int number1 = 3LL;
+    long long int number2 = 10LL;
+    long long int number3 = 0LL;
 
-    int result = alma::power_mod(number1, number2, number3);
+    long long int result = alma::power_mod(number1, number2, number3);
 
-    EXPECT_EQ(59049, result);
+    EXPECT_EQ(59049LL, result);
 }
 
 TEST(MathsTest, testPowerModWhenBaseIsNegativeAndExponentIsEven)
 {
-    int number1 = -3;
-    int number2 = 10;
-    int number3 = 0;
+    long long int number1 = -3LL;
+    long long int number2 = 10LL;
+    long long int number3 = 0LL;
 
-    int result = alma::power_mod(number1, number2, number3);
+    long long int result = alma::power_mod(number1, number2, number3);
 
-    EXPECT_EQ(59049, result);
+    EXPECT_EQ(59049LL, result);
 }
 
 TEST(MathsTest, testPowerModWhenBaseIsNegativeAndExponentIsOdd)
 {
-    int number1 = -3;
-    int number2 = 9;
-    int number3 = 0;
+    long long int number1 = -3LL;
+    long long int number2 = 9LL;
+    long long int number3 = 0LL;
 
-    int result = alma::power_mod(number1, number2, number3);
+    long long int result = alma::power_mod(number1, number2, number3);
 
-    EXPECT_EQ(-19683, result);
+    EXPECT_EQ(-19683LL, result);
 }
 
 TEST(MathsTest, testPowerModWhenExponentIsNegative)
 {
-    int number1 = 3;
-    int number2 = -10;
-    int number3 = 0;
+    long long int number1 = 3LL;
+    long long int number2 = -10LL;
+    long long int number3 = 0LL;
 
     EXPECT_THROW(alma::power_mod(number1, number2, number3), std::domain_error);
 }
 
 TEST(MathsTest, testPowerModWhenModuloAndBaseArePositive)
 {
-    int number1 = 5;
-    int number2 = 11;
-    int number3 = 10000;
+    long long int number1 = 5LL;
+    long long int number2 = 11LL;
+    long long int number3 = 10000LL;
 
-    int result = alma::power_mod(number1, number2, number3);
+    long long int result = alma::power_mod(number1, number2, number3);
 
-    EXPECT_EQ(8125, result);
+    EXPECT_EQ(8125LL, result);
 }
 
 TEST(MathsTest, testPowerModWhenModuloIsPositiveAndBaseIsNegative)
 {
-    int number1 = -5;
-    int number2 = 11;
-    int number3 = 10000;
+    long long int number1 = -5LL;
+    long long int number2 = 11LL;
+    long long int number3 = 10000LL;
 
-    int result = alma::power_mod(number1, number2, number3);
+    long long int result = alma::power_mod(number1, number2, number3);
 
-    EXPECT_EQ(1875, result);
-}
-
-TEST(MathsTest, testPowerModWhenModuloIsNegative)
-{
-    int number1 = 5;
-    int number2 = 11;
-    int number3 = -10000;
-
-    EXPECT_THROW(alma::power_mod(number1, number2, number3), std::domain_error);
+    EXPECT_EQ(1875LL, result);
 }
 
 TEST(MathsTest, testMultModWhenFactor1IsZero)
 {
-    int number1 = 0;
-    int number2 = 14;
-    int number3 = 0;
+    long long int number1 = 0LL;
+    long long int number2 = 14LL;
+    long long int number3 = 0LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
     EXPECT_EQ(number1, result);
 }
 
 TEST(MathsTest, testPowerModWhenFactor2IsZero)
 {
-    int number1 = 14;
-    int number2 = 0;
-    int number3 = 0;
+    long long int number1 = 14LL;
+    long long int number2 = 0LL;
+    long long int number3 = 0LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
     EXPECT_EQ(number2, result);
 }
 
 TEST(MathsTest, testMultModWhenFactorsAreZero)
 {
-    int number1 = 0;
-    int number2 = 0;
-    int number3 = 0;
+    long long int number1 = 0LL;
+    long long int number2 = 0LL;
+    long long int number3 = 0LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
     EXPECT_EQ(number1, result);
 }
 
 TEST(MathsTest, testMultModWhenFactor1IsNegativeAndFactor2IsPositive)
 {
-    int number1 = -3;
-    int number2 = 10;
-    int number3 = 0;
+    long long int number1 = -3LL;
+    long long int number2 = 10LL;
+    long long int number3 = 0LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
-    EXPECT_EQ(-30, result);
+    EXPECT_EQ(-30LL, result);
 }
 
 TEST(MathsTest, testMultModWhenFactor1IsPositiveAndFactor2IsNegative)
 {
-    int number1 = 3;
-    int number2 = -10;
-    int number3 = 0;
+    long long int number1 = 3LL;
+    long long int number2 = -10LL;
+    long long int number3 = 0LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
-    EXPECT_EQ(-30, result);
+    EXPECT_EQ(-30LL, result);
 }
 
 TEST(MathsTest, testMultModWhenFactorsAreNegative)
 {
-    int number1 = -3;
-    int number2 = -10;
-    int number3 = 0;
+    long long int number1 = -3LL;
+    long long int number2 = -10LL;
+    long long int number3 = 0LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
-    EXPECT_EQ(30, result);
+    EXPECT_EQ(30LL, result);
 }
 
 TEST(MathsTest, testMultModWhenModuloAndFactorsArePositive)
 {
-    int number1 = 547;
-    int number2 = 312;
-    int number3 = 10000;
+    long long int number1 = 547LL;
+    long long int number2 = 312LL;
+    long long int number3 = 10000LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
-    EXPECT_EQ(664, result);
+    EXPECT_EQ(664LL, result);
 }
 
 TEST(MathsTest, testMultModWhenModuloIsPositiveAndFactor1IsNegative)
 {
-    int number1 = -547;
-    int number2 = 312;
-    int number3 = 10000;
+    long long int number1 = -547LL;
+    long long int number2 = 312LL;
+    long long int number3 = 10000LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
-    EXPECT_EQ(9336, result);
+    EXPECT_EQ(9336LL, result);
 }
 
 TEST(MathsTest, testMultModWhenModuloIsPositiveAndFactor2IsNegative)
 {
-    int number1 = 547;
-    int number2 = -312;
-    int number3 = 10000;
+    long long int number1 = 547LL;
+    long long int number2 = -312LL;
+    long long int number3 = 10000LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
-    EXPECT_EQ(9336, result);
+    EXPECT_EQ(9336LL, result);
 }
 
 TEST(MathsTest, testMultModWhenModuloIsPositiveAndFactorsAreNegative)
 {
-    int number1 = -547;
-    int number2 = -312;
-    int number3 = 10000;
+    long long int number1 = -547LL;
+    long long int number2 = -312LL;
+    long long int number3 = 10000LL;
 
-    int result = alma::mult_mod(number1, number2, number3);
+    long long int result = alma::mult_mod(number1, number2, number3);
 
-    EXPECT_EQ(664, result);
-}
-
-TEST(MathsTest, testMultModWhenModuloIsNegative)
-{
-    int number1 = 547;
-    int number2 = 312;
-    int number3 = -10000;
-
-    EXPECT_THROW(alma::mult_mod(number1, number2, number3), std::domain_error);
+    EXPECT_EQ(664LL, result);
 }

@@ -21,15 +21,13 @@ long long int alma::lcm(long long int number1, long long int number2)
     return max_number / gcd(number1, number2) * min_number;
 }
 
-long long int alma::power_mod(long long int base, long long int exponent, long long int modulo)
+long long int alma::power_mod(long long int base, long long int exponent,
+                              unsigned long long int modulo)
 {
     long long int result = 1;
 
     if(exponent < 0)
         throw std::domain_error("Negative exponent.");
-
-    if(modulo < 0)
-        throw std::domain_error("Negative modulo.");
 
     if(base == 0 && exponent == 0)
         throw std::domain_error("Zero to the power of zero is NaN.");
@@ -46,12 +44,10 @@ long long int alma::power_mod(long long int base, long long int exponent, long l
     return result;
 }
 
-long long int alma::mult_mod(long long int factor1, long long int factor2, long long int modulo)
+long long int alma::mult_mod(long long int factor1, long long int factor2,
+                             unsigned long long int modulo)
 {
     long long int result = 0;
-
-    if(modulo < 0)
-        throw std::domain_error("Negative modulo.");
 
     if(factor1 < 0 && factor2 < 0)
         return mult_mod(-factor1, -factor2, modulo);

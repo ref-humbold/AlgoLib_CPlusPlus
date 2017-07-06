@@ -20,14 +20,17 @@ std::pair<long long int, long long int> detail::distribute(long long int number)
 
 bool alma::fermat_prime(long long int number)
 {
-    for(int i = 0; i < 10; ++i)
+    if(number == 2 || number == 3)
+        return true;
+
+    if(number < 2 || number % 2 == 0 || number % 3 == 0)
+        return false;
+
+    for(int i = 0; i < 12; ++i)
     {
-        long long int random_value = rand() % (number - 3) + 2;
+        long long int rdv = 1 + rand() % (number - 1);
 
-        if(gcd(random_value, number) > 1)
-            return false;
-
-        if(power_mod(random_value, number - 1, number) != 1)
+        if(gcd(rdv, number) > 1 || power_mod(rdv, number - 1, number) != 1)
             return false;
     }
 
@@ -36,23 +39,32 @@ bool alma::fermat_prime(long long int number)
 
 bool alma::miller_prime(long long int number)
 {
-    std::pair<long long int, long long int> distribution = detail::distribute(number - 1);
+    if(number == 2 || number == 3)
+        return true;
 
-    for(int i = 0; i < 10; ++i)
+    if(number < 2 || number % 2 == 0 || number % 3 == 0)
+        return false;
+
+    auto distribution = detail::distribute(number - 1);
+
+    for(int i = 0; i < 12; ++i)
     {
-        long long int random_value = rand() % (number - 3) + 2;
-        bool composity = true;
+        long long int rdv = 1 + rand() % (number - 1);
 
-        if(power_mod(random_value, distribution.second, number) != 1)
-            for(int j = 0; j < distribution.first; ++j)
+        if(power_mod(rdv, distribution.second, number) != 1)
+        {
+            bool is_composite = true;
+
+            for(long long int j = 0LL; j < distribution.first; ++j)
             {
-                long long int pwm = power_mod(random_value, (1 << j) * distribution.second, number);
+                long long int pwm = power_mod(rdv, (1LL << j) * distribution.second, number);
 
-                composity = composity && pwm != number - 1;
+                is_composite = is_composite && pwm != number - 1;
             }
 
-        if(composity)
-            return false;
+            if(is_composite)
+                return false;
+        }
     }
 
     return true;
