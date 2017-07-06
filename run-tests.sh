@@ -1,6 +1,6 @@
 #! /bin/sh
 
-TEST_DIR="tests"
+TEST_DIR="test"
 GTEST_OUTPUT_DIR="gtest_results"
 
 if test ! -d $TEST_DIR
