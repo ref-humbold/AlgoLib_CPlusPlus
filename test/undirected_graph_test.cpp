@@ -1,32 +1,32 @@
-// TESTY DLA GRAFÓW SKIEROWANYCH
+// TESTY DLA GRAFÓW NIESKIEROWANYCH
 #include <gtest/gtest.h>
-#include "../algolib/graphs/directed_graph.hpp"
+#include "../src/algolib/graphs/undirected_graph.hpp"
 
 namespace algr = algolib::graphs;
 
-class DirectedSimpleGraphTest : public ::testing::Test
+class UndirectedSimpleGraphTest : public ::testing::Test
 {
 protected:
-    algr::directed_simple_graph test_object;
+    algr::undirected_simple_graph test_object;
 
 public:
-    DirectedSimpleGraphTest() : test_object{algr::directed_simple_graph(10)}
+    UndirectedSimpleGraphTest() : test_object{algr::undirected_simple_graph(10)}
     {
     }
 
-    virtual ~DirectedSimpleGraphTest()
+    virtual ~UndirectedSimpleGraphTest()
     {
     }
 };
 
-TEST_F(DirectedSimpleGraphTest, testGetVerticesNumber)
+TEST_F(UndirectedSimpleGraphTest, testGetVerticesNumber)
 {
     size_t result = test_object.get_vertices_number();
 
     EXPECT_EQ(10, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetVertices)
+TEST_F(UndirectedSimpleGraphTest, testGetVertices)
 {
     std::vector<vertex_t> result = test_object.get_vertices();
 
@@ -35,7 +35,7 @@ TEST_F(DirectedSimpleGraphTest, testGetVertices)
     EXPECT_EQ(std::vector<vertex_t>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testAddVertex)
+TEST_F(UndirectedSimpleGraphTest, testAddVertex)
 {
     vertex_t result = test_object.add_vertex();
 
@@ -43,7 +43,7 @@ TEST_F(DirectedSimpleGraphTest, testAddVertex)
     EXPECT_EQ(11, test_object.get_vertices_number());
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetEdgesNumber)
+TEST_F(UndirectedSimpleGraphTest, testGetEdgesNumber)
 {
     test_object.add_edge(7, 7);
     test_object.add_edge(1, 5);
@@ -56,10 +56,10 @@ TEST_F(DirectedSimpleGraphTest, testGetEdgesNumber)
 
     size_t result = test_object.get_edges_number();
 
-    EXPECT_EQ(7, result);
+    EXPECT_EQ(6, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetEdges)
+TEST_F(UndirectedSimpleGraphTest, testGetEdges)
 {
     test_object.add_edge(7, 7);
     test_object.add_edge(1, 5);
@@ -75,16 +75,16 @@ TEST_F(DirectedSimpleGraphTest, testGetEdges)
     std::sort(result.begin(), result.end());
 
     EXPECT_EQ(
-        std::vector<edge_t>({std::make_tuple(1, 5), std::make_tuple(2, 4), std::make_tuple(3, 6),
-                             std::make_tuple(6, 3), std::make_tuple(7, 7), std::make_pair(8, 0),
-                             std::make_pair(9, 3)}),
+        std::vector<edge_t>({std::make_tuple(0, 8), std::make_tuple(1, 5), std::make_tuple(2, 4),
+                             std::make_tuple(3, 6), std::make_tuple(3, 9), std::make_tuple(7, 7)}),
         result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testAddEdge)
+TEST_F(UndirectedSimpleGraphTest, testAddEdge)
 {
     test_object.add_edge(1, 5);
     test_object.add_edge(1, 5);
+    test_object.add_edge(5, 1);
     test_object.add_edge(1, 1);
 
     std::vector<vertex_t> result1 = test_object.get_neighbours(1);
@@ -95,10 +95,10 @@ TEST_F(DirectedSimpleGraphTest, testAddEdge)
 
     EXPECT_EQ(2, test_object.get_edges_number());
     EXPECT_EQ(std::vector<vertex_t>({1, 5}), result1);
-    EXPECT_EQ(std::vector<vertex_t>(), result5);
+    EXPECT_EQ(std::vector<vertex_t>({1}), result5);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetNeighbours)
+TEST_F(UndirectedSimpleGraphTest, testGetNeighbours)
 {
     test_object.add_edge(1, 1);
     test_object.add_edge(1, 3);
@@ -112,10 +112,10 @@ TEST_F(DirectedSimpleGraphTest, testGetNeighbours)
 
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(std::vector<vertex_t>({1, 3, 4, 7, 9}), result);
+    EXPECT_EQ(std::vector<vertex_t>({1, 2, 3, 4, 6, 7, 9}), result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetOutdegree)
+TEST_F(UndirectedSimpleGraphTest, testGetOutdegree)
 {
     test_object.add_edge(1, 1);
     test_object.add_edge(1, 3);
@@ -127,10 +127,10 @@ TEST_F(DirectedSimpleGraphTest, testGetOutdegree)
 
     size_t result = test_object.get_outdegree(1);
 
-    EXPECT_EQ(5, result);
+    EXPECT_EQ(7, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetIndegree)
+TEST_F(UndirectedSimpleGraphTest, testGetIndegree)
 {
     test_object.add_edge(1, 1);
     test_object.add_edge(3, 1);
@@ -142,32 +142,36 @@ TEST_F(DirectedSimpleGraphTest, testGetIndegree)
 
     size_t result = test_object.get_indegree(1);
 
-    EXPECT_EQ(5, result);
+    EXPECT_EQ(7, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testReverse)
+TEST_F(UndirectedSimpleGraphTest, testAsDirected)
 {
-    test_object.add_edge(1, 2);
-    test_object.add_edge(3, 5);
-    test_object.add_edge(4, 9);
-    test_object.add_edge(5, 4);
-    test_object.add_edge(5, 7);
-    test_object.add_edge(6, 2);
-    test_object.add_edge(6, 6);
-    test_object.add_edge(7, 8);
-    test_object.add_edge(9, 1);
-    test_object.add_edge(9, 6);
+    test_object.add_edge(7, 7);
+    test_object.add_edge(1, 5);
+    test_object.add_edge(2, 4);
+    test_object.add_edge(8, 0);
+    test_object.add_edge(6, 3);
+    test_object.add_edge(3, 6);
+    test_object.add_edge(9, 3);
+    test_object.add_edge(8, 0);
 
-    test_object.reverse();
+    algr::directed_simple_graph * result = test_object.as_directed();
+    std::vector<vertex_t> expected_vertices = test_object.get_vertices();
+    std::vector<vertex_t> result_vertices = result->get_vertices();
+    std::vector<edge_t> result_edges = result->get_edges();
 
-    std::vector<edge_t> result = test_object.get_edges();
+    std::sort(expected_vertices.begin(), expected_vertices.end());
+    std::sort(result_vertices.begin(), result_vertices.end());
+    std::sort(result_edges.begin(), result_edges.end());
 
-    std::sort(result.begin(), result.end());
-
+    EXPECT_EQ(expected_vertices, result_vertices);
     EXPECT_EQ(
-        std::vector<edge_t>({std::make_tuple(1, 9), std::make_tuple(2, 1), std::make_tuple(2, 6),
-                             std::make_tuple(4, 5), std::make_tuple(5, 3), std::make_tuple(6, 6),
-                             std::make_tuple(6, 9), std::make_tuple(7, 5), std::make_tuple(8, 7),
-                             std::make_tuple(9, 4)}),
-        result);
+        std::vector<edge_t>({std::make_tuple(0, 8), std::make_tuple(1, 5), std::make_tuple(2, 4),
+                             std::make_tuple(3, 6), std::make_tuple(3, 9), std::make_tuple(4, 2),
+                             std::make_tuple(5, 1), std::make_tuple(6, 3), std::make_tuple(7, 7),
+                             std::make_tuple(8, 0), std::make_tuple(9, 3)}),
+        result_edges);
+
+    delete result;
 }

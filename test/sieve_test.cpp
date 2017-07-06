@@ -1,6 +1,6 @@
 // TESTY DLA ALGORYTMU SITA ERASTOTENESA"""
 #include <gtest/gtest.h>
-#include "../algolib/maths/sieve.hpp"
+#include "../src/algolib/maths/sieve.hpp"
 
 namespace alma = algolib::maths;
 

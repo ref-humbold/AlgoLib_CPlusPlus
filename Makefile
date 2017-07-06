@@ -2,29 +2,28 @@ CXX = g++ -std=c++11
 CXXFLAGS = -Wall -Wextra
 GTEST = -lgtest -lgtest_main -lpthread
 CMPL = $(CXX) $(CXXFLAGS)
-OBJ = obj
-TEST = tests
-ALGOLIB = algolib
+SRC = src
+OBJ = build
+TEST = test
+ALGOLIB = $(SRC)/algolib
 GRAPHS = $(ALGOLIB)/graphs
 MATHS = $(ALGOLIB)/maths
 STRUCTURES = $(ALGOLIB)/structures
-OBJALGOLIB = $(OBJ)/$(ALGOLIB)
+OBJSRC = $(OBJ)/$(SRC)
 OBJTEST = $(OBJ)/$(TEST)
 
 all : prepare srcDir testDir
 
-src : prepare srcDir
+source : prepare srcDir
 
-test : prepare testDir
+tests : prepare testDir
 
 prepare :
-	mkdir -p $(OBJALGOLIB)
+	mkdir -p $(OBJSRC)
 	mkdir -p $(OBJTEST)
 
 clean :
-	rm -f *.o
-	rm -f $(OBJALGOLIB)/*.o
-	rm -f $(OBJTEST)/*.o
+	rm -rf $(OBJ)
 
 refresh : clean all
 
@@ -44,142 +43,142 @@ structuresDir : avl_tree.o disjoint_sets.o equation_system.o
 
 
 closest_points.o : $(ALGOLIB)/closest_points.cpp
-	$(CMPL) -c $(ALGOLIB)/closest_points.cpp -o $(OBJALGOLIB)/closest_points.o
+	$(CMPL) -c $(ALGOLIB)/closest_points.cpp -o $(OBJSRC)/closest_points.o
 
 
 convex_hull.o : $(ALGOLIB)/convex_hull.cpp
-	$(CMPL) -c $(ALGOLIB)/convex_hull.cpp -o $(OBJALGOLIB)/convex_hull.o
+	$(CMPL) -c $(ALGOLIB)/convex_hull.cpp -o $(OBJSRC)/convex_hull.o
 
 
 kmp.o : $(ALGOLIB)/kmp.cpp
-	$(CMPL) -c $(ALGOLIB)/kmp.cpp -o $(OBJALGOLIB)/kmp.o
+	$(CMPL) -c $(ALGOLIB)/kmp.cpp -o $(OBJSRC)/kmp.o
 
 kmp_test.o : $(TEST)/kmp_test.cpp
 	$(CMPL) -c $(TEST)/kmp_test.cpp -o $(OBJTEST)/kmp_test.o
 
 kmp_test : kmp.o kmp_test.o
-	$(CMPL) $(OBJALGOLIB)/kmp.o $(OBJTEST)/kmp_test.o -o $(TEST)/kmp_test $(GTEST)
+	$(CMPL) $(OBJSRC)/kmp.o $(OBJTEST)/kmp_test.o -o $(TEST)/kmp_test $(GTEST)
 
 
 kmr.o : $(ALGOLIB)/kmr.cpp
-	$(CMPL) -c $(ALGOLIB)/kmr.cpp -o $(OBJALGOLIB)/kmr.o
+	$(CMPL) -c $(ALGOLIB)/kmr.cpp -o $(OBJSRC)/kmr.o
 
 
 lis.o : $(ALGOLIB)/lis.cpp
-	$(CMPL) -c $(ALGOLIB)/lis.cpp -o $(OBJALGOLIB)/lis.o
+	$(CMPL) -c $(ALGOLIB)/lis.cpp -o $(OBJSRC)/lis.o
 
 
 maximum_subarray.o : $(ALGOLIB)/maximum_subarray.cpp
-	$(CMPL) -c $(ALGOLIB)/maximum_subarray.cpp -o $(OBJALGOLIB)/maximum_subarray.o
+	$(CMPL) -c $(ALGOLIB)/maximum_subarray.cpp -o $(OBJSRC)/maximum_subarray.o
 
 
 sorting.o : $(ALGOLIB)/sorting.cpp
-	$(CMPL) -c $(ALGOLIB)/sorting.cpp -o $(OBJALGOLIB)/sorting.o
+	$(CMPL) -c $(ALGOLIB)/sorting.cpp -o $(OBJSRC)/sorting.o
 
 
 two_sat.o : $(ALGOLIB)/two_sat.cpp
-	$(CMPL) -c $(ALGOLIB)/two_sat.cpp -o $(OBJALGOLIB)/two_sat.o
+	$(CMPL) -c $(ALGOLIB)/two_sat.cpp -o $(OBJSRC)/two_sat.o
 
 
 cutting.o : $(GRAPHS)/cutting.cpp
-	$(CMPL) -c $(GRAPHS)/cutting.cpp -o $(OBJALGOLIB)/cutting.o
+	$(CMPL) -c $(GRAPHS)/cutting.cpp -o $(OBJSRC)/cutting.o
 
 
 directed_graph.o : $(GRAPHS)/directed_graph.cpp
-	$(CMPL) -c $(GRAPHS)/directed_graph.cpp -o $(OBJALGOLIB)/directed_graph.o
+	$(CMPL) -c $(GRAPHS)/directed_graph.cpp -o $(OBJSRC)/directed_graph.o
 
 directed_graph_test.o : $(TEST)/directed_graph_test.cpp
 	$(CMPL) -c $(TEST)/directed_graph_test.cpp -o $(OBJTEST)/directed_graph_test.o
 
 directed_graph_test : graph.o directed_graph.o directed_graph_test.o
-	$(CMPL) $(OBJALGOLIB)/graph.o $(OBJALGOLIB)/directed_graph.o $(OBJTEST)/directed_graph_test.o -o $(TEST)/directed_graph_test $(GTEST)
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJTEST)/directed_graph_test.o -o $(TEST)/directed_graph_test $(GTEST)
 
 
 graph.o : $(GRAPHS)/graph.cpp
-	$(CMPL) -c $(GRAPHS)/graph.cpp -o $(OBJALGOLIB)/graph.o
+	$(CMPL) -c $(GRAPHS)/graph.cpp -o $(OBJSRC)/graph.o
 
 
 mst.o : $(GRAPHS)/mst.cpp
-	$(CMPL) -c $(GRAPHS)/mst.cpp -o $(OBJALGOLIB)/mst.o
+	$(CMPL) -c $(GRAPHS)/mst.cpp -o $(OBJSRC)/mst.o
 
 mst_test.o : $(TEST)/mst_test.cpp
 	$(CMPL) -c $(TEST)/mst_test.cpp -o $(OBJTEST)/mst_test.o
 
 mst_test : graph.o directed_graph.o undirected_graph.o disjoint_sets.o mst.o mst_test.o
-	$(CMPL) $(OBJALGOLIB)/graph.o $(OBJALGOLIB)/directed_graph.o $(OBJALGOLIB)/undirected_graph.o $(OBJALGOLIB)/disjoint_sets.o $(OBJALGOLIB)/mst.o $(OBJTEST)/mst_test.o -o $(TEST)/mst_test $(GTEST)
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJSRC)/disjoint_sets.o $(OBJSRC)/mst.o $(OBJTEST)/mst_test.o -o $(TEST)/mst_test $(GTEST)
 
 
 paths.o : $(GRAPHS)/paths.cpp
-	$(CMPL) -c $(GRAPHS)/paths.cpp -o $(OBJALGOLIB)/paths.o
+	$(CMPL) -c $(GRAPHS)/paths.cpp -o $(OBJSRC)/paths.o
 
 
 searching.o : $(GRAPHS)/searching.cpp
-	$(CMPL) -c $(GRAPHS)/searching.cpp -o $(OBJALGOLIB)/searching.o
+	$(CMPL) -c $(GRAPHS)/searching.cpp -o $(OBJSRC)/searching.o
 
 
 topological_sorting.o : $(GRAPHS)/topological_sorting.cpp
-	$(CMPL) -c $(GRAPHS)/topological_sorting.cpp -o $(OBJALGOLIB)/topological_sorting.o
+	$(CMPL) -c $(GRAPHS)/topological_sorting.cpp -o $(OBJSRC)/topological_sorting.o
 
 topological_sorting_test.o : $(TEST)/topological_sorting_test.cpp
 	$(CMPL) -c $(TEST)/topological_sorting_test.cpp -o $(OBJTEST)/topological_sorting_test.o
 
 topological_sorting_test : graph.o directed_graph.o topological_sorting.o topological_sorting_test.o
-	$(CMPL) $(OBJALGOLIB)/graph.o $(OBJALGOLIB)/directed_graph.o $(OBJALGOLIB)/topological_sorting.o $(OBJTEST)/topological_sorting_test.o -o $(TEST)/topological_sorting_test $(GTEST)
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/topological_sorting.o $(OBJTEST)/topological_sorting_test.o -o $(TEST)/topological_sorting_test $(GTEST)
 
 
 undirected_graph.o : $(GRAPHS)/undirected_graph.cpp
-	$(CMPL) -c $(GRAPHS)/undirected_graph.cpp -o $(OBJALGOLIB)/undirected_graph.o
+	$(CMPL) -c $(GRAPHS)/undirected_graph.cpp -o $(OBJSRC)/undirected_graph.o
 
 undirected_graph_test.o : $(TEST)/undirected_graph_test.cpp
 	$(CMPL) -c $(TEST)/undirected_graph_test.cpp -o $(OBJTEST)/undirected_graph_test.o
 
 undirected_graph_test : graph.o directed_graph.o undirected_graph.o undirected_graph_test.o
-	$(CMPL) $(OBJALGOLIB)/graph.o $(OBJALGOLIB)/directed_graph.o $(OBJALGOLIB)/undirected_graph.o $(OBJTEST)/undirected_graph_test.o -o $(TEST)/undirected_graph_test $(GTEST)
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJTEST)/undirected_graph_test.o -o $(TEST)/undirected_graph_test $(GTEST)
 
 
 maths.o : $(MATHS)/maths.cpp
-	$(CMPL) -c $(MATHS)/maths.cpp -o $(OBJALGOLIB)/maths.o
+	$(CMPL) -c $(MATHS)/maths.cpp -o $(OBJSRC)/maths.o
 
 maths_test.o : $(TEST)/maths_test.cpp
 	$(CMPL) -c $(TEST)/maths_test.cpp -o $(OBJTEST)/maths_test.o
 
 maths_test : maths.o maths_test.o
-	$(CMPL) $(OBJALGOLIB)/maths.o $(OBJTEST)/maths_test.o -o $(TEST)/maths_test $(GTEST)
+	$(CMPL) $(OBJSRC)/maths.o $(OBJTEST)/maths_test.o -o $(TEST)/maths_test $(GTEST)
 
 
 prime_checking.o : $(MATHS)/prime_checking.cpp
-	$(CMPL) -c $(MATHS)/prime_checking.cpp -o $(OBJALGOLIB)/prime_checking.o
+	$(CMPL) -c $(MATHS)/prime_checking.cpp -o $(OBJSRC)/prime_checking.o
 
 
 sieve.o : $(MATHS)/sieve.cpp
-	$(CMPL) -c $(MATHS)/sieve.cpp -o $(OBJALGOLIB)/sieve.o
+	$(CMPL) -c $(MATHS)/sieve.cpp -o $(OBJSRC)/sieve.o
 
 sieve_test.o : $(TEST)/sieve_test.cpp
 	$(CMPL) -c $(TEST)/sieve_test.cpp -o $(OBJTEST)/sieve_test.o
 
 sieve_test : sieve.o sieve_test.o
-	$(CMPL) $(OBJALGOLIB)/sieve.o $(OBJTEST)/sieve_test.o -o $(TEST)/sieve_test $(GTEST)
+	$(CMPL) $(OBJSRC)/sieve.o $(OBJTEST)/sieve_test.o -o $(TEST)/sieve_test $(GTEST)
 
 
 avl_tree.o : $(STRUCTURES)/avl_tree.cpp
-	$(CMPL) -c $(STRUCTURES)/avl_tree.cpp -o $(OBJALGOLIB)/avl_tree.o
+	$(CMPL) -c $(STRUCTURES)/avl_tree.cpp -o $(OBJSRC)/avl_tree.o
 
 avl_tree_test.o : $(TEST)/avl_tree_test.cpp
 	$(CMPL) -c $(TEST)/avl_tree_test.cpp -o $(OBJTEST)/avl_tree_test.o
 
 avl_tree_test : avl_tree.o avl_tree_test.o
-	$(CMPL) $(OBJALGOLIB)/avl_tree.o $(OBJTEST)/avl_tree_test.o -o $(TEST)/avl_tree_test $(GTEST)
+	$(CMPL) $(OBJSRC)/avl_tree.o $(OBJTEST)/avl_tree_test.o -o $(TEST)/avl_tree_test $(GTEST)
 
 
 disjoint_sets.o : $(STRUCTURES)/disjoint_sets.cpp
-	$(CMPL) -c $(STRUCTURES)/disjoint_sets.cpp -o $(OBJALGOLIB)/disjoint_sets.o
+	$(CMPL) -c $(STRUCTURES)/disjoint_sets.cpp -o $(OBJSRC)/disjoint_sets.o
 
 disjoint_sets_test.o : $(TEST)/disjoint_sets_test.cpp
 	$(CMPL) -c $(TEST)/disjoint_sets_test.cpp -o $(OBJTEST)/disjoint_sets_test.o
 
 disjoint_sets_test : disjoint_sets.o disjoint_sets_test.o
-	$(CMPL) $(OBJALGOLIB)/disjoint_sets.o $(OBJTEST)/disjoint_sets_test.o -o $(TEST)/disjoint_sets_test $(GTEST)
+	$(CMPL) $(OBJSRC)/disjoint_sets.o $(OBJTEST)/disjoint_sets_test.o -o $(TEST)/disjoint_sets_test $(GTEST)
 
 
 equation_system.o : $(STRUCTURES)/equation_system.cpp
-	$(CMPL) -c $(STRUCTURES)/equation_system.cpp -o $(OBJALGOLIB)/equation_system.o
+	$(CMPL) -c $(STRUCTURES)/equation_system.cpp -o $(OBJSRC)/equation_system.o
