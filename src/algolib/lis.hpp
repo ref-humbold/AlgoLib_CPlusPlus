@@ -14,22 +14,22 @@ namespace detail
      * @param subseq_last końcowe elementy podciągów
      * @param index_begin indeks początku
      * @param index_end indeks końca
-     * @param element indeks elementu
+     * @param index_elem indeks elementu
      * @return indeks miejsca elementu w tablicy długości
      */
     template <typename T>
     int search(const std::vector<T> & sequence, const std::vector<int> & subseq_last,
-               int index_begin, int index_end, int element)
+               int index_begin, int index_end, int index_elem)
     {
         if(index_begin == index_end)
             return index_begin;
 
         int index_middle = (index_begin + index_end) / 2;
 
-        if(sequence[element] > sequence[subseq_last[index_middle]])
-            return search(sequence, subseq_last, index_middle + 1, index_end, element);
+        if(sequence[index_elem] > sequence[subseq_last[index_middle]])
+            return search(sequence, subseq_last, index_middle + 1, index_end, index_elem);
         else
-            return search(sequence, subseq_last, index_begin, index_middle, element);
+            return search(sequence, subseq_last, index_begin, index_middle, index_elem);
     }
 }
 

@@ -1,7 +1,7 @@
 // ALGORYTMY WYZNACZANIA PODCIĄGU SPÓJNEGO O MAKSYMALNEJ SUMIE
 #include "maximum_subarray.hpp"
 
-std::vector<double> algolib::find_maxsum_subseq1(const std::vector<double> & sequence)
+std::vector<double> algolib::find_maximum_subarray(const std::vector<double> & sequence)
 {
     std::vector<double> max_subseq, actual_subseq;
     double max_sum = 0.0, actual_sum = 0.0;
@@ -27,7 +27,7 @@ std::vector<double> algolib::find_maxsum_subseq1(const std::vector<double> & seq
     return max_subseq;
 }
 
-double algolib::find_maxsum_subseq2(const std::vector<double> & sequence)
+double algolib::find_maximal_sum(const std::vector<double> & sequence)
 {
     size_t size = 1;
 

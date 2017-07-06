@@ -29,7 +29,7 @@ refresh : clean all
 
 refreshtest : clean alltest
 
-testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test mst_test sieve_test topological_sorting_test undirected_graph_test
+testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test maximum_subarray_test mst_test sieve_test topological_sorting_test undirected_graph_test
 
 srcDir: algolibDir graphsDir mathsDir structuresDir
 
@@ -70,6 +70,12 @@ lis.o : $(ALGOLIB)/lis.cpp
 
 maximum_subarray.o : $(ALGOLIB)/maximum_subarray.cpp
 	$(CMPL) -c $(ALGOLIB)/maximum_subarray.cpp -o $(OBJSRC)/maximum_subarray.o
+
+maximum_subarray_test.o : $(TEST)/maximum_subarray_test.cpp
+	$(CMPL) -c $(TEST)/maximum_subarray_test.cpp -o $(OBJTEST)/maximum_subarray_test.o
+
+maximum_subarray_test : maximum_subarray.o maximum_subarray_test.o
+	$(CMPL) $(OBJSRC)/maximum_subarray.o $(OBJTEST)/maximum_subarray_test.o -o $(TEST)/maximum_subarray_test $(GTEST)
 
 
 sorting.o : $(ALGOLIB)/sorting.cpp

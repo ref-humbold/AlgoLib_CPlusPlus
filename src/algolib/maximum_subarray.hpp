@@ -1,10 +1,10 @@
 // ALGORYTMY WYZNACZANIA PODCIĄGU SPÓJNEGO O MAKSYMALNEJ SUMIE
-#ifndef PSOMS_HPP
-#define PSOMS_HPP
+#ifndef MAXIMUM_SUBARRAY_HPP
+#define MAXIMUM_SUBARRAY_HPP
 
 #include <cstdlib>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 namespace algolib
 {
@@ -13,14 +13,14 @@ namespace algolib
      * @param sequence ciąg
      * @return elementy spójnego podciągu o maksymalnej sumie
      */
-    std::vector<double> find_maxsum_subseq1(const std::vector<double> & sequence);
+    std::vector<double> find_maximum_subarray(const std::vector<double> & sequence);
 
     /**
-     * Wyznaczanie spójnego podciągu o maksymalnej sumie za pomocą drzewa przedziałowego.
+     * Wyznaczanie maksymalnej sumy spójnego podciągu za pomocą drzewa przedziałowego.
      * @param sequence ciąg
-     * @return suma spójnego podciągu o maksymalnej sumie
+     * @return maksymalna suma
      */
-    double find_maxsum_subseq2(const std::vector<double> & sequence);
+    double find_maximal_sum(const std::vector<double> & sequence);
 }
 
 #endif
