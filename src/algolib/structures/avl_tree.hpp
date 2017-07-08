@@ -141,6 +141,18 @@ namespace algolib
 
         private:
             /**
+             * Usuwanie elementu z pamięci.
+             * @param node węzeł do usunięcia
+             */
+            void destroy_node(node_pointer node)
+            {
+                node->set_left(nullptr);
+                node->set_right(nullptr);
+                --elems;
+                delete node;
+            }
+
+            /**
              * @return wewnętrzny korzeń drzewa
              */
             node_pointer get_inner_root() const
@@ -163,7 +175,7 @@ namespace algolib
              */
             bool is_inner_root(node_pointer node)
             {
-                return node->get_parent()->get_height() < 0;
+                return node->get_parent()->get_height() == 0;
             }
 
             /**
@@ -343,6 +355,7 @@ namespace algolib
         template <typename E>
         void avl_tree<E>::clear()
         {
+            delete get_inner_root();
             set_inner_root(nullptr);
             elems = 0;
         }
@@ -379,22 +392,14 @@ namespace algolib
         {
             if(root->get_left() != nullptr && root->get_right() != nullptr)
                 delete_node(root);
-            else if(root->get_left() != nullptr && root->get_right() == nullptr)
-            {
-                std::swap(root->get_left()->get_element(), root->get_element());
-                set_inner_root(root->get_left());
-                root->set_left(nullptr);
-                --elems;
-            }
-            else if(root->get_left() == nullptr && root->get_right() != nullptr)
-            {
-                std::swap(root->get_right()->get_element(), root->get_element());
-                set_inner_root(root->get_right());
-                root->set_right(nullptr);
-                --elems;
-            }
             else
-                clear();
+            {
+                node_pointer new_root =
+                    root->get_left() != nullptr ? root->get_left() : root->get_right();
+
+                set_inner_root(new_root);
+                destroy_node(root);
+            }
         }
 
         template <typename E>
@@ -415,8 +420,7 @@ namespace algolib
 
                 replace_subtree(node, son);
                 rebalance(node_parent);
-                --elems;
-                delete node;
+                destroy_node(node);
             }
         }
 
@@ -459,7 +463,7 @@ namespace algolib
         template <typename E>
         void avl_tree<E>::rebalance(avl_tree<E>::node_pointer node)
         {
-            while(node->get_height() >= 0)
+            while(node->get_height() > 0)
             {
                 node->recount_height();
 
@@ -508,7 +512,7 @@ namespace algolib
 
             virtual E & get_element() = 0;
 
-            virtual int get_height() = 0;
+            virtual size_t get_height() = 0;
 
             virtual node_pointer get_left() = 0;
 
@@ -589,7 +593,7 @@ namespace algolib
                 return element;
             }
 
-            int get_height()
+            size_t get_height()
             {
                 return this->height;
             }
@@ -692,8 +696,8 @@ namespace algolib
         template <typename E>
         void avl_tree<E>::avl_inner_node::recount_height()
         {
-            int left_height = left == nullptr ? -1 : left->get_height();
-            int right_height = right == nullptr ? -1 : right->get_height();
+            int left_height = left == nullptr ? 0 : left->get_height();
+            int right_height = right == nullptr ? 0 : right->get_height();
 
             height = std::max(left_height, right_height) + 1;
         }
@@ -727,8 +731,17 @@ namespace algolib
             {
             }
 
-            ~avl_root_node();
-            avl_root_node(const avl_root_node & node);
+            ~avl_root_node()
+            {
+                if(inner != nullptr)
+                    delete inner;
+            }
+
+            avl_root_node(const avl_root_node & node) : avl_tree<E>::avl_node()
+            {
+                this->set_left(node.inner->clone());
+            }
+
             avl_root_node(avl_root_node && node) = delete;
             avl_root_node & operator=(const avl_root_node & node);
             avl_root_node & operator=(avl_root_node && node) = delete;
@@ -738,9 +751,9 @@ namespace algolib
                 throw std::logic_error("Operation not permited.");
             }
 
-            int get_height()
+            size_t get_height()
             {
-                return -1;
+                return 0;
             }
 
             node_pointer get_left()
@@ -800,20 +813,6 @@ namespace algolib
                 return this;
             }
         };
-
-        template <typename E>
-        avl_tree<E>::avl_root_node::~avl_root_node()
-        {
-            if(inner != nullptr)
-                delete inner;
-        }
-
-        template <typename E>
-        avl_tree<E>::avl_root_node::avl_root_node(const avl_tree<E>::avl_root_node & node)
-            : avl_tree<E>::avl_node()
-        {
-            this->set_left(node.inner->clone());
-        }
 
         template <typename E>
         typename avl_tree<E>::avl_root_node & avl_tree<E>::avl_root_node::
@@ -912,7 +911,7 @@ namespace algolib
             if(node->get_right() != nullptr)
                 return node->get_right()->minimum();
 
-            while(succ->get_height() >= 0 && succ->get_element() <= node->get_element())
+            while(succ->get_height() > 0 && succ->get_element() <= node->get_element())
                 succ = succ->get_parent();
 
             return succ;
@@ -927,7 +926,7 @@ namespace algolib
             if(node->get_left() != nullptr)
                 return node->get_left()->maximum();
 
-            while(pred->get_height() >= 0 && pred->get_element() >= node->get_element())
+            while(pred->get_height() > 0 && pred->get_element() >= node->get_element())
                 pred = pred->get_parent();
 
             return pred;
@@ -955,7 +954,7 @@ namespace algolib
         template <typename E>
         typename avl_tree<E>::avl_fwd_iterator & avl_tree<E>::avl_fwd_iterator::operator++()
         {
-            if(this->current_node->get_height() >= 0)
+            if(this->current_node->get_height() > 0)
                 this->current_node = this->successor(this->current_node);
 
             return *this;
@@ -974,7 +973,7 @@ namespace algolib
         template <typename E>
         typename avl_tree<E>::avl_fwd_iterator & avl_tree<E>::avl_fwd_iterator::operator--()
         {
-            if(this->current_node->get_height() >= 0)
+            if(this->current_node->get_height() > 0)
                 this->current_node = this->predecessor(this->current_node);
             else
                 this->current_node = this->current_node->get_left()->maximum();
@@ -1014,7 +1013,7 @@ namespace algolib
         template <typename E>
         typename avl_tree<E>::avl_rev_iterator & avl_tree<E>::avl_rev_iterator::operator++()
         {
-            if(this->current_node->get_height() >= 0)
+            if(this->current_node->get_height() > 0)
                 this->current_node = this->predecessor(this->current_node);
 
             return *this;
@@ -1033,7 +1032,7 @@ namespace algolib
         template <typename E>
         typename avl_tree<E>::avl_rev_iterator & avl_tree<E>::avl_rev_iterator::operator--()
         {
-            if(this->current_node->get_height() >= 0)
+            if(this->current_node->get_height() > 0)
                 this->current_node = this->successor(this->current_node);
             else
                 this->current_node = this->current_node->get_left()->minimum();
