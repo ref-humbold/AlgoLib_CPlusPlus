@@ -4,7 +4,7 @@
 namespace algr = algolib::graphs;
 namespace alst = algolib::structures;
 
-weight_t algr::kruskal(const undirected_weighted_simple_graph & uwgraph)
+weight_t algr::kruskal(const undirected_weighted_graph & uwgraph)
 {
     weight_t size_MST = 0.0;
     int components = uwgraph.get_vertices_number();
@@ -34,7 +34,7 @@ weight_t algr::kruskal(const undirected_weighted_simple_graph & uwgraph)
     return size_MST;
 }
 
-weight_t algr::prim(const undirected_weighted_simple_graph & uwgraph, vertex_t source)
+weight_t algr::prim(const undirected_weighted_graph & uwgraph, vertex_t source)
 {
     weight_t size_MST = 0.0;
     std::vector<bool> is_visited(uwgraph.get_vertices_number(), false);

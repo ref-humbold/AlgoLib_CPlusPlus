@@ -35,7 +35,7 @@ srcDir: algolibDir graphsDir mathsDir structuresDir
 
 algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o sorting.o two_sat.o
 
-graphsDir : cutting.o directed_graph.o graph.o mst.o paths.o searching.o topological_sorting.o undirected_graph.o
+graphsDir : cutting.o directed_graph.o forest_graph.o graph.o mst.o paths.o searching.o topological_sorting.o undirected_graph.o
 
 mathsDir : maths.o prime_checking.o sieve.o
 
@@ -98,6 +98,10 @@ directed_graph_test.o : $(TEST)/directed_graph_test.cpp
 
 directed_graph_test : graph.o directed_graph.o directed_graph_test.o
 	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJTEST)/directed_graph_test.o -o $(TEST)/directed_graph_test $(GTEST)
+
+
+forest_graph.o : $(GRAPHS)/forest_graph.cpp
+	$(CMPL) -c $(GRAPHS)/forest_graph.cpp -o $(OBJSRC)/forest_graph.o
 
 
 graph.o : $(GRAPHS)/graph.cpp

@@ -50,31 +50,63 @@ namespace algolib
             size_t size();
 
             /**
+             * @return liczba zbiorów
+             */
+            size_t size() const;
+
+            /**
              * Należenie do dowolnego zbioru.
              * @param element element
              * @return czy element w jednym ze zbiorów
              */
-            bool contains(E element) const;
+            bool contains(const E & element) const;
 
             /**
              * Tworzenie nowego zbioru jednoelementowego.
              * @param element nowy element
              */
-            void make_set(E element);
+            void make_set(const E & element);
 
             /**
              * Ustalanie reprezentanta zbioru.
              * @param element element ze zbioru
              * @return reprezentant elementu
              */
-            E find_set(E element);
+            const E & find_set(const E & element);
+
+            /**
+             * Ustalanie reprezentanta zbioru.
+             * @param element element ze zbioru
+             * @return reprezentant elementu
+             */
+            const E & find_set(const E & element) const;
+
+            /**
+             * Ustalanie reprezentanta zbioru.
+             * @param element element ze zbioru
+             * @return reprezentant elementu
+             */
+            const E & operator[](const E & element)
+            {
+                return find_set(element);
+            }
+
+            /**
+             * Ustalanie reprezentanta zbioru.
+             * @param element element ze zbioru
+             * @return reprezentant elementu
+             */
+            const E & operator[](const E & element) const
+            {
+                return find_set(element);
+            }
 
             /**
              * Scalanie dwóch zbiorów.
              * @param element1 element pierwszego zbioru
              * @param element2 element drugiego zbioru
              */
-            void union_set(E element1, E element2);
+            void union_set(const E & element1, const E & element2);
 
             /**
              * Sprawdzanie, czy elementy należą do tego samego zbioru.
@@ -82,7 +114,15 @@ namespace algolib
              * @param element2 element drugiego zbioru
              * @return czy elementy znajdują się w różnych składowych
              */
-            bool is_same_set(E element1, E element2);
+            bool is_same_set(const E & element1, const E & element2);
+
+            /**
+             * Sprawdzanie, czy elementy należą do tego samego zbioru.
+             * @param element1 element pierwszego zbioru
+             * @param element2 element drugiego zbioru
+             * @return czy elementy znajdują się w różnych składowych
+             */
+            bool is_same_set(const E & element1, const E & element2) const;
         };
 
         template <typename E>
@@ -97,13 +137,24 @@ namespace algolib
         }
 
         template <typename E>
-        bool disjoint_sets<E>::contains(E element) const
+        size_t disjoint_sets<E>::size() const
+        {
+            std::set<E> reprs;
+
+            for(auto e : represents)
+                reprs.insert(find_set(e.first));
+
+            return reprs.size();
+        }
+
+        template <typename E>
+        bool disjoint_sets<E>::contains(const E & element) const
         {
             return represents.find(element) != represents.end();
         }
 
         template <typename E>
-        void disjoint_sets<E>::make_set(E element)
+        void disjoint_sets<E>::make_set(const E & element)
         {
             if(contains(element))
                 throw std::invalid_argument("Value already present.");
@@ -112,23 +163,35 @@ namespace algolib
         }
 
         template <typename E>
-        E disjoint_sets<E>::find_set(E element)
+        const E & disjoint_sets<E>::find_set(const E & element)
         {
-            if(represents[element] != element)
+            if(represents.at(element) != element)
                 represents[element] = find_set(represents[element]);
 
             return represents[element];
         }
 
         template <typename E>
-        void disjoint_sets<E>::union_set(E element1, E element2)
+        const E & disjoint_sets<E>::find_set(const E & element) const
+        {
+            return represents.at(element) == element ? element : find_set(represents.at(element));
+        }
+
+        template <typename E>
+        void disjoint_sets<E>::union_set(const E & element1, const E & element2)
         {
             if(!is_same_set(element1, element2))
                 represents[find_set(element1)] = find_set(element2);
         }
 
         template <typename E>
-        bool disjoint_sets<E>::is_same_set(E element1, E element2)
+        bool disjoint_sets<E>::is_same_set(const E & element1, const E & element2)
+        {
+            return find_set(element1) == find_set(element2);
+        }
+
+        template <typename E>
+        bool disjoint_sets<E>::is_same_set(const E & element1, const E & element2) const
         {
             return find_set(element1) == find_set(element2);
         }

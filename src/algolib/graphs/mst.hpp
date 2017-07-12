@@ -23,7 +23,7 @@ namespace algolib
          * @param uwgraph graf ważony
          * @return długość minimalnego drzewa spinającego
          */
-        double kruskal(const undirected_weighted_simple_graph & uwgraph);
+        double kruskal(const undirected_weighted_graph & uwgraph);
 
         /**
          * Algorytm Prima wyliczający długość MST.
@@ -31,7 +31,7 @@ namespace algolib
          * @param source początkowy wierzchołek
          * @return długość minimalnego drzewa spinającego
          */
-        double prim(const undirected_weighted_simple_graph & uwgraph, vertex_t source);
+        double prim(const undirected_weighted_graph & uwgraph, vertex_t source);
     }
 }
 

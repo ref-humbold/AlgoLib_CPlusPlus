@@ -20,6 +20,10 @@ namespace algolib
         class infinite_solutions_exception : public std::runtime_error
         {
         public:
+            explicit infinite_solutions_exception() : std::runtime_error("")
+            {
+            }
+
             explicit infinite_solutions_exception(const std::string & what_arg)
                 : std::runtime_error(what_arg)
             {
@@ -34,6 +38,10 @@ namespace algolib
         class no_solution_exception : public std::runtime_error
         {
         public:
+            explicit no_solution_exception() : std::runtime_error("")
+            {
+            }
+
             explicit no_solution_exception(const std::string & what_arg)
                 : std::runtime_error(what_arg)
             {

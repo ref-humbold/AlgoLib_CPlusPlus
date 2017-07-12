@@ -29,6 +29,10 @@ namespace algolib
             virtual void reverse() = 0;
         };
 
+        class directed_weighted_graph : public virtual directed_graph, public virtual weighted_graph
+        {
+        };
+
         class directed_simple_graph : public simple_graph, public virtual directed_graph
         {
         public:
@@ -57,7 +61,7 @@ namespace algolib
         };
 
         class directed_weighted_simple_graph : public directed_simple_graph,
-                                               public virtual weighted_graph
+                                               public virtual directed_weighted_graph
         {
         public:
             explicit directed_weighted_simple_graph(

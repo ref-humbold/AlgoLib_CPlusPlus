@@ -7,7 +7,6 @@
 
 #include <cstdlib>
 #include <exception>
-#include <memory>
 #include <stdexcept>
 #include <algorithm>
 #include <numeric>
@@ -29,6 +28,17 @@ namespace algolib
              * @return graf ze skierowanymi krawędziami
              */
             virtual directed_graph * as_directed() const = 0;
+        };
+
+        class undirected_weighted_graph : public virtual undirected_graph,
+                                          public virtual weighted_graph
+        {
+        public:
+            /**
+             * Zamiana krawędzi nieskierowanych na skierowane.
+             * @return graf ze skierowanymi krawędziami
+             */
+            virtual directed_weighted_graph * as_directed() const override = 0;
         };
 
         class undirected_simple_graph : public simple_graph, public virtual undirected_graph
@@ -63,7 +73,7 @@ namespace algolib
         };
 
         class undirected_weighted_simple_graph : public undirected_simple_graph,
-                                                 public virtual weighted_graph
+                                                 public virtual undirected_weighted_graph
         {
         public:
             explicit undirected_weighted_simple_graph(

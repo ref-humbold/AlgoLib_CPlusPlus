@@ -3,11 +3,10 @@
 
 namespace algr = algolib::graphs;
 
-std::vector<weight_t> algr::bellman_ford(const directed_weighted_simple_graph & diwgraph,
-                                            vertex_t source)
+std::vector<weight_t> algr::bellman_ford(const directed_weighted_graph & diwgraph, vertex_t source)
 {
     std::vector<weight_t> distances(diwgraph.get_vertices_number(),
-                                       directed_weighted_simple_graph::INF);
+                                    directed_weighted_simple_graph::INF);
 
     distances[source] = 0.0;
 
@@ -76,13 +75,11 @@ std::vector<weight_t> algr::dijkstra(const weighted_graph & wgraph, vertex_t sou
     return distances;
 }
 
-std::vector<std::vector<weight_t>>
-    algr::floyd_warshall(const directed_weighted_simple_graph & diwgraph)
+std::vector<std::vector<weight_t>> algr::floyd_warshall(const directed_weighted_graph & diwgraph)
 {
     std::vector<std::vector<weight_t>> distances(
         diwgraph.get_vertices_number(),
-        std::vector<weight_t>(diwgraph.get_vertices_number(),
-                                 directed_weighted_simple_graph::INF));
+        std::vector<weight_t>(diwgraph.get_vertices_number(), directed_weighted_simple_graph::INF));
 
     for(const auto & we : diwgraph.get_weighted_edges())
         distances[std::get<0>(we)][std::get<1>(we)] = std::get<2>(we);
