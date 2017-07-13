@@ -29,7 +29,7 @@ refresh : clean all
 
 refreshtest : clean alltest
 
-testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test maximum_subarray_test mst_test sieve_test topological_sorting_test undirected_graph_test
+testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test maximum_subarray_test mst_test paths_test sieve_test topological_sorting_test undirected_graph_test
 
 srcDir: algolibDir graphsDir mathsDir structuresDir
 
@@ -120,6 +120,12 @@ mst_test : graph.o directed_graph.o undirected_graph.o disjoint_sets.o mst.o mst
 
 paths.o : $(GRAPHS)/paths.cpp
 	$(CMPL) -c $(GRAPHS)/paths.cpp -o $(OBJSRC)/paths.o
+
+paths_test.o : $(TEST)/paths_test.cpp
+	$(CMPL) -c $(TEST)/paths_test.cpp -o $(OBJTEST)/paths_test.o
+
+paths_test : graph.o directed_graph.o undirected_graph.o paths.o paths_test.o
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJSRC)/paths.o $(OBJTEST)/paths_test.o -o $(TEST)/paths_test $(GTEST)
 
 
 searching.o : $(GRAPHS)/searching.cpp

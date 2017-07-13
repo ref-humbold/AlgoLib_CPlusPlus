@@ -23,6 +23,16 @@ namespace algolib
         class directed_graph : public virtual graph
         {
         public:
+            directed_graph()
+            {
+            }
+
+            virtual ~directed_graph() = default;
+            directed_graph(const directed_graph & g) = default;
+            directed_graph(directed_graph && g) = default;
+            directed_graph & operator=(const directed_graph & g) = default;
+            directed_graph & operator=(directed_graph && g) = default;
+
             /**
              * Odwracanie skierowania grafu
              */
@@ -31,6 +41,16 @@ namespace algolib
 
         class directed_weighted_graph : public virtual directed_graph, public virtual weighted_graph
         {
+        public:
+            directed_weighted_graph()
+            {
+            }
+
+            virtual ~directed_weighted_graph() = default;
+            directed_weighted_graph(const directed_weighted_graph & g) = default;
+            directed_weighted_graph(directed_weighted_graph && g) = default;
+            directed_weighted_graph & operator=(const directed_weighted_graph & g) = default;
+            directed_weighted_graph & operator=(directed_weighted_graph && g) = default;
         };
 
         class directed_simple_graph : public simple_graph, public virtual directed_graph

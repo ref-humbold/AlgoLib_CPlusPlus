@@ -31,6 +31,16 @@ namespace algolib
             /// Oznaczenie nieskończoności.
             static constexpr weight_t INF = std::numeric_limits<weight_t>::infinity();
 
+            graph()
+            {
+            }
+
+            virtual ~graph() = default;
+            graph(const graph & g) = default;
+            graph(graph && g) = default;
+            graph & operator=(const graph & g) = default;
+            graph & operator=(graph && g) = default;
+
             /**
              * @return liczba wierzchołków
              */
@@ -86,6 +96,16 @@ namespace algolib
         class weighted_graph : public virtual graph
         {
         public:
+            weighted_graph()
+            {
+            }
+
+            virtual ~weighted_graph() = default;
+            weighted_graph(const weighted_graph & g) = default;
+            weighted_graph(weighted_graph && g) = default;
+            weighted_graph & operator=(const weighted_graph & g) = default;
+            weighted_graph & operator=(weighted_graph && g) = default;
+
             /**
              * @return wektor krawędzi z wagami
              */

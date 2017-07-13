@@ -5,8 +5,7 @@ namespace algr = algolib::graphs;
 
 std::vector<weight_t> algr::bellman_ford(const directed_weighted_graph & diwgraph, vertex_t source)
 {
-    std::vector<weight_t> distances(diwgraph.get_vertices_number(),
-                                    directed_weighted_simple_graph::INF);
+    std::vector<weight_t> distances(diwgraph.get_vertices_number(), graph::INF);
 
     distances[source] = 0.0;
 
@@ -27,8 +26,8 @@ std::vector<weight_t> algr::bellman_ford(const directed_weighted_graph & diwgrap
 
         std::tie(v, u, wg) = we;
 
-        if(distances[v] < directed_weighted_simple_graph::INF && distances[v] + wg < distances[u])
-            throw std::runtime_error("Graph contains a negative cycle.");
+        if(distances[v] < graph::INF && distances[v] + wg < distances[u])
+            throw std::logic_error("Graph contains a negative cycle.");
     }
 
     return distances;
@@ -36,9 +35,14 @@ std::vector<weight_t> algr::bellman_ford(const directed_weighted_graph & diwgrap
 
 std::vector<weight_t> algr::dijkstra(const weighted_graph & wgraph, vertex_t source)
 {
-    std::vector<weight_t> distances(wgraph.get_vertices_number(), simple_graph::INF);
+    std::vector<weight_t> distances(wgraph.get_vertices_number(), graph::INF);
     std::vector<bool> is_visited(wgraph.get_vertices_number(), false);
     std::priority_queue<std::pair<weight_t, vertex_t>> vertex_queue;
+    std::vector<wedge_t> edges = wgraph.get_weighted_edges();
+
+    if(std::any_of(edges.begin(), edges.end(),
+                   [](const wedge_t & we) { return std::get<2>(we) < 0.0; }))
+        throw std::logic_error("Graph contains a negative weighted edge.");
 
     distances[source] = 0.0;
     vertex_queue.push(std::make_pair(0.0, source));
@@ -60,9 +64,6 @@ std::vector<weight_t> algr::dijkstra(const weighted_graph & wgraph, vertex_t sou
 
                 std::tie(nb, wg) = e;
 
-                if(wg < 0)
-                    throw std::runtime_error("Graph contains a negative weighted edge.");
-
                 if(distances[v] + wg < distances[nb])
                 {
                     distances[nb] = distances[v] + wg;
@@ -79,7 +80,10 @@ std::vector<std::vector<weight_t>> algr::floyd_warshall(const directed_weighted_
 {
     std::vector<std::vector<weight_t>> distances(
         diwgraph.get_vertices_number(),
-        std::vector<weight_t>(diwgraph.get_vertices_number(), directed_weighted_simple_graph::INF));
+        std::vector<weight_t>(diwgraph.get_vertices_number(), graph::INF));
+
+    for(const auto & v : diwgraph.get_vertices())
+        distances[v][v] = 0.0;
 
     for(const auto & we : diwgraph.get_weighted_edges())
         distances[std::get<0>(we)][std::get<1>(we)] = std::get<2>(we);
@@ -87,7 +91,7 @@ std::vector<std::vector<weight_t>> algr::floyd_warshall(const directed_weighted_
     for(const auto & w : diwgraph.get_vertices())
         for(const auto & v : diwgraph.get_vertices())
             for(const auto & u : diwgraph.get_vertices())
-                distances[w][v] = std::min(distances[w][v], distances[w][u] + distances[u][v]);
+                distances[v][u] = std::min(distances[v][u], distances[v][w] + distances[w][u]);
 
     return distances;
 }
