@@ -23,10 +23,7 @@ namespace algolib
         class undirected_graph : public virtual graph
         {
         public:
-            undirected_graph()
-            {
-            }
-
+            undirected_graph() = default;
             virtual ~undirected_graph() = default;
             undirected_graph(const undirected_graph & g) = default;
             undirected_graph(undirected_graph && g) = default;
@@ -44,10 +41,7 @@ namespace algolib
                                           public virtual weighted_graph
         {
         public:
-            undirected_weighted_graph()
-            {
-            }
-
+            undirected_weighted_graph() = default;
             virtual ~undirected_weighted_graph() = default;
             undirected_weighted_graph(const undirected_weighted_graph & g) = default;
             undirected_weighted_graph(undirected_weighted_graph && g) = default;

@@ -31,10 +31,7 @@ namespace algolib
             /// Oznaczenie nieskończoności.
             static constexpr weight_t INF = std::numeric_limits<weight_t>::infinity();
 
-            graph()
-            {
-            }
-
+            graph() = default;
             virtual ~graph() = default;
             graph(const graph & g) = default;
             graph(graph && g) = default;
@@ -96,10 +93,7 @@ namespace algolib
         class weighted_graph : public virtual graph
         {
         public:
-            weighted_graph()
-            {
-            }
-
+            weighted_graph() = default;
             virtual ~weighted_graph() = default;
             weighted_graph(const weighted_graph & g) = default;
             weighted_graph(weighted_graph && g) = default;
