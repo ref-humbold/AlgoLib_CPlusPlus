@@ -9,18 +9,18 @@
 #include <queue>
 #include <vector>
 
-class graph_partition_exception : public std::runtime_error
+class graph_partition_exception : public std::logic_error
 {
 public:
-    explicit graph_partition_exception() : std::runtime_error("")
+    explicit graph_partition_exception() : std::logic_error("")
     {
     }
 
-    explicit graph_partition_exception(const std::string & what_arg) : std::runtime_error(what_arg)
+    explicit graph_partition_exception(const std::string & what_arg) : std::logic_error(what_arg)
     {
     }
 
-    explicit graph_partition_exception(const char * what_arg) : std::runtime_error(what_arg)
+    explicit graph_partition_exception(const char * what_arg) : std::logic_error(what_arg)
     {
     }
 };

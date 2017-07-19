@@ -35,7 +35,7 @@ srcDir: algolibDir graphsDir mathsDir structuresDir
 
 algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o sorting.o two_sat.o
 
-graphsDir : cutting.o directed_graph.o forest_graph.o graph.o mst.o paths.o searching.o topological_sorting.o undirected_graph.o
+graphsDir : cutting.o directed_graph.o forest_graph.o graph.o mst.o multipartite_graph.o paths.o searching.o topological_sorting.o undirected_graph.o
 
 mathsDir : maths.o prime_checking.o sieve.o
 
@@ -116,6 +116,10 @@ mst_test.o : $(TEST)/mst_test.cpp
 
 mst_test : graph.o directed_graph.o undirected_graph.o disjoint_sets.o mst.o mst_test.o
 	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJSRC)/disjoint_sets.o $(OBJSRC)/mst.o $(OBJTEST)/mst_test.o -o $(TEST)/mst_test $(GTEST)
+
+
+multipartite_graph.o : $(GRAPHS)/multipartite_graph.cpp
+	$(CMPL) -c $(GRAPHS)/multipartite_graph.cpp -o $(OBJSRC)/multipartite_graph.o
 
 
 paths.o : $(GRAPHS)/paths.cpp

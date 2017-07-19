@@ -132,7 +132,7 @@ namespace algolib
         public:
             explicit simple_graph(int n)
             {
-                graphrepr.resize(n);
+                this->graphrepr.resize(n);
             }
 
             virtual ~simple_graph() = default;

@@ -31,5 +31,7 @@ bool algolib::is_satisfiable(const formula_t & formula)
 {
     algolib::graphs::directed_simple_graph digraph = detail::make_graph(formula);
 
+    // TODO algorytm 2sat i silnie spójne składowe
+
     return false;
 }

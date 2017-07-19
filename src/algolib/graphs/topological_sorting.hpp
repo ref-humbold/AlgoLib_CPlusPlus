@@ -9,11 +9,10 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
+#include <functional>
 #include <queue>
 #include <string>
 #include <vector>
-#include <functional>
-
 
 #include "directed_graph.hpp"
 
@@ -34,20 +33,20 @@ namespace algolib
 {
     namespace graphs
     {
-        class directed_cyclic_graph_exception : public std::runtime_error
+        class directed_cyclic_graph_exception : public std::logic_error
         {
         public:
-            explicit directed_cyclic_graph_exception() : std::runtime_error("")
+            explicit directed_cyclic_graph_exception() : std::logic_error("")
             {
             }
 
             explicit directed_cyclic_graph_exception(const std::string & what_arg)
-                : std::runtime_error(what_arg)
+                : std::logic_error(what_arg)
             {
             }
 
             explicit directed_cyclic_graph_exception(const char * what_arg)
-                : std::runtime_error(what_arg)
+                : std::logic_error(what_arg)
             {
             }
         };

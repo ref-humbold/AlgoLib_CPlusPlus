@@ -22,18 +22,18 @@ namespace algolib
 {
     namespace graphs
     {
-        class cycle_exception : std::runtime_error
+        class cycle_exception : std::logic_error
         {
         public:
-            explicit cycle_exception() : std::runtime_error("")
+            explicit cycle_exception() : std::logic_error("")
             {
             }
 
-            explicit cycle_exception(const std::string & what_arg) : std::runtime_error(what_arg)
+            explicit cycle_exception(const std::string & what_arg) : std::logic_error(what_arg)
             {
             }
 
-            explicit cycle_exception(const char * what_arg) : std::runtime_error(what_arg)
+            explicit cycle_exception(const char * what_arg) : std::logic_error(what_arg)
             {
             }
         };
@@ -69,7 +69,7 @@ namespace algolib
                 return this->graph.get_vertices();
             }
 
-            vertex_t add_vertex();
+            vertex_t add_vertex() override;
 
             size_t get_edges_number() const override
             {
@@ -81,7 +81,7 @@ namespace algolib
                 return this->graph.get_edges();
             }
 
-            void add_edge(vertex_t vertex1, vertex_t vertex2);
+            void add_edge(vertex_t vertex1, vertex_t vertex2) override;
 
             std::vector<vertex_t> get_neighbours(vertex_t vertex) const override
             {
