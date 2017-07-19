@@ -25,15 +25,11 @@ namespace algolib
         class cycle_exception : std::logic_error
         {
         public:
-            explicit cycle_exception() : std::logic_error("")
-            {
-            }
-
             explicit cycle_exception(const std::string & what_arg) : std::logic_error(what_arg)
             {
             }
 
-            explicit cycle_exception(const char * what_arg) : std::logic_error(what_arg)
+            explicit cycle_exception(const char * what_arg = "") : std::logic_error(what_arg)
             {
             }
         };
@@ -56,62 +52,60 @@ namespace algolib
 
             size_t get_trees_number() const
             {
-                return this->components.size();
+                return components.size();
             }
 
             size_t get_vertices_number() const override
             {
-                return this->graph.get_vertices_number();
+                return graph.get_vertices_number();
             }
 
             std::vector<vertex_t> get_vertices() const override
             {
-                return this->graph.get_vertices();
+                return graph.get_vertices();
             }
 
             vertex_t add_vertex() override;
 
             size_t get_edges_number() const override
             {
-                return this->graph.get_edges_number();
+                return graph.get_edges_number();
             }
 
             std::vector<edge_t> get_edges() const override
             {
-                return this->graph.get_edges();
+                return graph.get_edges();
             }
 
             void add_edge(vertex_t vertex1, vertex_t vertex2) override;
 
             std::vector<vertex_t> get_neighbours(vertex_t vertex) const override
             {
-                return this->graph.get_neighbours(vertex);
+                return graph.get_neighbours(vertex);
             }
 
             size_t get_outdegree(vertex_t vertex) const override
             {
-                return this->graph.get_outdegree(vertex);
+                return graph.get_outdegree(vertex);
             }
 
             size_t get_indegree(vertex_t vertex) const override
             {
-                return this->graph.get_indegree(vertex);
+                return graph.get_indegree(vertex);
             }
 
             directed_graph * as_directed() const override
             {
                 return graph.as_directed();
             }
+
             /**
              * Sprawdzanie, czy wierzchołki należą do tego samego drzewa.
              * @param vertex1 pierwszy wierzchołek
              * @param vertex2 drugi wierzchołek
              * @return czy wierzchołki są w jednym drzewie
              */
-            bool is_same_tree(vertex_t vertex1, vertex_t vertex2) const
-            {
-                return components.is_same_set(vertex1, vertex2);
-            }
+            bool is_same_tree(vertex_t vertex1, vertex_t vertex2) const;
         };
     }
 }

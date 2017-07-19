@@ -27,9 +27,26 @@ vertex_t algr::multipartite_graph::add_vertex(size_t group)
     return graph.add_vertex();
 }
 
+void algr::multipartite_graph::add_edge(vertex_t vertex1, vertex_t vertex2)
+{
+    if(vertex1 >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex1));
+
+    if(vertex2 >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex2));
+
+    if(is_same_group(vertex1, vertex2))
+        throw graph_partition_exception();
+
+    graph.add_edge(vertex1, vertex2);
+}
+
 std::vector<vertex_t> algr::multipartite_graph::get_neighbours(vertex_t vertex, size_t group) const
 {
     std::vector<vertex_t> vertices;
+
+    if(vertex >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex));
 
     if(group == 0)
         return graph.get_neighbours(vertex);
@@ -39,4 +56,23 @@ std::vector<vertex_t> algr::multipartite_graph::get_neighbours(vertex_t vertex, 
             vertices.push_back(v);
 
     return vertices;
+}
+
+bool algr::multipartite_graph::is_in_group(vertex_t vertex, size_t group) const
+{
+    if(vertex >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex));
+
+    return groups[vertex] == group;
+}
+
+bool algr::multipartite_graph::is_same_group(vertex_t vertex1, vertex_t vertex2) const
+{
+    if(vertex1 >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex1));
+
+    if(vertex2 >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex2));
+
+    return groups[vertex1] == groups[vertex2];
 }

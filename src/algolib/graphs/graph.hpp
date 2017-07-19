@@ -25,6 +25,20 @@ namespace algolib
 {
     namespace graphs
     {
+        class no_such_vertex_exception : public std::logic_error
+        {
+        public:
+            explicit no_such_vertex_exception(const std::string & what_arg)
+                : std::logic_error(what_arg)
+            {
+            }
+
+            explicit no_such_vertex_exception(const char * what_arg = "")
+                : std::logic_error(what_arg)
+            {
+            }
+        };
+
         class graph
         {
         public:
@@ -69,25 +83,25 @@ namespace algolib
              * @param v początkowy wierzchołek
              * @param u końcowy wierzchołek
              */
-            virtual void add_edge(vertex_t v, vertex_t u) = 0;
+            virtual void add_edge(vertex_t vertex1, vertex_t vertex2) = 0;
 
             /**
              * @param v numer wierzchołka
              * @return wektor sąsiadów wierzchołka
              */
-            virtual std::vector<vertex_t> get_neighbours(vertex_t v) const = 0;
+            virtual std::vector<vertex_t> get_neighbours(vertex_t vertex) const = 0;
 
             /**
              * @param v numer wierzchołka
              * @return stopień wyjściowy wierzchołka
              */
-            virtual size_t get_outdegree(vertex_t v) const = 0;
+            virtual size_t get_outdegree(vertex_t vertex) const = 0;
 
             /**
              * @param v numer wierzchołka
              * @return stopień wejściowy wierzchołka
              */
-            virtual size_t get_indegree(vertex_t v) const = 0;
+            virtual size_t get_indegree(vertex_t vertex) const = 0;
         };
 
         class weighted_graph : public virtual graph
@@ -111,13 +125,13 @@ namespace algolib
              * @param u końcowy wierzchołek
              * @param wg waga krawędzi
              */
-            virtual void add_weighted_edge(vertex_t v, vertex_t u, weight_t wg) = 0;
+            virtual void add_weighted_edge(vertex_t vertex1, vertex_t vertex2, weight_t weight) = 0;
 
             /**
              * @param v numer wierzchołka
              * @return wektor sąsiadów wierzchołka z wagami
              */
-            virtual std::vector<wvertex_t> get_weighted_neighbours(vertex_t v) const = 0;
+            virtual std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const = 0;
         };
 
         class simple_graph : public virtual graph
@@ -150,12 +164,9 @@ namespace algolib
 
             vertex_t add_vertex() override;
 
-            std::vector<vertex_t> get_neighbours(vertex_t v) const override;
+            std::vector<vertex_t> get_neighbours(vertex_t vertex) const override;
 
-            size_t get_outdegree(vertex_t v) const override
-            {
-                return graphrepr[v].size();
-            }
+            size_t get_outdegree(vertex_t vertex) const override;
         };
     }
 }

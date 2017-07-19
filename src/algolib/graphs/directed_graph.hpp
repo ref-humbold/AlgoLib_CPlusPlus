@@ -67,9 +67,9 @@ namespace algolib
 
             std::vector<edge_t> get_edges() const override;
 
-            void add_edge(vertex_t v, vertex_t u) override;
+            void add_edge(vertex_t vertex1, vertex_t vertex2) override;
 
-            size_t get_indegree(vertex_t v) const override;
+            size_t get_indegree(vertex_t vertex) const override;
 
             virtual void reverse() override;
         };
@@ -101,12 +101,9 @@ namespace algolib
 
             std::vector<wedge_t> get_weighted_edges() const override;
 
-            void add_weighted_edge(vertex_t v, vertex_t u, weight_t wg) override;
+            void add_weighted_edge(vertex_t vertex1, vertex_t vertex2, weight_t weight) override;
 
-            std::vector<wvertex_t> get_weighted_neighbours(vertex_t v) const override
-            {
-                return std::vector<wvertex_t>(graphrepr[v].begin(), graphrepr[v].end());
-            }
+            std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const;
 
             void reverse() override;
         };

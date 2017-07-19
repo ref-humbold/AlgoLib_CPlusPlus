@@ -28,12 +28,23 @@ vertex_t algr::simple_graph::add_vertex()
     return graphrepr.size() - 1;
 }
 
-std::vector<vertex_t> algr::simple_graph::get_neighbours(vertex_t v) const
+std::vector<vertex_t> algr::simple_graph::get_neighbours(vertex_t vertex) const
 {
-    std::vector<vertex_t> neibs(graphrepr[v].size());
+    if(vertex >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex));
 
-    std::transform(graphrepr[v].begin(), graphrepr[v].end(), neibs.begin(),
+    std::vector<vertex_t> neibs(graphrepr[vertex].size());
+
+    std::transform(graphrepr[vertex].begin(), graphrepr[vertex].end(), neibs.begin(),
                    [](wvertex_t wv) { return std::get<0>(wv); });
 
     return neibs;
+}
+
+size_t algr::simple_graph::get_outdegree(vertex_t vertex) const
+{
+    if(vertex >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex));
+
+    return graphrepr[vertex].size();
 }

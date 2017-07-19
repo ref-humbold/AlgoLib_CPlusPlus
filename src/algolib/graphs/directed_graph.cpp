@@ -26,20 +26,26 @@ std::vector<edge_t> algr::directed_simple_graph::get_edges() const
     return edges;
 }
 
-void algr::directed_simple_graph::add_edge(vertex_t v, vertex_t u)
+void algr::directed_simple_graph::add_edge(vertex_t vertex1, vertex_t vertex2)
 {
-    if(v > get_vertices_number() || u > get_vertices_number())
-        throw std::invalid_argument("No such vertex.");
+    if(vertex1 >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex1));
 
-    graphrepr[v].emplace(u, DEFAULT_WEIGHT);
+    if(vertex2 >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex2));
+
+    graphrepr[vertex1].emplace(vertex2, DEFAULT_WEIGHT);
 }
 
-size_t algr::directed_simple_graph::get_indegree(vertex_t v) const
+size_t algr::directed_simple_graph::get_indegree(vertex_t vertex) const
 {
+    if(vertex >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex));
+
     std::vector<edge_t> edges = get_edges();
 
     return std::accumulate(edges.begin(), edges.end(), 0, [&](size_t acc, edge_t e) {
-        return std::get<1>(e) == v ? acc + 1 : acc;
+        return std::get<1>(e) == vertex ? acc + 1 : acc;
     });
 }
 
@@ -66,13 +72,25 @@ std::vector<wedge_t> algr::directed_weighted_simple_graph::get_weighted_edges() 
     return wedges;
 }
 
-void algr::directed_weighted_simple_graph::add_weighted_edge(vertex_t v, vertex_t u,
-                                                             weight_t wg)
+void algr::directed_weighted_simple_graph::add_weighted_edge(vertex_t vertex1, vertex_t vertex2,
+                                                             weight_t weight)
 {
-    if(v > get_vertices_number() || u > get_vertices_number())
-        throw std::invalid_argument("No such vertex.");
+    if(vertex1 >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex1));
 
-    graphrepr[v].emplace(u, wg);
+    if(vertex2 >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex2));
+
+    graphrepr[vertex1].emplace(vertex2, weight);
+}
+
+std::vector<wvertex_t>
+    algr::directed_weighted_simple_graph::get_weighted_neighbours(vertex_t vertex) const
+{
+    if(vertex >= get_vertices_number())
+        throw no_such_vertex_exception(std::to_string(vertex));
+
+    return std::vector<wvertex_t>(graphrepr[vertex].begin(), graphrepr[vertex].end());
 }
 
 void algr::directed_weighted_simple_graph::reverse()

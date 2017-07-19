@@ -36,16 +36,12 @@ namespace algolib
         class directed_cyclic_graph_exception : public std::logic_error
         {
         public:
-            explicit directed_cyclic_graph_exception() : std::logic_error("")
-            {
-            }
-
             explicit directed_cyclic_graph_exception(const std::string & what_arg)
                 : std::logic_error(what_arg)
             {
             }
 
-            explicit directed_cyclic_graph_exception(const char * what_arg)
+            explicit directed_cyclic_graph_exception(const char * what_arg = "")
                 : std::logic_error(what_arg)
             {
             }

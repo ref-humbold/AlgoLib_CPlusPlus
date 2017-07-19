@@ -17,16 +17,13 @@ namespace algolib
         class graph_partition_exception : public std::logic_error
         {
         public:
-            explicit graph_partition_exception() : std::logic_error("")
-            {
-            }
-
             explicit graph_partition_exception(const std::string & what_arg)
                 : std::logic_error(what_arg)
             {
             }
 
-            explicit graph_partition_exception(const char * what_arg) : std::logic_error(what_arg)
+            explicit graph_partition_exception(const char * what_arg = "")
+                : std::logic_error(what_arg)
             {
             }
         };
@@ -98,13 +95,7 @@ namespace algolib
                 return graph.get_edges();
             }
 
-            void add_edge(vertex_t vertex1, vertex_t vertex2) override
-            {
-                if(is_same_group(vertex1, vertex2))
-                    throw graph_partition_exception();
-
-                graph.add_edge(vertex1, vertex2);
-            }
+            void add_edge(vertex_t vertex1, vertex_t vertex2) override;
 
             std::vector<vertex_t> get_neighbours(vertex_t vertex) const override
             {
@@ -139,10 +130,7 @@ namespace algolib
              * @param group numer grupy
              * @return czy wierzchołek jest w grupie
              */
-            bool is_in_group(vertex_t vertex, size_t group) const
-            {
-                return groups[vertex] == group;
-            }
+            bool is_in_group(vertex_t vertex, size_t group) const;
 
             /**
              * Sprawdzanie, czy wierzchołki należą do tej samej grupy.
@@ -150,10 +138,7 @@ namespace algolib
              * @param vertex2 drugi wierzchołek
              * @return czy wierzchołki są w jednej grupie
              */
-            bool is_same_group(vertex_t vertex1, vertex_t vertex2) const
-            {
-                return groups[vertex1] == groups[vertex2];
-            }
+            bool is_same_group(vertex_t vertex1, vertex_t vertex2) const;
         };
     }
 }
