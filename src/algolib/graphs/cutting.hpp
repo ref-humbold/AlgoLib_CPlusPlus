@@ -44,13 +44,13 @@ namespace detail
          * Znajdowanie mostów.
          * @return lista krawędzi będących mostami
          */
-        std::vector<edge_t> bridges();
+        std::vector<edge_t> edge_cut();
 
         /**
          * Znajdowanie punktów artykulacji.
          * @return lista punktów artykulacji
          */
-        std::vector<vertex_t> separators();
+        std::vector<vertex_t> vertex_cut();
 
     private:
         /**
@@ -58,24 +58,14 @@ namespace detail
          * @param vertex wierzchołek
          * @return czy wierzchołek incydentny z mostem
          */
-        bool has_bridge(vertex_t vertex)
-        {
-            return low_values[vertex] == dfs_depths[vertex] && !is_dfs_root(vertex);
-        }
+        bool has_bridge(vertex_t vertex);
 
         /**
          * Sprawdzanie, czy wierzchołek jest punktem artykulacji.
          * @param vertex wierzchołek
          * @return czy wierzchołek to punkt artykulacji
          */
-        bool is_separator(vertex_t vertex)
-        {
-            return is_dfs_root(vertex)
-                       ? dfs_children[vertex].size() > 1
-                       : std::any_of(
-                             dfs_children[vertex].begin(), dfs_children[vertex].end(),
-                             [&](vertex_t ch) { return low_values[ch] >= dfs_depths[vertex]; });
-        }
+        bool is_separator(vertex_t vertex);
 
         /**
          * Sprawdzanie, czy wierzchołek jest korzeniem drzewa DFS
@@ -106,15 +96,20 @@ namespace algolib
          * @param ugraph graf nieskierowany
          * @return lista krawędzi będących mostami
          */
-        std::vector<edge_t> find_bridges(const algolib::graphs::undirected_graph & ugraph);
+        std::vector<edge_t> find_edge_cut(const algolib::graphs::undirected_graph & ugraph)
+        {
+            return detail::graph_cutting(ugraph).edge_cut();
+        }
 
         /**
          * Wyznaczanie punktów artykulacji w grafie.
          * @param ugraph graf nieskierowany
          * @return lista punktów artykulacji
          */
-        std::vector<vertex_t>
-            find_vertex_separators(const algolib::graphs::undirected_graph & ugraph);
+        std::vector<vertex_t> find_vertex_cut(const algolib::graphs::undirected_graph & ugraph)
+        {
+            return detail::graph_cutting(ugraph).vertex_cut();
+        }
     }
 }
 

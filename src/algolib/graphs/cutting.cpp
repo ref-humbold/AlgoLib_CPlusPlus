@@ -3,7 +3,7 @@
 
 namespace algr = algolib::graph;
 
-std::vector<edge_t> detail::graph_cutting::bridges()
+std::vector<edge_t> detail::graph_cutting::edge_cut()
 {
     std::vector<edge_t> bridges;
 
@@ -18,7 +18,7 @@ std::vector<edge_t> detail::graph_cutting::bridges()
     return bridges;
 }
 
-std::vector<vertex_t> detail::graph_cutting::separators()
+std::vector<vertex_t> detail::graph_cutting::vertex_cut()
 {
     std::vector<vertex_t> separators;
 
@@ -31,6 +31,19 @@ std::vector<vertex_t> detail::graph_cutting::separators()
             separators.push_back(v);
 
     return separators;
+}
+
+bool detail::graph_cutting::has_bridge(vertex_t vertex)
+{
+    return low_values[vertex] == dfs_depths[vertex] && !is_dfs_root(vertex);
+}
+
+bool detail::graph_cutting::is_separator(vertex_t vertex)
+{
+    return is_dfs_root(vertex)
+               ? dfs_children[vertex].size() > 1
+               : std::any_of(dfs_children[vertex].begin(), dfs_children[vertex].end(),
+                             [&](vertex_t ch) { return low_values[ch] >= dfs_depths[vertex]; });
 }
 
 void detail::graph_cutting::dfs(vertex_t vertex, vertex_t parent, int depth)
@@ -48,14 +61,4 @@ void detail::graph_cutting::dfs(vertex_t vertex, vertex_t parent, int depth)
         }
         else if(neighbour != parent)
             low_values[vertex] = std::min(low_values[vertex], dfs_depths[neighbour]);
-}
-
-std::vector<edge_t> algr::find_bridges(const algolib::graphs::undirected_graph & ugraph)
-{
-    return detail::graph_cutting(ugraph).bridges();
-}
-
-std::vector<vertex_t> algr::find_vertex_separators(const algolib::graphs::undirected_graph & ugraph)
-{
-    return detail::graph_cutting(ugraph).separators();
-}
+};
