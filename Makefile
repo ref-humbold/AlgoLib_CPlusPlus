@@ -12,6 +12,7 @@ STRUCTURES = $(ALGOLIB)/structures
 OBJSRC = $(OBJ)/$(SRC)
 OBJTEST = $(OBJ)/$(TEST)
 
+
 all : prepare srcDir testDir
 
 source : prepare srcDir
@@ -27,7 +28,9 @@ clean :
 
 refresh : clean all
 
-refreshtest : clean alltest
+refreshSource : clean source
+
+refreshTest : clean tests
 
 testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test maximum_subarray_test mst_test paths_test sieve_test topological_sorting_test undirected_graph_test
 
