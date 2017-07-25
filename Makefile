@@ -1,6 +1,6 @@
 CXX = g++ -std=c++11
 CXXFLAGS = -Wall -Wextra
-GTEST = -lgtest -lgtest_main -lpthread
+GTEST = -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -lpthread
 CMPL = $(CXX) $(CXXFLAGS)
 SRC = src
 OBJ = build
@@ -41,6 +41,7 @@ mathsDir : maths.o prime_checking.o sieve.o
 
 structuresDir : avl_tree.o disjoint_sets.o equation_system.o
 
+# algolib
 
 closest_points.o : $(ALGOLIB)/closest_points.cpp
 	$(CMPL) -c $(ALGOLIB)/closest_points.cpp -o $(OBJSRC)/closest_points.o
@@ -85,6 +86,7 @@ sorting.o : $(ALGOLIB)/sorting.cpp
 two_sat.o : $(ALGOLIB)/two_sat.cpp
 	$(CMPL) -c $(ALGOLIB)/two_sat.cpp -o $(OBJSRC)/two_sat.o
 
+# algolib/graphs
 
 cutting.o : $(GRAPHS)/cutting.cpp
 	$(CMPL) -c $(GRAPHS)/cutting.cpp -o $(OBJSRC)/cutting.o
@@ -155,6 +157,7 @@ undirected_graph_test.o : $(TEST)/undirected_graph_test.cpp
 undirected_graph_test : graph.o directed_graph.o undirected_graph.o undirected_graph_test.o
 	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJTEST)/undirected_graph_test.o -o $(TEST)/undirected_graph_test $(GTEST)
 
+# algolib/maths
 
 maths.o : $(MATHS)/maths.cpp
 	$(CMPL) -c $(MATHS)/maths.cpp -o $(OBJSRC)/maths.o
@@ -179,6 +182,7 @@ sieve_test.o : $(TEST)/sieve_test.cpp
 sieve_test : sieve.o sieve_test.o
 	$(CMPL) $(OBJSRC)/sieve.o $(OBJTEST)/sieve_test.o -o $(TEST)/sieve_test $(GTEST)
 
+# algolib/structures
 
 avl_tree.o : $(STRUCTURES)/avl_tree.cpp
 	$(CMPL) -c $(STRUCTURES)/avl_tree.cpp -o $(OBJSRC)/avl_tree.o
