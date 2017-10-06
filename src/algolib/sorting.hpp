@@ -153,13 +153,13 @@ namespace algolib
     }
 
     /**
-     * Mutowalne sortowanie ciągu przez scalanie.
+     * Mutowalne sortowanie ciągu przez scalanie top-down.
      * @param sequence ciąg
      * @param index_begin początkowy indeks ciągu
      * @param index_end końcowy indeks ciągu
      */
     template <typename T>
-    void merge_sort(std::vector<T> & sequence, int index_begin = 0, int index_end = -1)
+    void mergedown_sort(std::vector<T> & sequence, int index_begin = 0, int index_end = -1)
     {
         if(index_end == -1)
             index_end = sequence.size();
@@ -175,22 +175,65 @@ namespace algolib
 
         int index_middle = (index_begin + index_end) / 2;
 
-        merge_sort(sequence, index_begin, index_middle);
-        merge_sort(sequence, index_middle, index_end);
+        mergedown_sort(sequence, index_begin, index_middle);
+        mergedown_sort(sequence, index_middle, index_end);
         detail::merge(sequence, index_begin, index_middle, index_end);
     }
 
     /**
-     * Niemutowalne sortowanie ciągu przez scalanie.
+     * Niemutowalne sortowanie ciągu przez scalanie top-down.
      * @param sequence ciąg
      * @param index_begin początkowy indeks ciągu
      * @param index_end końcowy indeks ciągu
      * @return ciąg posortowanych elementów
      */
     template <typename T>
-    std::vector<T> merge_sorted(std::vector<T> sequence, int index_begin = 0, int index_end = -1)
+    std::vector<T> mergedown_sorted(std::vector<T> sequence, int index_begin = 0,
+                                    int index_end = -1)
     {
-        merge_sort(sequence, index_begin, index_end);
+        mergedown_sort(sequence, index_begin, index_end);
+
+        return sequence;
+    }
+
+    /**
+     * Mutowalne sortowanie ciągu przez scalanie bottom-up.
+     * @param sequence ciąg
+     * @param index_begin początkowy indeks ciągu
+     * @param index_end końcowy indeks ciągu
+     */
+    template <typename T>
+    void mergeup_sort(std::vector<T> & sequence, int index_begin = 0, int index_end = -1)
+    {
+        if(index_end == -1)
+            index_end = sequence.size();
+
+        if(index_begin < 0 || index_end > sequence.size())
+            throw std::invalid_argument("Sequence beginning index out of range.");
+
+        if(index_end < 0 || index_end > sequence.size())
+            throw std::invalid_argument("Sequence ending index out of range.");
+
+        if(index_end - index_begin <= 1)
+            return;
+
+        for(int i = 2; i < 2 * (index_end - index_begin); i *= 2)
+            for(int j = index_begin; j < index_end; j += i)
+                detail::merge(sequence, j, std::min(j + i / 2, index_end),
+                              std::min(j + i, index_end));
+    }
+
+    /**
+     * Niemutowalne sortowanie ciągu przez scalanie bottom-up.
+     * @param sequence ciąg
+     * @param index_begin początkowy indeks ciągu
+     * @param index_end końcowy indeks ciągu
+     * @return ciąg posortowanych elementów
+     */
+    template <typename T>
+    std::vector<T> mergeup_sorted(std::vector<T> sequence, int index_begin = 0, int index_end = -1)
+    {
+        mergeup_sort(sequence, index_begin, index_end);
 
         return sequence;
     }
