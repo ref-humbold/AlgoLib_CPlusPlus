@@ -10,11 +10,12 @@ int detail::choose_pivot(int size)
     if(std::min(candidate2, candidate3) <= candidate1
        && candidate1 <= std::max(candidate2, candidate3))
         return candidate2;
-    else if(std::min(candidate1, candidate3) <= candidate2
-            && candidate2 <= std::max(candidate1, candidate3))
+
+    if(std::min(candidate1, candidate3) <= candidate2
+       && candidate2 <= std::max(candidate1, candidate3))
         return candidate2;
-    else
-        return candidate3;
+
+    return candidate3;
 }
 
 void algolib::angle_sort(std::vector<point2D_t> & points)
@@ -34,11 +35,4 @@ void algolib::angle_sort(std::vector<point2D_t> & points)
     };
 
     std::sort(points.begin(), points.end(), comparator);
-}
-
-std::vector<point2D_t> algolib::angle_sorted(std::vector<point2D_t> points)
-{
-    angle_sort(points);
-
-    return points;
 }

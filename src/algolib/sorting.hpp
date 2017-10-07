@@ -95,13 +95,6 @@ namespace algolib
     void angle_sort(std::vector<point2D_t> & points);
 
     /**
-     * Niemutowalne sortowanie kątowe punktów na płaszczyźnie.
-     * @param points lista punktów
-     * @return lista punktów posortowana względem kąta
-     */
-    std::vector<point2D_t> angle_sorted(std::vector<point2D_t> points);
-
-    /**
      * Mutowalne sortowanie ciągu przez kopcowanie.
      * @param sequence ciąg
      * @param index_begin początkowy indeks ciągu
@@ -138,21 +131,6 @@ namespace algolib
     }
 
     /**
-     * Niemutowalne sortowanie ciągu przez kopcowanie.
-     * @param sequence ciąg
-     * @param index_begin początkowy indeks ciągu
-     * @param index_end końcowy indeks ciągu
-     * @return ciąg posortowanych elementów
-     */
-    template <typename T>
-    std::vector<T> heap_sorted(std::vector<T> sequence, int index_begin = 0, int index_end = -1)
-    {
-        heap_sort(sequence, index_begin, index_end);
-
-        return sequence;
-    }
-
-    /**
      * Mutowalne sortowanie ciągu przez scalanie top-down.
      * @param sequence ciąg
      * @param index_begin początkowy indeks ciągu
@@ -181,22 +159,6 @@ namespace algolib
     }
 
     /**
-     * Niemutowalne sortowanie ciągu przez scalanie top-down.
-     * @param sequence ciąg
-     * @param index_begin początkowy indeks ciągu
-     * @param index_end końcowy indeks ciągu
-     * @return ciąg posortowanych elementów
-     */
-    template <typename T>
-    std::vector<T> mergedown_sorted(std::vector<T> sequence, int index_begin = 0,
-                                    int index_end = -1)
-    {
-        mergedown_sort(sequence, index_begin, index_end);
-
-        return sequence;
-    }
-
-    /**
      * Mutowalne sortowanie ciągu przez scalanie bottom-up.
      * @param sequence ciąg
      * @param index_begin początkowy indeks ciągu
@@ -221,21 +183,6 @@ namespace algolib
             for(int j = index_begin; j < index_end; j += i)
                 detail::merge(sequence, j, std::min(j + i / 2, index_end),
                               std::min(j + i, index_end));
-    }
-
-    /**
-     * Niemutowalne sortowanie ciągu przez scalanie bottom-up.
-     * @param sequence ciąg
-     * @param index_begin początkowy indeks ciągu
-     * @param index_end końcowy indeks ciągu
-     * @return ciąg posortowanych elementów
-     */
-    template <typename T>
-    std::vector<T> mergeup_sorted(std::vector<T> sequence, int index_begin = 0, int index_end = -1)
-    {
-        mergeup_sort(sequence, index_begin, index_end);
-
-        return sequence;
     }
 
     /**
@@ -279,21 +226,6 @@ namespace algolib
 
         quick_sort(sequence, index_begin, index_pivot);
         quick_sort(sequence, index_pivot + 1, index_end);
-    }
-
-    /**
-     * Niemutowalne szybkie sortowanie ciągu.
-     * @param sequence ciąg
-     * @param index_begin początkowy indeks ciągu
-     * @param index_end końcowy indeks ciągu
-     * @return ciąg posortowanych elementów
-     */
-    template <typename T>
-    std::vector<T> quick_sorted(std::vector<T> sequence, int index_begin = 0, int index_end = -1)
-    {
-        quick_sort(sequence, index_begin, index_end);
-
-        return sequence;
     }
 }
 
