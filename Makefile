@@ -3,7 +3,7 @@ CXXFLAGS = -Wall -Wextra
 GTEST = -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -lpthread
 CMPL = $(CXX) $(CXXFLAGS)
 SRC = src
-OBJ = build
+OBJ = obj
 TEST = test
 ALGOLIB = $(SRC)/algolib
 GRAPHS = $(ALGOLIB)/graphs
@@ -11,6 +11,7 @@ MATHS = $(ALGOLIB)/maths
 STRUCTURES = $(ALGOLIB)/structures
 OBJSRC = $(OBJ)/$(SRC)
 OBJTEST = $(OBJ)/$(TEST)
+TESTBIN = $(TEST)/bin
 
 
 all : prepare srcDir testDir
@@ -22,6 +23,7 @@ tests : prepare testDir
 prepare :
 	mkdir -p $(OBJSRC)
 	mkdir -p $(OBJTEST)
+	mkdir -p $(TESTBIN)
 
 clean :
 	rm -rf $(OBJ)
@@ -61,7 +63,7 @@ kmp_test.o : $(TEST)/kmp_test.cpp
 	$(CMPL) -c $(TEST)/kmp_test.cpp -o $(OBJTEST)/kmp_test.o
 
 kmp_test : kmp.o kmp_test.o
-	$(CMPL) $(OBJSRC)/kmp.o $(OBJTEST)/kmp_test.o -o $(TEST)/kmp_test $(GTEST)
+	$(CMPL) $(OBJSRC)/kmp.o $(OBJTEST)/kmp_test.o -o $(TESTBIN)/kmp_test $(GTEST)
 
 
 kmr.o : $(ALGOLIB)/kmr.cpp
@@ -79,7 +81,7 @@ maximum_subarray_test.o : $(TEST)/maximum_subarray_test.cpp
 	$(CMPL) -c $(TEST)/maximum_subarray_test.cpp -o $(OBJTEST)/maximum_subarray_test.o
 
 maximum_subarray_test : maximum_subarray.o maximum_subarray_test.o
-	$(CMPL) $(OBJSRC)/maximum_subarray.o $(OBJTEST)/maximum_subarray_test.o -o $(TEST)/maximum_subarray_test $(GTEST)
+	$(CMPL) $(OBJSRC)/maximum_subarray.o $(OBJTEST)/maximum_subarray_test.o -o $(TESTBIN)/maximum_subarray_test $(GTEST)
 
 
 sorting.o : $(ALGOLIB)/sorting.cpp
@@ -102,7 +104,7 @@ directed_graph_test.o : $(TEST)/directed_graph_test.cpp
 	$(CMPL) -c $(TEST)/directed_graph_test.cpp -o $(OBJTEST)/directed_graph_test.o
 
 directed_graph_test : graph.o directed_graph.o directed_graph_test.o
-	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJTEST)/directed_graph_test.o -o $(TEST)/directed_graph_test $(GTEST)
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJTEST)/directed_graph_test.o -o $(TESTBIN)/directed_graph_test $(GTEST)
 
 
 forest_graph.o : $(GRAPHS)/forest_graph.cpp
@@ -120,7 +122,7 @@ mst_test.o : $(TEST)/mst_test.cpp
 	$(CMPL) -c $(TEST)/mst_test.cpp -o $(OBJTEST)/mst_test.o
 
 mst_test : graph.o directed_graph.o undirected_graph.o disjoint_sets.o mst.o mst_test.o
-	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJSRC)/disjoint_sets.o $(OBJSRC)/mst.o $(OBJTEST)/mst_test.o -o $(TEST)/mst_test $(GTEST)
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJSRC)/disjoint_sets.o $(OBJSRC)/mst.o $(OBJTEST)/mst_test.o -o $(TESTBIN)/mst_test $(GTEST)
 
 
 multipartite_graph.o : $(GRAPHS)/multipartite_graph.cpp
@@ -134,7 +136,7 @@ paths_test.o : $(TEST)/paths_test.cpp
 	$(CMPL) -c $(TEST)/paths_test.cpp -o $(OBJTEST)/paths_test.o
 
 paths_test : graph.o directed_graph.o undirected_graph.o paths.o paths_test.o
-	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJSRC)/paths.o $(OBJTEST)/paths_test.o -o $(TEST)/paths_test $(GTEST)
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJSRC)/paths.o $(OBJTEST)/paths_test.o -o $(TESTBIN)/paths_test $(GTEST)
 
 
 searching.o : $(GRAPHS)/searching.cpp
@@ -148,7 +150,7 @@ topological_sorting_test.o : $(TEST)/topological_sorting_test.cpp
 	$(CMPL) -c $(TEST)/topological_sorting_test.cpp -o $(OBJTEST)/topological_sorting_test.o
 
 topological_sorting_test : graph.o directed_graph.o topological_sorting.o topological_sorting_test.o
-	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/topological_sorting.o $(OBJTEST)/topological_sorting_test.o -o $(TEST)/topological_sorting_test $(GTEST)
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/topological_sorting.o $(OBJTEST)/topological_sorting_test.o -o $(TESTBIN)/topological_sorting_test $(GTEST)
 
 
 undirected_graph.o : $(GRAPHS)/undirected_graph.cpp
@@ -158,7 +160,7 @@ undirected_graph_test.o : $(TEST)/undirected_graph_test.cpp
 	$(CMPL) -c $(TEST)/undirected_graph_test.cpp -o $(OBJTEST)/undirected_graph_test.o
 
 undirected_graph_test : graph.o directed_graph.o undirected_graph.o undirected_graph_test.o
-	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJTEST)/undirected_graph_test.o -o $(TEST)/undirected_graph_test $(GTEST)
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o $(OBJTEST)/undirected_graph_test.o -o $(TESTBIN)/undirected_graph_test $(GTEST)
 
 # algolib/maths
 
@@ -169,7 +171,7 @@ maths_test.o : $(TEST)/maths_test.cpp
 	$(CMPL) -c $(TEST)/maths_test.cpp -o $(OBJTEST)/maths_test.o
 
 maths_test : maths.o maths_test.o
-	$(CMPL) $(OBJSRC)/maths.o $(OBJTEST)/maths_test.o -o $(TEST)/maths_test $(GTEST)
+	$(CMPL) $(OBJSRC)/maths.o $(OBJTEST)/maths_test.o -o $(TESTBIN)/maths_test $(GTEST)
 
 
 prime_checking.o : $(MATHS)/prime_checking.cpp
@@ -183,7 +185,7 @@ sieve_test.o : $(TEST)/sieve_test.cpp
 	$(CMPL) -c $(TEST)/sieve_test.cpp -o $(OBJTEST)/sieve_test.o
 
 sieve_test : sieve.o sieve_test.o
-	$(CMPL) $(OBJSRC)/sieve.o $(OBJTEST)/sieve_test.o -o $(TEST)/sieve_test $(GTEST)
+	$(CMPL) $(OBJSRC)/sieve.o $(OBJTEST)/sieve_test.o -o $(TESTBIN)/sieve_test $(GTEST)
 
 # algolib/structures
 
@@ -194,7 +196,7 @@ avl_tree_test.o : $(TEST)/avl_tree_test.cpp
 	$(CMPL) -c $(TEST)/avl_tree_test.cpp -o $(OBJTEST)/avl_tree_test.o
 
 avl_tree_test : avl_tree.o avl_tree_test.o
-	$(CMPL) $(OBJSRC)/avl_tree.o $(OBJTEST)/avl_tree_test.o -o $(TEST)/avl_tree_test $(GTEST)
+	$(CMPL) $(OBJSRC)/avl_tree.o $(OBJTEST)/avl_tree_test.o -o $(TESTBIN)/avl_tree_test $(GTEST)
 
 
 disjoint_sets.o : $(STRUCTURES)/disjoint_sets.cpp
@@ -204,7 +206,7 @@ disjoint_sets_test.o : $(TEST)/disjoint_sets_test.cpp
 	$(CMPL) -c $(TEST)/disjoint_sets_test.cpp -o $(OBJTEST)/disjoint_sets_test.o
 
 disjoint_sets_test : disjoint_sets.o disjoint_sets_test.o
-	$(CMPL) $(OBJSRC)/disjoint_sets.o $(OBJTEST)/disjoint_sets_test.o -o $(TEST)/disjoint_sets_test $(GTEST)
+	$(CMPL) $(OBJSRC)/disjoint_sets.o $(OBJTEST)/disjoint_sets_test.o -o $(TESTBIN)/disjoint_sets_test $(GTEST)
 
 
 equation_system.o : $(STRUCTURES)/equation_system.cpp

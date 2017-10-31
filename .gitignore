@@ -1,0 +1,8 @@
+# ignore object files
+
+/obj
+
+#ignore GTest output
+
+/gtest_results
+/test/bin
