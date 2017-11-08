@@ -73,45 +73,39 @@ namespace algolib
             avl_tree<E> & operator=(avl_tree<E> && avl);
 
             /**
-             * Ustawia iterator na początek.
-             * @return iterator na najniższym elemencie
+             * @return iterator na początku
              */
             iterator begin() const;
 
             /**
-             * Ustawia iterator na koniec.
-             * @return iterator poza drzewem
+             * @return iterator na końcu
              */
             iterator end() const;
 
             /**
-             * Ustawia odwrócony iterator na odwrócony początek.
-             * @return iterator na nawyższym elemencie
+             * @return odwrócony iterator na początku
              */
             reverse_iterator rbegin() const;
 
             /**
-             * Ustawia odwrócony iterator na odwrócony koniec.
-             * @return iterator poza drzewem
+             * @return odwrócony iterator na końcu
              */
             reverse_iterator rend() const;
 
             /**
-             * Określanie pustości drzewa.
-             * @return czy drzewo jest puste
-             */
-            bool empty() const
-            {
-                return get_inner_root() == nullptr;
-            }
-
-            /**
-             * Określanie liczby elementów drzewa.
              * @return liczba elemenów drzewa
              */
             size_t size() const
             {
                 return elems;
+            }
+
+            /**
+             * @return czy drzewo jest puste
+             */
+            bool empty() const
+            {
+                return get_inner_root() == nullptr;
             }
 
             /**

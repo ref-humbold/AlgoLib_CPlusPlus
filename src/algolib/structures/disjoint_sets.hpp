@@ -25,14 +25,17 @@ namespace algolib
             /// Mapa reprezentantów elementów.
             std::map<E, E> represents;
 
+            /// Liczba elementów
+            size_t elems;
+
         public:
-            explicit disjoint_sets(std::initializer_list<E> universe)
+            explicit disjoint_sets(std::initializer_list<E> universe) : elems{universe.size()}
             {
                 for(E e : universe)
                     represents.insert(std::make_pair(e, e));
             }
 
-            explicit disjoint_sets(std::vector<E> universe)
+            explicit disjoint_sets(std::vector<E> universe) : elems{universe.size()}
             {
                 for(E e : universe)
                     represents.insert(std::make_pair(e, e));
@@ -47,12 +50,11 @@ namespace algolib
             /**
              * @return liczba zbiorów
              */
-            size_t size();
-
-            /**
-             * @return liczba zbiorów
-             */
-            size_t size() const;
+            template <typename E>
+            size_t size() const
+            {
+                return elems;
+            }
 
             /**
              * Należenie do dowolnego zbioru.
@@ -126,28 +128,6 @@ namespace algolib
         };
 
         template <typename E>
-        size_t disjoint_sets<E>::size()
-        {
-            std::set<E> reprs;
-
-            for(auto e : represents)
-                reprs.insert(find_set(e.first));
-
-            return reprs.size();
-        }
-
-        template <typename E>
-        size_t disjoint_sets<E>::size() const
-        {
-            std::set<E> reprs;
-
-            for(auto e : represents)
-                reprs.insert(find_set(e.first));
-
-            return reprs.size();
-        }
-
-        template <typename E>
         bool disjoint_sets<E>::contains(const E & element) const
         {
             return represents.find(element) != represents.end();
@@ -160,6 +140,7 @@ namespace algolib
                 throw std::invalid_argument("Value already present.");
 
             represents.emplace(element, element);
+            elems++;
         }
 
         template <typename E>
@@ -181,7 +162,10 @@ namespace algolib
         void disjoint_sets<E>::union_set(const E & element1, const E & element2)
         {
             if(!is_same_set(element1, element2))
+            {
                 represents[find_set(element1)] = find_set(element2);
+                elems--;
+            }
         }
 
         template <typename E>
