@@ -50,7 +50,6 @@ namespace algolib
             /**
              * @return liczba zbiorów
              */
-            template <typename E>
             size_t size() const
             {
                 return elems;
