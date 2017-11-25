@@ -3,28 +3,30 @@
 
 std::vector<double> algolib::find_maximum_subarray(const std::vector<double> & sequence)
 {
-    std::vector<double> max_subseq, actual_subseq;
-    double max_sum = 0.0, actual_sum = 0.0;
+    std::pair<double, std::vector<double>> actual, maximal;
+
+    actual.first = 0.0;
+    maximal.first = 0.0;
 
     for(const auto & elem : sequence)
     {
-        if(actual_sum < 0.0)
+        if(actual.first < 0.0)
         {
-            actual_sum = 0.0;
-            actual_subseq.clear();
+            actual.first = 0.0;
+            actual.second.clear();
         }
 
-        actual_subseq.push_back(elem);
-        actual_sum += elem;
+        actual.first += elem;
+        actual.second.push_back(elem);
 
-        if(actual_sum > max_sum)
+        if(actual.first > maximal.first)
         {
-            max_sum = actual_sum;
-            max_subseq = actual_subseq;
+            maximal.first = actual.first;
+            maximal.second = actual.second;
         }
     }
 
-    return max_subseq;
+    return maximal.second;
 }
 
 double algolib::find_maximal_sum(const std::vector<double> & sequence)
@@ -32,7 +34,7 @@ double algolib::find_maximal_sum(const std::vector<double> & sequence)
     size_t size = 1;
 
     while(size < 2 * sequence.size())
-        size <<= 1;
+        size *= 2;
 
     std::vector<double> interval_sums(size, 0.0);
     std::vector<double> prefix_sums(size, 0.0);
@@ -47,7 +49,7 @@ double algolib::find_maximal_sum(const std::vector<double> & sequence)
         interval_sums[index] = std::max(all_sums[index], 0.0);
         prefix_sums[index] = std::max(all_sums[index], 0.0);
         suffix_sums[index] = std::max(all_sums[index], 0.0);
-        index >>= 1;
+        index /= 2;
 
         while(index > 0)
         {
@@ -61,7 +63,7 @@ double algolib::find_maximal_sum(const std::vector<double> & sequence)
             suffix_sums[index] =
                 std::max(suffix_sums[index_left], suffix_sums[index_right] + all_sums[index_left]);
             all_sums[index] = all_sums[index_right] + all_sums[index_left];
-            index >>= 1;
+            index /= 2;
         }
     }
 
