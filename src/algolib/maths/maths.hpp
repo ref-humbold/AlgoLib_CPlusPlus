@@ -29,16 +29,6 @@ namespace algolib
         long long int lcm(long long int number1, long long int number2);
 
         /**
-         * Szybkie potęgowanie binarne modulowane.
-         * @param base podstawa
-         * @param exponent wykładnik
-         * @param modulo modulo
-         * @return wynik potęgowania wzięty modulo
-         */
-        long long int power_mod(long long int base, long long int exponent,
-                                unsigned long long int modulo);
-
-        /**
          * Szybkie mnożenie binarne modulowane.
          * @param factor1 mnnożna
          * @param factor2 mnożnik
@@ -47,6 +37,16 @@ namespace algolib
          */
         long long int mult_mod(long long int factor1, long long int factor2,
                                unsigned long long int modulo);
+
+        /**
+         * Szybkie potęgowanie binarne modulowane.
+         * @param base podstawa
+         * @param exponent wykładnik
+         * @param modulo modulo
+         * @return wynik potęgowania wzięty modulo
+         */
+        long long int power_mod(long long int base, long long int exponent,
+                                unsigned long long int modulo);
     }
 }
 
