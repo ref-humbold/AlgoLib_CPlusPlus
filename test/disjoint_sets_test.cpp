@@ -40,21 +40,21 @@ TEST_F(DisjointSetsTest, testContainsWhenNotContains)
     EXPECT_FALSE(result);
 }
 
-TEST_F(DisjointSetsTest, testMakeSetWhenNewElement)
+TEST_F(DisjointSetsTest, testAddElemWhenNewElement)
 {
     int elem = 20;
 
-    EXPECT_NO_THROW(test_object.make_set(elem));
+    EXPECT_NO_THROW(test_object.add_elem(elem));
 
     EXPECT_TRUE(test_object.contains(elem));
     EXPECT_EQ(elem, test_object.find_set(elem));
 }
 
-TEST_F(DisjointSetsTest, testMakeSetWhenPresentElement)
+TEST_F(DisjointSetsTest, testAddElemWhenPresentElement)
 {
     int elem = 7;
 
-    EXPECT_THROW(test_object.make_set(elem), std::invalid_argument);
+    EXPECT_THROW(test_object.add_elem(elem), std::invalid_argument);
 }
 
 TEST_F(DisjointSetsTest, testFindSet)
