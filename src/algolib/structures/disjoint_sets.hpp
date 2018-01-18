@@ -56,17 +56,17 @@ namespace algolib
             }
 
             /**
-             * Należenie do dowolnego zbioru.
+             * Sprawdzanie należenia do dowolnego zbioru.
              * @param element element
              * @return czy element w jednym ze zbiorów
              */
             bool contains(const E & element) const;
 
             /**
-             * Tworzenie nowego zbioru jednoelementowego.
+             * Dodawanie nowego elementu jako singleton.
              * @param element nowy element
              */
-            void make_set(const E & element);
+            void add_elem(const E & element);
 
             /**
              * Ustalanie reprezentanta zbioru.
@@ -133,7 +133,7 @@ namespace algolib
         }
 
         template <typename E>
-        void disjoint_sets<E>::make_set(const E & element)
+        void disjoint_sets<E>::add_elem(const E & element)
         {
             if(contains(element))
                 throw std::invalid_argument("Value already present.");

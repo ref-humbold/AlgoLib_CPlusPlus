@@ -6,7 +6,7 @@ namespace algr = algolib::graphs;
 vertex_t algr::forest_graph::add_vertex()
 {
     vertex_t vertex = graph.add_vertex();
-    components.make_set(vertex);
+    components.add_elem(vertex);
 
     return vertex;
 }

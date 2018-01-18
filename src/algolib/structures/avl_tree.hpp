@@ -173,26 +173,6 @@ namespace algolib
             }
 
             /**
-             * Sprawdzanie, czy węzeł jest lewym synem.
-             * @param node węzeł
-             * @return czy węzeł to lewy syn
-             */
-            bool is_left_son(node_pointer node)
-            {
-                return is_inner_root(node) ? false : node->get_parent()->get_left() == node;
-            }
-
-            /**
-             * Sprawdzanie, czy węzeł jest prawym synem.
-             * @param node węzeł
-             * @return czy węzeł to prawy syn
-             */
-            bool is_right_son(node_pointer node)
-            {
-                return is_inner_root(node) ? false : node->get_parent()->get_right() == node;
-            }
-
-            /**
              * Wskazanie poddrzewa, w którym może znaleźć się element.
              * @param node węzeł
              * @param element element
@@ -236,7 +216,7 @@ namespace algolib
              * Przywracanie balansowania na ścieżce od wierzchołka do korzenia.
              * @param node wierzchołek początkowy
              */
-            void rebalance(node_pointer node);
+            void balance(node_pointer node);
         };
 
         template <typename E>
@@ -320,7 +300,7 @@ namespace algolib
                 else
                     node_parent->set_left(new_node);
 
-                rebalance(node_parent);
+                balance(node_parent);
             }
             else
                 set_inner_root(new_node);
@@ -413,7 +393,7 @@ namespace algolib
                 avl_tree<E>::node_pointer node_parent = node->get_parent();
 
                 replace_subtree(node, son);
-                rebalance(node_parent);
+                balance(node_parent);
                 destroy_node(node);
             }
         }
@@ -424,9 +404,9 @@ namespace algolib
         {
             if(is_inner_root(node1))
                 set_inner_root(node2);
-            else if(is_left_son(node1))
+            else if(node1->is_left_son())
                 node1->get_parent()->set_left(node2);
-            else if(is_right_son(node1))
+            else if(node1->is_right_son())
                 node1->get_parent()->set_right(node2);
 
             node1->set_parent(nullptr);
@@ -440,13 +420,13 @@ namespace algolib
 
             avl_tree<E>::node_pointer upper_node = node->get_parent();
 
-            if(is_right_son(node))
+            if(node->is_right_son())
             {
                 upper_node->set_right(node->get_left());
                 replace_subtree(upper_node, node);
                 node->set_left(upper_node);
             }
-            else if(is_left_son(node))
+            else if(node->is_left_son())
             {
                 upper_node->set_left(node->get_right());
                 replace_subtree(upper_node, node);
@@ -455,11 +435,11 @@ namespace algolib
         }
 
         template <typename E>
-        void avl_tree<E>::rebalance(avl_tree<E>::node_pointer node)
+        void avl_tree<E>::balance(avl_tree<E>::node_pointer node)
         {
             while(node->get_height() > 0)
             {
-                node->recount_height();
+                node->count_height();
 
                 int new_balance = node->count_balance();
 
@@ -527,6 +507,18 @@ namespace algolib
             virtual node_pointer clone() = 0;
 
             /**
+             * Sprawdzanie, czy węzeł jest lewym synem.
+             * @return czy węzeł to lewy syn
+             */
+            virtual bool is_left_son() = 0;
+
+            /**
+             * Sprawdzanie, czy węzeł jest prawym synem.
+             * @return czy węzeł to prawy syn
+             */
+            virtual bool is_right_son() = 0;
+
+            /**
              * Wyliczanie balansu wierzchołka.
              * @return wartość balansu
              */
@@ -535,7 +527,7 @@ namespace algolib
             /**
              * Wyliczanie wysokości wierzchołka.
              */
-            virtual void recount_height() = 0;
+            virtual void count_height() = 0;
 
             /**
              * Wyszukiwanie minimum w poddrzewie.
@@ -604,7 +596,7 @@ namespace algolib
                 if(this->left != nullptr)
                     this->left->set_parent(this);
 
-                recount_height();
+                count_height();
             }
 
             node_pointer get_right()
@@ -619,7 +611,7 @@ namespace algolib
                 if(this->right != nullptr)
                     this->right->set_parent(this);
 
-                recount_height();
+                count_height();
             }
 
             node_pointer get_parent()
@@ -637,9 +629,13 @@ namespace algolib
                 return new avl_inner_node(*this);
             }
 
+            bool is_left_son();
+
+            bool is_right_son();
+
             int count_balance();
 
-            void recount_height();
+            void count_height();
 
             node_pointer minimum();
 
@@ -679,6 +675,18 @@ namespace algolib
         }
 
         template <typename E>
+        bool avl_tree<E>::avl_inner_node::is_left_son()
+        {
+            return parent != nullptr && parent->get_left() == this;
+        }
+
+        template <typename E>
+        bool avl_tree<E>::avl_inner_node::is_right_son()
+        {
+            return parent != nullptr && parent->get_right() == this;
+        }
+
+        template <typename E>
         int avl_tree<E>::avl_inner_node::count_balance()
         {
             int left_height = left == nullptr ? 0 : left->get_height();
@@ -688,7 +696,7 @@ namespace algolib
         }
 
         template <typename E>
-        void avl_tree<E>::avl_inner_node::recount_height()
+        void avl_tree<E>::avl_inner_node::count_height()
         {
             int left_height = left == nullptr ? 0 : left->get_height();
             int right_height = right == nullptr ? 0 : right->get_height();
@@ -783,12 +791,22 @@ namespace algolib
                 return new avl_root_node(*this);
             }
 
+            bool is_left_son()
+            {
+                return false;
+            }
+
+            bool is_right_son()
+            {
+                return false;
+            }
+
             int count_balance()
             {
                 return 0;
             }
 
-            void recount_height()
+            void count_height()
             {
             }
 
@@ -902,10 +920,10 @@ namespace algolib
             if(node->get_right() != nullptr)
                 return node->get_right()->minimum();
 
-            while(succ->get_height() > 0 && succ->get_element() <= node->get_element())
+            while(succ->get_height() > 0 && !succ->is_left_son())
                 succ = succ->get_parent();
 
-            return succ;
+            return succ->get_height() <= 0 ? succ : succ->get_parent();
         }
 
         template <typename E>
@@ -917,10 +935,10 @@ namespace algolib
             if(node->get_left() != nullptr)
                 return node->get_left()->maximum();
 
-            while(pred->get_height() > 0 && pred->get_element() >= node->get_element())
+            while(pred->get_height() > 0 && !pred->is_right_son())
                 pred = pred->get_parent();
 
-            return pred;
+            return pred->get_height() <= 0 ? pred : pred->get_parent();
         }
 
         // avl_succ_iterator
