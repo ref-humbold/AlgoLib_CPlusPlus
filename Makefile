@@ -34,14 +34,15 @@ refreshSource : clean source
 refreshTest : clean tests
 
 testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test \
-maximum_subarray_test mst_test paths_test sieve_test sorting_test topological_sorting_test undirected_graph_test
+maximum_subarray_test mst_test paths_test scc_test sieve_test sorting_test \
+topological_sorting_test undirected_graph_test
 
 srcDir : algolibDir graphsDir mathsDir structuresDir
 
 algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o sorting.o two_sat.o
 
 graphsDir : cutting.o directed_graph.o forest_graph.o graph.o mst.o multipartite_graph.o paths.o \
-searching.o topological_sorting.o undirected_graph.o
+scc.o searching.o topological_sorting.o undirected_graph.o
 
 mathsDir : maths.o prime_checking.o sieve.o
 
@@ -124,6 +125,14 @@ paths_test : $(TEST)/paths_test.cpp graph.o directed_graph.o undirected_graph.o 
 	$(CMPL) -c $(TEST)/paths_test.cpp -o $(OBJTEST)/paths_test.o
 	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o \
 	  $(OBJSRC)/paths.o $(OBJTEST)/paths_test.o -o $(TESTBIN)/paths_test $(GTEST)
+
+scc.o : $(GRAPHS)/scc.cpp
+	$(CMPL) -c $(GRAPHS)/scc.cpp -o $(OBJSRC)/scc.o
+
+scc_test : $(TEST)/scc_test.cpp graph.o directed_graph.o scc.o
+	$(CMPL) -c $(TEST)/scc_test.cpp -o $(OBJTEST)/scc_test.o
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/scc.o $(OBJTEST)/scc_test.o \
+	  -o $(TESTBIN)/scc_test $(GTEST)
 
 searching.o : $(GRAPHS)/searching.cpp
 	$(CMPL) -c $(GRAPHS)/searching.cpp -o $(OBJSRC)/searching.o
