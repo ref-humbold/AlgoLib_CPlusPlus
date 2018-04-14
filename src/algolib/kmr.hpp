@@ -1,6 +1,6 @@
 // SŁOWNIK PODSŁÓW BAZOWYCH Z ALGORYTMEM KARPA-MILLERA-ROSENBERGA
-#ifndef KMR_HPP
-#define KMR_HPP
+#ifndef _KMR_HPP_
+#define _KMR_HPP_
 
 #include <cstdlib>
 #include <algorithm>
@@ -22,8 +22,7 @@ namespace detail
      * Budowa nowych podsłów o podwojonej długości.
      * @param new_length nowa długość podsłów
      */
-    void double_length(int new_length,
-                       const std::string & text,
+    void double_length(int new_length, const std::string & text,
                        std::map<std::string, int> & factors);
 }
 

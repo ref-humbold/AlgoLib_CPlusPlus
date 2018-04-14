@@ -1,6 +1,6 @@
 // SITO ERASTOTENESA: WYZNACZANIE LICZB PIERWSZYCH
-#ifndef SIEVE_HPP
-#define SIEVE_HPP
+#ifndef _SIEVE_HPP_
+#define _SIEVE_HPP_
 
 #include <cstdlib>
 #include <cmath>

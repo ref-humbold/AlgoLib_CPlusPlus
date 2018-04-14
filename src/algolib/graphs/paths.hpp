@@ -2,8 +2,8 @@
  * @file paths.hpp
  * ALGORYTMY WYLICZANIA NAJKRÓTSZYCH ŚCIEŻEK W GRAFIE WAŻONYM
  */
-#ifndef PATHS_HPP
-#define PATHS_HPP
+#ifndef _PATHS_HPP_
+#define _PATHS_HPP_
 
 #include <cstdlib>
 #include <exception>
@@ -25,7 +25,7 @@ namespace algolib
          * @param source wierzchołek początkowy
          * @return lista odległości wierzchołków
          */
-        std::vector<weight_t> bellman_ford(const directed_weighted_graph & diwgraph,
+        std::vector<weight_t> bellman_ford(const directed_weighted_simple_graph & diwgraph,
                                            vertex_t source);
 
         /**
@@ -41,7 +41,8 @@ namespace algolib
          * @param wgraph graf ważony
          * @return macierz odległości
          */
-        std::vector<std::vector<weight_t>> floyd_warshall(const directed_weighted_graph & diwgraph);
+        std::vector<std::vector<weight_t>>
+            floyd_warshall(const directed_weighted_simple_graph & diwgraph);
     }
 }
 

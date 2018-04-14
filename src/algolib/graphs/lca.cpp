@@ -1,60 +1,65 @@
 // NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE
 #include "lca.hpp"
 
-int tree_graph::find_lca(int vertex1, int vertex2, int root)
+namespace algr = algolib::graphs;
+
+constexpr int detail::lca_finder::NO_TIME;
+
+int detail::lca_finder::search_lca(int vertex1, int vertex2, int root)
 {
-    paths.resize(num_vertex + 1);
-    pre_post_times.resize(num_vertex + 1);
     dfs(root, root, 0);
 
-    for(int i = 1; i <= log2(num_vertex) + 2; ++i)
-        for(int v = 1; v <= num_vertex; ++v)
-            paths[v].push_back(paths[paths[v][i - 1]][i - 1]);
+    for(int i = 0; i < log(graph.get_vertices_number()) / log(2) + 3; ++i)
+        for(int v : graph.get_vertices())
+            if(!paths[v].empty())
+                paths[v].push_back(paths[paths[v][i]][i]);
 
-    return search_lca(vertex1, vertex2);
+    return search(vertex1, vertex2);
 }
 
-int tree_graph::dfs(int vertex, int parent, int timer)
+int detail::lca_finder::search(int vertex1, int vertex2)
 {
-    int pre_time = timer;
-
-    is_visited[vertex] = true;
-    paths[vertex].push_back(parent);
-    ++timer;
-
-    for(size_t i = 0; i < graphrepr[vertex].size(); ++i)
-    {
-        int neighbour = graphrepr[vertex][i];
-
-        if(!is_visited[neighbour])
-            timer = dfs(neighbour, vertex, timer);
-    }
-
-    pre_post_times[vertex] = std::make_pair(pre_time, timer);
-
-    return timer + 1;
-}
-
-int tree_graph::search_lca(int vertex1, int vertex2)
-{
-    auto is_offspring = [&](int vertex1, int vertex2) {
-        return pre_post_times[vertex1].first >= pre_post_times[vertex2].first
-               && pre_post_times[vertex1].second <= pre_post_times[vertex2].second;
-    };
-
     if(is_offspring(vertex1, vertex2))
         return vertex2;
 
     if(is_offspring(vertex2, vertex1))
         return vertex1;
 
-    for(int i = paths[vertex1].size() - 1; i > 0; --i)
-    {
-        int candidate = paths[vertex1][i];
+    std::vector<int> candidates = paths[vertex1];
 
+    std::reverse(candidates.begin(), candidates.end());
+
+    for(int candidate : candidates)
         if(!is_offspring(vertex2, candidate))
-            return search_lca(candidate, vertex2);
-    }
+            return search(candidate, vertex2);
 
-    return search_lca(paths[vertex1][0], vertex2);
+    return search(paths[vertex1][0], vertex2);
+}
+
+int detail::lca_finder::dfs(int vertex, int parent, int timer)
+{
+    pre_post_times[vertex].first = timer;
+    paths[vertex].push_back(parent);
+    ++timer;
+
+    for(int neighbour : graph.get_neighbours(vertex))
+        if(pre_post_times[neighbour].first == NO_TIME)
+            timer = dfs(neighbour, vertex, timer);
+
+    pre_post_times[vertex].second = timer;
+
+    return timer + 1;
+}
+
+int algr::find_lca(const forest_graph & treegraph, int vertex1, int vertex2, int root)
+{
+    if(!treegraph.is_same_tree(vertex1, vertex2))
+        throw std::invalid_argument("Vertices are not in the same tree.");
+
+    if(!treegraph.is_same_tree(vertex1, root) || !treegraph.is_same_tree(vertex2, root))
+        throw std::invalid_argument("Root vertex does not belong to the tree.");
+
+    detail::lca_finder finder(treegraph);
+
+    return finder.search_lca(vertex1, vertex2, root);
 }

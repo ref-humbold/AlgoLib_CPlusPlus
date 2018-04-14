@@ -2,18 +2,25 @@
 
 TESTBIN_DIR="test/bin"
 GTEST_OUTPUT_DIR="gtest_results"
+BOLD_PURPLE="\033[1;35m"
+BOLD_RED="\033[1;31m"
+NORMAL="\033[0m"
 
-if test ! -d $TESTBIN_DIR
+echo ""
+
+if test ! -d $TEST_DIR
 then
-    echo "\033[0;31mTest directory not found.\033[0m"
+    echo "${BOLD_RED}Test directory not found.${NORMAL}"
     exit -1
 fi
 
 rm -rf $GTEST_OUTPUT_DIR && mkdir $GTEST_OUTPUT_DIR
-echo "\033[1;35mRunning GTest tests:\033[0m"
+echo "${BOLD_PURPLE}Running GTest tests:${NORMAL}"
+
 for FILE in $TESTBIN_DIR/*
 do
-    echo ""
-    echo "\033[1;35m    >>>> $FILE <<<<\033[0m"
+    echo "\n${BOLD_PURPLE}    >>>> $FILE <<<<${NORMAL}"
     ./$FILE --gtest_output="xml:./$GTEST_OUTPUT_DIR/"
 done
+
+echo ""

@@ -2,8 +2,8 @@
  * @file forest_graph.hpp
  * STRUKTURY GRAFÓW DRZEW
  */
-#ifndef FOREST_GRAPH_HPP
-#define FOREST_GRAPH_HPP
+#ifndef _FOREST_GRAPH_HPP_
+#define _FOREST_GRAPH_HPP_
 
 #include <cstdlib>
 #include <exception>
@@ -37,14 +37,14 @@ namespace algolib
         class forest_graph : public undirected_graph
         {
         private:
-            undirected_graph & graph;
+            undirected_simple_graph graph;
 
             alst::disjoint_sets<vertex_t> components;
 
         public:
-            explicit forest_graph(undirected_graph & ugraph,
-                                  std::vector<edge_t> edges = std::vector<edge_t>())
-                : graph{ugraph}, components{alst::disjoint_sets<vertex_t>(ugraph.get_vertices())}
+            explicit forest_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>())
+                : graph{undirected_simple_graph(n)}, components{alst::disjoint_sets<vertex_t>(
+                                                         this->graph.get_vertices())}
             {
                 for(const auto & e : edges)
                     this->add_edge(std::get<0>(e), std::get<1>(e));

@@ -2,8 +2,8 @@
  * @file avl_tree.h
  * DRZEWO AVL
  */
-#ifndef AVL_TREE_HPP
-#define AVL_TREE_HPP
+#ifndef _AVL_TREE_HPP_
+#define _AVL_TREE_HPP_
 
 #include <cstdlib>
 #include <cmath>
@@ -72,37 +72,25 @@ namespace algolib
             avl_tree<E> & operator=(const avl_tree<E> & avl);
             avl_tree<E> & operator=(avl_tree<E> && avl);
 
-            /**
-             * @return iterator na początku
-             */
+            /// @return iterator na początku
             iterator begin() const;
 
-            /**
-             * @return iterator na końcu
-             */
+            /// @return iterator na końcu
             iterator end() const;
 
-            /**
-             * @return odwrócony iterator na początku
-             */
+            /// @return odwrócony iterator na początku
             reverse_iterator rbegin() const;
 
-            /**
-             * @return odwrócony iterator na końcu
-             */
+            /// @return odwrócony iterator na końcu
             reverse_iterator rend() const;
 
-            /**
-             * @return liczba elemenów drzewa
-             */
+            /// @return liczba elemenów drzewa
             size_t size() const
             {
                 return elems;
             }
 
-            /**
-             * @return czy drzewo jest puste
-             */
+            /// @return czy drzewo jest puste
             bool empty() const
             {
                 return get_inner_root() == nullptr;
@@ -128,9 +116,7 @@ namespace algolib
              */
             void erase(const E & element);
 
-            /**
-             * Usuwanie wszystkich elementów z drzewa.
-             */
+            /// Usuwanie wszystkich elementów z drzewa.
             void clear();
 
         private:
@@ -146,17 +132,13 @@ namespace algolib
                 delete node;
             }
 
-            /**
-             * @return wewnętrzny korzeń drzewa
-             */
+            /// @return wewnętrzny korzeń drzewa
             node_pointer get_inner_root() const
             {
                 return tree->get_parent();
             }
 
-            /**
-             * @param node węzeł, który zostanie wewnętrznym korzeniem
-             */
+            /// @param node węzeł, który zostanie wewnętrznym korzeniem
             void set_inner_root(node_pointer node)
             {
                 tree->set_parent(node);
@@ -524,9 +506,7 @@ namespace algolib
              */
             virtual int count_balance() = 0;
 
-            /**
-             * Wyliczanie wysokości wierzchołka.
-             */
+            /// Wyliczanie wysokości wierzchołka.
             virtual void count_height() = 0;
 
             /**

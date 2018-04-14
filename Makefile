@@ -1,7 +1,7 @@
 CXX = g++ -std=c++11
 CXXFLAGS = -Wall -Wextra
-GTEST = -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -lpthread
 CMPL = $(CXX) $(CXXFLAGS)
+GTEST = -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -lpthread
 SRC = src
 OBJ = obj
 TEST = test
@@ -33,7 +33,7 @@ refreshSource : clean source
 
 refreshTest : clean tests
 
-testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test maths_test \
+testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test lca_test maths_test \
 maximum_subarray_test mst_test paths_test scc_test sieve_test sorting_test \
 topological_sorting_test undirected_graph_test
 
@@ -41,8 +41,8 @@ srcDir : algolibDir graphsDir mathsDir structuresDir
 
 algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o sorting.o two_sat.o
 
-graphsDir : cutting.o directed_graph.o forest_graph.o graph.o mst.o multipartite_graph.o paths.o \
-scc.o searching.o topological_sorting.o undirected_graph.o
+graphsDir : cutting.o directed_graph.o forest_graph.o graph.o lca.o matching.o mst.o \
+multipartite_graph.o paths.o scc.o searching.o topological_sorting.o undirected_graph.o
 
 mathsDir : maths.o prime_checking.o sieve.o
 
@@ -105,6 +105,18 @@ forest_graph.o : $(GRAPHS)/forest_graph.cpp
 
 graph.o : $(GRAPHS)/graph.cpp
 	$(CMPL) -c $(GRAPHS)/graph.cpp -o $(OBJSRC)/graph.o
+
+lca.o : $(GRAPHS)/lca.cpp
+	$(CMPL) -c $(GRAPHS)/lca.cpp -o $(OBJSRC)/lca.o
+
+lca_test : $(TEST)/lca_test.cpp graph.o directed_graph.o undirected_graph.o disjoint_sets.o forest_graph.o lca.o
+	$(CMPL) -c $(TEST)/lca_test.cpp -o $(OBJTEST)/lca_test.o
+	$(CMPL) $(OBJSRC)/graph.o $(OBJSRC)/directed_graph.o $(OBJSRC)/undirected_graph.o \
+	  $(OBJSRC)/disjoint_sets.o $(OBJSRC)/forest_graph.o $(OBJSRC)/lca.o $(OBJTEST)/lca_test.o \
+	  -o $(TESTBIN)/lca_test $(GTEST)
+
+matching.o : $(GRAPHS)/matching.cpp
+	$(CMPL) -c $(GRAPHS)/matching.cpp -o $(OBJSRC)/matching.o
 
 mst.o : $(GRAPHS)/mst.cpp
 	$(CMPL) -c $(GRAPHS)/mst.cpp -o $(OBJSRC)/mst.o

@@ -1,6 +1,6 @@
 // ALGORYTMY SORTOWANIA
-#ifndef SORTING_HPP
-#define SORTING_HPP
+#ifndef _SORTING_HPP_
+#define _SORTING_HPP_
 
 #include <cstdlib>
 #include <cmath>

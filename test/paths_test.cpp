@@ -37,7 +37,7 @@ TEST(PathsTest, testBellmanFordWhenUndirectedGraph)
              std::make_tuple(4, 5, 1.0), std::make_tuple(4, 3, 10.0), std::make_tuple(5, 8, 2.0),
              std::make_tuple(7, 5, 2.0), std::make_tuple(7, 8, 6.0), std::make_tuple(9, 6, 3.0)}));
     int source = 1;
-    algr::directed_weighted_graph * diwgraph = uwgraph.as_directed();
+    algr::directed_weighted_simple_graph * diwgraph = uwgraph.as_directed();
 
     std::vector<double> result = algr::dijkstra(*diwgraph, source);
     double i = algr::graph::INF;
@@ -154,7 +154,7 @@ TEST(PathsTest, testFloydWarshallWhenUndirectedGraph)
              std::make_tuple(2, 6, 8.0), std::make_tuple(3, 0, 3.0), std::make_tuple(3, 7, 5.0),
              std::make_tuple(4, 5, 1.0), std::make_tuple(4, 3, 10.0), std::make_tuple(5, 8, 2.0),
              std::make_tuple(7, 5, 2.0), std::make_tuple(7, 8, 6.0), std::make_tuple(9, 6, 3.0)}));
-    algr::directed_weighted_graph * diwgraph = uwgraph.as_directed();
+    algr::directed_weighted_simple_graph * diwgraph = uwgraph.as_directed();
 
     std::vector<std::vector<double>> result = algr::floyd_warshall(*diwgraph);
     double i = algr::graph::INF;

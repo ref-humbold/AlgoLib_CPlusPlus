@@ -2,8 +2,8 @@
  * @file scc.hpp
  * ALGORYTM WYZNACZANIA SILNIE SPÓLJNYCH SKŁADOWYCH W GRAFIE SKIEROWANYM
  */
-#ifndef PATHS_HPP
-#define PATHS_HPP
+#ifndef _SCC_HPP_
+#define _SCC_HPP_
 
 #include <cstdlib>
 #include <algorithm>

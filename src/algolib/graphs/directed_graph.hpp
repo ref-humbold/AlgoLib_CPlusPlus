@@ -2,8 +2,8 @@
  * @file directed_graph.hpp
  * STRUKTURY GRAFÓW SKIEROWANYCH
  */
-#ifndef DIRECTED_GRAPH_HPP
-#define DIRECTED_GRAPH_HPP
+#ifndef _DIRECTED_GRAPH_HPP_
+#define _DIRECTED_GRAPH_HPP_
 
 #include <cstdlib>
 #include <exception>
@@ -30,21 +30,8 @@ namespace algolib
             directed_graph & operator=(const directed_graph & g) = default;
             directed_graph & operator=(directed_graph && g) = default;
 
-            /**
-             * Odwracanie skierowania grafu
-             */
+            /// Odwracanie skierowania grafu.
             virtual void reverse() = 0;
-        };
-
-        class directed_weighted_graph : public virtual directed_graph, public virtual weighted_graph
-        {
-        public:
-            directed_weighted_graph() = default;
-            virtual ~directed_weighted_graph() = default;
-            directed_weighted_graph(const directed_weighted_graph & g) = default;
-            directed_weighted_graph(directed_weighted_graph && g) = default;
-            directed_weighted_graph & operator=(const directed_weighted_graph & g) = default;
-            directed_weighted_graph & operator=(directed_weighted_graph && g) = default;
         };
 
         class directed_simple_graph : public simple_graph, public virtual directed_graph
@@ -75,7 +62,7 @@ namespace algolib
         };
 
         class directed_weighted_simple_graph : public directed_simple_graph,
-                                               public virtual directed_weighted_graph
+                                               public virtual weighted_graph
         {
         public:
             explicit directed_weighted_simple_graph(
@@ -103,7 +90,7 @@ namespace algolib
 
             void add_weighted_edge(vertex_t vertex1, vertex_t vertex2, weight_t weight) override;
 
-            std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const;
+            std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const override;
 
             void reverse() override;
         };

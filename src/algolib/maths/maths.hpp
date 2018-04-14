@@ -1,6 +1,6 @@
 // ALGORYTMY MATEMATYCZNE
-#ifndef MATHS_HPP
-#define MATHS_HPP
+#ifndef _MATHS_HPP_
+#define _MATHS_HPP_
 
 #include <cstdlib>
 #include <cmath>

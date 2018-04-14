@@ -1,6 +1,6 @@
 // OTOCZKA WYPUKŁA PUNKTÓW NA PŁASZCZYŹNIE
-#ifndef OTOCZKA_WYPUKLA_HPP
-#define OTOCZKA_WYPUKLA_HPP
+#ifndef _CONVEX_HULL_HPP_
+#define _CONVEX_HULL_HPP_
 
 #include <cstdlib>
 #include <algorithm>

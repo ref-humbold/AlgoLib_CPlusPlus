@@ -2,8 +2,8 @@
  * @file topological_sorting.hpp
  * ALGORYTMY SORTOWANIA TOPOLOGICZNEGO
  */
-#ifndef TOPOLOGICAL_SORTING_HPP
-#define TOPOLOGICAL_SORTING_HPP
+#ifndef _TOPOLOGICAL_SORTING_HPP_
+#define _TOPOLOGICAL_SORTING_HPP_
 
 #include <cstdlib>
 #include <exception>

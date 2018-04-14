@@ -1,6 +1,6 @@
 // NAJMNIEJSZY LEKSYKOGRAFICZNIE NAJDŁUŻSZY PODCIĄG ROSNĄCY
-#ifndef LIS_HPP
-#define LIS_HPP
+#ifndef _LIS_HPP_
+#define _LIS_HPP_
 
 #include <cstdlib>
 #include <algorithm>
@@ -36,7 +36,7 @@ namespace detail
 namespace algolib
 {
     /**
-     * Wyzanczanie najdłuższego podciągu rosnącego.
+     * Wyznaczanie najdłuższego podciągu rosnącego.
      * @param sequence ciąg wejściowy
      * @return najdłuższy podciąg rosnący
      */

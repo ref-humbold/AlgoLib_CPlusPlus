@@ -1,6 +1,6 @@
 // STRUKTURY GRAFÓW WIELODZIELNYCH
-#ifndef MULTIPARTITE_GRAPH_HPP
-#define MULTIPARTITE_GRAPH_HPP
+#ifndef _MULTIPARTITE_GRAPH_HPP_
+#define _MULTIPARTITE_GRAPH_HPP_
 
 #include <cstdlib>
 #include <exception>
@@ -31,7 +31,7 @@ namespace algolib
         class multipartite_graph : public virtual undirected_graph
         {
             /// Struktura grafu wielodzielnego.
-            undirected_graph & graph;
+            undirected_simple_graph graph;
 
             /// Maksymalna liczba grup wierzchołków.
             size_t groups_number;
@@ -40,8 +40,8 @@ namespace algolib
             std::vector<size_t> groups;
 
         public:
-            multipartite_graph(size_t group, undirected_graph & ugraph)
-                : graph{ugraph}, groups_number{group}
+            multipartite_graph(int n, size_t group)
+                : graph{undirected_simple_graph(n)}, groups_number{group}
             {
                 groups.resize(1, this->graph.get_vertices_number());
             }
@@ -52,7 +52,7 @@ namespace algolib
             multipartite_graph & operator=(const multipartite_graph & g) = default;
             multipartite_graph & operator=(multipartite_graph && g) = default;
 
-            size_t get_groups_number()
+            size_t get_groups_number() const
             {
                 return this->groups_number;
             }

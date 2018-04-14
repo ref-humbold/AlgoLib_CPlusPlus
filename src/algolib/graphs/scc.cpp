@@ -4,8 +4,6 @@
  */
 #include "scc.hpp"
 
-#include <iostream>
-
 namespace algr = algolib::graphs;
 
 detail::graph_components::graph_components(algr::directed_graph & digr) : digraph{digr}
@@ -21,10 +19,10 @@ std::vector<int> detail::graph_components::find_scc()
 {
     int timer = 0, component = 0;
 
-    for(vertex_t vertex : digraph.get_vertices())
-        if(postorder[vertex].first < 0)
+    for(vertex_t v : digraph.get_vertices())
+        if(postorder[v].first < 0)
         {
-            timer = dfs_order(vertex, timer);
+            timer = dfs_order(v, timer);
             ++timer;
         }
 
