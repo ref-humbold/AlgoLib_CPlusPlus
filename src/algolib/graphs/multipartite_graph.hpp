@@ -28,22 +28,19 @@ namespace algolib
             }
         };
 
+        template <size_t N>
         class multipartite_graph : public virtual undirected_graph
         {
             /// Struktura grafu wielodzielnego.
             undirected_simple_graph graph;
 
-            /// Maksymalna liczba grup wierzchołków.
-            size_t groups_number;
-
             /// Numery grup wierzchołków.
             std::vector<size_t> groups;
 
         public:
-            multipartite_graph(int n, size_t group)
-                : graph{undirected_simple_graph(n)}, groups_number{group}
+            explicit multipartite_graph(int n) : graph{undirected_simple_graph(n)}
             {
-                groups.resize(1, this->graph.get_vertices_number());
+                groups.resize(n, 0);
             }
 
             virtual ~multipartite_graph() = default;
@@ -52,11 +49,6 @@ namespace algolib
             multipartite_graph & operator=(const multipartite_graph & g) = default;
             multipartite_graph & operator=(multipartite_graph && g) = default;
 
-            size_t get_groups_number() const
-            {
-                return this->groups_number;
-            }
-
             size_t get_vertices_number() const override
             {
                 return graph.get_vertices_number();
@@ -64,18 +56,27 @@ namespace algolib
 
             std::vector<vertex_t> get_vertices() const override
             {
-                return get_vertices(0);
+                return get_vertices(-1);
             }
 
             /**
              * @param group numer grupy wierzchołków
              * @return generator wierzchołków z zadanej grupy
              */
-            std::vector<vertex_t> get_vertices(size_t group) const;
+            std::vector<vertex_t> get_vertices(size_t group = -1) const
+            {
+                std::vector<vertex_t> vertices;
+
+                for(const auto & v : graph.get_vertices())
+                    if(groups[v] == group)
+                        vertices.push_back(v);
+
+                return vertices;
+            }
 
             vertex_t add_vertex() override
             {
-                return add_vertex(1);
+                return add_vertex(0);
             }
 
             /**
@@ -83,7 +84,12 @@ namespace algolib
              * @param group: numer grupy
              * @return oznaczenie wierzchołka
              */
-            vertex_t add_vertex(size_t group);
+            vertex_t add_vertex(size_t group = 0)
+            {
+                groups.push_back(group);
+
+                return graph.add_vertex();
+            }
 
             size_t get_edges_number() const override
             {
@@ -95,11 +101,23 @@ namespace algolib
                 return graph.get_edges();
             }
 
-            void add_edge(vertex_t vertex1, vertex_t vertex2) override;
+            void add_edge(vertex_t vertex1, vertex_t vertex2) override
+            {
+                if(vertex1 >= get_vertices_number())
+                    throw no_such_vertex_exception(std::to_string(vertex1));
+
+                if(vertex2 >= get_vertices_number())
+                    throw no_such_vertex_exception(std::to_string(vertex2));
+
+                if(is_same_group(vertex1, vertex2))
+                    throw graph_partition_exception();
+
+                graph.add_edge(vertex1, vertex2);
+            }
 
             std::vector<vertex_t> get_neighbours(vertex_t vertex) const override
             {
-                return get_neighbours(vertex, 0);
+                return get_neighbours(vertex, -1);
             }
 
             /**
@@ -107,7 +125,22 @@ namespace algolib
              * @param group: numer grupy sąsiadów
              * @return generator sąsiadów wierzchołka z zadanej grupy
              */
-            std::vector<vertex_t> get_neighbours(vertex_t vertex, size_t group) const;
+            std::vector<vertex_t> get_neighbours(vertex_t vertex, size_t group = -1) const
+            {
+                std::vector<vertex_t> vertices;
+
+                if(vertex >= get_vertices_number())
+                    throw no_such_vertex_exception(std::to_string(vertex));
+
+                if(group == 0)
+                    return graph.get_neighbours(vertex);
+
+                for(const auto & v : graph.get_neighbours(vertex))
+                    if(groups[v] == group)
+                        vertices.push_back(v);
+
+                return vertices;
+            }
 
             size_t get_outdegree(vertex_t vertex) const override
             {
@@ -119,7 +152,7 @@ namespace algolib
                 return graph.get_indegree(vertex);
             }
 
-            directed_graph * as_directed() const override
+            directed_simple_graph * as_directed() const override
             {
                 return graph.as_directed();
             }
@@ -130,7 +163,13 @@ namespace algolib
              * @param group numer grupy
              * @return czy wierzchołek jest w grupie
              */
-            bool is_in_group(vertex_t vertex, size_t group) const;
+            bool is_in_group(vertex_t vertex, size_t group) const
+            {
+                if(vertex >= get_vertices_number())
+                    throw no_such_vertex_exception(std::to_string(vertex));
+
+                return groups[vertex] == group;
+            }
 
             /**
              * Sprawdzanie, czy wierzchołki należą do tej samej grupy.
@@ -138,7 +177,16 @@ namespace algolib
              * @param vertex2 drugi wierzchołek
              * @return czy wierzchołki są w jednej grupie
              */
-            bool is_same_group(vertex_t vertex1, vertex_t vertex2) const;
+            bool is_same_group(vertex_t vertex1, vertex_t vertex2) const
+            {
+                if(vertex1 >= get_vertices_number())
+                    throw no_such_vertex_exception(std::to_string(vertex1));
+
+                if(vertex2 >= get_vertices_number())
+                    throw no_such_vertex_exception(std::to_string(vertex2));
+
+                return groups[vertex1] == groups[vertex2];
+            }
         };
     }
 }

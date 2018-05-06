@@ -22,7 +22,7 @@ namespace detail
         static constexpr int NO_MATCH = -1;
 
         /// Graf dwudzielny.
-        const algolib::graphs::multipartite_graph & graph;
+        const algolib::graphs::multipartite_graph<2> & graph;
 
         /// Skojarzenia wierzchołków.
         std::vector<int> matching;
@@ -34,12 +34,9 @@ namespace detail
         std::vector<bool> is_visited;
 
     public:
-        explicit match_augmenter(const algolib::graphs::multipartite_graph & partgraph)
+        explicit match_augmenter(const algolib::graphs::multipartite_graph<2> & partgraph)
             : graph{partgraph}
         {
-            if(this->graph.get_groups_number() != 2)
-                throw std::invalid_argument("Graph is not bipartite");
-
             this->matching.resize(this->graph.get_vertices_number(), NO_MATCH);
         }
 
@@ -77,7 +74,7 @@ namespace algolib
          * @param partgraph graf wielodzielny
          * @return pary skojarzonych wierzchołków
          */
-        std::vector<std::pair<int, int>> match(const multipartite_graph & partgraph);
+        std::vector<std::pair<int, int>> match(const multipartite_graph<2> & partgraph);
     }
 }
 
