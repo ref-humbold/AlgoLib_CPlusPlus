@@ -55,14 +55,14 @@ size_t algr::undirected_simple_graph::get_indegree(vertex_t vertex) const
     return get_outdegree(vertex);
 }
 
-algr::directed_simple_graph * algr::undirected_simple_graph::as_directed() const
+algr::undirected_simple_graph::operator algr::directed_simple_graph() const
 {
     std::vector<edge_t> diedges = get_edges();
 
     for(auto e : get_edges())
         diedges.emplace_back(std::get<1>(e), std::get<0>(e));
 
-    return new algr::directed_simple_graph(get_vertices_number(), diedges);
+    return algr::directed_simple_graph(get_vertices_number(), diedges);
 }
 
 // undirected_weighted_simple_graph
@@ -101,12 +101,12 @@ std::vector<wvertex_t>
     return std::vector<wvertex_t>(graphrepr[vertex].begin(), graphrepr[vertex].end());
 }
 
-algr::directed_weighted_simple_graph * algr::undirected_weighted_simple_graph::as_directed() const
+algr::undirected_weighted_simple_graph::operator algr::directed_weighted_simple_graph() const
 {
     std::vector<wedge_t> diwedges = get_weighted_edges();
 
     for(auto e : get_weighted_edges())
         diwedges.emplace_back(std::get<1>(e), std::get<0>(e), std::get<2>(e));
 
-    return new algr::directed_weighted_simple_graph(get_vertices_number(), diwedges);
+    return algr::directed_weighted_simple_graph(get_vertices_number(), diwedges);
 }
