@@ -25,13 +25,13 @@ namespace algolib
         public:
             undirected_graph() = default;
             virtual ~undirected_graph() = default;
-            undirected_graph(const undirected_graph & g) = default;
-            undirected_graph(undirected_graph && g) = default;
-            undirected_graph & operator=(const undirected_graph & g) = default;
-            undirected_graph & operator=(undirected_graph && g) = default;
+            undirected_graph(const undirected_graph &) = default;
+            undirected_graph(undirected_graph &&) = default;
+            undirected_graph & operator=(const undirected_graph &) = default;
+            undirected_graph & operator=(undirected_graph &&) = default;
         };
 
-        class undirected_simple_graph : public simple_graph, public virtual undirected_graph
+        class undirected_simple_graph : public simple_graph, public undirected_graph
         {
         public:
             explicit undirected_simple_graph(int n,
@@ -43,10 +43,10 @@ namespace algolib
             }
 
             virtual ~undirected_simple_graph() = default;
-            undirected_simple_graph(const undirected_simple_graph & g) = default;
-            undirected_simple_graph(undirected_simple_graph && g) = default;
-            undirected_simple_graph & operator=(const undirected_simple_graph & g) = default;
-            undirected_simple_graph & operator=(undirected_simple_graph && g) = default;
+            undirected_simple_graph(const undirected_simple_graph &) = default;
+            undirected_simple_graph(undirected_simple_graph &&) = default;
+            undirected_simple_graph & operator=(const undirected_simple_graph &) = default;
+            undirected_simple_graph & operator=(undirected_simple_graph &&) = default;
 
             size_t get_edges_number() const override;
 
@@ -60,7 +60,7 @@ namespace algolib
         };
 
         class undirected_weighted_simple_graph : public undirected_simple_graph,
-                                                 public virtual weighted_graph
+                                                 public weighted_graph
         {
         public:
             explicit undirected_weighted_simple_graph(
@@ -77,12 +77,12 @@ namespace algolib
             }
 
             virtual ~undirected_weighted_simple_graph() = default;
-            undirected_weighted_simple_graph(const undirected_weighted_simple_graph & g) = default;
-            undirected_weighted_simple_graph(undirected_weighted_simple_graph && g) = default;
+            undirected_weighted_simple_graph(const undirected_weighted_simple_graph &) = default;
+            undirected_weighted_simple_graph(undirected_weighted_simple_graph &&) = default;
             undirected_weighted_simple_graph &
-                operator=(const undirected_weighted_simple_graph & g) = default;
+                operator=(const undirected_weighted_simple_graph &) = default;
             undirected_weighted_simple_graph &
-                operator=(undirected_weighted_simple_graph && g) = default;
+                operator=(undirected_weighted_simple_graph &&) = default;
 
             std::vector<wedge_t> get_weighted_edges() const override;
 

@@ -156,10 +156,10 @@ TEST_F(UndirectedSimpleGraphTest, testAsDirected)
     test_object.add_edge(9, 3);
     test_object.add_edge(8, 0);
 
-    algr::directed_simple_graph * result = test_object.as_directed();
+    algr::directed_simple_graph result = test_object;
     std::vector<vertex_t> expected_vertices = test_object.get_vertices();
-    std::vector<vertex_t> result_vertices = result->get_vertices();
-    std::vector<edge_t> result_edges = result->get_edges();
+    std::vector<vertex_t> result_vertices = result.get_vertices();
+    std::vector<edge_t> result_edges = result.get_edges();
 
     std::sort(expected_vertices.begin(), expected_vertices.end());
     std::sort(result_vertices.begin(), result_vertices.end());
@@ -172,6 +172,4 @@ TEST_F(UndirectedSimpleGraphTest, testAsDirected)
                              std::make_tuple(5, 1), std::make_tuple(6, 3), std::make_tuple(7, 7),
                              std::make_tuple(8, 0), std::make_tuple(9, 3)}),
         result_edges);
-
-    delete result;
 }

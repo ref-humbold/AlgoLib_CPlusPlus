@@ -44,10 +44,10 @@ namespace algolib
             }
 
             virtual ~multipartite_graph() = default;
-            multipartite_graph(const multipartite_graph & g) = default;
-            multipartite_graph(multipartite_graph && g) = default;
-            multipartite_graph & operator=(const multipartite_graph & g) = default;
-            multipartite_graph & operator=(multipartite_graph && g) = default;
+            multipartite_graph(const multipartite_graph &) = default;
+            multipartite_graph(multipartite_graph &&) = default;
+            multipartite_graph & operator=(const multipartite_graph &) = default;
+            multipartite_graph & operator=(multipartite_graph &&) = default;
 
             /**
              * @param group numer grupy wierzchołków

@@ -47,10 +47,10 @@ namespace algolib
 
             graph() = default;
             virtual ~graph() = default;
-            graph(const graph & g) = default;
-            graph(graph && g) = default;
-            graph & operator=(const graph & g) = default;
-            graph & operator=(graph && g) = default;
+            graph(const graph &) = default;
+            graph(graph &&) = default;
+            graph & operator=(const graph &) = default;
+            graph & operator=(graph &&) = default;
 
             /**
              * @return liczba wierzchołków
@@ -109,10 +109,10 @@ namespace algolib
         public:
             weighted_graph() = default;
             virtual ~weighted_graph() = default;
-            weighted_graph(const weighted_graph & g) = default;
-            weighted_graph(weighted_graph && g) = default;
-            weighted_graph & operator=(const weighted_graph & g) = default;
-            weighted_graph & operator=(weighted_graph && g) = default;
+            weighted_graph(const weighted_graph &) = default;
+            weighted_graph(weighted_graph &&) = default;
+            weighted_graph & operator=(const weighted_graph &) = default;
+            weighted_graph & operator=(weighted_graph &&) = default;
 
             /**
              * @return wektor krawędzi z wagami
@@ -150,10 +150,10 @@ namespace algolib
             }
 
             virtual ~simple_graph() = default;
-            simple_graph(const simple_graph & g) = default;
-            simple_graph(simple_graph && g) = default;
-            simple_graph & operator=(const simple_graph & g) = default;
-            simple_graph & operator=(simple_graph && g) = default;
+            simple_graph(const simple_graph &) = default;
+            simple_graph(simple_graph &&) = default;
+            simple_graph & operator=(const simple_graph &) = default;
+            simple_graph & operator=(simple_graph &&) = default;
 
             size_t get_vertices_number() const override
             {

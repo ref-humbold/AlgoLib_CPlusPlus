@@ -25,16 +25,16 @@ namespace algolib
         public:
             directed_graph() = default;
             virtual ~directed_graph() = default;
-            directed_graph(const directed_graph & g) = default;
-            directed_graph(directed_graph && g) = default;
-            directed_graph & operator=(const directed_graph & g) = default;
-            directed_graph & operator=(directed_graph && g) = default;
+            directed_graph(const directed_graph &) = default;
+            directed_graph(directed_graph &&) = default;
+            directed_graph & operator=(const directed_graph &) = default;
+            directed_graph & operator=(directed_graph &&) = default;
 
             /// Odwracanie skierowania grafu.
             virtual void reverse() = 0;
         };
 
-        class directed_simple_graph : public simple_graph, public virtual directed_graph
+        class directed_simple_graph : public simple_graph, public directed_graph
         {
         public:
             explicit directed_simple_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>())
@@ -45,10 +45,10 @@ namespace algolib
             }
 
             virtual ~directed_simple_graph() = default;
-            directed_simple_graph(const directed_simple_graph & g) = default;
-            directed_simple_graph(directed_simple_graph && g) = default;
-            directed_simple_graph & operator=(const directed_simple_graph & g) = default;
-            directed_simple_graph & operator=(directed_simple_graph && g) = default;
+            directed_simple_graph(const directed_simple_graph &) = default;
+            directed_simple_graph(directed_simple_graph &&) = default;
+            directed_simple_graph & operator=(const directed_simple_graph &) = default;
+            directed_simple_graph & operator=(directed_simple_graph &&) = default;
 
             size_t get_edges_number() const override;
 
@@ -61,8 +61,7 @@ namespace algolib
             virtual void reverse() override;
         };
 
-        class directed_weighted_simple_graph : public directed_simple_graph,
-                                               public virtual weighted_graph
+        class directed_weighted_simple_graph : public directed_simple_graph, public weighted_graph
         {
         public:
             explicit directed_weighted_simple_graph(
@@ -79,12 +78,11 @@ namespace algolib
             }
 
             virtual ~directed_weighted_simple_graph() = default;
-            directed_weighted_simple_graph(const directed_weighted_simple_graph & g) = default;
-            directed_weighted_simple_graph(directed_weighted_simple_graph && g) = default;
+            directed_weighted_simple_graph(const directed_weighted_simple_graph &) = default;
+            directed_weighted_simple_graph(directed_weighted_simple_graph &&) = default;
             directed_weighted_simple_graph &
-                operator=(const directed_weighted_simple_graph & g) = default;
-            directed_weighted_simple_graph &
-                operator=(directed_weighted_simple_graph && g) = default;
+                operator=(const directed_weighted_simple_graph &) = default;
+            directed_weighted_simple_graph & operator=(directed_weighted_simple_graph &&) = default;
 
             std::vector<wedge_t> get_weighted_edges() const override;
 

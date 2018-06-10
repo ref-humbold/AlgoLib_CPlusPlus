@@ -37,14 +37,11 @@ TEST(PathsTest, testBellmanFordWhenUndirectedGraph)
              std::make_tuple(4, 5, 1.0), std::make_tuple(4, 3, 10.0), std::make_tuple(5, 8, 2.0),
              std::make_tuple(7, 5, 2.0), std::make_tuple(7, 8, 6.0), std::make_tuple(9, 6, 3.0)}));
     int source = 1;
-    algr::directed_weighted_simple_graph * diwgraph = uwgraph.as_directed();
 
-    std::vector<double> result = algr::dijkstra(*diwgraph, source);
+    std::vector<double> result = algr::bellman_ford(uwgraph, source);
     double i = algr::graph::INF;
 
     EXPECT_EQ(std::vector<double>({4.0, 0.0, i, 7.0, 7.0, 8.0, i, 10.0, 10.0, i}), result);
-
-    delete diwgraph;
 }
 
 TEST(PathsTest, testBellmanFordWhenNegativeCycle)
@@ -154,9 +151,8 @@ TEST(PathsTest, testFloydWarshallWhenUndirectedGraph)
              std::make_tuple(2, 6, 8.0), std::make_tuple(3, 0, 3.0), std::make_tuple(3, 7, 5.0),
              std::make_tuple(4, 5, 1.0), std::make_tuple(4, 3, 10.0), std::make_tuple(5, 8, 2.0),
              std::make_tuple(7, 5, 2.0), std::make_tuple(7, 8, 6.0), std::make_tuple(9, 6, 3.0)}));
-    algr::directed_weighted_simple_graph * diwgraph = uwgraph.as_directed();
 
-    std::vector<std::vector<double>> result = algr::floyd_warshall(*diwgraph);
+    std::vector<std::vector<double>> result = algr::floyd_warshall(uwgraph);
     double i = algr::graph::INF;
 
     EXPECT_EQ(std::vector<std::vector<double>>(
@@ -171,6 +167,4 @@ TEST(PathsTest, testFloydWarshallWhenUndirectedGraph)
                    std::vector<double>({12.0, 10.0, i, 9.0, 3.0, 2.0, i, 4.0, 0.0, i}),
                    std::vector<double>({i, i, 11.0, i, i, i, 3.0, i, i, 0.0})}),
               result);
-
-    delete diwgraph;
 }
