@@ -6,7 +6,7 @@
 
 namespace algr = algolib::graphs;
 
-std::vector<std::pair<int, int>> algr::match(const multipartite_graph & partgraph)
+std::vector<std::pair<int, int>> algr::match(const multipartite_graph<2> & partgraph)
 {
     detail::match_augmenter augmenter(partgraph);
 

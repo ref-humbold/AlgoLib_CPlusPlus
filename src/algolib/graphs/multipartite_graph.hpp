@@ -40,7 +40,7 @@ namespace algolib
         public:
             explicit multipartite_graph(int n) : graph{undirected_simple_graph(n)}
             {
-                groups.resize(n, 0);
+                groups.resize(n, 1);
             }
 
             virtual ~multipartite_graph() = default;
@@ -49,23 +49,34 @@ namespace algolib
             multipartite_graph & operator=(const multipartite_graph & g) = default;
             multipartite_graph & operator=(multipartite_graph && g) = default;
 
-            size_t get_vertices_number() const override
+            /**
+             * @param group numer grupy wierzchołków
+             * @return liczba wierzchołków z zadanej grupy
+             */
+            size_t get_vertices_number(size_t group = 0) const
             {
-                return graph.get_vertices_number();
-            }
+                if(group == 0)
+                    return graph.get_vertices_number();
 
-            std::vector<vertex_t> get_vertices() const override
-            {
-                return get_vertices(-1);
+                int num = 0;
+
+                for(const auto & v : graph.get_vertices())
+                    if(groups[v] == group)
+                        ++num;
+
+                return num;
             }
 
             /**
              * @param group numer grupy wierzchołków
-             * @return generator wierzchołków z zadanej grupy
+             * @return numery wierzchołków z zadanej grupy
              */
-            std::vector<vertex_t> get_vertices(size_t group = -1) const
+            std::vector<vertex_t> get_vertices(size_t group = 0) const
             {
                 std::vector<vertex_t> vertices;
+
+                if(group == 0)
+                    return graph.get_vertices();
 
                 for(const auto & v : graph.get_vertices())
                     if(groups[v] == group)
@@ -74,17 +85,12 @@ namespace algolib
                 return vertices;
             }
 
-            vertex_t add_vertex() override
-            {
-                return add_vertex(0);
-            }
-
             /**
              * Dodawanie nowego wierzchołka do zadanej grupy.
              * @param group: numer grupy
              * @return oznaczenie wierzchołka
              */
-            vertex_t add_vertex(size_t group = 0)
+            vertex_t add_vertex(size_t group)
             {
                 groups.push_back(group);
 
@@ -115,17 +121,12 @@ namespace algolib
                 graph.add_edge(vertex1, vertex2);
             }
 
-            std::vector<vertex_t> get_neighbours(vertex_t vertex) const override
-            {
-                return get_neighbours(vertex, -1);
-            }
-
             /**
              * @param vertex: numer wierzchołka
              * @param group: numer grupy sąsiadów
              * @return generator sąsiadów wierzchołka z zadanej grupy
              */
-            std::vector<vertex_t> get_neighbours(vertex_t vertex, size_t group = -1) const
+            std::vector<vertex_t> get_neighbours(vertex_t vertex, size_t group = 0) const
             {
                 std::vector<vertex_t> vertices;
 
