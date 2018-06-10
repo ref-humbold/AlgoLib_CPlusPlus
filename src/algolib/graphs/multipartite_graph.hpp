@@ -29,7 +29,7 @@ namespace algolib
         };
 
         template <size_t N>
-        class multipartite_graph : public virtual undirected_graph
+        class multipartite_graph : public undirected_graph
         {
             /// Struktura grafu wielodzielnego.
             undirected_simple_graph graph;
@@ -151,11 +151,6 @@ namespace algolib
             size_t get_indegree(vertex_t vertex) const override
             {
                 return graph.get_indegree(vertex);
-            }
-
-            directed_simple_graph * as_directed() const override
-            {
-                return graph.as_directed();
             }
 
             /**

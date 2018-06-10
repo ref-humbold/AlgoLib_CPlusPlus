@@ -94,11 +94,6 @@ namespace algolib
                 return graph.get_indegree(vertex);
             }
 
-            directed_graph * as_directed() const override
-            {
-                return graph.as_directed();
-            }
-
             /**
              * Sprawdzanie, czy wierzchołki należą do tego samego drzewa.
              * @param vertex1 pierwszy wierzchołek
