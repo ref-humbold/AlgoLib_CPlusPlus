@@ -44,7 +44,7 @@ algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o
 graphsDir : cutting.o directed_graph.o forest_graph.o graph.o lca.o matching.o mst.o \
 multipartite_graph.o paths.o scc.o searching.o topological_sorting.o undirected_graph.o
 
-mathsDir : maths.o prime_checking.o sieve.o
+mathsDir : fraction.o maths.o prime_checking.o sieve.o
 
 structuresDir : avl_tree.o disjoint_sets.o equation_system.o
 
@@ -166,6 +166,9 @@ undirected_graph_test : $(TEST)/undirected_graph_test.cpp graph.o directed_graph
 	  $(OBJTEST)/undirected_graph_test.o -o $(TESTBIN)/undirected_graph_test $(GTEST)
 
 # algolib/maths
+
+fraction.o : $(MATHS)/fraction.cpp
+	$(CMPL) -c $(MATHS)/fraction.cpp -o $(OBJSRC)/fraction.o
 
 maths.o : $(MATHS)/maths.cpp
 	$(CMPL) -c $(MATHS)/maths.cpp -o $(OBJSRC)/maths.o
