@@ -34,7 +34,7 @@ refreshSource : clean source
 refreshTest : clean tests
 
 testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test lca_test maths_test \
-maximum_subarray_test mst_test paths_test scc_test sieve_test sorting_test \
+maximum_subarray_test mst_test paths_test scc_test primes_test sorting_test \
 topological_sorting_test undirected_graph_test
 
 srcDir : algolibDir graphsDir mathsDir structuresDir
@@ -44,7 +44,7 @@ algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o
 graphsDir : cutting.o directed_graph.o forest_graph.o graph.o lca.o matching.o mst.o \
 multipartite_graph.o paths.o scc.o searching.o topological_sorting.o undirected_graph.o
 
-mathsDir : fraction.o maths.o prime_checking.o sieve.o
+mathsDir : fraction.o maths.o primes.o
 
 structuresDir : avl_tree.o disjoint_sets.o equation_system.o
 
@@ -177,15 +177,13 @@ maths_test : $(TEST)/maths_test.cpp maths.o
 	$(CMPL) -c $(TEST)/maths_test.cpp -o $(OBJTEST)/maths_test.o
 	$(CMPL) $(OBJSRC)/maths.o $(OBJTEST)/maths_test.o -o $(TESTBIN)/maths_test $(GTEST)
 
-prime_checking.o : $(MATHS)/prime_checking.cpp
-	$(CMPL) -c $(MATHS)/prime_checking.cpp -o $(OBJSRC)/prime_checking.o
+primes.o : $(MATHS)/primes.cpp
+	$(CMPL) -c $(MATHS)/primes.cpp -o $(OBJSRC)/primes.o
 
-sieve.o : $(MATHS)/sieve.cpp
-	$(CMPL) -c $(MATHS)/sieve.cpp -o $(OBJSRC)/sieve.o
-
-sieve_test : $(TEST)/sieve_test.cpp sieve.o
-	$(CMPL) -c $(TEST)/sieve_test.cpp -o $(OBJTEST)/sieve_test.o
-	$(CMPL) $(OBJSRC)/sieve.o $(OBJTEST)/sieve_test.o -o $(TESTBIN)/sieve_test $(GTEST)
+primes_test : $(TEST)/primes_test.cpp maths.o primes.o
+	$(CMPL) -c $(TEST)/primes_test.cpp -o $(OBJTEST)/primes_test.o
+	$(CMPL) $(OBJSRC)/maths.o $(OBJSRC)/primes.o $(OBJTEST)/primes_test.o \
+	  -o $(TESTBIN)/primes_test $(GTEST)
 
 # algolib/structures
 

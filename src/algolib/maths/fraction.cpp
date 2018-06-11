@@ -1,122 +1,116 @@
+// UŁAMKI
 #include "fraction.hpp"
 
-void fraction::normalize()
+namespace alma = algolib::maths;
+
+void alma::fraction::normalize()
 {
-    std::pair<int, int> p = std::make_pair(std::min(std::abs(num), std::abs(denom)),
-                                           std::max(std::abs(num), std::abs(denom)));
+    long long int gcd_val = gcd(num, denom);
 
-    while(p.first > 0)
-        p = std::make_pair(p.second % p.first, p.first);
+    num /= gcd_val;
+    denom /= gcd_val;
 
-    num /= p.second;
-    denom /= p.second;
-
-    if(num < 0 && denom < 0)
-    {
-        num = std::abs(num);
-        denom = std::abs(denom);
-    }
-    else if(num >= 0 && denom < 0)
+    if(denom < 0)
     {
         num = -num;
-        denom = std::abs(denom);
+        denom = -denom;
     }
 }
 
-fraction & fraction::operator+=(const fraction & r)
+alma::fraction & alma::fraction::operator+=(const alma::fraction & f)
 {
-    this->num = this->num * r.denom + r.num * this->denom;
-    this->denom *= r.denom;
+    this->num = this->num * f.denom + f.num * this->denom;
+    this->denom *= f.denom;
     this->normalize();
 
     return *this;
 }
 
-fraction & fraction::operator-=(const fraction & r)
+alma::fraction & alma::fraction::operator-=(const alma::fraction & f)
 {
-    this->num = this->num * r.denom - r.num * this->denom;
-    this->denom *= r.denom;
+    this->num = this->num * f.denom - f.num * this->denom;
+    this->denom *= f.denom;
     this->normalize();
 
     return *this;
 }
 
-fraction & fraction::operator*=(const fraction & r)
+alma::fraction & alma::fraction::operator*=(const alma::fraction & f)
 {
-    this->num *= r.num;
-    this->denom *= r.denom;
+    this->num *= f.num;
+    this->denom *= f.denom;
     this->normalize();
 
     return *this;
 }
 
-fraction & fraction::operator/=(const fraction & r)
+alma::fraction & alma::fraction::operator/=(const alma::fraction & f)
 {
-    this->num *= r.denom;
-    this->denom *= r.num;
+    this->num *= f.denom;
+    this->denom *= f.num;
     this->normalize();
 
     return *this;
 }
 
-fraction operator+(fraction r1, const fraction & r2)
+alma::fraction alma::operator+(alma::fraction f1, const alma::fraction & f2)
 {
-    r1 += r2;
+    f1 += f2;
 
-    return r1;
+    return f1;
 }
 
-fraction operator-(fraction r1, const fraction & r2)
+alma::fraction alma::operator-(alma::fraction f1, const alma::fraction & f2)
 {
-    r1 -= r2;
+    f1 -= f2;
 
-    return r1;
+    return f1;
 }
 
-fraction operator*(fraction r1, const fraction & r2)
+alma::fraction alma::operator*(alma::fraction f1, const alma::fraction & f2)
 {
-    r1 *= r2;
+    f1 *= f2;
 
-    return r1;
+    return f1;
 }
 
-fraction operator/(fraction r1, const fraction & r2)
+alma::fraction alma::operator/(alma::fraction f1, const alma::fraction & f2)
 {
-    r1 /= r2;
+    f1 /= f2;
 
-    return r1;
+    return f1;
 }
 
-fraction operator-(fraction r)
+alma::fraction alma::operator-(alma::fraction f)
 {
-    r.num *= -1;
+    f.num = -f.num;
 
-    return r;
+    return f;
 }
 
-fraction operator~(fraction r)
+alma::fraction alma::operator~(alma::fraction f)
 {
-    if(r == 0)
+    if(f.num == 0)
         throw std::domain_error("Reversing zero.");
 
-    std::swap(r.num, r.denom);
+    std::swap(f.num, f.denom);
 
-    return r;
+    return f;
 }
 
-bool operator==(const fraction & r1, const fraction & r2)
+bool alma::operator==(const alma::fraction & f1, const alma::fraction & f2)
 {
-    return r1.num == r2.num && r1.denom == r2.denom;
+    return f1.num == f2.num && f1.denom == f2.denom;
 }
 
-bool operator!=(const fraction & r1, const fraction & r2)
+bool alma::operator!=(const alma::fraction & f1, const alma::fraction & f2)
 {
-    return !(r1 == r2);
+    return !(f1 == f2);
 }
 
-std::ostream & operator<<(std::ostream & os, const fraction & r)
+std::ostream & alma::operator<<(std::ostream & os, const alma::fraction & f)
 {
-    os << r.num << "/" << r.denom;
+    os << f.num << "/" << f.denom;
 
     return os;
 }

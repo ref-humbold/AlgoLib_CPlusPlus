@@ -1,15 +1,15 @@
-// TESTY DLA ALGORYTMU SITA ERASTOTENESA"""
+// TESTY DLA ALGORYTMÓW DLA LICZB PIERWSZYCH"""
 #include <gtest/gtest.h>
-#include "../src/algolib/maths/sieve.hpp"
+#include "../src/algolib/maths/primes.hpp"
 
 namespace alma = algolib::maths;
 
-TEST(SieveTest, testFindPrimesTwoArgsDescending)
+TEST(PrimesTest, testFindPrimesTwoArgsDescending)
 {
     EXPECT_THROW(alma::find_primes(100, 30), std::invalid_argument);
 }
 
-TEST(SieveTest, testFindPrimesOneArgIsTwoArgs_with_zero_asMin)
+TEST(PrimesTest, testFindPrimesOneArgIsTwoArgs_with_zero_asMin)
 {
     std::vector<size_t> result1 = alma::find_primes(100);
     std::vector<size_t> result2 = alma::find_primes(0, 100);
@@ -17,7 +17,7 @@ TEST(SieveTest, testFindPrimesOneArgIsTwoArgs_with_zero_asMin)
     EXPECT_EQ(result1, result2);
 }
 
-TEST(SieveTest, testFindPrimesOneArg)
+TEST(PrimesTest, testFindPrimesOneArg)
 {
     std::vector<size_t> result = alma::find_primes(100);
 
@@ -26,7 +26,7 @@ TEST(SieveTest, testFindPrimesOneArg)
               result);
 }
 
-TEST(SieveTest, testFindPrimesOneArgWhenMaxIsPrime)
+TEST(PrimesTest, testFindPrimesOneArgWhenMaxIsPrime)
 {
     std::vector<size_t> result = alma::find_primes(67);
 
@@ -35,14 +35,14 @@ TEST(SieveTest, testFindPrimesOneArgWhenMaxIsPrime)
               result);
 }
 
-TEST(SieveTest, testFindPrimesOneArgWhenLessThanTwo)
+TEST(PrimesTest, testFindPrimesOneArgWhenLessThanTwo)
 {
     std::vector<size_t> result = alma::find_primes(1);
 
     EXPECT_EQ(std::vector<size_t>(), result);
 }
 
-TEST(SieveTest, testFindPrimesTwoArgs)
+TEST(PrimesTest, testFindPrimesTwoArgs)
 {
     std::vector<size_t> result = alma::find_primes(30, 200);
 
@@ -52,7 +52,7 @@ TEST(SieveTest, testFindPrimesTwoArgs)
               result);
 }
 
-TEST(SieveTest, testFindPrimesTwoArgsWhenMinLessThanSqrtOfMax)
+TEST(PrimesTest, testFindPrimesTwoArgsWhenMinLessThanSqrtOfMax)
 {
     std::vector<size_t> result = alma::find_primes(5, 150);
 
@@ -62,7 +62,7 @@ TEST(SieveTest, testFindPrimesTwoArgsWhenMinLessThanSqrtOfMax)
               result);
 }
 
-TEST(SieveTest, testFindPrimesTwoArgsWhenMinAndMaxArePrimes)
+TEST(PrimesTest, testFindPrimesTwoArgsWhenMinAndMaxArePrimes)
 {
     std::vector<size_t> result = alma::find_primes(137, 317);
 
@@ -72,14 +72,14 @@ TEST(SieveTest, testFindPrimesTwoArgsWhenMinAndMaxArePrimes)
               result);
 }
 
-TEST(SieveTest, testFindPrimesTwoArgsWhenMinEqualsMaxAndPrime)
+TEST(PrimesTest, testFindPrimesTwoArgsWhenMinEqualsMaxAndPrime)
 {
     std::vector<size_t> result = alma::find_primes(41, 41);
 
     EXPECT_EQ(std::vector<size_t>({41}), result);
 }
 
-TEST(SieveTest, testFindPrimesTwoArgsWhenMinEqualsMaxAndComposite)
+TEST(PrimesTest, testFindPrimesTwoArgsWhenMinEqualsMaxAndComposite)
 {
     std::vector<size_t> result = alma::find_primes(91, 91);
 
