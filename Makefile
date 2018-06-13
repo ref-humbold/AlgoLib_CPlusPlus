@@ -33,8 +33,8 @@ refreshSource : clean source
 
 refreshTest : clean tests
 
-testDir : avl_tree_test directed_graph_test disjoint_sets_test kmp_test lca_test maths_test \
-maximum_subarray_test mst_test paths_test scc_test primes_test sorting_test \
+testDir : avl_tree_test directed_graph_test disjoint_sets_test fraction_test kmp_test lca_test \
+maths_test maximum_subarray_test mst_test paths_test scc_test primes_test sorting_test \
 topological_sorting_test undirected_graph_test
 
 srcDir : algolibDir graphsDir mathsDir structuresDir
@@ -169,6 +169,12 @@ undirected_graph_test : $(TEST)/undirected_graph_test.cpp graph.o directed_graph
 
 fraction.o : $(MATHS)/fraction.cpp
 	$(CMPL) -c $(MATHS)/fraction.cpp -o $(OBJSRC)/fraction.o
+
+fraction_test : $(TEST)/fraction_test.cpp maths.o fraction.o
+	$(CMPL) -c $(TEST)/fraction_test.cpp -o $(OBJTEST)/fraction_test.o
+	$(CMPL) $(OBJSRC)/maths.o $(OBJSRC)/fraction.o $(OBJTEST)/fraction_test.o \
+	  -o $(TESTBIN)/fraction_test $(GTEST)
+
 
 maths.o : $(MATHS)/maths.cpp
 	$(CMPL) -c $(MATHS)/maths.cpp -o $(OBJSRC)/maths.o

@@ -5,16 +5,16 @@ namespace alma = algolib::maths;
 
 void alma::fraction::normalize()
 {
-    long long int gcd_val = gcd(num, denom);
-
-    num /= gcd_val;
-    denom /= gcd_val;
-
     if(denom < 0)
     {
         num = -num;
         denom = -denom;
     }
+
+    long long int gcd_val = gcd(std::abs(num), denom);
+
+    num /= gcd_val;
+    denom /= gcd_val;
 }
 
 alma::fraction & alma::fraction::operator+=(const alma::fraction & f)
@@ -91,9 +91,10 @@ alma::fraction alma::operator-(alma::fraction f)
 alma::fraction alma::operator~(alma::fraction f)
 {
     if(f.num == 0)
-        throw std::domain_error("Reversing zero.");
+        throw std::domain_error("Inversing zero.");
 
     std::swap(f.num, f.denom);
+    f.normalize();
 
     return f;
 }

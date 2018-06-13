@@ -39,6 +39,21 @@ namespace algolib
             fraction & operator=(const fraction &) = default;
             fraction & operator=(fraction &&) = default;
 
+            explicit operator double()
+            {
+                return (1.0 * num) / denom;
+            }
+
+            explicit operator long long int()
+            {
+                return num / denom;
+            }
+
+            explicit operator int()
+            {
+                return (long long int)(*this);
+            }
+
             fraction & operator+=(const fraction & f);
             fraction & operator-=(const fraction & f);
             fraction & operator*=(const fraction & f);

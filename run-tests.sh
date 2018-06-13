@@ -19,7 +19,7 @@ echo "${BOLD_PURPLE}Running GTest tests:${NORMAL}"
 
 for FILE in $TESTBIN_DIR/*
 do
-    echo "\n${BOLD_PURPLE}    >>>> $FILE <<<<${NORMAL}"
+    echo "\n${BOLD_PURPLE}    >>>> $(basename $FILE) <<<<${NORMAL}"
     ./$FILE --gtest_output="xml:./$GTEST_OUTPUT_DIR/"
 done
 
