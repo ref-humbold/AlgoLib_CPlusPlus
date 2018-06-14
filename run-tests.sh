@@ -6,6 +6,7 @@ BOLD_PURPLE="\033[1;35m"
 BOLD_RED="\033[1;31m"
 NORMAL="\033[0m"
 
+cd $(dirname $0)
 echo ""
 
 if test ! -d $TEST_DIR
