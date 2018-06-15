@@ -1,4 +1,6 @@
-# C++ output folders and files
+# C++ output
 obj
+
+# Google Test output
 gtest_results
 test/bin
