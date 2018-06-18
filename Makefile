@@ -1,5 +1,5 @@
 CXX = g++ -std=c++11
-CXXFLAGS = -Wall -Wextra -Iinclude
+CXXFLAGS = -Wall -Wextra -iquote include
 CMPL = $(CXX) $(CXXFLAGS)
 GTEST = -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -lpthread
 SRC = src
