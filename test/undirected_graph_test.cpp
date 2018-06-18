@@ -1,6 +1,6 @@
 // TESTY DLA GRAFÓW NIESKIEROWANYCH
 #include <gtest/gtest.h>
-#include "../src/algolib/graphs/undirected_graph.hpp"
+#include "algolib/graphs/undirected_graph.hpp"
 
 namespace algr = algolib::graphs;
 

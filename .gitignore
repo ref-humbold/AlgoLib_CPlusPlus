@@ -1,5 +1,6 @@
-# C++ output
+# C++ and CMake output
 obj
+lib
 
 # Google Test output
 gtest_results

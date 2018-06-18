@@ -1,4 +1,5 @@
-#include "two_sat.hpp"
+// ALGORYTM SPEŁNIALNOŚCI FORMUŁ 2-CNF
+#include "algolib/two_sat.hpp"
 
 namespace algr = algolib::graphs;
 

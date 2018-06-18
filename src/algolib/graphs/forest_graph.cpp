@@ -1,5 +1,5 @@
 // STRUKTURY GRAFÓW DRZEW
-#include "forest_graph.hpp"
+#include "algolib/graphs/forest_graph.hpp"
 
 namespace algr = algolib::graphs;
 

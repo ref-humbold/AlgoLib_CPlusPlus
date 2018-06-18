@@ -1,2 +1,2 @@
 // STRUKTURY GRAFÓW WIELODZIELNYCH
-#include "multipartite_graph.hpp"
+#include "algolib/graphs/multipartite_graph.hpp"

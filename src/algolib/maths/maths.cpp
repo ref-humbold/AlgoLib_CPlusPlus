@@ -1,5 +1,5 @@
 // ALGORYTMY MATEMATYCZNE
-#include "maths.hpp"
+#include "algolib/maths/maths.hpp"
 
 namespace alma = algolib::maths;
 

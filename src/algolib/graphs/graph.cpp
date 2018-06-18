@@ -1,5 +1,5 @@
 // STRUKTURY GRAFÓW
-#include "graph.hpp"
+#include "algolib/graphs/graph.hpp"
 
 namespace algr = algolib::graphs;
 

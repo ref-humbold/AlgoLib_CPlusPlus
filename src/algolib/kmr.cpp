@@ -1,5 +1,5 @@
 // SŁOWNIK PODSŁÓW BAZOWYCH Z ALGORYTMEM KARPA-MILLERA-ROSENBERGA
-#include "kmr.hpp"
+#include "algolib/kmr.hpp"
 
 std::map<std::string, int> detail::sign_letters(const std::string & text)
 {

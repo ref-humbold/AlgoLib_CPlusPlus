@@ -1,5 +1,5 @@
 // WYSZUKIWANIE MOSTÓW I PUNKTÓW ARTYKULACJI W GRAFIE
-#include "cutting.hpp"
+#include "algolib/graphs/cutting.hpp"
 
 namespace algr = algolib::graph;
 

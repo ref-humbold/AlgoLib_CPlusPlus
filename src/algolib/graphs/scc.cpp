@@ -2,7 +2,7 @@
  * @file scc.hpp
  * ALGORYTM WYZNACZANIA SILNIE SPÓLJNYCH SKŁADOWYCH W GRAFIE SKIEROWANYM
  */
-#include "scc.hpp"
+#include "algolib/graphs/scc.hpp"
 
 namespace algr = algolib::graphs;
 

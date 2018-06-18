@@ -1,5 +1,5 @@
 // ALGORYTMY WYZNACZANIA PODCIĄGU SPÓJNEGO O MAKSYMALNEJ SUMIE
-#include "maximum_subarray.hpp"
+#include "algolib/maximum_subarray.hpp"
 
 std::vector<double> algolib::find_maximum_subarray(const std::vector<double> & sequence)
 {

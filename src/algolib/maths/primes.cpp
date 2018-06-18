@@ -1,5 +1,5 @@
 // ALGORYTMY DLA LICZB PIERWSZYCH
-#include "primes.hpp"
+#include "algolib/maths/primes.hpp"
 
 namespace alma = algolib::maths;
 

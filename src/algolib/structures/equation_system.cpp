@@ -1,5 +1,5 @@
 // STRUKTURA UKŁADÓW RÓWNAŃ LINIOWYCH Z ALGORYTMEM ELIMINACJI GAUSSA
-#include "equation_system.hpp"
+#include "algolib/structures/equation_system.hpp"
 
 namespace alst = algolib::structures;
 

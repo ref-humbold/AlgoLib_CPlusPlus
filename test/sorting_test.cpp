@@ -1,6 +1,6 @@
 // TESTY DLA ALGORYTMÓW SORTOWANIA TOPOLOGICZNEGO"""
 #include <gtest/gtest.h>
-#include "../src/algolib/sorting.hpp"
+#include "algolib/sorting.hpp"
 
 TEST(SortingTest, testAngleSort)
 {

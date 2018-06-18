@@ -1,5 +1,5 @@
 // UŁAMKI
-#include "fraction.hpp"
+#include "algolib/maths/fraction.hpp"
 
 namespace alma = algolib::maths;
 

@@ -1,10 +1,5 @@
 // ALGORYTM EDMONDSA-KARPA: MAKSYMALNY PRZEP�YW
-#include <cstdlib>
-#include <algorithm>
-#include <queue>
-#include <vector>
-
-#include "edmonds.hpp"
+#include "algolib/graphs/edmonds.hpp"
 
 int flow_graph::count_flow(int source, int target)
 {

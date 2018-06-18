@@ -1,6 +1,6 @@
 // TESTY DLA GRAFÓW SKIEROWANYCH
 #include <gtest/gtest.h>
-#include "../src/algolib/graphs/directed_graph.hpp"
+#include "algolib/graphs/directed_graph.hpp"
 
 namespace algr = algolib::graphs;
 

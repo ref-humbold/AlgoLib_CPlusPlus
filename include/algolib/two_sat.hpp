@@ -1,4 +1,4 @@
-// SPEŁNIALNOŚĆ FORMUŁ 2-CNF
+// ALGORYTM SPEŁNIALNOŚCI FORMUŁ 2-CNF
 #ifndef TWO_SAT_HPP
 #define TWO_SAT_HPP
 
@@ -7,7 +7,7 @@
 #include <numeric>
 #include <vector>
 
-#include "graphs/directed_graph.hpp"
+#include "algolib/graphs/directed_graph.hpp"
 
 using literal_t = int;
 using clause_t = std::pair<literal_t, literal_t>;

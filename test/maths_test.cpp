@@ -1,6 +1,6 @@
 // TESTY DLA ALGORYTMÓW MATEMATYCZNYCH
 #include <gtest/gtest.h>
-#include "../src/algolib/maths/maths.hpp"
+#include "algolib/maths/maths.hpp"
 
 namespace alma = algolib::maths;
 

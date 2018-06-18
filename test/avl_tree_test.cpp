@@ -1,6 +1,6 @@
 // TESTY DLA DRZEWA AVL
 #include <gtest/gtest.h>
-#include "../src/algolib/structures/avl_tree.hpp"
+#include "algolib/structures/avl_tree.hpp"
 
 namespace alst = algolib::structures;
 

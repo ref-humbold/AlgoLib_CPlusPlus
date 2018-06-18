@@ -1,2 +1,2 @@
 // STRUKTURA ZBIORÓW ROZŁĄCZNYCH UNION-FIND
-#include "disjoint_sets.hpp"
+#include "algolib/structures/disjoint_sets.hpp"

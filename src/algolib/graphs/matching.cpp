@@ -2,7 +2,7 @@
  * @file matching.cpp
  * ALGORYTM HOPCROFTA-KARPA WYZNACZANIA SKOJARZEŃ W GRAFIE DWUDZIELNYM
  */
-#include "matching.hpp"
+#include "algolib/graphs/matching.hpp"
 
 namespace algr = algolib::graphs;
 

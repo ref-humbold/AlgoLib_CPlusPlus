@@ -1,5 +1,5 @@
 // ALGORYTMY SORTOWANIA
-#include "sorting.hpp"
+#include "algolib/sorting.hpp"
 
 int detail::choose_pivot(int size)
 {

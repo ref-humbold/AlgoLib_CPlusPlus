@@ -1,6 +1,6 @@
 // TESTY DLA ALGORYTMÓW MINIMALNEGO DRZEWA SPINAJĄCEGO
 #include <gtest/gtest.h>
-#include "../src/algolib/graphs/mst.hpp"
+#include "algolib/graphs/mst.hpp"
 
 namespace algr = algolib::graphs;
 

@@ -1,2 +1,2 @@
 // NAJMNIEJSZY LEKSYKOGRAFICZNIE NAJDŁUŻSZY PODCIĄG ROSNĄCY
-#include "lis.hpp"
+#include "algolib/lis.hpp"

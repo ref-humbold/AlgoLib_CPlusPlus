@@ -1,2 +1,2 @@
 // DRZEWO AVL
-#include "avl_tree.hpp"
+#include "algolib/structures/avl_tree.hpp"

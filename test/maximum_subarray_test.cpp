@@ -1,6 +1,6 @@
 // TESTY DLA PODCIĄGU SPÓJNEGO O MAKSYMALNEJ SUMIE
 #include <gtest/gtest.h>
-#include "../src/algolib/maximum_subarray.hpp"
+#include "algolib/maximum_subarray.hpp"
 
 TEST(MaximumSubarrayTest, testFindMaximumSubarray1)
 {

@@ -1,5 +1,5 @@
 // OTOCZKA WYPUKŁA PUNKTÓW NA PŁASZCZYŹNIE
-#include "convex_hull.hpp"
+#include "algolib/convex_hull.hpp"
 
 std::vector<point2D_t> algolib::find_convex_hull(std::vector<point2D_t> points)
 {

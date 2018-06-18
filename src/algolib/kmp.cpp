@@ -1,5 +1,5 @@
 // ALGORYTM KNUTHA-MORRISA-PRATTA WYSZUKIWANIA WZORCA W TEKŚCIE
-#include "kmp.hpp"
+#include "algolib/kmp.hpp"
 
 std::vector<size_t> detail::prefixes(const std::string & pattern)
 {

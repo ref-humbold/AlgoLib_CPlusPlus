@@ -1,6 +1,6 @@
 // TESTY DLA ALGORYTMÓW DLA LICZB PIERWSZYCH"""
 #include <gtest/gtest.h>
-#include "../src/algolib/maths/primes.hpp"
+#include "algolib/maths/primes.hpp"
 
 namespace alma = algolib::maths;
 

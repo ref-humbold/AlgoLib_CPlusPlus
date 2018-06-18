@@ -1,5 +1,5 @@
 // ALGORYTMY WYLICZANIA NAJKRÓTSZYCH ŚCIEŻEK W GRAFIE WAŻONYM
-#include "paths.hpp"
+#include "algolib/graphs/paths.hpp"
 
 namespace algr = algolib::graphs;
 

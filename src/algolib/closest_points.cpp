@@ -1,5 +1,5 @@
 // ALGORYTM WYZNACZANIA NAJBLIŻSZEJ PARY PUNKTÓW NA PŁASZCZYŹNIE
-#include "closest_points.hpp"
+#include "algolib/closest_points.hpp"
 
 std::pair<point2D_t, point2D_t>
     detail::search_closest(std::vector<point2D_t> & pointsX,
