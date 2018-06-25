@@ -7,7 +7,7 @@
 #include <queue>
 #include <vector>
 
-class flow_graph
+class edmonds_flow_graph
 {
 private:
     /** oznaczenie nieskończoności */
@@ -27,10 +27,9 @@ private:
 
 public:
     /**
-    KONSTRUKTOR PARAMETRYCZNY
     @param n liczba wierzchołków
     */
-    explicit flow_graph(int n) : num_vertex{n}
+    explicit edmonds_flow_graph(int n) : num_vertex{n}
     {
         graphrepr.resize(n + 1);
         capacities.resize(n + 1);
@@ -54,7 +53,7 @@ private:
     @param target ujście
     @return czy uda się powiększyć przepływ
     */
-    std::pair<double, bool> bfs_(int source, int target);
+    bool bfs(int source, int target);
 
     /**
     WYLICZANIE PRZEPŁYWU NA ŚCIEŻCE POWIĘKSZAJĄCEJ
@@ -62,7 +61,7 @@ private:
     @param target ujście
     @return przepływ na ścieżce
     */
-    double count_path_flow_(int source, int target);
+    double count_path_flow(int source, int target);
 };
 
 #endif

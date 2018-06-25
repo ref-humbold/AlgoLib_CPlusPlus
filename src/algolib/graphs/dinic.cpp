@@ -1,7 +1,7 @@
 // ALGORYTM DINICA: MAKSYMALNY PRZEPŁYW
 #include "algolib/graphs/dinic.hpp"
 
-double flow_graph::count_flow(int source, int target)
+double dinic_flow_graph::count_flow(int source, int target)
 {
     double max_flow = 0.0;
     bool is_flow_added = true;
@@ -10,16 +10,16 @@ double flow_graph::count_flow(int source, int target)
     {
         layer_graph.clear();
         layer_graph.resize(num_vertex + 1);
-        is_flow_added = bfs(source, target);
+        is_flow_added = dinic_flow_graph::bfs(source, target);
 
         if(is_flow_added)
-            max_flow += dfs(source, target, INF);
+            max_flow += dinic_flow_graph::dfs(source, target, INF);
     }
 
     return max_flow;
 }
 
-bool flow_graph::bfs(int source, int target)
+bool dinic_flow_graph::bfs(int source, int target)
 {
     std::vector<int> vertex_layer(num_vertex + 1, -1);
     std::queue<int> vertex_queue;
@@ -57,7 +57,7 @@ bool flow_graph::bfs(int source, int target)
     return false;
 }
 
-double flow_graph::dfs(int vertex, int target, double blocking_flow)
+double dinic_flow_graph::dfs(int vertex, int target, double blocking_flow)
 {
     if(vertex == target || blocking_flow == 0.0)
         return blocking_flow;

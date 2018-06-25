@@ -7,7 +7,7 @@
 #include <queue>
 #include <vector>
 
-class flow_graph
+class dinic_flow_graph
 {
 private:
     /**oznaczenie nieskończoności */
@@ -27,10 +27,9 @@ private:
 
 public:
     /**
-    KONSTRUKTOR PARAMETRYCZNY
     @param n liczba wierzchołków
     */
-    explicit flow_graph(int n) : num_vertex{n}
+    explicit dinic_flow_graph(int n) : num_vertex{n}
     {
         graphrepr.resize(n + 1);
         capacities.resize(n + 1);

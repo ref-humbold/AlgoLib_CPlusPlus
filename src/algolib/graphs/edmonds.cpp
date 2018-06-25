@@ -1,7 +1,7 @@
 // ALGORYTM EDMONDSA-KARPA: MAKSYMALNY PRZEP�YW
 #include "algolib/graphs/edmonds.hpp"
 
-int flow_graph::count_flow(int source, int target)
+int edmonds_flow_graph::count_flow(int source, int target)
 {
     double max_flow = 0.0;
     bool is_flow_added = true;
@@ -9,17 +9,17 @@ int flow_graph::count_flow(int source, int target)
     while(is_flow_added)
     {
         augmenting_paths.clear();
-        augmenting_paths.resize(num_vertex + 1, makepair(-1, INF));
-        is_flow_added = bfs(source, target);
+        augmenting_paths.resize(num_vertex + 1, std::make_pair(-1, INF));
+        is_flow_added = edmonds_flow_graph::bfs(source, target);
 
         if(is_flow_added)
-            max_flow += count_path_flow(source, target);
+            max_flow += edmonds_flow_graph::count_path_flow(source, target);
     }
 
     return max_flow;
 }
 
-std::pair<int, bool> flow_graph::bfs(int source, int target)
+bool edmonds_flow_graph::bfs(int source, int target)
 {
     std::queue<int> vertex_queue;
 
@@ -35,14 +35,14 @@ std::pair<int, bool> flow_graph::bfs(int source, int target)
         if(w == target)
             return true;
 
-        for(int i = 0; i < graphrepr[w].size(); ++i)
+        for(size_t i = 0; i < graphrepr[w].size(); ++i)
         {
             int s = graphrepr[w][i];
 
             if(capacities[w][s] > 0 && augmenting_paths[s].first == -1)
             {
                 augmenting_paths[s] =
-                    std::make_pair(w, min(capacities[w][s], augmenting_paths[w].second));
+                    std::make_pair(w, std::min(capacities[w][s], augmenting_paths[w].second));
                 vertex_queue.push(s);
             }
         }
@@ -51,7 +51,7 @@ std::pair<int, bool> flow_graph::bfs(int source, int target)
     return false;
 }
 
-int flow_graph::count_path_flow(int source, int target)
+double edmonds_flow_graph::count_path_flow(int source, int target)
 {
     for(int w = target; w != source; w = augmenting_paths[w].first)
     {
