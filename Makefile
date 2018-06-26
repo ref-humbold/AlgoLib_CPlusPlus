@@ -13,25 +13,20 @@ OBJSRC = $(OBJ)/$(SRC)
 OBJTEST = $(OBJ)/$(TEST)
 TESTBIN = $(TEST)/bin
 
+.PHONY: all prepare clean refresh test testDir srcDir algolibDir graphsDir mathsDir structuresDir
+
 all : prepare srcDir testDir
 
-source : prepare srcDir
-
-tests : prepare testDir
-
 prepare :
-	mkdir -p $(OBJSRC)
-	mkdir -p $(OBJTEST)
-	mkdir -p $(TESTBIN)
+	mkdir -p $(OBJSRC) $(OBJTEST) $(TESTBIN)
 
 clean :
 	rm -rf $(OBJ)
 
 refresh : clean all
 
-refreshSource : clean source
-
-refreshTest : clean tests
+test : prepare testDir
+	@sh run-tests.sh
 
 testDir : avl_tree_test directed_graph_test disjoint_sets_test fraction_test kmp_test lca_test \
 maths_test maximum_subarray_test mst_test paths_test scc_test primes_test sorting_test \
