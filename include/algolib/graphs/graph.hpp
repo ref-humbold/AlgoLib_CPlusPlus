@@ -39,6 +39,8 @@ namespace algolib
             }
         };
 
+#pragma region graph
+
         class graph
         {
         public:
@@ -104,6 +106,9 @@ namespace algolib
             virtual size_t get_indegree(vertex_t vertex) const = 0;
         };
 
+#pragma endregion
+#pragma region weighted_graph
+
         class weighted_graph : public virtual graph
         {
         public:
@@ -133,6 +138,9 @@ namespace algolib
              */
             virtual std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const = 0;
         };
+
+#pragma endregion
+#pragma region simple_graph
 
         class simple_graph : public virtual graph
         {
@@ -168,6 +176,8 @@ namespace algolib
 
             size_t get_outdegree(vertex_t vertex) const override;
         };
+
+#pragma endregion
     }
 }
 

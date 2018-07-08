@@ -3,7 +3,7 @@
 
 namespace algr = algolib::graphs;
 
-// directed_simple_graph
+#pragma region directed_simple_graph
 
 size_t algr::directed_simple_graph::get_edges_number() const
 {
@@ -59,7 +59,8 @@ void algr::directed_simple_graph::reverse()
     graphrepr = std::move(revgraph);
 }
 
-// directed_weighted_simple_graph
+#pragma endregion
+#pragma region directed_weighted_simple_graph
 
 std::vector<wedge_t> algr::directed_weighted_simple_graph::get_weighted_edges() const
 {
@@ -102,3 +103,5 @@ void algr::directed_weighted_simple_graph::reverse()
 
     graphrepr = std::move(revgraph);
 }
+
+#pragma endregion

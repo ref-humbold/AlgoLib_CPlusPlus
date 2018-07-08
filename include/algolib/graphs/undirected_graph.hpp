@@ -20,6 +20,8 @@ namespace algolib
 {
     namespace graphs
     {
+#pragma region undirected_graph
+
         class undirected_graph : public virtual graph
         {
         public:
@@ -30,6 +32,9 @@ namespace algolib
             undirected_graph & operator=(const undirected_graph &) = default;
             undirected_graph & operator=(undirected_graph &&) = default;
         };
+
+#pragma endregion
+#pragma region undirected_simple_graph
 
         class undirected_simple_graph : public simple_graph, public undirected_graph
         {
@@ -58,6 +63,9 @@ namespace algolib
 
             operator directed_simple_graph() const;
         };
+
+#pragma endregion
+#pragma region undirected_weighted_simple_graph
 
         class undirected_weighted_simple_graph : public undirected_simple_graph,
                                                  public weighted_graph
@@ -92,6 +100,8 @@ namespace algolib
 
             operator directed_weighted_simple_graph() const;
         };
+
+#pragma endregion
     }
 }
 

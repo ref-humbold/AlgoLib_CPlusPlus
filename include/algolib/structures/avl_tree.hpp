@@ -18,7 +18,7 @@ namespace algolib
 {
     namespace structures
     {
-        // avl_tree
+#pragma region avl_tree
 
         template <typename E, typename C = std::less<E>>
         class avl_tree
@@ -475,7 +475,8 @@ namespace algolib
             return left_height - right_height;
         }
 
-        // avl_node
+#pragma endregion
+#pragma region avl_node
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_node
@@ -541,7 +542,8 @@ namespace algolib
             virtual node_pointer maximum() = 0;
         };
 
-        // avl_inner_node
+#pragma endregion
+#pragma region avl_inner_node
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_inner_node : public avl_tree<E, C>::avl_node
@@ -704,7 +706,8 @@ namespace algolib
             return right == nullptr ? this : right->maximum();
         }
 
-        // avl_root_node
+#pragma endregion
+#pragma region avl_root_node
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_root_node : public avl_tree<E, C>::avl_node
@@ -816,7 +819,8 @@ namespace algolib
             return *this;
         }
 
-        // avl_iterator
+#pragma endregion
+#pragma region avl_iterator
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_iterator
@@ -924,7 +928,8 @@ namespace algolib
             return pred->get_height() <= 0 ? pred : pred->get_parent();
         }
 
-        // avl_succ_iterator
+#pragma endregion
+#pragma region avl_succ_iterator
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_succ_iterator : public avl_tree<E, C>::avl_iterator
@@ -984,7 +989,8 @@ namespace algolib
             return result;
         }
 
-        // avl_pred_iterator
+#pragma endregion
+#pragma region avl_pred_iterator
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_pred_iterator : public avl_tree<E, C>::avl_iterator
@@ -1043,6 +1049,8 @@ namespace algolib
 
             return result;
         }
+
+#pragma endregion
     }
 }
 
