@@ -1,8 +1,8 @@
 // TESTY DLA UŁAMKÓW
 #include <gtest/gtest.h>
-#include "algolib/maths/fraction.hpp"
+#include "algolib/math/fraction.hpp"
 
-namespace alma = algolib::maths;
+namespace alma = algolib::math;
 
 TEST(FractionTest, testInverseWhenPositive)
 {

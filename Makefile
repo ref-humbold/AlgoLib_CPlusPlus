@@ -32,14 +32,14 @@ testDir : avl_tree_test directed_graph_test disjoint_sets_test fraction_test kmp
 maths_test maximum_subarray_test mst_test paths_test scc_test primes_test sorting_test \
 topological_sorting_test undirected_graph_test
 
-srcDir : algolibDir graphsDir mathsDir structuresDir
+srcDir : algolibDir graphsDir mathDir structuresDir
 
 algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o sorting.o two_sat.o
 
 graphsDir : cutting.o directed_graph.o forest_graph.o graph.o lca.o matching.o mst.o \
 multipartite_graph.o paths.o scc.o searching.o topological_sorting.o undirected_graph.o
 
-mathsDir : fraction.o maths.o primes.o
+mathDir : fraction.o maths.o primes.o
 
 structuresDir : avl_tree.o disjoint_sets.o equation_system.o
 

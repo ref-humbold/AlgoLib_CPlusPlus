@@ -10,7 +10,7 @@
 
 namespace algolib
 {
-    namespace maths
+    namespace math
     {
         /**
          * Największy wspólny dzielnik dwóch liczb.

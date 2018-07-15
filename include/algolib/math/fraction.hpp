@@ -13,7 +13,7 @@
 
 namespace algolib
 {
-    namespace maths
+    namespace math
     {
         class fraction
         {

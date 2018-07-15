@@ -1,7 +1,7 @@
 // UŁAMKI
-#include "algolib/maths/fraction.hpp"
+#include "algolib/math/fraction.hpp"
 
-namespace alma = algolib::maths;
+namespace alma = algolib::math;
 
 void alma::fraction::normalize()
 {

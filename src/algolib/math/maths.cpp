@@ -1,7 +1,7 @@
 // ALGORYTMY MATEMATYCZNE
-#include "algolib/maths/maths.hpp"
+#include "algolib/math/maths.hpp"
 
-namespace alma = algolib::maths;
+namespace alma = algolib::math;
 
 long long int alma::gcd(long long int number1, long long int number2)
 {

@@ -1,7 +1,7 @@
 // ALGORYTMY DLA LICZB PIERWSZYCH
-#include "algolib/maths/primes.hpp"
+#include "algolib/math/primes.hpp"
 
-namespace alma = algolib::maths;
+namespace alma = algolib::math;
 
 std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
 {

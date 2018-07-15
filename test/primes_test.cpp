@@ -1,8 +1,8 @@
 // TESTY DLA ALGORYTMÓW DLA LICZB PIERWSZYCH"""
 #include <gtest/gtest.h>
-#include "algolib/maths/primes.hpp"
+#include "algolib/math/primes.hpp"
 
-namespace alma = algolib::maths;
+namespace alma = algolib::math;
 
 TEST(PrimesTest, testFindPrimesTwoArgsDescending)
 {
