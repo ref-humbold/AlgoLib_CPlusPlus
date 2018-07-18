@@ -439,13 +439,13 @@ namespace algolib
             {
                 node->count_height();
 
-                int new_balance = node->count_balance();
+                int new_balance = count_balance(node);
 
                 if(new_balance >= 2)
                 {
-                    if(node->get_left()->count_balance() > 0)
+                    if(count_balance(node->get_left()) > 0)
                         rotate(node->get_left());
-                    else if(node->get_left()->count_balance() < 0)
+                    else if(count_balance(node->get_left()) < 0)
                     {
                         rotate(node->get_left()->get_right());
                         rotate(node->get_left());
@@ -453,9 +453,9 @@ namespace algolib
                 }
                 else if(new_balance <= -2)
                 {
-                    if(node->get_right()->count_balance() < 0)
+                    if(count_balance(node->get_right()) < 0)
                         rotate(node->get_right());
-                    else if(node->get_right()->count_balance() > 0)
+                    else if(count_balance(node->get_right()) > 0)
                     {
                         rotate(node->get_right()->get_left());
                         rotate(node->get_right());
