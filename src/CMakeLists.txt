@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.5)
 include_directories("${PROJECT_SOURCE_DIR}/include")
 set(ALGOLIB "algolib")
 set(GRAPHS "${ALGOLIB}/graphs")
-set(MATHS "${ALGOLIB}/maths")
+set(MATHS "${ALGOLIB}/math")
 set(STRUCTURES "${ALGOLIB}/structures")
 set(ALGOLIB_SOURCES
     "${ALGOLIB}/closest_points.cpp"
