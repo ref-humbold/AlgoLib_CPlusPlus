@@ -1,8 +1,6 @@
-# C++ and CMake output
+# C++, CMake, Google Test
 build
-obj
-lib
-
-# Google Test output
 gtest_results
+lib
+obj
 test/bin
