@@ -1,4 +1,4 @@
-// ALGORYTMY DLA LICZB PIERWSZYCH
+// ALGORITHMS FOR PRIME NUMBERS
 #include "algolib/math/primes.hpp"
 
 namespace alma = algolib::math;

@@ -1,9 +1,9 @@
-// ALGORYTMY SORTOWANIA
+// SORTING ALGORITHMS
 #include "algolib/sorting.hpp"
 
 int detail::choose_pivot(int size)
 {
-    srand(time(0));
+    srand(time(nullptr));
 
     int candidate1 = rand() % size, candidate2 = rand() % size, candidate3 = rand() % size;
 
@@ -16,6 +16,15 @@ int detail::choose_pivot(int size)
         return candidate2;
 
     return candidate3;
+}
+
+void detail::validate_indices(size_t size, int index_begin, int index_end)
+{
+    if(index_begin < 0 || index_end > size)
+        throw std::invalid_argument("Sequence beginning index out of range.");
+
+    if(index_end < 0 || index_end > size)
+        throw std::invalid_argument("Sequence ending index out of range.");
 }
 
 void algolib::angle_sort(std::vector<point2D_t> & points)
