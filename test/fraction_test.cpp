@@ -73,3 +73,12 @@ TEST(FractionTest, testConvertToInt)
 
     EXPECT_EQ(-6, result);
 }
+
+TEST(FractionTest, testHash)
+{
+    alma::fraction frac(-129, 20);
+
+    size_t result = std::hash<alma::fraction>()(frac);
+
+    EXPECT_EQ(-109, result);
+}

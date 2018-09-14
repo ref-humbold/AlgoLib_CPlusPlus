@@ -18,7 +18,7 @@ int detail::choose_pivot(int size)
     return candidate3;
 }
 
-void detail::validate_indices(size_t size, int index_begin, int index_end)
+void detail::validate_indices(int size, int index_begin, int index_end)
 {
     if(index_begin < 0 || index_end > size)
         throw std::invalid_argument("Sequence beginning index out of range.");

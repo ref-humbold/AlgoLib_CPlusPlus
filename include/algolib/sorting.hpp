@@ -91,7 +91,7 @@ namespace detail
      * @param index_begin początkowy indeks ciągu
      * @param index_end końcowy indeks ciągu
      */
-    void validate_indices(size_t size, int index_begin, int index_end);
+    void validate_indices(int size, int index_begin, int index_end);
 }
 
 namespace algolib
