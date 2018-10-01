@@ -7,7 +7,7 @@ OBJ = obj
 TEST = test
 ALGOLIB = $(SRC)/algolib
 GRAPHS = $(ALGOLIB)/graphs
-MATHS = $(ALGOLIB)/math
+MATH = $(ALGOLIB)/math
 STRUCTURES = $(ALGOLIB)/structures
 OBJSRC = $(OBJ)/$(SRC)
 OBJTEST = $(OBJ)/$(TEST)
@@ -39,9 +39,9 @@ algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o
 graphsDir : cutting.o directed_graph.o forest_graph.o graph.o lca.o matching.o mst.o \
 multipartite_graph.o paths.o scc.o searching.o topological_sorting.o undirected_graph.o
 
-mathDir : fraction.o maths.o primes.o
+mathDir : equation_system.o fraction.o maths.o primes.o
 
-structuresDir : avl_tree.o disjoint_sets.o equation_system.o
+structuresDir : avl_tree.o disjoint_sets.o
 
 # algolib
 
@@ -162,24 +162,26 @@ undirected_graph_test : $(TEST)/undirected_graph_test.cpp graph.o directed_graph
 
 # algolib/maths
 
-fraction.o : $(MATHS)/fraction.cpp
-	$(CMPL) -c $(MATHS)/fraction.cpp -o $(OBJSRC)/fraction.o
+equation_system.o : $(MATH)/equation_system.cpp
+	$(CMPL) -c $(MATH)/equation_system.cpp -o $(OBJSRC)/equation_system.o
+
+fraction.o : $(MATH)/fraction.cpp
+	$(CMPL) -c $(MATH)/fraction.cpp -o $(OBJSRC)/fraction.o
 
 fraction_test : $(TEST)/fraction_test.cpp maths.o fraction.o
 	$(CMPL) -c $(TEST)/fraction_test.cpp -o $(OBJTEST)/fraction_test.o
 	$(CMPL) $(OBJSRC)/maths.o $(OBJSRC)/fraction.o $(OBJTEST)/fraction_test.o \
 	  -o $(TESTBIN)/fraction_test $(GTEST)
 
-
-maths.o : $(MATHS)/maths.cpp
-	$(CMPL) -c $(MATHS)/maths.cpp -o $(OBJSRC)/maths.o
+maths.o : $(MATH)/maths.cpp
+	$(CMPL) -c $(MATH)/maths.cpp -o $(OBJSRC)/maths.o
 
 maths_test : $(TEST)/maths_test.cpp maths.o
 	$(CMPL) -c $(TEST)/maths_test.cpp -o $(OBJTEST)/maths_test.o
 	$(CMPL) $(OBJSRC)/maths.o $(OBJTEST)/maths_test.o -o $(TESTBIN)/maths_test $(GTEST)
 
-primes.o : $(MATHS)/primes.cpp
-	$(CMPL) -c $(MATHS)/primes.cpp -o $(OBJSRC)/primes.o
+primes.o : $(MATH)/primes.cpp
+	$(CMPL) -c $(MATH)/primes.cpp -o $(OBJSRC)/primes.o
 
 primes_test : $(TEST)/primes_test.cpp maths.o primes.o
 	$(CMPL) -c $(TEST)/primes_test.cpp -o $(OBJTEST)/primes_test.o
@@ -202,6 +204,3 @@ disjoint_sets_test : $(TEST)/disjoint_sets_test.cpp disjoint_sets.o
 	$(CMPL) -c $(TEST)/disjoint_sets_test.cpp -o $(OBJTEST)/disjoint_sets_test.o
 	$(CMPL) $(OBJSRC)/disjoint_sets.o $(OBJTEST)/disjoint_sets_test.o \
 	  -o $(TESTBIN)/disjoint_sets_test $(GTEST)
-
-equation_system.o : $(STRUCTURES)/equation_system.cpp
-	$(CMPL) -c $(STRUCTURES)/equation_system.cpp -o $(OBJSRC)/equation_system.o
