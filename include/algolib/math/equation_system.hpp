@@ -50,10 +50,10 @@ namespace algolib
         {
         private:
             /// Macierz współczynników równania.
-            double[N][N] coeffs;
+            double coeffs[N][N];
 
             /// Wektor wyrazów wolnych równania.
-            double[N] free_terms;
+            double free_terms[N];
 
         public:
             explicit equation_system();

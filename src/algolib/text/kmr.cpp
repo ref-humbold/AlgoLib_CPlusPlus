@@ -1,5 +1,5 @@
 // SŁOWNIK PODSŁÓW BAZOWYCH Z ALGORYTMEM KARPA-MILLERA-ROSENBERGA
-#include "algolib/kmr.hpp"
+#include "algolib/text/kmr.hpp"
 
 namespace alte = algolib::text;
 
