@@ -105,7 +105,7 @@ namespace algolib
              * @param eq2 numer drugiego równania
              * @param constant stała kombinacji liniowej
              */
-            void combine(size_t equ1, size_t equ2, double constant);
+            void combine(size_t equ1, size_t equ2, double constant = 1.0);
         };
 
         template <size_t N>
@@ -123,11 +123,11 @@ namespace algolib
             std::initializer_list<double> frees)
         {
             if(coef.size() != N || frees.size() != N)
-                throw std::length_error("Incorrect number of equations.");
+                throw std::length_error("Incorrect number of equations");
 
             for(auto it : coef)
                 if(it.size() != N)
-                    throw std::length_error("Initializer matrix is not a square matrix.");
+                    throw std::length_error("Coefficient matrix is not a square matrix");
 
             int i = 0;
 
@@ -235,9 +235,6 @@ namespace algolib
         template <size_t N>
         void equation_system<N>::combine(size_t equ1, size_t equ2, double constant)
         {
-            if(constant == 0)
-                throw std::domain_error("Constant cannot be zero");
-
             for(size_t i = 0; i < N; ++i)
                 coeffs[equ1][i] += constant * coeffs[equ2][i];
 
