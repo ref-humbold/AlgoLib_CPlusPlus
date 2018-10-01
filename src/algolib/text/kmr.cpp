@@ -1,6 +1,8 @@
 // SŁOWNIK PODSŁÓW BAZOWYCH Z ALGORYTMEM KARPA-MILLERA-ROSENBERGA
 #include "algolib/kmr.hpp"
 
+namespace alte = algolib::text;
+
 std::map<std::string, int> detail::sign_letters(const std::string & text)
 {
     std::map<std::string, int> factors;
@@ -48,7 +50,7 @@ void detail::double_length(int new_length, const std::string & text,
         }
 }
 
-std::map<std::string, int> algolib::kmr(const std::string & text)
+std::map<std::string, int> alte::kmr(const std::string & text)
 {
     std::map<std::string, int> factors = detail::sign_letters(text);
 
