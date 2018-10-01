@@ -45,7 +45,7 @@ namespace algolib
             }
         };
 
-        template <int N>
+        template <size_t N>
         class equation_system
         {
         private:
@@ -86,22 +86,29 @@ namespace algolib
             void gaussian_reduce();
 
             /**
+             * Pomnożenie równania przez niezerową stałą.
+             * @param equ numer równania
+             * @param constant stała
+             */
+            void mult(size_t equ, double constant);
+
+            /**
              * Zamiana równań miejscami.
              * @param eq1 numer pierwszego równania
              * @param eq2 numer drugiego równania
              */
-            void change(int equ1, int equ2);
+            void swap(size_t equ1, size_t equ2);
 
             /**
              * Przekształcenie równania przez kombinację liniową z innym równaniem.
              * @param eq1 numer równania przekształcanego
              * @param eq2 numer drugiego równania
-             * @param cst stała kombinacji liniowej
+             * @param constant stała kombinacji liniowej
              */
-            void linear_comb(int equ1, int equ2, double cst);
+            void combine(size_t equ1, size_t equ2, double constant);
         };
 
-        template <int N>
+        template <size_t N>
         equation_system<N>::equation_system()
         {
             for(size_t i = 0; i < N; ++i)
@@ -110,7 +117,7 @@ namespace algolib
             std::fill(this->free_terms, this->free_terms + N, 0);
         }
 
-        template <int N>
+        template <size_t N>
         equation_system<N>::equation_system(
             std::initializer_list<std::initializer_list<double>> coef,
             std::initializer_list<double> frees)
@@ -136,9 +143,17 @@ namespace algolib
 
                 ++i;
             }
+
+            i = 0;
+
+            for(auto it : frees)
+            {
+                this->free_terms[i] = it;
+                ++i;
+            }
         }
 
-        template <int N>
+        template <size_t N>
         std::vector<double> equation_system<N>::solve()
         {
             gaussian_reduce();
@@ -166,7 +181,7 @@ namespace algolib
             return solution;
         }
 
-        template <int N>
+        template <size_t N>
         void equation_system<N>::gaussian_reduce()
         {
             for(size_t equ = 0; equ < N - 1; ++equ)
@@ -184,20 +199,32 @@ namespace algolib
 
                 if(coeffs[index_min][equ] != 0)
                 {
-                    change(equ, index_min);
+                    swap(equ, index_min);
 
                     for(size_t i = equ + 1; i < N; ++i)
                     {
                         double param = coeffs[i][equ] / coeffs[equ][equ];
 
-                        linear_comb(i, equ, -param);
+                        combine(i, equ, -param);
                     }
                 }
             }
         }
 
-        template <int N>
-        void equation_system<N>::change(int equ1, int equ2)
+        template <size_t N>
+        void equation_system<N>::mult(size_t equ, double constant)
+        {
+            if(constant == 0)
+                throw std::domain_error("Constant cannot be zero");
+
+            for(int i = 0; i < N; ++i)
+                coeffs[equ][i] *= constant;
+
+            free_terms[equ] *= constant;
+        };
+
+        template <size_t N>
+        void equation_system<N>::swap(size_t equ1, size_t equ2)
         {
             for(size_t i = 0; i < N; ++i)
                 std::swap(coeffs[equ1][i], coeffs[equ2][i]);
@@ -205,13 +232,16 @@ namespace algolib
             std::swap(free_terms[equ1], free_terms[equ2]);
         }
 
-        template <int N>
-        void equation_system<N>::linear_comb(int equ1, int equ2, double cst)
+        template <size_t N>
+        void equation_system<N>::combine(size_t equ1, size_t equ2, double constant)
         {
-            for(size_t i = 0; i < N; ++i)
-                coeffs[equ1][i] += cst * coeffs[equ2][i];
+            if(constant == 0)
+                throw std::domain_error("Constant cannot be zero");
 
-            free_terms[equ1] += cst * free_terms[equ2];
+            for(size_t i = 0; i < N; ++i)
+                coeffs[equ1][i] += constant * coeffs[equ2][i];
+
+            free_terms[equ1] += constant * free_terms[equ2];
         }
     }
 }
