@@ -1,6 +1,6 @@
 # C++, CMake, Google Test
+bin
 build
 gtest_results
-lib
 obj
 test/bin
