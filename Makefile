@@ -7,13 +7,15 @@ OBJ = obj
 TEST = test
 ALGOLIB = $(SRC)/algolib
 GRAPHS = $(ALGOLIB)/graphs
-MATHS = $(ALGOLIB)/math
+MATH = $(ALGOLIB)/math
 STRUCTURES = $(ALGOLIB)/structures
+TEXT = $(ALGOLIB)/text
 OBJSRC = $(OBJ)/$(SRC)
 OBJTEST = $(OBJ)/$(TEST)
 TESTBIN = $(TEST)/bin
 
-.PHONY: all prepare clean refresh test testDir srcDir algolibDir graphsDir mathsDir structuresDir
+.PHONY: all prepare clean refresh test testDir srcDir algolibDir graphsDir mathsDir \
+  structuresDir textDir
 
 all : prepare srcDir testDir
 
@@ -29,19 +31,21 @@ test : prepare testDir
 	@sh run-tests.sh
 
 testDir : avl_tree_test directed_graph_test disjoint_sets_test fraction_test kmp_test lca_test \
-maths_test maximum_subarray_test mst_test paths_test scc_test primes_test sorting_test \
-topological_sorting_test undirected_graph_test
+  maths_test maximum_subarray_test mst_test paths_test scc_test primes_test sorting_test \
+  topological_sorting_test undirected_graph_test
 
-srcDir : algolibDir graphsDir mathDir structuresDir
+srcDir : algolibDir graphsDir mathDir structuresDir textDir
 
-algolibDir : closest_points.o convex_hull.o kmp.o kmr.o lis.o maximum_subarray.o sorting.o two_sat.o
+algolibDir : closest_points.o convex_hull.o lis.o maximum_subarray.o sorting.o two_sat.o
 
 graphsDir : cutting.o directed_graph.o forest_graph.o graph.o lca.o matching.o mst.o \
-multipartite_graph.o paths.o scc.o searching.o topological_sorting.o undirected_graph.o
+  multipartite_graph.o paths.o scc.o searching.o topological_sorting.o undirected_graph.o
 
-mathDir : fraction.o maths.o primes.o
+mathDir : equation_system.o fraction.o maths.o primes.o
 
-structuresDir : avl_tree.o disjoint_sets.o equation_system.o
+structuresDir : avl_tree.o disjoint_sets.o
+
+textDir : kmp.o kmr.o
 
 # algolib
 
@@ -50,16 +54,6 @@ closest_points.o : $(ALGOLIB)/closest_points.cpp
 
 convex_hull.o : $(ALGOLIB)/convex_hull.cpp
 	$(CMPL) -c $(ALGOLIB)/convex_hull.cpp -o $(OBJSRC)/convex_hull.o
-
-kmp.o : $(ALGOLIB)/kmp.cpp
-	$(CMPL) -c $(ALGOLIB)/kmp.cpp -o $(OBJSRC)/kmp.o
-
-kmp_test : $(TEST)/kmp_test.cpp kmp.o
-	$(CMPL) -c $(TEST)/kmp_test.cpp -o $(OBJTEST)/kmp_test.o
-	$(CMPL) $(OBJSRC)/kmp.o $(OBJTEST)/kmp_test.o -o $(TESTBIN)/kmp_test $(GTEST)
-
-kmr.o : $(ALGOLIB)/kmr.cpp
-	$(CMPL) -c $(ALGOLIB)/kmr.cpp -o $(OBJSRC)/kmr.o
 
 lis.o : $(ALGOLIB)/lis.cpp
 	$(CMPL) -c $(ALGOLIB)/lis.cpp -o $(OBJSRC)/lis.o
@@ -162,24 +156,26 @@ undirected_graph_test : $(TEST)/undirected_graph_test.cpp graph.o directed_graph
 
 # algolib/maths
 
-fraction.o : $(MATHS)/fraction.cpp
-	$(CMPL) -c $(MATHS)/fraction.cpp -o $(OBJSRC)/fraction.o
+equation_system.o : $(MATH)/equation_system.cpp
+	$(CMPL) -c $(MATH)/equation_system.cpp -o $(OBJSRC)/equation_system.o
+
+fraction.o : $(MATH)/fraction.cpp
+	$(CMPL) -c $(MATH)/fraction.cpp -o $(OBJSRC)/fraction.o
 
 fraction_test : $(TEST)/fraction_test.cpp maths.o fraction.o
 	$(CMPL) -c $(TEST)/fraction_test.cpp -o $(OBJTEST)/fraction_test.o
 	$(CMPL) $(OBJSRC)/maths.o $(OBJSRC)/fraction.o $(OBJTEST)/fraction_test.o \
 	  -o $(TESTBIN)/fraction_test $(GTEST)
 
-
-maths.o : $(MATHS)/maths.cpp
-	$(CMPL) -c $(MATHS)/maths.cpp -o $(OBJSRC)/maths.o
+maths.o : $(MATH)/maths.cpp
+	$(CMPL) -c $(MATH)/maths.cpp -o $(OBJSRC)/maths.o
 
 maths_test : $(TEST)/maths_test.cpp maths.o
 	$(CMPL) -c $(TEST)/maths_test.cpp -o $(OBJTEST)/maths_test.o
 	$(CMPL) $(OBJSRC)/maths.o $(OBJTEST)/maths_test.o -o $(TESTBIN)/maths_test $(GTEST)
 
-primes.o : $(MATHS)/primes.cpp
-	$(CMPL) -c $(MATHS)/primes.cpp -o $(OBJSRC)/primes.o
+primes.o : $(MATH)/primes.cpp
+	$(CMPL) -c $(MATH)/primes.cpp -o $(OBJSRC)/primes.o
 
 primes_test : $(TEST)/primes_test.cpp maths.o primes.o
 	$(CMPL) -c $(TEST)/primes_test.cpp -o $(OBJTEST)/primes_test.o
@@ -203,5 +199,14 @@ disjoint_sets_test : $(TEST)/disjoint_sets_test.cpp disjoint_sets.o
 	$(CMPL) $(OBJSRC)/disjoint_sets.o $(OBJTEST)/disjoint_sets_test.o \
 	  -o $(TESTBIN)/disjoint_sets_test $(GTEST)
 
-equation_system.o : $(STRUCTURES)/equation_system.cpp
-	$(CMPL) -c $(STRUCTURES)/equation_system.cpp -o $(OBJSRC)/equation_system.o
+# algolib/text
+
+kmp.o : $(TEXT)/kmp.cpp
+	$(CMPL) -c $(TEXT)/kmp.cpp -o $(OBJSRC)/kmp.o
+
+kmp_test : $(TEST)/kmp_test.cpp kmp.o
+	$(CMPL) -c $(TEST)/kmp_test.cpp -o $(OBJTEST)/kmp_test.o
+	$(CMPL) $(OBJSRC)/kmp.o $(OBJTEST)/kmp_test.o -o $(TESTBIN)/kmp_test $(GTEST)
+
+kmr.o : $(TEXT)/kmr.cpp
+	$(CMPL) -c $(TEXT)/kmr.cpp -o $(OBJSRC)/kmr.o

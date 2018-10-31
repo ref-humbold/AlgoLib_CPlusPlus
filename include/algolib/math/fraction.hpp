@@ -1,4 +1,4 @@
-// UŁAMKI
+// DATA STRUCTURE FOR FRACTIONS
 #ifndef _FRACTION_HPP_
 #define _FRACTION_HPP_
 
@@ -10,6 +10,20 @@
 #include <string>
 
 #include "maths.hpp"
+
+namespace algolib
+{
+    namespace math
+    {
+        class fraction;
+    }
+}
+
+namespace std
+{
+    template <>
+    struct hash<algolib::math::fraction>;
+}
 
 namespace algolib
 {
@@ -39,17 +53,17 @@ namespace algolib
             fraction & operator=(const fraction &) = default;
             fraction & operator=(fraction &&) = default;
 
-            explicit operator double()
+            explicit operator double() const
             {
                 return (1.0 * num) / denom;
             }
 
-            explicit operator long long int()
+            explicit operator long long int() const
             {
                 return num / denom;
             }
 
-            explicit operator int()
+            explicit operator int() const
             {
                 return (long long int)(*this);
             }
@@ -70,6 +84,8 @@ namespace algolib
 
             friend std::ostream & operator<<(std::ostream & os, const fraction & f);
 
+            friend struct std::hash<fraction>;
+
         private:
             void normalize();
         };
@@ -84,6 +100,21 @@ namespace algolib
         bool operator!=(const fraction & f1, const fraction & f2);
         std::ostream & operator<<(std::ostream & os, const fraction & f);
     }
+}
+
+namespace std
+{
+    template <>
+    struct hash<algolib::math::fraction>
+    {
+        using argument_type = algolib::math::fraction;
+        using result_type = size_t;
+
+        result_type operator()(const argument_type & f)
+        {
+            return hash<long long int>()(f.num) + hash<long long int>()(f.denom);
+        }
+    };
 }
 
 #endif

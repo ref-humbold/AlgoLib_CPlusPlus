@@ -1,4 +1,4 @@
-// ALGORYTMY SORTOWANIA
+// SORTING ALGORITHMS
 #ifndef _SORTING_HPP_
 #define _SORTING_HPP_
 
@@ -84,6 +84,14 @@ namespace detail
      * @return indeks piwota
      */
     int choose_pivot(int size);
+
+    /**
+     * Sprawdzanie poprawności indeksów
+     * @param size długość ciągu
+     * @param index_begin początkowy indeks ciągu
+     * @param index_end końcowy indeks ciągu
+     */
+    void validate_indices(int size, int index_begin, int index_end);
 }
 
 namespace algolib
@@ -106,11 +114,7 @@ namespace algolib
         if(index_end == -1)
             index_end = sequence.size();
 
-        if(index_begin < 0 || index_end > sequence.size())
-            throw std::invalid_argument("Sequence beginning index out of range.");
-
-        if(index_end < 0 || index_end > sequence.size())
-            throw std::invalid_argument("Sequence ending index out of range.");
+        detail::validate_indices(sequence.size(), index_begin, index_end);
 
         int heap_size = index_end - index_begin;
 
@@ -142,11 +146,7 @@ namespace algolib
         if(index_end == -1)
             index_end = sequence.size();
 
-        if(index_begin < 0 || index_end > sequence.size())
-            throw std::invalid_argument("Sequence beginning index out of range.");
-
-        if(index_end < 0 || index_end > sequence.size())
-            throw std::invalid_argument("Sequence ending index out of range.");
+        detail::validate_indices(sequence.size(), index_begin, index_end);
 
         if(index_end - index_begin <= 1)
             return;
@@ -170,11 +170,7 @@ namespace algolib
         if(index_end == -1)
             index_end = sequence.size();
 
-        if(index_begin < 0 || index_end > sequence.size())
-            throw std::invalid_argument("Sequence beginning index out of range.");
-
-        if(index_end < 0 || index_end > sequence.size())
-            throw std::invalid_argument("Sequence ending index out of range.");
+        detail::validate_indices(sequence.size(), index_begin, index_end);
 
         if(index_end - index_begin <= 1)
             return;
@@ -197,11 +193,7 @@ namespace algolib
         if(index_end == -1)
             index_end = sequence.size();
 
-        if(index_begin < 0 || index_end > sequence.size())
-            throw std::invalid_argument("Sequence beginning index out of range.");
-
-        if(index_end < 0 || index_end > sequence.size())
-            throw std::invalid_argument("Sequence ending index out of range.");
+        detail::validate_indices(sequence.size(), index_begin, index_end);
 
         if(index_end - index_begin <= 1)
             return;

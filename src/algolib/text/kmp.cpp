@@ -1,5 +1,7 @@
 // ALGORYTM KNUTHA-MORRISA-PRATTA WYSZUKIWANIA WZORCA W TEKŚCIE
-#include "algolib/kmp.hpp"
+#include "algolib/text/kmp.hpp"
+
+namespace alte = algolib::text;
 
 std::vector<size_t> detail::prefixes(const std::string & pattern)
 {
@@ -20,7 +22,7 @@ std::vector<size_t> detail::prefixes(const std::string & pattern)
     return pi;
 }
 
-std::vector<size_t> algolib::kmp(const std::string & text, const std::string & pattern)
+std::vector<size_t> alte::kmp(const std::string & text, const std::string & pattern)
 {
     std::vector<size_t> places;
     std::vector<size_t> pi = detail::prefixes(pattern);

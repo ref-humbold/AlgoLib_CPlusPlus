@@ -1,4 +1,4 @@
-// UŁAMKI
+// DATA STRUCTURE FOR FRACTIONS
 #include "algolib/math/fraction.hpp"
 
 namespace alma = algolib::math;

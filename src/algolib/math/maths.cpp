@@ -1,4 +1,4 @@
-// ALGORYTMY MATEMATYCZNE
+// MATHS ALGORITHMS
 #include "algolib/math/maths.hpp"
 
 namespace alma = algolib::math;

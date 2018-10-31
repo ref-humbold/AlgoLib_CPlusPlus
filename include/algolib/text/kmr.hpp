@@ -28,12 +28,15 @@ namespace detail
 
 namespace algolib
 {
-    /**
-     * Budowa słownika podsłów bazowych.
-     * @param text słowo
-     * @return słownik podsłów bazowych
-     */
-    std::map<std::string, int> kmr(const std::string & text);
+    namespace text
+    {
+        /**
+         * Budowa słownika podsłów bazowych.
+         * @param text słowo
+         * @return słownik podsłów bazowych
+         */
+        std::map<std::string, int> kmr(const std::string & text);
+    }
 }
 
 #endif
