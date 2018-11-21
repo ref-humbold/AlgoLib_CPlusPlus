@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <numeric>
 #include <vector>
-
 #include "algolib/graphs/directed_graph.hpp"
 
 using literal_t = int;

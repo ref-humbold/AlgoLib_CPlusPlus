@@ -12,7 +12,6 @@
 #include <numeric>
 #include <tuple>
 #include <vector>
-
 #include "directed_graph.hpp"
 #include "graph.hpp"
 

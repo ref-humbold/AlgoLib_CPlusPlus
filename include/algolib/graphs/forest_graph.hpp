@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <tuple>
 #include <vector>
-
 #include "../structures/disjoint_sets.hpp"
 #include "graph.hpp"
 #include "undirected_graph.hpp"
@@ -43,8 +42,8 @@ namespace algolib
 
         public:
             explicit forest_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>())
-                : graph{undirected_simple_graph(n)}, components{alst::disjoint_sets<vertex_t>(
-                                                         this->graph.get_vertices())}
+                : graph{undirected_simple_graph(n)},
+                  components{alst::disjoint_sets<vertex_t>(this->graph.get_vertices())}
             {
                 for(const auto & e : edges)
                     this->add_edge(std::get<0>(e), std::get<1>(e));

@@ -9,7 +9,6 @@
 #include <algorithm>
 #include <set>
 #include <vector>
-
 #include "directed_graph.hpp"
 
 namespace detail

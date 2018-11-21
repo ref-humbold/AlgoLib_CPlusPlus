@@ -6,7 +6,6 @@
 #include <exception>
 #include <stdexcept>
 #include <vector>
-
 #include "directed_graph.hpp"
 #include "undirected_graph.hpp"
 

@@ -10,7 +10,6 @@
 #include <queue>
 #include <stack>
 #include <vector>
-
 #include "graph.hpp"
 
 namespace detail

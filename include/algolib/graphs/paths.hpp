@@ -12,7 +12,6 @@
 #include <queue>
 #include <tuple>
 #include <vector>
-
 #include "directed_graph.hpp"
 
 namespace algolib

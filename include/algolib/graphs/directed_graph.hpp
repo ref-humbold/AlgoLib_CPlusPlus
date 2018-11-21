@@ -13,7 +13,6 @@
 #include <set>
 #include <tuple>
 #include <vector>
-
 #include "graph.hpp"
 
 namespace algolib

@@ -8,7 +8,6 @@
 #include <cstdlib>
 #include <algorithm>
 #include <vector>
-
 #include "undirected_graph.hpp"
 
 namespace detail

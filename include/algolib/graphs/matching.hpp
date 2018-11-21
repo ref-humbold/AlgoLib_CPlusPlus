@@ -10,7 +10,6 @@
 #include <stdexcept>
 #include <queue>
 #include <vector>
-
 #include "multipartite_graph.hpp"
 
 namespace detail

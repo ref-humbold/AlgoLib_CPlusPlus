@@ -6,7 +6,6 @@
 #include <ctime>
 #include <algorithm>
 #include <vector>
-
 #include "maths.hpp"
 
 namespace detail
@@ -24,11 +23,11 @@ namespace algolib
     namespace math
     {
         /**
-          * Wyznaczanie liczb pierwszych na przedziale domkniętym.
-          * @param min_number dolna granica przedziału
-          * @param max_number górna granica przedziału
-          * @return lista liczb pierwszych
-          */
+         * Wyznaczanie liczb pierwszych na przedziale domkniętym.
+         * @param min_number dolna granica przedziału
+         * @param max_number górna granica przedziału
+         * @return lista liczb pierwszych
+         */
         std::vector<size_t> find_primes(size_t min_number, size_t max_number);
 
         /**

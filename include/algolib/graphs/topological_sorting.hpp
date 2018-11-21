@@ -13,7 +13,6 @@
 #include <queue>
 #include <string>
 #include <vector>
-
 #include "directed_graph.hpp"
 
 namespace detail

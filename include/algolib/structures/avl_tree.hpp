@@ -349,8 +349,9 @@ namespace algolib
             typename avl_tree<E, C>::node_pointer tree_iter = get_inner_root();
             typename avl_tree<E, C>::node_pointer iter_parent = nullptr;
 
-            while(tree_iter != nullptr && (cmp(tree_iter->get_element(), element)
-                                           || cmp(element, tree_iter->get_element())))
+            while(tree_iter != nullptr
+                  && (cmp(tree_iter->get_element(), element)
+                      || cmp(element, tree_iter->get_element())))
             {
                 iter_parent = tree_iter;
                 tree_iter = get_subtree(tree_iter, element);

@@ -5,7 +5,6 @@
 #include <stdexcept>
 #include <algorithm>
 #include <vector>
-
 #include "forest_graph.hpp"
 
 namespace detail
