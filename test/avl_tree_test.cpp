@@ -21,6 +21,54 @@ public:
     }
 };
 
+TEST_F(AVLTreeTest, testCopyConstructor)
+{
+    alst::avl_tree<int> copy_object = test_object;
+
+    ASSERT_EQ(test_object.size(), copy_object.size());
+
+    for(const auto & e : test_object)
+        EXPECT_NE(copy_object.end(), copy_object.find(e));
+}
+
+TEST_F(AVLTreeTest, testMoveConstructor)
+{
+    alst::avl_tree<int> move_object = std::move(test_object);
+
+    ASSERT_EQ(numbers.size(), move_object.size());
+
+    for(const auto & e : numbers)
+        EXPECT_NE(move_object.end(), move_object.find(e));
+}
+
+TEST_F(AVLTreeTest, testCopyAssignment)
+{
+    alst::avl_tree<int> copy_object({119});
+
+    ASSERT_NE(copy_object.end(), copy_object.find(119));
+
+    copy_object = test_object;
+
+    ASSERT_EQ(test_object.size(), copy_object.size());
+
+    for(const auto & e : test_object)
+        EXPECT_NE(copy_object.end(), copy_object.find(e));
+}
+
+TEST_F(AVLTreeTest, testMoveAssignment)
+{
+    alst::avl_tree<int> move_object({119});
+
+    ASSERT_NE(move_object.end(), move_object.find(119));
+
+    move_object = std::move(test_object);
+
+    ASSERT_EQ(numbers.size(), move_object.size());
+
+    for(const auto & e : numbers)
+        EXPECT_NE(move_object.end(), move_object.find(e));
+}
+
 TEST_F(AVLTreeTest, testEmptyWhenEmpty)
 {
     test_object = alst::avl_tree<int>();
@@ -122,7 +170,7 @@ TEST_F(AVLTreeTest, testInsertWhenNewElement)
     {
         auto result = test_object.insert(i);
 
-        EXPECT_TRUE(result.second);
+        ASSERT_TRUE(result.second);
         EXPECT_NE(test_object.end(), result.first);
         EXPECT_EQ(i, *result.first);
         EXPECT_NE(test_object.end(), test_object.find(i));
@@ -137,7 +185,7 @@ TEST_F(AVLTreeTest, testInsertWhenPresentElement)
     {
         auto result = test_object.insert(i);
 
-        EXPECT_FALSE(result.second);
+        ASSERT_FALSE(result.second);
         EXPECT_NE(test_object.end(), result.first);
         EXPECT_EQ(i, *result.first);
         EXPECT_NE(test_object.end(), test_object.find(i));
