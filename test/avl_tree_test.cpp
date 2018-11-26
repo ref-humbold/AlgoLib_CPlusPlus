@@ -8,7 +8,7 @@ class AVLTreeTest : public ::testing::Test
 {
 protected:
     alst::avl_tree<int> test_object;
-    std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};
+    const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};
 
 public:
     AVLTreeTest()
@@ -16,9 +16,7 @@ public:
     {
     }
 
-    virtual ~AVLTreeTest()
-    {
-    }
+    virtual ~AVLTreeTest() = default;
 };
 
 TEST_F(AVLTreeTest, testCopyConstructor)
