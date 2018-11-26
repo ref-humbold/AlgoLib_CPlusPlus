@@ -38,8 +38,7 @@ namespace algolib
         class undirected_simple_graph : public simple_graph, public undirected_graph
         {
         public:
-            explicit undirected_simple_graph(int n,
-                                             std::vector<edge_t> edges = std::vector<edge_t>())
+            explicit undirected_simple_graph(int n, std::vector<edge_t> edges = {})
                 : simple_graph(n)
             {
                 for(const auto & e : edges)
@@ -70,8 +69,7 @@ namespace algolib
                                                  public weighted_graph
         {
         public:
-            explicit undirected_weighted_simple_graph(
-                int n, std::vector<edge_t> edges = std::vector<edge_t>())
+            explicit undirected_weighted_simple_graph(int n, std::vector<edge_t> edges = {})
                 : undirected_simple_graph(n, edges)
             {
             }

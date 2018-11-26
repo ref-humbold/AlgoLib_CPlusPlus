@@ -35,11 +35,6 @@ namespace algolib
 
         class forest_graph : public undirected_graph
         {
-        private:
-            undirected_simple_graph graph;
-
-            alst::disjoint_sets<vertex_t> components;
-
         public:
             explicit forest_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>())
                 : graph{undirected_simple_graph(n)},
@@ -100,6 +95,11 @@ namespace algolib
              * @return czy wierzchołki są w jednym drzewie
              */
             bool is_same_tree(vertex_t vertex1, vertex_t vertex2) const;
+
+        private:
+            undirected_simple_graph graph;
+
+            alst::disjoint_sets<vertex_t> components;
         };
     }
 }

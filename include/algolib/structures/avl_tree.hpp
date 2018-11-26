@@ -23,7 +23,7 @@ namespace algolib
         template <typename E, typename C = std::less<E>>
         class avl_tree
         {
-        protected:
+        private:
             class avl_node;
             class avl_inner_node;
             class avl_root_node;
@@ -38,17 +38,6 @@ namespace algolib
             using iterator = avl_succ_iterator;
             using reverse_iterator = avl_pred_iterator;
 
-        private:
-            /// Korzeń drzewa.
-            node_pointer tree = new avl_root_node();
-
-            ///  Liczba elementów drzewa.
-            size_t elems = 0;
-
-            /// Komparator
-            C cmp;
-
-        public:
             explicit avl_tree(const C & cmp = C()) : cmp{cmp}
             {
             }
@@ -220,6 +209,15 @@ namespace algolib
              * @return wartość balansu
              */
             int count_balance(node_pointer node);
+
+            /// Korzeń drzewa.
+            node_pointer tree = new avl_root_node();
+
+            ///  Liczba elementów drzewa.
+            size_t elems = 0;
+
+            /// Komparator
+            C cmp;
         };
 
         template <typename E, typename C>
@@ -560,22 +558,6 @@ namespace algolib
         template <typename E, typename C>
         class avl_tree<E, C>::avl_inner_node : public avl_tree<E, C>::avl_node
         {
-        private:
-            /// Wartość w węźle.
-            E element;
-
-            /// Wysokość węzła.
-            int height = 1;
-
-            /// Lewy syn węzła.
-            node_pointer left = nullptr;
-
-            /// Prawy syn węzła.
-            node_pointer right = nullptr;
-
-            /// Ojciec węzła.
-            node_pointer parent = nullptr;
-
         public:
             avl_inner_node(const E & elem) : avl_tree<E, C>::avl_node(), element{elem}
             {
@@ -651,6 +633,22 @@ namespace algolib
             node_pointer minimum();
 
             node_pointer maximum();
+
+        private:
+            /// Wartość w węźle.
+            E element;
+
+            /// Wysokość węzła.
+            int height = 1;
+
+            /// Lewy syn węzła.
+            node_pointer left = nullptr;
+
+            /// Prawy syn węzła.
+            node_pointer right = nullptr;
+
+            /// Ojciec węzła.
+            node_pointer parent = nullptr;
         };
 
         template <typename E, typename C>
@@ -724,10 +722,6 @@ namespace algolib
         template <typename E, typename C>
         class avl_tree<E, C>::avl_root_node : public avl_tree<E, C>::avl_node
         {
-        private:
-            /// Wewnętrzne wierzchołki.
-            node_pointer inner = nullptr;
-
         public:
             avl_root_node() : avl_tree<E, C>::avl_node()
             {
@@ -816,6 +810,10 @@ namespace algolib
             {
                 return this;
             }
+
+        private:
+            /// Wewnętrzne wierzchołki.
+            node_pointer inner = nullptr;
         };
 
         template <typename E, typename C>
@@ -836,10 +834,6 @@ namespace algolib
         template <typename E, typename C>
         class avl_tree<E, C>::avl_iterator
         {
-        protected:
-            /// Aktualny węzeł.
-            avl_tree<E, C>::node_pointer current_node;
-
         public:
             explicit avl_iterator(avl_tree<E, C>::node_pointer node) : current_node{node}
             {
@@ -883,6 +877,9 @@ namespace algolib
              * @return węzeł z poprzednią wartością
              */
             avl_tree<E, C>::node_pointer predecessor(avl_tree<E, C>::node_pointer node);
+
+            /// Aktualny węzeł.
+            avl_tree<E, C>::node_pointer current_node;
         };
 
         template <typename E, typename C>

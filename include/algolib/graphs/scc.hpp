@@ -15,16 +15,6 @@ namespace detail
 {
     class graph_components
     {
-    private:
-        /// Reprezentacja grafu skierowanego.
-        algolib::graphs::directed_graph & digraph;
-
-        /// Numery silnie spójnych składowych dla wierzchołków
-        std::vector<int> components;
-
-        /// Czasy post-order wierzchołków
-        std::vector<std::pair<int, vertex_t>> postorder;
-
     public:
         explicit graph_components(algolib::graphs::directed_graph & digr);
 
@@ -49,6 +39,15 @@ namespace detail
          * @param component numer składowej
          */
         void dfs_scc(vertex_t vertex, int component);
+
+        /// Reprezentacja grafu skierowanego.
+        algolib::graphs::directed_graph & digraph;
+
+        /// Numery silnie spójnych składowych dla wierzchołków
+        std::vector<int> components;
+
+        /// Czasy post-order wierzchołków
+        std::vector<std::pair<int, vertex_t>> postorder;
     };
 }
 

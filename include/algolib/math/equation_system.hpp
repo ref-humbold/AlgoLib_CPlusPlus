@@ -48,13 +48,6 @@ namespace algolib
         template <size_t N>
         class equation_system
         {
-        private:
-            /// Macierz współczynników równania.
-            double coeffs[N][N];
-
-            /// Wektor wyrazów wolnych równania.
-            double free_terms[N];
-
         public:
             explicit equation_system();
             explicit equation_system(std::initializer_list<std::initializer_list<double>> coef,
@@ -67,15 +60,7 @@ namespace algolib
             equation_system & operator=(equation_system && eqsys) = default;
 
             /**
-             * @return liczba równań układu
-             */
-            size_t get_N_number()
-            {
-                return N;
-            }
-
-            /**
-             * Wyliczanie rozwiązań układu równań liniowych.
+             * Wyliczanie rozwiązań układu równań liniowych
              * @return wektor wyniku równania
              */
             std::vector<double> solve();
@@ -83,29 +68,36 @@ namespace algolib
             /**
              * Algorytm eliminacji Gaussa.
              */
-            void gaussian_reduce();
+            void gauss();
 
             /**
-             * Pomnożenie równania przez niezerową stałą.
+             * Pomnożenie równania przez niezerową stałą
              * @param equ numer równania
              * @param constant stała
              */
             void mult(size_t equ, double constant);
 
             /**
-             * Zamiana równań miejscami.
+             * Zamiana równań miejscami
              * @param eq1 numer pierwszego równania
              * @param eq2 numer drugiego równania
              */
             void swap(size_t equ1, size_t equ2);
 
             /**
-             * Przekształcenie równania przez kombinację liniową z innym równaniem.
+             * Przekształcenie równania przez kombinację liniową z innym równaniem
              * @param eq1 numer równania przekształcanego
              * @param eq2 numer drugiego równania
              * @param constant stała kombinacji liniowej
              */
             void combine(size_t equ1, size_t equ2, double constant = 1.0);
+
+        private:
+            /// Macierz współczynników równania
+            double coeffs[N][N];
+
+            /// Wektor wyrazów wolnych równania
+            double free_terms[N];
         };
 
         template <size_t N>
@@ -156,7 +148,7 @@ namespace algolib
         template <size_t N>
         std::vector<double> equation_system<N>::solve()
         {
-            gaussian_reduce();
+            gauss();
 
             if(coeffs[N - 1][N - 1] == 0 && free_terms[N - 1] == 0)
                 throw infinite_solutions_exception("");
@@ -182,7 +174,7 @@ namespace algolib
         }
 
         template <size_t N>
-        void equation_system<N>::gaussian_reduce()
+        void equation_system<N>::gauss()
         {
             for(size_t equ = 0; equ < N - 1; ++equ)
             {

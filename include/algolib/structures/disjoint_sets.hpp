@@ -21,13 +21,6 @@ namespace algolib
         template <typename E>
         class disjoint_sets
         {
-        private:
-            /// Mapa reprezentantów elementów.
-            std::map<E, E> represents;
-
-            /// Liczba elementów
-            size_t elems;
-
         public:
             explicit disjoint_sets(std::initializer_list<E> universe) : elems{universe.size()}
             {
@@ -124,6 +117,13 @@ namespace algolib
              * @return czy elementy znajdują się w różnych składowych
              */
             bool is_same_set(const E & element1, const E & element2) const;
+
+        private:
+            /// Mapa reprezentantów elementów.
+            std::map<E, E> represents;
+
+            /// Liczba elementów
+            size_t elems;
         };
 
         template <typename E>

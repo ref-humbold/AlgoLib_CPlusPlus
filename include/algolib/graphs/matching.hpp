@@ -16,22 +16,6 @@ namespace detail
 {
     class match_augmenter
     {
-    private:
-        /// Oznaczenie braku skojarzenia.
-        static constexpr int NO_MATCH = -1;
-
-        /// Graf dwudzielny.
-        const algolib::graphs::multipartite_graph<2> & graph;
-
-        /// Skojarzenia wierzchołków.
-        std::vector<int> matching;
-
-        /// Odległości wierzchołków.
-        std::vector<double> distances;
-
-        /// Lista odwiedzonych wierzchołków.
-        std::vector<bool> is_visited;
-
     public:
         explicit match_augmenter(const algolib::graphs::multipartite_graph<2> & partgraph)
             : graph{partgraph}
@@ -61,6 +45,21 @@ namespace detail
          * @return czy powiększono skojarzenie
          */
         bool dfs(int vertex);
+
+        /// Oznaczenie braku skojarzenia.
+        static constexpr int NO_MATCH = -1;
+
+        /// Graf dwudzielny.
+        const algolib::graphs::multipartite_graph<2> & graph;
+
+        /// Skojarzenia wierzchołków.
+        std::vector<int> matching;
+
+        /// Odległości wierzchołków.
+        std::vector<double> distances;
+
+        /// Lista odwiedzonych wierzchołków.
+        std::vector<bool> is_visited;
     };
 }
 

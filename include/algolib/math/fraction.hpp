@@ -30,9 +30,6 @@ namespace algolib
     {
         class fraction
         {
-        private:
-            long long int num, denom;
-
         public:
             fraction() : fraction(0)
             {
@@ -71,6 +68,7 @@ namespace algolib
             fraction & operator-=(const fraction & f);
             fraction & operator*=(const fraction & f);
             fraction & operator/=(const fraction & f);
+
             friend fraction operator+(fraction f1, const fraction & f2);
             friend fraction operator-(fraction f1, const fraction & f2);
             friend fraction operator*(fraction f1, const fraction & f2);
@@ -87,6 +85,8 @@ namespace algolib
 
         private:
             void normalize();
+
+            long long int num, denom;
         };
 
         fraction operator+(fraction f1, const fraction & f2);

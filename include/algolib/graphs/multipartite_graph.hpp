@@ -30,12 +30,6 @@ namespace algolib
         template <size_t N>
         class multipartite_graph : public undirected_graph
         {
-            /// Struktura grafu wielodzielnego.
-            undirected_simple_graph graph;
-
-            /// Numery grup wierzchołków.
-            std::vector<size_t> groups;
-
         public:
             explicit multipartite_graph(int n) : graph{undirected_simple_graph(n)}
             {
@@ -182,6 +176,13 @@ namespace algolib
 
                 return groups[vertex1] == groups[vertex2];
             }
+
+        private:
+            /// Struktura grafu wielodzielnego.
+            undirected_simple_graph graph;
+
+            /// Numery grup wierzchołków.
+            std::vector<size_t> groups;
         };
     }
 }

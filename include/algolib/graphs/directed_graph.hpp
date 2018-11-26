@@ -36,7 +36,7 @@ namespace algolib
         };
 
 #pragma endregion
-#pragma region directed_graph
+#pragma region directed_simple_graph
 
         class directed_simple_graph : public simple_graph, public directed_graph
         {
@@ -71,8 +71,7 @@ namespace algolib
         class directed_weighted_simple_graph : public directed_simple_graph, public weighted_graph
         {
         public:
-            explicit directed_weighted_simple_graph(
-                int n, std::vector<edge_t> edges = std::vector<edge_t>())
+            explicit directed_weighted_simple_graph(int n, std::vector<edge_t> edges = {})
                 : directed_simple_graph(n, edges)
             {
             }

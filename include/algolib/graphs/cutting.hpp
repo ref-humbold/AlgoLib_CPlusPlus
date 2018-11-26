@@ -14,22 +14,6 @@ namespace detail
 {
     class graph_cutting
     {
-    private:
-        /// Reprezentacja grafu nieskierowanego.
-        const algolib::graphs::undirected_graph & graph;
-
-        /// Ojciec wierzchołka w drzewie DFS.
-        std::vector<vertex_t> dfs_parents;
-
-        /// Lista synów w drzewie DFS.
-        std::vector<std::vector<vertex_t>> dfs_children;
-
-        /// Głębokość wierzchołka w drzewie DFS.
-        std::vector<int> dfs_depths;
-
-        /// Wartości funkcji LOW dla wierzchołków.
-        std::vector<int> low_values;
-
     public:
         explicit graph_cutting(const algolib::graphs::undirected_graph & graph) : graph{graph}
         {
@@ -83,6 +67,21 @@ namespace detail
          * @param depth głębokość
          */
         void dfs(vertex_t vertex, vertex_t parent, int depth);
+
+        /// Reprezentacja grafu nieskierowanego.
+        const algolib::graphs::undirected_graph & graph;
+
+        /// Ojciec wierzchołka w drzewie DFS.
+        std::vector<vertex_t> dfs_parents;
+
+        /// Lista synów w drzewie DFS.
+        std::vector<std::vector<vertex_t>> dfs_children;
+
+        /// Głębokość wierzchołka w drzewie DFS.
+        std::vector<int> dfs_depths;
+
+        /// Wartości funkcji LOW dla wierzchołków.
+        std::vector<int> low_values;
     };
 }
 

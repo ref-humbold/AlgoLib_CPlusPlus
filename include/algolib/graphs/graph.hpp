@@ -144,13 +144,6 @@ namespace algolib
 
         class simple_graph : public virtual graph
         {
-        protected:
-            /// Domyślna waga krawędzi.
-            static constexpr weight_t DEFAULT_WEIGHT = 1.0;
-
-            /// Lista sąsiedztwa grafu.
-            std::vector<std::set<wvertex_t>> graphrepr;
-
         public:
             explicit simple_graph(int n)
             {
@@ -175,6 +168,13 @@ namespace algolib
             std::vector<vertex_t> get_neighbours(vertex_t vertex) const override;
 
             size_t get_outdegree(vertex_t vertex) const override;
+
+        protected:
+            /// Domyślna waga krawędzi.
+            static constexpr weight_t DEFAULT_WEIGHT = 1.0;
+
+            /// Lista sąsiedztwa grafu.
+            std::vector<std::set<wvertex_t>> graphrepr;
         };
 
 #pragma endregion
