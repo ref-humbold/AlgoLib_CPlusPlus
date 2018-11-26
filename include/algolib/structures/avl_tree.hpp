@@ -61,11 +61,10 @@ namespace algolib
 
             ~avl_tree()
             {
-                delete tree;
+                delete this->tree;
             }
 
-            avl_tree(const avl_tree & avl)
-                : tree{new avl_root_node(*avl.tree)}, elems{avl.elems}, cmp{cmp}
+            avl_tree(const avl_tree & avl) : tree{avl.tree->clone()}, elems{avl.elems}, cmp{cmp}
             {
             }
 
@@ -216,10 +215,12 @@ namespace algolib
         template <typename E, typename C>
         avl_tree<E, C> & avl_tree<E, C>::operator=(const avl_tree<E, C> & avl)
         {
-            delete this->tree;
-            this->tree = new avl_root_node(*avl.tree);
+            node_pointer tree_orig = this->tree;
+
             this->elems = avl.elems;
             this->cmp = avl.cmp;
+            this->tree = avl.tree->clone();
+            delete tree_orig;
 
             return *this;
         }
@@ -645,11 +646,8 @@ namespace algolib
         template <typename E, typename C>
         avl_tree<E, C>::avl_inner_node::~avl_inner_node()
         {
-            if(left != nullptr)
-                delete left;
-
-            if(right != nullptr)
-                delete right;
+            delete this->left;
+            delete this->right;
         }
 
         template <typename E, typename C>
@@ -664,12 +662,15 @@ namespace algolib
         typename avl_tree<E, C>::avl_inner_node & avl_tree<E, C>::avl_inner_node::
             operator=(const avl_tree<E, C>::avl_inner_node & node)
         {
+            node_pointer left_orig = this->left;
+            node_pointer right_orig = this->right;
+
             this->element = node.element;
             this->height = node.height;
-            delete this->left;
             this->set_left(node.left->clone());
-            delete this->right;
             this->set_right(node.right->clone());
+            delete left_orig;
+            delete right_orig;
 
             return *this;
         }
@@ -724,8 +725,7 @@ namespace algolib
 
             ~avl_root_node()
             {
-                if(inner != nullptr)
-                    delete inner;
+                delete this->inner;
             }
 
             avl_root_node(const avl_root_node & node) : avl_tree<E, C>::avl_node()
@@ -812,10 +812,10 @@ namespace algolib
         typename avl_tree<E, C>::avl_root_node & avl_tree<E, C>::avl_root_node::
             operator=(const avl_tree<E, C>::avl_root_node & node)
         {
-            if(this->inner != nullptr)
-                delete this->inner;
+            node_pointer inner_orig = this->inner;
 
             this->set_parent(node.inner->clone());
+            delete inner_orig;
 
             return *this;
         }
