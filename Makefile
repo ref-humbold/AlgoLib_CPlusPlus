@@ -1,7 +1,7 @@
 CXX = g++ -std=c++11
 CXXFLAGS = -Wall -Wextra -Wno-unknown-pragmas -iquote include
 CMPL = $(CXX) $(CXXFLAGS)
-GTEST = -I/usr/local/include -L/usr/local/lib -lgtest -lgtest_main -lpthread
+GTEST = -L/usr/local/lib -lgtest -lgtest_main -lpthread
 SRC = src
 OBJ = obj
 TEST = test
@@ -24,6 +24,7 @@ prepare :
 
 clean :
 	rm -rf $(OBJ)
+	rm -rf $(TESTBIN)
 
 refresh : clean all
 
