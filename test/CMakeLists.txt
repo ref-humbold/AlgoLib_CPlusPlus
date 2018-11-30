@@ -36,5 +36,5 @@ foreach(testsource ${SOURCES})
                           ${GTEST_MAIN_LIBRARY}
                           Threads::Threads
                           "${PROJECT_SOURCE_DIR}/bin/libalgolib.so")
-    add_test(NAME ${testexec} COMMAND ${testexec})
+    gtest_discover_tests(${testexec})
 endforeach(testsource ${SOURCES})
