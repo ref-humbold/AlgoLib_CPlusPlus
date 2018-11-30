@@ -11,7 +11,7 @@
 #include <algorithm>
 #include <tuple>
 #include <vector>
-#include "../structures/disjoint_sets.hpp"
+#include "algolib/structures/disjoint_sets.hpp"
 #include "graph.hpp"
 #include "undirected_graph.hpp"
 
@@ -43,6 +43,12 @@ namespace algolib
                 for(const auto & e : edges)
                     this->add_edge(std::get<0>(e), std::get<1>(e));
             }
+
+            virtual ~forest_graph() = default;
+            forest_graph(const forest_graph &) = default;
+            forest_graph(forest_graph &&) = default;
+            forest_graph & operator=(const forest_graph &) = default;
+            forest_graph & operator=(forest_graph &&) = default;
 
             size_t get_trees_number() const
             {

@@ -7,10 +7,8 @@ find_package(Threads REQUIRED)
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
-enable_testing()
 
 # SOURCES
-include_directories("${PROJECT_SOURCE_DIR}/include")
 set(SOURCES
     "avl_tree_test.cpp"
     "directed_graph_test.cpp"
@@ -29,14 +27,14 @@ set(SOURCES
     "undirected_graph_test.cpp")
 
 # OUTPUT
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 foreach(testsource ${SOURCES})
     get_filename_component(testexec ${testsource} NAME_WE)
     add_executable(${testexec} ${testsource})
     target_link_libraries(${testexec}
                           ${GTEST_LIBRARY}
                           ${GTEST_MAIN_LIBRARY}
-                          Threads::Thread)
+                          Threads::Threads
+                          "${PROJECT_SOURCE_DIR}/bin/libalgolib.so")
     add_test(NAME ${testexec} COMMAND ${testexec})
 endforeach(testsource ${SOURCES})
-

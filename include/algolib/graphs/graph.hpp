@@ -54,14 +54,10 @@ namespace algolib
             graph & operator=(const graph &) = default;
             graph & operator=(graph &&) = default;
 
-            /**
-             * @return liczba wierzchołków
-             */
+            /// @return liczba wierzchołków
             virtual size_t get_vertices_number() const = 0;
 
-            /**
-             * @return wektor wierzchołków
-             */
+            /// @return wektor wierzchołków
             virtual std::vector<vertex_t> get_vertices() const = 0;
 
             /**
@@ -70,14 +66,10 @@ namespace algolib
              */
             virtual vertex_t add_vertex() = 0;
 
-            /**
-             * @return liczba krawędzi
-             */
+            /// @return liczba krawędzi
             virtual size_t get_edges_number() const = 0;
 
-            /**
-             * @return wektor krawędzi
-             */
+            /// @return wektor krawędzi
             virtual std::vector<edge_t> get_edges() const = 0;
 
             /**

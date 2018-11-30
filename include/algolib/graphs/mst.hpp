@@ -10,7 +10,7 @@
 #include <queue>
 #include <tuple>
 #include <vector>
-#include "../structures/disjoint_sets.hpp"
+#include "algolib/structures/disjoint_sets.hpp"
 #include "undirected_graph.hpp"
 
 namespace algolib

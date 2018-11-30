@@ -6,6 +6,8 @@
 
 namespace algr = algolib::graphs;
 
+constexpr int detail::match_augmenter::NO_MATCH;
+
 std::vector<std::pair<int, int>> algr::match(const multipartite_graph<2> & partgraph)
 {
     detail::match_augmenter augmenter(partgraph);
