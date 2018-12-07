@@ -27,7 +27,7 @@ set(SOURCES
     "undirected_graph_test.cpp")
 
 # OUTPUT
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin/test")
 foreach(testsource ${SOURCES})
     get_filename_component(testexec ${testsource} NAME_WE)
     add_executable(${testexec} ${testsource})
