@@ -11,8 +11,7 @@ set(ALGOLIB_SOURCES
     "${ALGOLIB}/convex_hull.cpp"
     "${ALGOLIB}/lis.cpp"
     "${ALGOLIB}/maximum_subarray.cpp"
-    "${ALGOLIB}/sorting.cpp"
-    "${ALGOLIB}/two_sat.cpp")
+    "${ALGOLIB}/sorting.cpp")
 set(GRAPHS_SOURCES
     "${GRAPHS}/cutting.cpp"
     "${GRAPHS}/dinic.cpp"
