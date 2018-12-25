@@ -15,12 +15,14 @@ namespace algolib
         public:
             suffix_array(std::string s) : text{s}
             {
+                init_array();
+                init_lcp();
             }
 
             ~suffix_array() = default;
             suffix_array(const suffix_array &) = default;
-            suffix_array & operator=(const suffix_array &) = default;
             suffix_array(suffix_array &&) = default;
+            suffix_array & operator=(const suffix_array &) = default;
             suffix_array & operator=(suffix_array &&) = default;
 
             std::string get_text()
@@ -28,13 +30,23 @@ namespace algolib
                 return this->text;
             }
 
-            std::string operator[](int i);
+            std::string operator[](size_t i);
 
         private:
+            void init_array();
+            void init_lcp();
+
+            /// Text
             std::string text;
-            std::vector<int> array;
-            std::vector<int> inv;
-            std::vector<int> lcp;
+
+            /// Suffix array
+            std::vector<size_t> array;
+
+            /// Inversed suffix array
+            std::vector<size_t> inv;
+
+            /// Array of longest common prefices
+            std::vector<size_t> lcp;
         };
     }
 }
