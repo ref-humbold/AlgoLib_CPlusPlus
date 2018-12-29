@@ -23,6 +23,7 @@ set(SOURCES
     "primes_test.cpp"
     "scc_test.cpp"
     "sorting_test.cpp"
+    "suffix_array_test.cpp"
     "topological_sorting_test.cpp"
     "undirected_graph_test.cpp")
 
