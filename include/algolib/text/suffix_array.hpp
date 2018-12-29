@@ -33,12 +33,12 @@ namespace algolib
 
             std::string get_text() const
             {
-                return this->text;
+                return text;
             }
 
             size_t size() const
             {
-                return this->length;
+                return length;
             }
 
             std::string operator[](size_t i) const
