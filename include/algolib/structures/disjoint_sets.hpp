@@ -6,12 +6,12 @@
 #define _DISJOINT_SETS_HPP_
 
 #include <cstdlib>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
+#include <exception>
 #include <initializer_list>
-#include <map>
 #include <set>
+#include <stdexcept>
+#include <unordered_map>
 #include <vector>
 
 namespace algolib
@@ -28,21 +28,13 @@ namespace algolib
                     represents.insert(std::make_pair(e, e));
             }
 
-            explicit disjoint_sets(std::vector<E> universe) : elems{universe.size()}
-            {
-                for(E e : universe)
-                    represents.insert(std::make_pair(e, e));
-            }
-
             ~disjoint_sets() = default;
             disjoint_sets(const disjoint_sets & ds) = default;
             disjoint_sets(disjoint_sets && ds) = default;
             disjoint_sets & operator=(const disjoint_sets & ds) = default;
             disjoint_sets & operator=(disjoint_sets && ds) = default;
 
-            /**
-             * @return liczba zbiorów
-             */
+            /// @return liczba zbiorów
             size_t size() const
             {
                 return elems;
@@ -58,8 +50,9 @@ namespace algolib
             /**
              * Dodawanie nowego elementu jako singleton.
              * @param element nowy element
+             * @return struktura (dla łańcuchów metod)
              */
-            void add_elem(const E & element);
+            disjoint_sets<E> & add_elem(const E & element);
 
             /**
              * Ustalanie reprezentanta zbioru.
@@ -120,7 +113,7 @@ namespace algolib
 
         private:
             /// Mapa reprezentantów elementów.
-            std::map<E, E> represents;
+            std::unordered_map<E, E> represents;
 
             /// Liczba elementów
             size_t elems;
@@ -133,13 +126,15 @@ namespace algolib
         }
 
         template <typename E>
-        void disjoint_sets<E>::add_elem(const E & element)
+        disjoint_sets<E> & disjoint_sets<E>::add_elem(const E & element)
         {
             if(contains(element))
                 throw std::invalid_argument("Value already present.");
 
             represents.emplace(element, element);
             elems++;
+
+            return *this;
         }
 
         template <typename E>
@@ -148,7 +143,7 @@ namespace algolib
             if(represents.at(element) != element)
                 represents[element] = find_set(represents[element]);
 
-            return represents[element];
+            return represents.at(element);
         }
 
         template <typename E>

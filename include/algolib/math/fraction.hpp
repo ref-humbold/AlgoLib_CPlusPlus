@@ -1,4 +1,7 @@
-// DATA STRUCTURE FOR FRACTIONS
+/**
+ * @file fraction.hpp
+ * STRUCTURE FOR FRACTIONS
+ */
 #ifndef _FRACTION_HPP_
 #define _FRACTION_HPP_
 
@@ -31,16 +34,16 @@ namespace algolib
         class fraction
         {
         public:
-            fraction() : fraction(0)
+            fraction() : fraction(0LL)
             {
             }
 
-            fraction(long long int num, long long int denom = 1) : num{num}, denom{denom}
+            fraction(long long int num, long long int denom = 1LL) : num{num}, denom{denom}
             {
-                if(denom == 0)
-                    throw std::domain_error("Denominator equals zero.");
+                if(denom == 0LL)
+                    throw std::domain_error("Denominator equals zero");
 
-                this->normalize();
+                normalize();
             }
 
             ~fraction() = default;
@@ -61,7 +64,7 @@ namespace algolib
 
             explicit operator int() const
             {
-                return (long long int)(*this);
+                return static_cast<int>(num / denom);
             }
 
             fraction & operator+=(const fraction & f);
@@ -111,7 +114,7 @@ namespace std
 
         result_type operator()(const argument_type & f)
         {
-            return hash<long long int>()(f.num) + hash<long long int>()(f.denom);
+            return hash<long long int>()(f.num) ^ hash<long long int>()(f.denom);
         }
     };
 }

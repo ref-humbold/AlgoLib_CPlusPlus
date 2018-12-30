@@ -1,4 +1,7 @@
-// ALGORITHMS FOR PRIME NUMBERS
+/**
+ * @file primes.hpp
+ * ALGORITHMS FOR PRIME NUMBERS
+ */
 #ifndef _PRIMES_HPP_
 #define _PRIMES_HPP_
 
@@ -11,7 +14,7 @@
 namespace detail
 {
     /**
-     * Rozkładanie liczby do testu Millera-Rabina.
+     * Rozkładanie liczby do testu Millera-Rabina
      * @param number rozkładana liczba
      * @return rozkład liczby
      */

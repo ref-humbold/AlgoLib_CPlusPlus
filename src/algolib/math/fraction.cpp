@@ -1,4 +1,7 @@
-// DATA STRUCTURE FOR FRACTIONS
+/**
+ * @file fraction.hpp
+ * STRUCTURE FOR FRACTIONS
+ */
 #include "algolib/math/fraction.hpp"
 
 namespace alma = algolib::math;
@@ -21,7 +24,7 @@ alma::fraction & alma::fraction::operator+=(const alma::fraction & f)
 {
     this->num = this->num * f.denom + f.num * this->denom;
     this->denom *= f.denom;
-    this->normalize();
+    normalize();
 
     return *this;
 }
@@ -30,7 +33,7 @@ alma::fraction & alma::fraction::operator-=(const alma::fraction & f)
 {
     this->num = this->num * f.denom - f.num * this->denom;
     this->denom *= f.denom;
-    this->normalize();
+    normalize();
 
     return *this;
 }
@@ -39,7 +42,7 @@ alma::fraction & alma::fraction::operator*=(const alma::fraction & f)
 {
     this->num *= f.num;
     this->denom *= f.denom;
-    this->normalize();
+    normalize();
 
     return *this;
 }

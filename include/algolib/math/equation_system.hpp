@@ -7,10 +7,10 @@
 
 #include <cstdlib>
 #include <cmath>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
+#include <exception>
 #include <initializer_list>
+#include <stdexcept>
 #include <vector>
 
 namespace algolib
@@ -50,7 +50,7 @@ namespace algolib
         {
         public:
             explicit equation_system();
-            explicit equation_system(std::initializer_list<std::initializer_list<double>> coef,
+            explicit equation_system(std::initializer_list<std::initializer_list<double>> coeffs,
                                      std::initializer_list<double> frees);
 
             ~equation_system() = default;
@@ -97,27 +97,27 @@ namespace algolib
             double coeffs[N][N];
 
             /// Wektor wyrazów wolnych równania
-            double free_terms[N];
+            double frees[N];
         };
 
         template <size_t N>
         equation_system<N>::equation_system()
         {
             for(size_t i = 0; i < N; ++i)
-                std::fill(this->coeffs[i], this->coeffs[i] + N, 0);
+                std::fill(coeffs[i], coeffs[i] + N, 0);
 
-            std::fill(this->free_terms, this->free_terms + N, 0);
+            std::fill(frees, frees + N, 0);
         }
 
         template <size_t N>
         equation_system<N>::equation_system(
-            std::initializer_list<std::initializer_list<double>> coef,
+            std::initializer_list<std::initializer_list<double>> coeffs,
             std::initializer_list<double> frees)
         {
-            if(coef.size() != N || frees.size() != N)
+            if(coeffs.size() != N || frees.size() != N)
                 throw std::length_error("Incorrect number of equations");
 
-            for(auto it : coef)
+            for(auto it : coeffs)
                 if(it.size() != N)
                     throw std::length_error("Coefficient matrix is not a square matrix");
 
@@ -140,7 +140,7 @@ namespace algolib
 
             for(auto it : frees)
             {
-                this->free_terms[i] = it;
+                this->frees[i] = it;
                 ++i;
             }
         }
@@ -150,19 +150,19 @@ namespace algolib
         {
             gauss();
 
-            if(coeffs[N - 1][N - 1] == 0 && free_terms[N - 1] == 0)
+            if(coeffs[N - 1][N - 1] == 0 && frees[N - 1] == 0)
                 throw infinite_solutions_exception("");
 
-            if(coeffs[N - 1][N - 1] == 0 && free_terms[N - 1] != 0)
+            if(coeffs[N - 1][N - 1] == 0 && frees[N - 1] != 0)
                 throw no_solution_exception("");
 
             std::vector<double> solution(N);
 
-            solution.back() = free_terms[N - 1] / coeffs[N - 1][N - 1];
+            solution.back() = frees[N - 1] / coeffs[N - 1][N - 1];
 
             for(int equ = N - 2; equ >= 0; --equ)
             {
-                double value = free_terms[equ];
+                double value = frees[equ];
 
                 for(int i = N - 1; i > equ; --i)
                     value -= coeffs[equ][i] * solution[i];
@@ -194,11 +194,7 @@ namespace algolib
                     swap(equ, index_min);
 
                     for(size_t i = equ + 1; i < N; ++i)
-                    {
-                        double param = coeffs[i][equ] / coeffs[equ][equ];
-
-                        combine(i, equ, -param);
-                    }
+                        combine(i, equ, -coeffs[i][equ] / coeffs[equ][equ]);
                 }
             }
         }
@@ -212,7 +208,7 @@ namespace algolib
             for(int i = 0; i < N; ++i)
                 coeffs[equ][i] *= constant;
 
-            free_terms[equ] *= constant;
+            frees[equ] *= constant;
         };
 
         template <size_t N>
@@ -221,7 +217,7 @@ namespace algolib
             for(size_t i = 0; i < N; ++i)
                 std::swap(coeffs[equ1][i], coeffs[equ2][i]);
 
-            std::swap(free_terms[equ1], free_terms[equ2]);
+            std::swap(frees[equ1], frees[equ2]);
         }
 
         template <size_t N>
@@ -230,7 +226,7 @@ namespace algolib
             for(size_t i = 0; i < N; ++i)
                 coeffs[equ1][i] += constant * coeffs[equ2][i];
 
-            free_terms[equ1] += constant * free_terms[equ2];
+            frees[equ1] += constant * frees[equ2];
         }
     }
 }
