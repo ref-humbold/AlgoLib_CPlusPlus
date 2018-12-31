@@ -4,7 +4,9 @@
 
 #include <cstdlib>
 #include <algorithm>
+#include <exception>
 #include <queue>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -41,11 +43,9 @@ namespace algolib
                 return length;
             }
 
-            std::string operator[](size_t i) const
-            {
-                return text.substr(suf_arr[i], std::string::npos);
-            }
-
+            std::string at(size_t i) const;
+            std::string operator[](size_t i) const;
+            size_t index(size_t suf) const;
             size_t lcp(size_t suf1, size_t suf2) const;
 
         private:

@@ -3,8 +3,32 @@
 
 namespace alte = algolib::text;
 
+std::string alte::suffix_array::at(size_t i) const
+{
+    if(i >= length)
+        throw std::out_of_range("Suffix array index out of range");
+
+    return text.substr(suf_arr[i], std::string::npos);
+}
+
+std::string alte::suffix_array::operator[](size_t i) const
+{
+    return at(i);
+}
+
+size_t alte::suffix_array::index(size_t suf) const
+{
+    if(suf >= length)
+        throw std::out_of_range("Text index out of range");
+
+    return inv_arr[suf];
+}
+
 size_t alte::suffix_array::lcp(size_t suf1, size_t suf2) const
 {
+    if(suf1 >= length || suf2 >= length)
+        throw std::out_of_range("Text index out of range");
+
     if(suf1 == suf2)
         return length - suf1;
 
