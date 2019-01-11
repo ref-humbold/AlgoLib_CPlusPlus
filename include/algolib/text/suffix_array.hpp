@@ -51,7 +51,8 @@ namespace algolib
         private:
             void init_array();
             void init_lcp();
-            void lex_sort(std::vector<std::queue<size_t>> & buckets, size_t ix);
+            void pref_sort(std::vector<std::queue<std::pair<size_t, size_t>>> & buckets,
+                           std::vector<size_t> & ranks, size_t pref_len);
 
             /// Size of suffix array
             size_t length;

@@ -44,13 +44,31 @@ size_t alte::suffix_array::lcp(size_t suf1, size_t suf2) const
 
 void alte::suffix_array::init_array()
 {
-    std::vector<std::queue<size_t>> buckets(128);
+    std::vector<std::queue<std::pair<size_t, size_t>>> buckets(128);
+    std::vector<size_t> ranks(length);
 
     for(size_t i = 0; i < text.size(); ++i)
-        suf_arr.push_back(i);
+        buckets[+text[i]].push(std::make_pair(i, 1));
 
-    for(size_t i = length; i > 0; --i)
-        lex_sort(buckets, i - 1);
+    size_t r = 1;
+
+    for(auto & q : buckets)
+    {
+        size_t added = 0;
+
+        while(!q.empty())
+        {
+            suf_arr.push_back(q.front().first);
+            ranks[q.front().first] = r;
+            q.pop();
+            added = 1;
+        }
+
+        r += added;
+    }
+
+    for(size_t i = 1; i < length; i *= 2)
+        pref_sort(buckets, ranks, i);
 
     inv_arr.resize(length);
 
@@ -58,31 +76,51 @@ void alte::suffix_array::init_array()
         inv_arr[suf_arr[i]] = i;
 }
 
-void alte::suffix_array::lex_sort(std::vector<std::queue<size_t>> & buckets, size_t ix)
+void alte::suffix_array::pref_sort(std::vector<std::queue<std::pair<size_t, size_t>>> & buckets,
+                                   std::vector<size_t> & ranks, size_t pref_len)
 {
-    std::vector<size_t> sizes;
-
     for(size_t i = 0; i < length; ++i)
-    {
-        if(suf_arr[i] + ix < length)
-            buckets[+text[suf_arr[i] + ix]].push(suf_arr[i]);
+        if(i + pref_len < length)
+            buckets[ranks[i + pref_len]].push(std::make_pair(i, ranks[i + pref_len]));
         else
-            buckets[0].push(suf_arr[i]);
-    }
+            buckets[0].push(std::make_pair(i, 0));
 
+    std::pair<size_t, size_t> snd_order[length];
     size_t j = 0;
 
-    for(std::queue<size_t> & q : buckets)
-    {
-        if(!q.empty())
-            sizes.push_back(q.size());
-
+    for(auto & q : buckets)
         while(!q.empty())
         {
-            suf_arr[j] = q.front();
+            snd_order[j] = q.front();
             q.pop();
             ++j;
         }
+
+    for(size_t i = 0; i < length; ++i)
+        buckets[ranks[snd_order[i].first]].push(snd_order[i]);
+
+    size_t r = 0, k = 0;
+
+    for(auto & q : buckets)
+    {
+        size_t added = 0, prev_rank = 0;
+
+        while(!q.empty())
+        {
+            if(q.front().second != prev_rank)
+            {
+                prev_rank = q.front().second;
+                ++r;
+            }
+
+            suf_arr[k] = q.front().first;
+            ranks[q.front().first] = r;
+            q.pop();
+            ++k;
+            added = 1;
+        }
+
+        r += added;
     }
 }
 
