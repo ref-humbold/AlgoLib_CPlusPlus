@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(algolib VERSION 0.3)
+project(algolib VERSION 0.31)
 
 # COMPILER
 set(CMAKE_CXX_STANDARD 14)
