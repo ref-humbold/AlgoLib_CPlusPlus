@@ -49,22 +49,20 @@ void alte::suffix_array::init_array()
     for(size_t i = 0; i < text.size(); ++i)
         suf_arr.push_back(i);
 
-    lex_sort(buckets, 0, 0, length);
+    for(size_t i = length; i > 0; --i)
+        lex_sort(buckets, i - 1);
+
     inv_arr.resize(length);
 
     for(size_t i = 0; i < length; ++i)
         inv_arr[suf_arr[i]] = i;
 }
 
-void alte::suffix_array::lex_sort(std::vector<std::queue<size_t>> & buckets, size_t ix, size_t beg,
-                                  size_t end)
+void alte::suffix_array::lex_sort(std::vector<std::queue<size_t>> & buckets, size_t ix)
 {
-    if(end - beg < 2 || ix >= length)
-        return;
-
     std::vector<size_t> sizes;
 
-    for(size_t i = beg; i < end; ++i)
+    for(size_t i = 0; i < length; ++i)
     {
         if(suf_arr[i] + ix < length)
             buckets[+text[suf_arr[i] + ix]].push(suf_arr[i]);
@@ -72,7 +70,7 @@ void alte::suffix_array::lex_sort(std::vector<std::queue<size_t>> & buckets, siz
             buckets[0].push(suf_arr[i]);
     }
 
-    size_t j = beg;
+    size_t j = 0;
 
     for(std::queue<size_t> & q : buckets)
     {
@@ -85,14 +83,6 @@ void alte::suffix_array::lex_sort(std::vector<std::queue<size_t>> & buckets, siz
             q.pop();
             ++j;
         }
-    }
-
-    size_t offset = 0;
-
-    for(size_t s : sizes)
-    {
-        lex_sort(buckets, ix + 1, beg + offset, beg + offset + s);
-        offset += s;
     }
 }
 
