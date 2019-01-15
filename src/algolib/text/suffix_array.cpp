@@ -126,11 +126,9 @@ void alte::suffix_array::pref_sort(std::vector<std::queue<std::pair<size_t, size
 
 void alte::suffix_array::init_lcp()
 {
-    size_t len = 0;
-
     lcp_arr.resize(length);
 
-    for(size_t i = 0; i < length; ++i)
+    for(size_t i = 0, len = 0; i < length; ++i)
     {
         if(inv_arr[i] >= 1)
         {
