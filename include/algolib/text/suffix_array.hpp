@@ -18,9 +18,10 @@ namespace algolib
         class suffix_array
         {
         public:
-            explicit suffix_array(const std::string & s) : length{s.length()}, text{s}
+            explicit suffix_array(const std::string & s) : length{s.length()}, txt{s}
             {
                 init_array();
+                init_inv();
                 init_lcp();
             }
 
@@ -34,9 +35,9 @@ namespace algolib
             suffix_array & operator=(const suffix_array &) = default;
             suffix_array & operator=(suffix_array &&) = default;
 
-            std::string get_text() const
+            std::string text() const
             {
-                return text;
+                return txt;
             }
 
             size_t size() const
@@ -52,6 +53,7 @@ namespace algolib
 
         private:
             void init_array();
+            void init_inv();
             void init_lcp();
             size_t get(const std::vector<size_t> & v, size_t i);
             void sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
@@ -66,7 +68,7 @@ namespace algolib
             size_t length;
 
             /// Text
-            std::string text;
+            std::string txt;
 
             /// Suffix array
             std::vector<size_t> suf_arr;

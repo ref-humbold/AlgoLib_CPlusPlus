@@ -13,7 +13,7 @@ std::string alte::suffix_array::at(size_t i) const
 
 std::string alte::suffix_array::operator[](size_t i) const
 {
-    return text.substr(suf_arr[i], std::string::npos);
+    return txt.substr(suf_arr[i], std::string::npos);
 }
 
 size_t alte::suffix_array::index_at(size_t i) const
@@ -52,9 +52,13 @@ size_t alte::suffix_array::lcp(size_t suf1, size_t suf2) const
 
 void alte::suffix_array::init_array()
 {
-    std::vector<size_t> t(text.begin(), text.end());
+    std::vector<size_t> t(txt.begin(), txt.end());
 
     suf_arr = create_array(t, 128);
+}
+
+void alte::suffix_array::init_inv()
+{
     inv_arr.resize(length);
 
     for(size_t i = 0; i < length; ++i)
@@ -200,7 +204,7 @@ void alte::suffix_array::init_lcp()
         {
             size_t j = suf_arr[inv_arr[i] - 1];
 
-            while(text[i + len] == text[j + len])
+            while(txt[i + len] == txt[j + len])
                 ++len;
 
             lcp_arr[inv_arr[i]] = len;
