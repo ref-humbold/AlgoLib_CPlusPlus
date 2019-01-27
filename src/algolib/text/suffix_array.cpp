@@ -52,88 +52,142 @@ size_t alte::suffix_array::lcp(size_t suf1, size_t suf2) const
 
 void alte::suffix_array::init_array()
 {
-    std::vector<std::queue<std::pair<size_t, size_t>>> buckets(128);
-    std::vector<size_t> ranks(length);
+    std::vector<size_t> t(text.begin(), text.end());
 
-    for(size_t i = 0; i < text.size(); ++i)
-        buckets[+text[i]].push(std::make_pair(i, 1));
-
-    size_t r = 1;
-
-    for(auto & q : buckets)
-    {
-        size_t added = 0;
-
-        while(!q.empty())
-        {
-            suf_arr.push_back(q.front().first);
-            ranks[q.front().first] = r;
-            q.pop();
-            added = 1;
-        }
-
-        r += added;
-    }
-
-    buckets.resize(r);
-
-    for(size_t i = 1; i < length; i *= 2)
-        pref_sort(buckets, ranks, i);
-
+    suf_arr = create_array(t, 128);
     inv_arr.resize(length);
 
     for(size_t i = 0; i < length; ++i)
         inv_arr[suf_arr[i]] = i;
 }
 
-void alte::suffix_array::pref_sort(std::vector<std::queue<std::pair<size_t, size_t>>> & buckets,
-                                   std::vector<size_t> & ranks, size_t pref_len)
+size_t alte::suffix_array::get(const std::vector<size_t> & v, size_t i)
 {
-    for(size_t i = 0; i < length; ++i)
-        if(i + pref_len < length)
-            buckets[ranks[i + pref_len]].push(std::make_pair(i, ranks[i + pref_len]));
-        else
-            buckets[0].push(std::make_pair(i, 0));
+    return i < v.size() ? v[i] : 0;
+}
 
-    std::pair<size_t, size_t> snd_order[length];
+void alte::suffix_array::sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
+                                      size_t shift, size_t k)
+{
+    std::queue<size_t> elems[k];
     size_t j = 0;
 
-    for(auto & q : buckets)
-        while(!q.empty())
+    for(size_t i = 0; i < v.size(); ++i)
+        elems[get(keys, v[i] + shift)].push(v[i]);
+
+    for(std::queue<size_t> & e : elems)
+        while(!e.empty())
         {
-            snd_order[j] = q.front();
-            q.pop();
+            v[j] = e.front();
+            e.pop();
             ++j;
         }
+}
 
-    for(size_t i = 0; i < length; ++i)
-        buckets[ranks[snd_order[i].first]].push(snd_order[i]);
+std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> & t, size_t k)
+{
+    if(t.size() < 2)
+        return std::vector<size_t>({0});
 
-    size_t r = 0, k = 0;
+    size_t n2 = (t.size() + 2) / 3, n1 = (t.size() + 1) / 3, n0 = t.size() / 3, n02 = n0 + n2;
+    std::vector<size_t> t12;
 
-    for(auto & q : buckets)
+    for(size_t i = 0; i < t.size() + n2 - n1; ++i)
+        if(i % 3 != 0)
+            t12.push_back(i);
+
+    sort_by_keys(t12, t, 2, k);
+    sort_by_keys(t12, t, 1, k);
+    sort_by_keys(t12, t, 0, k);
+
+    size_t ix = 0, last0 = k, last1 = k, last2 = k;
+    std::vector<size_t> tn12(n02, 0);
+
+    for(size_t i : t12)
     {
-        size_t added = 0, prev_rank = 0;
-
-        while(!q.empty())
+        if(get(t, i) != last0 || get(t, i + 1) != last1 || get(t, i + 2) != last2)
         {
-            if(q.front().second != prev_rank)
-            {
-                prev_rank = q.front().second;
-                ++r;
-            }
-
-            suf_arr[k] = q.front().first;
-            ranks[q.front().first] = r;
-            q.pop();
-            ++k;
-            added = 1;
+            ++ix;
+            last0 = get(t, i);
+            last1 = get(t, i + 1);
+            last2 = get(t, i + 2);
         }
 
-        r += added;
+        if(i % 3 == 1)
+            tn12[i / 3] = ix;
+        else
+            tn12[i / 3 + n2] = ix;
     }
 
-    buckets.resize(r);
+    std::vector<size_t> sa0, sa12;
+
+    if(ix < n02)
+    {
+        sa12 = create_array(tn12, ix + 1);
+
+        for(size_t i = 0; i < sa12.size(); ++i)
+            tn12[sa12[i]] = i + 1;
+    }
+    else
+    {
+        sa12.resize(n02, 0);
+
+        for(size_t i = 0; i < tn12.size(); ++i)
+            sa12[tn12[i] - 1] = i;
+    }
+
+    for(size_t i : sa12)
+        if(i < n2)
+            sa0.push_back(3 * i);
+
+    sort_by_keys(sa0, t, 0, k);
+
+    return merge(t, sa0, tn12, sa12);
+}
+
+std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
+                                              const std::vector<size_t> & sa0,
+                                              const std::vector<size_t> & t12,
+                                              const std::vector<size_t> & sa12)
+{
+    std::vector<size_t> sa;
+    size_t n2 = (t0.size() + 2) / 3, n1 = (t0.size() + 1) / 3;
+    size_t i0 = 0, i12 = n2 - n1;
+
+    while(i0 < sa0.size() && i12 < sa12.size())
+    {
+        size_t pos12 = sa12[i12] < n2 ? sa12[i12] * 3 + 1 : (sa12[i12] - n2) * 3 + 2;
+        size_t pos0 = sa0[i0];
+
+        if(sa12[i12] < n2
+               ? std::make_tuple(get(t0, pos12), get(t12, sa12[i12] + n2))
+                     <= std::make_tuple(get(t0, pos0), get(t12, pos0 / 3))
+               : std::make_tuple(get(t0, pos12), get(t0, pos12 + 1), get(t12, sa12[i12] - n2 + 1))
+                     <= std::make_tuple(get(t0, pos0), get(t0, pos0 + 1), get(t12, pos0 / 3 + n2)))
+        {
+            sa.push_back(pos12);
+            ++i12;
+        }
+        else
+        {
+            sa.push_back(pos0);
+            ++i0;
+        }
+    }
+
+    while(i12 < sa12.size())
+    {
+        sa.push_back(sa12[i12] < n2 ? sa12[i12] * 3 + 1 : (sa12[i12] - n2) * 3 + 2);
+        ++i12;
+    }
+
+    while(i0 < sa0.size())
+    {
+        sa.push_back(sa0[i0]);
+        ++i0;
+    }
+
+    return sa;
 }
 
 void alte::suffix_array::init_lcp()

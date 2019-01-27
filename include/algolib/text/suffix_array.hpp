@@ -8,6 +8,7 @@
 #include <queue>
 #include <stdexcept>
 #include <string>
+#include <tuple>
 #include <vector>
 
 namespace algolib
@@ -52,8 +53,14 @@ namespace algolib
         private:
             void init_array();
             void init_lcp();
-            void pref_sort(std::vector<std::queue<std::pair<size_t, size_t>>> & buckets,
-                           std::vector<size_t> & ranks, size_t pref_len);
+            size_t get(const std::vector<size_t> & v, size_t i);
+            void sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
+                              size_t shift, size_t k);
+            std::vector<size_t> create_array(const std::vector<size_t> & t, size_t k);
+            std::vector<size_t> merge(const std::vector<size_t> & t0,
+                                      const std::vector<size_t> & sa0,
+                                      const std::vector<size_t> & tn12,
+                                      const std::vector<size_t> & sa12);
 
             /// Size of suffix array
             size_t length;
