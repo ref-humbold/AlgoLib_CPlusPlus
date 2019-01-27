@@ -38,7 +38,8 @@ set(STRUCTURES_SOURCES
     "${STRUCTURES}/disjoint_sets.cpp")
 set(TEXT_SOURCES
     "${TEXT}/kmp.cpp"
-    "${TEXT}/kmr.cpp")
+    "${TEXT}/kmr.cpp"
+    "${TEXT}/suffix_array.cpp")
 set(SOURCES
     "${ALGOLIB_SOURCES}"
     "${GRAPHS_SOURCES}"
