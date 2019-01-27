@@ -39,17 +39,48 @@ TEST_F(SuffixArrayTest, testOperatorIndex)
     EXPECT_EQ("ssippi", result3);
 }
 
-TEST_F(SuffixArrayTest, testOperatorIndexWhenOutOfRange)
+TEST_F(SuffixArrayTest, testAt)
 {
-    EXPECT_THROW(test_object[20], std::out_of_range);
+    std::string result0 = test_object.at(0);
+    std::string result1 = test_object.at(3);
+    std::string result2 = test_object.at(6);
+    std::string result3 = test_object.at(9);
+
+    EXPECT_EQ("i", result0);
+    EXPECT_EQ("ississippi", result1);
+    EXPECT_EQ("ppi", result2);
+    EXPECT_EQ("ssippi", result3);
 }
 
-TEST_F(SuffixArrayTest, testIndex)
+TEST_F(SuffixArrayTest, testAtWhenOutOfRange)
 {
-    size_t result0 = test_object.index(0);
-    size_t result1 = test_object.index(3);
-    size_t result2 = test_object.index(6);
-    size_t result3 = test_object.index(9);
+    EXPECT_THROW(test_object.at(20), std::out_of_range);
+}
+
+TEST_F(SuffixArrayTest, testIndexAt)
+{
+    size_t result0 = test_object.index_at(0);
+    size_t result1 = test_object.index_at(3);
+    size_t result2 = test_object.index_at(6);
+    size_t result3 = test_object.index_at(9);
+
+    EXPECT_EQ(10, result0);
+    EXPECT_EQ(1, result1);
+    EXPECT_EQ(8, result2);
+    EXPECT_EQ(5, result3);
+}
+
+TEST_F(SuffixArrayTest, testIndexAtWhenOutOfRange)
+{
+    EXPECT_THROW(test_object.index_at(20), std::out_of_range);
+}
+
+TEST_F(SuffixArrayTest, testIndexOf)
+{
+    size_t result0 = test_object.index_of(0);
+    size_t result1 = test_object.index_of(3);
+    size_t result2 = test_object.index_of(6);
+    size_t result3 = test_object.index_of(9);
 
     EXPECT_EQ(4, result0);
     EXPECT_EQ(8, result1);
@@ -59,7 +90,7 @@ TEST_F(SuffixArrayTest, testIndex)
 
 TEST_F(SuffixArrayTest, testIndexWhenOutOfRange)
 {
-    EXPECT_THROW(test_object.index(20), std::out_of_range);
+    EXPECT_THROW(test_object.index_of(20), std::out_of_range);
 }
 
 TEST_F(SuffixArrayTest, testLCPWhenSameSuffix)

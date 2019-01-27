@@ -45,7 +45,8 @@ namespace algolib
 
             std::string at(size_t i) const;
             std::string operator[](size_t i) const;
-            size_t index(size_t suf) const;
+            size_t index_at(size_t i) const;
+            size_t index_of(size_t suf) const;
             size_t lcp(size_t suf1, size_t suf2) const;
 
         private:

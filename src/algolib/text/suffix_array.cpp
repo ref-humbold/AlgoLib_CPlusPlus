@@ -8,15 +8,23 @@ std::string alte::suffix_array::at(size_t i) const
     if(i >= length)
         throw std::out_of_range("Suffix array index out of range");
 
-    return text.substr(suf_arr[i], std::string::npos);
+    return operator[](i);
 }
 
 std::string alte::suffix_array::operator[](size_t i) const
 {
-    return at(i);
+    return text.substr(suf_arr[i], std::string::npos);
 }
 
-size_t alte::suffix_array::index(size_t suf) const
+size_t alte::suffix_array::index_at(size_t i) const
+{
+    if(i >= length)
+        throw std::out_of_range("Suffix array index out of range");
+
+    return suf_arr[i];
+}
+
+size_t alte::suffix_array::index_of(size_t suf) const
 {
     if(suf >= length)
         throw std::out_of_range("Text index out of range");
@@ -66,6 +74,8 @@ void alte::suffix_array::init_array()
 
         r += added;
     }
+
+    buckets.resize(r);
 
     for(size_t i = 1; i < length; i *= 2)
         pref_sort(buckets, ranks, i);
@@ -122,6 +132,8 @@ void alte::suffix_array::pref_sort(std::vector<std::queue<std::pair<size_t, size
 
         r += added;
     }
+
+    buckets.resize(r);
 }
 
 void alte::suffix_array::init_lcp()
