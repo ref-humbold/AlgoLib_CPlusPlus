@@ -9,7 +9,7 @@ weight_t algr::kruskal(const undirected_weighted_simple_graph & uwgraph)
     weight_t size_MST = 0.0;
     int components = uwgraph.get_vertices_number();
     std::priority_queue<std::tuple<weight_t, vertex_t, vertex_t>> edge_queue;
-    alst::disjoint_sets<vertex_t> vertex_sets(uwgraph.get_vertices());
+    alst::disjoint_sets<vertex_t> vertex_sets(uwgraph.get_vertices().begin(), uwgraph.get_vertices().end());
 
     for(const auto & we : uwgraph.get_weighted_edges())
         edge_queue.push(std::make_tuple(-std::get<2>(we), std::get<0>(we), std::get<1>(we)));

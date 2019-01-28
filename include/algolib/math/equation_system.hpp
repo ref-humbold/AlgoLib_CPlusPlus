@@ -123,7 +123,7 @@ namespace algolib
 
             int i = 0;
 
-            for(auto it1 : coef)
+            for(auto it1 : coeffs)
             {
                 int j = 0;
 
