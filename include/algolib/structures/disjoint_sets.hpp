@@ -22,10 +22,20 @@ namespace algolib
         class disjoint_sets
         {
         public:
+            template<typename InputIterator>
+            disjoint_sets(InputIterator first, InputIterator last):elems{0}
+            {
+                for(InputIterator it = first; it != last; ++it)
+                {
+                    represents.emplace(*it, *it);
+                    ++elems;
+                }
+            }
+
             explicit disjoint_sets(std::initializer_list<E> universe) : elems{universe.size()}
             {
                 for(E e : universe)
-                    represents.insert(std::make_pair(e, e));
+                    represents.emplace(e, e);
             }
 
             ~disjoint_sets() = default;
