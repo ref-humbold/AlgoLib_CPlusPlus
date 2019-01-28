@@ -57,9 +57,15 @@ namespace algolib
             /**
              * Dodawanie nowego elementu jako singleton.
              * @param element nowy element
-             * @return struktura (dla łańcuchów metod)
              */
-            disjoint_sets<E> & add_elem(const E & element);
+            void insert(const E & element);
+
+            /**
+             * Dodawanie nowych elementów jako singletony.
+             * @param element nowy element
+             */
+            template <typename InputIterator>
+            void insert(InputIterator first, InputIterator last);
 
             /**
              * Ustalanie reprezentanta zbioru.
@@ -144,15 +150,21 @@ namespace algolib
         }
 
         template <typename E>
-        disjoint_sets<E> & disjoint_sets<E>::add_elem(const E & element)
+        void disjoint_sets<E>::insert(const E & element)
         {
             if(contains(element))
-                throw std::invalid_argument("Value already present.");
+                throw std::invalid_argument("Value already present");
 
             represents.emplace(element, element);
             elems++;
+        }
 
-            return *this;
+        template <typename E>
+        template <typename InputIterator>
+        void disjoint_sets<E>::insert(InputIterator first, InputIterator last)
+        {
+            for(InputIterator it = first; it != last; ++it)
+                insert(*it);
         }
 
         template <typename E>

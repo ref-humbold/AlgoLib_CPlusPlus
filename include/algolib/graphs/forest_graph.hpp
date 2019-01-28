@@ -37,7 +37,6 @@ namespace algolib
         {
         public:
             explicit forest_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>());
-
             virtual ~forest_graph() = default;
             forest_graph(const forest_graph &) = default;
             forest_graph(forest_graph &&) = default;
@@ -101,18 +100,6 @@ namespace algolib
 
             alst::disjoint_sets<vertex_t> components;
         };
-
-        forest_graph::forest_graph(int n, std::vector<edge_t> edges)
-            : graph{undirected_simple_graph(n)}
-        {
-            std::vector<vertex_t> vertices = graph.get_vertices();
-
-            components = alst::disjoint_sets<vertex_t>(std::make_move_iterator(vertices.begin()),
-                                                       std::make_move_iterator(vertices.end()));
-
-            for(const auto & e : edges)
-                add_edge(std::get<0>(e), std::get<1>(e));
-        }
     }
 }
 

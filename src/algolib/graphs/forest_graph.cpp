@@ -3,10 +3,22 @@
 
 namespace algr = algolib::graphs;
 
+algr::forest_graph::forest_graph(int n, std::vector<edge_t> edges)
+    : graph{undirected_simple_graph(n)}
+{
+    std::vector<vertex_t> vertices = graph.get_vertices();
+
+    components.insert(std::make_move_iterator(vertices.begin()),
+                      std::make_move_iterator(vertices.end()));
+
+    for(const auto & e : edges)
+        add_edge(std::get<0>(e), std::get<1>(e));
+}
+
 vertex_t algr::forest_graph::add_vertex()
 {
     vertex_t vertex = graph.add_vertex();
-    components.add_elem(vertex);
+    components.insert(vertex);
 
     return vertex;
 }

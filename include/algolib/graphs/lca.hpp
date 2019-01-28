@@ -1,9 +1,9 @@
 // NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE
 #include <cstdlib>
 #include <cmath>
+#include <algorithm>
 #include <exception>
 #include <stdexcept>
-#include <algorithm>
 #include <vector>
 #include "forest_graph.hpp"
 
@@ -11,25 +11,11 @@ namespace detail
 {
     class lca_finder
     {
-    private:
-        /// Oznaczenie braku nadania czasu wejścia lub wyjścia.
-        static constexpr int NO_TIME = -1;
-
-        /// Reprezentacja drzewa.
-        const algolib::graphs::forest_graph & graph;
-
-        /// Skompresowane ścieżki do korzenia drzewa.
-        std::vector<std::vector<int>> paths;
-
-        /// Czas wejścia i wyjścia dla wierzchołka.
-        std::vector<std::pair<int, int>> pre_post_times;
-
     public:
         explicit lca_finder(const algolib::graphs::forest_graph & treegraph) : graph{treegraph}
         {
-            this->paths.resize(graph.get_vertices_number());
-            this->pre_post_times.resize(graph.get_vertices_number(),
-                                        std::make_pair(NO_TIME, NO_TIME));
+            paths.resize(graph.get_vertices_number());
+            pre_post_times.resize(graph.get_vertices_number(), std::make_pair(NO_TIME, NO_TIME));
         }
 
         /**
@@ -70,6 +56,18 @@ namespace detail
             return pre_post_times[vertex1].first >= pre_post_times[vertex2].first
                    && pre_post_times[vertex1].second <= pre_post_times[vertex2].second;
         }
+
+        /// Oznaczenie braku nadania czasu wejścia lub wyjścia.
+        static constexpr int NO_TIME = -1;
+
+        /// Reprezentacja drzewa.
+        const algolib::graphs::forest_graph & graph;
+
+        /// Skompresowane ścieżki do korzenia drzewa.
+        std::vector<std::vector<int>> paths;
+
+        /// Czas wejścia i wyjścia dla wierzchołka.
+        std::vector<std::pair<int, int>> pre_post_times;
     };
 }
 
