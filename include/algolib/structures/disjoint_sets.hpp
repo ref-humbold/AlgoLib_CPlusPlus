@@ -22,14 +22,8 @@ namespace algolib
         class disjoint_sets
         {
         public:
-            template<typename InputIterator>
-            disjoint_sets(InputIterator first, InputIterator last):elems{0}
+            disjoint_sets() : elems{0}
             {
-                for(InputIterator it = first; it != last; ++it)
-                {
-                    represents.emplace(*it, *it);
-                    ++elems;
-                }
             }
 
             explicit disjoint_sets(std::initializer_list<E> universe) : elems{universe.size()}
@@ -37,6 +31,9 @@ namespace algolib
                 for(E e : universe)
                     represents.emplace(e, e);
             }
+
+            template <typename InputIterator>
+            disjoint_sets(InputIterator first, InputIterator last);
 
             ~disjoint_sets() = default;
             disjoint_sets(const disjoint_sets & ds) = default;
@@ -128,6 +125,17 @@ namespace algolib
             /// Liczba elementów
             size_t elems;
         };
+
+        template <typename E>
+        template <typename InputIterator>
+        disjoint_sets<E>::disjoint_sets(InputIterator first, InputIterator last) : elems{0}
+        {
+            for(InputIterator it = first; it != last; ++it)
+            {
+                represents.emplace(*it, *it);
+                ++elems;
+            }
+        }
 
         template <typename E>
         bool disjoint_sets<E>::contains(const E & element) const
