@@ -55,14 +55,14 @@ namespace algolib
             void init_array();
             void init_inv();
             void init_lcp();
-            size_t get(const std::vector<size_t> & v, size_t i);
-            void sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
-                              size_t shift, size_t k);
             std::vector<size_t> create_array(const std::vector<size_t> & t, size_t k);
             std::vector<size_t> merge(const std::vector<size_t> & t0,
                                       const std::vector<size_t> & sa0,
                                       const std::vector<size_t> & tn12,
                                       const std::vector<size_t> & sa12);
+            void sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
+                              size_t shift, size_t k);
+            size_t get_elem(const std::vector<size_t> & v, size_t i);
 
             /// Size of suffix array
             size_t length;

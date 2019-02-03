@@ -65,27 +65,25 @@ void alte::suffix_array::init_inv()
         inv_arr[suf_arr[i]] = i;
 }
 
-size_t alte::suffix_array::get(const std::vector<size_t> & v, size_t i)
+void alte::suffix_array::init_lcp()
 {
-    return i < v.size() ? v[i] : 0;
-}
+    lcp_arr.resize(length);
 
-void alte::suffix_array::sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
-                                      size_t shift, size_t k)
-{
-    std::queue<size_t> elems[k];
-    size_t j = 0;
-
-    for(size_t i = 0; i < v.size(); ++i)
-        elems[get(keys, v[i] + shift)].push(v[i]);
-
-    for(std::queue<size_t> & e : elems)
-        while(!e.empty())
+    for(size_t i = 0, len = 0; i < length; ++i)
+    {
+        if(inv_arr[i] >= 1)
         {
-            v[j] = e.front();
-            e.pop();
-            ++j;
+            size_t j = suf_arr[inv_arr[i] - 1];
+
+            while(txt[i + len] == txt[j + len])
+                ++len;
+
+            lcp_arr[inv_arr[i]] = len;
         }
+
+        if(len > 0)
+            --len;
+    }
 }
 
 std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> & t, size_t k)
@@ -109,12 +107,12 @@ std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> &
 
     for(size_t i : t12)
     {
-        if(get(t, i) != last0 || get(t, i + 1) != last1 || get(t, i + 2) != last2)
+        if(get_elem(t, i) != last0 || get_elem(t, i + 1) != last1 || get_elem(t, i + 2) != last2)
         {
             ++ix;
-            last0 = get(t, i);
-            last1 = get(t, i + 1);
-            last2 = get(t, i + 2);
+            last0 = get_elem(t, i);
+            last1 = get_elem(t, i + 1);
+            last2 = get_elem(t, i + 2);
         }
 
         if(i % 3 == 1)
@@ -164,10 +162,10 @@ std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
         size_t pos0 = sa0[i0];
 
         if(sa12[i12] < n2
-               ? std::make_tuple(get(t0, pos12), get(t12, sa12[i12] + n2))
-                     <= std::make_tuple(get(t0, pos0), get(t12, pos0 / 3))
-               : std::make_tuple(get(t0, pos12), get(t0, pos12 + 1), get(t12, sa12[i12] - n2 + 1))
-                     <= std::make_tuple(get(t0, pos0), get(t0, pos0 + 1), get(t12, pos0 / 3 + n2)))
+               ? std::make_tuple(get_elem(t0, pos12), get_elem(t12, sa12[i12] + n2))
+                     <= std::make_tuple(get_elem(t0, pos0), get_elem(t12, pos0 / 3))
+               : std::make_tuple(get_elem(t0, pos12), get_elem(t0, pos12 + 1), get_elem(t12, sa12[i12] - n2 + 1))
+                     <= std::make_tuple(get_elem(t0, pos0), get_elem(t0, pos0 + 1), get_elem(t12, pos0 / 3 + n2)))
         {
             sa.push_back(pos12);
             ++i12;
@@ -194,23 +192,25 @@ std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
     return sa;
 }
 
-void alte::suffix_array::init_lcp()
+void alte::suffix_array::sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
+                                      size_t shift, size_t k)
 {
-    lcp_arr.resize(length);
+    std::queue<size_t> buckets[k];
+    size_t j = 0;
 
-    for(size_t i = 0, len = 0; i < length; ++i)
-    {
-        if(inv_arr[i] >= 1)
+    for(int i : v)
+        buckets[get_elem(keys, i + shift)].push(i);
+
+    for(std::queue<size_t> & e : buckets)
+        while(!e.empty())
         {
-            size_t j = suf_arr[inv_arr[i] - 1];
-
-            while(txt[i + len] == txt[j + len])
-                ++len;
-
-            lcp_arr[inv_arr[i]] = len;
+            v[j] = e.front();
+            e.pop();
+            ++j;
         }
+}
 
-        if(len > 0)
-            --len;
-    }
+size_t alte::suffix_array::get_elem(const std::vector<size_t> & v, size_t i)
+{
+    return i < v.size() ? v[i] : 0;
 }
