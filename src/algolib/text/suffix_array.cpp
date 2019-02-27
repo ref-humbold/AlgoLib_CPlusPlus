@@ -75,7 +75,7 @@ void alte::suffix_array::init_lcp()
         {
             size_t j = suf_arr[inv_arr[i] - 1];
 
-            while(txt[i + len] == txt[j + len])
+            while(i + len < length && j + len < length && txt[i + len] == txt[j + len])
                 ++len;
 
             lcp_arr[inv_arr[i]] = len;

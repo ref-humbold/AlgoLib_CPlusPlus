@@ -88,7 +88,7 @@ TEST_F(SuffixArrayTest, testIndexOf)
     EXPECT_EQ(5, result3);
 }
 
-TEST_F(SuffixArrayTest, testIndexWhenOutOfRange)
+TEST_F(SuffixArrayTest, testIndexOfWhenOutOfRange)
 {
     EXPECT_THROW(test_object.index_of(20), std::out_of_range);
 }
