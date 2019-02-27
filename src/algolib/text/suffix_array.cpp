@@ -69,8 +69,7 @@ void alte::suffix_array::init_lcp()
 {
     lcp_arr.resize(length);
 
-    for(size_t i = 0, len = 0; i < length; ++i)
-    {
+    for(size_t i = 0, len = 0; i < length; ++i, len = len == 0 ? 0 : len - 1)
         if(inv_arr[i] >= 1)
         {
             size_t j = suf_arr[inv_arr[i] - 1];
@@ -80,10 +79,6 @@ void alte::suffix_array::init_lcp()
 
             lcp_arr[inv_arr[i]] = len;
         }
-
-        if(len > 0)
-            --len;
-    }
 }
 
 std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> & t, size_t k)
@@ -161,11 +156,12 @@ std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
         size_t pos12 = sa12[i12] < n2 ? sa12[i12] * 3 + 1 : (sa12[i12] - n2) * 3 + 2;
         size_t pos0 = sa0[i0];
 
-        if(sa12[i12] < n2
-               ? std::make_tuple(get_elem(t0, pos12), get_elem(t12, sa12[i12] + n2))
-                     <= std::make_tuple(get_elem(t0, pos0), get_elem(t12, pos0 / 3))
-               : std::make_tuple(get_elem(t0, pos12), get_elem(t0, pos12 + 1), get_elem(t12, sa12[i12] - n2 + 1))
-                     <= std::make_tuple(get_elem(t0, pos0), get_elem(t0, pos0 + 1), get_elem(t12, pos0 / 3 + n2)))
+        if(sa12[i12] < n2 ? std::make_tuple(get_elem(t0, pos12), get_elem(t12, sa12[i12] + n2))
+                                <= std::make_tuple(get_elem(t0, pos0), get_elem(t12, pos0 / 3))
+                          : std::make_tuple(get_elem(t0, pos12), get_elem(t0, pos12 + 1),
+                                            get_elem(t12, sa12[i12] - n2 + 1))
+                                <= std::make_tuple(get_elem(t0, pos0), get_elem(t0, pos0 + 1),
+                                                   get_elem(t12, pos0 / 3 + n2)))
         {
             sa.push_back(pos12);
             ++i12;
