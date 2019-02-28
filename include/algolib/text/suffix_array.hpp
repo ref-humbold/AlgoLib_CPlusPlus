@@ -64,19 +64,10 @@ namespace algolib
                               size_t shift, size_t k);
             size_t get_elem(const std::vector<size_t> & v, size_t i);
 
-            /// Size of suffix array
             size_t length;
-
-            /// Text
             std::string txt;
-
-            /// Suffix array
             std::vector<size_t> suf_arr;
-
-            /// Inversed suffix array
             std::vector<size_t> inv_arr;
-
-            /// Array of longest common prefices
             std::vector<size_t> lcp_arr;
         };
     }
