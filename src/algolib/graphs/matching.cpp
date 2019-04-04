@@ -29,7 +29,7 @@ bool detail::match_augmenter::augment_match()
 {
     bool match_added = false;
 
-    distances.resize(graph.get_vertices_number(), algolib::graphs::graph::INF);
+    distances.resize(graph.get_vertices_number(), algr::graph::INF);
     is_visited.resize(graph.get_vertices_number(), false);
 
     bfs();
@@ -57,7 +57,7 @@ void detail::match_augmenter::bfs()
         vertex_queue.pop();
 
         for(int nb : graph.get_neighbours(v))
-            if(matching[nb] != NO_MATCH && distances[matching[nb]] == algolib::graphs::graph::INF)
+            if(matching[nb] != NO_MATCH && distances[matching[nb]] == algr::graph::INF)
             {
                 distances[matching[nb]] = distances[v] + 1;
                 vertex_queue.push(matching[nb]);
