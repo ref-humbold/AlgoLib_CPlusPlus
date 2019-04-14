@@ -1,8 +1,8 @@
 // TESTY DLA UŁAMKÓW
 #include <gtest/gtest.h>
-#include "algolib/math/fraction.hpp"
+#include "algolib/mathmat/fraction.hpp"
 
-namespace alma = algolib::math;
+namespace alma = algolib::mathmat;
 
 TEST(FractionTest, testInverseWhenPositive)
 {
@@ -80,5 +80,5 @@ TEST(FractionTest, testHash)
 
     size_t result = std::hash<alma::fraction>()(frac);
 
-    EXPECT_EQ(-109, result);
+    EXPECT_EQ(-129 ^ 20, result);
 }

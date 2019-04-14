@@ -22,11 +22,18 @@ namespace algolib
         class disjoint_sets
         {
         public:
+            disjoint_sets() : elems{0}
+            {
+            }
+
             explicit disjoint_sets(std::initializer_list<E> universe) : elems{universe.size()}
             {
                 for(E e : universe)
-                    represents.insert(std::make_pair(e, e));
+                    represents.emplace(e, e);
             }
+
+            template <typename InputIterator>
+            disjoint_sets(InputIterator first, InputIterator last);
 
             ~disjoint_sets() = default;
             disjoint_sets(const disjoint_sets & ds) = default;
@@ -50,9 +57,15 @@ namespace algolib
             /**
              * Dodawanie nowego elementu jako singleton.
              * @param element nowy element
-             * @return struktura (dla łańcuchów metod)
              */
-            disjoint_sets<E> & add_elem(const E & element);
+            void insert(const E & element);
+
+            /**
+             * Dodawanie nowych elementów jako singletony.
+             * @param element nowy element
+             */
+            template <typename InputIterator>
+            void insert(InputIterator first, InputIterator last);
 
             /**
              * Ustalanie reprezentanta zbioru.
@@ -120,21 +133,38 @@ namespace algolib
         };
 
         template <typename E>
+        template <typename InputIterator>
+        disjoint_sets<E>::disjoint_sets(InputIterator first, InputIterator last) : elems{0}
+        {
+            for(InputIterator it = first; it != last; ++it)
+            {
+                represents.emplace(*it, *it);
+                ++elems;
+            }
+        }
+
+        template <typename E>
         bool disjoint_sets<E>::contains(const E & element) const
         {
             return represents.find(element) != represents.end();
         }
 
         template <typename E>
-        disjoint_sets<E> & disjoint_sets<E>::add_elem(const E & element)
+        void disjoint_sets<E>::insert(const E & element)
         {
             if(contains(element))
-                throw std::invalid_argument("Value already present.");
+                throw std::invalid_argument("Value already present");
 
             represents.emplace(element, element);
             elems++;
+        }
 
-            return *this;
+        template <typename E>
+        template <typename InputIterator>
+        void disjoint_sets<E>::insert(InputIterator first, InputIterator last)
+        {
+            for(InputIterator it = first; it != last; ++it)
+                insert(*it);
         }
 
         template <typename E>

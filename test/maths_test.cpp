@@ -1,8 +1,8 @@
 // TESTY DLA ALGORYTMÓW MATEMATYCZNYCH
 #include <gtest/gtest.h>
-#include "algolib/math/maths.hpp"
+#include "algolib/mathmat/maths.hpp"
 
-namespace alma = algolib::math;
+namespace alma = algolib::mathmat;
 
 TEST(MathsTest, testGCDWhenNumbersAreComposite)
 {

@@ -6,9 +6,9 @@
 #define _FOREST_GRAPH_HPP_
 
 #include <cstdlib>
+#include <algorithm>
 #include <exception>
 #include <stdexcept>
-#include <algorithm>
 #include <tuple>
 #include <vector>
 #include "algolib/structures/disjoint_sets.hpp"
@@ -36,14 +36,7 @@ namespace algolib
         class forest_graph : public undirected_graph
         {
         public:
-            explicit forest_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>())
-                : graph{undirected_simple_graph(n)},
-                  components{alst::disjoint_sets<vertex_t>(this->graph.get_vertices())}
-            {
-                for(const auto & e : edges)
-                    this->add_edge(std::get<0>(e), std::get<1>(e));
-            }
-
+            explicit forest_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>());
             virtual ~forest_graph() = default;
             forest_graph(const forest_graph &) = default;
             forest_graph(forest_graph &&) = default;

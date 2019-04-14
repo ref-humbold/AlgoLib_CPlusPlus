@@ -7,26 +7,25 @@ namespace alst = algolib::structures;
 weight_t algr::kruskal(const undirected_weighted_simple_graph & uwgraph)
 {
     weight_t size_MST = 0.0;
-    int components = uwgraph.get_vertices_number();
+    std::vector<vertex_t> vertices = uwgraph.get_vertices();
     std::priority_queue<std::tuple<weight_t, vertex_t, vertex_t>> edge_queue;
-    alst::disjoint_sets<vertex_t> vertex_sets(uwgraph.get_vertices());
+    alst::disjoint_sets<vertex_t> vertex_sets(std::make_move_iterator(vertices.begin()),
+                                              std::make_move_iterator(vertices.end()));
 
     for(const auto & we : uwgraph.get_weighted_edges())
         edge_queue.push(std::make_tuple(-std::get<2>(we), std::get<0>(we), std::get<1>(we)));
 
-    while(components > 1 && !edge_queue.empty())
+    while(vertex_sets.size() > 1 && !edge_queue.empty())
     {
         weight_t edge_weight;
         vertex_t edge_vert1, edge_vert2;
 
         std::tie(edge_weight, edge_vert1, edge_vert2) = edge_queue.top();
         edge_queue.pop();
-        edge_weight = -edge_weight;
 
         if(!vertex_sets.is_same_set(edge_vert1, edge_vert2))
         {
-            size_MST += edge_weight;
-            --components;
+            size_MST -= edge_weight;
             vertex_sets.union_set(edge_vert1, edge_vert2);
         }
     }

@@ -23,7 +23,7 @@ namespace detail
 
 namespace algolib
 {
-    namespace math
+    namespace mathmat
     {
         /**
          * Wyznaczanie liczb pierwszych na przedziale domkniętym.
