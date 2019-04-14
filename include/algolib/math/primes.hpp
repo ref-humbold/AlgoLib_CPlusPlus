@@ -1,6 +1,6 @@
 /**
  * @file primes.hpp
- * ALGORITHMS FOR PRIME NUMBERS
+ * @brief Algorithms for prime numbers
  */
 #ifndef _PRIMES_HPP_
 #define _PRIMES_HPP_

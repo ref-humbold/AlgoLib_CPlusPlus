@@ -1,7 +1,4 @@
-/**
- * @file primes.cpp
- * ALGORITHMS FOR PRIME NUMBERS
- */
+// Algorithms for prime numbers
 #include "algolib/math/primes.hpp"
 
 namespace alma = algolib::math;

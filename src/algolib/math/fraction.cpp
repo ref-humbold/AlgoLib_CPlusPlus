@@ -1,7 +1,4 @@
-/**
- * @file fraction.hpp
- * STRUCTURE FOR FRACTIONS
- */
+// Fractions structure
 #include "algolib/math/fraction.hpp"
 
 namespace alma = algolib::math;

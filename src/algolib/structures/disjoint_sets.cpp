@@ -1,5 +1,2 @@
-/**
- * @file disjoint_sets.cpp
- * STRUKTURA ZBIORÓW ROZŁĄCZNYCH UNION-FIND
- */
+// Disjoint sets structure (union-find)
 #include "algolib/structures/disjoint_sets.hpp"

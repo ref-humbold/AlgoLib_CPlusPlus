@@ -1,16 +1,16 @@
 /**
  * @file disjoint_sets.hpp
- * STRUKTURA ZBIORÓW ROZŁĄCZNYCH UNION-FIND
+ * @brief Disjoint sets structure (union-find)
  */
 #ifndef _DISJOINT_SETS_HPP_
 #define _DISJOINT_SETS_HPP_
 
 #include <cstdlib>
-#include <algorithm>
 #include <exception>
+#include <stdexcept>
+#include <algorithm>
 #include <initializer_list>
 #include <set>
-#include <stdexcept>
 #include <unordered_map>
 #include <vector>
 

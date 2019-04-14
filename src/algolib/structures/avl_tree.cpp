@@ -1,5 +1,2 @@
-/**
- * @file avl_tree.cpp
- * AVL TREE STRUCTURE
- */
+// AVL tree structure
 #include "algolib/structures/avl_tree.hpp"

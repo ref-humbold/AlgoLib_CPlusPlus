@@ -1,2 +1,2 @@
-// STRUKTURA UKŁADÓW RÓWNAŃ LINIOWYCH Z ALGORYTMEM ELIMINACJI GAUSSA
+// Struktura układów równań liniowych z algorytmem eliminacji Gaussa
 #include "algolib/math/equation_system.hpp"
