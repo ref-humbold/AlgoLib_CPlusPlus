@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 # SOURCES
 set(ALGOLIB "algolib")
 set(GRAPHS "${ALGOLIB}/graphs")
-set(MATH "${ALGOLIB}/math")
+set(MATH "${ALGOLIB}/mathmat")
 set(STRUCTURES "${ALGOLIB}/structures")
 set(TEXT "${ALGOLIB}/text")
 set(ALGOLIB_SOURCES

@@ -2,9 +2,9 @@
  * @file primes.cpp
  * ALGORITHMS FOR PRIME NUMBERS
  */
-#include "algolib/math/primes.hpp"
+#include "algolib/mathmat/primes.hpp"
 
-namespace alma = algolib::math;
+namespace alma = algolib::mathmat;
 
 std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
 {

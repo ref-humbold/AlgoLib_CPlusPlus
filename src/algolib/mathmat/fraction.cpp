@@ -2,9 +2,9 @@
  * @file fraction.hpp
  * STRUCTURE FOR FRACTIONS
  */
-#include "algolib/math/fraction.hpp"
+#include "algolib/mathmat/fraction.hpp"
 
-namespace alma = algolib::math;
+namespace alma = algolib::mathmat;
 
 void alma::fraction::normalize()
 {
