@@ -15,7 +15,7 @@
 
 namespace algolib
 {
-    namespace math
+    namespace mathmat
     {
         class fraction;
     }
@@ -24,12 +24,12 @@ namespace algolib
 namespace std
 {
     template <>
-    struct hash<algolib::math::fraction>;
+    struct hash<algolib::mathmat::fraction>;
 }
 
 namespace algolib
 {
-    namespace math
+    namespace mathmat
     {
         class fraction
         {
@@ -107,9 +107,9 @@ namespace algolib
 namespace std
 {
     template <>
-    struct hash<algolib::math::fraction>
+    struct hash<algolib::mathmat::fraction>
     {
-        using argument_type = algolib::math::fraction;
+        using argument_type = algolib::mathmat::fraction;
         using result_type = size_t;
 
         result_type operator()(const argument_type & f)

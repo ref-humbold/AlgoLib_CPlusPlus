@@ -15,7 +15,7 @@
 
 namespace algolib
 {
-    namespace math
+    namespace mathmat
     {
         class infinite_solutions_exception : public std::runtime_error
         {

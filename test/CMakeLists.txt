@@ -33,9 +33,8 @@ foreach(testsource ${SOURCES})
     get_filename_component(testexec ${testsource} NAME_WE)
     add_executable(${testexec} ${testsource})
     target_link_libraries(${testexec}
-                          ${GTEST_LIBRARY}
-                          ${GTEST_MAIN_LIBRARY}
-                          Threads::Threads
+                          GTest::GTest
+                          GTest::Main
                           "${PROJECT_SOURCE_DIR}/bin/libalgolib.so")
     gtest_discover_tests(${testexec})
 endforeach(testsource ${SOURCES})
