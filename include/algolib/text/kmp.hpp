@@ -1,4 +1,7 @@
-// ALGORYTM KNUTHA-MORRISA-PRATTA WYSZUKIWANIA WZORCA W TEKŚCIE
+/**
+ * @filee kmp.hpp
+ * @brief Knuth-Morris-Pratt algorithm.
+ */
 #ifndef _KMP_HPP_
 #define _KMP_HPP_
 
@@ -10,9 +13,9 @@
 namespace detail
 {
     /**
-     * Funkcja prefiksowa pi Knutha.
-     * @param pattern wzorzec
-     * @return wartości funkcji prefiksowej
+     * @brief Knuth's pi prefix function.
+     * @param pattern pattern to count the function for
+     * @return vector of prefix function values
      */
     std::vector<size_t> prefixes(const std::string & pattern);
 }
@@ -22,10 +25,10 @@ namespace algolib
     namespace text
     {
         /**
-         * Algorytm Knutha-Morrisa-Pratta.
-         * @param text słowo
-         * @param pattern wzorzec
-         * @return lista pozycji wystąpień wzorca w słowie
+         * @brief Knuth-Morris-Pratt algorithm.
+         * @param text text
+         * @param pattern pattern to search for
+         * @return vector of pattern occurrence positions
          */
         std::vector<size_t> kmp(const std::string & text, const std::string & pattern);
     }

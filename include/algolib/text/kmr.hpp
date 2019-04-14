@@ -1,4 +1,7 @@
-// SŁOWNIK PODSŁÓW BAZOWYCH Z ALGORYTMEM KARPA-MILLERA-ROSENBERGA
+/**
+ * @file kmr.hpp
+ * @brief Karp-Miller-Rosenberg algorithm.
+ */
 #ifndef _KMR_HPP_
 #define _KMR_HPP_
 

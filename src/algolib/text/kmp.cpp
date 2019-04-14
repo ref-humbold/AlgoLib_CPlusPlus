@@ -1,4 +1,4 @@
-// ALGORYTM KNUTHA-MORRISA-PRATTA WYSZUKIWANIA WZORCA W TEKŚCIE
+// Knuth-Morris-Pratt algorithm.
 #include "algolib/text/kmp.hpp"
 
 namespace alte = algolib::text;

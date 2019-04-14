@@ -1,4 +1,7 @@
-// NAJMNIEJSZY LEKSYKOGRAFICZNIE NAJDŁUŻSZY PODCIĄG ROSNĄCY
+/**
+ * @file lis.hpp
+ * @brief Longest increasing subsequence (least lexicographically).
+ */
 #ifndef _LIS_HPP_
 #define _LIS_HPP_
 

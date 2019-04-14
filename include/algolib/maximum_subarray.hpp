@@ -1,4 +1,7 @@
-// ALGORITHMS FOR MAXIMUM SUBARRAY
+/**
+ * @file maximum_subarray.hpp
+ * @brief Algorithms for maximum subarray.
+ */
 #ifndef _MAXIMUM_SUBARRAY_HPP_
 #define _MAXIMUM_SUBARRAY_HPP_
 

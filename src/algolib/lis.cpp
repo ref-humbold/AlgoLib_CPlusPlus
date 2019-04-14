@@ -1,2 +1,2 @@
-// NAJMNIEJSZY LEKSYKOGRAFICZNIE NAJDŁUŻSZY PODCIĄG ROSNĄCY
+// Longest increasing subsequence (least lexicographically).
 #include "algolib/lis.hpp"

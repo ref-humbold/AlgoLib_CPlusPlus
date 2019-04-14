@@ -1,6 +1,6 @@
 /**
  * @file equation_system.hpp
- * @brief Struktura układów równań liniowych z algorytmem eliminacji Gaussa
+ * @brief Structure of linear equation sysytem with Gauss elimination algorithm.
  */
 #ifndef _EQUATION_SYSTEM_HPP_
 #define _EQUATION_SYSTEM_HPP_

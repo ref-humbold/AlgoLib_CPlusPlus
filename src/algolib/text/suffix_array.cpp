@@ -1,4 +1,4 @@
-// Suffix array structure
+// Suffix array structure.
 #include "algolib/text/suffix_array.hpp"
 
 namespace alte = algolib::text;

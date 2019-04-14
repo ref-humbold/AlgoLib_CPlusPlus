@@ -1,6 +1,6 @@
 /**
  * @file avl_tree.hpp
- * @brief AVL tree structure
+ * @brief AVL tree structure.
  */
 #ifndef _AVL_TREE_HPP_
 #define _AVL_TREE_HPP_
