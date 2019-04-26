@@ -2,8 +2,8 @@
  * @file directed_graph.hpp
  * STRUKTURY GRAFÓW SKIEROWANYCH
  */
-#ifndef _DIRECTED_GRAPH_HPP_
-#define _DIRECTED_GRAPH_HPP_
+#ifndef DIRECTED_GRAPH_HPP_
+#define DIRECTED_GRAPH_HPP_
 
 #include <cstdlib>
 #include <exception>

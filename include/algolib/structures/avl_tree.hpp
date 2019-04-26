@@ -2,8 +2,8 @@
  * @file avl_tree.hpp
  * @brief AVL tree structure.
  */
-#ifndef _AVL_TREE_HPP_
-#define _AVL_TREE_HPP_
+#ifndef AVL_TREE_HPP_
+#define AVL_TREE_HPP_
 
 #include <cstdlib>
 #include <cmath>

@@ -2,8 +2,8 @@
  * @filee kmp.hpp
  * @brief Knuth-Morris-Pratt algorithm.
  */
-#ifndef _KMP_HPP_
-#define _KMP_HPP_
+#ifndef KMP_HPP_
+#define KMP_HPP_
 
 #include <cstdlib>
 #include <algorithm>

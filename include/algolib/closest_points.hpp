@@ -2,8 +2,8 @@
  * @file closest_points.hpp
  * @brief Algorithm for closest pair of points on a plane.
  */
-#ifndef _CLOSEST_POINTS_HPP_
-#define _CLOSEST_POINTS_HPP_
+#ifndef CLOSEST_POINTS_HPP_
+#define CLOSEST_POINTS_HPP_
 
 #include <cstdlib>
 #include <cmath>

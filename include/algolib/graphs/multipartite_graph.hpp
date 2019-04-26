@@ -1,6 +1,6 @@
 // STRUKTURY GRAFÓW WIELODZIELNYCH
-#ifndef _MULTIPARTITE_GRAPH_HPP_
-#define _MULTIPARTITE_GRAPH_HPP_
+#ifndef MULTIPARTITE_GRAPH_HPP_
+#define MULTIPARTITE_GRAPH_HPP_
 
 #include <cstdlib>
 #include <exception>

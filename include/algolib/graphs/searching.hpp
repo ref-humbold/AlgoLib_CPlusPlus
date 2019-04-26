@@ -2,8 +2,8 @@
  * @file searching.hpp
  * ALGORYTMY PRZESZUKIWANIA GRAFU
  */
-#ifndef _SEARCHING_HPP_
-#define _SEARCHING_HPP_
+#ifndef SEARCHING_HPP_
+#define SEARCHING_HPP_
 
 #include <cstdlib>
 #include <algorithm>

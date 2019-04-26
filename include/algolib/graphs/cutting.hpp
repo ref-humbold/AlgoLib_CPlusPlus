@@ -2,8 +2,8 @@
  * @file cutting.hpp
  * WYSZUKIWANIE MOSTÓW I PUNKTÓW ARTYKULACJI W GRAFIE
  */
-#ifndef _CUTTING_HPP_
-#define _CUTTING_HPP_
+#ifndef CUTTING_HPP_
+#define CUTTING_HPP_
 
 #include <cstdlib>
 #include <algorithm>

@@ -2,8 +2,8 @@
  * @file primes.hpp
  * @brief Algorithms for prime numbers.
  */
-#ifndef _PRIMES_HPP_
-#define _PRIMES_HPP_
+#ifndef PRIMES_HPP_
+#define PRIMES_HPP_
 
 #include <cstdlib>
 #include <ctime>

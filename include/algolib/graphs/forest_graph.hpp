@@ -2,8 +2,8 @@
  * @file forest_graph.hpp
  * STRUKTURY GRAFÓW DRZEW
  */
-#ifndef _FOREST_GRAPH_HPP_
-#define _FOREST_GRAPH_HPP_
+#ifndef FOREST_GRAPH_HPP_
+#define FOREST_GRAPH_HPP_
 
 #include <cstdlib>
 #include <algorithm>

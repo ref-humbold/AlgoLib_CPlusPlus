@@ -2,8 +2,8 @@
  * @file graph.hpp
  * STRUKTURY GRAFÓW
  */
-#ifndef _GRAPH_HPP_
-#define _GRAPH_HPP_
+#ifndef GRAPH_HPP_
+#define GRAPH_HPP_
 
 #include <cstdlib>
 #include <exception>

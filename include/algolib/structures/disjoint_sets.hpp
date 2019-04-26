@@ -2,8 +2,8 @@
  * @file disjoint_sets.hpp
  * @brief Disjoint sets structure (union-find).
  */
-#ifndef _DISJOINT_SETS_HPP_
-#define _DISJOINT_SETS_HPP_
+#ifndef DISJOINT_SETS_HPP_
+#define DISJOINT_SETS_HPP_
 
 #include <cstdlib>
 #include <exception>

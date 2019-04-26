@@ -2,8 +2,8 @@
  * @file maths.hpp
  * @brief Basic mathematics algorithms.
  */
-#ifndef _MATHS_HPP_
-#define _MATHS_HPP_
+#ifndef MATHS_HPP_
+#define MATHS_HPP_
 
 #include <cstdlib>
 #include <cmath>
