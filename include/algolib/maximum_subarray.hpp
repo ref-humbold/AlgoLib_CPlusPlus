@@ -1,6 +1,6 @@
 // ALGORITHMS FOR MAXIMUM SUBARRAY
-#ifndef _MAXIMUM_SUBARRAY_HPP_
-#define _MAXIMUM_SUBARRAY_HPP_
+#ifndef MAXIMUM_SUBARRAY_HPP_
+#define MAXIMUM_SUBARRAY_HPP_
 
 #include <cstdlib>
 #include <algorithm>

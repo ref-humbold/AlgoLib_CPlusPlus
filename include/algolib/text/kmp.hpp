@@ -1,6 +1,6 @@
 // ALGORYTM KNUTHA-MORRISA-PRATTA WYSZUKIWANIA WZORCA W TEKŚCIE
-#ifndef _KMP_HPP_
-#define _KMP_HPP_
+#ifndef KMP_HPP_
+#define KMP_HPP_
 
 #include <cstdlib>
 #include <algorithm>

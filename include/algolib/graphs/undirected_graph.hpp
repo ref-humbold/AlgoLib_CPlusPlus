@@ -2,8 +2,8 @@
  * @file undirected_graph.hpp
  * STRUKTURY GRAFÓW NIESKIEROWANYCH
  */
-#ifndef _UNDIRECTED_GRAPH_HPP_
-#define _UNDIRECTED_GRAPH_HPP_
+#ifndef UNDIRECTED_GRAPH_HPP_
+#define UNDIRECTED_GRAPH_HPP_
 
 #include <cstdlib>
 #include <exception>

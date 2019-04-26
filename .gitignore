@@ -1,3 +1,9 @@
 # C++, CMake, CTest
 bin
 build
+
+# CLion
+.idea
+cmake-build-debug
+out
+gen

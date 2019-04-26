@@ -1,6 +1,6 @@
 // SŁOWNIK PODSŁÓW BAZOWYCH Z ALGORYTMEM KARPA-MILLERA-ROSENBERGA
-#ifndef _KMR_HPP_
-#define _KMR_HPP_
+#ifndef KMR_HPP_
+#define KMR_HPP_
 
 #include <cstdlib>
 #include <algorithm>

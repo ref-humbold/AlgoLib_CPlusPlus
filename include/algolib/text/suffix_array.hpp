@@ -1,6 +1,6 @@
 // SUFFIX ARRAY STRUCTURE
-#ifndef _SUFFIX_ARRAY_HPP_
-#define _SUFFIX_ARRAY_HPP_
+#ifndef SUFFIX_ARRAY_HPP_
+#define SUFFIX_ARRAY_HPP_
 
 #include <cstdlib>
 #include <algorithm>

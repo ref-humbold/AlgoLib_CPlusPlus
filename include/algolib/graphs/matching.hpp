@@ -2,8 +2,8 @@
  * @file matching.hpp
  * ALGORYTM HOPCROFTA-KARPA WYZNACZANIA SKOJARZEŃ W GRAFIE DWUDZIELNYM
  */
-#ifndef _MATCHING_HPP_
-#define _MATCHING_HPP_
+#ifndef MATCHING_HPP_
+#define MATCHING_HPP_
 
 #include <cstdlib>
 #include <exception>

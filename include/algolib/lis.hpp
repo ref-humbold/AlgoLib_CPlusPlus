@@ -1,6 +1,6 @@
 // NAJMNIEJSZY LEKSYKOGRAFICZNIE NAJDŁUŻSZY PODCIĄG ROSNĄCY
-#ifndef _LIS_HPP_
-#define _LIS_HPP_
+#ifndef LIS_HPP_
+#define LIS_HPP_
 
 #include <cstdlib>
 #include <algorithm>

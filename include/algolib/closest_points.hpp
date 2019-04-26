@@ -1,6 +1,6 @@
 // ALGORYTM WYZNACZANIA NAJBLIŻSZEJ PARY PUNKTÓW NA PŁASZCZYŹNIE
-#ifndef _CLOSEST_POINTS_HPP_
-#define _CLOSEST_POINTS_HPP_
+#ifndef CLOSEST_POINTS_HPP_
+#define CLOSEST_POINTS_HPP_
 
 #include <cstdlib>
 #include <cmath>

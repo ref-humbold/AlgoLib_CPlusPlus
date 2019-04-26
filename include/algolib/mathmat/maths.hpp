@@ -2,14 +2,14 @@
  * @file maths.hpp
  * MATHS ALGORITHMS
  */
-#ifndef _MATHS_HPP_
-#define _MATHS_HPP_
+#ifndef MATHS_HPP_
+#define MATHS_HPP_
 
 #include <cstdlib>
 #include <cmath>
-#include <algorithm>
 #include <exception>
 #include <stdexcept>
+#include <algorithm>
 
 namespace algolib
 {

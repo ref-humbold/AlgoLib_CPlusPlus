@@ -1,6 +1,6 @@
 // GRAHAM'S ALGORITHM FOR CONVEX HULL ON A PLANE
-#ifndef _CONVEX_HULL_HPP_
-#define _CONVEX_HULL_HPP_
+#ifndef CONVEX_HULL_HPP_
+#define CONVEX_HULL_HPP_
 
 #include <cstdlib>
 #include <algorithm>

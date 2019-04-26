@@ -2,8 +2,8 @@
  * @file disjoint_sets.hpp
  * STRUKTURA ZBIORÓW ROZŁĄCZNYCH UNION-FIND
  */
-#ifndef _DISJOINT_SETS_HPP_
-#define _DISJOINT_SETS_HPP_
+#ifndef DISJOINT_SETS_HPP_
+#define DISJOINT_SETS_HPP_
 
 #include <cstdlib>
 #include <algorithm>

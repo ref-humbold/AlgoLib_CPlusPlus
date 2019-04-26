@@ -1,9 +1,12 @@
 // NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE
+#ifndef LCA_HPP_
+#define LCA_HPP_
+
 #include <cstdlib>
 #include <cmath>
-#include <algorithm>
 #include <exception>
 #include <stdexcept>
+#include <algorithm>
 #include <vector>
 #include "forest_graph.hpp"
 
@@ -86,3 +89,5 @@ namespace algolib
         int find_lca(const forest_graph & treegraph, int vertex1, int vertex2, int root = 0);
     }
 }
+
+#endif
