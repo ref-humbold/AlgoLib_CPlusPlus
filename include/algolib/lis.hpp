@@ -1,6 +1,6 @@
 /**
  * @file lis.hpp
- * @brief Longest increasing subsequence (least lexicographically).
+ * @brief Algorithm for longest increasing subsequence (least lexicographically).
  */
 #ifndef LIS_HPP_
 #define LIS_HPP_

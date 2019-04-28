@@ -1,2 +1,2 @@
-// Longest increasing subsequence (least lexicographically).
+// Algorithm for longest increasing subsequence (least lexicographically).
 #include "algolib/lis.hpp"
