@@ -26,13 +26,15 @@ namespace algolib
         private:
             class avl_node;
             class avl_inner_node;
-            class avl_root_node;
+            class avl_header_node;
 
             class avl_iterator;
             class avl_succ_iterator;
             class avl_pred_iterator;
 
-            using node_pointer = avl_node *;
+            using node_ptr = avl_node *;
+            using inner_ptr = avl_inner_node *;
+            using header_ptr = avl_header_node *;
 
         public:
             using iterator = avl_succ_iterator;
@@ -87,7 +89,7 @@ namespace algolib
             /// @return czy drzewo jest puste
             bool empty() const
             {
-                return get_inner_root() == nullptr;
+                return get_root() == nullptr;
             }
 
             /**
@@ -118,7 +120,7 @@ namespace algolib
              * Kopiowanie obiektu węzła.
              * @return kopia obiektu
              */
-            static node_pointer clone_node(node_pointer node)
+            static node_ptr clone_node(node_ptr node)
             {
                 return node == nullptr ? nullptr : node->clone();
             }
@@ -127,7 +129,7 @@ namespace algolib
              * Usuwanie elementu z pamięci.
              * @param node węzeł do usunięcia
              */
-            void destroy_node(node_pointer node)
+            void destroy_node(node_ptr node)
             {
                 node->set_left(nullptr);
                 node->set_right(nullptr);
@@ -136,13 +138,13 @@ namespace algolib
             }
 
             /// @return wewnętrzny korzeń drzewa
-            node_pointer get_inner_root() const
+            node_ptr get_root() const
             {
                 return tree->get_parent();
             }
 
             /// @param node węzeł, który zostanie wewnętrznym korzeniem
-            void set_inner_root(node_pointer node)
+            void set_root(node_ptr node)
             {
                 tree->set_parent(node);
             }
@@ -152,7 +154,7 @@ namespace algolib
              * @param node węzeł
              * @return czy węzeł to korzeń
              */
-            bool is_inner_root(node_pointer node)
+            bool is_root(node_ptr node)
             {
                 return node->get_parent()->get_height() == 0;
             }
@@ -163,55 +165,55 @@ namespace algolib
              * @param element element
              * @return korzeń poddrzewa z elementem
              */
-            node_pointer get_subtree(node_pointer node, const E & element) const;
+            node_ptr search(node_ptr node, const E & element) const;
 
             /**
              * Wyszukiwanie ojca węzła z daną wartością.
              * @param element wartość do znalezienia
              * @return ojciec węzła z wartością
              */
-            node_pointer find_node_parent(const E & element) const;
+            node_ptr find_node_parent(const E & element) const;
 
             /**
              * Usuwanie elementu z korzenia drzewa.
              * @param root korzeń drzewa
              */
-            void delete_root(node_pointer root);
+            void delete_root(node_ptr root);
 
             /**
              * Usuwanie elementu z węzła wewnętrznego drzewa.
              * @param node węzeł do usunięcia
              */
-            void delete_node(node_pointer node);
+            void delete_node(node_ptr node);
 
             /**
              * Zamiana poddrzewa ukorzenionego w danym węźle.
              * @param node1 węzeł do zamiany
              * @param node2 korzeń nowego poddrzewa
              */
-            void replace_subtree(node_pointer node1, node_pointer node2);
+            void replace_subtree(node_ptr node1, node_ptr node2);
 
             /**
              * Rotowanie węzła wzdłuż krawędzi z jego ojcem.
              * @param node węzeł do rotacji
              */
-            void rotate(node_pointer node);
+            void rotate(node_ptr node);
 
             /**
              * Przywracanie balansowania na ścieżce od wierzchołka do korzenia.
              * @param node wierzchołek początkowy
              */
-            void balance(node_pointer node);
+            void balance(node_ptr node);
 
             /**
              * Wyliczanie balansu wierzchołka.
              * @param node węzeł
              * @return wartość balansu
              */
-            int count_balance(node_pointer node);
+            int count_balance(node_ptr node);
 
             /// Korzeń drzewa.
-            node_pointer tree = new avl_root_node();
+            node_ptr tree = new avl_header_node();
 
             ///  Liczba elementów drzewa.
             size_t elems = 0;
@@ -223,7 +225,7 @@ namespace algolib
         template <typename E, typename C>
         avl_tree<E, C> & avl_tree<E, C>::operator=(const avl_tree<E, C> & avl)
         {
-            node_pointer tree_orig = this->tree;
+            node_ptr tree_orig = this->tree;
 
             this->elems = avl.elems;
             this->cmp = avl.cmp;
@@ -246,7 +248,7 @@ namespace algolib
         template <typename E, typename C>
         typename avl_tree<E, C>::iterator avl_tree<E, C>::begin() const
         {
-            return iterator(get_inner_root()->minimum());
+            return iterator(get_root()->minimum());
         }
 
         template <typename E, typename C>
@@ -258,7 +260,7 @@ namespace algolib
         template <typename E, typename C>
         typename avl_tree<E, C>::reverse_iterator avl_tree<E, C>::rbegin() const
         {
-            return reverse_iterator(get_inner_root()->maximum());
+            return reverse_iterator(get_root()->maximum());
         }
 
         template <typename E, typename C>
@@ -273,12 +275,12 @@ namespace algolib
             if(empty())
                 return end();
 
-            avl_tree<E, C>::node_pointer node_parent = find_node_parent(element);
+            avl_tree<E, C>::node_ptr node_parent = find_node_parent(element);
 
             if(node_parent == nullptr)
-                return iterator(get_inner_root());
+                return iterator(get_root());
 
-            avl_tree<E, C>::node_pointer the_node = get_subtree(node_parent, element);
+            avl_tree<E, C>::node_ptr the_node = search(node_parent, element);
 
             if(the_node == nullptr)
                 return end();
@@ -289,14 +291,14 @@ namespace algolib
         template <typename E, typename C>
         std::pair<typename avl_tree<E, C>::iterator, bool> avl_tree<E, C>::insert(const E & element)
         {
-            avl_tree<E, C>::node_pointer node_parent = find_node_parent(element);
-            avl_tree<E, C>::node_pointer the_node =
-                    node_parent == nullptr ? get_inner_root() : get_subtree(node_parent, element);
+            avl_tree<E, C>::node_ptr node_parent = find_node_parent(element);
+            avl_tree<E, C>::node_ptr the_node =
+                    node_parent == nullptr ? get_root() : search(node_parent, element);
 
             if(the_node != nullptr)
                 return std::make_pair(iterator(the_node), false);
 
-            avl_tree<E, C>::node_pointer new_node = new avl_inner_node(element);
+            avl_tree<E, C>::node_ptr new_node = new avl_inner_node(element);
 
             if(node_parent != nullptr)
             {
@@ -308,7 +310,7 @@ namespace algolib
                 balance(node_parent);
             }
             else
-                set_inner_root(new_node);
+                set_root(new_node);
 
             ++elems;
 
@@ -318,9 +320,9 @@ namespace algolib
         template <typename E, typename C>
         void avl_tree<E, C>::erase(const E & element)
         {
-            avl_tree<E, C>::node_pointer node_parent = find_node_parent(element);
-            avl_tree<E, C>::node_pointer the_node =
-                    node_parent == nullptr ? get_inner_root() : get_subtree(node_parent, element);
+            avl_tree<E, C>::node_ptr node_parent = find_node_parent(element);
+            avl_tree<E, C>::node_ptr the_node =
+                    node_parent == nullptr ? get_root() : search(node_parent, element);
 
             if(the_node == nullptr)
                 return;
@@ -334,72 +336,71 @@ namespace algolib
         template <typename E, typename C>
         void avl_tree<E, C>::clear()
         {
-            delete get_inner_root();
-            set_inner_root(nullptr);
+            delete get_root();
+            set_root(nullptr);
             elems = 0;
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer
-                avl_tree<E, C>::get_subtree(avl_tree<E, C>::node_pointer node,
-                                            const E & element) const
+        typename avl_tree<E, C>::node_ptr avl_tree<E, C>::search(avl_tree<E, C>::node_ptr node,
+                                                                 const E & element) const
         {
             if(!cmp(element, node->get_element()) && !cmp(node->get_element(), element))
                 return node;
-            else if(cmp(element, node->get_element()))
+
+            if(cmp(element, node->get_element()))
                 return node->get_left();
-            else
-                return node->get_right();
+
+            return node->get_right();
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer
-                avl_tree<E, C>::find_node_parent(const E & element) const
+        typename avl_tree<E, C>::node_ptr avl_tree<E, C>::find_node_parent(const E & element) const
         {
-            typename avl_tree<E, C>::node_pointer tree_iter = get_inner_root();
-            typename avl_tree<E, C>::node_pointer iter_parent = nullptr;
+            typename avl_tree<E, C>::node_ptr tree_iter = get_root();
+            typename avl_tree<E, C>::node_ptr iter_parent = nullptr;
 
             while(tree_iter != nullptr
                   && (cmp(tree_iter->get_element(), element)
                       || cmp(element, tree_iter->get_element())))
             {
                 iter_parent = tree_iter;
-                tree_iter = get_subtree(tree_iter, element);
+                tree_iter = search(tree_iter, element);
             }
 
             return iter_parent;
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::delete_root(avl_tree<E, C>::node_pointer root)
+        void avl_tree<E, C>::delete_root(avl_tree<E, C>::node_ptr root)
         {
             if(root->get_left() != nullptr && root->get_right() != nullptr)
                 delete_node(root);
             else
             {
-                node_pointer new_root =
+                node_ptr new_root =
                         root->get_left() != nullptr ? root->get_left() : root->get_right();
 
-                set_inner_root(new_root);
+                set_root(new_root);
                 destroy_node(root);
             }
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::delete_node(avl_tree<E, C>::node_pointer node)
+        void avl_tree<E, C>::delete_node(avl_tree<E, C>::node_ptr node)
         {
             if(node->get_left() != nullptr && node->get_right() != nullptr)
             {
-                avl_tree<E, C>::node_pointer succ = node->get_right()->minimum();
+                avl_tree<E, C>::node_ptr succ = node->get_right()->minimum();
 
                 std::swap(succ->get_element(), node->get_element());
                 delete_node(succ);
             }
             else
             {
-                avl_tree<E, C>::node_pointer son =
+                avl_tree<E, C>::node_ptr son =
                         node->get_left() != nullptr ? node->get_left() : node->get_right();
-                avl_tree<E, C>::node_pointer node_parent = node->get_parent();
+                avl_tree<E, C>::node_ptr node_parent = node->get_parent();
 
                 replace_subtree(node, son);
                 balance(node_parent);
@@ -408,11 +409,11 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::replace_subtree(avl_tree<E, C>::node_pointer node1,
-                                             avl_tree<E, C>::node_pointer node2)
+        void avl_tree<E, C>::replace_subtree(avl_tree<E, C>::node_ptr node1,
+                                             avl_tree<E, C>::node_ptr node2)
         {
-            if(is_inner_root(node1))
-                set_inner_root(node2);
+            if(is_root(node1))
+                set_root(node2);
             else if(node1->is_left_son())
                 node1->get_parent()->set_left(node2);
             else if(node1->is_right_son())
@@ -422,12 +423,12 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::rotate(avl_tree<E, C>::node_pointer node)
+        void avl_tree<E, C>::rotate(avl_tree<E, C>::node_ptr node)
         {
-            if(is_inner_root(node))
+            if(is_root(node))
                 return;
 
-            avl_tree<E, C>::node_pointer upper_node = node->get_parent();
+            avl_tree<E, C>::node_ptr upper_node = node->get_parent();
 
             if(node->is_right_son())
             {
@@ -444,7 +445,7 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::balance(avl_tree<E, C>::node_pointer node)
+        void avl_tree<E, C>::balance(avl_tree<E, C>::node_ptr node)
         {
             while(node->get_height() > 0)
             {
@@ -478,7 +479,7 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        int avl_tree<E, C>::count_balance(avl_tree<E, C>::node_pointer node)
+        int avl_tree<E, C>::count_balance(avl_tree<E, C>::node_ptr node)
         {
             int left_height = node->get_left() == nullptr ? 0 : node->get_left()->get_height();
             int right_height = node->get_right() == nullptr ? 0 : node->get_right()->get_height();
@@ -500,27 +501,25 @@ namespace algolib
             avl_node & operator=(const avl_node & node) = default;
             avl_node & operator=(avl_node && node) = delete;
 
-            virtual E & get_element() = 0;
-
             virtual size_t get_height() = 0;
 
-            virtual node_pointer get_left() = 0;
+            virtual node_ptr get_left() = 0;
 
-            virtual void set_left(node_pointer node) = 0;
+            virtual void set_left(node_ptr node) = 0;
 
-            virtual node_pointer get_right() = 0;
+            virtual node_ptr get_right() = 0;
 
-            virtual void set_right(node_pointer node) = 0;
+            virtual void set_right(node_ptr node) = 0;
 
-            virtual node_pointer get_parent() = 0;
+            virtual node_ptr get_parent() = 0;
 
-            virtual void set_parent(node_pointer node) = 0;
+            virtual void set_parent(node_ptr node) = 0;
 
             /**
              * Kopiowanie obiektu węzła.
              * @return kopia obiektu
              */
-            virtual node_pointer clone() = 0;
+            virtual node_ptr clone() = 0;
 
             /**
              * Sprawdzanie, czy węzeł jest lewym synem.
@@ -541,13 +540,13 @@ namespace algolib
              * Wyszukiwanie minimum w poddrzewie.
              * @return węzeł z minimalną wartością w poddrzewie
              */
-            virtual node_pointer minimum() = 0;
+            virtual node_ptr minimum() = 0;
 
             /**
              * Wyszukiwanie maksimum w ukorzenionym poddrzewie.
              * @return węzeł z maksymalną wartością w poddrzewie
              */
-            virtual node_pointer maximum() = 0;
+            virtual node_ptr maximum() = 0;
         };
 
 #pragma endregion
@@ -572,17 +571,17 @@ namespace algolib
                 return element;
             }
 
-            size_t get_height()
+            size_t get_height() override
             {
                 return this->height;
             }
 
-            node_pointer get_left()
+            node_ptr get_left() override
             {
                 return this->left;
             }
 
-            void set_left(node_pointer node)
+            void set_left(node_ptr node) override
             {
                 this->left = node;
 
@@ -592,12 +591,12 @@ namespace algolib
                 count_height();
             }
 
-            node_pointer get_right()
+            node_ptr get_right() override
             {
                 return this->right;
             }
 
-            void set_right(node_pointer node)
+            void set_right(node_ptr node) override
             {
                 this->right = node;
 
@@ -607,17 +606,17 @@ namespace algolib
                 count_height();
             }
 
-            node_pointer get_parent()
+            node_ptr get_parent() override
             {
                 return this->parent;
             }
 
-            void set_parent(node_pointer node)
+            void set_parent(node_ptr node) override
             {
                 this->parent = node;
             }
 
-            node_pointer clone()
+            node_ptr clone() override
             {
                 return new avl_inner_node(*this);
             }
@@ -626,11 +625,11 @@ namespace algolib
 
             bool is_right_son();
 
-            void count_height();
+            void count_height() override;
 
-            node_pointer minimum();
+            node_ptr minimum() override;
 
-            node_pointer maximum();
+            node_ptr maximum() override;
 
         private:
             /// Wartość w węźle.
@@ -640,13 +639,13 @@ namespace algolib
             int height = 1;
 
             /// Lewy syn węzła.
-            node_pointer left = nullptr;
+            node_ptr left = nullptr;
 
             /// Prawy syn węzła.
-            node_pointer right = nullptr;
+            node_ptr right = nullptr;
 
             /// Ojciec węzła.
-            node_pointer parent = nullptr;
+            node_ptr parent = nullptr;
         };
 
         template <typename E, typename C>
@@ -668,8 +667,8 @@ namespace algolib
         typename avl_tree<E, C>::avl_inner_node & avl_tree<E, C>::avl_inner_node::
                 operator=(const avl_tree<E, C>::avl_inner_node & node)
         {
-            node_pointer left_orig = this->left;
-            node_pointer right_orig = this->right;
+            node_ptr left_orig = this->left;
+            node_ptr right_orig = this->right;
 
             this->element = node.element;
             this->height = node.height;
@@ -703,13 +702,13 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer avl_tree<E, C>::avl_inner_node::minimum()
+        typename avl_tree<E, C>::node_ptr avl_tree<E, C>::avl_inner_node::minimum()
         {
             return left == nullptr ? this : left->minimum();
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer avl_tree<E, C>::avl_inner_node::maximum()
+        typename avl_tree<E, C>::node_ptr avl_tree<E, C>::avl_inner_node::maximum()
         {
             return right == nullptr ? this : right->maximum();
         }
@@ -718,61 +717,56 @@ namespace algolib
 #pragma region avl_root_node
 
         template <typename E, typename C>
-        class avl_tree<E, C>::avl_root_node : public avl_tree<E, C>::avl_node
+        class avl_tree<E, C>::avl_header_node : public avl_tree<E, C>::avl_node
         {
         public:
-            avl_root_node() : avl_tree<E, C>::avl_node()
+            avl_header_node() : avl_tree<E, C>::avl_node()
             {
             }
 
-            ~avl_root_node()
+            ~avl_header_node()
             {
                 delete this->inner;
             }
 
-            avl_root_node(const avl_root_node & node) : avl_tree<E, C>::avl_node()
+            avl_header_node(const avl_header_node & node) : avl_tree<E, C>::avl_node()
             {
                 this->set_parent(avl_tree::clone_node(node.inner));
             }
 
-            avl_root_node(avl_root_node && node) = delete;
-            avl_root_node & operator=(const avl_root_node & node);
-            avl_root_node & operator=(avl_root_node && node) = delete;
+            avl_header_node(avl_header_node && node) = delete;
+            avl_header_node & operator=(const avl_header_node & node);
+            avl_header_node & operator=(avl_header_node && node) = delete;
 
-            E & get_element()
-            {
-                throw std::logic_error("Operation not permited.");
-            }
-
-            size_t get_height()
+            size_t get_height() override
             {
                 return 0;
             }
 
-            node_pointer get_left()
+            node_ptr get_left() override
             {
                 return nullptr;
             }
 
-            void set_left(node_pointer)
+            void set_left(node_ptr) override
             {
             }
 
-            node_pointer get_right()
+            node_ptr get_right() override
             {
                 return nullptr;
             }
 
-            void set_right(node_pointer)
+            void set_right(node_ptr) override
             {
             }
 
-            node_pointer get_parent()
+            node_ptr get_parent() override
             {
                 return inner;
             }
 
-            void set_parent(node_pointer node)
+            void set_parent(node_ptr node) override
             {
                 inner = node;
 
@@ -780,45 +774,45 @@ namespace algolib
                     inner->set_parent(this);
             }
 
-            node_pointer clone()
+            node_ptr clone() override
             {
-                return new avl_root_node(*this);
+                return new avl_header_node(*this);
             }
 
-            bool is_left_son()
-            {
-                return false;
-            }
-
-            bool is_right_son()
+            bool is_left_son() override
             {
                 return false;
             }
 
-            void count_height()
+            bool is_right_son() override
+            {
+                return false;
+            }
+
+            void count_height() override
             {
             }
 
-            node_pointer minimum()
+            node_ptr minimum() override
             {
                 return this;
             }
 
-            node_pointer maximum()
+            node_ptr maximum() override
             {
                 return this;
             }
 
         private:
             /// Wewnętrzne wierzchołki.
-            node_pointer inner = nullptr;
+            node_ptr inner = nullptr;
         };
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_root_node & avl_tree<E, C>::avl_root_node::
-                operator=(const avl_tree<E, C>::avl_root_node & node)
+        typename avl_tree<E, C>::avl_header_node & avl_tree<E, C>::avl_header_node::
+                operator=(const avl_tree<E, C>::avl_header_node & node)
         {
-            node_pointer inner_orig = this->inner;
+            node_ptr inner_orig = this->inner;
 
             this->set_parent(avl_tree::clone_node(node.inner));
             delete inner_orig;
@@ -833,7 +827,7 @@ namespace algolib
         class avl_tree<E, C>::avl_iterator
         {
         public:
-            explicit avl_iterator(avl_tree<E, C>::node_pointer node) : current_node{node}
+            explicit avl_iterator(avl_tree<E, C>::node_ptr node) : current_node{node}
             {
             }
 
@@ -867,17 +861,17 @@ namespace algolib
              * @param node węzeł
              * @return węzeł z następną wartością
              */
-            avl_tree<E, C>::node_pointer successor(avl_tree<E, C>::node_pointer node);
+            avl_tree<E, C>::node_ptr successor(avl_tree<E, C>::node_ptr node);
 
             /**
              * Wyznaczanie poprzednika węzła w drzewie.
              * @param node węzeł
              * @return węzeł z poprzednią wartością
              */
-            avl_tree<E, C>::node_pointer predecessor(avl_tree<E, C>::node_pointer node);
+            avl_tree<E, C>::node_ptr predecessor(avl_tree<E, C>::node_ptr node);
 
             /// Aktualny węzeł.
-            avl_tree<E, C>::node_pointer current_node;
+            avl_tree<E, C>::node_ptr current_node;
         };
 
         template <typename E, typename C>
@@ -905,10 +899,10 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer
-                avl_tree<E, C>::avl_iterator::successor(avl_tree<E, C>::node_pointer node)
+        typename avl_tree<E, C>::node_ptr
+                avl_tree<E, C>::avl_iterator::successor(avl_tree<E, C>::node_ptr node)
         {
-            avl_tree<E, C>::node_pointer succ = node;
+            avl_tree<E, C>::node_ptr succ = node;
 
             if(node->get_right() != nullptr)
                 return node->get_right()->minimum();
@@ -920,10 +914,10 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer
-                avl_tree<E, C>::avl_iterator::predecessor(avl_tree<E, C>::node_pointer node)
+        typename avl_tree<E, C>::node_ptr
+                avl_tree<E, C>::avl_iterator::predecessor(avl_tree<E, C>::node_ptr node)
         {
-            avl_tree<E, C>::node_pointer pred = node;
+            avl_tree<E, C>::node_ptr pred = node;
 
             if(node->get_left() != nullptr)
                 return node->get_left()->maximum();
@@ -941,7 +935,7 @@ namespace algolib
         class avl_tree<E, C>::avl_succ_iterator : public avl_tree<E, C>::avl_iterator
         {
         public:
-            explicit avl_succ_iterator(avl_tree<E, C>::node_pointer node) : avl_iterator(node)
+            explicit avl_succ_iterator(avl_tree<E, C>::node_ptr node) : avl_iterator(node)
             {
             }
 
@@ -1002,7 +996,7 @@ namespace algolib
         class avl_tree<E, C>::avl_pred_iterator : public avl_tree<E, C>::avl_iterator
         {
         public:
-            explicit avl_pred_iterator(avl_tree<E, C>::node_pointer node) : avl_iterator(node)
+            explicit avl_pred_iterator(avl_tree<E, C>::node_ptr node) : avl_iterator(node)
             {
             }
 
