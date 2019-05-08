@@ -1,6 +1,9 @@
-// ALGORYTM WYZNACZANIA NAJBLIŻSZEJ PARY PUNKTÓW NA PŁASZCZYŹNIE
-#ifndef _CLOSEST_POINTS_HPP_
-#define _CLOSEST_POINTS_HPP_
+/**
+ * @file closest_points.hpp
+ * @brief Algorithm for closest pair of points on a plane.
+ */
+#ifndef CLOSEST_POINTS_HPP_
+#define CLOSEST_POINTS_HPP_
 
 #include <cstdlib>
 #include <cmath>

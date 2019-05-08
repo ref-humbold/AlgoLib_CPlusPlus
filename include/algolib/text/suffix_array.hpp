@@ -1,12 +1,15 @@
-// SUFFIX ARRAY STRUCTURE
-#ifndef _SUFFIX_ARRAY_HPP_
-#define _SUFFIX_ARRAY_HPP_
+/**
+ * @file suffix_array.hpp
+ * @brief Suffix array structure.
+ */
+#ifndef SUFFIX_ARRAY_HPP_
+#define SUFFIX_ARRAY_HPP_
 
 #include <cstdlib>
-#include <algorithm>
 #include <exception>
-#include <queue>
 #include <stdexcept>
+#include <algorithm>
+#include <queue>
 #include <string>
 #include <tuple>
 #include <vector>

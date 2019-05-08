@@ -1,6 +1,9 @@
-// GRAHAM'S ALGORITHM FOR CONVEX HULL ON A PLANE
-#ifndef _CONVEX_HULL_HPP_
-#define _CONVEX_HULL_HPP_
+/**
+ * @file convex_hull.hpp
+ * @brief Graham's algorithm for convex hull on a plane.
+ */
+#ifndef CONVEX_HULL_HPP_
+#define CONVEX_HULL_HPP_
 
 #include <cstdlib>
 #include <algorithm>

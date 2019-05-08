@@ -1,6 +1,6 @@
 // ALGORYTM DINICA: MAKSYMALNY PRZEPŁYW
-#ifndef DINIC_HPP
-#define DINIC_HPP
+#ifndef DINIC_HPP_
+#define DINIC_HPP_
 
 #include <cstdlib>
 #include <algorithm>

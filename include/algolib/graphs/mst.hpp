@@ -2,8 +2,8 @@
  * @file mst.hpp
  * ALGORYTMY WYZNACZAJĄCE MINIMALNE DRZEWO SPINAJĄCE
  */
-#ifndef _MST_HPP_
-#define _MST_HPP_
+#ifndef MST_HPP_
+#define MST_HPP_
 
 #include <cstdlib>
 #include <algorithm>

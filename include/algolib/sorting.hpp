@@ -1,6 +1,9 @@
-// SORTING ALGORITHMS
-#ifndef _SORTING_HPP_
-#define _SORTING_HPP_
+/**
+ * @file sorting.hpp
+ * @brief Sorting algorithms.
+ */
+#ifndef SORTING_HPP_
+#define SORTING_HPP_
 
 #include <cstdlib>
 #include <cmath>

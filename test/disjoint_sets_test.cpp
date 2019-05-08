@@ -14,9 +14,7 @@ public:
     {
     }
 
-    virtual ~DisjointSetsTest()
-    {
-    }
+    virtual ~DisjointSetsTest() = default;
 };
 
 TEST_F(DisjointSetsTest, testSize)
@@ -40,14 +38,25 @@ TEST_F(DisjointSetsTest, testContainsWhenNotContains)
     EXPECT_FALSE(result);
 }
 
-TEST_F(DisjointSetsTest, testInsertWhenNewElement)
+TEST_F(DisjointSetsTest, testInsertWhenNewElementAsSingleton)
 {
     int elem = 20;
 
     EXPECT_NO_THROW(test_object.insert(elem));
 
-    EXPECT_TRUE(test_object.contains(elem));
+    ASSERT_TRUE(test_object.contains(elem));
     EXPECT_EQ(elem, test_object.find_set(elem));
+}
+
+TEST_F(DisjointSetsTest, testInsertWhenNewElementToPresentSet)
+{
+    int elem = 20;
+    int repr = 7;
+
+    EXPECT_NO_THROW(test_object.insert(elem, repr));
+
+    ASSERT_TRUE(test_object.contains(elem));
+    EXPECT_EQ(repr, test_object.find_set(elem));
 }
 
 TEST_F(DisjointSetsTest, testInsertWhenPresentElement)
@@ -55,6 +64,41 @@ TEST_F(DisjointSetsTest, testInsertWhenPresentElement)
     int elem = 7;
 
     EXPECT_THROW(test_object.insert(elem), std::invalid_argument);
+}
+
+TEST_F(DisjointSetsTest, testInsertWhenNotPresentRepresent)
+{
+    int elem = 20;
+    int repr = 14;
+
+    EXPECT_THROW(test_object.insert(elem, repr), std::invalid_argument);
+}
+
+TEST_F(DisjointSetsTest, testInsertManyElementsAsSingletons)
+{
+    std::vector<int> elems = {20, 22, 24, 26};
+
+    EXPECT_NO_THROW(test_object.insert(elems.begin(), elems.end()));
+
+    for(int e : elems)
+    {
+        ASSERT_TRUE(test_object.contains(e));
+        EXPECT_EQ(e, test_object.find_set(e));
+    }
+}
+
+TEST_F(DisjointSetsTest, testInsertManyElementsToPresentSet)
+{
+    std::vector<int> elems = {20, 22, 24, 26};
+    int repr = 3;
+
+    EXPECT_NO_THROW(test_object.insert(elems.begin(), elems.end(), repr));
+
+    for(int e : elems)
+    {
+        ASSERT_TRUE(test_object.contains(e));
+        EXPECT_EQ(repr, test_object.find_set(e));
+    }
 }
 
 TEST_F(DisjointSetsTest, testFindSet)
@@ -73,7 +117,6 @@ TEST_F(DisjointSetsTest, testUnionSetWhenDifferentSets)
     test_object.union_set(elem1, elem2);
 
     EXPECT_TRUE(test_object.is_same_set(elem1, elem2));
-    EXPECT_EQ(test_object.find_set(elem1), test_object.find_set(elem2));
 }
 
 TEST_F(DisjointSetsTest, testUnionSetWhenSameSets1)
@@ -83,7 +126,6 @@ TEST_F(DisjointSetsTest, testUnionSetWhenSameSets1)
     test_object.union_set(elem, elem);
 
     EXPECT_TRUE(test_object.is_same_set(elem, elem));
-    EXPECT_EQ(test_object.find_set(elem), test_object.find_set(elem));
 }
 
 TEST_F(DisjointSetsTest, testUnionSetWhenSameSets2)
@@ -95,7 +137,6 @@ TEST_F(DisjointSetsTest, testUnionSetWhenSameSets2)
     test_object.union_set(elem1, elem2);
 
     EXPECT_TRUE(test_object.is_same_set(elem1, elem2));
-    EXPECT_EQ(test_object.find_set(elem1), test_object.find_set(elem2));
 }
 
 TEST_F(DisjointSetsTest, testIsSameSetWhenDifferentSets)

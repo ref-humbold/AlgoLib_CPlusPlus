@@ -1,4 +1,4 @@
-// ALGORITHMS FOR MAXIMUM SUBARRAY
+// Algorithms for maximum subarray.
 #include "algolib/maximum_subarray.hpp"
 
 std::vector<double> algolib::find_maximum_subarray(const std::vector<double> & sequence)

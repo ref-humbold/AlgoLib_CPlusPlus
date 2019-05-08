@@ -1,9 +1,9 @@
 /**
  * @file fraction.hpp
- * STRUCTURE FOR FRACTIONS
+ * @brief Fractions structure.
  */
-#ifndef _FRACTION_HPP_
-#define _FRACTION_HPP_
+#ifndef FRACTION_HPP_
+#define FRACTION_HPP_
 
 #include <cstdlib>
 #include <cmath>

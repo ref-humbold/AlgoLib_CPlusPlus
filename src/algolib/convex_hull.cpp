@@ -1,4 +1,4 @@
-// GRAHAM'S ALGORITHM FOR CONVEX HULL ON A PLANE
+// Graham's algorithm for convex hull on a plane.
 #include "algolib/convex_hull.hpp"
 
 std::vector<point2D_t> algolib::find_convex_hull(std::vector<point2D_t> points)

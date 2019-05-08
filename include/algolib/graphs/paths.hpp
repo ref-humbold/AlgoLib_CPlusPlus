@@ -2,8 +2,8 @@
  * @file paths.hpp
  * ALGORYTMY WYLICZANIA NAJKRÓTSZYCH ŚCIEŻEK W GRAFIE WAŻONYM
  */
-#ifndef _PATHS_HPP_
-#define _PATHS_HPP_
+#ifndef PATHS_HPP_
+#define PATHS_HPP_
 
 #include <cstdlib>
 #include <exception>

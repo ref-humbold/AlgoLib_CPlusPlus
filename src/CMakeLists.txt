@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 # SOURCES
 set(ALGOLIB "algolib")
 set(GRAPHS "${ALGOLIB}/graphs")
-set(MATH "${ALGOLIB}/mathmat")
+set(MATHMAT "${ALGOLIB}/mathmat")
 set(STRUCTURES "${ALGOLIB}/structures")
 set(TEXT "${ALGOLIB}/text")
 set(ALGOLIB_SOURCES
@@ -28,11 +28,11 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/searching.cpp"
     "${GRAPHS}/topological_sorting.cpp"
     "${GRAPHS}/undirected_graph.cpp")
-set(MATH_SOURCES
-    "${MATH}/equation_system.cpp"
-    "${MATH}/fraction.cpp"
-    "${MATH}/maths.cpp"
-    "${MATH}/primes.cpp")
+set(MATHMAT_SOURCES
+    "${MATHMAT}/equation_system.cpp"
+    "${MATHMAT}/fraction.cpp"
+    "${MATHMAT}/maths.cpp"
+    "${MATHMAT}/primes.cpp")
 set(STRUCTURES_SOURCES
     "${STRUCTURES}/avl_tree.cpp"
     "${STRUCTURES}/disjoint_sets.cpp")
@@ -43,7 +43,7 @@ set(TEXT_SOURCES
 set(SOURCES
     "${ALGOLIB_SOURCES}"
     "${GRAPHS_SOURCES}"
-    "${MATH_SOURCES}"
+    "${MATHMAT_SOURCES}"
     "${STRUCTURES_SOURCES}"
     "${TEXT_SOURCES}")
 

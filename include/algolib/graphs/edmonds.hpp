@@ -1,6 +1,6 @@
 // ALGORYTM EDMONDSA-KARPA: MAKSYMALNY PRZEPŁYW
-#ifndef EDMONDS_HPP
-#define EDMONDS_HPP
+#ifndef EDMONDS_HPP_
+#define EDMONDS_HPP_
 
 #include <cstdlib>
 #include <algorithm>

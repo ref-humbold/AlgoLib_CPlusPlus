@@ -1,16 +1,16 @@
 /**
  * @file equation_system.hpp
- * STRUKTURA UKŁADÓW RÓWNAŃ LINIOWYCH Z ALGORYTMEM ELIMINACJI GAUSSA
+ * @brief Structure of linear equation sysytem with Gauss elimination algorithm.
  */
-#ifndef _EQUATION_SYSTEM_HPP_
-#define _EQUATION_SYSTEM_HPP_
+#ifndef EQUATION_SYSTEM_HPP_
+#define EQUATION_SYSTEM_HPP_
 
 #include <cstdlib>
 #include <cmath>
-#include <algorithm>
 #include <exception>
-#include <initializer_list>
 #include <stdexcept>
+#include <algorithm>
+#include <initializer_list>
 #include <vector>
 
 namespace algolib

@@ -1,4 +1,4 @@
-// SORTING ALGORITHMS
+// Sorting algorithms.
 #include "algolib/sorting.hpp"
 
 int detail::choose_pivot(int size)

@@ -1,18 +1,18 @@
 /**
  * @file avl_tree.hpp
- * AVL TREE STRUCTURE
+ * @brief AVL tree structure.
  */
-#ifndef _AVL_TREE_HPP_
-#define _AVL_TREE_HPP_
+#ifndef AVL_TREE_HPP_
+#define AVL_TREE_HPP_
 
 #include <cstdlib>
 #include <cmath>
-#include <algorithm>
 #include <exception>
+#include <stdexcept>
+#include <algorithm>
 #include <functional>
 #include <initializer_list>
 #include <iterator>
-#include <stdexcept>
 
 namespace algolib
 {

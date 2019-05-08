@@ -1,4 +1,4 @@
-// ALGORYTM WYZNACZANIA NAJBLIŻSZEJ PARY PUNKTÓW NA PŁASZCZYŹNIE
+// Algorithm for closest pair of points on a plane.
 #include "algolib/closest_points.hpp"
 
 std::pair<point2D_t, point2D_t>

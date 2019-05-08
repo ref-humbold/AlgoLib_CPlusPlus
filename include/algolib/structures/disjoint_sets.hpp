@@ -1,16 +1,16 @@
 /**
  * @file disjoint_sets.hpp
- * STRUKTURA ZBIORÓW ROZŁĄCZNYCH UNION-FIND
+ * @brief Disjoint sets structure (union-find).
  */
-#ifndef _DISJOINT_SETS_HPP_
-#define _DISJOINT_SETS_HPP_
+#ifndef DISJOINT_SETS_HPP_
+#define DISJOINT_SETS_HPP_
 
 #include <cstdlib>
-#include <algorithm>
 #include <exception>
+#include <stdexcept>
+#include <algorithm>
 #include <initializer_list>
 #include <set>
-#include <stdexcept>
 #include <unordered_map>
 #include <vector>
 
@@ -26,7 +26,7 @@ namespace algolib
             {
             }
 
-            explicit disjoint_sets(std::initializer_list<E> universe) : elems{universe.size()}
+            disjoint_sets(std::initializer_list<E> universe) : elems{universe.size()}
             {
                 for(E e : universe)
                     represents.emplace(e, e);
@@ -37,54 +37,72 @@ namespace algolib
 
             ~disjoint_sets() = default;
             disjoint_sets(const disjoint_sets & ds) = default;
-            disjoint_sets(disjoint_sets && ds) = default;
+            disjoint_sets(disjoint_sets && ds) noexcept = default;
             disjoint_sets & operator=(const disjoint_sets & ds) = default;
-            disjoint_sets & operator=(disjoint_sets && ds) = default;
+            disjoint_sets & operator=(disjoint_sets && ds) noexcept = default;
 
-            /// @return liczba zbiorów
+            /// @return number of sets
             size_t size() const
             {
                 return elems;
             }
 
             /**
-             * Sprawdzanie należenia do dowolnego zbioru.
+             * @brief Checks whether given element in one of the sets in the structure.
              * @param element element
-             * @return czy element w jednym ze zbiorów
+             * @return  true if element belongs to the structure, otherwise false
              */
-            bool contains(const E & element) const;
+            bool contains(const E & element) const
+            {
+                return represents.find(element) != represents.end();
+            }
 
             /**
-             * Dodawanie nowego elementu jako singleton.
-             * @param element nowy element
+             * @brief Adds new element to the set represented by another element.
+             * @param element new element
+             * @param repr representant of the set
+             */
+            void insert(const E & element, const E & repr);
+
+            /**
+             * @brief Adds new element as a singleton set.
+             * @param element new element
              */
             void insert(const E & element);
 
             /**
-             * Dodawanie nowych elementów jako singletony.
+             * @brief Adds new elements to the set represented by another element.
+             * @param element nowy element
+             * @param repr representant of the set
+             */
+            template <typename InputIterator>
+            void insert(InputIterator first, InputIterator last, const E & repr);
+
+            /**
+             * @brief Adds new elements as singleton sets.
              * @param element nowy element
              */
             template <typename InputIterator>
             void insert(InputIterator first, InputIterator last);
 
             /**
-             * Ustalanie reprezentanta zbioru.
-             * @param element element ze zbioru
-             * @return reprezentant elementu
+             * @brief Finds represent of the set with given element
+             * @param element element from the structure
+             * @return represent of the element
              */
             const E & find_set(const E & element);
 
             /**
-             * Ustalanie reprezentanta zbioru.
-             * @param element element ze zbioru
-             * @return reprezentant elementu
+             * @brief Finds represent of the set with given element
+             * @param element element from the structure
+             * @return represent of the element
              */
             const E & find_set(const E & element) const;
 
             /**
-             * Ustalanie reprezentanta zbioru.
-             * @param element element ze zbioru
-             * @return reprezentant elementu
+             * @brief Finds represent of the set with given element
+             * @param element element from the structure
+             * @return represent of the element
              */
             const E & operator[](const E & element)
             {
@@ -92,9 +110,9 @@ namespace algolib
             }
 
             /**
-             * Ustalanie reprezentanta zbioru.
-             * @param element element ze zbioru
-             * @return reprezentant elementu
+             * @brief Finds represent of the set with given element
+             * @param element element from the structure
+             * @return represent of the element
              */
             const E & operator[](const E & element) const
             {
@@ -102,33 +120,33 @@ namespace algolib
             }
 
             /**
-             * Scalanie dwóch zbiorów.
-             * @param element1 element pierwszego zbioru
-             * @param element2 element drugiego zbioru
+             * @brief Performs union of two sets in the structure.
+             * @param element1 element from the first set
+             * @param element2 element from the second set
              */
             void union_set(const E & element1, const E & element2);
 
             /**
-             * Sprawdzanie, czy elementy należą do tego samego zbioru.
-             * @param element1 element pierwszego zbioru
-             * @param element2 element drugiego zbioru
-             * @return czy elementy znajdują się w różnych składowych
+             * @brief Tests whether two elements belong to the same set
+             * @param element1 element from the first set
+             * @param element2 element from the second set
+             * @return true if both element are in the same set, otherwise false
              */
             bool is_same_set(const E & element1, const E & element2);
 
             /**
-             * Sprawdzanie, czy elementy należą do tego samego zbioru.
-             * @param element1 element pierwszego zbioru
-             * @param element2 element drugiego zbioru
-             * @return czy elementy znajdują się w różnych składowych
+             * @brief Tests whether two elements belong to the same set
+             * @param element1 element from the first set
+             * @param element2 element from the second set
+             * @return true if both element are in the same set, otherwise false
              */
             bool is_same_set(const E & element1, const E & element2) const;
 
         private:
-            /// Mapa reprezentantów elementów.
+            /// @brief Map of elements' represents.
             std::unordered_map<E, E> represents;
 
-            /// Liczba elementów
+            /// @brief Number of sets.
             size_t elems;
         };
 
@@ -144,16 +162,23 @@ namespace algolib
         }
 
         template <typename E>
-        bool disjoint_sets<E>::contains(const E & element) const
+        void disjoint_sets<E>::insert(const E & element, const E & repr)
         {
-            return represents.find(element) != represents.end();
+            if(contains(element))
+                throw std::invalid_argument("New value already present");
+
+            if(!contains(repr))
+                throw std::invalid_argument("Represent value not present");
+
+            represents.emplace(element, find_set(repr));
+            elems++;
         }
 
         template <typename E>
         void disjoint_sets<E>::insert(const E & element)
         {
             if(contains(element))
-                throw std::invalid_argument("Value already present");
+                throw std::invalid_argument("New value already present");
 
             represents.emplace(element, element);
             elems++;
@@ -165,6 +190,14 @@ namespace algolib
         {
             for(InputIterator it = first; it != last; ++it)
                 insert(*it);
+        }
+
+        template <typename E>
+        template <typename InputIterator>
+        void disjoint_sets<E>::insert(InputIterator first, InputIterator last, const E & repr)
+        {
+            for(InputIterator it = first; it != last; ++it)
+                insert(*it, repr);
         }
 
         template <typename E>
