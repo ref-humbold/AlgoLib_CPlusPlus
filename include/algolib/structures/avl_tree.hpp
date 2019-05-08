@@ -384,8 +384,10 @@ namespace algolib
 
                 if(node->get_parent()->get_height() > 0)
                 {
+                    inner_ptr node_parent = static_cast<inner_ptr>(node->get_parent());
+
                     replace_node(node, child);
-                    balance(static_cast<inner_ptr>(child->get_parent()));
+                    balance(node_parent);
                 }
                 else
                     set_root(child);
