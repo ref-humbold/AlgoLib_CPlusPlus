@@ -1,4 +1,7 @@
-// SORTING ALGORITHMS
+/**
+ * @file sorting.hpp
+ * @brief Sorting algorithms.
+ */
 #ifndef SORTING_HPP_
 #define SORTING_HPP_
 

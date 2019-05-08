@@ -1,7 +1,4 @@
-/**
- * @file maths.cpp
- * MATHS ALGORITHMS
- */
+// Basic mathematics algorithms.
 #include "algolib/mathmat/maths.hpp"
 
 namespace alma = algolib::mathmat;

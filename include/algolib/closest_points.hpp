@@ -1,4 +1,7 @@
-// ALGORYTM WYZNACZANIA NAJBLIŻSZEJ PARY PUNKTÓW NA PŁASZCZYŹNIE
+/**
+ * @file closest_points.hpp
+ * @brief Algorithm for closest pair of points on a plane.
+ */
 #ifndef CLOSEST_POINTS_HPP_
 #define CLOSEST_POINTS_HPP_
 
