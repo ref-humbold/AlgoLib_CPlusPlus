@@ -204,7 +204,14 @@ namespace algolib
              * Przywracanie balansowania na ścieżce od wierzchołka do korzenia.
              * @param node wierzchołek początkowy
              */
-            void balance(inner_ptr node);
+            void balance(node_ptr node);
+
+            /**
+             * Wyliczanie balansu wierzchołka.
+             * @param node węzeł
+             * @return wartość balansu
+             */
+            int count_balance(node_ptr node);
 
             /// Korzeń drzewa.
             header_ptr tree = new avl_header_node();
@@ -384,7 +391,7 @@ namespace algolib
 
                 if(node->get_parent()->get_height() > 0)
                 {
-                    inner_ptr node_parent = static_cast<inner_ptr>(node->get_parent());
+                    node_ptr node_parent = node->get_parent();
 
                     replace_node(node, child);
                     balance(node_parent);
@@ -431,40 +438,47 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::balance(inner_ptr node)
+        void avl_tree<E, C>::balance(node_ptr node)
         {
-            do
+            while(node->get_height() > 0)
             {
                 node->count_height();
 
-                int new_balance = node->balance();
+                int new_balance = count_balance(node);
+                inner_ptr rnode = static_cast<inner_ptr>(node);
 
                 if(new_balance >= 2)
                 {
-                    if(node->get_left()->balance() > 0)
-                        rotate(node->get_left());
-                    else if(node->get_left()->balance() < 0)
+                    if(count_balance(node->get_left()) > 0)
+                        rotate(rnode->get_left());
+                    else if(count_balance(node->get_left()) < 0)
                     {
-                        rotate(node->get_left()->get_right());
-                        rotate(node->get_left());
+                        rotate(rnode->get_left()->get_right());
+                        rotate(rnode->get_left());
                     }
                 }
                 else if(new_balance <= -2)
                 {
-                    if(node->get_right()->balance() < 0)
-                        rotate(node->get_right());
-                    else if(node->get_right()->balance() > 0)
+                    if(count_balance(node->get_right()) < 0)
+                        rotate(rnode->get_right());
+                    else if(count_balance(node->get_right()) > 0)
                     {
-                        rotate(node->get_right()->get_left());
-                        rotate(node->get_right());
+                        rotate(rnode->get_right()->get_left());
+                        rotate(rnode->get_right());
                     }
                 }
 
-                if(node->get_parent()->get_height() == 0)
-                    break;
+                node = node->get_parent();
+            }
+        }
 
-                node = static_cast<inner_ptr>(node->get_parent());
-            } while(true);
+        template <typename E, typename C>
+        int avl_tree<E, C>::count_balance(avl_tree<E, C>::node_ptr node)
+        {
+            int left_height = node->get_left() == nullptr ? 0 : node->get_left()->get_height();
+            int right_height = node->get_right() == nullptr ? 0 : node->get_right()->get_height();
+
+            return left_height - right_height;
         }
 
 #pragma endregion
@@ -495,6 +509,9 @@ namespace algolib
 
             virtual void set_parent(node_ptr node) = 0;
 
+            /// Wyliczanie wysokości wierzchołka.
+            virtual void count_height() = 0;
+
             /**
              * Wyszukiwanie minimum w poddrzewie.
              * @return węzeł z minimalną wartością w poddrzewie
@@ -521,9 +538,9 @@ namespace algolib
 
             ~avl_inner_node();
             avl_inner_node(const avl_inner_node & node);
-            avl_inner_node(avl_inner_node && node) = delete;
+            avl_inner_node(avl_inner_node &&) = delete;
             avl_inner_node & operator=(const avl_inner_node & node);
-            avl_inner_node & operator=(avl_inner_node && node) = delete;
+            avl_inner_node & operator=(avl_inner_node &&) = delete;
 
             E & get_element()
             {
@@ -575,6 +592,8 @@ namespace algolib
                 parent = node;
             }
 
+            void count_height() override;
+
             inner_ptr minimum() override
             {
                 return left == nullptr ? this : left->minimum();
@@ -584,15 +603,6 @@ namespace algolib
             {
                 return right == nullptr ? this : right->maximum();
             }
-
-            /// Wyliczanie wysokości wierzchołka.
-            void count_height();
-
-            /**
-             * Wyliczanie balansu wierzchołka.
-             * @return wartość balansu
-             */
-            int balance();
 
         private:
             /// Wartość w węźle.
@@ -660,15 +670,6 @@ namespace algolib
             height = std::max(left_height, right_height) + 1;
         }
 
-        template <typename E, typename C>
-        int avl_tree<E, C>::avl_inner_node::balance()
-        {
-            int left_height = left == nullptr ? 0 : left->get_height();
-            int right_height = right == nullptr ? 0 : right->get_height();
-
-            return left_height - right_height;
-        }
-
 #pragma endregion
 #pragma region avl_header_node
 
@@ -730,6 +731,10 @@ namespace algolib
 
                 if(inner != nullptr)
                     inner->set_parent(this);
+            }
+
+            void count_height() override
+            {
             }
 
             node_ptr minimum() override
