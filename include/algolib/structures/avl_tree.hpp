@@ -52,7 +52,7 @@ namespace algolib
 
             ~avl_tree()
             {
-                delete this->tree;
+                delete tree;
             }
 
             avl_tree(const avl_tree & avl)
@@ -522,21 +522,6 @@ namespace algolib
             virtual node_ptr clone() = 0;
 
             /**
-             * Sprawdzanie, czy węzeł jest lewym synem.
-             * @return czy węzeł to lewy syn
-             */
-            virtual bool is_left_son() = 0;
-
-            /**
-             * Sprawdzanie, czy węzeł jest prawym synem.
-             * @return czy węzeł to prawy syn
-             */
-            virtual bool is_right_son() = 0;
-
-            /// Wyliczanie wysokości wierzchołka.
-            virtual void count_height() = 0;
-
-            /**
              * Wyszukiwanie minimum w poddrzewie.
              * @return węzeł z minimalną wartością w poddrzewie
              */
@@ -573,47 +558,47 @@ namespace algolib
 
             size_t get_height() override
             {
-                return this->height;
+                return height;
             }
 
             node_ptr get_left() override
             {
-                return this->left;
+                return left;
             }
 
             void set_left(node_ptr node) override
             {
-                this->left = node;
+                left = node;
 
-                if(this->left != nullptr)
-                    this->left->set_parent(this);
+                if(left != nullptr)
+                    left->set_parent(this);
 
                 count_height();
             }
 
             node_ptr get_right() override
             {
-                return this->right;
+                return right;
             }
 
             void set_right(node_ptr node) override
             {
-                this->right = node;
+                right = node;
 
-                if(this->right != nullptr)
-                    this->right->set_parent(this);
+                if(right != nullptr)
+                    right->set_parent(this);
 
                 count_height();
             }
 
             node_ptr get_parent() override
             {
-                return this->parent;
+                return parent;
             }
 
             void set_parent(node_ptr node) override
             {
-                this->parent = node;
+                parent = node;
             }
 
             node_ptr clone() override
@@ -621,15 +606,36 @@ namespace algolib
                 return new avl_inner_node(*this);
             }
 
-            bool is_left_son();
+            node_ptr minimum() override
+            {
+                return left == nullptr ? this : left->minimum();
+            }
 
-            bool is_right_son();
+            node_ptr maximum() override
+            {
+                return right == nullptr ? this : right->maximum();
+            }
 
-            void count_height() override;
+            /**
+             * Sprawdzanie, czy węzeł jest lewym synem.
+             * @return czy węzeł to lewy syn
+             */
+            bool is_left_son()
+            {
+                return parent != nullptr && parent->get_left() == this;
+            }
 
-            node_ptr minimum() override;
+            /**
+             * Sprawdzanie, czy węzeł jest prawym synem.
+             * @return czy węzeł to prawy syn
+             */
+            bool is_right_son()
+            {
+                return parent != nullptr && parent->get_right() == this;
+            }
 
-            node_ptr maximum() override;
+            /// Wyliczanie wysokości wierzchołka.
+            void count_height();
 
         private:
             /// Wartość w węźle.
@@ -651,16 +657,16 @@ namespace algolib
         template <typename E, typename C>
         avl_tree<E, C>::avl_inner_node::~avl_inner_node()
         {
-            delete this->left;
-            delete this->right;
+            delete left;
+            delete right;
         }
 
         template <typename E, typename C>
         avl_tree<E, C>::avl_inner_node::avl_inner_node(const avl_tree<E, C>::avl_inner_node & node)
             : avl_tree<E, C>::avl_node(), element{node.element}, height{node.height}
         {
-            this->set_left(avl_tree::clone_node(node.left));
-            this->set_right(avl_tree::clone_node(node.right));
+            set_left(avl_tree::clone_node(node.left));
+            set_right(avl_tree::clone_node(node.right));
         }
 
         template <typename E, typename C>
@@ -681,18 +687,6 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        bool avl_tree<E, C>::avl_inner_node::is_left_son()
-        {
-            return parent != nullptr && parent->get_left() == this;
-        }
-
-        template <typename E, typename C>
-        bool avl_tree<E, C>::avl_inner_node::is_right_son()
-        {
-            return parent != nullptr && parent->get_right() == this;
-        }
-
-        template <typename E, typename C>
         void avl_tree<E, C>::avl_inner_node::count_height()
         {
             int left_height = left == nullptr ? 0 : left->get_height();
@@ -701,20 +695,8 @@ namespace algolib
             height = std::max(left_height, right_height) + 1;
         }
 
-        template <typename E, typename C>
-        typename avl_tree<E, C>::node_ptr avl_tree<E, C>::avl_inner_node::minimum()
-        {
-            return left == nullptr ? this : left->minimum();
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::node_ptr avl_tree<E, C>::avl_inner_node::maximum()
-        {
-            return right == nullptr ? this : right->maximum();
-        }
-
 #pragma endregion
-#pragma region avl_root_node
+#pragma region avl_header_node
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_header_node : public avl_tree<E, C>::avl_node
@@ -726,12 +708,12 @@ namespace algolib
 
             ~avl_header_node()
             {
-                delete this->inner;
+                delete inner;
             }
 
             avl_header_node(const avl_header_node & node) : avl_tree<E, C>::avl_node()
             {
-                this->set_parent(avl_tree::clone_node(node.inner));
+                set_parent(avl_tree::clone_node(node.inner));
             }
 
             avl_header_node(avl_header_node && node) = delete;
@@ -777,20 +759,6 @@ namespace algolib
             node_ptr clone() override
             {
                 return new avl_header_node(*this);
-            }
-
-            bool is_left_son() override
-            {
-                return false;
-            }
-
-            bool is_right_son() override
-            {
-                return false;
-            }
-
-            void count_height() override
-            {
             }
 
             node_ptr minimum() override
@@ -877,13 +845,13 @@ namespace algolib
         template <typename E, typename C>
         E & avl_tree<E, C>::avl_iterator::operator*() const
         {
-            return this->current_node->get_element();
+            return static_cast<avl_tree<E, C>::inner_ptr>(current_node)->get_element();
         }
 
         template <typename E, typename C>
         E * avl_tree<E, C>::avl_iterator::operator->() const
         {
-            return &this->current_node->get_element();
+            return &static_cast<avl_tree<E, C>::inner_ptr>(current_node)->get_element();
         }
 
         template <typename E, typename C>
@@ -951,8 +919,8 @@ namespace algolib
         template <typename E, typename C>
         typename avl_tree<E, C>::avl_succ_iterator & avl_tree<E, C>::avl_succ_iterator::operator++()
         {
-            if(this->current_node->get_height() > 0)
-                this->current_node = this->successor(this->current_node);
+            if(current_node->get_height() > 0)
+                current_node = successor(current_node);
 
             return *this;
         }
@@ -971,9 +939,8 @@ namespace algolib
         template <typename E, typename C>
         typename avl_tree<E, C>::avl_succ_iterator & avl_tree<E, C>::avl_succ_iterator::operator--()
         {
-            this->current_node = this->current_node->get_height() > 0
-                                         ? this->predecessor(this->current_node)
-                                         : this->current_node->get_parent()->maximum();
+            current_node = current_node->get_height() > 0 ? predecessor(current_node)
+                                                          : current_node->get_parent()->maximum();
 
             return *this;
         }
@@ -1012,8 +979,8 @@ namespace algolib
         template <typename E, typename C>
         typename avl_tree<E, C>::avl_pred_iterator & avl_tree<E, C>::avl_pred_iterator::operator++()
         {
-            if(this->current_node->get_height() > 0)
-                this->current_node = this->predecessor(this->current_node);
+            if(current_node->get_height() > 0)
+                current_node = predecessor(current_node);
 
             return *this;
         }
@@ -1032,9 +999,8 @@ namespace algolib
         template <typename E, typename C>
         typename avl_tree<E, C>::avl_pred_iterator & avl_tree<E, C>::avl_pred_iterator::operator--()
         {
-            this->current_node = this->current_node->get_height() > 0
-                                         ? this->successor(this->current_node)
-                                         : this->current_node->get_parent()->minimum();
+            current_node = current_node->get_height() > 0 ? successor(current_node)
+                                                          : current_node->get_parent()->minimum();
 
             return *this;
         }
