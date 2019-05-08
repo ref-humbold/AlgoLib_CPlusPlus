@@ -292,7 +292,7 @@ namespace algolib
                 inner_ptr child = search(n, e);
 
                 return child == nullptr
-                       || (cmp(child->get_element(), e) && cmp(e, child->get_element()));
+                       || (!cmp(child->get_element(), e) && !cmp(e, child->get_element()));
             };
             inner_ptr node_parent = find_node(element, child_equal);
 
