@@ -182,12 +182,6 @@ namespace algolib
                     std::function<bool(avl_tree<E, C>::inner_ptr, const E &)> predicate) const;
 
             /**
-             * Usuwanie elementu z korzenia drzewa.
-             * @param root korzeń drzewa
-             */
-            void delete_root(inner_ptr root);
-
-            /**
              * Usuwanie elementu z węzła wewnętrznego drzewa.
              * @param node węzeł do usunięcia
              */
@@ -318,7 +312,7 @@ namespace algolib
             else
                 node_parent->set_right(new_node);
 
-            balance(new_node);
+            balance(node_parent);
             ++elems;
 
             return std::make_pair(iterator(new_node), true);
@@ -336,10 +330,7 @@ namespace algolib
             if(the_node == nullptr)
                 return;
 
-            if(the_node->get_parent()->get_height() == 0)
-                delete_root(the_node);
-            else
-                delete_node(the_node);
+            delete_node(the_node);
         }
 
         template <typename E, typename C>
@@ -377,21 +368,6 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::delete_root(inner_ptr root)
-        {
-            if(root->get_left() != nullptr && root->get_right() != nullptr)
-                delete_node(root);
-            else
-            {
-                inner_ptr new_root =
-                        root->get_left() != nullptr ? root->get_left() : root->get_right();
-
-                set_root(new_root);
-                destroy_node(root);
-            }
-        }
-
-        template <typename E, typename C>
         void avl_tree<E, C>::delete_node(inner_ptr node)
         {
             if(node->get_left() != nullptr && node->get_right() != nullptr)
@@ -403,11 +379,17 @@ namespace algolib
             }
             else
             {
-                avl_tree<E, C>::inner_ptr child =
+                inner_ptr child =
                         node->get_left() != nullptr ? node->get_left() : node->get_right();
 
-                replace_node(node, child);
-                balance(child);
+                if(node->get_parent()->get_height() > 0)
+                {
+                    replace_node(node, child);
+                    balance(static_cast<inner_ptr>(child->get_parent()));
+                }
+                else
+                    set_root(child);
+
                 destroy_node(node);
             }
         }
@@ -451,7 +433,6 @@ namespace algolib
         {
             do
             {
-                node = static_cast<inner_ptr>(node->get_parent());
                 node->count_height();
 
                 int new_balance = node->balance();
@@ -476,7 +457,12 @@ namespace algolib
                         rotate(node->get_right());
                     }
                 }
-            } while(node->get_parent()->get_height() > 0);
+
+                if(node->get_parent()->get_height() == 0)
+                    break;
+
+                node = static_cast<inner_ptr>(node->get_parent());
+            } while(true);
         }
 
 #pragma endregion
