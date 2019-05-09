@@ -36,10 +36,20 @@ namespace algolib
             using header_ptr = avl_header_node *;
 
         public:
+            using value_type = E;
+            using reference = E &;
+            using const_reference = const E &;
+            using pointer = E *;
+            using const_pointer = const E *;
+
+            using compare = C;
             using iterator = avl_iterator;
             using const_iterator = avl_const_iterator;
             using reverse_iterator = std::reverse_iterator<avl_iterator>;
             using const_reverse_iterator = std::reverse_iterator<avl_const_iterator>;
+
+            using difference_type = typename std::iterator_traits<iterator>::difference_type;
+            using size_type = size_t;
 
             explicit avl_tree(const C & cmp = C()) : cmp{cmp}
             {
@@ -119,7 +129,7 @@ namespace algolib
             }
 
             /// @return liczba elemenów drzewa
-            size_t size() const
+            size_type size() const
             {
                 return elems;
             }
@@ -254,10 +264,10 @@ namespace algolib
             header_ptr tree = new avl_header_node();
 
             ///  Liczba elementów drzewa.
-            size_t elems = 0;
+            size_type elems = 0;
 
             /// Komparator.
-            C cmp;
+            compare cmp;
         };
 
         template <typename E, typename C>
@@ -793,9 +803,15 @@ namespace algolib
             {
             }
 
-            E & operator*() const;
+            reference operator*() const
+            {
+                return static_cast<avl_tree<E, C>::inner_ptr>(current_node)->element();
+            }
 
-            E * operator->() const;
+            pointer operator->() const
+            {
+                return &(operator*());
+            }
 
             avl_iterator & operator++();
 
@@ -809,21 +825,14 @@ namespace algolib
 
             bool operator!=(const avl_iterator & it) const;
 
+            explicit operator avl_const_iterator()
+            {
+                return avl_const_iterator(current_node);
+            }
+
         private:
             node_ptr current_node;
         };
-
-        template <typename E, typename C>
-        E & avl_tree<E, C>::avl_iterator::operator*() const
-        {
-            return static_cast<avl_tree<E, C>::inner_ptr>(current_node)->element();
-        }
-
-        template <typename E, typename C>
-        E * avl_tree<E, C>::avl_iterator::operator->() const
-        {
-            return &(operator*());
-        }
 
         template <typename E, typename C>
         typename avl_tree<E, C>::avl_iterator & avl_tree<E, C>::avl_iterator::operator++()
@@ -916,9 +925,16 @@ namespace algolib
             {
             }
 
-            const E & operator*() const;
+            reference operator*() const
+            {
+                return const_cast<const E &>(
+                        static_cast<avl_tree<E, C>::inner_ptr>(current_node)->element());
+            }
 
-            const E * operator->() const;
+            pointer operator->() const
+            {
+                return &(operator*());
+            }
 
             avl_const_iterator & operator++();
 
@@ -935,19 +951,6 @@ namespace algolib
         private:
             node_ptr current_node;
         };
-
-        template <typename E, typename C>
-        const E & avl_tree<E, C>::avl_const_iterator::operator*() const
-        {
-            return const_cast<const E &>(
-                    static_cast<avl_tree<E, C>::inner_ptr>(current_node)->element());
-        }
-
-        template <typename E, typename C>
-        const E * avl_tree<E, C>::avl_const_iterator::operator->() const
-        {
-            return &(operator*());
-        }
 
         template <typename E, typename C>
         typename avl_tree<E, C>::avl_const_iterator & avl_tree<E, C>::avl_const_iterator::
