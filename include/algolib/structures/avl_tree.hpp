@@ -536,7 +536,12 @@ namespace algolib
             {
             }
 
-            ~avl_inner_node();
+            ~avl_inner_node()
+            {
+                delete left;
+                delete right;
+            }
+
             avl_inner_node(const avl_inner_node & node);
             avl_inner_node(avl_inner_node &&) = delete;
             avl_inner_node & operator=(const avl_inner_node & node);
@@ -620,13 +625,6 @@ namespace algolib
             /// Ojciec węzła.
             node_ptr parent = nullptr;
         };
-
-        template <typename E, typename C>
-        avl_tree<E, C>::avl_inner_node::~avl_inner_node()
-        {
-            delete left;
-            delete right;
-        }
 
         template <typename E, typename C>
         avl_tree<E, C>::avl_inner_node::avl_inner_node(const avl_tree<E, C>::avl_inner_node & node)
