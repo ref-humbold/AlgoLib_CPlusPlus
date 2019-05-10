@@ -25,8 +25,17 @@ TEST_F(AVLTreeTest, testCopyConstructor)
 
     ASSERT_EQ(test_object.size(), copy_object.size());
 
-    for(const auto & e : test_object)
-        EXPECT_NE(copy_object.end(), copy_object.find(e));
+    auto test_it = test_object.cbegin();
+    auto copy_it = copy_object.cbegin();
+
+    while(test_it != test_object.cend() && copy_it != copy_object.cend())
+    {
+        EXPECT_EQ(*test_it, *copy_it);
+        EXPECT_NE(&(*test_it), &(*copy_it));
+
+        ++test_it;
+        ++copy_it;
+    }
 }
 
 TEST_F(AVLTreeTest, testMoveConstructor)
@@ -49,8 +58,17 @@ TEST_F(AVLTreeTest, testCopyAssignment)
 
     ASSERT_EQ(test_object.size(), copy_object.size());
 
-    for(const auto & e : test_object)
-        EXPECT_NE(copy_object.end(), copy_object.find(e));
+    auto test_it = test_object.cbegin();
+    auto copy_it = copy_object.cbegin();
+
+    while(test_it != test_object.cend() && copy_it != copy_object.cend())
+    {
+        EXPECT_EQ(*test_it, *copy_it);
+        EXPECT_NE(&(*test_it), &(*copy_it));
+
+        ++test_it;
+        ++copy_it;
+    }
 }
 
 TEST_F(AVLTreeTest, testMoveAssignment)
@@ -65,6 +83,16 @@ TEST_F(AVLTreeTest, testMoveAssignment)
 
     for(const auto & e : numbers)
         EXPECT_NE(move_object.end(), move_object.find(e));
+}
+
+TEST_F(AVLTreeTest, testSelfAssignment)
+{
+    test_object = test_object;
+
+    ASSERT_EQ(numbers.size(), test_object.size());
+
+    for(const auto & e : numbers)
+        EXPECT_NE(test_object.end(), test_object.find(e));
 }
 
 TEST_F(AVLTreeTest, testEmptyWhenEmpty)
