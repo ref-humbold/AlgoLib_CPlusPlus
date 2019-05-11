@@ -20,9 +20,9 @@ set(SOURCES
     "maximum_subarray_test.cpp"
     "mst_test.cpp"
     "paths_test.cpp"
+    "points_sorting_test.cpp"
     "primes_test.cpp"
     "scc_test.cpp"
-    "sorting_test.cpp"
     "suffix_array_test.cpp"
     "topological_sorting_test.cpp"
     "undirected_graph_test.cpp")
