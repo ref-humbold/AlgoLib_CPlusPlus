@@ -10,7 +10,7 @@
 #include <vector>
 #include "undirected_graph.hpp"
 
-namespace detail
+namespace impl
 {
     class graph_cutting
     {
@@ -96,7 +96,7 @@ namespace algolib
          */
         std::vector<edge_t> find_edge_cut(const algolib::graphs::undirected_graph & ugraph)
         {
-            return detail::graph_cutting(ugraph).edge_cut();
+            return impl::graph_cutting(ugraph).edge_cut();
         }
 
         /**
@@ -106,7 +106,7 @@ namespace algolib
          */
         std::vector<vertex_t> find_vertex_cut(const algolib::graphs::undirected_graph & ugraph)
         {
-            return detail::graph_cutting(ugraph).vertex_cut();
+            return impl::graph_cutting(ugraph).vertex_cut();
         }
     }
 }

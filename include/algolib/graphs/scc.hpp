@@ -11,7 +11,7 @@
 #include <vector>
 #include "directed_graph.hpp"
 
-namespace detail
+namespace impl
 {
     class graph_components
     {

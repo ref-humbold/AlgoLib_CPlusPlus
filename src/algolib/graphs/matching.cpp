@@ -6,11 +6,11 @@
 
 namespace algr = algolib::graphs;
 
-constexpr int detail::match_augmenter::NO_MATCH;
+constexpr int impl::match_augmenter::NO_MATCH;
 
 std::vector<std::pair<int, int>> algr::match(const multipartite_graph<2> & partgraph)
 {
-    detail::match_augmenter augmenter(partgraph);
+    impl::match_augmenter augmenter(partgraph);
 
     while(augmenter.augment_match())
     {
@@ -25,7 +25,7 @@ std::vector<std::pair<int, int>> algr::match(const multipartite_graph<2> & partg
     return match_pairs;
 }
 
-bool detail::match_augmenter::augment_match()
+bool impl::match_augmenter::augment_match()
 {
     bool match_added = false;
 
@@ -40,7 +40,7 @@ bool detail::match_augmenter::augment_match()
     return match_added;
 }
 
-void detail::match_augmenter::bfs()
+void impl::match_augmenter::bfs()
 {
     std::queue<int> vertex_queue;
 
@@ -65,7 +65,7 @@ void detail::match_augmenter::bfs()
     }
 }
 
-bool detail::match_augmenter::dfs(int vertex)
+bool impl::match_augmenter::dfs(int vertex)
 {
     is_visited[vertex] = true;
 

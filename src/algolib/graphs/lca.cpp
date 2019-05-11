@@ -3,9 +3,9 @@
 
 namespace algr = algolib::graphs;
 
-constexpr int detail::lca_finder::NO_TIME;
+constexpr int impl::lca_finder::NO_TIME;
 
-int detail::lca_finder::search_lca(int vertex1, int vertex2, int root)
+int impl::lca_finder::search_lca(int vertex1, int vertex2, int root)
 {
     dfs(root, root, 0);
 
@@ -17,7 +17,7 @@ int detail::lca_finder::search_lca(int vertex1, int vertex2, int root)
     return search(vertex1, vertex2);
 }
 
-int detail::lca_finder::search(int vertex1, int vertex2)
+int impl::lca_finder::search(int vertex1, int vertex2)
 {
     if(is_offspring(vertex1, vertex2))
         return vertex2;
@@ -36,7 +36,7 @@ int detail::lca_finder::search(int vertex1, int vertex2)
     return search(paths[vertex1][0], vertex2);
 }
 
-int detail::lca_finder::dfs(int vertex, int parent, int timer)
+int impl::lca_finder::dfs(int vertex, int parent, int timer)
 {
     pre_post_times[vertex].first = timer;
     paths[vertex].push_back(parent);
@@ -59,7 +59,7 @@ int algr::find_lca(const forest_graph & treegraph, int vertex1, int vertex2, int
     if(!treegraph.is_same_tree(vertex1, root) || !treegraph.is_same_tree(vertex2, root))
         throw std::invalid_argument("Root vertex does not belong to the tree.");
 
-    detail::lca_finder finder(treegraph);
+    impl::lca_finder finder(treegraph);
 
     return finder.search_lca(vertex1, vertex2, root);
 }

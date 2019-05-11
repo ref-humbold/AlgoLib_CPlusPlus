@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <vector>
 
-namespace detail
+namespace impl
 {
     /**
      * Wyszukiwanie miejsca dla elementu
@@ -58,7 +58,7 @@ namespace algolib
             }
             else
             {
-                int index = detail::search(sequence, subseq_last, 0, subseq_last.size() - 1, i);
+                int index = impl::search(sequence, subseq_last, 0, subseq_last.size() - 1, i);
 
                 subseq_last[index] = i;
                 previous_elems[i] = index > 0 ? subseq_last[index - 1] : -1;

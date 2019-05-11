@@ -9,13 +9,13 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-#include <functional>
 #include <queue>
 #include <string>
 #include <vector>
+#include <functional>
 #include "directed_graph.hpp"
 
-namespace detail
+namespace impl
 {
     /**
      * Algorytm DFS wyznaczający kolejność wierzchołków.
@@ -60,6 +60,6 @@ namespace algolib
          */
         std::vector<vertex_t> sort_topological2(const directed_graph & digraph);
     }
-};
+}
 
 #endif

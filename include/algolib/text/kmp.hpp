@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-namespace detail
+namespace impl
 {
     /**
      * @brief Knuth's pi prefix function.
