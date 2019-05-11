@@ -12,7 +12,7 @@
 #include <vector>
 #include "graph.hpp"
 
-namespace detail
+namespace impl
 {
     /**
      * Krok rekurencyjnego DFS.

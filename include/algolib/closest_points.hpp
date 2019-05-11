@@ -12,7 +12,7 @@
 
 using point2D_t = std::pair<double, double>;
 
-namespace detail
+namespace impl
 {
     /**
      * Znajdowanie najbliższej pary punktów.

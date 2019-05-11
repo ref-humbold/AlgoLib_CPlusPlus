@@ -10,7 +10,7 @@
 #include <vector>
 #include "forest_graph.hpp"
 
-namespace detail
+namespace impl
 {
     class lca_finder
     {

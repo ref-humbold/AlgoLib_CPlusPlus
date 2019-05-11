@@ -3,7 +3,7 @@
 
 namespace alte = algolib::text;
 
-std::map<std::string, int> detail::sign_letters(const std::string & text)
+std::map<std::string, int> impl::sign_letters(const std::string & text)
 {
     std::map<std::string, int> factors;
     std::vector<std::string> letters;
@@ -25,8 +25,8 @@ std::map<std::string, int> detail::sign_letters(const std::string & text)
     return factors;
 }
 
-void detail::double_length(int new_length, const std::string & text,
-                           std::map<std::string, int> & factors)
+void impl::double_length(int new_length, const std::string & text,
+                         std::map<std::string, int> & factors)
 {
     std::vector<std::tuple<int, int, int>> codes;
     int code_value = 0;
@@ -52,10 +52,10 @@ void detail::double_length(int new_length, const std::string & text,
 
 std::map<std::string, int> alte::kmr(const std::string & text)
 {
-    std::map<std::string, int> factors = detail::sign_letters(text);
+    std::map<std::string, int> factors = impl::sign_letters(text);
 
     for(size_t length = 2; length <= text.size(); length <<= 1)
-        detail::double_length(length, text, factors);
+        impl::double_length(length, text, factors);
 
     return factors;
 }

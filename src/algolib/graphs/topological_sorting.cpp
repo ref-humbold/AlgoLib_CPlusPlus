@@ -3,8 +3,8 @@
 
 namespace algr = algolib::graphs;
 
-void detail::dfs(vertex_t vertex, vertex_t index, const algr::directed_graph & digraph,
-                 std::vector<vertex_t> & order, std::vector<std::pair<vertex_t, bool>> & indices)
+void impl::dfs(vertex_t vertex, vertex_t index, const algr::directed_graph & digraph,
+                  std::vector<vertex_t> & order, std::vector<std::pair<vertex_t, bool>> & indices)
 {
     indices[vertex] = std::make_pair(index, true);
 
@@ -59,14 +59,14 @@ std::vector<vertex_t> algr::sort_topological2(const directed_graph & digraph)
 {
     std::vector<vertex_t> order;
     std::vector<std::pair<vertex_t, bool>> indices(
-        digraph.get_vertices_number(), std::make_pair(digraph.get_vertices_number(), false));
+            digraph.get_vertices_number(), std::make_pair(digraph.get_vertices_number(), false));
     std::vector<vertex_t> vertices = digraph.get_vertices();
 
     std::sort(vertices.rbegin(), vertices.rend());
 
     for(const auto & v : vertices)
         if(indices[v].first == digraph.get_vertices_number())
-            detail::dfs(v, v, digraph, order, indices);
+            impl::dfs(v, v, digraph, order, indices);
 
     std::reverse(order.begin(), order.end());
 

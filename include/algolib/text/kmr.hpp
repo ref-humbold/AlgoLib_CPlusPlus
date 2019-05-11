@@ -12,7 +12,7 @@
 #include <tuple>
 #include <vector>
 
-namespace detail
+namespace impl
 {
     /**
      * Budowa podsłów złożonych z pojedynczych znaków.
