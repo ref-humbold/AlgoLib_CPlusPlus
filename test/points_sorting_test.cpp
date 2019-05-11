@@ -44,3 +44,35 @@ TEST(PointsSortingTest, testAngleSortWhenEmptyVector)
 
     EXPECT_EQ(std::vector<alge::point2d>(), sequence);
 }
+
+TEST(PointsSortingTest, testSortByX)
+{
+    std::vector<alge::point2d> sequence = {
+            alge::p2d(0.0, 0.0),  alge::p2d(-2.0, -3.0), alge::p2d(-3.0, -2.0),
+            alge::p2d(3.0, -2.0), alge::p2d(-2.0, 3.0),  alge::p2d(3.0, 2.0),
+            alge::p2d(2.0, -3.0), alge::p2d(2.0, 3.0),   alge::p2d(-3.0, 2.0)};
+
+    alge::sort_by_x(sequence);
+
+    EXPECT_EQ(std::vector<alge::point2d>(
+                      {alge::p2d(-3.0, -2.0), alge::p2d(-3.0, 2.0), alge::p2d(-2.0, -3.0),
+                       alge::p2d(-2.0, 3.0), alge::p2d(0.0, 0.0), alge::p2d(2.0, -3.0),
+                       alge::p2d(2.0, 3.0), alge::p2d(3.0, -2.0), alge::p2d(3.0, 2.0)}),
+              sequence);
+}
+
+TEST(PointsSortingTest, testSortByY)
+{
+    std::vector<alge::point2d> sequence = {
+            alge::p2d(0.0, 0.0),  alge::p2d(-2.0, -3.0), alge::p2d(-3.0, -2.0),
+            alge::p2d(3.0, -2.0), alge::p2d(-2.0, 3.0),  alge::p2d(3.0, 2.0),
+            alge::p2d(2.0, -3.0), alge::p2d(2.0, 3.0),   alge::p2d(-3.0, 2.0)};
+
+    alge::sort_by_y(sequence);
+
+    EXPECT_EQ(std::vector<alge::point2d>(
+                      {alge::p2d(-2.0, -3.0), alge::p2d(2.0, -3.0), alge::p2d(-3.0, -2.0),
+                       alge::p2d(3.0, -2.0), alge::p2d(0.0, 0.0), alge::p2d(-3.0, 2.0),
+                       alge::p2d(3.0, 2.0), alge::p2d(-2.0, 3.0), alge::p2d(2.0, 3.0)}),
+              sequence);
+}

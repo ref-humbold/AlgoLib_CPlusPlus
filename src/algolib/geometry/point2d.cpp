@@ -10,7 +10,7 @@ alge::point2d alge::p2d(double x, double y)
 
 bool alge::operator==(const alge::point2d & p1, const alge::point2d & p2)
 {
-    return p1.x == p2.x && p1.y == p2.y;
+    return p1.xCoord == p2.xCoord && p1.yCoord == p2.yCoord;
 }
 
 bool alge::operator!=(const alge::point2d & p1, const alge::point2d & p2)
@@ -20,7 +20,7 @@ bool alge::operator!=(const alge::point2d & p1, const alge::point2d & p2)
 
 bool alge::operator<(const alge::point2d & p1, const alge::point2d & p2)
 {
-    return p1.x != p2.x ? p1.x < p2.x : p1.y < p2.y;
+    return p1.xCoord != p2.xCoord ? p1.xCoord < p2.xCoord : p1.yCoord < p2.yCoord;
 }
 
 bool alge::operator<=(const alge::point2d & p1, const alge::point2d & p2)
@@ -30,7 +30,7 @@ bool alge::operator<=(const alge::point2d & p1, const alge::point2d & p2)
 
 bool alge::operator>(const alge::point2d & p1, const alge::point2d & p2)
 {
-    return p1.x != p2.x ? p1.x > p2.x : p1.y > p2.y;
+    return p1.xCoord != p2.xCoord ? p1.xCoord > p2.xCoord : p1.yCoord > p2.yCoord;
 }
 
 bool alge::operator>=(const alge::point2d & p1, const alge::point2d & p2)
@@ -40,7 +40,7 @@ bool alge::operator>=(const alge::point2d & p1, const alge::point2d & p2)
 
 std::ostream & alge::operator<<(std::ostream & os, const alge::point2d & p)
 {
-    os << "(" << p.x << ", " << p.y << ")";
+    os << "(" << p.xCoord << ", " << p.yCoord << ")";
 
     return os;
 }

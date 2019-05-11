@@ -20,6 +20,20 @@ namespace algolib
          * @param points vector of points
          */
         void angle_sort(std::vector<point2d> & points);
+
+        /**
+         * Mutably sorts points with respect to their coordinates.
+         * First sorts by X coordinate, then by Y coordinate.
+         * @param points vector of points
+         */
+        void sort_by_x(std::vector<point2d> & points);
+
+        /**
+         * Mutably sorts points with respect to their coordinates.
+         * First sorts by Y coordinate, then by X coordinate.
+         * @param points vector of points
+         */
+        void sort_by_y(std::vector<point2d> & points);
     }
 }
 #endif

@@ -30,7 +30,7 @@ namespace algolib
         class point2d
         {
         public:
-            point2d(double x, double y) : x{x}, y{y}
+            point2d(double x, double y) : xCoord{x}, yCoord{y}
             {
             }
 
@@ -40,16 +40,26 @@ namespace algolib
             point2d & operator=(const point2d &) = default;
             point2d & operator=(point2d &&) = default;
 
+            double x() const
+            {
+                return xCoord;
+            }
+
+            double y() const
+            {
+                return yCoord;
+            }
+
             double angle() const
             {
-                double ang = atan2(y, x) * 180.0 / M_PI;
+                double ang = atan2(yCoord, xCoord) * 180.0 / M_PI;
 
-                return y >= 0.0 ? ang : ang + 360.0;
+                return yCoord >= 0.0 ? ang : ang + 360.0;
             }
 
             double radius() const
             {
-                return x * x + y * y;
+                return xCoord * xCoord + yCoord * yCoord;
             }
 
             friend bool operator==(const point2d & p1, const point2d & p2);
@@ -64,7 +74,7 @@ namespace algolib
             friend struct std::hash<point2d>;
 
         private:
-            double x, y;
+            double xCoord, yCoord;
         };
 
         point2d p2d(double x, double y);
@@ -89,7 +99,7 @@ namespace std
 
         result_type operator()(const argument_type & p)
         {
-            return hash<double>()(p.x) ^ hash<double>()(p.y);
+            return hash<double>()(p.xCoord) ^ hash<double>()(p.yCoord);
         }
     };
 }

@@ -24,7 +24,7 @@ std::vector<point2D_t> algolib::find_convex_hull(std::vector<point2D_t> points)
 
     size_t upper_size = hull.size();
 
-    for(auto it = points.rbegin() + 2; it != points.rend(); ++it)
+    for(auto it = points.rbegin() + 1; it != points.rend(); ++it)
     {
         while(hull.size() > upper_size
               && cross_product(*(hull.end() - 2), *(hull.end() - 1), *it) <= 0)
