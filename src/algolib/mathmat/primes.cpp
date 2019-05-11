@@ -35,7 +35,7 @@ std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
     return primes;
 }
 
-std::pair<long long int, long long int> detail::distribute(long long int number)
+std::pair<long long int, long long int> impl::distribute(long long int number)
 {
     long long int power = 2LL, exponent = 1LL;
 
@@ -77,7 +77,7 @@ bool alma::test_miller(long long int number)
     if(number < 2 || number % 2 == 0 || number % 3 == 0)
         return false;
 
-    auto distribution = detail::distribute(number - 1);
+    auto distribution = impl::distribute(number - 1);
 
     for(int i = 0; i < 12; ++i)
     {

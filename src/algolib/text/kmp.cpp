@@ -3,7 +3,7 @@
 
 namespace alte = algolib::text;
 
-std::vector<size_t> detail::prefixes(const std::string & pattern)
+std::vector<size_t> impl::prefixes(const std::string & pattern)
 {
     std::vector<size_t> pi(1, 0);
     size_t pos = 0;
@@ -25,7 +25,7 @@ std::vector<size_t> detail::prefixes(const std::string & pattern)
 std::vector<size_t> alte::kmp(const std::string & text, const std::string & pattern)
 {
     std::vector<size_t> places;
-    std::vector<size_t> pi = detail::prefixes(pattern);
+    std::vector<size_t> pi = impl::prefixes(pattern);
     size_t pos = 0;
 
     if(pattern == "")

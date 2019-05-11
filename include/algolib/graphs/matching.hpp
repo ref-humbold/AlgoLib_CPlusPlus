@@ -12,7 +12,7 @@
 #include <vector>
 #include "multipartite_graph.hpp"
 
-namespace detail
+namespace impl
 {
     class match_augmenter
     {

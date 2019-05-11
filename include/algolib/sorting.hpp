@@ -15,7 +15,7 @@
 
 using point2D_t = std::pair<double, double>;
 
-namespace detail
+namespace impl
 {
     /**
      * Przywracanie własności kopca.
@@ -117,7 +117,7 @@ namespace algolib
         if(index_end == -1)
             index_end = sequence.size();
 
-        detail::validate_indices(sequence.size(), index_begin, index_end);
+        impl::validate_indices(sequence.size(), index_begin, index_end);
 
         int heap_size = index_end - index_begin;
 
@@ -125,14 +125,14 @@ namespace algolib
             return;
 
         for(int i = index_begin + heap_size / 2; i >= index_begin; --i)
-            detail::move_down(sequence, i, index_begin, index_end);
+            impl::move_down(sequence, i, index_begin, index_end);
 
         while(heap_size > 1)
         {
             int index_heap = index_begin + heap_size;
 
             std::swap(sequence[index_heap], sequence[index_begin]);
-            detail::move_down(sequence, index_begin, index_begin, index_heap);
+            impl::move_down(sequence, index_begin, index_begin, index_heap);
             --heap_size;
         }
     }
@@ -149,7 +149,7 @@ namespace algolib
         if(index_end == -1)
             index_end = sequence.size();
 
-        detail::validate_indices(sequence.size(), index_begin, index_end);
+        impl::validate_indices(sequence.size(), index_begin, index_end);
 
         if(index_end - index_begin <= 1)
             return;
@@ -158,7 +158,7 @@ namespace algolib
 
         mergedown_sort(sequence, index_begin, index_middle);
         mergedown_sort(sequence, index_middle, index_end);
-        detail::merge(sequence, index_begin, index_middle, index_end);
+        impl::merge(sequence, index_begin, index_middle, index_end);
     }
 
     /**
@@ -173,14 +173,14 @@ namespace algolib
         if(index_end == -1)
             index_end = sequence.size();
 
-        detail::validate_indices(sequence.size(), index_begin, index_end);
+        impl::validate_indices(sequence.size(), index_begin, index_end);
 
         if(index_end - index_begin <= 1)
             return;
 
         for(int i = 2; i < 2 * (index_end - index_begin); i *= 2)
             for(int j = index_begin; j < index_end; j += i)
-                detail::merge(sequence, j, std::min(j + i / 2, index_end),
+                impl::merge(sequence, j, std::min(j + i / 2, index_end),
                               std::min(j + i, index_end));
     }
 
@@ -196,13 +196,13 @@ namespace algolib
         if(index_end == -1)
             index_end = sequence.size();
 
-        detail::validate_indices(sequence.size(), index_begin, index_end);
+        impl::validate_indices(sequence.size(), index_begin, index_end);
 
         if(index_end - index_begin <= 1)
             return;
 
         int index_pivot = index_begin, index_front = index_begin + 1, index_back = index_end - 1;
-        int rdpv = index_begin + detail::choose_pivot(index_end - index_begin);
+        int rdpv = index_begin + impl::choose_pivot(index_end - index_begin);
 
         std::swap(sequence[index_pivot], sequence[rdpv]);
 

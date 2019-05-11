@@ -11,7 +11,7 @@
 #include <vector>
 #include "maths.hpp"
 
-namespace detail
+namespace impl
 {
     /**
      * Rozkładanie liczby do testu Millera-Rabina
