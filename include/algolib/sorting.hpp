@@ -17,13 +17,6 @@ using point2D_t = std::pair<double, double>;
 
 namespace impl
 {
-    /**
-     * Przywracanie własności kopca.
-     * @param heap kopiec
-     * @param vertex wierzchołek kopca
-     * @param index_begin początkowy indeks kopca
-     * @param index_end końcowy indeks kopca
-     */
     template <typename T>
     void move_down(std::vector<T> & heap, int vertex, int index_begin, int index_end)
     {
@@ -46,13 +39,6 @@ namespace impl
         move_down(heap, next_vertex, index_begin, index_end);
     }
 
-    /**
-     * Scalanie dwóch uporządkowanych fragmentów ciągu.
-     * @param sequence ciąg
-     * @param index_begin początek fragmentu
-     * @param index_middle środek fragmentu
-     * @param index_end koniec fragmentu
-     */
     template <typename T>
     void merge(std::vector<T> & sequence, int index_begin, int index_middle, int index_end)
     {
@@ -81,19 +67,8 @@ namespace impl
             sequence[index_begin + i] = ordered[i];
     }
 
-    /**
-     * Losowanie piwota.
-     * @param size liczba elementów
-     * @return indeks piwota
-     */
     int choose_pivot(int size);
 
-    /**
-     * Sprawdzanie poprawności indeksów
-     * @param size długość ciągu
-     * @param index_begin początkowy indeks ciągu
-     * @param index_end końcowy indeks ciągu
-     */
     void validate_indices(int size, int index_begin, int index_end);
 }
 
@@ -181,7 +156,7 @@ namespace algolib
         for(int i = 2; i < 2 * (index_end - index_begin); i *= 2)
             for(int j = index_begin; j < index_end; j += i)
                 impl::merge(sequence, j, std::min(j + i / 2, index_end),
-                              std::min(j + i, index_end));
+                            std::min(j + i, index_end));
     }
 
     /**

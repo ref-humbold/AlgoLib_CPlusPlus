@@ -10,16 +10,6 @@
 #include <string>
 #include <vector>
 
-namespace impl
-{
-    /**
-     * @brief Knuth's pi prefix function.
-     * @param pattern pattern to count the function for
-     * @return vector of prefix function values
-     */
-    std::vector<size_t> prefixes(const std::string & pattern);
-}
-
 namespace algolib
 {
     namespace text

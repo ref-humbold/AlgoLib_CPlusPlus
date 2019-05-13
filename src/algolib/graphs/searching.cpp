@@ -3,13 +3,16 @@
 
 namespace algr = algolib::graphs;
 
-void impl::dfsR_step(const algr::graph & gr, vertex_t vertex, std::vector<bool> & is_visited)
+namespace
 {
-    is_visited[vertex] = true;
+    void dfsR_step(const algr::graph & gr, vertex_t vertex, std::vector<bool> & is_visited)
+    {
+        is_visited[vertex] = true;
 
-    for(const auto & neighbour : gr.get_neighbours(vertex))
-        if(!is_visited[neighbour])
-            dfsR_step(gr, neighbour, is_visited);
+        for(const auto & neighbour : gr.get_neighbours(vertex))
+            if(!is_visited[neighbour])
+                dfsR_step(gr, neighbour, is_visited);
+    }
 }
 
 std::vector<bool> algr::bfs(const graph & gr, vertex_t root)
@@ -67,7 +70,7 @@ std::vector<bool> algr::dfsR(const graph & gr, vertex_t root)
 {
     std::vector<bool> is_visited(gr.get_vertices_number(), false);
 
-    impl::dfsR_step(gr, root, is_visited);
+    dfsR_step(gr, root, is_visited);
 
     return is_visited;
 }
