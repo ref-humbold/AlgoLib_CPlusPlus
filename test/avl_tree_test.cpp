@@ -175,38 +175,12 @@ TEST_F(AVLTreeTest, testIteratorWhenRangeBasedForLoop)
     EXPECT_EQ(sorted_numbers, result);
 }
 
-TEST_F(AVLTreeTest, testConstIterator)
-{
-    std::vector<int> result;
-    std::vector<int> sorted_numbers = numbers;
-
-    for(auto it = test_object.cbegin(); it != test_object.cend(); ++it)
-        result.push_back(*it);
-
-    std::sort(sorted_numbers.begin(), sorted_numbers.end());
-
-    EXPECT_EQ(sorted_numbers, result);
-}
-
 TEST_F(AVLTreeTest, testReverseIterator)
 {
     std::vector<int> result;
     std::vector<int> reversed_numbers = numbers;
 
     for(auto it = test_object.rbegin(); it != test_object.rend(); ++it)
-        result.push_back(*it);
-
-    std::sort(reversed_numbers.rbegin(), reversed_numbers.rend());
-
-    EXPECT_EQ(reversed_numbers, result);
-}
-
-TEST_F(AVLTreeTest, testConstReverseIterator)
-{
-    std::vector<int> result;
-    std::vector<int> reversed_numbers = numbers;
-
-    for(auto it = test_object.crbegin(); it != test_object.crend(); ++it)
         result.push_back(*it);
 
     std::sort(reversed_numbers.rbegin(), reversed_numbers.rend());

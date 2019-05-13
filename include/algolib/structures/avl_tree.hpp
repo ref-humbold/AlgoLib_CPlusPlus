@@ -28,7 +28,6 @@ namespace algolib
             class avl_inner_node;
             class avl_header_node;
 
-            class avl_iterator;
             class avl_const_iterator;
 
             using node_ptr = avl_node *;
@@ -43,9 +42,9 @@ namespace algolib
             using const_pointer = const value_type *;
 
             using compare = C;
-            using iterator = avl_iterator;
+            using iterator = avl_const_iterator;
             using const_iterator = avl_const_iterator;
-            using reverse_iterator = std::reverse_iterator<avl_iterator>;
+            using reverse_iterator = std::reverse_iterator<avl_const_iterator>;
             using const_reverse_iterator = std::reverse_iterator<avl_const_iterator>;
 
             using difference_type = typename std::iterator_traits<iterator>::difference_type;
@@ -779,128 +778,6 @@ namespace algolib
             delete inner_orig;
 
             return *this;
-        }
-
-#pragma endregion
-#pragma region avl_iterator
-
-        template <typename E, typename C>
-        class avl_tree<E, C>::avl_iterator
-        {
-        public:
-            using iterator_category = std::bidirectional_iterator_tag;
-            using value_type = E;
-            using reference = value_type &;
-            using pointer = value_type *;
-            using difference_type = ptrdiff_t;
-
-            explicit avl_iterator(avl_tree<E, C>::node_ptr node) : current_node{node}
-            {
-            }
-
-            reference operator*() const
-            {
-                return static_cast<avl_tree<E, C>::inner_ptr>(current_node)->element;
-            }
-
-            pointer operator->() const
-            {
-                return &(operator*());
-            }
-
-            avl_iterator & operator++();
-
-            const avl_iterator operator++(int);
-
-            avl_iterator & operator--();
-
-            const avl_iterator operator--(int);
-
-            bool operator==(const avl_iterator & it) const;
-
-            bool operator!=(const avl_iterator & it) const;
-
-            explicit operator avl_const_iterator()
-            {
-                return avl_const_iterator(current_node);
-            }
-
-        private:
-            node_ptr current_node;
-        };
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::avl_iterator & avl_tree<E, C>::avl_iterator::operator++()
-        {
-            if(current_node->get_height() > 0)
-            {
-                if(current_node->get_right() != nullptr)
-                    current_node = current_node->get_right()->minimum();
-                else
-                {
-                    while(current_node->get_parent()->get_height() > 0
-                          && current_node->get_parent()->get_left() != current_node)
-                        current_node = current_node->get_parent();
-
-                    current_node = current_node->get_parent();
-                }
-            }
-
-            return *this;
-        }
-
-        template <typename E, typename C>
-        const typename avl_tree<E, C>::avl_iterator avl_tree<E, C>::avl_iterator::operator++(int)
-        {
-            avl_tree<E, C>::avl_iterator result = *this;
-
-            ++(*this);
-
-            return result;
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::avl_iterator & avl_tree<E, C>::avl_iterator::operator--()
-        {
-            if(current_node->get_height() > 0)
-            {
-                if(current_node->get_left() != nullptr)
-                    current_node = current_node->get_left()->maximum();
-                else
-                {
-                    while(current_node->get_parent()->get_height() > 0
-                          && current_node->get_parent()->get_right() != current_node)
-                        current_node = current_node->get_parent();
-
-                    current_node = current_node->get_parent();
-                }
-            }
-            else
-                current_node = current_node->get_parent()->maximum();
-
-            return *this;
-        }
-
-        template <typename E, typename C>
-        const typename avl_tree<E, C>::avl_iterator avl_tree<E, C>::avl_iterator::operator--(int)
-        {
-            avl_tree<E, C>::avl_iterator result = *this;
-
-            --(*this);
-
-            return result;
-        }
-
-        template <typename E, typename C>
-        bool avl_tree<E, C>::avl_iterator::operator==(const avl_tree<E, C>::avl_iterator & it) const
-        {
-            return this->current_node == it.current_node;
-        }
-
-        template <typename E, typename C>
-        bool avl_tree<E, C>::avl_iterator::operator!=(const avl_tree<E, C>::avl_iterator & it) const
-        {
-            return this->current_node != it.current_node;
         }
 
 #pragma endregion
