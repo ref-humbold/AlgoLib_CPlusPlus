@@ -11,15 +11,6 @@
 
 namespace impl
 {
-    /**
-     * Wyszukiwanie miejsca dla elementu
-     * @param sequence ciąg wejściowy
-     * @param subseq_last końcowe elementy podciągów
-     * @param index_begin indeks początku
-     * @param index_end indeks końca
-     * @param index_elem indeks elementu
-     * @return indeks miejsca elementu w tablicy długości
-     */
     template <typename T>
     int search(const std::vector<T> & sequence, const std::vector<int> & subseq_last,
                int index_begin, int index_end, int index_elem)

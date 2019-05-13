@@ -12,18 +12,6 @@
 #include <vector>
 #include "graph.hpp"
 
-namespace impl
-{
-    /**
-     * Krok rekurencyjnego DFS.
-     * @param graph graf
-     * @param vertex aktualny wierzchołek
-     * @param is_visited lista odwiedzonych wierzchołków
-     */
-    void dfsR_step(const algolib::graphs::graph & gr, vertex_t vertex,
-                   std::vector<bool> & is_visited);
-}
-
 namespace algolib
 {
     namespace graphs

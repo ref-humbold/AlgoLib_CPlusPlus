@@ -15,19 +15,6 @@
 #include <functional>
 #include "directed_graph.hpp"
 
-namespace impl
-{
-    /**
-     * Algorytm DFS wyznaczający kolejność wierzchołków.
-     * @param vertex aktualny wierzchołek
-     * @param digraph graf skierowany
-     * @param order aktualny porządek topologiczny
-     * @param visited czy wierzchołek odwiedzony
-     */
-    void dfs(vertex_t vertex, vertex_t index, const algolib::graphs::directed_graph & digraph,
-             std::vector<vertex_t> & order, std::vector<std::pair<vertex_t, bool>> & indices);
-}
-
 namespace algolib
 {
     namespace graphs

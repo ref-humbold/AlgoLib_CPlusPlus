@@ -11,16 +11,6 @@
 #include <vector>
 #include "maths.hpp"
 
-namespace impl
-{
-    /**
-     * Rozkładanie liczby do testu Millera-Rabina
-     * @param number rozkładana liczba
-     * @return rozkład liczby
-     */
-    std::pair<long long int, long long int> distribute(long long int number);
-}
-
 namespace algolib
 {
     namespace mathmat

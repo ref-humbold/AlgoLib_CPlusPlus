@@ -3,11 +3,29 @@
 
 namespace alma = algolib::mathmat;
 
+namespace
+{
+    std::pair<long long int, long long int> distribute(long long int number)
+    {
+        long long int power = 2LL, exponent = 1LL;
+
+        while(number % power == 0)
+        {
+            ++exponent;
+            power <<= 1;
+        }
+
+        --exponent;
+
+        return std::make_pair(exponent, number / (1 << exponent));
+    }
+}
+
 std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
 {
     if(max_number < min_number)
         throw std::invalid_argument(
-            "Second argument must be grater or equal to the first argument.");
+                "Second argument must be grater or equal to the first argument.");
 
     std::vector<size_t> primes;
     std::vector<bool> is_prime;
@@ -33,21 +51,6 @@ std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
             primes.push_back(min_number + i);
 
     return primes;
-}
-
-std::pair<long long int, long long int> impl::distribute(long long int number)
-{
-    long long int power = 2LL, exponent = 1LL;
-
-    while(number % power == 0)
-    {
-        ++exponent;
-        power <<= 1;
-    }
-
-    --exponent;
-
-    return std::make_pair(exponent, number / (1 << exponent));
 }
 
 bool alma::test_fermat(long long int number)
@@ -77,7 +80,7 @@ bool alma::test_miller(long long int number)
     if(number < 2 || number % 2 == 0 || number % 3 == 0)
         return false;
 
-    auto distribution = impl::distribute(number - 1);
+    auto distribution = distribute(number - 1);
 
     for(int i = 0; i < 12; ++i)
     {
