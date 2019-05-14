@@ -179,7 +179,7 @@ namespace algolib
             void insert(std::initializer_list<value_type> il);
 
             /*!
-             * \brief Removes element from the tree if present.
+             * \brief Removes given element from the tree if present.
              * \param element value to be removed
              * \return number of element removed
              */
@@ -190,7 +190,7 @@ namespace algolib
 
         private:
             /*!
-             * \brief Removes node from the tree.
+             * \brief Removes given node from the tree.
              * @param node node to be removed
              */
             void destroy_node(inner_ptr node)
@@ -577,7 +577,7 @@ namespace algolib
 
             /*!
              * \brief Searches in its subtree for the node with minimal value.
-             * @returnthe node with minimal value
+             * \return the node with minimal value
              */
             virtual node_ptr minimum() = 0;
 
