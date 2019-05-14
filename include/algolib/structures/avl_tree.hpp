@@ -218,7 +218,7 @@ namespace algolib
              * @param node node to be checked
              * @return \c true if the node is left child, otherwise \c false
              */
-            bool is_left_son(inner_ptr node)
+            bool is_left_child(inner_ptr node)
             {
                 return node->get_parent()->get_height() > 0
                        && node->get_parent()->get_left() == node;
@@ -229,7 +229,7 @@ namespace algolib
              * @param node node to be checked
              * @return \c true if the node is right child, otherwise \c false
              */
-            bool is_right_son(inner_ptr node)
+            bool is_right_child(inner_ptr node)
             {
                 return node->get_parent()->get_height() > 0
                        && node->get_parent()->get_right() == node;
@@ -419,13 +419,9 @@ namespace algolib
         typename avl_tree<E, C>::inner_ptr avl_tree<E, C>::search(inner_ptr node,
                                                                   const_reference element) const
         {
-            if(cmp(element, node->element))
-                return node->get_left();
-
-            if(cmp(node->element, element))
-                return node->get_right();
-
-            return node;
+            return cmp(element, node->element)
+                           ? node->get_left()
+                           : cmp(node->element, element) ? node->get_right() : node;
         }
 
         template <typename E, typename C>
@@ -473,9 +469,9 @@ namespace algolib
         template <typename E, typename C>
         void avl_tree<E, C>::replace_node(inner_ptr node1, inner_ptr node2)
         {
-            if(is_left_son(node1))
+            if(is_left_child(node1))
                 node1->get_parent()->set_left(node2);
-            else if(is_right_son(node1))
+            else if(is_right_child(node1))
                 node1->get_parent()->set_right(node2);
             else
                 set_root(node2);
@@ -486,7 +482,7 @@ namespace algolib
         template <typename E, typename C>
         void avl_tree<E, C>::rotate(inner_ptr node)
         {
-            if(is_right_son(node))
+            if(is_right_child(node))
             {
                 auto upper_node = static_cast<inner_ptr>(node->get_parent());
 
@@ -494,7 +490,7 @@ namespace algolib
                 replace_node(upper_node, node);
                 node->set_left(upper_node);
             }
-            else if(is_left_son(node))
+            else if(is_left_child(node))
             {
                 auto upper_node = static_cast<inner_ptr>(node->get_parent());
 
