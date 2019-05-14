@@ -1,6 +1,6 @@
-/**
- * @file avl_tree.hpp
- * @brief AVL tree structure.
+/*!
+ * \file avl_tree.hpp
+ * \brief AVL tree structure.
  */
 #ifndef AVL_TREE_HPP_
 #define AVL_TREE_HPP_
@@ -10,9 +10,9 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-#include <functional>
 #include <initializer_list>
 #include <iterator>
+#include <functional>
 
 namespace algolib
 {
@@ -26,108 +26,174 @@ namespace algolib
         private:
             class avl_node;
             class avl_inner_node;
-            class avl_root_node;
+            class avl_header_node;
 
             class avl_iterator;
-            class avl_succ_iterator;
-            class avl_pred_iterator;
+            class avl_const_iterator;
 
-            using node_pointer = avl_node *;
+            using node_ptr = avl_node *;
+            using inner_ptr = avl_inner_node *;
+            using header_ptr = avl_header_node *;
 
         public:
-            using iterator = avl_succ_iterator;
-            using reverse_iterator = avl_pred_iterator;
+            using value_type = E;
+            using reference = value_type &;
+            using const_reference = const value_type &;
+            using pointer = value_type *;
+            using const_pointer = const value_type *;
 
-            explicit avl_tree(const C & cmp = C()) : cmp{cmp}
+            using compare = C;
+            using iterator = avl_iterator;
+            using const_iterator = avl_const_iterator;
+            using reverse_iterator = std::reverse_iterator<avl_iterator>;
+            using const_reverse_iterator = std::reverse_iterator<avl_const_iterator>;
+
+            using difference_type = typename std::iterator_traits<iterator>::difference_type;
+            using size_type = size_t;
+
+            explicit avl_tree(const compare & cmp = compare()) : cmp{cmp}
             {
             }
 
-            avl_tree(std::initializer_list<E> init_list, const C & cmp = C()) : cmp{cmp}
+            avl_tree(std::initializer_list<value_type> il, const compare & cmp = compare())
+                : cmp{cmp}
             {
-                for(auto i : init_list)
-                    insert(i);
+                insert(il);
             }
 
             ~avl_tree()
             {
-                delete this->tree;
+                delete tree;
             }
 
             avl_tree(const avl_tree & avl)
-                : tree{avl_tree::clone_node(avl.tree)}, elems{avl.elems}, cmp{avl.cmp}
+                : tree{new avl_header_node(*avl.tree)}, elems{avl.elems}, cmp{avl.cmp}
             {
             }
 
-            avl_tree(avl_tree && avl) : elems{std::move(avl.elems)}, cmp{avl.cmp}
+            avl_tree(avl_tree && avl) noexcept
+                : elems{std::move(avl.elems)}, cmp{std::move(avl.cmp)}
             {
                 std::swap(this->tree, avl.tree);
             }
 
             avl_tree<E, C> & operator=(const avl_tree<E, C> & avl);
-            avl_tree<E, C> & operator=(avl_tree<E, C> && avl);
+            avl_tree<E, C> & operator=(avl_tree<E, C> && avl) noexcept;
 
-            /// @return iterator na początku
-            iterator begin() const;
+            const_iterator cbegin() const
+            {
+                return const_iterator(get_root()->minimum());
+            }
 
-            /// @return iterator na końcu
-            iterator end() const;
+            const_iterator cend() const
+            {
+                return const_iterator(tree);
+            }
 
-            /// @return odwrócony iterator na początku
-            reverse_iterator rbegin() const;
+            const_reverse_iterator crbegin() const
+            {
+                return const_reverse_iterator(cend());
+            }
 
-            /// @return odwrócony iterator na końcu
-            reverse_iterator rend() const;
+            const_reverse_iterator crend() const
+            {
+                return const_reverse_iterator(cbegin());
+            }
 
-            /// @return liczba elemenów drzewa
-            size_t size() const
+            iterator begin()
+            {
+                return iterator(get_root()->minimum());
+            }
+
+            const_iterator begin() const
+            {
+                return cbegin();
+            }
+
+            iterator end()
+            {
+                return iterator(tree);
+            }
+
+            const_iterator end() const
+            {
+                return cend();
+            }
+
+            reverse_iterator rbegin()
+            {
+                return reverse_iterator(end());
+            }
+
+            const_reverse_iterator rbegin() const
+            {
+                return crbegin();
+            }
+
+            reverse_iterator rend()
+            {
+                return reverse_iterator(begin());
+            }
+
+            const_reverse_iterator rend() const
+            {
+                return crend();
+            }
+
+            size_type size() const
             {
                 return elems;
             }
 
-            /// @return czy drzewo jest puste
             bool empty() const
             {
-                return get_inner_root() == nullptr;
+                return get_root() == nullptr;
             }
 
-            /**
-             * Sprawdzanie występowania elementu w drzewie.
-             * @param element wartość do znalezienia
-             * @return iterator na wartość w drzewie
+            /*!
+             * \brief Checks whether given value is present in the tree.
+             * \param element value to check
+             * \return iterator on the element if found, otherwise iterator at the end
              */
-            iterator find(const E & element) const;
+            iterator find(const_reference element);
 
-            /**
-             * Dodawanie elementu do drzewa.
-             * @param element wartość do dodania
-             * @return iterator na nowy element z infromacją o jego dodaniu
+            /*!
+             * \brief Checks whether given value is present in the tree.
+             * \param element value to check
+             * \return iterator on the element if found, otherwise iterator at the end
              */
-            std::pair<iterator, bool> insert(const E & element);
+            const_iterator find(const_reference element) const;
 
-            /**
-             * Usuwanie elementu z drzewa.
-             * @param element wartość do usunięcia
+            /*!
+             * \brief Adds a new value to the tree.
+             * \param element value to be added
+             * \return iterator at the new element and \c true whether insert was successful,
+             * otherwise \c false
              */
-            void erase(const E & element);
+            std::pair<iterator, bool> insert(const_reference element);
 
-            /// Usuwanie wszystkich elementów z drzewa.
+            /*!
+             * \brief Adds values from initializer list to the tree.
+             * \param il An initializer list with new values
+             */
+            void insert(std::initializer_list<value_type> il);
+
+            /*!
+             * \brief Removes element from the tree if present.
+             * \param element value to be removed
+             * \return number of element removed
+             */
+            size_type erase(const_reference element);
+
+            //! \brief Removes all elements in the tree.
             void clear();
 
         private:
-            /**
-             * Kopiowanie obiektu węzła.
-             * @return kopia obiektu
+            /*!
+             * \brief Removes node from the tree.
+             * @param node node to be removed
              */
-            static node_pointer clone_node(node_pointer node)
-            {
-                return node == nullptr ? nullptr : node->clone();
-            }
-
-            /**
-             * Usuwanie elementu z pamięci.
-             * @param node węzeł do usunięcia
-             */
-            void destroy_node(node_pointer node)
+            void destroy_node(inner_ptr node)
             {
                 node->set_left(nullptr);
                 node->set_right(nullptr);
@@ -135,106 +201,110 @@ namespace algolib
                 delete node;
             }
 
-            /// @return wewnętrzny korzeń drzewa
-            node_pointer get_inner_root() const
+            //! \return root of the tree
+            inner_ptr get_root() const
             {
                 return tree->get_parent();
             }
 
-            /// @param node węzeł, który zostanie wewnętrznym korzeniem
-            void set_inner_root(node_pointer node)
+            //! \param node node that will become the new root of the tree
+            void set_root(inner_ptr node)
             {
                 tree->set_parent(node);
             }
 
-            /**
-             * Sprawdzanie, czy węzeł jest wewnętrznym korzeniem.
-             * @param node węzeł
-             * @return czy węzeł to korzeń
+            /*!
+             * \brief Checks whether given node is a left child.
+             * @param node node to be checked
+             * @return \c true if the node is left child, otherwise \c false
              */
-            bool is_inner_root(node_pointer node)
+            bool is_left_son(inner_ptr node)
             {
-                return node->get_parent()->get_height() == 0;
+                return node->get_parent()->get_height() > 0
+                       && node->get_parent()->get_left() == node;
             }
 
-            /**
-             * Wskazanie poddrzewa, w którym może znaleźć się element.
-             * @param node węzeł
-             * @param element element
-             * @return korzeń poddrzewa z elementem
+            /*!
+             * \brief Checks whether given node is a right child.
+             * @param node node to be checked
+             * @return \c true if the node is right child, otherwise \c false
              */
-            node_pointer get_subtree(node_pointer node, const E & element) const;
+            bool is_right_son(inner_ptr node)
+            {
+                return node->get_parent()->get_height() > 0
+                       && node->get_parent()->get_right() == node;
+            }
+
+            /*!
+             * \brief Determines the subtree where given value might be present.
+             * \param node node
+             * \param element value to find
+             * \return the node if it hold given value, otherwise left child if the value is less or
+             * right child if the value is greater
+             */
+            inner_ptr search(inner_ptr node, const_reference element) const;
+
+            /*!
+             * \brief Searches for node that satisfies given predicate with given value.
+             * \param element value for predicate
+             * \param predicate predicate for node and argument value
+             * \return node that satisfies the predicate if any, otherwise \c nullptr
+             */
+            inner_ptr find_node(const_reference element,
+                                std::function<bool(inner_ptr, const_reference)> predicate) const;
+
+            /*!
+             * \brief Removes inner node from the tree.
+             * \param node node to be removed
+             */
+            void delete_node(inner_ptr node);
+
+            /*!
+             * \brief Replaces the subtree rootted in one node with subtree of another node.
+             * @param node1 root of the subtree to be replaced
+             * @param node2 root of the new subtree
+             */
+            void replace_node(inner_ptr node1, inner_ptr node2);
+
+            /*!
+             * \brief Rotates the node along the egde to its parent.
+             * @param node node to be rotated
+             */
+            void rotate(inner_ptr node);
 
             /**
-             * Wyszukiwanie ojca węzła z daną wartością.
-             * @param element wartość do znalezienia
-             * @return ojciec węzła z wartością
+             * \brief Restores balancing on a path from given node to the root.
+             * \param node node to start balancing from
              */
-            node_pointer find_node_parent(const E & element) const;
+            void balance(node_ptr node);
 
-            /**
-             * Usuwanie elementu z korzenia drzewa.
-             * @param root korzeń drzewa
+            /*!
+             * \brief Counts current node balance.
+             * \param node node
+             * \return balance value
              */
-            void delete_root(node_pointer root);
+            int count_balance(node_ptr node);
 
-            /**
-             * Usuwanie elementu z węzła wewnętrznego drzewa.
-             * @param node węzeł do usunięcia
-             */
-            void delete_node(node_pointer node);
-
-            /**
-             * Zamiana poddrzewa ukorzenionego w danym węźle.
-             * @param node1 węzeł do zamiany
-             * @param node2 korzeń nowego poddrzewa
-             */
-            void replace_subtree(node_pointer node1, node_pointer node2);
-
-            /**
-             * Rotowanie węzła wzdłuż krawędzi z jego ojcem.
-             * @param node węzeł do rotacji
-             */
-            void rotate(node_pointer node);
-
-            /**
-             * Przywracanie balansowania na ścieżce od wierzchołka do korzenia.
-             * @param node wierzchołek początkowy
-             */
-            void balance(node_pointer node);
-
-            /**
-             * Wyliczanie balansu wierzchołka.
-             * @param node węzeł
-             * @return wartość balansu
-             */
-            int count_balance(node_pointer node);
-
-            /// Korzeń drzewa.
-            node_pointer tree = new avl_root_node();
-
-            ///  Liczba elementów drzewa.
-            size_t elems = 0;
-
-            /// Komparator
-            C cmp;
+            header_ptr tree = new avl_header_node();    //!< The tree denoted by its header.
+            size_type elems = 0;    //!< Number of elements.
+            compare cmp;    //!< Comparator.
         };
 
         template <typename E, typename C>
         avl_tree<E, C> & avl_tree<E, C>::operator=(const avl_tree<E, C> & avl)
         {
-            node_pointer tree_orig = this->tree;
+            header_ptr tree_orig = this->tree;
 
             this->elems = avl.elems;
             this->cmp = avl.cmp;
-            this->tree = avl_tree::clone_node(avl.tree);
+            this->tree = new avl_header_node(*avl.tree);
             delete tree_orig;
 
             return *this;
         }
 
         template <typename E, typename C>
-        avl_tree<E, C> & avl_tree<E, C>::operator=(avl_tree<E, C> && avl)
+        avl_tree<E, C> & avl_tree<E, C>::operator=(avl_tree<E, C> && avl) noexcept
         {
             std::swap(this->tree, avl.tree);
             std::swap(this->elems, avl.elems);
@@ -244,231 +314,224 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::iterator avl_tree<E, C>::begin() const
-        {
-            return iterator(get_inner_root()->minimum());
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::iterator avl_tree<E, C>::end() const
-        {
-            return iterator(tree);
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::reverse_iterator avl_tree<E, C>::rbegin() const
-        {
-            return reverse_iterator(get_inner_root()->maximum());
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::reverse_iterator avl_tree<E, C>::rend() const
-        {
-            return reverse_iterator(tree);
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::iterator avl_tree<E, C>::find(const E & element) const
+        typename avl_tree<E, C>::iterator avl_tree<E, C>::find(const_reference element)
         {
             if(empty())
                 return end();
 
-            avl_tree<E, C>::node_pointer node_parent = find_node_parent(element);
+            std::function<bool(inner_ptr, const_reference)> equal =
+                    [this](inner_ptr n, const_reference e) -> bool {
+                return !cmp(n->element, e) && !cmp(e, n->element);
+            };
+            node_ptr the_node = find_node(element, equal);
 
-            if(node_parent == nullptr)
-                return iterator(get_inner_root());
-
-            avl_tree<E, C>::node_pointer the_node = get_subtree(node_parent, element);
-
-            if(the_node == nullptr)
-                return end();
-
-            return iterator(the_node);
+            return the_node == nullptr ? end() : iterator(the_node);
         }
 
         template <typename E, typename C>
-        std::pair<typename avl_tree<E, C>::iterator, bool> avl_tree<E, C>::insert(const E & element)
+        typename avl_tree<E, C>::const_iterator avl_tree<E, C>::find(const_reference element) const
         {
-            avl_tree<E, C>::node_pointer node_parent = find_node_parent(element);
-            avl_tree<E, C>::node_pointer the_node =
-                node_parent == nullptr ? get_inner_root() : get_subtree(node_parent, element);
+            if(empty())
+                return cend();
+
+            std::function<bool(inner_ptr, const_reference)> equal =
+                    [this](inner_ptr n, const_reference e) -> bool {
+                return !cmp(n->element, e) && !cmp(e, n->element);
+            };
+            node_ptr the_node = find_node(element, equal);
+
+            return the_node == nullptr ? cend() : const_iterator(the_node);
+        }
+
+        template <typename E, typename C>
+        std::pair<typename avl_tree<E, C>::iterator, bool>
+                avl_tree<E, C>::insert(const_reference element)
+        {
+            std::function<bool(inner_ptr, const_reference)> child_equal =
+                    [this](inner_ptr n, const_reference e) -> bool {
+                inner_ptr child = search(n, e);
+
+                return child == nullptr || (!cmp(child->element, e) && !cmp(e, child->element));
+            };
+            inner_ptr node_parent = find_node(element, child_equal);
+
+            if(node_parent == nullptr)
+            {
+                auto new_node = new avl_inner_node(element);
+
+                set_root(new_node);
+                ++elems;
+
+                return std::make_pair(iterator(new_node), true);
+            }
+
+            inner_ptr the_node = search(node_parent, element);
 
             if(the_node != nullptr)
                 return std::make_pair(iterator(the_node), false);
 
-            avl_tree<E, C>::node_pointer new_node = new avl_inner_node(element);
+            auto new_node = new avl_inner_node(element);
 
-            if(node_parent != nullptr)
-            {
-                if(cmp(element, node_parent->get_element()))
-                    node_parent->set_left(new_node);
-                else
-                    node_parent->set_right(new_node);
-
-                balance(node_parent);
-            }
+            if(cmp(element, node_parent->element))
+                node_parent->set_left(new_node);
             else
-                set_inner_root(new_node);
+                node_parent->set_right(new_node);
 
+            balance(node_parent);
             ++elems;
 
             return std::make_pair(iterator(new_node), true);
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::erase(const E & element)
+        void avl_tree<E, C>::insert(std::initializer_list<value_type> il)
         {
-            avl_tree<E, C>::node_pointer node_parent = find_node_parent(element);
-            avl_tree<E, C>::node_pointer the_node =
-                node_parent == nullptr ? get_inner_root() : get_subtree(node_parent, element);
+            for(auto i : il)
+                insert(i);
+        }
+
+        template <typename E, typename C>
+        typename avl_tree<E, C>::size_type avl_tree<E, C>::erase(const_reference element)
+        {
+            std::function<bool(inner_ptr, const_reference)> equal =
+                    [this](inner_ptr n, const_reference e) -> bool {
+                return !cmp(n->element, e) && !cmp(e, n->element);
+            };
+            inner_ptr the_node = find_node(element, equal);
 
             if(the_node == nullptr)
-                return;
+                return 0;
 
-            if(node_parent == nullptr)
-                delete_root(the_node);
-            else
-                delete_node(the_node);
+            delete_node(the_node);
+
+            return 1;
         }
 
         template <typename E, typename C>
         void avl_tree<E, C>::clear()
         {
-            delete get_inner_root();
-            set_inner_root(nullptr);
+            delete get_root();
+            set_root(nullptr);
             elems = 0;
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer
-            avl_tree<E, C>::get_subtree(avl_tree<E, C>::node_pointer node, const E & element) const
+        typename avl_tree<E, C>::inner_ptr avl_tree<E, C>::search(inner_ptr node,
+                                                                  const_reference element) const
         {
-            if(!cmp(element, node->get_element()) && !cmp(node->get_element(), element))
-                return node;
-            else if(cmp(element, node->get_element()))
+            if(cmp(element, node->element))
                 return node->get_left();
-            else
+
+            if(cmp(node->element, element))
                 return node->get_right();
+
+            return node;
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer
-            avl_tree<E, C>::find_node_parent(const E & element) const
+        typename avl_tree<E, C>::inner_ptr avl_tree<E, C>::find_node(
+                const_reference element,
+                std::function<bool(inner_ptr, const_reference)> predicate) const
         {
-            typename avl_tree<E, C>::node_pointer tree_iter = get_inner_root();
-            typename avl_tree<E, C>::node_pointer iter_parent = nullptr;
+            inner_ptr node = get_root();
 
-            while(tree_iter != nullptr
-                  && (cmp(tree_iter->get_element(), element)
-                      || cmp(element, tree_iter->get_element())))
-            {
-                iter_parent = tree_iter;
-                tree_iter = get_subtree(tree_iter, element);
-            }
+            while(node != nullptr && !predicate(node, element))
+                node = search(node, element);
 
-            return iter_parent;
+            return node;
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::delete_root(avl_tree<E, C>::node_pointer root)
-        {
-            if(root->get_left() != nullptr && root->get_right() != nullptr)
-                delete_node(root);
-            else
-            {
-                node_pointer new_root =
-                    root->get_left() != nullptr ? root->get_left() : root->get_right();
-
-                set_inner_root(new_root);
-                destroy_node(root);
-            }
-        }
-
-        template <typename E, typename C>
-        void avl_tree<E, C>::delete_node(avl_tree<E, C>::node_pointer node)
+        void avl_tree<E, C>::delete_node(inner_ptr node)
         {
             if(node->get_left() != nullptr && node->get_right() != nullptr)
             {
-                avl_tree<E, C>::node_pointer succ = node->get_right()->minimum();
+                inner_ptr succ = node->get_right()->minimum();
 
-                std::swap(succ->get_element(), node->get_element());
+                std::swap(succ->element, node->element);
                 delete_node(succ);
             }
             else
             {
-                avl_tree<E, C>::node_pointer son =
-                    node->get_left() != nullptr ? node->get_left() : node->get_right();
-                avl_tree<E, C>::node_pointer node_parent = node->get_parent();
+                inner_ptr child =
+                        node->get_left() != nullptr ? node->get_left() : node->get_right();
 
-                replace_subtree(node, son);
-                balance(node_parent);
+                if(node->get_parent()->get_height() > 0)
+                {
+                    node_ptr node_parent = node->get_parent();
+
+                    replace_node(node, child);
+                    balance(node_parent);
+                }
+                else
+                    set_root(child);
+
                 destroy_node(node);
             }
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::replace_subtree(avl_tree<E, C>::node_pointer node1,
-                                             avl_tree<E, C>::node_pointer node2)
+        void avl_tree<E, C>::replace_node(inner_ptr node1, inner_ptr node2)
         {
-            if(is_inner_root(node1))
-                set_inner_root(node2);
-            else if(node1->is_left_son())
+            if(is_left_son(node1))
                 node1->get_parent()->set_left(node2);
-            else if(node1->is_right_son())
+            else if(is_right_son(node1))
                 node1->get_parent()->set_right(node2);
+            else
+                set_root(node2);
 
             node1->set_parent(nullptr);
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::rotate(avl_tree<E, C>::node_pointer node)
+        void avl_tree<E, C>::rotate(inner_ptr node)
         {
-            if(is_inner_root(node))
-                return;
-
-            avl_tree<E, C>::node_pointer upper_node = node->get_parent();
-
-            if(node->is_right_son())
+            if(is_right_son(node))
             {
+                auto upper_node = static_cast<inner_ptr>(node->get_parent());
+
                 upper_node->set_right(node->get_left());
-                replace_subtree(upper_node, node);
+                replace_node(upper_node, node);
                 node->set_left(upper_node);
             }
-            else if(node->is_left_son())
+            else if(is_left_son(node))
             {
+                auto upper_node = static_cast<inner_ptr>(node->get_parent());
+
                 upper_node->set_left(node->get_right());
-                replace_subtree(upper_node, node);
+                replace_node(upper_node, node);
                 node->set_right(upper_node);
             }
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::balance(avl_tree<E, C>::node_pointer node)
+        void avl_tree<E, C>::balance(node_ptr node)
         {
             while(node->get_height() > 0)
             {
                 node->count_height();
 
                 int new_balance = count_balance(node);
+                auto rnode = static_cast<inner_ptr>(node);
 
                 if(new_balance >= 2)
                 {
                     if(count_balance(node->get_left()) > 0)
-                        rotate(node->get_left());
+                        rotate(rnode->get_left());
                     else if(count_balance(node->get_left()) < 0)
                     {
-                        rotate(node->get_left()->get_right());
-                        rotate(node->get_left());
+                        rotate(rnode->get_left()->get_right());
+                        rotate(rnode->get_left());
                     }
                 }
                 else if(new_balance <= -2)
                 {
                     if(count_balance(node->get_right()) < 0)
-                        rotate(node->get_right());
+                        rotate(rnode->get_right());
                     else if(count_balance(node->get_right()) > 0)
                     {
-                        rotate(node->get_right()->get_left());
-                        rotate(node->get_right());
+                        rotate(rnode->get_right()->get_left());
+                        rotate(rnode->get_right());
                     }
                 }
 
@@ -477,7 +540,7 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        int avl_tree<E, C>::count_balance(avl_tree<E, C>::node_pointer node)
+        int avl_tree<E, C>::count_balance(avl_tree<E, C>::node_ptr node)
         {
             int left_height = node->get_left() == nullptr ? 0 : node->get_left()->get_height();
             int right_height = node->get_right() == nullptr ? 0 : node->get_right()->get_height();
@@ -492,64 +555,41 @@ namespace algolib
         class avl_tree<E, C>::avl_node
         {
         public:
-            avl_node()
-            {
-            }
-
+            avl_node() = default;
             virtual ~avl_node() = default;
             avl_node(const avl_node & node) = default;
             avl_node(avl_node && node) = delete;
             avl_node & operator=(const avl_node & node) = default;
             avl_node & operator=(avl_node && node) = delete;
 
-            virtual E & get_element() = 0;
-
             virtual size_t get_height() = 0;
 
-            virtual node_pointer get_left() = 0;
+            virtual node_ptr get_left() = 0;
 
-            virtual void set_left(node_pointer node) = 0;
+            virtual void set_left(node_ptr node) = 0;
 
-            virtual node_pointer get_right() = 0;
+            virtual node_ptr get_right() = 0;
 
-            virtual void set_right(node_pointer node) = 0;
+            virtual void set_right(node_ptr node) = 0;
 
-            virtual node_pointer get_parent() = 0;
+            virtual node_ptr get_parent() = 0;
 
-            virtual void set_parent(node_pointer node) = 0;
+            virtual void set_parent(node_ptr node) = 0;
 
-            /**
-             * Kopiowanie obiektu węzła.
-             * @return kopia obiektu
-             */
-            virtual node_pointer clone() = 0;
-
-            /**
-             * Sprawdzanie, czy węzeł jest lewym synem.
-             * @return czy węzeł to lewy syn
-             */
-            virtual bool is_left_son() = 0;
-
-            /**
-             * Sprawdzanie, czy węzeł jest prawym synem.
-             * @return czy węzeł to prawy syn
-             */
-            virtual bool is_right_son() = 0;
-
-            /// Wyliczanie wysokości wierzchołka.
+            //! \brief Recounts the height of the node.
             virtual void count_height() = 0;
 
-            /**
-             * Wyszukiwanie minimum w poddrzewie.
-             * @return węzeł z minimalną wartością w poddrzewie
+            /*!
+             * \brief Searches in its subtree for the node with minimal value.
+             * @returnthe node with minimal value
              */
-            virtual node_pointer minimum() = 0;
+            virtual node_ptr minimum() = 0;
 
-            /**
-             * Wyszukiwanie maksimum w ukorzenionym poddrzewie.
-             * @return węzeł z maksymalną wartością w poddrzewie
+            /*!
+             * \brief Searches in its subtree for the node with maximal value.
+             * \return the node with maximal value
              */
-            virtual node_pointer maximum() = 0;
+            virtual node_ptr maximum() = 0;
         };
 
 #pragma endregion
@@ -559,140 +599,121 @@ namespace algolib
         class avl_tree<E, C>::avl_inner_node : public avl_tree<E, C>::avl_node
         {
         public:
-            avl_inner_node(const E & elem) : avl_tree<E, C>::avl_node(), element{elem}
+            explicit avl_inner_node(const_reference elem)
+                : avl_tree<E, C>::avl_node(), element{elem}
             {
             }
 
             ~avl_inner_node();
             avl_inner_node(const avl_inner_node & node);
-            avl_inner_node(avl_inner_node && node) = delete;
+            avl_inner_node(avl_inner_node &&) = delete;
             avl_inner_node & operator=(const avl_inner_node & node);
-            avl_inner_node & operator=(avl_inner_node && node) = delete;
+            avl_inner_node & operator=(avl_inner_node &&) = delete;
 
-            E & get_element()
+            value_type element;    //!< Value in the node.
+
+            size_t get_height() override
             {
-                return element;
+                return height;
             }
 
-            size_t get_height()
+            inner_ptr get_left() override
             {
-                return this->height;
+                return left;
             }
 
-            node_pointer get_left()
+            void set_left(node_ptr node) override
             {
-                return this->left;
-            }
+                left = static_cast<inner_ptr>(node);
 
-            void set_left(node_pointer node)
-            {
-                this->left = node;
-
-                if(this->left != nullptr)
-                    this->left->set_parent(this);
+                if(left != nullptr)
+                    left->set_parent(this);
 
                 count_height();
             }
 
-            node_pointer get_right()
+            inner_ptr get_right() override
             {
-                return this->right;
+                return right;
             }
 
-            void set_right(node_pointer node)
+            void set_right(node_ptr node) override
             {
-                this->right = node;
+                right = static_cast<inner_ptr>(node);
 
-                if(this->right != nullptr)
-                    this->right->set_parent(this);
+                if(right != nullptr)
+                    right->set_parent(this);
 
                 count_height();
             }
 
-            node_pointer get_parent()
+            node_ptr get_parent() override
             {
-                return this->parent;
+                return parent;
             }
 
-            void set_parent(node_pointer node)
+            void set_parent(node_ptr node) override
             {
-                this->parent = node;
+                parent = node;
             }
 
-            node_pointer clone()
+            void count_height() override;
+
+            inner_ptr minimum() override
             {
-                return new avl_inner_node(*this);
+                return left == nullptr ? this : left->minimum();
             }
 
-            bool is_left_son();
-
-            bool is_right_son();
-
-            void count_height();
-
-            node_pointer minimum();
-
-            node_pointer maximum();
+            inner_ptr maximum() override
+            {
+                return right == nullptr ? this : right->maximum();
+            }
 
         private:
-            /// Wartość w węźle.
-            E element;
-
-            /// Wysokość węzła.
-            int height = 1;
-
-            /// Lewy syn węzła.
-            node_pointer left = nullptr;
-
-            /// Prawy syn węzła.
-            node_pointer right = nullptr;
-
-            /// Ojciec węzła.
-            node_pointer parent = nullptr;
+            int height = 1;    //!< Height of the node.
+            inner_ptr left = nullptr;    //!< Left child of the node.
+            inner_ptr right = nullptr;    //!< Right child of the node.
+            node_ptr parent = nullptr;    //!< Parent of the node.
         };
 
         template <typename E, typename C>
         avl_tree<E, C>::avl_inner_node::~avl_inner_node()
         {
-            delete this->left;
-            delete this->right;
+            delete left;
+            delete right;
         }
 
         template <typename E, typename C>
         avl_tree<E, C>::avl_inner_node::avl_inner_node(const avl_tree<E, C>::avl_inner_node & node)
-            : avl_tree<E, C>::avl_node(), element{node.element}, height{node.height}
+            : avl_tree<E, C>::avl_node(),
+              element{node.element},
+              height{node.height},
+              left{nullptr},
+              right{nullptr},
+              parent{nullptr}
         {
-            this->set_left(avl_tree::clone_node(node.left));
-            this->set_right(avl_tree::clone_node(node.right));
+            if(node.left != nullptr)
+                set_left(new avl_inner_node(*node.left));
+
+            if(node.right != nullptr)
+                set_right(new avl_inner_node(*node.right));
         }
 
         template <typename E, typename C>
         typename avl_tree<E, C>::avl_inner_node & avl_tree<E, C>::avl_inner_node::
-            operator=(const avl_tree<E, C>::avl_inner_node & node)
+                operator=(const avl_tree<E, C>::avl_inner_node & node)
         {
-            node_pointer left_orig = this->left;
-            node_pointer right_orig = this->right;
+            node_ptr left_orig = this->left;
+            node_ptr right_orig = this->right;
 
             this->element = node.element;
             this->height = node.height;
-            this->set_left(clone_node(node.left));
-            this->set_right(clone_node(node.right));
+            this->set_left(node.left == nullptr ? nullptr : new avl_inner_node(*node.left));
+            this->set_right(node.right == nullptr ? nullptr : new avl_inner_node(*node.right));
             delete left_orig;
             delete right_orig;
 
             return *this;
-        }
-
-        template <typename E, typename C>
-        bool avl_tree<E, C>::avl_inner_node::is_left_son()
-        {
-            return parent != nullptr && parent->get_left() == this;
-        }
-
-        template <typename E, typename C>
-        bool avl_tree<E, C>::avl_inner_node::is_right_son()
-        {
-            return parent != nullptr && parent->get_right() == this;
         }
 
         template <typename E, typename C>
@@ -704,125 +725,94 @@ namespace algolib
             height = std::max(left_height, right_height) + 1;
         }
 
-        template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer avl_tree<E, C>::avl_inner_node::minimum()
-        {
-            return left == nullptr ? this : left->minimum();
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer avl_tree<E, C>::avl_inner_node::maximum()
-        {
-            return right == nullptr ? this : right->maximum();
-        }
-
 #pragma endregion
-#pragma region avl_root_node
+#pragma region avl_header_node
 
         template <typename E, typename C>
-        class avl_tree<E, C>::avl_root_node : public avl_tree<E, C>::avl_node
+        class avl_tree<E, C>::avl_header_node : public avl_tree<E, C>::avl_node
         {
         public:
-            avl_root_node() : avl_tree<E, C>::avl_node()
+            avl_header_node() : avl_tree<E, C>::avl_node()
             {
             }
 
-            ~avl_root_node()
+            ~avl_header_node()
             {
-                delete this->inner;
+                delete inner;
             }
 
-            avl_root_node(const avl_root_node & node) : avl_tree<E, C>::avl_node()
+            avl_header_node(const avl_header_node & node)
+                : avl_tree<E, C>::avl_node(), inner{nullptr}
             {
-                this->set_parent(avl_tree::clone_node(node.inner));
+                if(node.inner != nullptr)
+                    set_parent(new avl_inner_node(*node.inner));
             }
 
-            avl_root_node(avl_root_node && node) = delete;
-            avl_root_node & operator=(const avl_root_node & node);
-            avl_root_node & operator=(avl_root_node && node) = delete;
+            avl_header_node(avl_header_node && node) = delete;
+            avl_header_node & operator=(const avl_header_node & node);
+            avl_header_node & operator=(avl_header_node && node) = delete;
 
-            E & get_element()
-            {
-                throw std::logic_error("Operation not permited.");
-            }
-
-            size_t get_height()
+            size_t get_height() override
             {
                 return 0;
             }
 
-            node_pointer get_left()
+            inner_ptr get_left() override
             {
                 return nullptr;
             }
 
-            void set_left(node_pointer)
+            void set_left(node_ptr) override
             {
             }
 
-            node_pointer get_right()
+            inner_ptr get_right() override
             {
                 return nullptr;
             }
 
-            void set_right(node_pointer)
+            void set_right(node_ptr) override
             {
             }
 
-            node_pointer get_parent()
+            inner_ptr get_parent() override
             {
                 return inner;
             }
 
-            void set_parent(node_pointer node)
+            void set_parent(node_ptr node) override
             {
-                inner = node;
+                inner = static_cast<inner_ptr>(node);
 
                 if(inner != nullptr)
                     inner->set_parent(this);
             }
 
-            node_pointer clone()
-            {
-                return new avl_root_node(*this);
-            }
-
-            bool is_left_son()
-            {
-                return false;
-            }
-
-            bool is_right_son()
-            {
-                return false;
-            }
-
-            void count_height()
+            void count_height() override
             {
             }
 
-            node_pointer minimum()
+            node_ptr minimum() override
             {
                 return this;
             }
 
-            node_pointer maximum()
+            node_ptr maximum() override
             {
                 return this;
             }
 
         private:
-            /// Wewnętrzne wierzchołki.
-            node_pointer inner = nullptr;
+            inner_ptr inner = nullptr;    //!< The real tree denoted by its root.
         };
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_root_node & avl_tree<E, C>::avl_root_node::
-            operator=(const avl_tree<E, C>::avl_root_node & node)
+        typename avl_tree<E, C>::avl_header_node & avl_tree<E, C>::avl_header_node::
+                operator=(const avl_tree<E, C>::avl_header_node & node)
         {
-            node_pointer inner_orig = this->inner;
+            node_ptr inner_orig = this->inner;
 
-            this->set_parent(avl_tree::clone_node(node.inner));
+            this->set_parent(node.inner == nullptr ? nullptr : new avl_inner_node(*node.inner));
             delete inner_orig;
 
             return *this;
@@ -835,63 +825,120 @@ namespace algolib
         class avl_tree<E, C>::avl_iterator
         {
         public:
-            explicit avl_iterator(avl_tree<E, C>::node_pointer node) : current_node{node}
+            using iterator_category = std::bidirectional_iterator_tag;
+            using value_type = E;
+            using reference = value_type &;
+            using pointer = value_type *;
+            using difference_type = ptrdiff_t;
+
+            explicit avl_iterator(node_ptr node) : current_node{node}
             {
             }
 
-            /**
-             * Dereferencja iteratora.
-             * @return wartość w iteratorze
-             */
-            E & operator*() const;
+            avl_iterator(const avl_iterator & it) : current_node{it.current_node}
+            {
+            }
 
-            /**
-             * Uzyskanie składowej spod iteratora.
-             * @return wartość w iteratorze
-             */
-            E * operator->() const;
+            avl_iterator(avl_iterator && it) noexcept : current_node{it.current_node}
+            {
+            }
 
-            /**
-             * Porównanie iteratorów na równość.
-             * @return czy iteratory wskazują na ten sam węzeł
-             */
+            avl_iterator & operator=(const avl_iterator & it)
+            {
+                this->current_node = it.current_node;
+            }
+
+            avl_iterator & operator=(avl_iterator && it) noexcept
+            {
+                this->current_node = it.current_node;
+            }
+
+            reference operator*() const
+            {
+                return static_cast<inner_ptr>(current_node)->element;
+            }
+
+            pointer operator->() const
+            {
+                return &(operator*());
+            }
+
+            avl_iterator & operator++();
+
+            const avl_iterator operator++(int);
+
+            avl_iterator & operator--();
+
+            const avl_iterator operator--(int);
+
             bool operator==(const avl_iterator & it) const;
 
-            /**
-             * Porównanie iteratorów na różność.
-             * @return czy iteratory wskazują na różne węzły
-             */
             bool operator!=(const avl_iterator & it) const;
 
-        protected:
-            /**
-             * Wyznaczanie następnika węzła w drzewie.
-             * @param node węzeł
-             * @return węzeł z następną wartością
-             */
-            avl_tree<E, C>::node_pointer successor(avl_tree<E, C>::node_pointer node);
-
-            /**
-             * Wyznaczanie poprzednika węzła w drzewie.
-             * @param node węzeł
-             * @return węzeł z poprzednią wartością
-             */
-            avl_tree<E, C>::node_pointer predecessor(avl_tree<E, C>::node_pointer node);
-
-            /// Aktualny węzeł.
-            avl_tree<E, C>::node_pointer current_node;
+        private:
+            node_ptr current_node;
         };
 
         template <typename E, typename C>
-        E & avl_tree<E, C>::avl_iterator::operator*() const
+        typename avl_tree<E, C>::avl_iterator & avl_tree<E, C>::avl_iterator::operator++()
         {
-            return this->current_node->get_element();
+            if(current_node->get_height() > 0)
+            {
+                if(current_node->get_right() != nullptr)
+                    current_node = current_node->get_right()->minimum();
+                else
+                {
+                    while(current_node->get_parent()->get_height() > 0
+                          && current_node->get_parent()->get_left() != current_node)
+                        current_node = current_node->get_parent();
+
+                    current_node = current_node->get_parent();
+                }
+            }
+
+            return *this;
         }
 
         template <typename E, typename C>
-        E * avl_tree<E, C>::avl_iterator::operator->() const
+        const typename avl_tree<E, C>::avl_iterator avl_tree<E, C>::avl_iterator::operator++(int)
         {
-            return &this->current_node->get_element();
+            avl_tree<E, C>::avl_const_iterator result = *this;
+
+            ++(*this);
+
+            return result;
+        }
+
+        template <typename E, typename C>
+        typename avl_tree<E, C>::avl_iterator & avl_tree<E, C>::avl_iterator::operator--()
+        {
+            if(current_node->get_height() > 0)
+            {
+                if(current_node->get_left() != nullptr)
+                    current_node = current_node->get_left()->maximum();
+                else
+                {
+                    while(current_node->get_parent()->get_height() > 0
+                          && current_node->get_parent()->get_right() != current_node)
+                        current_node = current_node->get_parent();
+
+                    current_node = current_node->get_parent();
+                }
+            }
+            else
+                current_node = current_node->get_parent()->maximum();
+
+            return *this;
+        }
+
+        template <typename E, typename C>
+        const typename avl_tree<E, C>::avl_iterator avl_tree<E, C>::avl_iterator::operator--(int)
+        {
+            avl_tree<E, C>::avl_const_iterator result = *this;
+
+            --(*this);
+
+            return result;
         }
 
         template <typename E, typename C>
@@ -906,70 +953,97 @@ namespace algolib
             return this->current_node != it.current_node;
         }
 
-        template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer
-            avl_tree<E, C>::avl_iterator::successor(avl_tree<E, C>::node_pointer node)
-        {
-            avl_tree<E, C>::node_pointer succ = node;
-
-            if(node->get_right() != nullptr)
-                return node->get_right()->minimum();
-
-            while(succ->get_height() > 0 && !succ->is_left_son())
-                succ = succ->get_parent();
-
-            return succ->get_height() <= 0 ? succ : succ->get_parent();
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::node_pointer
-            avl_tree<E, C>::avl_iterator::predecessor(avl_tree<E, C>::node_pointer node)
-        {
-            avl_tree<E, C>::node_pointer pred = node;
-
-            if(node->get_left() != nullptr)
-                return node->get_left()->maximum();
-
-            while(pred->get_height() > 0 && !pred->is_right_son())
-                pred = pred->get_parent();
-
-            return pred->get_height() <= 0 ? pred : pred->get_parent();
-        }
-
 #pragma endregion
-#pragma region avl_succ_iterator
+#pragma region avl_const_iterator
 
         template <typename E, typename C>
-        class avl_tree<E, C>::avl_succ_iterator : public avl_tree<E, C>::avl_iterator
+        class avl_tree<E, C>::avl_const_iterator
         {
         public:
-            explicit avl_succ_iterator(avl_tree<E, C>::node_pointer node) : avl_iterator(node)
+            using iterator_category = std::bidirectional_iterator_tag;
+            using value_type = E;
+            using reference = const value_type &;
+            using pointer = const value_type *;
+            using difference_type = ptrdiff_t;
+
+            explicit avl_const_iterator(node_ptr node) : current_node{node}
             {
             }
 
-            avl_succ_iterator & operator++();
+            avl_const_iterator(const avl_iterator & it) : current_node{it.current_node}
+            {
+            }
 
-            avl_succ_iterator operator++(int);
+            avl_const_iterator(const avl_const_iterator & it) : current_node{it.current_node}
+            {
+            }
 
-            avl_succ_iterator & operator--();
+            avl_const_iterator(avl_const_iterator && it) noexcept : current_node{it.current_node}
+            {
+            }
 
-            avl_succ_iterator operator--(int);
+            avl_const_iterator & operator=(const avl_const_iterator & it)
+            {
+                this->current_node = it.current_node;
+            }
+
+            avl_const_iterator & operator=(avl_const_iterator && it) noexcept
+            {
+                this->current_node = it.current_node;
+            }
+
+            reference operator*() const
+            {
+                return static_cast<inner_ptr>(current_node)->element;
+            }
+
+            pointer operator->() const
+            {
+                return &(operator*());
+            }
+
+            avl_const_iterator & operator++();
+
+            const avl_const_iterator operator++(int);
+
+            avl_const_iterator & operator--();
+
+            const avl_const_iterator operator--(int);
+
+            bool operator==(const avl_const_iterator & it) const;
+
+            bool operator!=(const avl_const_iterator & it) const;
+
+        private:
+            node_ptr current_node;
         };
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_succ_iterator & avl_tree<E, C>::avl_succ_iterator::operator++()
+        typename avl_tree<E, C>::avl_const_iterator & avl_tree<E, C>::avl_const_iterator::
+                operator++()
         {
-            if(this->current_node->get_height() > 0)
-                this->current_node = this->successor(this->current_node);
+            if(current_node->get_height() > 0)
+            {
+                if(current_node->get_right() != nullptr)
+                    current_node = current_node->get_right()->minimum();
+                else
+                {
+                    while(current_node->get_parent()->get_height() > 0
+                          && current_node->get_parent()->get_left() != current_node)
+                        current_node = current_node->get_parent();
+
+                    current_node = current_node->get_parent();
+                }
+            }
 
             return *this;
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_succ_iterator avl_tree<E, C>::avl_succ_iterator::
-            operator++(int)
+        const typename avl_tree<E, C>::avl_const_iterator avl_tree<E, C>::avl_const_iterator::
+                operator++(int)
         {
-            avl_tree<E, C>::avl_succ_iterator result = *this;
+            avl_tree<E, C>::avl_const_iterator result = *this;
 
             ++(*this);
 
@@ -977,85 +1051,51 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_succ_iterator & avl_tree<E, C>::avl_succ_iterator::operator--()
+        typename avl_tree<E, C>::avl_const_iterator & avl_tree<E, C>::avl_const_iterator::
+                operator--()
         {
-            this->current_node = this->current_node->get_height() > 0
-                                     ? this->predecessor(this->current_node)
-                                     : this->current_node->get_parent()->maximum();
-
-            return *this;
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::avl_succ_iterator avl_tree<E, C>::avl_succ_iterator::
-            operator--(int)
-        {
-            avl_tree<E, C>::avl_iterator result = *this;
-
-            --(*this);
-
-            return result;
-        }
-
-#pragma endregion
-#pragma region avl_pred_iterator
-
-        template <typename E, typename C>
-        class avl_tree<E, C>::avl_pred_iterator : public avl_tree<E, C>::avl_iterator
-        {
-        public:
-            explicit avl_pred_iterator(avl_tree<E, C>::node_pointer node) : avl_iterator(node)
+            if(current_node->get_height() > 0)
             {
+                if(current_node->get_left() != nullptr)
+                    current_node = current_node->get_left()->maximum();
+                else
+                {
+                    while(current_node->get_parent()->get_height() > 0
+                          && current_node->get_parent()->get_right() != current_node)
+                        current_node = current_node->get_parent();
+
+                    current_node = current_node->get_parent();
+                }
             }
-
-            avl_pred_iterator & operator++();
-
-            avl_pred_iterator operator++(int);
-
-            avl_pred_iterator & operator--();
-
-            avl_pred_iterator operator--(int);
-        };
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::avl_pred_iterator & avl_tree<E, C>::avl_pred_iterator::operator++()
-        {
-            if(this->current_node->get_height() > 0)
-                this->current_node = this->predecessor(this->current_node);
+            else
+                current_node = current_node->get_parent()->maximum();
 
             return *this;
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_pred_iterator avl_tree<E, C>::avl_pred_iterator::
-            operator++(int)
+        const typename avl_tree<E, C>::avl_const_iterator avl_tree<E, C>::avl_const_iterator::
+                operator--(int)
         {
-            avl_tree<E, C>::avl_pred_iterator result = *this;
-
-            ++(*this);
-
-            return result;
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::avl_pred_iterator & avl_tree<E, C>::avl_pred_iterator::operator--()
-        {
-            this->current_node = this->current_node->get_height() > 0
-                                     ? this->successor(this->current_node)
-                                     : this->current_node->get_parent()->minimum();
-
-            return *this;
-        }
-
-        template <typename E, typename C>
-        typename avl_tree<E, C>::avl_pred_iterator avl_tree<E, C>::avl_pred_iterator::
-            operator--(int)
-        {
-            avl_tree<E, C>::avl_pred_iterator result = *this;
+            avl_tree<E, C>::avl_const_iterator result = *this;
 
             --(*this);
 
             return result;
+        }
+
+        template <typename E, typename C>
+        bool avl_tree<E, C>::avl_const_iterator::
+                operator==(const avl_tree<E, C>::avl_const_iterator & it) const
+        {
+            return this->current_node == it.current_node;
+        }
+
+        template <typename E, typename C>
+        bool avl_tree<E, C>::avl_const_iterator::
+                operator!=(const avl_tree<E, C>::avl_const_iterator & it) const
+        {
+            return this->current_node != it.current_node;
         }
 
 #pragma endregion

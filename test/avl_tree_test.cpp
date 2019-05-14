@@ -8,11 +8,14 @@ class AVLTreeTest : public ::testing::Test
 {
 protected:
     alst::avl_tree<int> test_object;
+    const alst::avl_tree<int> const_test_object;
     const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};
 
 public:
     AVLTreeTest()
-        : test_object{alst::avl_tree<int>({10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26})}
+        : test_object{alst::avl_tree<int>({10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26})},
+          const_test_object{
+                  alst::avl_tree<int>({10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26})}
     {
     }
 
@@ -25,8 +28,17 @@ TEST_F(AVLTreeTest, testCopyConstructor)
 
     ASSERT_EQ(test_object.size(), copy_object.size());
 
-    for(const auto & e : test_object)
-        EXPECT_NE(copy_object.end(), copy_object.find(e));
+    auto test_it = test_object.cbegin();
+    auto copy_it = copy_object.cbegin();
+
+    while(test_it != test_object.cend() && copy_it != copy_object.cend())
+    {
+        EXPECT_EQ(*test_it, *copy_it);
+        EXPECT_NE(&(*test_it), &(*copy_it));
+
+        ++test_it;
+        ++copy_it;
+    }
 }
 
 TEST_F(AVLTreeTest, testMoveConstructor)
@@ -49,8 +61,17 @@ TEST_F(AVLTreeTest, testCopyAssignment)
 
     ASSERT_EQ(test_object.size(), copy_object.size());
 
-    for(const auto & e : test_object)
-        EXPECT_NE(copy_object.end(), copy_object.find(e));
+    auto test_it = test_object.cbegin();
+    auto copy_it = copy_object.cbegin();
+
+    while(test_it != test_object.cend() && copy_it != copy_object.cend())
+    {
+        EXPECT_EQ(*test_it, *copy_it);
+        EXPECT_NE(&(*test_it), &(*copy_it));
+
+        ++test_it;
+        ++copy_it;
+    }
 }
 
 TEST_F(AVLTreeTest, testMoveAssignment)
@@ -65,6 +86,16 @@ TEST_F(AVLTreeTest, testMoveAssignment)
 
     for(const auto & e : numbers)
         EXPECT_NE(move_object.end(), move_object.find(e));
+}
+
+TEST_F(AVLTreeTest, testSelfAssignment)
+{
+    test_object = test_object;
+
+    ASSERT_EQ(numbers.size(), test_object.size());
+
+    for(const auto & e : numbers)
+        EXPECT_NE(test_object.end(), test_object.find(e));
 }
 
 TEST_F(AVLTreeTest, testEmptyWhenEmpty)
@@ -121,6 +152,28 @@ TEST_F(AVLTreeTest, testFindWhenOuterElement)
     }
 }
 
+TEST_F(AVLTreeTest, testFindWhenConstObjectAndPresentElement)
+{
+    for(auto i : numbers)
+    {
+        auto result = const_test_object.find(i);
+
+        EXPECT_NE(const_test_object.end(), result);
+    }
+}
+
+TEST_F(AVLTreeTest, testFindWhenConstObjectAndOuterElement)
+{
+    std::vector<int> elems = {111, 140, 187};
+
+    for(auto i : elems)
+    {
+        auto result = const_test_object.find(i);
+
+        EXPECT_EQ(const_test_object.end(), result);
+    }
+}
+
 TEST_F(AVLTreeTest, testIteratorWhenFullForLoop)
 {
     std::vector<int> result;
@@ -147,6 +200,23 @@ TEST_F(AVLTreeTest, testIteratorWhenRangeBasedForLoop)
     EXPECT_EQ(sorted_numbers, result);
 }
 
+TEST_F(AVLTreeTest, testConstIteratorWhenAccessElement)
+{
+    std::vector<int> sorted_numbers = numbers;
+    auto test_it = test_object.cbegin();
+
+    std::sort(sorted_numbers.begin(), sorted_numbers.end());
+
+    for(size_t i = 0; i < test_object.size(); ++i)
+    {
+        int result = *test_it;
+
+        ++test_it;
+
+        EXPECT_EQ(sorted_numbers[i], result);
+    }
+}
+
 TEST_F(AVLTreeTest, testReverseIterator)
 {
     std::vector<int> result;
@@ -158,6 +228,36 @@ TEST_F(AVLTreeTest, testReverseIterator)
     std::sort(reversed_numbers.rbegin(), reversed_numbers.rend());
 
     EXPECT_EQ(reversed_numbers, result);
+}
+
+TEST_F(AVLTreeTest, testReverseIteratorWhenConstObject)
+{
+    std::vector<int> result;
+    std::vector<int> reversed_numbers = numbers;
+
+    for(auto it = const_test_object.rbegin(); it != const_test_object.rend(); ++it)
+        result.push_back(*it);
+
+    std::sort(reversed_numbers.rbegin(), reversed_numbers.rend());
+
+    EXPECT_EQ(reversed_numbers, result);
+}
+
+TEST_F(AVLTreeTest, testConstReverseIteratorWhenAccessElement)
+{
+    std::vector<int> sorted_numbers = numbers;
+    auto test_it = test_object.crbegin();
+
+    std::sort(sorted_numbers.rbegin(), sorted_numbers.rend());
+
+    for(size_t i = 0; i < test_object.size(); ++i)
+    {
+        int result = *test_it;
+
+        ++test_it;
+
+        EXPECT_EQ(sorted_numbers[i], result);
+    }
 }
 
 TEST_F(AVLTreeTest, testInsertWhenNewElement)
@@ -196,8 +296,9 @@ TEST_F(AVLTreeTest, testEraseWhenPresentElement)
 
     for(auto i : elems)
     {
-        test_object.erase(i);
+        size_t result = test_object.erase(i);
 
+        EXPECT_EQ(1, result);
         EXPECT_EQ(test_object.end(), test_object.find(i));
     }
 }
@@ -209,8 +310,9 @@ TEST_F(AVLTreeTest, testEraseRootWhenTwoElements1)
 
     test_object = alst::avl_tree<int>({root, elem});
 
-    test_object.erase(root);
+    size_t result = test_object.erase(root);
 
+    EXPECT_EQ(1, result);
     EXPECT_EQ(test_object.end(), test_object.find(root));
     EXPECT_NE(test_object.end(), test_object.find(elem));
 }
@@ -222,8 +324,9 @@ TEST_F(AVLTreeTest, testEraseRootWhenTwoElements2)
 
     test_object = alst::avl_tree<int>({root, elem});
 
-    test_object.erase(root);
+    size_t result = test_object.erase(root);
 
+    EXPECT_EQ(1, result);
     EXPECT_EQ(test_object.end(), test_object.find(root));
     EXPECT_NE(test_object.end(), test_object.find(elem));
 }
@@ -234,8 +337,9 @@ TEST_F(AVLTreeTest, testEraseRootWhenOneElement)
 
     test_object = alst::avl_tree<int>({root});
 
-    test_object.erase(root);
+    size_t result = test_object.erase(root);
 
+    EXPECT_EQ(1, result);
     EXPECT_EQ(test_object.end(), test_object.find(root));
     EXPECT_TRUE(test_object.empty());
 }
@@ -244,8 +348,9 @@ TEST_F(AVLTreeTest, testEraseWhenEmpty)
 {
     test_object = alst::avl_tree<int>();
 
-    test_object.erase(0);
+    size_t result = test_object.erase(0);
 
+    EXPECT_EQ(0, result);
     EXPECT_TRUE(test_object.empty());
 }
 
@@ -255,8 +360,9 @@ TEST_F(AVLTreeTest, testEraseWhenOuterElement)
 
     for(auto i : elems)
     {
-        test_object.erase(i);
+        size_t result = test_object.erase(i);
 
+        EXPECT_EQ(0, result);
         EXPECT_EQ(test_object.end(), test_object.find(i));
     }
 }
