@@ -50,7 +50,7 @@ namespace algolib
             using difference_type = typename std::iterator_traits<iterator>::difference_type;
             using size_type = size_t;
 
-            explicit avl_tree(const C & cmp = C()) : cmp{cmp}
+            explicit avl_tree(const compare & cmp = compare()) : cmp{cmp}
             {
             }
 
@@ -216,7 +216,7 @@ namespace algolib
              */
             inner_ptr find_node(
                     const_reference element,
-                    std::function<bool(avl_tree<E, C>::inner_ptr, const_reference)> predicate) const;
+                    std::function<bool(inner_ptr, const_reference)> predicate) const;
 
             /*!
              * \brief Removes inner node from the tree.
@@ -333,7 +333,7 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::erase(const_reference element)
+        typename avl_tree<E, C>::size_type avl_tree<E, C>::erase(const_reference element)
         {
             std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
                                                                      const_reference e) -> bool {
@@ -342,9 +342,11 @@ namespace algolib
             inner_ptr the_node = find_node(element, equal);
 
             if(the_node == nullptr)
-                return;
+                return 0;
 
             delete_node(the_node);
+            
+            return 1;
         }
 
         template <typename E, typename C>
@@ -371,9 +373,9 @@ namespace algolib
         template <typename E, typename C>
         typename avl_tree<E, C>::inner_ptr avl_tree<E, C>::find_node(
                 const_reference element,
-                std::function<bool(avl_tree<E, C>::inner_ptr, const_reference)> predicate) const
+                std::function<bool(inner_ptr, const_reference)> predicate) const
         {
-            typename avl_tree<E, C>::inner_ptr node = get_root();
+            inner_ptr node = get_root();
 
             while(node != nullptr && !predicate(node, element))
                 node = search(node, element);
@@ -386,7 +388,7 @@ namespace algolib
         {
             if(node->get_left() != nullptr && node->get_right() != nullptr)
             {
-                avl_tree<E, C>::inner_ptr succ = node->get_right()->minimum();
+                inner_ptr succ = node->get_right()->minimum();
 
                 std::swap(succ->element, node->element);
                 delete_node(succ);
