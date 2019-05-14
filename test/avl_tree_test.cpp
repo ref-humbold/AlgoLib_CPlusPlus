@@ -8,11 +8,14 @@ class AVLTreeTest : public ::testing::Test
 {
 protected:
     alst::avl_tree<int> test_object;
+    const alst::avl_tree<int> const_test_object;
     const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};
 
 public:
     AVLTreeTest()
-        : test_object{alst::avl_tree<int>({10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26})}
+        : test_object{alst::avl_tree<int>({10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26})},
+          const_test_object{
+                  alst::avl_tree<int>({10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26})}
     {
     }
 
@@ -149,6 +152,28 @@ TEST_F(AVLTreeTest, testFindWhenOuterElement)
     }
 }
 
+TEST_F(AVLTreeTest, testFindWhenConstObjectAndPresentElement)
+{
+    for(auto i : numbers)
+    {
+        auto result = const_test_object.find(i);
+
+        EXPECT_NE(const_test_object.end(), result);
+    }
+}
+
+TEST_F(AVLTreeTest, testFindWhenConstObjectAndOuterElement)
+{
+    std::vector<int> elems = {111, 140, 187};
+
+    for(auto i : elems)
+    {
+        auto result = const_test_object.find(i);
+
+        EXPECT_EQ(const_test_object.end(), result);
+    }
+}
+
 TEST_F(AVLTreeTest, testIteratorWhenFullForLoop)
 {
     std::vector<int> result;
@@ -177,7 +202,6 @@ TEST_F(AVLTreeTest, testIteratorWhenRangeBasedForLoop)
 
 TEST_F(AVLTreeTest, testConstIteratorWhenAccessElement)
 {
-    int result;
     std::vector<int> sorted_numbers = numbers;
     auto test_it = test_object.cbegin();
 
@@ -185,7 +209,8 @@ TEST_F(AVLTreeTest, testConstIteratorWhenAccessElement)
 
     for(size_t i = 0; i < test_object.size(); ++i)
     {
-        result = *test_it;
+        int result = *test_it;
+
         ++test_it;
 
         EXPECT_EQ(sorted_numbers[i], result);
@@ -205,9 +230,21 @@ TEST_F(AVLTreeTest, testReverseIterator)
     EXPECT_EQ(reversed_numbers, result);
 }
 
+TEST_F(AVLTreeTest, testReverseIteratorWhenConstObject)
+{
+    std::vector<int> result;
+    std::vector<int> reversed_numbers = numbers;
+
+    for(auto it = const_test_object.rbegin(); it != const_test_object.rend(); ++it)
+        result.push_back(*it);
+
+    std::sort(reversed_numbers.rbegin(), reversed_numbers.rend());
+
+    EXPECT_EQ(reversed_numbers, result);
+}
+
 TEST_F(AVLTreeTest, testConstReverseIteratorWhenAccessElement)
 {
-    int result;
     std::vector<int> sorted_numbers = numbers;
     auto test_it = test_object.crbegin();
 
@@ -215,7 +252,8 @@ TEST_F(AVLTreeTest, testConstReverseIteratorWhenAccessElement)
 
     for(size_t i = 0; i < test_object.size(); ++i)
     {
-        result = *test_it;
+        int result = *test_it;
+
         ++test_it;
 
         EXPECT_EQ(sorted_numbers[i], result);
@@ -258,8 +296,9 @@ TEST_F(AVLTreeTest, testEraseWhenPresentElement)
 
     for(auto i : elems)
     {
-        test_object.erase(i);
+        size_t result = test_object.erase(i);
 
+        EXPECT_EQ(1, result);
         EXPECT_EQ(test_object.end(), test_object.find(i));
     }
 }
@@ -271,8 +310,9 @@ TEST_F(AVLTreeTest, testEraseRootWhenTwoElements1)
 
     test_object = alst::avl_tree<int>({root, elem});
 
-    test_object.erase(root);
+    size_t result = test_object.erase(root);
 
+    EXPECT_EQ(1, result);
     EXPECT_EQ(test_object.end(), test_object.find(root));
     EXPECT_NE(test_object.end(), test_object.find(elem));
 }
@@ -284,8 +324,9 @@ TEST_F(AVLTreeTest, testEraseRootWhenTwoElements2)
 
     test_object = alst::avl_tree<int>({root, elem});
 
-    test_object.erase(root);
+    size_t result = test_object.erase(root);
 
+    EXPECT_EQ(1, result);
     EXPECT_EQ(test_object.end(), test_object.find(root));
     EXPECT_NE(test_object.end(), test_object.find(elem));
 }
@@ -296,8 +337,9 @@ TEST_F(AVLTreeTest, testEraseRootWhenOneElement)
 
     test_object = alst::avl_tree<int>({root});
 
-    test_object.erase(root);
+    size_t result = test_object.erase(root);
 
+    EXPECT_EQ(1, result);
     EXPECT_EQ(test_object.end(), test_object.find(root));
     EXPECT_TRUE(test_object.empty());
 }
@@ -306,8 +348,9 @@ TEST_F(AVLTreeTest, testEraseWhenEmpty)
 {
     test_object = alst::avl_tree<int>();
 
-    test_object.erase(0);
+    size_t result = test_object.erase(0);
 
+    EXPECT_EQ(0, result);
     EXPECT_TRUE(test_object.empty());
 }
 
@@ -317,8 +360,9 @@ TEST_F(AVLTreeTest, testEraseWhenOuterElement)
 
     for(auto i : elems)
     {
-        test_object.erase(i);
+        size_t result = test_object.erase(i);
 
+        EXPECT_EQ(0, result);
         EXPECT_EQ(test_object.end(), test_object.find(i));
     }
 }
