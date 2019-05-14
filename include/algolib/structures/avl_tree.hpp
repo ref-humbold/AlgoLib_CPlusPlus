@@ -28,6 +28,7 @@ namespace algolib
             class avl_inner_node;
             class avl_header_node;
 
+            class avl_iterator;
             class avl_const_iterator;
 
             using node_ptr = avl_node *;
@@ -54,10 +55,9 @@ namespace algolib
             {
             }
 
-            avl_tree(std::initializer_list<value_type> init_list, const compare & cmp = compare()) : cmp{cmp}
+            avl_tree(std::initializer_list<value_type> il, const compare & cmp = compare()) : cmp{cmp}
             {
-                for(auto i : init_list)
-                    insert(i);
+                insert(il);
             }
 
             ~avl_tree()
@@ -157,11 +157,17 @@ namespace algolib
             iterator find(const_reference element) const;
 
             /*!
-             * \brief Adds new value to the tree.
+             * \brief Adds a new value to the tree.
              * \param element value to be added
              * \return iterator at the new element and \c true whether insert was successful, otherwise \c false
              */
             std::pair<iterator, bool> insert(const_reference element);
+
+            /*!
+             * \brief Adds values from initializer list to the tree.
+             * \param il An initializer list with new values
+             */
+            void insert(std::initializer_list<value_type> il);
 
             /*!
              * \brief Removes element from the tree if present.
@@ -350,6 +356,13 @@ namespace algolib
             ++elems;
 
             return std::make_pair(iterator(new_node), true);
+        }
+        
+        template <typename E, typename C>
+        void avl_tree<E, C>::insert(std::initializer_list<value_type> il)
+        {
+            for(auto i : init_list)
+                insert(i);
         }
 
         template <typename E, typename C>
