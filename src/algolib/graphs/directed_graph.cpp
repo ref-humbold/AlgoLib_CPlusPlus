@@ -5,6 +5,16 @@ namespace algr = algolib::graphs;
 
 #pragma region directed_simple_graph
 
+algr::directed_simple_graph::directed_simple_graph(const algr::undirected_simple_graph & ugraph)
+    : simple_graph(ugraph.get_vertices_number())
+{
+    for(auto e : ugraph.get_edges())
+    {
+        add_edge(std::get<0>(e), std::get<1>(e));
+        add_edge(std::get<1>(e), std::get<0>(e));
+    }
+}
+
 size_t algr::directed_simple_graph::get_edges_number() const
 {
     size_t edges_number = 0;
@@ -62,6 +72,17 @@ void algr::directed_simple_graph::reverse()
 #pragma endregion
 #pragma region directed_weighted_simple_graph
 
+algr::directed_weighted_simple_graph::directed_weighted_simple_graph(
+        const algr::undirected_weighted_simple_graph & uwgraph)
+    : directed_simple_graph(uwgraph.get_vertices_number())
+{
+    for(auto e : uwgraph.get_weighted_edges())
+    {
+        add_weighted_edge(std::get<0>(e), std::get<1>(e), std::get<2>(e));
+        add_weighted_edge(std::get<1>(e), std::get<2>(e), std::get<2>(e));
+    }
+}
+
 std::vector<wedge_t> algr::directed_weighted_simple_graph::get_weighted_edges() const
 {
     std::vector<wedge_t> wedges;
@@ -86,7 +107,7 @@ void algr::directed_weighted_simple_graph::add_weighted_edge(vertex_t vertex1, v
 }
 
 std::vector<wvertex_t>
-    algr::directed_weighted_simple_graph::get_weighted_neighbours(vertex_t vertex) const
+        algr::directed_weighted_simple_graph::get_weighted_neighbours(vertex_t vertex) const
 {
     if(vertex >= get_vertices_number())
         throw no_such_vertex_exception(std::to_string(vertex));

@@ -9,11 +9,11 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-#include <numeric>
 #include <set>
 #include <tuple>
 #include <vector>
-#include "graph.hpp"
+#include <numeric>
+#include "undirected_graph.hpp"
 
 namespace algolib
 {
@@ -48,6 +48,8 @@ namespace algolib
                     add_edge(std::get<0>(e), std::get<1>(e));
             }
 
+            directed_simple_graph(const undirected_simple_graph & ugraph);
+
             virtual ~directed_simple_graph() = default;
             directed_simple_graph(const directed_simple_graph &) = default;
             directed_simple_graph(directed_simple_graph &&) = default;
@@ -62,7 +64,7 @@ namespace algolib
 
             size_t get_indegree(vertex_t vertex) const override;
 
-            virtual void reverse() override;
+            void reverse() override;
         };
 
 #pragma endregion
@@ -83,11 +85,13 @@ namespace algolib
                     add_weighted_edge(std::get<0>(e), std::get<1>(e), std::get<2>(e));
             }
 
+            directed_weighted_simple_graph(const undirected_weighted_simple_graph & uwgraph);
+
             virtual ~directed_weighted_simple_graph() = default;
             directed_weighted_simple_graph(const directed_weighted_simple_graph &) = default;
             directed_weighted_simple_graph(directed_weighted_simple_graph &&) = default;
             directed_weighted_simple_graph &
-                operator=(const directed_weighted_simple_graph &) = default;
+                    operator=(const directed_weighted_simple_graph &) = default;
             directed_weighted_simple_graph & operator=(directed_weighted_simple_graph &&) = default;
 
             std::vector<wedge_t> get_weighted_edges() const override;

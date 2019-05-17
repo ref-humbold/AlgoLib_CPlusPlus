@@ -9,10 +9,9 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-#include <numeric>
 #include <tuple>
 #include <vector>
-#include "directed_graph.hpp"
+#include <numeric>
 #include "graph.hpp"
 
 namespace algolib
@@ -58,8 +57,6 @@ namespace algolib
             void add_edge(vertex_t vertex1, vertex_t vertex2) override;
 
             size_t get_indegree(vertex_t vertex) const override;
-
-            operator directed_simple_graph() const;
         };
 
 #pragma endregion
@@ -85,17 +82,15 @@ namespace algolib
             undirected_weighted_simple_graph(const undirected_weighted_simple_graph &) = default;
             undirected_weighted_simple_graph(undirected_weighted_simple_graph &&) = default;
             undirected_weighted_simple_graph &
-                operator=(const undirected_weighted_simple_graph &) = default;
+                    operator=(const undirected_weighted_simple_graph &) = default;
             undirected_weighted_simple_graph &
-                operator=(undirected_weighted_simple_graph &&) = default;
+                    operator=(undirected_weighted_simple_graph &&) = default;
 
             std::vector<wedge_t> get_weighted_edges() const override;
 
             void add_weighted_edge(vertex_t vertex1, vertex_t vertex2, weight_t weight) override;
 
             std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const override;
-
-            operator directed_weighted_simple_graph() const;
         };
 
 #pragma endregion

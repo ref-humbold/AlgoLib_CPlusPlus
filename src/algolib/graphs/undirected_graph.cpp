@@ -55,16 +55,6 @@ size_t algr::undirected_simple_graph::get_indegree(vertex_t vertex) const
     return get_outdegree(vertex);
 }
 
-algr::undirected_simple_graph::operator algr::directed_simple_graph() const
-{
-    std::vector<edge_t> diedges = get_edges();
-
-    for(auto e : get_edges())
-        diedges.emplace_back(std::get<1>(e), std::get<0>(e));
-
-    return algr::directed_simple_graph(get_vertices_number(), diedges);
-}
-
 #pragma endregion
 #pragma region undirected_weighted_simple_graph
 
@@ -94,22 +84,12 @@ void algr::undirected_weighted_simple_graph::add_weighted_edge(vertex_t vertex1,
 }
 
 std::vector<wvertex_t>
-    algr::undirected_weighted_simple_graph::get_weighted_neighbours(vertex_t vertex) const
+        algr::undirected_weighted_simple_graph::get_weighted_neighbours(vertex_t vertex) const
 {
     if(vertex >= get_vertices_number())
         throw no_such_vertex_exception(std::to_string(vertex));
 
     return std::vector<wvertex_t>(graphrepr[vertex].begin(), graphrepr[vertex].end());
-}
-
-algr::undirected_weighted_simple_graph::operator algr::directed_weighted_simple_graph() const
-{
-    std::vector<wedge_t> diwedges = get_weighted_edges();
-
-    for(auto e : get_weighted_edges())
-        diwedges.emplace_back(std::get<1>(e), std::get<0>(e), std::get<2>(e));
-
-    return algr::directed_weighted_simple_graph(get_vertices_number(), diwedges);
 }
 
 #pragma endregion
