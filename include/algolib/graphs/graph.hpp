@@ -21,6 +21,8 @@ using wvertex_t = std::tuple<vertex_t, weight_t>;
 using edge_t = std::tuple<vertex_t, vertex_t>;
 using wedge_t = std::tuple<vertex_t, vertex_t, weight_t>;
 
+using namespace std::string_literals;
+
 namespace algolib
 {
     namespace graphs
@@ -28,8 +30,8 @@ namespace algolib
         class no_such_vertex_exception : public std::logic_error
         {
         public:
-            explicit no_such_vertex_exception(const std::string & what_arg)
-                : std::logic_error(what_arg)
+            explicit no_such_vertex_exception(const std::string & vertex)
+                : std::logic_error("No vertex "s + vertex)
             {
             }
         };
