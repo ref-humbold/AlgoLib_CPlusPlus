@@ -26,10 +26,6 @@ namespace algolib
         public:
             directed_graph() = default;
             virtual ~directed_graph() = default;
-            directed_graph(const directed_graph &) = default;
-            directed_graph(directed_graph &&) = default;
-            directed_graph & operator=(const directed_graph &) = default;
-            directed_graph & operator=(directed_graph &&) = default;
 
             /// Odwracanie skierowania grafu.
             virtual void reverse() = 0;
@@ -41,7 +37,7 @@ namespace algolib
         class directed_simple_graph : public simple_graph, public directed_graph
         {
         public:
-            explicit directed_simple_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>())
+            explicit directed_simple_graph(int n, const std::vector<edge_t> & edges = {})
                 : simple_graph(n)
             {
                 for(const auto & e : edges)
@@ -73,7 +69,7 @@ namespace algolib
         class directed_weighted_simple_graph : public directed_simple_graph, public weighted_graph
         {
         public:
-            explicit directed_weighted_simple_graph(int n, std::vector<edge_t> edges = {})
+            explicit directed_weighted_simple_graph(int n, const std::vector<edge_t> & edges = {})
                 : directed_simple_graph(n, edges)
             {
             }

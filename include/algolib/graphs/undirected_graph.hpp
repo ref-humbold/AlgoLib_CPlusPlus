@@ -25,10 +25,6 @@ namespace algolib
         public:
             undirected_graph() = default;
             virtual ~undirected_graph() = default;
-            undirected_graph(const undirected_graph &) = default;
-            undirected_graph(undirected_graph &&) = default;
-            undirected_graph & operator=(const undirected_graph &) = default;
-            undirected_graph & operator=(undirected_graph &&) = default;
         };
 
 #pragma endregion
@@ -37,7 +33,7 @@ namespace algolib
         class undirected_simple_graph : public simple_graph, public undirected_graph
         {
         public:
-            explicit undirected_simple_graph(int n, std::vector<edge_t> edges = {})
+            explicit undirected_simple_graph(int n, const std::vector<edge_t> & edges = {})
                 : simple_graph(n)
             {
                 for(const auto & e : edges)
@@ -66,7 +62,7 @@ namespace algolib
                                                  public weighted_graph
         {
         public:
-            explicit undirected_weighted_simple_graph(int n, std::vector<edge_t> edges = {})
+            explicit undirected_weighted_simple_graph(int n, const std::vector<edge_t> & edges = {})
                 : undirected_simple_graph(n, edges)
             {
             }

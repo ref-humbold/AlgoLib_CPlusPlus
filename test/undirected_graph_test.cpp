@@ -144,32 +144,3 @@ TEST_F(UndirectedSimpleGraphTest, testGetIndegree)
 
     EXPECT_EQ(7, result);
 }
-
-TEST_F(UndirectedSimpleGraphTest, testAsDirected)
-{
-    test_object.add_edge(7, 7);
-    test_object.add_edge(1, 5);
-    test_object.add_edge(2, 4);
-    test_object.add_edge(8, 0);
-    test_object.add_edge(6, 3);
-    test_object.add_edge(3, 6);
-    test_object.add_edge(9, 3);
-    test_object.add_edge(8, 0);
-
-    algr::directed_simple_graph result = test_object;
-    std::vector<vertex_t> expected_vertices = test_object.get_vertices();
-    std::vector<vertex_t> result_vertices = result.get_vertices();
-    std::vector<edge_t> result_edges = result.get_edges();
-
-    std::sort(expected_vertices.begin(), expected_vertices.end());
-    std::sort(result_vertices.begin(), result_vertices.end());
-    std::sort(result_edges.begin(), result_edges.end());
-
-    EXPECT_EQ(expected_vertices, result_vertices);
-    EXPECT_EQ(
-        std::vector<edge_t>({std::make_tuple(0, 8), std::make_tuple(1, 5), std::make_tuple(2, 4),
-                             std::make_tuple(3, 6), std::make_tuple(3, 9), std::make_tuple(4, 2),
-                             std::make_tuple(5, 1), std::make_tuple(6, 3), std::make_tuple(7, 7),
-                             std::make_tuple(8, 0), std::make_tuple(9, 3)}),
-        result_edges);
-}

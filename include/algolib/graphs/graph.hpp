@@ -9,11 +9,11 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-#include <numeric>
 #include <set>
 #include <tuple>
 #include <vector>
 #include <limits>
+#include <numeric>
 
 using weight_t = double;
 using vertex_t = size_t;
@@ -49,10 +49,6 @@ namespace algolib
 
             graph() = default;
             virtual ~graph() = default;
-            graph(const graph &) = default;
-            graph(graph &&) = default;
-            graph & operator=(const graph &) = default;
-            graph & operator=(graph &&) = default;
 
             /// @return liczba wierzchołków
             virtual size_t get_vertices_number() const = 0;
