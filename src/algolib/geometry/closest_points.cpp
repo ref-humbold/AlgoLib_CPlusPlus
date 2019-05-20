@@ -67,22 +67,24 @@ namespace
                         ? closestL
                         : closestR;
         double middle_width = min_distance;
-        std::vector<std::pair<int, bool>> middle_points;
+        std::vector<int> middle_points;
 
         for(size_t i = 0; i < pointsY.size(); ++i)
             if(pointsY[i].x() >= middleX - middle_width && pointsY[i].x() <= middleX + middle_width)
-                middle_points.emplace_back(i, pointsY[i].x() <= middleX);
+                middle_points.emplace_back(i);
 
         for(size_t i = 1; i < middle_points.size(); ++i)
             for(size_t j = i + 1; j < middle_points.size(); ++j)
-                if(middle_points[i].second != middle_points[j].second)
+            {
+                alge::point2d pt1 = pointsY[middle_points[i]];
+                alge::point2d pt2 = pointsY[middle_points[j]];
+
+                if(pt2.y() > pt1.y() + middle_width)
+                    break;
+
+                if((pt1.x() <= middleX && pt2.x() > middleX)
+                   || (pt1.x() > middleX && pt2.x() <= middleX))
                 {
-                    alge::point2d pt1 = pointsY[middle_points[i].first];
-                    alge::point2d pt2 = pointsY[middle_points[j].first];
-
-                    if(pt2.y() <= pt1.y() + middle_width)
-                        break;
-
                     double actual_distance = distance(pt1, pt2);
 
                     if(actual_distance < min_distance)
@@ -91,7 +93,7 @@ namespace
                         closest_points = std::make_pair(pt1, pt2);
                     }
                 }
-
+            }
         return closest_points;
     }
 }
