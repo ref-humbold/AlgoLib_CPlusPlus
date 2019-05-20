@@ -74,13 +74,13 @@ namespace
                 middle_points.emplace_back(i, pointsY[i].x() <= middleX);
 
         for(size_t i = 1; i < middle_points.size(); ++i)
-            for(int j = i - 1; j >= 0; --j)
+            for(size_t j = i + 1; j < middle_points.size(); ++j)
                 if(middle_points[i].second != middle_points[j].second)
                 {
                     alge::point2d pt1 = pointsY[middle_points[i].first];
                     alge::point2d pt2 = pointsY[middle_points[j].first];
 
-                    if(pt1.y() <= pt2.y() + middle_width)
+                    if(pt2.y() <= pt1.y() + middle_width)
                         break;
 
                     double actual_distance = distance(pt1, pt2);
