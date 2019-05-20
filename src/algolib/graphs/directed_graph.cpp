@@ -79,7 +79,7 @@ algr::directed_weighted_simple_graph::directed_weighted_simple_graph(
     for(auto e : uwgraph.get_weighted_edges())
     {
         add_weighted_edge(std::get<0>(e), std::get<1>(e), std::get<2>(e));
-        add_weighted_edge(std::get<1>(e), std::get<2>(e), std::get<2>(e));
+        add_weighted_edge(std::get<1>(e), std::get<0>(e), std::get<2>(e));
     }
 }
 

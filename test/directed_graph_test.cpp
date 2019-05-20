@@ -19,6 +19,27 @@ public:
     }
 };
 
+TEST_F(DirectedSimpleGraphTest, testConstructorFromUndirected)
+{
+    algr::undirected_simple_graph ugraph(
+            6, std::vector<edge_t>({std::make_tuple(0, 1), std::make_tuple(0, 4),
+                                    std::make_tuple(1, 3), std::make_tuple(3, 2),
+                                    std::make_tuple(3, 5), std::make_tuple(5, 4)}));
+    algr::directed_simple_graph digraph(ugraph);
+
+    std::vector<edge_t> result = digraph.get_edges();
+
+    std::sort(result.begin(), result.end());
+
+    ASSERT_EQ(6, digraph.get_vertices_number());
+    EXPECT_EQ(std::vector<edge_t>(
+                      {std::make_tuple(0, 1), std::make_tuple(0, 4), std::make_tuple(1, 0),
+                       std::make_tuple(1, 3), std::make_tuple(2, 3), std::make_tuple(3, 1),
+                       std::make_tuple(3, 2), std::make_tuple(3, 5), std::make_tuple(4, 0),
+                       std::make_tuple(4, 5), std::make_tuple(5, 3), std::make_tuple(5, 4)}),
+              result);
+}
+
 TEST_F(DirectedSimpleGraphTest, testGetVerticesNumber)
 {
     size_t result = test_object.get_vertices_number();
@@ -74,11 +95,11 @@ TEST_F(DirectedSimpleGraphTest, testGetEdges)
 
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-        std::vector<edge_t>({std::make_tuple(1, 5), std::make_tuple(2, 4), std::make_tuple(3, 6),
-                             std::make_tuple(6, 3), std::make_tuple(7, 7), std::make_pair(8, 0),
-                             std::make_pair(9, 3)}),
-        result);
+    EXPECT_EQ(std::vector<edge_t>({std::make_tuple(1, 5), std::make_tuple(2, 4),
+                                   std::make_tuple(3, 6), std::make_tuple(6, 3),
+                                   std::make_tuple(7, 7), std::make_pair(8, 0),
+                                   std::make_pair(9, 3)}),
+              result);
 }
 
 TEST_F(DirectedSimpleGraphTest, testAddEdge)
@@ -164,10 +185,10 @@ TEST_F(DirectedSimpleGraphTest, testReverse)
 
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-        std::vector<edge_t>({std::make_tuple(1, 9), std::make_tuple(2, 1), std::make_tuple(2, 6),
-                             std::make_tuple(4, 5), std::make_tuple(5, 3), std::make_tuple(6, 6),
-                             std::make_tuple(6, 9), std::make_tuple(7, 5), std::make_tuple(8, 7),
-                             std::make_tuple(9, 4)}),
-        result);
+    EXPECT_EQ(std::vector<edge_t>({std::make_tuple(1, 9), std::make_tuple(2, 1),
+                                   std::make_tuple(2, 6), std::make_tuple(4, 5),
+                                   std::make_tuple(5, 3), std::make_tuple(6, 6),
+                                   std::make_tuple(6, 9), std::make_tuple(7, 5),
+                                   std::make_tuple(8, 7), std::make_tuple(9, 4)}),
+              result);
 }

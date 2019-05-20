@@ -32,11 +32,6 @@ namespace algolib
                 : std::logic_error(what_arg)
             {
             }
-
-            explicit no_such_vertex_exception(const char * what_arg = "")
-                : std::logic_error(what_arg)
-            {
-            }
         };
 
 #pragma region graph
