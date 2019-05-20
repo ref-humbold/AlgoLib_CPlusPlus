@@ -2,16 +2,20 @@ cmake_minimum_required(VERSION 3.10)
 
 # SOURCES
 set(ALGOLIB "algolib")
+set(GEOMETRY "${ALGOLIB}/geometry")
 set(GRAPHS "${ALGOLIB}/graphs")
 set(MATHMAT "${ALGOLIB}/mathmat")
 set(STRUCTURES "${ALGOLIB}/structures")
 set(TEXT "${ALGOLIB}/text")
 set(ALGOLIB_SOURCES
-    "${ALGOLIB}/closest_points.cpp"
-    "${ALGOLIB}/convex_hull.cpp"
     "${ALGOLIB}/lis.cpp"
     "${ALGOLIB}/maximum_subarray.cpp"
-    "${ALGOLIB}/sorting.cpp")
+    "${ALGOLIB}/vector_sorting.cpp")
+set(GEOMETRY_SOURCES
+    "${GEOMETRY}/closest_points.cpp"
+    "${GEOMETRY}/convex_hull.cpp"
+    "${GEOMETRY}/point2d.cpp"
+    "${GEOMETRY}/points_sorting.cpp")
 set(GRAPHS_SOURCES
     "${GRAPHS}/cutting.cpp"
     "${GRAPHS}/dinic.cpp"
@@ -42,6 +46,7 @@ set(TEXT_SOURCES
     "${TEXT}/suffix_array.cpp")
 set(SOURCES
     "${ALGOLIB_SOURCES}"
+    "${GEOMETRY_SOURCES}"
     "${GRAPHS_SOURCES}"
     "${MATHMAT_SOURCES}"
     "${STRUCTURES_SOURCES}"

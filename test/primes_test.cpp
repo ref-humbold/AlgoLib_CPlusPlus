@@ -1,4 +1,4 @@
-// TESTY DLA ALGORYTMÓW DLA LICZB PIERWSZYCH"""
+// TESTY DLA ALGORYTMÓW DLA LICZB PIERWSZYCH
 #include <gtest/gtest.h>
 #include "algolib/mathmat/primes.hpp"
 
@@ -31,7 +31,7 @@ TEST(PrimesTest, testFindPrimesOneArgWhenMaxIsPrime)
     std::vector<size_t> result = alma::find_primes(67);
 
     EXPECT_EQ(std::vector<size_t>(
-                  {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67}),
+                      {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67}),
               result);
 }
 

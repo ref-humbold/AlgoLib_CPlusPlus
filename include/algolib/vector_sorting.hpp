@@ -1,9 +1,9 @@
 /**
- * @file sorting.hpp
- * @brief Sorting algorithms.
+ * @file vector_sorting.hpp
+ * @brief Vector sorting algorithms.
  */
-#ifndef SORTING_HPP_
-#define SORTING_HPP_
+#ifndef VECTOR_SORTING_HPP_
+#define VECTOR_SORTING_HPP_
 
 #include <cstdlib>
 #include <cmath>
@@ -12,8 +12,6 @@
 #include <stdexcept>
 #include <algorithm>
 #include <vector>
-
-using point2D_t = std::pair<double, double>;
 
 namespace impl
 {
@@ -74,12 +72,6 @@ namespace impl
 
 namespace algolib
 {
-    /**
-     * Mutowalne sortowanie kątowe punktów na płaszczyźnie.
-     * @param points lista punktów
-     */
-    void angle_sort(std::vector<point2D_t> & points);
-
     /**
      * Mutowalne sortowanie ciągu przez kopcowanie.
      * @param sequence ciąg
