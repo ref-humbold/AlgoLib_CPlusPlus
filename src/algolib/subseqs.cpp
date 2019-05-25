@@ -29,7 +29,7 @@ std::vector<double> algolib::maximum_subarray(const std::vector<double> & sequen
     return maximal.second;
 }
 
-double algolib::maximal_sum(const std::vector<double> & sequence)
+double algolib::maximal_subsum(const std::vector<double> & sequence)
 {
     size_t size = 1;
 

@@ -80,7 +80,7 @@ namespace algolib
      * \param sequence ciąg
      * \return maksymalna suma
      */
-    double maximal_sum(const std::vector<double> & sequence);
+    double maximal_subsum(const std::vector<double> & sequence);
 }
 
 #endif
