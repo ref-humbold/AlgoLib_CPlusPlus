@@ -1,6 +1,6 @@
-/**
- * @file disjoint_sets.hpp
- * @brief Disjoint sets structure (union-find).
+/*!
+ * \file disjoint_sets.hpp
+ * \brief Disjoint sets structure (union-find).
  */
 #ifndef DISJOINT_SETS_HPP_
 #define DISJOINT_SETS_HPP_
@@ -10,7 +10,6 @@
 #include <stdexcept>
 #include <algorithm>
 #include <initializer_list>
-#include <set>
 #include <unordered_map>
 #include <vector>
 
@@ -22,11 +21,11 @@ namespace algolib
         class disjoint_sets
         {
         public:
-            disjoint_sets() : elems{0}
+            disjoint_sets() : sets{0}
             {
             }
 
-            disjoint_sets(std::initializer_list<E> universe) : elems{universe.size()}
+            explicit disjoint_sets(std::initializer_list<E> universe) : sets{universe.size()}
             {
                 for(E e : universe)
                     represents.emplace(e, e);
@@ -41,123 +40,122 @@ namespace algolib
             disjoint_sets & operator=(const disjoint_sets & ds) = default;
             disjoint_sets & operator=(disjoint_sets && ds) noexcept = default;
 
-            /// @return number of sets
+            /// \return number of sets
             size_t size() const
             {
-                return elems;
+                return sets;
             }
 
-            /**
-             * @brief Checks whether given element in one of the sets in the structure.
-             * @param element element
-             * @return  true if element belongs to the structure, otherwise false
+            /*!
+             * \brief Checks whether given element in one of the sets in the structure.
+             * \param element element
+             * \return  true if element belongs to the structure, otherwise false
              */
             bool contains(const E & element) const
             {
                 return represents.find(element) != represents.end();
             }
 
-            /**
-             * @brief Adds new element to the set represented by another element.
-             * @param element new element
-             * @param repr representant of the set
+            /*!
+             * \brief Adds new element to the set represented by another element.
+             * \param element new element
+             * \param repr representant of the set
              */
             void insert(const E & element, const E & repr);
 
-            /**
-             * @brief Adds new element as a singleton set.
-             * @param element new element
+            /*!
+             * \brief Adds new element as a singleton set.
+             * \param element new element
              */
             void insert(const E & element);
 
-            /**
-             * @brief Adds new elements to the set represented by another element.
-             * @param element nowy element
-             * @param repr representant of the set
+            /*!
+             * \brief Adds new elements to the set represented by another element.
+             * \param first beginning of elements range
+             * \param last end of elements range
+             * \param repr representant of the set
              */
             template <typename InputIterator>
             void insert(InputIterator first, InputIterator last, const E & repr);
 
-            /**
-             * @brief Adds new elements as singleton sets.
-             * @param element nowy element
+            /*!
+             * \brief Adds new elements as singleton sets.
+             * \param first beginning of elements range
+             * \param last end of elements range
              */
             template <typename InputIterator>
             void insert(InputIterator first, InputIterator last);
 
-            /**
-             * @brief Finds represent of the set with given element
-             * @param element element from the structure
-             * @return represent of the element
+            /*!
+             * \brief Finds represent of the set with given element
+             * \param element element from the structure
+             * \return represent of the element
              */
             const E & find_set(const E & element);
 
-            /**
-             * @brief Finds represent of the set with given element
-             * @param element element from the structure
-             * @return represent of the element
+            /*!
+             * \brief Finds represent of the set with given element
+             * \param element element from the structure
+             * \return represent of the element
              */
             const E & find_set(const E & element) const;
 
-            /**
-             * @brief Finds represent of the set with given element
-             * @param element element from the structure
-             * @return represent of the element
+            /*!
+             * \brief Finds represent of the set with given element
+             * \param element element from the structure
+             * \return represent of the element
              */
             const E & operator[](const E & element)
             {
                 return find_set(element);
             }
 
-            /**
-             * @brief Finds represent of the set with given element
-             * @param element element from the structure
-             * @return represent of the element
+            /*!
+             * \brief Finds represent of the set with given element
+             * \param element element from the structure
+             * \return represent of the element
              */
             const E & operator[](const E & element) const
             {
                 return find_set(element);
             }
 
-            /**
-             * @brief Performs union of two sets in the structure.
-             * @param element1 element from the first set
-             * @param element2 element from the second set
+            /*!
+             * \brief Performs union of two sets in the structure.
+             * \param element1 element from the first set
+             * \param element2 element from the second set
              */
             void union_set(const E & element1, const E & element2);
 
-            /**
-             * @brief Tests whether two elements belong to the same set
-             * @param element1 element from the first set
-             * @param element2 element from the second set
-             * @return true if both element are in the same set, otherwise false
+            /*!
+             * \brief Tests whether two elements belong to the same set
+             * \param element1 element from the first set
+             * \param element2 element from the second set
+             * \return true if both element are in the same set, otherwise false
              */
             bool is_same_set(const E & element1, const E & element2);
 
-            /**
-             * @brief Tests whether two elements belong to the same set
-             * @param element1 element from the first set
-             * @param element2 element from the second set
-             * @return true if both element are in the same set, otherwise false
+            /*!
+             * \brief Tests whether two elements belong to the same set
+             * \param element1 element from the first set
+             * \param element2 element from the second set
+             * \return true if both element are in the same set, otherwise false
              */
             bool is_same_set(const E & element1, const E & element2) const;
 
         private:
-            /// @brief Map of elements' represents.
-            std::unordered_map<E, E> represents;
-
-            /// @brief Number of sets.
-            size_t elems;
+            std::unordered_map<E, E> represents;  //!< Map of elements' represents.
+            size_t sets;  //!< Number of sets.
         };
 
         template <typename E>
         template <typename InputIterator>
-        disjoint_sets<E>::disjoint_sets(InputIterator first, InputIterator last) : elems{0}
+        disjoint_sets<E>::disjoint_sets(InputIterator first, InputIterator last) : sets{0}
         {
             for(InputIterator it = first; it != last; ++it)
             {
                 represents.emplace(*it, *it);
-                ++elems;
+                ++sets;
             }
         }
 
@@ -171,7 +169,6 @@ namespace algolib
                 throw std::invalid_argument("Represent value not present");
 
             represents.emplace(element, find_set(repr));
-            elems++;
         }
 
         template <typename E>
@@ -181,7 +178,7 @@ namespace algolib
                 throw std::invalid_argument("New value already present");
 
             represents.emplace(element, element);
-            elems++;
+            sets++;
         }
 
         template <typename E>
@@ -189,7 +186,14 @@ namespace algolib
         void disjoint_sets<E>::insert(InputIterator first, InputIterator last)
         {
             for(InputIterator it = first; it != last; ++it)
-                insert(*it);
+                if(contains(*it))
+                    throw std::invalid_argument("New value already present");
+
+            for(InputIterator it = first; it != last; ++it)
+            {
+                represents.emplace(*it, *it);
+                sets++;
+            }
         }
 
         template <typename E>
@@ -197,7 +201,11 @@ namespace algolib
         void disjoint_sets<E>::insert(InputIterator first, InputIterator last, const E & repr)
         {
             for(InputIterator it = first; it != last; ++it)
-                insert(*it, repr);
+                if(contains(*it))
+                    throw std::invalid_argument("New value already present");
+
+            for(InputIterator it = first; it != last; ++it)
+                represents.emplace(*it, find_set(repr));
         }
 
         template <typename E>
@@ -218,11 +226,11 @@ namespace algolib
         template <typename E>
         void disjoint_sets<E>::union_set(const E & element1, const E & element2)
         {
-            if(!is_same_set(element1, element2))
-            {
-                represents[find_set(element1)] = find_set(element2);
-                elems--;
-            }
+            if(is_same_set(element1, element2))
+                return;
+
+            represents[find_set(element1)] = find_set(element2);
+            --sets;
         }
 
         template <typename E>

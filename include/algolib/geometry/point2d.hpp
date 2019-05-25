@@ -1,9 +1,9 @@
-/**
- * @file point2d.hpp
- * @brief Points on a plane.
+/*!
+ * \file point2d.hpp
+ * \brief Points on a plane.
  */
-#ifndef POINT2D_
-#define POINT2D_
+#ifndef POINT2D_HPP_
+#define POINT2D_HPP_
 
 #include <cstdlib>
 #include <cmath>

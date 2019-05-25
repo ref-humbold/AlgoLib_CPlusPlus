@@ -285,9 +285,9 @@ namespace algolib
              */
             int count_balance(node_ptr node);
 
-            header_ptr tree = new avl_header_node();    //!< The tree denoted by its header.
-            size_type elems = 0;    //!< Number of elements.
-            compare cmp;    //!< Comparator.
+            header_ptr tree = new avl_header_node();  //!< The tree denoted by its header.
+            size_type elems = 0;  //!< Number of elements.
+            compare cmp;  //!< Comparator.
         };
 
         template <typename E, typename C>
@@ -606,7 +606,7 @@ namespace algolib
             avl_inner_node & operator=(const avl_inner_node & node);
             avl_inner_node & operator=(avl_inner_node &&) = delete;
 
-            value_type element;    //!< Value in the node.
+            value_type element;  //!< Value in the node.
 
             size_t get_height() override
             {
@@ -666,10 +666,10 @@ namespace algolib
             }
 
         private:
-            int height = 1;    //!< Height of the node.
-            inner_ptr left = nullptr;    //!< Left child of the node.
-            inner_ptr right = nullptr;    //!< Right child of the node.
-            node_ptr parent = nullptr;    //!< Parent of the node.
+            int height = 1;  //!< Height of the node.
+            inner_ptr left = nullptr;  //!< Left child of the node.
+            inner_ptr right = nullptr;  //!< Right child of the node.
+            node_ptr parent = nullptr;  //!< Parent of the node.
         };
 
         template <typename E, typename C>
@@ -799,7 +799,7 @@ namespace algolib
             }
 
         private:
-            inner_ptr inner = nullptr;    //!< The real tree denoted by its root.
+            inner_ptr inner = nullptr;  //!< The real tree denoted by its root.
         };
 
         template <typename E, typename C>
