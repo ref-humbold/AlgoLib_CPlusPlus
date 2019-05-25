@@ -8,8 +8,7 @@ set(MATHMAT "${ALGOLIB}/mathmat")
 set(STRUCTURES "${ALGOLIB}/structures")
 set(TEXT "${ALGOLIB}/text")
 set(ALGOLIB_SOURCES
-    "${ALGOLIB}/lis.cpp"
-    "${ALGOLIB}/maximum_subarray.cpp"
+    "${ALGOLIB}/subseqs.cpp"
     "${ALGOLIB}/vector_sorting.cpp")
 set(GEOMETRY_SOURCES
     "${GEOMETRY}/closest_points.cpp"
