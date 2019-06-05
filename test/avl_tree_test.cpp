@@ -1,4 +1,7 @@
-// TESTY DLA DRZEWA AVL
+/*!
+ * \file avl_tree_test.cpp
+ * \brief TEST: AVL tree
+ */
 #include <gtest/gtest.h>
 #include "algolib/structures/avl_tree.hpp"
 

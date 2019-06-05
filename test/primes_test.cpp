@@ -1,4 +1,7 @@
-// TESTY DLA ALGORYTMÓW DLA LICZB PIERWSZYCH
+/*!
+ * \file avl_tree_test.cpp
+ * \brief TEST: Algorithms for prime numbers
+ */
 #include <gtest/gtest.h>
 #include "algolib/mathmat/primes.hpp"
 
@@ -128,8 +131,7 @@ TEST(PrimesTest, testTestFermatWhenComposite)
 
 TEST(PrimesTest, testTestFermatWhenCarmichaelNumber)
 {
-    // 1105 = 5 * 13 * 17 is a Carmichael number
-    bool result = alma::test_fermat(1105);
+    bool result = alma::test_fermat(1105);  // 1105 = 5 * 13 * 17 is a Carmichael number
 
     EXPECT_FALSE(result);
 }

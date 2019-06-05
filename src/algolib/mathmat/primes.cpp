@@ -62,23 +62,20 @@ bool alma::test_miller(long long int number)
     if(number < 2 || number % 2 == 0 || number % 3 == 0)
         return false;
 
-    long long int two_power = 1LL, odds_mul = number - 1;
+    long long int multip = number - 1;
 
-    do
-    {
-        two_power <<= 1;
-        odds_mul >>= 1;
-    } while(odds_mul % 2 == 0);
+    while(multip % 2 == 0)
+        multip >>= 1;
 
     for(int i = 0; i < 12; ++i)
     {
         long long int rdv = 1 + rand() % (number - 1);
 
-        if(power_mod(rdv, odds_mul, number) != 1)
+        if(power_mod(rdv, multip, number) != 1)
         {
             bool is_composite = true;
 
-            for(long long int d = odds_mul; d <= number / 2; d <<= 1)
+            for(long long int d = multip; d <= number / 2; d <<= 1)
             {
                 long long int pwm = power_mod(rdv, d, number);
 
