@@ -4,6 +4,8 @@
 
 namespace alma = algolib::mathmat;
 
+#pragma region testFindPrimes
+
 TEST(PrimesTest, testFindPrimesTwoArgsDescending)
 {
     EXPECT_THROW(alma::find_primes(100, 30), std::invalid_argument);
@@ -85,3 +87,96 @@ TEST(PrimesTest, testFindPrimesTwoArgsWhenMinEqualsMaxAndComposite)
 
     EXPECT_EQ(std::vector<size_t>(), result);
 }
+
+#pragma endregion
+#pragma region testTestFermat
+
+TEST(PrimesTest, testTestFermatWhenZero)
+{
+    bool result = alma::test_fermat(0);
+
+    EXPECT_FALSE(result);
+}
+
+TEST(PrimesTest, testTestFermatWhenOne)
+{
+    bool result = alma::test_fermat(1);
+
+    EXPECT_FALSE(result);
+}
+
+TEST(PrimesTest, testTestFermatWhenTwo)
+{
+    bool result = alma::test_fermat(2);
+
+    EXPECT_TRUE(result);
+}
+
+TEST(PrimesTest, testTestFermatWhenPrime)
+{
+    bool result = alma::test_fermat(1013);
+
+    EXPECT_TRUE(result);
+}
+
+TEST(PrimesTest, testTestFermatWhenComposite)
+{
+    bool result = alma::test_fermat(1001);
+
+    EXPECT_FALSE(result);
+}
+
+TEST(PrimesTest, testTestFermatWhenCarmichaelNumber)
+{
+    // 1105 = 5 * 13 * 17 is a Carmichael number
+    bool result = alma::test_fermat(1105);
+
+    EXPECT_FALSE(result);
+}
+
+#pragma endregion
+#pragma region testTestMiller
+
+TEST(PrimesTest, testTestMillerWhenZero)
+{
+    bool result = alma::test_miller(0);
+
+    EXPECT_FALSE(result);
+}
+
+TEST(PrimesTest, testTestMillerWhenOne)
+{
+    bool result = alma::test_miller(1);
+
+    EXPECT_FALSE(result);
+}
+
+TEST(PrimesTest, testTestMillerWhenTwo)
+{
+    bool result = alma::test_miller(2);
+
+    EXPECT_TRUE(result);
+}
+
+TEST(PrimesTest, testTestMillerWhenPrime)
+{
+    bool result = alma::test_miller(1013);
+
+    EXPECT_TRUE(result);
+}
+
+TEST(PrimesTest, testTestMillerWhenComposite1)
+{
+    bool result = alma::test_miller(1001);
+
+    EXPECT_FALSE(result);
+}
+
+TEST(PrimesTest, testTestMillerWhenComposite2)
+{
+    bool result = alma::test_miller(1105);
+
+    EXPECT_FALSE(result);
+}
+
+#pragma endregion
