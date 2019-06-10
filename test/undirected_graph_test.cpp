@@ -1,4 +1,4 @@
-// TESTY DLA GRAFÓW NIESKIEROWANYCH
+//! TESTY DLA GRAFÓW NIESKIEROWANYCH
 #include <gtest/gtest.h>
 #include "algolib/graphs/undirected_graph.hpp"
 

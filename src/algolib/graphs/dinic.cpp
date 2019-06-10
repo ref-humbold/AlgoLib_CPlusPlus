@@ -1,4 +1,4 @@
-// ALGORYTM DINICA: MAKSYMALNY PRZEPŁYW
+//! ALGORYTM DINICA: MAKSYMALNY PRZEPŁYW
 #include "algolib/graphs/dinic.hpp"
 
 double dinic_flow_graph::count_flow(int source, int target)

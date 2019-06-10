@@ -1,6 +1,6 @@
-/**
- * @file mst.hpp
- * ALGORYTMY WYZNACZAJĄCE MINIMALNE DRZEWO SPINAJĄCE
+/**!
+ * \file mst.hpp
+ * \brief ALGORYTMY WYZNACZAJĄCE MINIMALNE DRZEWO SPINAJĄCE
  */
 #ifndef MST_HPP_
 #define MST_HPP_
@@ -17,18 +17,18 @@ namespace algolib
 {
     namespace graphs
     {
-        /**
-         * Algorytm Kruskala wyliczający długość MST.
-         * @param uwgraph graf ważony
-         * @return długość minimalnego drzewa spinającego
+        /**!
+         * \brief Algorytm Kruskala wyliczający długość MST.
+         * \param uwgraph graf ważony
+         * \return długość minimalnego drzewa spinającego
          */
         double kruskal(const undirected_weighted_simple_graph & uwgraph);
 
-        /**
-         * Algorytm Prima wyliczający długość MST.
-         * @param uwgraph graf ważony
-         * @param source początkowy wierzchołek
-         * @return długość minimalnego drzewa spinającego
+        /**!
+         * \brief Algorytm Prima wyliczający długość MST.
+         * \param uwgraph graf ważony
+         * \param source początkowy wierzchołek
+         * \return długość minimalnego drzewa spinającego
          */
         double prim(const undirected_weighted_simple_graph & uwgraph, vertex_t source);
     }

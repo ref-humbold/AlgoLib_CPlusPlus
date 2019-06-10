@@ -1,4 +1,4 @@
-// STRUKTURY GRAFÓW WIELODZIELNYCH
+//! STRUKTURY GRAFÓW WIELODZIELNYCH
 #ifndef MULTIPARTITE_GRAPH_HPP_
 #define MULTIPARTITE_GRAPH_HPP_
 
@@ -42,9 +42,9 @@ namespace algolib
             multipartite_graph & operator=(const multipartite_graph &) = default;
             multipartite_graph & operator=(multipartite_graph &&) = default;
 
-            /**
-             * @param group numer grupy wierzchołków
-             * @return liczba wierzchołków z zadanej grupy
+            /**!
+             * \param group numer grupy wierzchołków
+             * \return liczba wierzchołków z zadanej grupy
              */
             size_t get_vertices_number(size_t group = 0) const
             {
@@ -60,9 +60,9 @@ namespace algolib
                 return num;
             }
 
-            /**
-             * @param group numer grupy wierzchołków
-             * @return numery wierzchołków z zadanej grupy
+            /**!
+             * \param group numer grupy wierzchołków
+             * \return numery wierzchołków z zadanej grupy
              */
             std::vector<vertex_t> get_vertices(size_t group = 0) const
             {
@@ -78,10 +78,10 @@ namespace algolib
                 return vertices;
             }
 
-            /**
-             * Dodawanie nowego wierzchołka do zadanej grupy.
-             * @param group: numer grupy
-             * @return oznaczenie wierzchołka
+            /**!
+             * \brief Dodawanie nowego wierzchołka do zadanej grupy.
+             * \param group: numer grupy
+             * \return oznaczenie wierzchołka
              */
             vertex_t add_vertex(size_t group)
             {
@@ -114,10 +114,10 @@ namespace algolib
                 graph.add_edge(vertex1, vertex2);
             }
 
-            /**
-             * @param vertex: numer wierzchołka
-             * @param group: numer grupy sąsiadów
-             * @return generator sąsiadów wierzchołka z zadanej grupy
+            /**!
+             * \param vertex: numer wierzchołka
+             * \param group: numer grupy sąsiadów
+             * \return generator sąsiadów wierzchołka z zadanej grupy
              */
             std::vector<vertex_t> get_neighbours(vertex_t vertex, size_t group = 0) const
             {
@@ -146,11 +146,11 @@ namespace algolib
                 return graph.get_indegree(vertex);
             }
 
-            /**
-             * Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.
-             * @param vertex wierzchołek
-             * @param group numer grupy
-             * @return czy wierzchołek jest w grupie
+            /**!
+             * \brief Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.
+             * \param vertex wierzchołek
+             * \param group numer grupy
+             * \return czy wierzchołek jest w grupie
              */
             bool is_in_group(vertex_t vertex, size_t group) const
             {
@@ -160,11 +160,11 @@ namespace algolib
                 return groups[vertex] == group;
             }
 
-            /**
-             * Sprawdzanie, czy wierzchołki należą do tej samej grupy.
-             * @param vertex1 pierwszy wierzchołek
-             * @param vertex2 drugi wierzchołek
-             * @return czy wierzchołki są w jednej grupie
+            /**!
+             * \brief Sprawdzanie, czy wierzchołki należą do tej samej grupy.
+             * \param vertex1 pierwszy wierzchołek
+             * \param vertex2 drugi wierzchołek
+             * \return czy wierzchołki są w jednej grupie
              */
             bool is_same_group(vertex_t vertex1, vertex_t vertex2) const
             {
@@ -178,11 +178,8 @@ namespace algolib
             }
 
         private:
-            /// Struktura grafu wielodzielnego.
-            undirected_simple_graph graph;
-
-            /// Numery grup wierzchołków.
-            std::vector<size_t> groups;
+            undirected_simple_graph graph;  //!< Struktura grafu wielodzielnego.
+            std::vector<size_t> groups;  //!< Numery grup wierzchołków.
         };
     }
 }

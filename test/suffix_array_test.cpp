@@ -1,4 +1,4 @@
-// TESTS FOR SUFFIX ARRAY STRUCTURE
+//! TESTS FOR SUFFIX ARRAY STRUCTURE
 #include <gtest/gtest.h>
 #include "algolib/text/suffix_array.hpp"
 

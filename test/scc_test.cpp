@@ -1,6 +1,6 @@
-/**
- * @file scc_test.cpp
- * TESTY DLA ALGORYTMU SILNIE SPÓLJNYCH SKŁADOWYCH W GRAFIE SKIEROWANYM
+/**!
+ * \file scc_test.cpp
+ * \brief TESTY DLA ALGORYTMU SILNIE SPÓLJNYCH SKŁADOWYCH W GRAFIE SKIEROWANYM
  */
 #include <algorithm>
 #include <gtest/gtest.h>

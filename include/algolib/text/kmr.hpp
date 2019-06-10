@@ -1,6 +1,6 @@
-/**
- * @file kmr.hpp
- * @brief Karp-Miller-Rosenberg algorithm.
+/*!
+ * \file kmr.hpp
+ * \brief Karp-Miller-Rosenberg algorithm.
  */
 #ifndef _KMR_HPP_
 #define _KMR_HPP_
@@ -16,10 +16,10 @@ namespace algolib
 {
     namespace text
     {
-        /**
-         * Budowa słownika podsłów bazowych.
-         * @param text słowo
-         * @return słownik podsłów bazowych
+        /*!
+         * \brief Budowa słownika podsłów bazowych.
+         * \param text słowo
+         * \return słownik podsłów bazowych
          */
         std::map<std::string, int> kmr(const std::string & text);
     }

@@ -1,4 +1,4 @@
-// Knuth-Morris-Pratt algorithm.
+//! Knuth-Morris-Pratt algorithm.
 #include "algolib/text/kmp.hpp"
 
 namespace alte = algolib::text;

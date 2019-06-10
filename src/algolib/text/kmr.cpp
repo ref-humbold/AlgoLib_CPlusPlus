@@ -1,4 +1,4 @@
-// Karp-Miller-Rosenberg algorithm.
+//! Karp-Miller-Rosenberg algorithm.
 #include "algolib/text/kmr.hpp"
 
 namespace alte = algolib::text;

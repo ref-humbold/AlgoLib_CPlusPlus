@@ -1,4 +1,4 @@
-// TESTY DLA ALGORYTMU KNUTHA-MORRISA-PRATTA
+//! TESTY DLA ALGORYTMU KNUTHA-MORRISA-PRATTA
 #include <gtest/gtest.h>
 #include "algolib/text/kmp.hpp"
 

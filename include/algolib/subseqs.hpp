@@ -1,6 +1,6 @@
-/**
- * @file subseqs.hpp
- * @brief Algorithms for subsequences.
+/**!
+ * \file subseqs.hpp
+ * \brief Algorithms for subsequences.
  */
 #ifndef SUBSEQS_HPP_
 #define SUBSEQS_HPP_

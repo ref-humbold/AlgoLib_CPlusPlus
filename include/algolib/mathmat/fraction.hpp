@@ -1,6 +1,6 @@
-/**
- * @file fraction.hpp
- * @brief Fractions structure.
+/**!
+ * \file fraction.hpp
+ * \brief Fractions structure.
  */
 #ifndef FRACTION_HPP_
 #define FRACTION_HPP_

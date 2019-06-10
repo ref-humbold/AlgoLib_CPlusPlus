@@ -1,6 +1,6 @@
-/**
- * @file directed_graph.hpp
- * STRUKTURY GRAFÓW SKIEROWANYCH
+/*!
+ * \file directed_graph.hpp
+ * \brief Struktury grafów skierowanych.
  */
 #ifndef DIRECTED_GRAPH_HPP_
 #define DIRECTED_GRAPH_HPP_
@@ -24,10 +24,9 @@ namespace algolib
         class directed_graph : public virtual graph
         {
         public:
-            directed_graph() = default;
             virtual ~directed_graph() = default;
 
-            /// Odwracanie skierowania grafu.
+            //! \brief Odwracanie skierowania grafu.
             virtual void reverse() = 0;
         };
 
@@ -45,7 +44,6 @@ namespace algolib
             }
 
             directed_simple_graph(const undirected_simple_graph & ugraph);
-
             virtual ~directed_simple_graph() = default;
             directed_simple_graph(const directed_simple_graph &) = default;
             directed_simple_graph(directed_simple_graph &&) = default;
@@ -82,7 +80,6 @@ namespace algolib
             }
 
             directed_weighted_simple_graph(const undirected_weighted_simple_graph & uwgraph);
-
             virtual ~directed_weighted_simple_graph() = default;
             directed_weighted_simple_graph(const directed_weighted_simple_graph &) = default;
             directed_weighted_simple_graph(directed_weighted_simple_graph &&) = default;

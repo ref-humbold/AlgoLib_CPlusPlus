@@ -1,6 +1,6 @@
-/**
- * @file equation_system.hpp
- * @brief Structure of linear equation sysytem with Gauss elimination algorithm.
+/**!
+ * \file equation_system.hpp
+ * \brief Structure of linear equation sysytem with Gauss elimination algorithm.
  */
 #ifndef EQUATION_SYSTEM_HPP_
 #define EQUATION_SYSTEM_HPP_
@@ -59,45 +59,42 @@ namespace algolib
             equation_system & operator=(const equation_system & eqsys) = default;
             equation_system & operator=(equation_system && eqsys) = default;
 
-            /**
-             * Wyliczanie rozwiązań układu równań liniowych
-             * @return wektor wyniku równania
+            /**!
+             * \brief Wyliczanie rozwiązań układu równań liniowych
+             * \return wektor wyniku równania
              */
             std::vector<double> solve();
 
-            /**
-             * Algorytm eliminacji Gaussa.
+            /**!
+             * \brief Algorytm eliminacji Gaussa.
              */
             void gauss();
 
-            /**
-             * Pomnożenie równania przez niezerową stałą
-             * @param equ numer równania
-             * @param constant stała
+            /**!
+             * \brief Pomnożenie równania przez niezerową stałą
+             * \param equ numer równania
+             * \param constant stała
              */
             void mult(size_t equ, double constant);
 
-            /**
-             * Zamiana równań miejscami
-             * @param eq1 numer pierwszego równania
-             * @param eq2 numer drugiego równania
+            /**!
+             * \brief Zamiana równań miejscami
+             * \param eq1 numer pierwszego równania
+             * \param eq2 numer drugiego równania
              */
             void swap(size_t equ1, size_t equ2);
 
-            /**
-             * Przekształcenie równania przez kombinację liniową z innym równaniem
-             * @param eq1 numer równania przekształcanego
-             * @param eq2 numer drugiego równania
-             * @param constant stała kombinacji liniowej
+            /**!
+             * \brief Przekształcenie równania przez kombinację liniową z innym równaniem
+             * \param eq1 numer równania przekształcanego
+             * \param eq2 numer drugiego równania
+             * \param constant stała kombinacji liniowej
              */
             void combine(size_t equ1, size_t equ2, double constant = 1.0);
 
         private:
-            /// Macierz współczynników równania
-            double coeffs[N][N];
-
-            /// Wektor wyrazów wolnych równania
-            double frees[N];
+            double coeffs[N][N];  //!< Macierz współczynników równania.
+            double frees[N];  //!< Wektor wyrazów wolnych równania.
         };
 
         template <size_t N>
@@ -111,8 +108,8 @@ namespace algolib
 
         template <size_t N>
         equation_system<N>::equation_system(
-            std::initializer_list<std::initializer_list<double>> coeffs,
-            std::initializer_list<double> frees)
+                std::initializer_list<std::initializer_list<double>> coeffs,
+                std::initializer_list<double> frees)
         {
             if(coeffs.size() != N || frees.size() != N)
                 throw std::length_error("Incorrect number of equations");

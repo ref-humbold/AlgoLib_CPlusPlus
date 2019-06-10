@@ -1,4 +1,4 @@
-// STRUKTURY GRAFÓW SKIEROWANYCH
+//! STRUKTURY GRAFÓW SKIEROWANYCH
 #include "algolib/graphs/directed_graph.hpp"
 
 namespace algr = algolib::graphs;

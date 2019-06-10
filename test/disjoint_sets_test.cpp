@@ -1,4 +1,4 @@
-// TESTY DLA STRUKTURY ZBIORÓW ROZŁĄCZNYCH
+//! TESTY DLA STRUKTURY ZBIORÓW ROZŁĄCZNYCH
 #include <gtest/gtest.h>
 #include "algolib/structures/disjoint_sets.hpp"
 

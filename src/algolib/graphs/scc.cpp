@@ -1,6 +1,6 @@
-/**
- * @file scc.hpp
- * ALGORYTM WYZNACZANIA SILNIE SPÓLJNYCH SKŁADOWYCH W GRAFIE SKIEROWANYM
+/**!
+ * \file scc.hpp
+ * \brief ALGORYTM WYZNACZANIA SILNIE SPÓLJNYCH SKŁADOWYCH W GRAFIE SKIEROWANYM
  */
 #include "algolib/graphs/scc.hpp"
 

@@ -1,4 +1,4 @@
-// TESTY DLA GRAFÓW SKIEROWANYCH
+//! TESTY DLA GRAFÓW SKIEROWANYCH
 #include <gtest/gtest.h>
 #include "algolib/graphs/directed_graph.hpp"
 

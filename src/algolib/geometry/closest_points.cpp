@@ -1,4 +1,4 @@
-// Algorithm for closest pair of points on a plane.
+//! Algorithm for closest pair of points on a plane.
 #include "algolib/geometry/closest_points.hpp"
 
 namespace alge = algolib::geometry;

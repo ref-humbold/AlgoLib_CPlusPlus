@@ -1,6 +1,6 @@
-/**
- * @file matching.cpp
- * ALGORYTM HOPCROFTA-KARPA WYZNACZANIA SKOJARZEŃ W GRAFIE DWUDZIELNYM
+/**!
+ * \file matching.cpp
+ * \brief ALGORYTM HOPCROFTA-KARPA WYZNACZANIA SKOJARZEŃ W GRAFIE DWUDZIELNYM
  */
 #include "algolib/graphs/matching.hpp"
 

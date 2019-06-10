@@ -1,4 +1,4 @@
-// TESTY DLA UŁAMKÓW
+//! TESTY DLA UŁAMKÓW
 #include <gtest/gtest.h>
 #include "algolib/mathmat/fraction.hpp"
 

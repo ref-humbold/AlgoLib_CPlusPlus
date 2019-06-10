@@ -1,4 +1,4 @@
-// TESTY DLA ALGORYTMU NAJNIŻSZEGO WSPÓLNEGO PRZODKA
+//! TESTY DLA ALGORYTMU NAJNIŻSZEGO WSPÓLNEGO PRZODKA
 #include <gtest/gtest.h>
 #include "algolib/graphs/lca.hpp"
 

@@ -1,4 +1,4 @@
-// TEST : Algorithms for subsequences.
+//! TEST : Algorithms for subsequences.
 #include <gtest/gtest.h>
 #include "algolib/subseqs.hpp"
 

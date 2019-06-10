@@ -1,7 +1,9 @@
-// ALGORYTMY SORTOWANIA TOPOLOGICZNEGO
+//! ALGORYTMY SORTOWANIA TOPOLOGICZNEGO
 #include "algolib/graphs/topological_sorting.hpp"
 
 namespace algr = algolib::graphs;
+
+using namespace std::string_literals;
 
 namespace
 {
@@ -14,7 +16,8 @@ namespace
             if(indices[neighbour].first == digraph.get_vertices_number())
                 dfs(neighbour, index, digraph, order, indices);
             else if(indices[neighbour] == std::make_pair(index, true))
-                throw algr::directed_cyclic_graph_exception();
+                throw algr::directed_cyclic_graph_exception(
+                        "Cannot perform topological sorting on directed cyclic graph"s);
 
         order.push_back(vertex);
         indices[vertex].second = false;
@@ -53,7 +56,8 @@ std::vector<vertex_t> algr::sort_topological1(const directed_graph & digraph)
     }
 
     if(order.size() != digraph.get_vertices_number())
-        throw directed_cyclic_graph_exception();
+        throw algr::directed_cyclic_graph_exception(
+                "Cannot perform topological sorting on directed cyclic graph"s);
 
     return order;
 }

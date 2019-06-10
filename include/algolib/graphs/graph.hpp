@@ -1,6 +1,6 @@
-/**
- * @file graph.hpp
- * STRUKTURY GRAFÓW
+/*!
+ * \file graph.hpp
+ * \brief Struktury grafów.
  */
 #ifndef GRAPH_HPP_
 #define GRAPH_HPP_
@@ -41,52 +41,51 @@ namespace algolib
         class graph
         {
         public:
-            /// Oznaczenie nieskończoności.
-            static constexpr weight_t INF = std::numeric_limits<weight_t>::infinity();
+            static constexpr weight_t INF =
+                    std::numeric_limits<weight_t>::infinity();  //!< Oznaczenie nieskończoności.
 
-            graph() = default;
             virtual ~graph() = default;
 
-            /// @return liczba wierzchołków
+            //! \return liczba wierzchołków
             virtual size_t get_vertices_number() const = 0;
 
-            /// @return wektor wierzchołków
+            //! \return wektor wierzchołków
             virtual std::vector<vertex_t> get_vertices() const = 0;
 
-            /**
-             * Dodawanie nowego wierzchołka.
-             * @return oznaczenie wierzchołka
+            /*!
+             * \brief Dodawanie nowego wierzchołka.
+             * \return oznaczenie wierzchołka
              */
             virtual vertex_t add_vertex() = 0;
 
-            /// @return liczba krawędzi
+            //! \return liczba krawędzi
             virtual size_t get_edges_number() const = 0;
 
-            /// @return wektor krawędzi
+            //! \return wektor krawędzi
             virtual std::vector<edge_t> get_edges() const = 0;
 
-            /**
-             * Dodawanie nowej krawędzi.
-             * @param v początkowy wierzchołek
-             * @param u końcowy wierzchołek
+            /*!
+             * \brief Dodawanie nowej krawędzi.
+             * \param v początkowy wierzchołek
+             * \param u końcowy wierzchołek
              */
             virtual void add_edge(vertex_t vertex1, vertex_t vertex2) = 0;
 
-            /**
-             * @param v numer wierzchołka
-             * @return wektor sąsiadów wierzchołka
+            /*!
+             * \param v numer wierzchołka
+             * \return wektor sąsiadów wierzchołka
              */
             virtual std::vector<vertex_t> get_neighbours(vertex_t vertex) const = 0;
 
-            /**
-             * @param v numer wierzchołka
-             * @return stopień wyjściowy wierzchołka
+            /*!
+             * \param v numer wierzchołka
+             * \return stopień wyjściowy wierzchołka
              */
             virtual size_t get_outdegree(vertex_t vertex) const = 0;
 
-            /**
-             * @param v numer wierzchołka
-             * @return stopień wejściowy wierzchołka
+            /*!
+             * \param v numer wierzchołka
+             * \return stopień wejściowy wierzchołka
              */
             virtual size_t get_indegree(vertex_t vertex) const = 0;
         };
@@ -97,29 +96,22 @@ namespace algolib
         class weighted_graph : public virtual graph
         {
         public:
-            weighted_graph() = default;
             virtual ~weighted_graph() = default;
-            weighted_graph(const weighted_graph &) = default;
-            weighted_graph(weighted_graph &&) = default;
-            weighted_graph & operator=(const weighted_graph &) = default;
-            weighted_graph & operator=(weighted_graph &&) = default;
 
-            /**
-             * @return wektor krawędzi z wagami
-             */
+            //! \return wektor krawędzi z wagami
             virtual std::vector<wedge_t> get_weighted_edges() const = 0;
 
-            /**
-             * Dodawanie nowej krawędzi z jej wagą.
-             * @param v początkowy wierzchołek
-             * @param u końcowy wierzchołek
-             * @param wg waga krawędzi
+            /*!
+             * \brief Dodawanie nowej krawędzi z jej wagą.
+             * \param v początkowy wierzchołek
+             * \param u końcowy wierzchołek
+             * \param wg waga krawędzi
              */
             virtual void add_weighted_edge(vertex_t vertex1, vertex_t vertex2, weight_t weight) = 0;
 
-            /**
-             * @param v numer wierzchołka
-             * @return wektor sąsiadów wierzchołka z wagami
+            /*!
+             * \param v numer wierzchołka
+             * \return wektor sąsiadów wierzchołka z wagami
              */
             virtual std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const = 0;
         };
@@ -155,11 +147,8 @@ namespace algolib
             size_t get_outdegree(vertex_t vertex) const override;
 
         protected:
-            /// Domyślna waga krawędzi.
-            static constexpr weight_t DEFAULT_WEIGHT = 1.0;
-
-            /// Lista sąsiedztwa grafu.
-            std::vector<std::set<wvertex_t>> graphrepr;
+            static constexpr weight_t DEFAULT_WEIGHT = 1.0;  //!< Domyślna waga krawędzi.
+            std::vector<std::set<wvertex_t>> graphrepr;  //!< Lista sąsiedztwa grafu.
         };
 
 #pragma endregion

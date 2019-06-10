@@ -1,4 +1,4 @@
-// Vector sorting algorithms.
+//! Vector sorting algorithms.
 #include "algolib/vector_sorting.hpp"
 
 int impl::choose_pivot(int size)

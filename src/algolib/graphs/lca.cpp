@@ -1,4 +1,4 @@
-// NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE
+//! NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE
 #include "algolib/graphs/lca.hpp"
 
 namespace algr = algolib::graphs;

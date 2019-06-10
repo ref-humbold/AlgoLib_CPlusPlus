@@ -1,6 +1,6 @@
-/**
- * @file searching.hpp
- * ALGORYTMY PRZESZUKIWANIA GRAFU
+/**!
+ * \file searching.hpp
+ * \brief ALGORYTMY PRZESZUKIWANIA GRAFU
  */
 #ifndef SEARCHING_HPP_
 #define SEARCHING_HPP_
@@ -16,27 +16,27 @@ namespace algolib
 {
     namespace graphs
     {
-        /**
-         * Algorytm BFS.
-         * @param gr graf
-         * @param root wierzchołek początkowy
-         * @return lista odwiedzonych wierzchołków
+        /**!
+         * \brief Algorytm BFS.
+         * \param gr graf
+         * \param root wierzchołek początkowy
+         * \return lista odwiedzonych wierzchołków
          */
         std::vector<bool> bfs(const graph & gr, vertex_t root);
 
-        /**
-         * Iteracyjny algorytm DFS.
-         * @param gr graf
-         * @param root wierzchołek początkowy
-         * @return lista odwiedzonych wierzchołków
+        /**!
+         * \brief Iteracyjny algorytm DFS.
+         * \param gr graf
+         * \param root wierzchołek początkowy
+         * \return lista odwiedzonych wierzchołków
          */
         std::vector<bool> dfsI(const graph & gr, vertex_t root);
 
-        /**
-         * Rekurencyjny algorytm DFS.
-         * @param gr graf
-         * @param root wierzchołek początkowy
-         * @return lista odwiedzonych wierzchołków
+        /**!
+         * \brief Rekurencyjny algorytm DFS.
+         * \param gr graf
+         * \param root wierzchołek początkowy
+         * \return lista odwiedzonych wierzchołków
          */
         std::vector<bool> dfsR(const graph & gr, vertex_t root);
     }

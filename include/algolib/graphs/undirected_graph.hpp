@@ -1,6 +1,6 @@
-/**
- * @file undirected_graph.hpp
- * STRUKTURY GRAFÓW NIESKIEROWANYCH
+/*!
+ * \file undirected_graph.hpp
+ * \brief Struktury grafów nieskierowanych.
  */
 #ifndef UNDIRECTED_GRAPH_HPP_
 #define UNDIRECTED_GRAPH_HPP_
@@ -23,7 +23,6 @@ namespace algolib
         class undirected_graph : public virtual graph
         {
         public:
-            undirected_graph() = default;
             virtual ~undirected_graph() = default;
         };
 

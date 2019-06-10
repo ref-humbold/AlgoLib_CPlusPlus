@@ -1,4 +1,4 @@
-// Basic mathematics algorithms.
+//! Basic mathematics algorithms.
 #include "algolib/mathmat/maths.hpp"
 
 namespace alma = algolib::mathmat;

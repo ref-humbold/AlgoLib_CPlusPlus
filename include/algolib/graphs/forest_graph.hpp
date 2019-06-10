@@ -1,6 +1,6 @@
-/**
- * @file forest_graph.hpp
- * STRUKTURY GRAFÓW DRZEW
+/**!
+ * \file forest_graph.hpp
+ * \brief STRUKTURY GRAFÓW DRZEW
  */
 #ifndef FOREST_GRAPH_HPP_
 #define FOREST_GRAPH_HPP_
@@ -87,11 +87,11 @@ namespace algolib
                 return graph.get_indegree(vertex);
             }
 
-            /**
-             * Sprawdzanie, czy wierzchołki należą do tego samego drzewa.
-             * @param vertex1 pierwszy wierzchołek
-             * @param vertex2 drugi wierzchołek
-             * @return czy wierzchołki są w jednym drzewie
+            /**!
+             * \brief Sprawdzanie, czy wierzchołki należą do tego samego drzewa.
+             * \param vertex1 pierwszy wierzchołek
+             * \param vertex2 drugi wierzchołek
+             * \return czy wierzchołki są w jednym drzewie
              */
             bool is_same_tree(vertex_t vertex1, vertex_t vertex2) const;
 

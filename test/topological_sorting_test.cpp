@@ -1,4 +1,4 @@
-// TESTY DLA ALGORYTMÓW SORTOWANIA TOPOLOGICZNEGO"""
+//! TESTY DLA ALGORYTMÓW SORTOWANIA TOPOLOGICZNEGO"""
 #include <gtest/gtest.h>
 #include "algolib/graphs/topological_sorting.hpp"
 

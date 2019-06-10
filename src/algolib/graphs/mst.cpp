@@ -1,4 +1,4 @@
-// ALGORYTMY WYZNACZAJĄCE MINIMALNE DRZEWO SPINAJĄCE
+//! ALGORYTMY WYZNACZAJĄCE MINIMALNE DRZEWO SPINAJĄCE
 #include "algolib/graphs/mst.hpp"
 
 namespace algr = algolib::graphs;

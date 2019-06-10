@@ -1,4 +1,4 @@
-// ALGORYTM EDMONDSA-KARPA: MAKSYMALNY PRZEP�YW
+//! ALGORYTM EDMONDSA-KARPA: MAKSYMALNY PRZEP�YW
 #include "algolib/graphs/edmonds.hpp"
 
 constexpr double edmonds_flow_graph::INF;

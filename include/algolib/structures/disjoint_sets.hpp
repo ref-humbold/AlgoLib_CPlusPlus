@@ -40,7 +40,7 @@ namespace algolib
             disjoint_sets & operator=(const disjoint_sets & ds) = default;
             disjoint_sets & operator=(disjoint_sets && ds) noexcept = default;
 
-            /// \return number of sets
+            //! \return number of sets
             size_t size() const
             {
                 return sets;

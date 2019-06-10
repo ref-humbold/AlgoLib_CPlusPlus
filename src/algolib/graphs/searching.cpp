@@ -1,4 +1,4 @@
-// ALGORYTMY PRZESZUKIWANIA GRAFU
+//! ALGORYTMY PRZESZUKIWANIA GRAFU
 #include "algolib/graphs/searching.hpp"
 
 namespace algr = algolib::graphs;

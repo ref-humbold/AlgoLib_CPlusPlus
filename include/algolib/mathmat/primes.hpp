@@ -1,6 +1,6 @@
-/**
- * @file primes.hpp
- * @brief Algorithms for prime numbers.
+/**!
+ * \file primes.hpp
+ * \brief Algorithms for prime numbers.
  */
 #ifndef PRIMES_HPP_
 #define PRIMES_HPP_
@@ -15,35 +15,35 @@ namespace algolib
 {
     namespace mathmat
     {
-        /**
-         * Wyznaczanie liczb pierwszych na przedziale domkniętym.
-         * @param min_number dolna granica przedziału
-         * @param max_number górna granica przedziału
-         * @return lista liczb pierwszych
+        /**!
+         * \brief Wyznaczanie liczb pierwszych na przedziale domkniętym.
+         * \param min_number dolna granica przedziału
+         * \param max_number górna granica przedziału
+         * \return lista liczb pierwszych
          */
         std::vector<size_t> find_primes(size_t min_number, size_t max_number);
 
-        /**
-         * Wyznaczanie liczb pierwszych od zera.
-         * @param max_number górna granica
-         * @return lista liczb pierwszych
+        /**!
+         * \brief Wyznaczanie liczb pierwszych od zera.
+         * \param max_number górna granica
+         * \return lista liczb pierwszych
          */
         inline std::vector<size_t> find_primes(size_t max_number)
         {
             return find_primes(0, max_number);
         }
 
-        /**
-         * Test pierwszości Fermata.
-         * @param number testowana liczba
-         * @return czy liczba prawdopodobnie jest pierwsza
+        /**!
+         * \brief Test pierwszości Fermata.
+         * \param number testowana liczba
+         * \return czy liczba prawdopodobnie jest pierwsza
          */
         bool test_fermat(long long int number);
 
-        /**
-         * Test pierwszości Millera-Rabina.
-         * @param number testowana liczba
-         * @return czy liczba prawdopodobnie jest pierwsza
+        /**!
+         * \brief Test pierwszości Millera-Rabina.
+         * \param number testowana liczba
+         * \return czy liczba prawdopodobnie jest pierwsza
          */
         bool test_miller(long long int number);
     }

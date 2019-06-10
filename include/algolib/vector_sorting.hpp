@@ -1,6 +1,6 @@
-/**
- * @file vector_sorting.hpp
- * @brief Vector sorting algorithms.
+/*!
+ * \file vector_sorting.hpp
+ * \brief Vector sorting algorithms.
  */
 #ifndef VECTOR_SORTING_HPP_
 #define VECTOR_SORTING_HPP_
@@ -72,11 +72,11 @@ namespace impl
 
 namespace algolib
 {
-    /**
-     * Mutowalne sortowanie ciągu przez kopcowanie.
-     * @param sequence ciąg
-     * @param index_begin początkowy indeks ciągu
-     * @param index_end końcowy indeks ciągu
+    /*!
+     * \brief Mutowalne sortowanie ciągu przez kopcowanie.
+     * \param sequence ciąg
+     * \param index_begin początkowy indeks ciągu
+     * \param index_end końcowy indeks ciągu
      */
     template <typename T>
     void heap_sort(std::vector<T> & sequence, int index_begin = 0, int index_end = -1)
@@ -104,11 +104,11 @@ namespace algolib
         }
     }
 
-    /**
-     * Mutowalne sortowanie ciągu przez scalanie top-down.
-     * @param sequence ciąg
-     * @param index_begin początkowy indeks ciągu
-     * @param index_end końcowy indeks ciągu
+    /*!
+     * \brief Mutowalne sortowanie ciągu przez scalanie top-down.
+     * \param sequence ciąg
+     * \param index_begin początkowy indeks ciągu
+     * \param index_end końcowy indeks ciągu
      */
     template <typename T>
     void mergedown_sort(std::vector<T> & sequence, int index_begin = 0, int index_end = -1)
@@ -128,11 +128,11 @@ namespace algolib
         impl::merge(sequence, index_begin, index_middle, index_end);
     }
 
-    /**
-     * Mutowalne sortowanie ciągu przez scalanie bottom-up.
-     * @param sequence ciąg
-     * @param index_begin początkowy indeks ciągu
-     * @param index_end końcowy indeks ciągu
+    /*!
+     * \brief Mutowalne sortowanie ciągu przez scalanie bottom-up.
+     * \param sequence ciąg
+     * \param index_begin początkowy indeks ciągu
+     * \param index_end końcowy indeks ciągu
      */
     template <typename T>
     void mergeup_sort(std::vector<T> & sequence, int index_begin = 0, int index_end = -1)
@@ -151,11 +151,11 @@ namespace algolib
                             std::min(j + i, index_end));
     }
 
-    /**
-     * Mutowalne szybkie sortowanie ciągu.
-     * @param sequence ciąg
-     * @param index_begin początkowy indeks ciągu
-     * @param index_end końcowy indeks ciągu
+    /*!
+     * \brief Mutowalne szybkie sortowanie ciągu.
+     * \param sequence ciąg
+     * \param index_begin początkowy indeks ciągu
+     * \param index_end końcowy indeks ciągu
      */
     template <typename T>
     void quick_sort(std::vector<T> & sequence, int index_begin = 0, int index_end = -1)

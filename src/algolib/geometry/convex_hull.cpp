@@ -1,4 +1,4 @@
-// Graham's algorithm for convex hull on a plane.
+//! Graham's algorithm for convex hull on a plane.
 #include "algolib/geometry/convex_hull.hpp"
 
 namespace alge = algolib::geometry;

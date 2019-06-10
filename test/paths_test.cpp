@@ -1,4 +1,4 @@
-// TESTY DLA ALGORYTMÓW WYZNACZANIA NAJKRÓTSZYCH ŚCIEŻEK
+//! TESTY DLA ALGORYTMÓW WYZNACZANIA NAJKRÓTSZYCH ŚCIEŻEK
 #include <gtest/gtest.h>
 #include "algolib/graphs/directed_graph.hpp"
 #include "algolib/graphs/paths.hpp"

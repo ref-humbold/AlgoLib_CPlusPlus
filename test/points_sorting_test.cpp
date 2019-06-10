@@ -1,4 +1,4 @@
-// Tests: Points sorting algorithms.
+//! Tests: Points sorting algorithms.
 #include <gtest/gtest.h>
 #include "algolib/geometry/points_sorting.hpp"
 

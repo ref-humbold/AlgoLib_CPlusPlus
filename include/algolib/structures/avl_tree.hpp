@@ -168,7 +168,7 @@ namespace algolib
              * \brief Adds a new value to the tree.
              * \param element value to be added
              * \return iterator at the new element and \c true whether insert was successful,
-             * otherwise \c false
+             * \brief otherwise \c false
              */
             std::pair<iterator, bool> insert(const_reference element);
 
@@ -191,7 +191,7 @@ namespace algolib
         private:
             /*!
              * \brief Removes given node from the tree.
-             * @param node node to be removed
+             * \param node node to be removed
              */
             void destroy_node(inner_ptr node)
             {
@@ -215,8 +215,8 @@ namespace algolib
 
             /*!
              * \brief Checks whether given node is a left child.
-             * @param node node to be checked
-             * @return \c true if the node is left child, otherwise \c false
+             * \param node node to be checked
+             * \return \c true if the node is left child, otherwise \c false
              */
             bool is_left_child(inner_ptr node)
             {
@@ -226,8 +226,8 @@ namespace algolib
 
             /*!
              * \brief Checks whether given node is a right child.
-             * @param node node to be checked
-             * @return \c true if the node is right child, otherwise \c false
+             * \param node node to be checked
+             * \return \c true if the node is right child, otherwise \c false
              */
             bool is_right_child(inner_ptr node)
             {
@@ -240,7 +240,7 @@ namespace algolib
              * \param node node
              * \param element value to find
              * \return the node if it hold given value, otherwise left child if the value is less or
-             * right child if the value is greater
+             * \brief right child if the value is greater
              */
             inner_ptr search(inner_ptr node, const_reference element) const;
 
@@ -261,18 +261,18 @@ namespace algolib
 
             /*!
              * \brief Replaces the subtree rootted in one node with subtree of another node.
-             * @param node1 root of the subtree to be replaced
-             * @param node2 root of the new subtree
+             * \param node1 root of the subtree to be replaced
+             * \param node2 root of the new subtree
              */
             void replace_node(inner_ptr node1, inner_ptr node2);
 
             /*!
              * \brief Rotates the node along the egde to its parent.
-             * @param node node to be rotated
+             * \param node node to be rotated
              */
             void rotate(inner_ptr node);
 
-            /**
+            /**!
              * \brief Restores balancing on a path from given node to the root.
              * \param node node to start balancing from
              */

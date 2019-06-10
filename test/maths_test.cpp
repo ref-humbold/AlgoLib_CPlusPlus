@@ -1,4 +1,4 @@
-// TESTY DLA ALGORYTMÓW MATEMATYCZNYCH
+//! TESTY DLA ALGORYTMÓW MATEMATYCZNYCH
 #include <gtest/gtest.h>
 #include "algolib/mathmat/maths.hpp"
 

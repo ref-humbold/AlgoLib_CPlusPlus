@@ -1,4 +1,4 @@
-// Points on a plane.
+//! Points on a plane.
 #include "algolib/geometry/point2d.hpp"
 
 namespace alge = algolib::geometry;

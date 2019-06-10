@@ -1,6 +1,6 @@
-/**
- * @file topological_sorting.hpp
- * ALGORYTMY SORTOWANIA TOPOLOGICZNEGO
+/*!
+ * \file topological_sorting.hpp
+ * \brief ALGORYTMY SORTOWANIA TOPOLOGICZNEGO
  */
 #ifndef TOPOLOGICAL_SORTING_HPP_
 #define TOPOLOGICAL_SORTING_HPP_
@@ -26,24 +26,19 @@ namespace algolib
                 : std::logic_error(what_arg)
             {
             }
-
-            explicit directed_cyclic_graph_exception(const char * what_arg = "")
-                : std::logic_error(what_arg)
-            {
-            }
         };
 
-        /**
-         * Sortowanie topologiczne przez liczenie poprzedników.
-         * @param digraph graf skierowany
-         * @return porządek topologiczny wierzchołków
+        /*!
+         * \brief Sortowanie topologiczne przez liczenie poprzedników.
+         * \param digraph graf skierowany
+         * \return porządek topologiczny wierzchołków
          */
         std::vector<vertex_t> sort_topological1(const directed_graph & digraph);
 
-        /**
-         * Sortowanie topologiczne z użyciem DFS.
-         * @param digraph graf skierowany
-         * @return porządek topologiczny wierzchołków
+        /*!
+         * \brief Sortowanie topologiczne z użyciem DFS.
+         * \param digraph graf skierowany
+         * \return porządek topologiczny wierzchołków
          */
         std::vector<vertex_t> sort_topological2(const directed_graph & digraph);
     }

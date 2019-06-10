@@ -1,4 +1,4 @@
-// Fractions structure.
+//! Fractions structure.
 #include "algolib/mathmat/fraction.hpp"
 
 namespace alma = algolib::mathmat;
