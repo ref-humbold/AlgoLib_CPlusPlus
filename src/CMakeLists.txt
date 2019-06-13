@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # SOURCES
-set(ALGOLIB "algolib")
+set(ALGOLIB "${PROJECT_SOURCE_DIR}/src/algolib")
 set(GEOMETRY "${ALGOLIB}/geometry")
 set(GRAPHS "${ALGOLIB}/graphs")
 set(MATHMAT "${ALGOLIB}/mathmat")

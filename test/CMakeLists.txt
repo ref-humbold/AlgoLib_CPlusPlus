@@ -9,23 +9,24 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 # SOURCES
+set(TEST "${PROJECT_SOURCE_DIR}/test")
 set(SOURCES
-    "avl_tree_test.cpp"
-    "directed_graph_test.cpp"
-    "disjoint_sets_test.cpp"
-    "fraction_test.cpp"
-    "kmp_test.cpp"
-    "lca_test.cpp"
-    "maths_test.cpp"
-    "mst_test.cpp"
-    "paths_test.cpp"
-    "points_sorting_test.cpp"
-    "primes_test.cpp"
-    "scc_test.cpp"
-    "subseqs_test.cpp"
-    "suffix_array_test.cpp"
-    "topological_sorting_test.cpp"
-    "undirected_graph_test.cpp")
+    "${TEST}/avl_tree_test.cpp"
+    "${TEST}/directed_graph_test.cpp"
+    "${TEST}/disjoint_sets_test.cpp"
+    "${TEST}/fraction_test.cpp"
+    "${TEST}/kmp_test.cpp"
+    "${TEST}/lca_test.cpp"
+    "${TEST}/maths_test.cpp"
+    "${TEST}/mst_test.cpp"
+    "${TEST}/paths_test.cpp"
+    "${TEST}/points_sorting_test.cpp"
+    "${TEST}/primes_test.cpp"
+    "${TEST}/scc_test.cpp"
+    "${TEST}/subseqs_test.cpp"
+    "${TEST}/suffix_array_test.cpp"
+    "${TEST}/topological_sorting_test.cpp"
+    "${TEST}/undirected_graph_test.cpp")
 
 # OUTPUT
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin/test")
