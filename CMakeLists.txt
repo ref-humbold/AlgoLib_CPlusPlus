@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(AlgoLib_CPlusPlus VERSION 0.4.190502 LANGUAGES CXX)
+project(AlgoLib_CPlusPlus VERSION 0.5.190615 LANGUAGES CXX)
 
 # COMPILER
 set(CMAKE_CXX_STANDARD 14)

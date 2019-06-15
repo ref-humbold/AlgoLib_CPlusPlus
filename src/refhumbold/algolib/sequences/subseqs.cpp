@@ -1,5 +1,5 @@
 //! Algorithms for subsequences.
-#include "refhumbold/algolib/subseqs.hpp"
+#include "refhumbold/algolib/sequences/subseqs.hpp"
 
 std::vector<double> algolib::maximum_subarray(const std::vector<double> & sequence)
 {

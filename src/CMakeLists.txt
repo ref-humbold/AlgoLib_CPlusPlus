@@ -5,11 +5,10 @@ set(ALGOLIB "refhumbold/algolib")
 set(GEOMETRY "${ALGOLIB}/geometry")
 set(GRAPHS "${ALGOLIB}/graphs")
 set(MATHMAT "${ALGOLIB}/mathmat")
+set(SEQUENCES "${ALGOLIB}/sequences")
 set(STRUCTURES "${ALGOLIB}/structures")
 set(TEXT "${ALGOLIB}/text")
-set(ALGOLIB_SOURCES
-    "${ALGOLIB}/subseqs.cpp"
-    "${ALGOLIB}/vector_sorting.cpp")
+
 set(GEOMETRY_SOURCES
     "${GEOMETRY}/closest_points.cpp"
     "${GEOMETRY}/convex_hull.cpp"
@@ -36,6 +35,9 @@ set(MATHMAT_SOURCES
     "${MATHMAT}/fraction.cpp"
     "${MATHMAT}/maths.cpp"
     "${MATHMAT}/primes.cpp")
+set(SEQUENCES_SOURCES
+    "${SEQUENCES}/subseqs.cpp"
+    "${SEQUENCES}/vector_sorting.cpp")
 set(STRUCTURES_SOURCES
     "${STRUCTURES}/avl_tree.cpp"
     "${STRUCTURES}/disjoint_sets.cpp")
@@ -43,11 +45,12 @@ set(TEXT_SOURCES
     "${TEXT}/kmp.cpp"
     "${TEXT}/kmr.cpp"
     "${TEXT}/suffix_array.cpp")
+
 set(SOURCES
-    "${ALGOLIB_SOURCES}"
     "${GEOMETRY_SOURCES}"
     "${GRAPHS_SOURCES}"
     "${MATHMAT_SOURCES}"
+    "${SEQUENCES_SOURCES}"
     "${STRUCTURES_SOURCES}"
     "${TEXT_SOURCES}")
 
