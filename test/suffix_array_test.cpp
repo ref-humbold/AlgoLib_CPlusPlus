@@ -1,6 +1,6 @@
 //! TESTS FOR SUFFIX ARRAY STRUCTURE
 #include <gtest/gtest.h>
-#include "algolib/text/suffix_array.hpp"
+#include "refhumbold/algolib/text/suffix_array.hpp"
 
 namespace alte = algolib::text;
 

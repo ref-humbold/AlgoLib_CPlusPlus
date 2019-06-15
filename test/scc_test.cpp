@@ -4,7 +4,7 @@
  */
 #include <algorithm>
 #include <gtest/gtest.h>
-#include "algolib/graphs/scc.hpp"
+#include "refhumbold/algolib/graphs/scc.hpp"
 
 namespace algr = algolib::graphs;
 

@@ -1,6 +1,6 @@
 //! TESTY DLA ALGORYTMU NAJNIŻSZEGO WSPÓLNEGO PRZODKA
 #include <gtest/gtest.h>
-#include "algolib/graphs/lca.hpp"
+#include "refhumbold/algolib/graphs/lca.hpp"
 
 namespace algr = algolib::graphs;
 

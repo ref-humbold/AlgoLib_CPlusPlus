@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unknown-pragmas")
 
 # SOURCES
-include_directories("${PROJECT_SOURCE_DIR}/include")
+include_directories("include")
 
 # TESTS
 include(CTest)

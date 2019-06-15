@@ -3,7 +3,7 @@
  * \brief TEST: Algorithms for prime numbers
  */
 #include <gtest/gtest.h>
-#include "algolib/mathmat/primes.hpp"
+#include "refhumbold/algolib/mathmat/primes.hpp"
 
 namespace alma = algolib::mathmat;
 

@@ -1,6 +1,6 @@
 //! TESTY DLA ALGORYTMÓW SORTOWANIA TOPOLOGICZNEGO"""
 #include <gtest/gtest.h>
-#include "algolib/graphs/topological_sorting.hpp"
+#include "refhumbold/algolib/graphs/topological_sorting.hpp"
 
 namespace algr = algolib::graphs;
 

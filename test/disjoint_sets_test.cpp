@@ -1,6 +1,6 @@
 //! TESTY DLA STRUKTURY ZBIORÓW ROZŁĄCZNYCH
 #include <gtest/gtest.h>
-#include "algolib/structures/disjoint_sets.hpp"
+#include "refhumbold/algolib/structures/disjoint_sets.hpp"
 
 namespace alst = algolib::structures;
 
