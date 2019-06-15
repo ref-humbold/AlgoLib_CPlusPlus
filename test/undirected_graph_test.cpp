@@ -1,6 +1,6 @@
 //! TESTY DLA GRAFÓW NIESKIEROWANYCH
 #include <gtest/gtest.h>
-#include "refhumbold/algolib/graphs/undirected_graph.hpp"
+#include "algolib/graphs/undirected_graph.hpp"
 
 namespace algr = algolib::graphs;
 
@@ -74,10 +74,10 @@ TEST_F(UndirectedSimpleGraphTest, testGetEdges)
 
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-        std::vector<edge_t>({std::make_tuple(0, 8), std::make_tuple(1, 5), std::make_tuple(2, 4),
-                             std::make_tuple(3, 6), std::make_tuple(3, 9), std::make_tuple(7, 7)}),
-        result);
+    EXPECT_EQ(std::vector<edge_t>({std::make_tuple(0, 8), std::make_tuple(1, 5),
+                                   std::make_tuple(2, 4), std::make_tuple(3, 6),
+                                   std::make_tuple(3, 9), std::make_tuple(7, 7)}),
+              result);
 }
 
 TEST_F(UndirectedSimpleGraphTest, testAddEdge)

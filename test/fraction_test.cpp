@@ -1,6 +1,6 @@
 //! TESTY DLA UŁAMKÓW
 #include <gtest/gtest.h>
-#include "refhumbold/algolib/mathmat/fraction.hpp"
+#include "algolib/mathmat/fraction.hpp"
 
 namespace alma = algolib::mathmat;
 

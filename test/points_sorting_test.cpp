@@ -1,6 +1,6 @@
 //! Tests: Points sorting algorithms.
 #include <gtest/gtest.h>
-#include "refhumbold/algolib/geometry/points_sorting.hpp"
+#include "algolib/geometry/points_sorting.hpp"
 
 namespace alge = algolib::geometry;
 

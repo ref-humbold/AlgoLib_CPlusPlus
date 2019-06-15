@@ -3,7 +3,7 @@
  * \brief TEST: AVL tree
  */
 #include <gtest/gtest.h>
-#include "refhumbold/algolib/structures/avl_tree.hpp"
+#include "algolib/structures/avl_tree.hpp"
 
 namespace alst = algolib::structures;
 

@@ -1,6 +1,6 @@
 //! TESTY DLA ALGORYTMU KNUTHA-MORRISA-PRATTA
 #include <gtest/gtest.h>
-#include "refhumbold/algolib/text/kmp.hpp"
+#include "algolib/text/kmp.hpp"
 
 namespace alte = algolib::text;
 
