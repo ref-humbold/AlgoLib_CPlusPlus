@@ -27,6 +27,9 @@ set(SOURCES
     "topological_sorting_test.cpp"
     "undirected_graph_test.cpp")
 
+# TESTS
+include(CTest)
+
 # OUTPUT
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin/test")
 foreach(testsource ${SOURCES})
