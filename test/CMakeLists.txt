@@ -15,20 +15,17 @@ set(SOURCES
     "disjoint_sets_test.cpp"
     "fraction_test.cpp"
     "kmp_test.cpp"
-    "lca_test.cpp"
+    "lowest_common_ancestor_test.cpp"
     "maths_test.cpp"
-    "mst_test.cpp"
+    "minimal_spanning_tree_test.cpp"
     "paths_test.cpp"
     "points_sorting_test.cpp"
     "primes_test.cpp"
-    "scc_test.cpp"
+    "strongly_connected_components_test.cpp"
     "subseqs_test.cpp"
     "suffix_array_test.cpp"
     "topological_sorting_test.cpp"
     "undirected_graph_test.cpp")
-
-# TESTS
-include(CTest)
 
 # OUTPUT
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin/test")

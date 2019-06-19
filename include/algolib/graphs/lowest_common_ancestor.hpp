@@ -1,6 +1,6 @@
 //! NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE
-#ifndef LCA_HPP_
-#define LCA_HPP_
+#ifndef LOWEST_COMMON_ANCESTOR_HPP_
+#define LOWEST_COMMON_ANCESTOR_HPP_
 
 #include <cstdlib>
 #include <cmath>
@@ -40,11 +40,9 @@ namespace impl
         int search(int vertex1, int vertex2);
 
         /**!
-         * \brief Algorytm dfs z licznikiem czasu wyznaczający kolejne wierzchołki na ścieżce do korzenia.
-         * \param vertex aktualny wierzchołek
-         * \param parent ojciec wierzchołka
-         * \param timer aktualny czasu
-         * \return nowy czas po przetworzeniu wierzchołka
+         * \brief Algorytm dfs z licznikiem czasu wyznaczający kolejne wierzchołki na ścieżce do
+         * korzenia. \param vertex aktualny wierzchołek \param parent ojciec wierzchołka \param
+         * timer aktualny czasu \return nowy czas po przetworzeniu wierzchołka
          */
         int dfs(int vertex, int parent, int timer);
 

@@ -28,12 +28,12 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/edmonds.cpp"
     "${GRAPHS}/forest_graph.cpp"
     "${GRAPHS}/graph.cpp"
-    "${GRAPHS}/lca.cpp"
+    "${GRAPHS}/lowest_common_ancestor.cpp"
     "${GRAPHS}/matching.cpp"
-    "${GRAPHS}/mst.cpp"
+    "${GRAPHS}/minimal_spanning_tree.cpp"
     "${GRAPHS}/multipartite_graph.cpp"
     "${GRAPHS}/paths.cpp"
-    "${GRAPHS}/scc.cpp"
+    "${GRAPHS}/strongly_connected_components.cpp"
     "${GRAPHS}/searching.cpp"
     "${GRAPHS}/topological_sorting.cpp"
     "${GRAPHS}/undirected_graph.cpp")
@@ -60,6 +60,9 @@ set(SOURCES
     "${SEQUENCES_SOURCES}"
     "${STRUCTURES_SOURCES}"
     "${TEXT_SOURCES}")
+
+# TESTS
+include(CTest)
 
 # OUTPUT
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")

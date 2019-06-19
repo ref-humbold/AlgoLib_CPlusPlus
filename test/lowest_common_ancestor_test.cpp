@@ -1,6 +1,6 @@
 //! TESTY DLA ALGORYTMU NAJNIŻSZEGO WSPÓLNEGO PRZODKA
 #include <gtest/gtest.h>
-#include "algolib/graphs/lca.hpp"
+#include "algolib/graphs/lowest_common_ancestor.hpp"
 
 namespace algr = algolib::graphs;
 
@@ -12,11 +12,11 @@ protected:
 public:
     LCATest()
         : trees{algr::forest_graph(
-              12,
-              std::vector<edge_t>({std::make_pair(0, 1), std::make_pair(0, 2), std::make_pair(1, 3),
-                                   std::make_pair(1, 4), std::make_pair(1, 5), std::make_pair(2, 6),
-                                   std::make_pair(4, 7), std::make_pair(6, 8), std::make_pair(6, 9),
-                                   std::make_pair(10, 11)}))}
+                12, std::vector<edge_t>({std::make_pair(0, 1), std::make_pair(0, 2),
+                                         std::make_pair(1, 3), std::make_pair(1, 4),
+                                         std::make_pair(1, 5), std::make_pair(2, 6),
+                                         std::make_pair(4, 7), std::make_pair(6, 8),
+                                         std::make_pair(6, 9), std::make_pair(10, 11)}))}
     {
     }
 
