@@ -3,7 +3,7 @@
 
 namespace algr = algolib::graphs;
 
-#pragma region directed_simple_graph
+//region directed_simple_graph
 
 algr::directed_simple_graph::directed_simple_graph(const algr::undirected_simple_graph & ugraph)
     : simple_graph(ugraph.get_vertices_number())
@@ -69,8 +69,8 @@ void algr::directed_simple_graph::reverse()
     graphrepr = std::move(revgraph);
 }
 
-#pragma endregion
-#pragma region directed_weighted_simple_graph
+//endregion
+//region directed_weighted_simple_graph
 
 algr::directed_weighted_simple_graph::directed_weighted_simple_graph(
         const algr::undirected_weighted_simple_graph & uwgraph)
@@ -125,4 +125,4 @@ void algr::directed_weighted_simple_graph::reverse()
     graphrepr = std::move(revgraph);
 }
 
-#pragma endregion
+//endregion

@@ -18,7 +18,7 @@ namespace algolib
 {
     namespace structures
     {
-#pragma region avl_tree
+        // region avl_tree
 
         template <typename E, typename C = std::less<E>>
         class avl_tree
@@ -189,18 +189,6 @@ namespace algolib
             void clear();
 
         private:
-            /*!
-             * \brief Removes given node from the tree.
-             * \param node node to be removed
-             */
-            void destroy_node(inner_ptr node)
-            {
-                node->set_left(nullptr);
-                node->set_right(nullptr);
-                --elems;
-                delete node;
-            }
-
             //! \return root of the tree
             inner_ptr get_root() const
             {
@@ -462,7 +450,10 @@ namespace algolib
                 else
                     set_root(child);
 
-                destroy_node(node);
+                node->set_left(nullptr);
+                node->set_right(nullptr);
+                --elems;
+                delete node;
             }
         }
 
@@ -544,8 +535,8 @@ namespace algolib
             return left_height - right_height;
         }
 
-#pragma endregion
-#pragma region avl_node
+        // endregion
+        // region avl_node
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_node
@@ -588,8 +579,8 @@ namespace algolib
             virtual node_ptr maximum() = 0;
         };
 
-#pragma endregion
-#pragma region avl_inner_node
+        // endregion
+        // region avl_inner_node
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_inner_node : public avl_tree<E, C>::avl_node
@@ -721,8 +712,8 @@ namespace algolib
             height = std::max(left_height, right_height) + 1;
         }
 
-#pragma endregion
-#pragma region avl_header_node
+        // endregion
+        // region avl_header_node
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_header_node : public avl_tree<E, C>::avl_node
@@ -814,8 +805,8 @@ namespace algolib
             return *this;
         }
 
-#pragma endregion
-#pragma region avl_iterator
+        // endregion
+        // region avl_iterator
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_iterator
@@ -949,8 +940,8 @@ namespace algolib
             return this->current_node != it.current_node;
         }
 
-#pragma endregion
-#pragma region avl_const_iterator
+        // endregion
+        // region avl_const_iterator
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_const_iterator
@@ -1094,7 +1085,7 @@ namespace algolib
             return this->current_node != it.current_node;
         }
 
-#pragma endregion
+        // endregion
     }
 }
 

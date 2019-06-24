@@ -3,7 +3,7 @@
 
 namespace algr = algolib::graphs;
 
-#pragma region undirected_simple_graph
+//region undirected_simple_graph
 
 size_t algr::undirected_simple_graph::get_edges_number() const
 {
@@ -55,8 +55,8 @@ size_t algr::undirected_simple_graph::get_indegree(vertex_t vertex) const
     return get_outdegree(vertex);
 }
 
-#pragma endregion
-#pragma region undirected_weighted_simple_graph
+//endregion
+//region undirected_weighted_simple_graph
 
 std::vector<wedge_t> algr::undirected_weighted_simple_graph::get_weighted_edges() const
 {
@@ -92,4 +92,4 @@ std::vector<wvertex_t>
     return std::vector<wvertex_t>(graphrepr[vertex].begin(), graphrepr[vertex].end());
 }
 
-#pragma endregion
+//endregion
