@@ -14,9 +14,7 @@ public:
     {
     }
 
-    virtual ~SuffixArrayTest()
-    {
-    }
+    virtual ~SuffixArrayTest() = default;
 };
 
 TEST_F(SuffixArrayTest, size)

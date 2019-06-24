@@ -4,6 +4,8 @@
 
 namespace alma = algolib::mathmat;
 
+// region gcd
+
 TEST(MathsTest, gcd_whenNumbersAreComposite_thenReturnsGCD)
 {
     long long int number1 = 161LL;
@@ -54,6 +56,9 @@ TEST(MathsTest, gcd_whenNumber2IsZero_thenReturnsNumber1)
     EXPECT_EQ(number1, result);
 }
 
+// endregion
+// region lcm
+
 TEST(MathsTest, lcm_whenNumbersAreComposite_thenReturnsLCM)
 {
     long long int number1 = 161LL;
@@ -103,6 +108,9 @@ TEST(MathsTest, lcm_whenNumber2IsZero_thenReturnsZero)
 
     EXPECT_EQ(0LL, result);
 }
+
+// endregion
+// region powerMod
 
 TEST(MathsTest, powerMod_whenBaseIsZero_thenReturnsZero)
 {
@@ -198,6 +206,9 @@ TEST(MathsTest, powerMod_whenModuloIsPositiveAndBaseIsNegative)
 
     EXPECT_EQ(1875LL, result);
 }
+
+// endregion
+// region multMod
 
 TEST(MathsTest, multMod_whenFactor1IsZero_thenReturnsZero)
 {
@@ -308,3 +319,5 @@ TEST(MathsTest, multMod_whenModuloIsPositiveAndFactorsAreNegative)
 
     EXPECT_EQ(664LL, result);
 }
+
+// endregion
