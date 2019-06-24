@@ -17,28 +17,28 @@ public:
     virtual ~DisjointSetsTest() = default;
 };
 
-TEST_F(DisjointSetsTest, testSize)
+TEST_F(DisjointSetsTest, size)
 {
     size_t result = test_object.size();
 
     EXPECT_EQ(10, result);
 }
 
-TEST_F(DisjointSetsTest, testContainsWhenContains)
+TEST_F(DisjointSetsTest, contains_whenContains)
 {
     bool result = test_object.contains(4);
 
     EXPECT_TRUE(result);
 }
 
-TEST_F(DisjointSetsTest, testContainsWhenNotContains)
+TEST_F(DisjointSetsTest, contains_whenNotContains)
 {
     bool result = test_object.contains(17);
 
     EXPECT_FALSE(result);
 }
 
-TEST_F(DisjointSetsTest, testInsertWhenNewElementAsSingleton)
+TEST_F(DisjointSetsTest, insert_whenNewElementAsSingleton)
 {
     int elem = 20;
 
@@ -48,7 +48,7 @@ TEST_F(DisjointSetsTest, testInsertWhenNewElementAsSingleton)
     EXPECT_EQ(elem, test_object.find_set(elem));
 }
 
-TEST_F(DisjointSetsTest, testInsertWhenNewElementToPresentSet)
+TEST_F(DisjointSetsTest, insert_whenNewElementToPresentSet)
 {
     int elem = 20;
     int repr = 7;
@@ -59,14 +59,14 @@ TEST_F(DisjointSetsTest, testInsertWhenNewElementToPresentSet)
     EXPECT_EQ(repr, test_object.find_set(elem));
 }
 
-TEST_F(DisjointSetsTest, testInsertWhenPresentElement)
+TEST_F(DisjointSetsTest, insert_whenPresentElement)
 {
     int elem = 7;
 
     EXPECT_THROW(test_object.insert(elem), std::invalid_argument);
 }
 
-TEST_F(DisjointSetsTest, testInsertWhenNotPresentRepresent)
+TEST_F(DisjointSetsTest, insert_whenNotPresentRepresent)
 {
     int elem = 20;
     int repr = 14;
@@ -74,7 +74,7 @@ TEST_F(DisjointSetsTest, testInsertWhenNotPresentRepresent)
     EXPECT_THROW(test_object.insert(elem, repr), std::invalid_argument);
 }
 
-TEST_F(DisjointSetsTest, testInsertManyElementsAsSingletons)
+TEST_F(DisjointSetsTest, insertManyElementsAsSingletons)
 {
     std::vector<int> elems = {20, 22, 24, 26};
 
@@ -87,7 +87,7 @@ TEST_F(DisjointSetsTest, testInsertManyElementsAsSingletons)
     }
 }
 
-TEST_F(DisjointSetsTest, testInsertManyElementsToPresentSet)
+TEST_F(DisjointSetsTest, insertManyElementsToPresentSet)
 {
     std::vector<int> elems = {20, 22, 24, 26};
     int repr = 3;
@@ -101,7 +101,7 @@ TEST_F(DisjointSetsTest, testInsertManyElementsToPresentSet)
     }
 }
 
-TEST_F(DisjointSetsTest, testFindSet)
+TEST_F(DisjointSetsTest, findSet)
 {
     int elem = 4;
     int result = test_object.find_set(elem);
@@ -109,7 +109,7 @@ TEST_F(DisjointSetsTest, testFindSet)
     EXPECT_EQ(elem, result);
 }
 
-TEST_F(DisjointSetsTest, testUnionSetWhenDifferentSets)
+TEST_F(DisjointSetsTest, unionSet_whenDifferentSets)
 {
     int elem1 = 4;
     int elem2 = 6;
@@ -119,7 +119,7 @@ TEST_F(DisjointSetsTest, testUnionSetWhenDifferentSets)
     EXPECT_TRUE(test_object.is_same_set(elem1, elem2));
 }
 
-TEST_F(DisjointSetsTest, testUnionSetWhenSameSets1)
+TEST_F(DisjointSetsTest, unionSet_whenSameSets1)
 {
     int elem = 4;
 
@@ -128,7 +128,7 @@ TEST_F(DisjointSetsTest, testUnionSetWhenSameSets1)
     EXPECT_TRUE(test_object.is_same_set(elem, elem));
 }
 
-TEST_F(DisjointSetsTest, testUnionSetWhenSameSets2)
+TEST_F(DisjointSetsTest, unionSet_whenSameSets2)
 {
     int elem1 = 3;
     int elem2 = 8;
@@ -139,7 +139,7 @@ TEST_F(DisjointSetsTest, testUnionSetWhenSameSets2)
     EXPECT_TRUE(test_object.is_same_set(elem1, elem2));
 }
 
-TEST_F(DisjointSetsTest, testIsSameSetWhenDifferentSets)
+TEST_F(DisjointSetsTest, isSameSet_whenDifferentSets)
 {
     int elem1 = 4;
     int elem2 = 6;
@@ -149,7 +149,7 @@ TEST_F(DisjointSetsTest, testIsSameSetWhenDifferentSets)
     EXPECT_FALSE(result);
 }
 
-TEST_F(DisjointSetsTest, testIsSameSetWhenSameSets1)
+TEST_F(DisjointSetsTest, isSameSet_whenSameSets1)
 {
     int elem = 4;
 
@@ -158,7 +158,7 @@ TEST_F(DisjointSetsTest, testIsSameSetWhenSameSets1)
     EXPECT_TRUE(result);
 }
 
-TEST_F(DisjointSetsTest, testIsSameSetWhenSameSets2)
+TEST_F(DisjointSetsTest, isSameSet_whenSameSets2)
 {
     int elem1 = 3;
     int elem2 = 8;

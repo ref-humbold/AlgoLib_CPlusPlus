@@ -19,14 +19,14 @@ public:
     }
 };
 
-TEST_F(SuffixArrayTest, testSize)
+TEST_F(SuffixArrayTest, size)
 {
     size_t result = test_object.size();
 
     EXPECT_EQ(11, result);
 }
 
-TEST_F(SuffixArrayTest, testOperatorIndex)
+TEST_F(SuffixArrayTest, operatorIndex)
 {
     std::string result0 = test_object[0];
     std::string result1 = test_object[3];
@@ -39,7 +39,7 @@ TEST_F(SuffixArrayTest, testOperatorIndex)
     EXPECT_EQ("ssippi", result3);
 }
 
-TEST_F(SuffixArrayTest, testAt)
+TEST_F(SuffixArrayTest, at)
 {
     std::string result0 = test_object.at(0);
     std::string result1 = test_object.at(3);
@@ -52,12 +52,12 @@ TEST_F(SuffixArrayTest, testAt)
     EXPECT_EQ("ssippi", result3);
 }
 
-TEST_F(SuffixArrayTest, testAtWhenOutOfRange)
+TEST_F(SuffixArrayTest, at_whenOutOfRange)
 {
     EXPECT_THROW(test_object.at(20), std::out_of_range);
 }
 
-TEST_F(SuffixArrayTest, testIndexAt)
+TEST_F(SuffixArrayTest, indexAt)
 {
     size_t result0 = test_object.index_at(0);
     size_t result1 = test_object.index_at(3);
@@ -70,12 +70,12 @@ TEST_F(SuffixArrayTest, testIndexAt)
     EXPECT_EQ(5, result3);
 }
 
-TEST_F(SuffixArrayTest, testIndexAtWhenOutOfRange)
+TEST_F(SuffixArrayTest, indexAt_whenOutOfRange)
 {
     EXPECT_THROW(test_object.index_at(20), std::out_of_range);
 }
 
-TEST_F(SuffixArrayTest, testIndexOf)
+TEST_F(SuffixArrayTest, indexOf)
 {
     size_t result0 = test_object.index_of(0);
     size_t result1 = test_object.index_of(3);
@@ -88,33 +88,33 @@ TEST_F(SuffixArrayTest, testIndexOf)
     EXPECT_EQ(5, result3);
 }
 
-TEST_F(SuffixArrayTest, testIndexOfWhenOutOfRange)
+TEST_F(SuffixArrayTest, indexOf_whenOutOfRange)
 {
     EXPECT_THROW(test_object.index_of(20), std::out_of_range);
 }
 
-TEST_F(SuffixArrayTest, testLCPWhenSameSuffix)
+TEST_F(SuffixArrayTest, lcp_whenSameSuffix)
 {
     size_t result = test_object.lcp(4, 4);
 
     EXPECT_EQ(7, result);
 }
 
-TEST_F(SuffixArrayTest, testLCPWhenDifferentSuffix1)
+TEST_F(SuffixArrayTest, lcp_whenDifferentSuffix1)
 {
     size_t result = test_object.lcp(1, 10);
 
     EXPECT_EQ(1, result);
 }
 
-TEST_F(SuffixArrayTest, testLCPWhenDifferentSuffix2)
+TEST_F(SuffixArrayTest, lcp_whenDifferentSuffix2)
 {
     size_t result = test_object.lcp(9, 6);
 
     EXPECT_EQ(0, result);
 }
 
-TEST_F(SuffixArrayTest, testLCPWhenSwapSuffix)
+TEST_F(SuffixArrayTest, lcp_whenSwapSuffix)
 {
     size_t result0 = test_object.lcp(2, 5);
     size_t result1 = test_object.lcp(5, 2);

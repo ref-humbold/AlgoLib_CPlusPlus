@@ -4,7 +4,7 @@
 
 namespace alma = algolib::mathmat;
 
-TEST(FractionTest, testInverseWhenPositive)
+TEST(FractionTest, inverse_whenPositive)
 {
     alma::fraction frac(7, 19);
 
@@ -13,7 +13,7 @@ TEST(FractionTest, testInverseWhenPositive)
     EXPECT_EQ(alma::fraction(19, 7), result);
 }
 
-TEST(FractionTest, testInverseWhenNegative)
+TEST(FractionTest, inverse_whenNegative)
 {
     alma::fraction frac(-7, 19);
 
@@ -22,14 +22,14 @@ TEST(FractionTest, testInverseWhenNegative)
     EXPECT_EQ(alma::fraction(-19, 7), result);
 }
 
-TEST(FractionTest, testInverseWhenZero)
+TEST(FractionTest, inverse_whenZero_thenThrowsDomainError)
 {
     alma::fraction frac(0);
 
     EXPECT_THROW(~frac, std::domain_error);
 }
 
-TEST(FractionTest, testReverseWhenPositive)
+TEST(FractionTest, reverse_whenPositive)
 {
     alma::fraction frac(7, 19);
 
@@ -38,7 +38,7 @@ TEST(FractionTest, testReverseWhenPositive)
     EXPECT_EQ(alma::fraction(-7, 19), result);
 }
 
-TEST(FractionTest, testReverseWhenNegative)
+TEST(FractionTest, reverse_whenNegative)
 {
     alma::fraction frac(-7, 19);
 
@@ -47,7 +47,7 @@ TEST(FractionTest, testReverseWhenNegative)
     EXPECT_EQ(alma::fraction(7, 19), result);
 }
 
-TEST(FractionTest, testReverseWhenZero)
+TEST(FractionTest, reverse_whenZero_thenReturnsZero)
 {
     alma::fraction frac(0);
 
@@ -56,25 +56,25 @@ TEST(FractionTest, testReverseWhenZero)
     EXPECT_EQ(alma::fraction(0), result);
 }
 
-TEST(FractionTest, testConvertToDouble)
+TEST(FractionTest, convertToDouble)
 {
     alma::fraction frac(-129, 20);
 
-    double result = (double)frac;
+    double result = static_cast<double>(frac);
 
     EXPECT_EQ(-6.45, result);
 }
 
-TEST(FractionTest, testConvertToInt)
+TEST(FractionTest, convertToInt)
 {
     alma::fraction frac(-129, 20);
 
-    int result = (int)frac;
+    int result = static_cast<int>(frac);
 
     EXPECT_EQ(-6, result);
 }
 
-TEST(FractionTest, testHash)
+TEST(FractionTest, hash_whenFraction_thenReturnsXor)
 {
     alma::fraction frac(-129, 20);
 

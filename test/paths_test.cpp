@@ -6,7 +6,7 @@
 
 namespace algr = algolib::graphs;
 
-TEST(PathsTest, testBellmanFordWhenDirectedGraph)
+TEST(PathsTest, bellmanFord_whenDirectedGraph)
 {
     algr::directed_weighted_simple_graph diwgraph(
             10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
@@ -28,7 +28,7 @@ TEST(PathsTest, testBellmanFordWhenDirectedGraph)
               result);
 }
 
-TEST(PathsTest, testBellmanFordWhenUndirectedGraph)
+TEST(PathsTest, bellmanFord_whenUndirectedGraph)
 {
     algr::undirected_weighted_simple_graph uwgraph(
             10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
@@ -45,7 +45,7 @@ TEST(PathsTest, testBellmanFordWhenUndirectedGraph)
     EXPECT_EQ(std::vector<double>({4.0, 0.0, i, 7.0, 7.0, 8.0, i, 10.0, 10.0, i}), result);
 }
 
-TEST(PathsTest, testBellmanFordWhenNegativeCycle)
+TEST(PathsTest, bellmanFord_whenNegativeCycle)
 {
     algr::directed_weighted_simple_graph diwgraph(
             10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
@@ -62,7 +62,7 @@ TEST(PathsTest, testBellmanFordWhenNegativeCycle)
     EXPECT_THROW(algr::bellman_ford(diwgraph, source), std::logic_error);
 }
 
-TEST(PathsTest, testDijkstraWhenDirectedGraph)
+TEST(PathsTest, dijkstra_whenDirectedGraph)
 {
     algr::directed_weighted_simple_graph diwgraph(
             10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
@@ -82,7 +82,7 @@ TEST(PathsTest, testDijkstraWhenDirectedGraph)
               result);
 }
 
-TEST(PathsTest, testDijkstraWhenUndirectedGraph)
+TEST(PathsTest, dijkstra_whenUndirectedGraph)
 {
     algr::undirected_weighted_simple_graph uwgraph(
             10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
@@ -99,7 +99,7 @@ TEST(PathsTest, testDijkstraWhenUndirectedGraph)
     EXPECT_EQ(std::vector<double>({4.0, 0.0, i, 7.0, 7.0, 8.0, i, 10.0, 10.0, i}), result);
 }
 
-TEST(PathsTest, testDijkstraWhenNegativeEdge)
+TEST(PathsTest, dijkstra_whenNegativeEdge)
 {
     algr::directed_weighted_simple_graph diwgraph(
             10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
@@ -116,7 +116,7 @@ TEST(PathsTest, testDijkstraWhenNegativeEdge)
     EXPECT_THROW(algr::dijkstra(diwgraph, source), std::logic_error);
 }
 
-TEST(PathsTest, testFloydWarshallWhenDirectedGraph)
+TEST(PathsTest, floydWarshall_whenDirectedGraph)
 {
     algr::directed_weighted_simple_graph diwgraph(
             10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
@@ -146,7 +146,7 @@ TEST(PathsTest, testFloydWarshallWhenDirectedGraph)
               result);
 }
 
-TEST(PathsTest, testFloydWarshallWhenUndirectedGraph)
+TEST(PathsTest, floydWarshall_whenUndirectedGraph)
 {
     algr::undirected_weighted_simple_graph uwgraph(
             10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),

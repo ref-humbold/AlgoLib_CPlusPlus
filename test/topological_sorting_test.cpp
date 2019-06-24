@@ -4,7 +4,7 @@
 
 namespace algr = algolib::graphs;
 
-TEST(TopologicalSortingTest, testSortTopological1WhenAcyclicGraph)
+TEST(TopologicalSortingTest, sortTopological1_whenAcyclicGraph)
 {
     algr::directed_simple_graph graph(
             6, std::vector<edge_t>({std::make_tuple(0, 2), std::make_tuple(0, 4),
@@ -18,7 +18,7 @@ TEST(TopologicalSortingTest, testSortTopological1WhenAcyclicGraph)
     EXPECT_EQ(std::vector<vertex_t>({3, 5, 1, 0, 2, 4}), result);
 }
 
-TEST(TopologicalSortingTest, testSortTopological1WhenCyclicGraph)
+TEST(TopologicalSortingTest, sortTopological1_whenCyclicGraph)
 {
     algr::directed_simple_graph graph(
             6, std::vector<edge_t>(
@@ -30,7 +30,7 @@ TEST(TopologicalSortingTest, testSortTopological1WhenCyclicGraph)
     EXPECT_THROW(sort_topological1(graph), algr::directed_cyclic_graph_exception);
 }
 
-TEST(TopologicalSortingTest, testSortTopological1WhenEmptyGraph)
+TEST(TopologicalSortingTest, sortTopological1_whenEmptyGraph)
 {
     algr::directed_simple_graph graph(6);
 
@@ -39,7 +39,7 @@ TEST(TopologicalSortingTest, testSortTopological1WhenEmptyGraph)
     EXPECT_EQ(std::vector<vertex_t>({0, 1, 2, 3, 4, 5}), result);
 }
 
-TEST(TopologicalSortingTest, testSortTopological2WhenAcyclicGraph)
+TEST(TopologicalSortingTest, sortTopological2_whenAcyclicGraph)
 {
     algr::directed_simple_graph graph(
             6, std::vector<edge_t>({std::make_tuple(0, 2), std::make_tuple(0, 4),
@@ -58,7 +58,7 @@ TEST(TopologicalSortingTest, testSortTopological2WhenAcyclicGraph)
                         [&](const std::vector<vertex_t> expected) { return expected == result; }));
 }
 
-TEST(TopologicalSortingTest, testSortTopological2WhenCyclicGraph)
+TEST(TopologicalSortingTest, sortTopological2_whenCyclicGraph)
 {
     algr::directed_simple_graph graph(
             6, std::vector<edge_t>(
@@ -70,7 +70,7 @@ TEST(TopologicalSortingTest, testSortTopological2WhenCyclicGraph)
     EXPECT_THROW(sort_topological2(graph), algr::directed_cyclic_graph_exception);
 }
 
-TEST(TopologicalSortingTest, testSortTopological2WhenEmptyGraph)
+TEST(TopologicalSortingTest, sortTopological2_whenEmptyGraph)
 {
     algr::directed_simple_graph graph(6);
 

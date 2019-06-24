@@ -4,7 +4,7 @@
 
 namespace alge = algolib::geometry;
 
-TEST(PointsSortingTest, testAngleSort)
+TEST(PointsSortingTest, angleSort)
 {
     std::vector<alge::point2d> sequence = {
             alge::p2d(0.0, 0.0),  alge::p2d(-2.0, -3.0), alge::p2d(-3.0, -2.0),
@@ -20,7 +20,7 @@ TEST(PointsSortingTest, testAngleSort)
               sequence);
 }
 
-TEST(PointsSortingTest, testAngleSortWhenAllEqual)
+TEST(PointsSortingTest, angleSort_whenAllEqual)
 {
     std::vector<alge::point2d> sequence = {
             alge::p2d(1.0, 2.0), alge::p2d(1.0, 2.0), alge::p2d(1.0, 2.0),
@@ -36,7 +36,7 @@ TEST(PointsSortingTest, testAngleSortWhenAllEqual)
               sequence);
 }
 
-TEST(PointsSortingTest, testAngleSortWhenEmptyVector)
+TEST(PointsSortingTest, angleSort_whenEmptyVector)
 {
     std::vector<alge::point2d> sequence;
 
@@ -45,7 +45,7 @@ TEST(PointsSortingTest, testAngleSortWhenEmptyVector)
     EXPECT_EQ(std::vector<alge::point2d>(), sequence);
 }
 
-TEST(PointsSortingTest, testSortByX)
+TEST(PointsSortingTest, sortByX)
 {
     std::vector<alge::point2d> sequence = {
             alge::p2d(0.0, 0.0),  alge::p2d(-2.0, -3.0), alge::p2d(-3.0, -2.0),
@@ -61,7 +61,7 @@ TEST(PointsSortingTest, testSortByX)
               sequence);
 }
 
-TEST(PointsSortingTest, testSortByY)
+TEST(PointsSortingTest, sortByY)
 {
     std::vector<alge::point2d> sequence = {
             alge::p2d(0.0, 0.0),  alge::p2d(-2.0, -3.0), alge::p2d(-3.0, -2.0),

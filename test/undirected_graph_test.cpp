@@ -19,14 +19,14 @@ public:
     }
 };
 
-TEST_F(UndirectedSimpleGraphTest, testGetVerticesNumber)
+TEST_F(UndirectedSimpleGraphTest, getVerticesNumber)
 {
     size_t result = test_object.get_vertices_number();
 
     EXPECT_EQ(10, result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, testGetVertices)
+TEST_F(UndirectedSimpleGraphTest, getVertices)
 {
     std::vector<vertex_t> result = test_object.get_vertices();
 
@@ -35,7 +35,7 @@ TEST_F(UndirectedSimpleGraphTest, testGetVertices)
     EXPECT_EQ(std::vector<vertex_t>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, testAddVertex)
+TEST_F(UndirectedSimpleGraphTest, addVertex)
 {
     vertex_t result = test_object.add_vertex();
 
@@ -43,7 +43,7 @@ TEST_F(UndirectedSimpleGraphTest, testAddVertex)
     EXPECT_EQ(11, test_object.get_vertices_number());
 }
 
-TEST_F(UndirectedSimpleGraphTest, testGetEdgesNumber)
+TEST_F(UndirectedSimpleGraphTest, getEdgesNumber)
 {
     test_object.add_edge(7, 7);
     test_object.add_edge(1, 5);
@@ -59,7 +59,7 @@ TEST_F(UndirectedSimpleGraphTest, testGetEdgesNumber)
     EXPECT_EQ(6, result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, testGetEdges)
+TEST_F(UndirectedSimpleGraphTest, getEdges)
 {
     test_object.add_edge(7, 7);
     test_object.add_edge(1, 5);
@@ -80,7 +80,7 @@ TEST_F(UndirectedSimpleGraphTest, testGetEdges)
               result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, testAddEdge)
+TEST_F(UndirectedSimpleGraphTest, addEdge)
 {
     test_object.add_edge(1, 5);
     test_object.add_edge(1, 5);
@@ -98,7 +98,7 @@ TEST_F(UndirectedSimpleGraphTest, testAddEdge)
     EXPECT_EQ(std::vector<vertex_t>({1}), result5);
 }
 
-TEST_F(UndirectedSimpleGraphTest, testGetNeighbours)
+TEST_F(UndirectedSimpleGraphTest, getNeighbours)
 {
     test_object.add_edge(1, 1);
     test_object.add_edge(1, 3);
@@ -115,7 +115,7 @@ TEST_F(UndirectedSimpleGraphTest, testGetNeighbours)
     EXPECT_EQ(std::vector<vertex_t>({1, 2, 3, 4, 6, 7, 9}), result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, testGetOutdegree)
+TEST_F(UndirectedSimpleGraphTest, getOutdegree)
 {
     test_object.add_edge(1, 1);
     test_object.add_edge(1, 3);
@@ -130,7 +130,7 @@ TEST_F(UndirectedSimpleGraphTest, testGetOutdegree)
     EXPECT_EQ(7, result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, testGetIndegree)
+TEST_F(UndirectedSimpleGraphTest, getIndegree)
 {
     test_object.add_edge(1, 1);
     test_object.add_edge(3, 1);

@@ -25,7 +25,7 @@ public:
     }
 };
 
-TEST_F(LCATest, testFindLCAWhenVerticesNotInSameTree)
+TEST_F(LCATest, findLCA_whenVerticesNotInSameTree)
 {
     vertex_t vertex1 = 1;
     vertex_t vertex2 = 11;
@@ -33,7 +33,7 @@ TEST_F(LCATest, testFindLCAWhenVerticesNotInSameTree)
     EXPECT_THROW(algr::find_lca(trees, vertex1, vertex2), std::invalid_argument);
 }
 
-TEST_F(LCATest, testFindLCAWhenRootNotInSameTree)
+TEST_F(LCATest, findLCA_whenRootNotInSameTree)
 {
     vertex_t vertex1 = 1;
     vertex_t vertex2 = 9;
@@ -42,7 +42,7 @@ TEST_F(LCATest, testFindLCAWhenRootNotInSameTree)
     EXPECT_THROW(algr::find_lca(trees, vertex1, vertex2, root), std::invalid_argument);
 }
 
-TEST_F(LCATest, testFindLCAWhenSameVertex)
+TEST_F(LCATest, findLCA_whenSameVertex)
 {
     vertex_t vertex = 6;
 
@@ -51,7 +51,7 @@ TEST_F(LCATest, testFindLCAWhenSameVertex)
     EXPECT_EQ(vertex, result);
 }
 
-TEST_F(LCATest, testFindLCAWhenVerticesChanged)
+TEST_F(LCATest, findLCA_whenVerticesChanged)
 {
     vertex_t vertex1 = 5;
     vertex_t vertex2 = 7;
@@ -63,7 +63,7 @@ TEST_F(LCATest, testFindLCAWhenVerticesChanged)
     EXPECT_EQ(1, result2);
 }
 
-TEST_F(LCATest, testFindLCAWhenVerticesInDifferentSubtrees)
+TEST_F(LCATest, findLCA_whenVerticesInDifferentSubtrees)
 {
     vertex_t vertex1 = 5;
     vertex_t vertex2 = 7;
@@ -73,7 +73,7 @@ TEST_F(LCATest, testFindLCAWhenVerticesInDifferentSubtrees)
     EXPECT_EQ(1, result);
 }
 
-TEST_F(LCATest, testFindLCAWhenRootIsLCA)
+TEST_F(LCATest, findLCA_whenRootIsLCA)
 {
     vertex_t vertex1 = 3;
     vertex_t vertex2 = 9;
@@ -84,7 +84,7 @@ TEST_F(LCATest, testFindLCAWhenRootIsLCA)
     EXPECT_EQ(root, result);
 }
 
-TEST_F(LCATest, testFindLCAWhenVerticesAreOffsprings)
+TEST_F(LCATest, findLCA_whenVerticesAreOffsprings)
 {
     vertex_t vertex1 = 8;
     vertex_t vertex2 = 2;
@@ -94,7 +94,7 @@ TEST_F(LCATest, testFindLCAWhenVerticesAreOffsprings)
     EXPECT_EQ(vertex2, result);
 }
 
-TEST_F(LCATest, testFindLCARootIsOneOfVertices1)
+TEST_F(LCATest, findLCARootIsOneOfVertices1)
 {
     vertex_t vertex1 = 11;
     vertex_t vertex2 = 10;
@@ -104,7 +104,7 @@ TEST_F(LCATest, testFindLCARootIsOneOfVertices1)
     EXPECT_EQ(vertex1, result);
 }
 
-TEST_F(LCATest, testFindLCAWhenRootIsOneOfVertices2)
+TEST_F(LCATest, findLCA_whenRootIsOneOfVertices2)
 {
     vertex_t vertex1 = 4;
     vertex_t vertex2 = 0;

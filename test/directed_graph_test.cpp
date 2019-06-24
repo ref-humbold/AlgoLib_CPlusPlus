@@ -19,7 +19,7 @@ public:
     }
 };
 
-TEST_F(DirectedSimpleGraphTest, testConstructorFromUndirected)
+TEST_F(DirectedSimpleGraphTest, constructorFromUndirected)
 {
     algr::undirected_simple_graph ugraph(
             6, std::vector<edge_t>({std::make_tuple(0, 1), std::make_tuple(0, 4),
@@ -40,14 +40,14 @@ TEST_F(DirectedSimpleGraphTest, testConstructorFromUndirected)
               result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetVerticesNumber)
+TEST_F(DirectedSimpleGraphTest, getVerticesNumber)
 {
     size_t result = test_object.get_vertices_number();
 
     EXPECT_EQ(10, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetVertices)
+TEST_F(DirectedSimpleGraphTest, getVertices)
 {
     std::vector<vertex_t> result = test_object.get_vertices();
 
@@ -56,7 +56,7 @@ TEST_F(DirectedSimpleGraphTest, testGetVertices)
     EXPECT_EQ(std::vector<vertex_t>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testAddVertex)
+TEST_F(DirectedSimpleGraphTest, addVertex)
 {
     vertex_t result = test_object.add_vertex();
 
@@ -64,7 +64,7 @@ TEST_F(DirectedSimpleGraphTest, testAddVertex)
     EXPECT_EQ(11, test_object.get_vertices_number());
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetEdgesNumber)
+TEST_F(DirectedSimpleGraphTest, getEdgesNumber)
 {
     test_object.add_edge(7, 7);
     test_object.add_edge(1, 5);
@@ -80,7 +80,7 @@ TEST_F(DirectedSimpleGraphTest, testGetEdgesNumber)
     EXPECT_EQ(7, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetEdges)
+TEST_F(DirectedSimpleGraphTest, getEdges)
 {
     test_object.add_edge(7, 7);
     test_object.add_edge(1, 5);
@@ -102,7 +102,7 @@ TEST_F(DirectedSimpleGraphTest, testGetEdges)
               result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testAddEdge)
+TEST_F(DirectedSimpleGraphTest, addEdge)
 {
     test_object.add_edge(1, 5);
     test_object.add_edge(1, 5);
@@ -119,7 +119,7 @@ TEST_F(DirectedSimpleGraphTest, testAddEdge)
     EXPECT_EQ(std::vector<vertex_t>(), result5);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetNeighbours)
+TEST_F(DirectedSimpleGraphTest, getNeighbours)
 {
     test_object.add_edge(1, 1);
     test_object.add_edge(1, 3);
@@ -136,7 +136,7 @@ TEST_F(DirectedSimpleGraphTest, testGetNeighbours)
     EXPECT_EQ(std::vector<vertex_t>({1, 3, 4, 7, 9}), result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetOutdegree)
+TEST_F(DirectedSimpleGraphTest, getOutdegree)
 {
     test_object.add_edge(1, 1);
     test_object.add_edge(1, 3);
@@ -151,7 +151,7 @@ TEST_F(DirectedSimpleGraphTest, testGetOutdegree)
     EXPECT_EQ(5, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testGetIndegree)
+TEST_F(DirectedSimpleGraphTest, getIndegree)
 {
     test_object.add_edge(1, 1);
     test_object.add_edge(3, 1);
@@ -166,7 +166,7 @@ TEST_F(DirectedSimpleGraphTest, testGetIndegree)
     EXPECT_EQ(5, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, testReverse)
+TEST_F(DirectedSimpleGraphTest, reverse)
 {
     test_object.add_edge(1, 2);
     test_object.add_edge(3, 5);
