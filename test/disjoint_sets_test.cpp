@@ -17,21 +17,30 @@ public:
     virtual ~DisjointSetsTest() = default;
 };
 
-TEST_F(DisjointSetsTest, size)
+TEST_F(DisjointSetsTest, empty_whenNotEmpty_thenFalse)
 {
-    size_t result = test_object.size();
+    bool result = test_object.empty();
 
-    EXPECT_EQ(10, result);
+    EXPECT_FALSE(result);
 }
 
-TEST_F(DisjointSetsTest, contains_whenContains)
+TEST_F(DisjointSetsTest, empty_whenEmpty_thenTrue)
+{
+    test_object = alst::disjoint_sets<int>();
+
+    bool result = test_object.empty();
+
+    EXPECT_TRUE(result);
+}
+
+TEST_F(DisjointSetsTest, contains_whenElementIsInside_thenTrue)
 {
     bool result = test_object.contains(4);
 
     EXPECT_TRUE(result);
 }
 
-TEST_F(DisjointSetsTest, contains_whenNotContains)
+TEST_F(DisjointSetsTest, contains_whenElementIsNotInside_thenFalse)
 {
     bool result = test_object.contains(17);
 
@@ -46,6 +55,7 @@ TEST_F(DisjointSetsTest, insert_whenNewElementAsSingleton)
 
     ASSERT_TRUE(test_object.contains(elem));
     EXPECT_EQ(elem, test_object.find_set(elem));
+    EXPECT_EQ(11, test_object.size());
 }
 
 TEST_F(DisjointSetsTest, insert_whenNewElementToPresentSet)
@@ -57,6 +67,7 @@ TEST_F(DisjointSetsTest, insert_whenNewElementToPresentSet)
 
     ASSERT_TRUE(test_object.contains(elem));
     EXPECT_EQ(repr, test_object.find_set(elem));
+    EXPECT_EQ(10, test_object.size());
 }
 
 TEST_F(DisjointSetsTest, insert_whenPresentElement)
@@ -74,7 +85,7 @@ TEST_F(DisjointSetsTest, insert_whenNotPresentRepresent)
     EXPECT_THROW(test_object.insert(elem, repr), std::invalid_argument);
 }
 
-TEST_F(DisjointSetsTest, insertManyElementsAsSingletons)
+TEST_F(DisjointSetsTest, insert_whenManyElementsAsSingletons)
 {
     std::vector<int> elems = {20, 22, 24, 26};
 
@@ -87,7 +98,7 @@ TEST_F(DisjointSetsTest, insertManyElementsAsSingletons)
     }
 }
 
-TEST_F(DisjointSetsTest, insertManyElementsToPresentSet)
+TEST_F(DisjointSetsTest, insert_whenManyElementsToPresentSet)
 {
     std::vector<int> elems = {20, 22, 24, 26};
     int repr = 3;

@@ -25,7 +25,7 @@ namespace algolib
             {
             }
 
-            explicit disjoint_sets(std::initializer_list<E> universe) : sets{universe.size()}
+            disjoint_sets(std::initializer_list<E> universe) : sets{universe.size()}
             {
                 for(E e : universe)
                     represents.emplace(e, e);
@@ -39,6 +39,11 @@ namespace algolib
             disjoint_sets(disjoint_sets && ds) noexcept = default;
             disjoint_sets & operator=(const disjoint_sets & ds) = default;
             disjoint_sets & operator=(disjoint_sets && ds) noexcept = default;
+
+            bool empty() const
+            {
+                return sets == 0;
+            }
 
             //! \return number of sets
             size_t size() const
