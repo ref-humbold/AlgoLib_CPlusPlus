@@ -18,16 +18,15 @@ namespace algolib
 {
     namespace graphs
     {
-//region undirected_graph
+        // region undirected_graph
 
-        class undirected_graph : public virtual graph
+        struct undirected_graph : public virtual graph
         {
-        public:
-            virtual ~undirected_graph() = default;
+            ~undirected_graph() override = default;
         };
 
-//endregion
-//region undirected_simple_graph
+        // endregion
+        // region undirected_simple_graph
 
         class undirected_simple_graph : public simple_graph, public undirected_graph
         {
@@ -39,7 +38,7 @@ namespace algolib
                     add_edge(std::get<0>(e), std::get<1>(e));
             }
 
-            virtual ~undirected_simple_graph() = default;
+            ~undirected_simple_graph() override = default;
             undirected_simple_graph(const undirected_simple_graph &) = default;
             undirected_simple_graph(undirected_simple_graph &&) = default;
             undirected_simple_graph & operator=(const undirected_simple_graph &) = default;
@@ -54,8 +53,8 @@ namespace algolib
             size_t get_indegree(vertex_t vertex) const override;
         };
 
-//endregion
-//region undirected_weighted_simple_graph
+        // endregion
+        // region undirected_weighted_simple_graph
 
         class undirected_weighted_simple_graph : public undirected_simple_graph,
                                                  public weighted_graph
@@ -73,7 +72,7 @@ namespace algolib
                     add_weighted_edge(std::get<0>(e), std::get<1>(e), std::get<2>(e));
             }
 
-            virtual ~undirected_weighted_simple_graph() = default;
+            ~undirected_weighted_simple_graph() override = default;
             undirected_weighted_simple_graph(const undirected_weighted_simple_graph &) = default;
             undirected_weighted_simple_graph(undirected_weighted_simple_graph &&) = default;
             undirected_weighted_simple_graph &
@@ -88,7 +87,7 @@ namespace algolib
             std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const override;
         };
 
-//endregion
+        // endregion
     }
 }
 

@@ -14,9 +14,7 @@ public:
     {
     }
 
-    virtual ~DirectedSimpleGraphTest()
-    {
-    }
+    ~DirectedSimpleGraphTest() override = default;
 };
 
 TEST_F(DirectedSimpleGraphTest, constructorFromUndirected)

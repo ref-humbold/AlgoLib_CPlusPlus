@@ -21,10 +21,9 @@ namespace algolib
     {
         // region directed_graph
 
-        class directed_graph : public virtual graph
+        struct directed_graph : public virtual graph
         {
-        public:
-            virtual ~directed_graph() = default;
+            ~directed_graph() override = default;
 
             //! \brief Odwracanie skierowania grafu.
             virtual void reverse() = 0;
@@ -44,7 +43,7 @@ namespace algolib
             }
 
             directed_simple_graph(const undirected_simple_graph & ugraph);
-            virtual ~directed_simple_graph() = default;
+            ~directed_simple_graph() override = default;
             directed_simple_graph(const directed_simple_graph &) = default;
             directed_simple_graph(directed_simple_graph &&) = default;
             directed_simple_graph & operator=(const directed_simple_graph &) = default;
@@ -80,7 +79,7 @@ namespace algolib
             }
 
             directed_weighted_simple_graph(const undirected_weighted_simple_graph & uwgraph);
-            virtual ~directed_weighted_simple_graph() = default;
+            ~directed_weighted_simple_graph() override = default;
             directed_weighted_simple_graph(const directed_weighted_simple_graph &) = default;
             directed_weighted_simple_graph(directed_weighted_simple_graph &&) = default;
             directed_weighted_simple_graph &

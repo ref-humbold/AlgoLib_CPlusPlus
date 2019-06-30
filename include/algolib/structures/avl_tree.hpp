@@ -24,7 +24,7 @@ namespace algolib
         class avl_tree
         {
         private:
-            class avl_node;
+            struct avl_node;
             class avl_inner_node;
             class avl_header_node;
 
@@ -539,15 +539,9 @@ namespace algolib
         // region avl_node
 
         template <typename E, typename C>
-        class avl_tree<E, C>::avl_node
+        struct avl_tree<E, C>::avl_node
         {
-        public:
-            avl_node() = default;
             virtual ~avl_node() = default;
-            avl_node(const avl_node & node) = default;
-            avl_node(avl_node && node) = delete;
-            avl_node & operator=(const avl_node & node) = default;
-            avl_node & operator=(avl_node && node) = delete;
 
             virtual size_t get_height() = 0;
 
@@ -587,17 +581,20 @@ namespace algolib
         {
         public:
             explicit avl_inner_node(const_reference elem)
-                : avl_tree<E, C>::avl_node(), element{elem}
+                : avl_tree<E, C>::avl_node(),
+                  element{elem},
+                  height{1},
+                  left{nullptr},
+                  right{nullptr},
+                  parent{nullptr}
             {
             }
 
-            ~avl_inner_node();
+            ~avl_inner_node() override;
             avl_inner_node(const avl_inner_node & node);
             avl_inner_node(avl_inner_node &&) = delete;
             avl_inner_node & operator=(const avl_inner_node & node);
             avl_inner_node & operator=(avl_inner_node &&) = delete;
-
-            value_type element;  //!< Value in the node.
 
             size_t get_height() override
             {
@@ -656,11 +653,13 @@ namespace algolib
                 return right == nullptr ? this : right->maximum();
             }
 
+            value_type element;  //!< Value in the node.
+
         private:
-            int height = 1;  //!< Height of the node.
-            inner_ptr left = nullptr;  //!< Left child of the node.
-            inner_ptr right = nullptr;  //!< Right child of the node.
-            node_ptr parent = nullptr;  //!< Parent of the node.
+            int height;  //!< Height of the node.
+            inner_ptr left;  //!< Left child of the node.
+            inner_ptr right;  //!< Right child of the node.
+            node_ptr parent;  //!< Parent of the node.
         };
 
         template <typename E, typename C>
@@ -719,11 +718,11 @@ namespace algolib
         class avl_tree<E, C>::avl_header_node : public avl_tree<E, C>::avl_node
         {
         public:
-            avl_header_node() : avl_tree<E, C>::avl_node()
+            avl_header_node() : avl_tree<E, C>::avl_node(), inner{nullptr}
             {
             }
 
-            ~avl_header_node()
+            ~avl_header_node() override
             {
                 delete inner;
             }
@@ -790,7 +789,7 @@ namespace algolib
             }
 
         private:
-            inner_ptr inner = nullptr;  //!< The real tree denoted by its root.
+            inner_ptr inner;  //!< The real tree denoted by its root.
         };
 
         template <typename E, typename C>
@@ -819,6 +818,10 @@ namespace algolib
             using difference_type = ptrdiff_t;
 
             explicit avl_iterator(node_ptr node) : current_node{node}
+            {
+            }
+
+            ~avl_iterator()
             {
             }
 
@@ -954,6 +957,10 @@ namespace algolib
             using difference_type = ptrdiff_t;
 
             explicit avl_const_iterator(node_ptr node) : current_node{node}
+            {
+            }
+
+            ~avl_const_iterator()
             {
             }
 

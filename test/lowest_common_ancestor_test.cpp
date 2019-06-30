@@ -20,9 +20,7 @@ public:
     {
     }
 
-    virtual ~LCATest()
-    {
-    }
+    ~LCATest() override = default;
 };
 
 TEST_F(LCATest, findLCA_whenVerticesNotInSameTree)
