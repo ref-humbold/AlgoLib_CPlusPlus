@@ -35,6 +35,7 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/paths.cpp"
     "${GRAPHS}/strongly_connected_components.cpp"
     "${GRAPHS}/searching.cpp"
+    "${GRAPHS}/searching_strategy.cpp"
     "${GRAPHS}/topological_sorting.cpp"
     "${GRAPHS}/undirected_graph.cpp")
 set(MATHMAT_SOURCES
