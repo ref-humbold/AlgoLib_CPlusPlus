@@ -3,12 +3,12 @@
 
 namespace algr = algolib::graphs;
 
-//region graph
+// region graph
 
 constexpr weight_t algr::graph::INF;
 
-//endregion
-//region simple_graph
+// endregion
+// region simple_graph
 
 constexpr weight_t algr::simple_graph::DEFAULT_WEIGHT;
 
@@ -22,11 +22,20 @@ std::vector<vertex_t> algr::simple_graph::get_vertices() const
     return vertices;
 }
 
-vertex_t algr::simple_graph::add_vertex()
+vertex_t algr::simple_graph::add_vertex(const std::vector<vertex_t> & neighbours)
 {
+    for(vertex_t nb : neighbours)
+        if(nb >= graphrepr.size())
+            throw no_such_vertex_exception(std::to_string(nb));
+
     graphrepr.emplace_back();
 
-    return graphrepr.size() - 1;
+    vertex_t v = graphrepr.size() - 1;
+
+    for(vertex_t nb : neighbours)
+        add_edge(v, nb);
+
+    return v;
 }
 
 std::vector<vertex_t> algr::simple_graph::get_neighbours(vertex_t vertex) const
@@ -50,4 +59,4 @@ size_t algr::simple_graph::get_outdegree(vertex_t vertex) const
     return graphrepr[vertex].size();
 }
 
-//endregion
+// endregion

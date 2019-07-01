@@ -26,7 +26,6 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/dinic.cpp"
     "${GRAPHS}/directed_graph.cpp"
     "${GRAPHS}/edmonds.cpp"
-    "${GRAPHS}/forest_graph.cpp"
     "${GRAPHS}/graph.cpp"
     "${GRAPHS}/lowest_common_ancestor.cpp"
     "${GRAPHS}/matching.cpp"
@@ -36,6 +35,7 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/strongly_connected_components.cpp"
     "${GRAPHS}/searching.cpp"
     "${GRAPHS}/topological_sorting.cpp"
+    "${GRAPHS}/tree_graph.cpp"
     "${GRAPHS}/undirected_graph.cpp")
 set(MATHMAT_SOURCES
     "${MATHMAT}/equation_system.cpp"

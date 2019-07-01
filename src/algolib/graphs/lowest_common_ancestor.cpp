@@ -51,14 +51,8 @@ int impl::lca_finder::dfs(int vertex, int parent, int timer)
     return timer + 1;
 }
 
-int algr::find_lca(const forest_graph & treegraph, int vertex1, int vertex2, int root)
+int algr::find_lca(const tree_graph & treegraph, int vertex1, int vertex2, int root)
 {
-    if(!treegraph.is_same_tree(vertex1, vertex2))
-        throw std::invalid_argument("Vertices are not in the same tree.");
-
-    if(!treegraph.is_same_tree(vertex1, root) || !treegraph.is_same_tree(vertex2, root))
-        throw std::invalid_argument("Root vertex does not belong to the tree.");
-
     impl::lca_finder finder(treegraph);
 
     return finder.search_lca(vertex1, vertex2, root);

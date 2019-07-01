@@ -36,7 +36,7 @@ namespace algolib
             }
         };
 
-//region graph
+        // region graph
 
         class graph
         {
@@ -54,9 +54,10 @@ namespace algolib
 
             /*!
              * \brief Dodawanie nowego wierzchołka.
+             * \param neighbours sąsiedzi nowego wierzchołka
              * \return oznaczenie wierzchołka
              */
-            virtual vertex_t add_vertex() = 0;
+            virtual vertex_t add_vertex(const std::vector<vertex_t> & neighbours) = 0;
 
             //! \return liczba krawędzi
             virtual size_t get_edges_number() const = 0;
@@ -90,8 +91,8 @@ namespace algolib
             virtual size_t get_indegree(vertex_t vertex) const = 0;
         };
 
-//endregion
-//region weighted_graph
+        // endregion
+        // region weighted_graph
 
         class weighted_graph : public virtual graph
         {
@@ -116,8 +117,8 @@ namespace algolib
             virtual std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const = 0;
         };
 
-//endregion
-//region simple_graph
+        // endregion
+        // region simple_graph
 
         class simple_graph : public virtual graph
         {
@@ -140,7 +141,7 @@ namespace algolib
 
             std::vector<vertex_t> get_vertices() const override;
 
-            vertex_t add_vertex() override;
+            vertex_t add_vertex(const std::vector<vertex_t> & neighbours) override;
 
             std::vector<vertex_t> get_neighbours(vertex_t vertex) const override;
 
@@ -151,7 +152,7 @@ namespace algolib
             std::vector<std::set<wvertex_t>> graphrepr;  //!< Lista sąsiedztwa grafu.
         };
 
-//endregion
+        // endregion
     }
 }
 
