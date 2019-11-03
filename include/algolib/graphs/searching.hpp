@@ -6,10 +6,7 @@
 #define SEARCHING_HPP_
 
 #include <cstdlib>
-#include <algorithm>
-#include <queue>
-#include <stack>
-#include <vector>
+#include <initializer_list>
 #include "graph.hpp"
 #include "searching_strategy.hpp"
 
@@ -23,7 +20,8 @@ namespace algolib
          * \param root wierzchołek początkowy
          * \return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> bfs(const graph & gr, searching_strategy & strategy, vertex_t root);
+        std::vector<bool> bfs(const graph & gr, searching_strategy & strategy,
+                              std::initializer_list<vertex_t> roots);
 
         /**!
          * \brief Iteracyjny algorytm DFS.
@@ -31,7 +29,8 @@ namespace algolib
          * \param root wierzchołek początkowy
          * \return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> dfsI(const graph & gr, searching_strategy & strategy, vertex_t root);
+        std::vector<bool> dfsI(const graph & gr, searching_strategy & strategy,
+                               std::initializer_list<vertex_t> roots);
 
         /**!
          * \brief Rekurencyjny algorytm DFS.

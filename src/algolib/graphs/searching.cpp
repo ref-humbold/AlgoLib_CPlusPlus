@@ -1,5 +1,12 @@
-//! ALGORYTMY PRZESZUKIWANIA GRAFU
+/**!
+ * \file searching.cpp
+ * \brief Graph searching algorithms.
+ */
 #include "algolib/graphs/searching.hpp"
+#include <algorithm>
+#include <queue>
+#include <stack>
+#include <vector>
 
 namespace algr = algolib::graphs;
 
@@ -15,69 +22,94 @@ namespace
     }
 }
 
-std::vector<bool> algr::bfs(const graph & gr, searching_strategy & strategy, vertex_t root)
+std::vector<bool> algr::bfs(const graph & gr, searching_strategy & strategy,
+                            std::initializer_list<vertex_t> roots)
 {
-    std::vector<bool> is_visited(gr.get_vertices_number(), false);
+    std::vector<bool> visited;
+    std::vector<int> reached(gr.get_vertices_number(), 0);
     std::queue<vertex_t> vertex_queue;
+    int iteration = 0;
 
-    vertex_queue.push(root);
-    is_visited[root] = true;
-
-    while(!vertex_queue.empty())
-    {
-        vertex_t v = vertex_queue.front();
-        strategy.preprocess(v);
-
-        vertex_queue.pop();
-
-        for(const auto & nb : gr.get_neighbours(v))
-            if(!is_visited[nb])
-            {
-                strategy.for_neighbour(v, nb);
-                is_visited[nb] = true;
-                vertex_queue.push(nb);
-            }
-            else
-                strategy.on_cycle(v, nb);
-
-        strategy.postprocess(v);
-    }
-
-    return is_visited;
-}
-
-std::vector<bool> algr::dfsI(const graph & gr, searching_strategy & strategy, vertex_t root)
-{
-    std::vector<bool> is_visited(gr.get_vertices_number(), false);
-    std::stack<vertex_t> vertex_stack;
-
-    vertex_stack.push(root);
-
-    while(!vertex_stack.empty())
-    {
-        vertex_t v = vertex_stack.top();
-
-        vertex_stack.pop();
-
-        if(!is_visited[v])
+    for(vertex_t root : roots)
+        if(reached[root] == 0)
         {
-            is_visited[v] = true;
-            strategy.preprocess(v);
+            vertex_queue.push(root);
+            reached[root] = iteration;
 
-            for(const auto & nb : gr.get_neighbours(v))
-                if(!is_visited[nb])
-                {
-                    strategy.for_neighbour(v, nb);
-                    vertex_stack.push(nb);
-                }
-                else
-                    strategy.on_cycle(v, nb);
+            while(!vertex_queue.empty())
+            {
+                vertex_t vertex = vertex_queue.front();
+
+                vertex_queue.pop();
+                strategy.preprocess(vertex);
+
+                for(const auto & neighbour : gr.get_neighbours(vertex))
+                    if(reached[neighbour] == 0)
+                    {
+                        strategy.for_neighbour(vertex, neighbour);
+                        reached[neighbour] = iteration;
+                        vertex_queue.push(neighbour);
+                    }
+                    else if(reached[neighbour] == iteration)
+                        strategy.on_cycle(vertex, neighbour);
+
+                strategy.postprocess(vertex);
+                reached[vertex] = -iteration;
+            }
+
+            ++iteration;
         }
 
-        strategy.postprocess(v);
-    }
+    std::transform(reached.begin(), reached.end(), std::back_inserter(visited),
+                   [](int i) { return i != 0; });
 
-    return is_visited;
+    return visited;
+}
+
+std::vector<bool> algr::dfsI(const graph & gr, searching_strategy & strategy,
+                             std::initializer_list<vertex_t> roots)
+{
+    std::vector<bool> visited;
+    std::vector<int> reached(gr.get_vertices_number(), 0);
+    std::stack<vertex_t> vertex_stack;
+    int iteration = 0;
+    for(vertex_t root : roots)
+        if(reached[root] == 0)
+        {
+            vertex_stack.push(root);
+
+            while(!vertex_stack.empty())
+            {
+                vertex_t vertex = vertex_stack.top();
+
+                vertex_stack.pop();
+
+                if(reached[vertex] == 0)
+                {
+                    reached[vertex] = iteration;
+                    strategy.preprocess(vertex);
+
+                    for(const auto & neighbour : gr.get_neighbours(vertex))
+                        if(reached[neighbour] == 0)
+                        {
+                            strategy.for_neighbour(vertex, neighbour);
+                            vertex_stack.push(neighbour);
+                        }
+                        else if(reached[neighbour] == iteration)
+                            strategy.on_cycle(vertex, neighbour);
+                }
+
+                strategy.postprocess(vertex);
+                reached[vertex] = -iteration;
+            }
+
+            ++iteration;
+        }
+
+    std::transform(reached.begin(), reached.end(), std::back_inserter(visited),
+                   [](int i) { return i != 0; });
+
+    return visited;
 }
 
 std::vector<bool> algr::dfsR(const graph & gr, vertex_t root)
