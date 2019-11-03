@@ -15,7 +15,7 @@ namespace
     }
 }
 
-std::vector<bool> algr::bfs(const graph & gr, vertex_t root)
+std::vector<bool> algr::bfs(const graph & gr, searching_strategy & strategy, vertex_t root)
 {
     std::vector<bool> is_visited(gr.get_vertices_number(), false);
     std::queue<vertex_t> vertex_queue;
@@ -26,21 +26,27 @@ std::vector<bool> algr::bfs(const graph & gr, vertex_t root)
     while(!vertex_queue.empty())
     {
         vertex_t v = vertex_queue.front();
+        strategy.preprocess(v);
 
         vertex_queue.pop();
 
         for(const auto & nb : gr.get_neighbours(v))
             if(!is_visited[nb])
             {
+                strategy.for_neighbour(v, nb);
                 is_visited[nb] = true;
                 vertex_queue.push(nb);
             }
+            else
+                strategy.on_cycle(v, nb);
+
+        strategy.postprocess(v);
     }
 
     return is_visited;
 }
 
-std::vector<bool> algr::dfsI(const graph & gr, vertex_t root)
+std::vector<bool> algr::dfsI(const graph & gr, searching_strategy & strategy, vertex_t root)
 {
     std::vector<bool> is_visited(gr.get_vertices_number(), false);
     std::stack<vertex_t> vertex_stack;
@@ -56,11 +62,19 @@ std::vector<bool> algr::dfsI(const graph & gr, vertex_t root)
         if(!is_visited[v])
         {
             is_visited[v] = true;
+            strategy.preprocess(v);
 
             for(const auto & nb : gr.get_neighbours(v))
                 if(!is_visited[nb])
+                {
+                    strategy.for_neighbour(v, nb);
                     vertex_stack.push(nb);
+                }
+                else
+                    strategy.on_cycle(v, nb);
         }
+
+        strategy.postprocess(v);
     }
 
     return is_visited;

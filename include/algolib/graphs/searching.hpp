@@ -1,6 +1,6 @@
 /**!
  * \file searching.hpp
- * \brief ALGORYTMY PRZESZUKIWANIA GRAFU
+ * \brief Graph searching algorithms.
  */
 #ifndef SEARCHING_HPP_
 #define SEARCHING_HPP_
@@ -11,6 +11,7 @@
 #include <stack>
 #include <vector>
 #include "graph.hpp"
+#include "searching_strategy.hpp"
 
 namespace algolib
 {
@@ -22,7 +23,7 @@ namespace algolib
          * \param root wierzchołek początkowy
          * \return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> bfs(const graph & gr, vertex_t root);
+        std::vector<bool> bfs(const graph & gr, searching_strategy & strategy, vertex_t root);
 
         /**!
          * \brief Iteracyjny algorytm DFS.
@@ -30,7 +31,7 @@ namespace algolib
          * \param root wierzchołek początkowy
          * \return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> dfsI(const graph & gr, vertex_t root);
+        std::vector<bool> dfsI(const graph & gr, searching_strategy & strategy, vertex_t root);
 
         /**!
          * \brief Rekurencyjny algorytm DFS.
