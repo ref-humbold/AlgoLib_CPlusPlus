@@ -821,9 +821,7 @@ namespace algolib
             {
             }
 
-            ~avl_iterator()
-            {
-            }
+            ~avl_iterator() = default;
 
             avl_iterator(const avl_iterator & it) : current_node{it.current_node}
             {
@@ -836,11 +834,15 @@ namespace algolib
             avl_iterator & operator=(const avl_iterator & it)
             {
                 this->current_node = it.current_node;
+
+                return *this;
             }
 
             avl_iterator & operator=(avl_iterator && it) noexcept
             {
                 this->current_node = it.current_node;
+
+                return *this;
             }
 
             reference operator*() const
@@ -960,9 +962,7 @@ namespace algolib
             {
             }
 
-            ~avl_const_iterator()
-            {
-            }
+            ~avl_const_iterator() = default;
 
             avl_const_iterator(const avl_iterator & it) : current_node{it.current_node}
             {
@@ -979,11 +979,15 @@ namespace algolib
             avl_const_iterator & operator=(const avl_const_iterator & it)
             {
                 this->current_node = it.current_node;
+
+                return *this;
             }
 
             avl_const_iterator & operator=(avl_const_iterator && it) noexcept
             {
                 this->current_node = it.current_node;
+
+                return *this;
             }
 
             reference operator*() const

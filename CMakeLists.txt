@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(AlgoLib_CPlusPlus VERSION 0.5.190615 LANGUAGES CXX)
+project(AlgoLib_CPlusPlus VERSION 0.5.190615)
 
 # COMPILER
 set(CMAKE_CXX_STANDARD 14)
@@ -66,7 +66,7 @@ set(SOURCES
 include(CTest)
 
 # OUTPUT
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY bin)
 add_library(algolib SHARED ${SOURCES})
 
 add_subdirectory(test)
