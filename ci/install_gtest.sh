@@ -2,9 +2,10 @@
 
 set -e
 
-cd /usr/src/googletest/googletest
-sudo mkdir build
-cd build
-sudo -s cmake ..
-sudo -s make
-sudo cp *.a /usr/local/lib/
+sudo -i \
+/usr/src/googletest/googletest && \
+mkdir build && \
+cd build && \
+cmake .. && \
+make && \
+cp *.a /usr/local/lib/
