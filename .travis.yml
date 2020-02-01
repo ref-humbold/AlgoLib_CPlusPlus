@@ -3,7 +3,7 @@ dist: bionic
 addons:
   apt:
     packages:
-      - googletest
+      - libgtest-dev
 
 language: cpp
 compiler:
@@ -11,6 +11,7 @@ compiler:
   - clang
 
 before_install:
+  - ci/install_gtest.sh
   - mkdir build
 install:
   - cd ./build
