@@ -4,6 +4,8 @@ addons:
   apt:
     packages:
       - libgtest-dev
+      - cmake
+      - make
 
 language: cpp
 compiler:
