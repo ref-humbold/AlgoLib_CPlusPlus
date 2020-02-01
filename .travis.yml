@@ -11,7 +11,7 @@ compiler:
   - clang
 
 before_install:
-  - ci/install_gtest.sh
+  - ./ci/install_gtest.sh
   - mkdir build
 install:
   - cd ./build
