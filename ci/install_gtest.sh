@@ -3,7 +3,7 @@
 set -e
 
 sudo -i \
-/usr/src/googletest/googletest && \
+cd /usr/src/googletest/googletest && \
 mkdir build && \
 cd build && \
 cmake .. && \
