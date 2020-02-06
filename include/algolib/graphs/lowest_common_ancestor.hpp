@@ -22,7 +22,7 @@ namespace impl
         }
 
         /**!
-         * \brief Wyszukiwanie najniższego wspólnego przodka.
+         * \brief Wyszukiwanie najniższego wspólnego przodka
          * \param vertex1 wierzchołek 1
          * \param vertex2 wierzchołek 2
          * \param root korzeń drzewa
@@ -31,7 +31,7 @@ namespace impl
         int search_lca(int vertex1, int vertex2, int root);
 
         /**!
-         * \brief Wyszukiwanie najniższego wspólnego przodka.
+         * \brief Wyszukiwanie najniższego wspólnego przodka
          * \param vertex1 wierzchołek 1
          * \param vertex2 wierzchołek 2
          * \return najniższy wspólny przodek
@@ -47,7 +47,7 @@ namespace impl
         int dfs(int vertex, int parent, int timer);
 
         /**!
-         * \brief Sprawdza, czy wierzchołki są potomkami.
+         * \brief Sprawdza, czy wierzchołki są potomkami
          * \param vertex1 wierzchołek 1
          * \param vertex2 wierzchołek 2
          * \return czy wierzchołek 1 jest potomkiem wierzchołka 2
@@ -71,7 +71,7 @@ namespace algolib
     namespace graphs
     {
         /**!
-         * \brief Wyznaczanie najniższego wspólnego przodka.
+         * \brief Wyznaczanie najniższego wspólnego przodka
          * \param treegraph graf drzewo
          * \param vertex1 wierzchołek 1
          * \param vertex2 wierzchołek 2

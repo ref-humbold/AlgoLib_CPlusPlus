@@ -79,7 +79,7 @@ namespace algolib
             }
 
             /**!
-             * \brief Dodawanie nowego wierzchołka do zadanej grupy.
+             * \brief Dodawanie nowego wierzchołka do zadanej grupy
              * \param group: numer grupy
              * \return oznaczenie wierzchołka
              */
@@ -147,7 +147,7 @@ namespace algolib
             }
 
             /**!
-             * \brief Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.
+             * \brief Sprawdzanie, czy wierzchołek nalezy do zadanej grupy
              * \param vertex wierzchołek
              * \param group numer grupy
              * \return czy wierzchołek jest w grupie
@@ -161,7 +161,7 @@ namespace algolib
             }
 
             /**!
-             * \brief Sprawdzanie, czy wierzchołki należą do tej samej grupy.
+             * \brief Sprawdzanie, czy wierzchołki należą do tej samej grupy
              * \param vertex1 pierwszy wierzchołek
              * \param vertex2 drugi wierzchołek
              * \return czy wierzchołki są w jednej grupie

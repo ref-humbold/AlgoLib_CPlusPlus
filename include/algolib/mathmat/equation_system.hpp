@@ -1,6 +1,6 @@
 /**!
  * \file equation_system.hpp
- * \brief Structure of linear equation sysytem with Gauss elimination algorithm.
+ * \brief Structure of linear equation sysytem with Gauss elimination algorithm
  */
 #ifndef EQUATION_SYSTEM_HPP_
 #define EQUATION_SYSTEM_HPP_
@@ -66,7 +66,7 @@ namespace algolib
             std::vector<double> solve();
 
             /**!
-             * \brief Algorytm eliminacji Gaussa.
+             * \brief Algorytm eliminacji Gaussa
              */
             void gauss();
 

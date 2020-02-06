@@ -17,7 +17,7 @@ namespace algolib
     namespace graphs
     {
         /**!
-         * \brief Algorytm BFS.
+         * \brief Algorytm BFS
          * \param gr graf
          * \param root wierzchołek początkowy
          * \return lista odwiedzonych wierzchołków
@@ -25,7 +25,7 @@ namespace algolib
         std::vector<bool> bfs(const graph & gr, vertex_t root);
 
         /**!
-         * \brief Iteracyjny algorytm DFS.
+         * \brief Iteracyjny algorytm DFS
          * \param gr graf
          * \param root wierzchołek początkowy
          * \return lista odwiedzonych wierzchołków
@@ -33,7 +33,7 @@ namespace algolib
         std::vector<bool> dfsI(const graph & gr, vertex_t root);
 
         /**!
-         * \brief Rekurencyjny algorytm DFS.
+         * \brief Rekurencyjny algorytm DFS
          * \param gr graf
          * \param root wierzchołek początkowy
          * \return lista odwiedzonych wierzchołków

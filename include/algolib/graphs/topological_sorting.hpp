@@ -29,14 +29,14 @@ namespace algolib
         };
 
         /*!
-         * \brief Sortowanie topologiczne przez liczenie poprzedników.
+         * \brief Sortowanie topologiczne przez liczenie poprzedników
          * \param digraph graf skierowany
          * \return porządek topologiczny wierzchołków
          */
         std::vector<vertex_t> sort_topological1(const directed_graph & digraph);
 
         /*!
-         * \brief Sortowanie topologiczne z użyciem DFS.
+         * \brief Sortowanie topologiczne z użyciem DFS
          * \param digraph graf skierowany
          * \return porządek topologiczny wierzchołków
          */
