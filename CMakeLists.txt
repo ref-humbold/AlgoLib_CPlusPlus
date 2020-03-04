@@ -38,6 +38,7 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/topological_sorting.cpp"
     "${GRAPHS}/undirected_graph.cpp")
 set(MATHMAT_SOURCES
+    "${MATHMAT}/equation.cpp"
     "${MATHMAT}/equation_system.cpp"
     "${MATHMAT}/fraction.cpp"
     "${MATHMAT}/maths.cpp"
