@@ -53,11 +53,7 @@ namespace algolib
         class timer_strategy : public virtual searching_strategy
         {
         public:
-            explicit timer_strategy(const graph & graph) : timer{1}
-            {
-                pre_times.resize(graph.get_vertices_number(), 0);
-                post_times.resize(graph.get_vertices_number(), 0);
-            }
+            explicit timer_strategy(const graph & graph);
 
             ~timer_strategy() override = default;
             timer_strategy(const timer_strategy &) = default;
@@ -75,21 +71,13 @@ namespace algolib
                 return post_times[vertex];
             }
 
-            void preprocess(vertex_t vertex) override
-            {
-                pre_times[vertex] = timer;
-                ++timer;
-            }
+            void preprocess(vertex_t vertex) override;
 
             void for_neighbour(vertex_t, vertex_t) override
             {
             }
 
-            void postprocess(vertex_t vertex) override
-            {
-                post_times[vertex] = timer;
-                ++timer;
-            }
+            void postprocess(vertex_t vertex) override;
 
             void on_cycle(vertex_t, vertex_t) override
             {

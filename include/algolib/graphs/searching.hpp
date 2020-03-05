@@ -17,7 +17,8 @@ namespace algolib
         /**!
          * \brief Algorytm BFS.
          * \param gr graf
-         * \param root wierzchołek początkowy
+         * \param strategy strategia odwiedzania
+         * \param roots wierzchołki początkowe
          * \return lista odwiedzonych wierzchołków
          */
         std::vector<bool> bfs(const graph & gr, searching_strategy & strategy,
@@ -26,7 +27,8 @@ namespace algolib
         /**!
          * \brief Iteracyjny algorytm DFS.
          * \param gr graf
-         * \param root wierzchołek początkowy
+         * \param strategy strategia odwiedzania
+         * \param roots wierzchołki początkowe
          * \return lista odwiedzonych wierzchołków
          */
         std::vector<bool> dfsI(const graph & gr, searching_strategy & strategy,
@@ -35,10 +37,12 @@ namespace algolib
         /**!
          * \brief Rekurencyjny algorytm DFS.
          * \param gr graf
-         * \param root wierzchołek początkowy
+         * \param strategy strategia odwiedzania
+         * \param roots wierzchołki początkowe
          * \return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> dfsR(const graph & gr, vertex_t root);
+        std::vector<bool> dfsR(const graph & gr, searching_strategy & strategy,
+                               std::initializer_list<vertex_t> roots);
     }
 }
 
