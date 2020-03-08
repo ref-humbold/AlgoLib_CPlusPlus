@@ -66,7 +66,7 @@ set(SOURCES
 include(CTest)
 
 # OUTPUT
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/dist")
 add_library(algolib SHARED ${SOURCES})
 
 add_subdirectory(test)

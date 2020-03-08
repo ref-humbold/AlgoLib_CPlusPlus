@@ -59,7 +59,7 @@ std::vector<bool> algr::bfs(const graph & gr, searching_strategy & strategy,
     std::vector<bool> visited;
     std::vector<int> reached(gr.get_vertices_number(), 0);
     std::queue<vertex_t> vertex_queue;
-    int iteration = 0;
+    int iteration = 1;
 
     for(vertex_t root : roots)
         if(reached[root] == 0)
@@ -103,7 +103,8 @@ std::vector<bool> algr::dfsI(const graph & gr, searching_strategy & strategy,
     std::vector<bool> visited;
     std::vector<int> reached(gr.get_vertices_number(), 0);
     std::stack<vertex_t> vertex_stack;
-    int iteration = 0;
+    int iteration = 1;
+
     for(vertex_t root : roots)
         if(reached[root] == 0)
         {
