@@ -1,6 +1,6 @@
 /**!
  * \file equation_system.hpp
- * \brief Structure of linear equation sysytem with Gauss elimination algorithm
+ * \brief Structure of linear equation system with Gauss elimination algorithm
  */
 #ifndef EQUATION_SYSTEM_HPP_
 #define EQUATION_SYSTEM_HPP_
@@ -10,8 +10,8 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-#include <initializer_list>
-#include <vector>
+#include <array>
+#include "equation.hpp"
 
 namespace algolib
 {
@@ -49,181 +49,142 @@ namespace algolib
         class equation_system
         {
         public:
-            explicit equation_system();
-            explicit equation_system(std::initializer_list<std::initializer_list<double>> coeffs,
-                                     std::initializer_list<double> frees);
+            explicit equation_system(const std::array<equation<N>, N> & equations)
+                : equations{equations}
+            {
+            }
 
             ~equation_system() = default;
-            equation_system(const equation_system & eqsys) = default;
-            equation_system(equation_system && eqsys) = default;
-            equation_system & operator=(const equation_system & eqsys) = default;
-            equation_system & operator=(equation_system && eqsys) = default;
+            equation_system(const equation_system & es) = default;
+            equation_system(equation_system && es) = default;
+            equation_system & operator=(const equation_system & es) = default;
+            equation_system & operator=(equation_system && es) = default;
 
             /**!
-             * \brief Wyliczanie rozwiązań układu równań liniowych
-             * \return wektor wyniku równania
+             * \param i index of equation
+             * \return equation object
              */
-            std::vector<double> solve();
+            equation<N> & operator[](size_t i);
 
             /**!
-             * \brief Algorytm eliminacji Gaussa
+             * \param i index of equation
+             * \return equation object
              */
-            void gauss();
+            const equation<N> & operator[](size_t i) const;
 
             /**!
-             * \brief Pomnożenie równania przez niezerową stałą
-             * \param equ numer równania
-             * \param constant stała
+             * \brief Computes the solution of this equation system
+             * \return solution vector
+             * \throw infinite_solutions_exception
+             * \throw no_solution_exception
              */
-            void mult(size_t equ, double constant);
+            std::array<double, N> solve();
 
             /**!
-             * \brief Zamiana równań miejscami
-             * \param eq1 numer pierwszego równania
-             * \param eq2 numer drugiego równania
+             * \brief Gauss elimination algorithm
              */
-            void swap(size_t equ1, size_t equ2);
+            void gaussian_reduce();
 
             /**!
-             * \brief Przekształcenie równania przez kombinację liniową z innym równaniem
-             * \param eq1 numer równania przekształcanego
-             * \param eq2 numer drugiego równania
-             * \param constant stała kombinacji liniowej
+             * \brief Swaps two equations
+             * \param i index of first equation
+             * \param j index of second equation
              */
-            void combine(size_t equ1, size_t equ2, double constant = 1.0);
+            void swap(size_t i, size_t j);
+
+            /**!
+             * \brief Checks whether given values solve this equation system
+             * \param solution values to check
+             * \return ``true`` if solution is correct, otherwise ``false``
+             */
+            bool is_solution(const std::array<double, N> & solution) const;
 
         private:
-            double coeffs[N][N];  //!< Macierz współczynników równania.
-            double frees[N];  //!< Wektor wyrazów wolnych równania.
+            std::array<equation<N>, N> equations;
         };
 
         template <size_t N>
-        equation_system<N>::equation_system()
+        equation<N> & equation_system<N>::operator[](size_t i)
         {
-            for(size_t i = 0; i < N; ++i)
-                std::fill(coeffs[i], coeffs[i] + N, 0);
-
-            std::fill(frees, frees + N, 0);
+            return equations.at(i);
         }
 
         template <size_t N>
-        equation_system<N>::equation_system(
-                std::initializer_list<std::initializer_list<double>> coeffs,
-                std::initializer_list<double> frees)
+        const equation<N> & equation_system<N>::operator[](size_t i) const
         {
-            if(coeffs.size() != N || frees.size() != N)
-                throw std::length_error("Incorrect number of equations");
-
-            for(auto it : coeffs)
-                if(it.size() != N)
-                    throw std::length_error("Coefficient matrix is not a square matrix");
-
-            int i = 0;
-
-            for(auto it1 : coeffs)
-            {
-                int j = 0;
-
-                for(auto it2 : it1)
-                {
-                    this->coeffs[i][j] = it2;
-                    ++j;
-                }
-
-                ++i;
-            }
-
-            i = 0;
-
-            for(auto it : frees)
-            {
-                this->frees[i] = it;
-                ++i;
-            }
+            return equations.at(i);
         }
 
         template <size_t N>
-        std::vector<double> equation_system<N>::solve()
+        std::array<double, N> equation_system<N>::solve()
         {
-            gauss();
+            gaussian_reduce();
 
-            if(coeffs[N - 1][N - 1] == 0 && frees[N - 1] == 0)
+            if(equations[N - 1][N - 1] == 0 && equations[N - 1].free == 0)
                 throw infinite_solutions_exception("");
 
-            if(coeffs[N - 1][N - 1] == 0 && frees[N - 1] != 0)
+            if(equations[N - 1][N - 1] == 0 && equations[N - 1].free != 0)
                 throw no_solution_exception("");
 
-            std::vector<double> solution(N);
+            std::array<double, N> solution;
 
-            solution.back() = frees[N - 1] / coeffs[N - 1][N - 1];
+            solution.back() = equations[N - 1].free / equations[N - 1][N - 1];
 
-            for(int equ = N - 2; equ >= 0; --equ)
+            for(int i = N - 2; i >= 0; --i)
             {
-                double value = frees[equ];
+                double value = equations[i].free;
 
-                for(int i = N - 1; i > equ; --i)
-                    value -= coeffs[equ][i] * solution[i];
+                for(int j = N - 1; j > i; --j)
+                    value -= equations[i][j] * solution[j];
 
-                solution[equ] = value / coeffs[equ][equ];
+                solution[i] = value / equations[i][i];
             }
 
             return solution;
         }
 
         template <size_t N>
-        void equation_system<N>::gauss()
+        void equation_system<N>::gaussian_reduce()
         {
-            for(size_t equ = 0; equ < N - 1; ++equ)
+            for(size_t i = 0; i < N - 1; ++i)
             {
-                int index_min = equ;
+                int index_min = i;
 
-                for(size_t i = equ + 1; i < N; ++i)
+                for(size_t j = i + 1; j < N; ++j)
                 {
-                    double min_coef = coeffs[index_min][equ];
-                    double act_coef = coeffs[i][equ];
+                    double min_coef = equations[index_min][i];
+                    double act_coef = equations[j][i];
 
                     if(act_coef != 0 && (min_coef == 0 || std::abs(act_coef) < std::abs(min_coef)))
-                        index_min = i;
+                        index_min = j;
                 }
 
-                if(coeffs[index_min][equ] != 0)
+                if(equations[index_min][i] != 0)
                 {
-                    swap(equ, index_min);
+                    swap(index_min, i);
 
-                    for(size_t i = equ + 1; i < N; ++i)
-                        combine(i, equ, -coeffs[i][equ] / coeffs[equ][equ]);
+                    for(size_t j = i + 1; j < N; ++j){
+                        double param = -equations[j][i] / equations[i][i];
+
+                        if(param != 0)
+                            equations[j].combine(equations[i], param);
+                    }
                 }
             }
         }
 
         template <size_t N>
-        void equation_system<N>::mult(size_t equ, double constant)
+        void equation_system<N>::swap(size_t i, size_t j)
         {
-            if(constant == 0)
-                throw std::domain_error("Constant cannot be zero");
-
-            for(int i = 0; i < N; ++i)
-                coeffs[equ][i] *= constant;
-
-            frees[equ] *= constant;
-        };
-
-        template <size_t N>
-        void equation_system<N>::swap(size_t equ1, size_t equ2)
-        {
-            for(size_t i = 0; i < N; ++i)
-                std::swap(coeffs[equ1][i], coeffs[equ2][i]);
-
-            std::swap(frees[equ1], frees[equ2]);
+            std::swap(equations.at(i), equations.at(j));
         }
 
         template <size_t N>
-        void equation_system<N>::combine(size_t equ1, size_t equ2, double constant)
+        bool equation_system<N>::is_solution(const std::array<double, N> & solution) const
         {
-            for(size_t i = 0; i < N; ++i)
-                coeffs[equ1][i] += constant * coeffs[equ2][i];
-
-            frees[equ1] += constant * frees[equ2];
+            return std::all_of(
+                    equations.begin(), equations.end(),
+                    [this, solution](const equation<N> & eq) { return eq.is_solution(solution); });
         }
     }
 }

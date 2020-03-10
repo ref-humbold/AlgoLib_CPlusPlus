@@ -11,7 +11,6 @@
 #include <stdexcept>
 #include <algorithm>
 #include <array>
-#include <initializer_list>
 
 namespace algolib
 {
@@ -30,6 +29,7 @@ namespace algolib
             equation & operator=(equation && eq) noexcept = default;
 
             std::pair<std::array<double, N>, double> values() const;
+            double & operator[](size_t i);
             double operator[](size_t i) const;
             equation & operator*=(double constant);
             void combine(const equation<N> & equation, double constant = 1);
@@ -49,6 +49,12 @@ namespace algolib
         std::pair<std::array<double, N>, double> equation<N>::values() const
         {
             return std::make_pair(coefficients, free);
+        }
+
+        template <size_t N>
+        double & equation<N>::operator[](size_t i)
+        {
+            return coefficients.at(i);
         }
 
         template <size_t N>
