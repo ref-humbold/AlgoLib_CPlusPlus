@@ -30,7 +30,7 @@ namespace impl
         }
 
         /**!
-         * \brief Powiększanie skojarzenia przy pomocy scieżek poiększających.
+         * \brief Powiększanie skojarzenia przy pomocy scieżek poiększających
          * \return czy powiększono skojarzenie
          */
         bool augment_match();
@@ -40,7 +40,7 @@ namespace impl
         void bfs();
 
         /**!
-         * \brief Algorytm DFS powiększający skojarzenie za pomocą ścieżek powiekszających.
+         * \brief Algorytm DFS powiększający skojarzenie za pomocą ścieżek powiekszających
          * \param vertex wierzchołek
          * \return czy powiększono skojarzenie
          */
@@ -59,7 +59,7 @@ namespace algolib
     namespace graphs
     {
         /**!
-         * \brief Wyznaczanie maksymalnego skojarzenia.
+         * \brief Wyznaczanie maksymalnego skojarzenia
          * \param partgraph graf wielodzielny
          * \return pary skojarzonych wierzchołków
          */

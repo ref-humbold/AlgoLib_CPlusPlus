@@ -1,6 +1,6 @@
 /*!
  * \file graph.hpp
- * \brief Struktury grafów.
+ * \brief Struktury grafów
  */
 #ifndef GRAPH_HPP_
 #define GRAPH_HPP_
@@ -52,7 +52,7 @@ namespace algolib
             virtual std::vector<vertex_t> get_vertices() const = 0;
 
             /*!
-             * \brief Dodawanie nowego wierzchołka.
+             * \brief Dodawanie nowego wierzchołka
              * \return oznaczenie wierzchołka
              */
             virtual vertex_t add_vertex() = 0;
@@ -64,7 +64,7 @@ namespace algolib
             virtual std::vector<edge_t> get_edges() const = 0;
 
             /*!
-             * \brief Dodawanie nowej krawędzi.
+             * \brief Dodawanie nowej krawędzi
              * \param v początkowy wierzchołek
              * \param u końcowy wierzchołek
              */
@@ -100,7 +100,7 @@ namespace algolib
             virtual std::vector<wedge_t> get_weighted_edges() const = 0;
 
             /*!
-             * \brief Dodawanie nowej krawędzi z jej wagą.
+             * \brief Dodawanie nowej krawędzi z jej wagą
              * \param v początkowy wierzchołek
              * \param u końcowy wierzchołek
              * \param wg waga krawędzi

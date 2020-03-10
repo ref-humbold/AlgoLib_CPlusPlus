@@ -1,6 +1,6 @@
 /**!
  * \file maths.hpp
- * \brief Basic mathematics algorithms.
+ * \brief Basic mathematics algorithms
  */
 #ifndef MATHS_HPP_
 #define MATHS_HPP_
@@ -16,7 +16,7 @@ namespace algolib
     namespace mathmat
     {
         /**!
-         * \brief Największy wspólny dzielnik dwóch liczb.
+         * \brief Największy wspólny dzielnik dwóch liczb
          * \param number1 pierwsza liczba
          * \param number2 druga liczba
          * \return największy wspólny dzielnik
@@ -24,7 +24,7 @@ namespace algolib
         long long int gcd(long long int number1, long long int number2);
 
         /**!
-         * \brief Najmniejsza wspólna wielokrotność dwóch liczb.
+         * \brief Najmniejsza wspólna wielokrotność dwóch liczb
          * \param number1 pierwsza liczba
          * \param number2 druga liczba
          * \return najmniejsza wspólna wielokrotność
@@ -32,7 +32,7 @@ namespace algolib
         long long int lcm(long long int number1, long long int number2);
 
         /**!
-         * \brief Szybkie mnożenie binarne modulowane.
+         * \brief Szybkie mnożenie binarne modulowane
          * \param factor1 mnnożna
          * \param factor2 mnożnik
          * \param modulo modulo
@@ -42,7 +42,7 @@ namespace algolib
                                unsigned long long int modulo);
 
         /**!
-         * \brief Szybkie potęgowanie binarne modulowane.
+         * \brief Szybkie potęgowanie binarne modulowane
          * \param base podstawa
          * \param exponent wykładnik
          * \param modulo modulo

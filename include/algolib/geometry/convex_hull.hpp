@@ -1,6 +1,6 @@
 /*!
  * \file convex_hull.hpp
- * \brief Graham's algorithm for convex hull on a plane.
+ * \brief Graham's algorithm for convex hull on a plane
  */
 #ifndef CONVEX_HULL_HPP_
 #define CONVEX_HULL_HPP_
@@ -15,7 +15,7 @@ namespace algolib
     namespace geometry
     {
         /*!
-         * \brief Wyznacza otoczkę wypukłą.
+         * \brief Wyznacza otoczkę wypukłą
          * \param points lista punktów na płaszczyźnie
          * \return lista punktów otoczki
          */

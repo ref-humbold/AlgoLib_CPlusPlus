@@ -15,7 +15,7 @@ namespace algolib
     namespace graphs
     {
         /**!
-         * \brief Algorytm BFS.
+         * \brief Algorytm BFS
          * \param gr graf
          * \param strategy strategia odwiedzania
          * \param roots wierzchołki początkowe
@@ -25,7 +25,7 @@ namespace algolib
                               std::initializer_list<vertex_t> roots);
 
         /**!
-         * \brief Iteracyjny algorytm DFS.
+         * \brief Iteracyjny algorytm DFS
          * \param gr graf
          * \param strategy strategia odwiedzania
          * \param roots wierzchołki początkowe
@@ -35,7 +35,7 @@ namespace algolib
                                std::initializer_list<vertex_t> roots);
 
         /**!
-         * \brief Rekurencyjny algorytm DFS.
+         * \brief Rekurencyjny algorytm DFS
          * \param gr graf
          * \param strategy strategia odwiedzania
          * \param roots wierzchołki początkowe

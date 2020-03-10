@@ -88,7 +88,7 @@ namespace algolib
             }
 
             /**!
-             * \brief Sprawdzanie, czy wierzchołki należą do tego samego drzewa.
+             * \brief Sprawdzanie, czy wierzchołki należą do tego samego drzewa
              * \param vertex1 pierwszy wierzchołek
              * \param vertex2 drugi wierzchołek
              * \return czy wierzchołki są w jednym drzewie
