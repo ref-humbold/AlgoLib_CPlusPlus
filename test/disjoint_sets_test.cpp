@@ -14,7 +14,7 @@ public:
     {
     }
 
-    virtual ~DisjointSetsTest() = default;
+    ~DisjointSetsTest() override = default;
 };
 
 TEST_F(DisjointSetsTest, empty_whenNotEmpty_thenFalse)

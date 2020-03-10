@@ -23,6 +23,7 @@ set(SOURCES
     "paths_test.cpp"
     "points_sorting_test.cpp"
     "primes_test.cpp"
+    "searching_test.cpp"
     "strongly_connected_components_test.cpp"
     "subseqs_test.cpp"
     "suffix_array_test.cpp"
@@ -37,6 +38,6 @@ foreach(testsource ${SOURCES})
     target_link_libraries(${testexec}
                           GTest::GTest
                           GTest::Main
-                          "${PROJECT_SOURCE_DIR}/bin/libalgolib.so")
+                          "${PROJECT_SOURCE_DIR}/dist/libalgolib.so")
     gtest_discover_tests(${testexec})
 endforeach(testsource ${SOURCES})

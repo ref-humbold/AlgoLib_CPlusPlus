@@ -35,6 +35,7 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/paths.cpp"
     "${GRAPHS}/strongly_connected_components.cpp"
     "${GRAPHS}/searching.cpp"
+    "${GRAPHS}/searching_strategy.cpp"
     "${GRAPHS}/topological_sorting.cpp"
     "${GRAPHS}/undirected_graph.cpp")
 set(MATHMAT_SOURCES
@@ -66,7 +67,7 @@ set(SOURCES
 include(CTest)
 
 # OUTPUT
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/dist")
 add_library(algolib SHARED ${SOURCES})
 
 add_subdirectory(test)

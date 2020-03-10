@@ -37,7 +37,7 @@ namespace algolib
         {
         public:
             explicit forest_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>());
-            virtual ~forest_graph() = default;
+            ~forest_graph() override = default;
             forest_graph(const forest_graph &) = default;
             forest_graph(forest_graph &&) = default;
             forest_graph & operator=(const forest_graph &) = default;

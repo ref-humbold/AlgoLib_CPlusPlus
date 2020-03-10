@@ -19,9 +19,7 @@ public:
     {
     }
 
-    virtual ~MSTTest()
-    {
-    }
+    ~MSTTest() override = default;
 };
 
 TEST_F(MSTTest, kruskal)

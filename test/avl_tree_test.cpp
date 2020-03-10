@@ -22,7 +22,7 @@ public:
     {
     }
 
-    virtual ~AVLTreeTest() = default;
+    ~AVLTreeTest() override = default;
 };
 
 TEST_F(AVLTreeTest, copyConstructor)
