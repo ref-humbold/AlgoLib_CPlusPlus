@@ -1,6 +1,6 @@
 /*!
  * \file kmr.hpp
- * \brief Karp-Miller-Rosenberg algorithm.
+ * \brief Karp-Miller-Rosenberg algorithm
  */
 #ifndef _KMR_HPP_
 #define _KMR_HPP_
@@ -17,7 +17,7 @@ namespace algolib
     namespace text
     {
         /*!
-         * \brief Budowa słownika podsłów bazowych.
+         * \brief Budowa słownika podsłów bazowych
          * \param text słowo
          * \return słownik podsłów bazowych
          */

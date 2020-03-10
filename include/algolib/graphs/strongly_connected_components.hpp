@@ -19,14 +19,14 @@ namespace impl
         explicit graph_components(algolib::graphs::directed_graph & digr);
 
         /**!
-         * \brief Algorytm wyznaczania silnie spójnych składowych grafu.
+         * \brief Algorytm wyznaczania silnie spójnych składowych grafu
          * \return numery silnie spójnych składowych dla wierzchołków
          */
         std::vector<int> find_scc();
 
     private:
         /**!
-         * \brief Algorytm DFS z licznikiem czasu wyznaczający porządek post-order wierzchołków.
+         * \brief Algorytm DFS z licznikiem czasu wyznaczający porządek post-order wierzchołków
          * \param vertex aktualny wierzchołek
          * \param timer aktualny czas
          * \return nowy czas po przetworzeniu wierzchołka
@@ -34,7 +34,7 @@ namespace impl
         int dfs_order(vertex_t vertex, int timer);
 
         /**!
-         * \brief Algorytm DFS wyznaczający silnie spójne składowe.
+         * \brief Algorytm DFS wyznaczający silnie spójne składowe
          * \param vertex aktualny wierzchołek
          * \param component numer składowej
          */
@@ -51,7 +51,7 @@ namespace algolib
     namespace graphs
     {
         /**!
-         * \brief Algorytm wyznaczania silnie spójnych składowych grafu.
+         * \brief Algorytm wyznaczania silnie spójnych składowych grafu
          * \param digraph graf skierowany
          * \return numery silnie spójnych składowych dla wierzchołków
          */

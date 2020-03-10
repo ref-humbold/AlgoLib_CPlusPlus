@@ -1,6 +1,6 @@
 /*!
  * \file directed_graph.hpp
- * \brief Struktury grafów skierowanych.
+ * \brief Struktury grafów skierowanych
  */
 #ifndef DIRECTED_GRAPH_HPP_
 #define DIRECTED_GRAPH_HPP_

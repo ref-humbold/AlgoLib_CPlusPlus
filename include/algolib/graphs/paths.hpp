@@ -19,7 +19,7 @@ namespace algolib
     namespace graphs
     {
         /**!
-         * \brief Algorytm Bellmana-Forda.
+         * \brief Algorytm Bellmana-Forda
          * \param wgraph graf ważony
          * \param source wierzchołek początkowy
          * \return lista odległości wierzchołków
@@ -28,7 +28,7 @@ namespace algolib
                                            vertex_t source);
 
         /**!
-         * \brief Algorytm Dijkstry.
+         * \brief Algorytm Dijkstry
          * \param wgraph graf ważony
          * \param source wierzchołek początkowy
          * \return lista odległości wierzchołków
@@ -36,7 +36,7 @@ namespace algolib
         std::vector<weight_t> dijkstra(const weighted_graph & wgraph, vertex_t source);
 
         /**!
-         * \brief Algorytm Floyda-Warshalla.
+         * \brief Algorytm Floyda-Warshalla
          * \param wgraph graf ważony
          * \return macierz odległości
          */

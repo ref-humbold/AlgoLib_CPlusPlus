@@ -1,6 +1,6 @@
 /*!
  * \file vector_sorting.hpp
- * \brief Vector sorting algorithms.
+ * \brief Vector sorting algorithms
  */
 #ifndef VECTOR_SORTING_HPP_
 #define VECTOR_SORTING_HPP_
@@ -73,7 +73,7 @@ namespace impl
 namespace algolib
 {
     /*!
-     * \brief Mutowalne sortowanie ciągu przez kopcowanie.
+     * \brief Mutowalne sortowanie ciągu przez kopcowanie
      * \param sequence ciąg
      * \param index_begin początkowy indeks ciągu
      * \param index_end końcowy indeks ciągu
@@ -105,7 +105,7 @@ namespace algolib
     }
 
     /*!
-     * \brief Mutowalne sortowanie ciągu przez scalanie top-down.
+     * \brief Mutowalne sortowanie ciągu przez scalanie top-down
      * \param sequence ciąg
      * \param index_begin początkowy indeks ciągu
      * \param index_end końcowy indeks ciągu
@@ -129,7 +129,7 @@ namespace algolib
     }
 
     /*!
-     * \brief Mutowalne sortowanie ciągu przez scalanie bottom-up.
+     * \brief Mutowalne sortowanie ciągu przez scalanie bottom-up
      * \param sequence ciąg
      * \param index_begin początkowy indeks ciągu
      * \param index_end końcowy indeks ciągu
@@ -152,7 +152,7 @@ namespace algolib
     }
 
     /*!
-     * \brief Mutowalne szybkie sortowanie ciągu.
+     * \brief Mutowalne szybkie sortowanie ciągu
      * \param sequence ciąg
      * \param index_begin początkowy indeks ciągu
      * \param index_end końcowy indeks ciągu

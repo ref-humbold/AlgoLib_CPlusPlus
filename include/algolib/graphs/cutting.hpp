@@ -24,27 +24,27 @@ namespace impl
         }
 
         /**!
-         * \brief Znajdowanie mostów.
+         * \brief Znajdowanie mostów
          * \return lista krawędzi będących mostami
          */
         std::vector<edge_t> edge_cut();
 
         /**!
-         * \brief Znajdowanie punktów artykulacji.
+         * \brief Znajdowanie punktów artykulacji
          * \return lista punktów artykulacji
          */
         std::vector<vertex_t> vertex_cut();
 
     private:
         /**!
-         * \brief Sprawdzanie, czy od wierzchołka wychodzi krawędź będąca mostem.
+         * \brief Sprawdzanie, czy od wierzchołka wychodzi krawędź będąca mostem
          * \param vertex wierzchołek
          * \return czy wierzchołek incydentny z mostem
          */
         bool has_bridge(vertex_t vertex);
 
         /**!
-         * \brief Sprawdzanie, czy wierzchołek jest punktem artykulacji.
+         * \brief Sprawdzanie, czy wierzchołek jest punktem artykulacji
          * \param vertex wierzchołek
          * \return czy wierzchołek to punkt artykulacji
          */
@@ -61,7 +61,7 @@ namespace impl
         }
 
         /**!
-         * \brief Algorytm DFS wyliczający funkcję LOW.
+         * \brief Algorytm DFS wyliczający funkcję LOW
          * \param vertex aktualny wierzchołek
          * \param parent ojciec wierzchołka
          * \param depth głębokość
@@ -81,7 +81,7 @@ namespace algolib
     namespace graph
     {
         /**!
-         * \brief Wyznaczanie mostów w grafie.
+         * \brief Wyznaczanie mostów w grafie
          * \param ugraph graf nieskierowany
          * \return lista krawędzi będących mostami
          */
@@ -91,7 +91,7 @@ namespace algolib
         }
 
         /**!
-         * \brief Wyznaczanie punktów artykulacji w grafie.
+         * \brief Wyznaczanie punktów artykulacji w grafie
          * \param ugraph graf nieskierowany
          * \return lista punktów artykulacji
          */

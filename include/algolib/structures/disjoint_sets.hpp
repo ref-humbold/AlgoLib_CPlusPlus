@@ -1,6 +1,6 @@
 /*!
  * \file disjoint_sets.hpp
- * \brief Disjoint sets structure (union-find).
+ * \brief Disjoint sets structure (union-find)
  */
 #ifndef DISJOINT_SETS_HPP_
 #define DISJOINT_SETS_HPP_
@@ -52,7 +52,7 @@ namespace algolib
             }
 
             /*!
-             * \brief Checks whether given element in one of the sets in the structure.
+             * \brief Checks whether given element in one of the sets in the structure
              * \param element element
              * \return  true if element belongs to the structure, otherwise false
              */
@@ -62,20 +62,20 @@ namespace algolib
             }
 
             /*!
-             * \brief Adds new element to the set represented by another element.
+             * \brief Adds new element to the set represented by another element
              * \param element new element
              * \param repr representant of the set
              */
             void insert(const E & element, const E & repr);
 
             /*!
-             * \brief Adds new element as a singleton set.
+             * \brief Adds new element as a singleton set
              * \param element new element
              */
             void insert(const E & element);
 
             /*!
-             * \brief Adds new elements to the set represented by another element.
+             * \brief Adds new elements to the set represented by another element
              * \param first beginning of elements range
              * \param last end of elements range
              * \param repr representant of the set
@@ -84,7 +84,7 @@ namespace algolib
             void insert(InputIterator first, InputIterator last, const E & repr);
 
             /*!
-             * \brief Adds new elements as singleton sets.
+             * \brief Adds new elements as singleton sets
              * \param first beginning of elements range
              * \param last end of elements range
              */
@@ -126,7 +126,7 @@ namespace algolib
             }
 
             /*!
-             * \brief Performs union of two sets in the structure.
+             * \brief Performs union of two sets in the structure
              * \param element1 element from the first set
              * \param element2 element from the second set
              */

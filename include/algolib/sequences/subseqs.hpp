@@ -1,6 +1,6 @@
 /**!
  * \file subseqs.hpp
- * \brief Algorithms for subsequences.
+ * \brief Algorithms for subsequences
  */
 #ifndef SUBSEQS_HPP_
 #define SUBSEQS_HPP_
@@ -32,10 +32,10 @@ namespace impl
 namespace algolib
 {
     /*!
-     * \brief Constructs longest ordered subsequence.
+     * \brief Constructs longest ordered subsequence
      * \param sequence sequence of elements
      * \param order order function of elements in subsequence
-     * \return longest ordered subsequence (least lexicographically).
+     * \return longest ordered subsequence (least lexicographically)
      */
     template <typename T>
     std::vector<T> longest_ordered(const std::vector<T> & sequence,
@@ -69,14 +69,14 @@ namespace algolib
     }
 
     /*!
-     * \brief Wyznaczanie spójnego podciągu o maksymalnej sumie w sposób dynamiczny.
+     * \brief Wyznaczanie spójnego podciągu o maksymalnej sumie w sposób dynamiczny
      * \param sequence ciąg
      * \return elementy spójnego podciągu o maksymalnej sumie
      */
     std::vector<double> maximum_subarray(const std::vector<double> & sequence);
 
     /*!
-     * \brief Wyznaczanie maksymalnej sumy spójnego podciągu za pomocą drzewa przedziałowego.
+     * \brief Wyznaczanie maksymalnej sumy spójnego podciągu za pomocą drzewa przedziałowego
      * \param sequence ciąg
      * \return maksymalna suma
      */

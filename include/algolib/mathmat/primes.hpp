@@ -1,6 +1,6 @@
 /**!
  * \file primes.hpp
- * \brief Algorithms for prime numbers.
+ * \brief Algorithms for prime numbers
  */
 #ifndef PRIMES_HPP_
 #define PRIMES_HPP_
@@ -16,7 +16,7 @@ namespace algolib
     namespace mathmat
     {
         /**!
-         * \brief Wyznaczanie liczb pierwszych na przedziale domkniętym.
+         * \brief Wyznaczanie liczb pierwszych na przedziale domkniętym
          * \param min_number dolna granica przedziału
          * \param max_number górna granica przedziału
          * \return lista liczb pierwszych
@@ -24,7 +24,7 @@ namespace algolib
         std::vector<size_t> find_primes(size_t min_number, size_t max_number);
 
         /**!
-         * \brief Wyznaczanie liczb pierwszych od zera.
+         * \brief Wyznaczanie liczb pierwszych od zera
          * \param max_number górna granica
          * \return lista liczb pierwszych
          */
@@ -34,14 +34,14 @@ namespace algolib
         }
 
         /**!
-         * \brief Test pierwszości Fermata.
+         * \brief Test pierwszości Fermata
          * \param number testowana liczba
          * \return czy liczba prawdopodobnie jest pierwsza
          */
         bool test_fermat(long long int number);
 
         /**!
-         * \brief Test pierwszości Millera-Rabina.
+         * \brief Test pierwszości Millera-Rabina
          * \param number testowana liczba
          * \return czy liczba prawdopodobnie jest pierwsza
          */

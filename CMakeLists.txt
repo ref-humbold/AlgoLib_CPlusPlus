@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(AlgoLib_CPlusPlus VERSION 0.5.190615 LANGUAGES CXX)
+project(AlgoLib_CPlusPlus VERSION 0.0)
 
 # COMPILER
 set(CMAKE_CXX_STANDARD 14)
@@ -38,6 +38,7 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/tree_graph.cpp"
     "${GRAPHS}/undirected_graph.cpp")
 set(MATHMAT_SOURCES
+    "${MATHMAT}/equation.cpp"
     "${MATHMAT}/equation_system.cpp"
     "${MATHMAT}/fraction.cpp"
     "${MATHMAT}/maths.cpp"
