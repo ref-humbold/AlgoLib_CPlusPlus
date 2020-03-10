@@ -13,6 +13,7 @@ set(SOURCES
     "avl_tree_test.cpp"
     "directed_graph_test.cpp"
     "disjoint_sets_test.cpp"
+    "equation_test.cpp"
     "fraction_test.cpp"
     "kmp_test.cpp"
     "lowest_common_ancestor_test.cpp"

@@ -29,9 +29,11 @@ namespace algolib
             equation & operator=(const equation & eq) = default;
             equation & operator=(equation && eq) noexcept = default;
 
-            double operator[](size_t i);
+            std::pair<std::array<double, N>, double> values() const;
+            double operator[](size_t i) const;
             equation & operator*=(double constant);
-            void combine(const equation<N> & equation, double constant);
+            void combine(const equation<N> & equation, double constant = 1);
+            bool is_solution(const std::array<double, N> & solution) const;
 
             std::array<double, N> coefficients;
             double free;
@@ -44,7 +46,13 @@ namespace algolib
         }
 
         template <size_t N>
-        double equation<N>::operator[](size_t i)
+        std::pair<std::array<double, N>, double> equation<N>::values() const
+        {
+            return std::make_pair(coefficients, free);
+        }
+
+        template <size_t N>
+        double equation<N>::operator[](size_t i) const
         {
             return coefficients.at(i);
         }
@@ -52,7 +60,7 @@ namespace algolib
         template <size_t N>
         equation<N> & equation<N>::operator*=(double constant)
         {
-            if(constant == 0.0)
+            if(constant == 0)
                 throw std::domain_error("Constant cannot be zero");
 
             for(size_t i = 0; i < N; ++i)
@@ -65,13 +73,24 @@ namespace algolib
         template <size_t N>
         void equation<N>::combine(const equation<N> & equation, double constant)
         {
-            if(constant == 0.0)
+            if(constant == 0)
                 throw std::domain_error("Constant cannot be zero");
 
             for(size_t i = 0; i < N; ++i)
                 coefficients[i] += equation[i] * constant;
 
-            free *= equation.free * constant;
+            free += equation.free * constant;
+        }
+
+        template <size_t N>
+        bool equation<N>::is_solution(const std::array<double, N> & solution) const
+        {
+            double result = 0;
+
+            for(size_t i = 0; i < N; ++i)
+                result += solution[i] * coefficients[i];
+
+            return result == free;
         }
     }
 }
