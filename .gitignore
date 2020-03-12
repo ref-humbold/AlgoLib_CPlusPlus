@@ -11,8 +11,3 @@ cmake-build-debug/
 # Visual Studio Code
 .vscode
 *.code-workspace
-
-# [ UML ]
-# Visual Paradigm backup files
-UML/*.bak*
-UML/*.vbak*
