@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <initializer_list>
 #include <unordered_map>
-#include <vector>
 
 namespace algolib
 {
@@ -25,7 +24,7 @@ namespace algolib
             {
             }
 
-            disjoint_sets(std::initializer_list<E> universe) : sets{universe.size()}
+            explicit disjoint_sets(std::initializer_list<E> universe) : sets{universe.size()}
             {
                 for(E e : universe)
                     represents.emplace(e, e);
@@ -52,7 +51,7 @@ namespace algolib
             }
 
             /*!
-             * \brief Checks whether given element in one of the sets in the structure
+             * \brief Checks whether given element in one of the sets in the structure.
              * \param element element
              * \return  true if element belongs to the structure, otherwise false
              */
@@ -62,20 +61,20 @@ namespace algolib
             }
 
             /*!
-             * \brief Adds new element to the set represented by another element
+             * \brief Adds new element to the set represented by another element.
              * \param element new element
              * \param repr representant of the set
              */
             void insert(const E & element, const E & repr);
 
             /*!
-             * \brief Adds new element as a singleton set
+             * \brief Adds new element as a singleton set.
              * \param element new element
              */
             void insert(const E & element);
 
             /*!
-             * \brief Adds new elements to the set represented by another element
+             * \brief Adds new elements to the set represented by another element.
              * \param first beginning of elements range
              * \param last end of elements range
              * \param repr representant of the set
@@ -84,7 +83,7 @@ namespace algolib
             void insert(InputIterator first, InputIterator last, const E & repr);
 
             /*!
-             * \brief Adds new elements as singleton sets
+             * \brief Adds new elements as singleton sets.
              * \param first beginning of elements range
              * \param last end of elements range
              */
@@ -92,48 +91,62 @@ namespace algolib
             void insert(InputIterator first, InputIterator last);
 
             /*!
-             * \brief Finds represent of the set with given element
+             * \brief Finds represent of the set with given element.
              * \param element element from the structure
              * \return represent of the element
              */
-            const E & find_set(const E & element);
+            const E & operator[](const E & element);
 
             /*!
-             * \brief Finds represent of the set with given element
+             * \brief Finds represent of the set with given element.
              * \param element element from the structure
              * \return represent of the element
              */
-            const E & find_set(const E & element) const;
+            const E & operator[](const E & element) const;
 
             /*!
-             * \brief Finds represent of the set with given element
+             * \brief Finds represent of the set with given element.
              * \param element element from the structure
              * \return represent of the element
              */
-            const E & operator[](const E & element)
+            const E & find_set(const E & element, const E & default_value)
             {
-                return find_set(element);
+                try
+                {
+                    return this->operator[](element);
+                }
+                catch(const std::out_of_range & e)
+                {
+                    return default_value;
+                }
             }
 
             /*!
-             * \brief Finds represent of the set with given element
+             * \brief Finds represent of the set with given element.
              * \param element element from the structure
              * \return represent of the element
              */
-            const E & operator[](const E & element) const
+            const E & find_set(const E & element, const E & default_value) const
             {
-                return find_set(element);
+                try
+                {
+                    return this->operator[](element);
+                }
+                catch(const std::out_of_range & e)
+                {
+                    return default_value;
+                }
             }
 
             /*!
-             * \brief Performs union of two sets in the structure
+             * \brief Performs union of two sets in the structure.
              * \param element1 element from the first set
              * \param element2 element from the second set
              */
             void union_set(const E & element1, const E & element2);
 
             /*!
-             * \brief Tests whether two elements belong to the same set
+             * \brief Tests whether two elements belong to the same set.
              * \param element1 element from the first set
              * \param element2 element from the second set
              * \return true if both element are in the same set, otherwise false
@@ -141,7 +154,7 @@ namespace algolib
             bool is_same_set(const E & element1, const E & element2);
 
             /*!
-             * \brief Tests whether two elements belong to the same set
+             * \brief Tests whether two elements belong to the same set.
              * \param element1 element from the first set
              * \param element2 element from the second set
              * \return true if both element are in the same set, otherwise false
@@ -149,8 +162,8 @@ namespace algolib
             bool is_same_set(const E & element1, const E & element2) const;
 
         private:
-            std::unordered_map<E, E> represents;  //!< Map of elements' represents.
-            size_t sets;  //!< Number of sets.
+            std::unordered_map<E, E> represents;  //!< Map of elements' represents
+            size_t sets;  //!< Number of sets
         };
 
         template <typename E>
@@ -173,7 +186,7 @@ namespace algolib
             if(!contains(repr))
                 throw std::invalid_argument("Represent value not present");
 
-            represents.emplace(element, find_set(repr));
+            represents.emplace(element, this->operator[](repr));
         }
 
         template <typename E>
@@ -210,22 +223,23 @@ namespace algolib
                     throw std::invalid_argument("New value already present");
 
             for(InputIterator it = first; it != last; ++it)
-                represents.emplace(*it, find_set(repr));
+                represents.emplace(*it, this->operator[](repr));
         }
 
         template <typename E>
-        const E & disjoint_sets<E>::find_set(const E & element)
+        const E & disjoint_sets<E>::operator[](const E & element)
         {
             if(represents.at(element) != element)
-                represents[element] = find_set(represents[element]);
+                represents[element] = this->operator[](represents[element]);
 
             return represents.at(element);
         }
 
         template <typename E>
-        const E & disjoint_sets<E>::find_set(const E & element) const
+        const E & disjoint_sets<E>::operator[](const E & element) const
         {
-            return represents.at(element) == element ? element : find_set(represents.at(element));
+            return represents.at(element) == element ? element
+                                                     : this->operator[](represents.at(element));
         }
 
         template <typename E>
@@ -234,20 +248,20 @@ namespace algolib
             if(is_same_set(element1, element2))
                 return;
 
-            represents[find_set(element1)] = find_set(element2);
+            represents[this->operator[](element1)] = this->operator[](element2);
             --sets;
         }
 
         template <typename E>
         bool disjoint_sets<E>::is_same_set(const E & element1, const E & element2)
         {
-            return find_set(element1) == find_set(element2);
+            return this->operator[](element1) == this->operator[](element2);
         }
 
         template <typename E>
         bool disjoint_sets<E>::is_same_set(const E & element1, const E & element2) const
         {
-            return find_set(element1) == find_set(element2);
+            return this->operator[](element1) == this->operator[](element2);
         }
     }
 }
