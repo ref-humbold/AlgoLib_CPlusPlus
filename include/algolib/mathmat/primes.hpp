@@ -16,7 +16,7 @@ namespace algolib
     namespace mathmat
     {
         /**!
-         * \brief Wyznaczanie liczb pierwszych na przedziale domkniętym
+         * \brief Wyznaczanie liczb pierwszych na przedziale domkniętym lewostronnie
          * \param min_number dolna granica przedziału
          * \param max_number górna granica przedziału
          * \return lista liczb pierwszych

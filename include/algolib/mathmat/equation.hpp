@@ -17,6 +17,21 @@ namespace algolib
     namespace mathmat
     {
         template <size_t N>
+        class equation;
+    }
+}
+
+namespace std
+{
+    template <size_t N>
+    struct hash<algolib::mathmat::equation<N>>;
+}
+
+namespace algolib
+{
+    namespace mathmat
+    {
+        template <size_t N>
         class equation
         {
         public:
@@ -41,7 +56,7 @@ namespace algolib
 
         template <size_t N>
         equation<N>::equation(const std::array<double, N> & coefficients, double free)
-            : coefficients(coefficients), free(free)
+            : coefficients{coefficients}, free{free}
         {
         }
 
@@ -72,7 +87,7 @@ namespace algolib
             for(size_t i = 0; i < N; ++i)
                 coefficients[i] *= constant;
 
-            free *= constant;
+            this->free *= constant;
             return *this;
         }
 
@@ -85,7 +100,7 @@ namespace algolib
             for(size_t i = 0; i < N; ++i)
                 coefficients[i] += equation[i] * constant;
 
-            free += equation.free * constant;
+            this->free += equation.free * constant;
         }
 
         template <size_t N>
@@ -99,6 +114,21 @@ namespace algolib
             return result == free;
         }
     }
+}
+
+namespace std
+{
+    template <size_t N>
+    struct hash<algolib::mathmat::equation<N>>
+    {
+        using argument_type = algolib::mathmat::equation<N>;
+        using result_type = size_t;
+
+        result_type operator()(const argument_type & eq)
+        {
+            return hash<std::array<double, N>>()(eq.coefficients) ^ hash<double>()(eq.free);
+        }
+    };
 }
 
 #endif

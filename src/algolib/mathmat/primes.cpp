@@ -5,15 +5,14 @@ namespace alma = algolib::mathmat;
 
 std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
 {
-    if(max_number < min_number)
-        throw std::invalid_argument(
-                "Second argument must be grater or equal to the first argument.");
+    if(max_number <= min_number)
+        return std::vector<size_t>();
 
     std::vector<size_t> primes;
     std::vector<bool> is_prime;
     std::vector<bool> base_primes(static_cast<int>(sqrt(max_number) / 2), true);
 
-    for(size_t i = min_number; i <= max_number; ++i)
+    for(size_t i = min_number; i < max_number; ++i)
         is_prime.push_back(i == 2 || (i > 2 && i % 2 != 0));
 
     for(size_t i = 0; i < base_primes.size(); ++i)
