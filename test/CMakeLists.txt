@@ -28,6 +28,7 @@ set(SOURCES
     "subseqs_test.cpp"
     "suffix_array_test.cpp"
     "topological_sorting_test.cpp"
+    "tree_graph_test.cpp"
     "undirected_graph_test.cpp")
 
 # OUTPUT

@@ -1,6 +1,6 @@
 /**!
  * \file forest_graph.hpp
- * \brief STRUKTURY GRAFÓW DRZEW
+ * \brief Tree graph structure
  */
 #ifndef TREE_GRAPH_HPP_
 #define TREE_GRAPH_HPP_
@@ -58,7 +58,7 @@ namespace algolib
                 return graph.get_vertices();
             }
 
-            vertex_t add_vertex(const std::vector<vertex_t> &neighbours) override;
+            vertex_t add_vertex(const std::vector<vertex_t> & neighbours) override;
 
             size_t get_edges_number() const override
             {
