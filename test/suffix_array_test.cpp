@@ -14,7 +14,7 @@ public:
     {
     }
 
-    virtual ~SuffixArrayTest() = default;
+    ~SuffixArrayTest() override = default;
 };
 
 TEST_F(SuffixArrayTest, size)

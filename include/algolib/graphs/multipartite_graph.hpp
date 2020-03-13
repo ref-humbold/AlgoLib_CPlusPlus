@@ -33,7 +33,7 @@ namespace algolib
                 groups.resize(n, 1);
             }
 
-            virtual ~multipartite_graph() = default;
+            ~multipartite_graph() override = default;
             multipartite_graph(const multipartite_graph &) = default;
             multipartite_graph(multipartite_graph &&) = default;
             multipartite_graph & operator=(const multipartite_graph &) = default;

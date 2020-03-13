@@ -9,12 +9,14 @@ namespace alma = algolib::mathmat;
 
 // region findPrimes
 
-TEST(PrimesTest, findPrimes_whenRangeIsDescending)
+TEST(PrimesTest, findPrimes_whenRangeIsDescending_thenEmptyResult)
 {
-    EXPECT_THROW(alma::find_primes(100, 30), std::invalid_argument);
+    std::vector<size_t> result = alma::find_primes(100, 30);
+
+    EXPECT_TRUE(result.empty());
 }
 
-TEST(PrimesTest, findPrimes_whenSingleMaximumAndRangeFromZero_thenReturnSameResult)
+TEST(PrimesTest, findPrimes_whenSingleMaximumAndRangeFromZero_thenSameResult)
 {
     std::vector<size_t> result1 = alma::find_primes(100);
     std::vector<size_t> result2 = alma::find_primes(0, 100);
@@ -22,7 +24,7 @@ TEST(PrimesTest, findPrimes_whenSingleMaximumAndRangeFromZero_thenReturnSameResu
     EXPECT_EQ(result1, result2);
 }
 
-TEST(PrimesTest, findPrimes_whenSingleMaximum_thenReturnsPrimesFromZero)
+TEST(PrimesTest, findPrimes_whenSingleMaximum_thenPrimesFromZero)
 {
     std::vector<size_t> result = alma::find_primes(100);
 
@@ -31,23 +33,23 @@ TEST(PrimesTest, findPrimes_whenSingleMaximum_thenReturnsPrimesFromZero)
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenMaximumIsPrime_thenMaximumIsContained)
+TEST(PrimesTest, findPrimes_whenMaximumIsPrime_thenMaximumIsNotContained)
 {
     std::vector<size_t> result = alma::find_primes(67);
 
     EXPECT_EQ(std::vector<size_t>(
-                      {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67}),
+                      {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61}),
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenMaximumIsLessThanTwo_thenReturnsEmptyResult)
+TEST(PrimesTest, findPrimes_whenMaximumIsLessThanTwo_thenEmptyResult)
 {
     std::vector<size_t> result = alma::find_primes(1);
 
-    EXPECT_EQ(std::vector<size_t>(), result);
+    EXPECT_TRUE(result.empty());
 }
 
-TEST(PrimesTest, findPrimes_whenRange_thenReturnsPrimesInsideRange)
+TEST(PrimesTest, findPrimes_whenRange_thenPrimesInsideRange)
 {
     std::vector<size_t> result = alma::find_primes(30, 200);
 
@@ -57,7 +59,7 @@ TEST(PrimesTest, findPrimes_whenRange_thenReturnsPrimesInsideRange)
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenMinimumLessThanSquareRootOfMaximum_thenReturnsPrimesInsideRange)
+TEST(PrimesTest, findPrimes_whenMinimumLessThanSquareRootOfMaximum_thenPrimesInsideRange)
 {
     std::vector<size_t> result = alma::find_primes(5, 150);
 
@@ -67,28 +69,28 @@ TEST(PrimesTest, findPrimes_whenMinimumLessThanSquareRootOfMaximum_thenReturnsPr
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenRangeBoundariesArePrimes_thenBoundariesAreIncluded)
+TEST(PrimesTest, findPrimes_whenRangeBoundariesArePrimes_thenLeftBoundaryIsIncluded)
 {
     std::vector<size_t> result = alma::find_primes(137, 317);
 
-    EXPECT_EQ(std::vector<size_t>({137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193,
-                                   197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263,
-                                   269, 271, 277, 281, 283, 293, 307, 311, 313, 317}),
+    EXPECT_EQ(std::vector<size_t>({137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191,
+                                   193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251,
+                                   257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313}),
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenRangeBoundariesAreSameAndPrime_thenReturnsSingleton)
+TEST(PrimesTest, findPrimes_whenRangeBoundariesAreSameAndPrime_thenEmptyResult)
 {
     std::vector<size_t> result = alma::find_primes(41, 41);
 
-    EXPECT_EQ(std::vector<size_t>({41}), result);
+    EXPECT_TRUE(result.empty());
 }
 
-TEST(PrimesTest, findPrimes_whenRangeBoundariesAreSameAndComposite_thenReturnsEmptyResult)
+TEST(PrimesTest, findPrimes_whenRangeBoundariesAreSameAndComposite_thenEmptyResult)
 {
     std::vector<size_t> result = alma::find_primes(91, 91);
 
-    EXPECT_EQ(std::vector<size_t>(), result);
+    EXPECT_TRUE(result.empty());
 }
 
 // endregion

@@ -14,9 +14,7 @@ public:
     {
     }
 
-    virtual ~UndirectedSimpleGraphTest()
-    {
-    }
+    ~UndirectedSimpleGraphTest() override = default;
 };
 
 TEST_F(UndirectedSimpleGraphTest, getVerticesNumber)

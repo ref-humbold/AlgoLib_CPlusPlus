@@ -1,4 +1,7 @@
-//! TESTY DLA STRUKTURY ZBIORÓW ROZŁĄCZNYCH
+/*!
+ * \file disjoint_sets_test.c4pp
+ * \brief Tests: Disjoint sets structure (union-find)
+ */
 #include <gtest/gtest.h>
 #include "algolib/structures/disjoint_sets.hpp"
 
@@ -14,7 +17,7 @@ public:
     {
     }
 
-    virtual ~DisjointSetsTest() = default;
+    ~DisjointSetsTest() override = default;
 };
 
 TEST_F(DisjointSetsTest, empty_whenNotEmpty_thenFalse)
@@ -54,7 +57,7 @@ TEST_F(DisjointSetsTest, insert_whenNewElementAsSingleton)
     EXPECT_NO_THROW(test_object.insert(elem));
 
     ASSERT_TRUE(test_object.contains(elem));
-    EXPECT_EQ(elem, test_object.find_set(elem));
+    EXPECT_EQ(elem, test_object[elem]);
     EXPECT_EQ(11, test_object.size());
 }
 
@@ -66,7 +69,7 @@ TEST_F(DisjointSetsTest, insert_whenNewElementToPresentSet)
     EXPECT_NO_THROW(test_object.insert(elem, repr));
 
     ASSERT_TRUE(test_object.contains(elem));
-    EXPECT_EQ(repr, test_object.find_set(elem));
+    EXPECT_EQ(repr, test_object[elem]);
     EXPECT_EQ(10, test_object.size());
 }
 
@@ -94,7 +97,7 @@ TEST_F(DisjointSetsTest, insert_whenManyElementsAsSingletons)
     for(int e : elems)
     {
         ASSERT_TRUE(test_object.contains(e));
-        EXPECT_EQ(e, test_object.find_set(e));
+        EXPECT_EQ(e, test_object[e]);
     }
 }
 
@@ -108,16 +111,37 @@ TEST_F(DisjointSetsTest, insert_whenManyElementsToPresentSet)
     for(int e : elems)
     {
         ASSERT_TRUE(test_object.contains(e));
-        EXPECT_EQ(repr, test_object.find_set(e));
+        EXPECT_EQ(repr, test_object[e]);
     }
 }
 
-TEST_F(DisjointSetsTest, findSet)
+TEST_F(DisjointSetsTest, getItem_whenPresent_thenRepresent)
 {
     int elem = 4;
-    int result = test_object.find_set(elem);
+    int result = test_object[elem];
 
     EXPECT_EQ(elem, result);
+}
+
+TEST_F(DisjointSetsTest, getItem_whenPresent_thenOutOfRange)
+{
+    EXPECT_THROW(test_object[17], std::out_of_range);
+}
+
+TEST_F(DisjointSetsTest, findSet_whenPresent_thenRepresent)
+{
+    int elem = 4;
+    int result = test_object.find_set(elem, 10);
+
+    EXPECT_EQ(elem, result);
+}
+
+TEST_F(DisjointSetsTest, findSet_whenPresent_thenOutOfRange)
+{
+    int default_value = 10;
+    int result = test_object.find_set(22, default_value);
+
+    EXPECT_EQ(default_value, result);
 }
 
 TEST_F(DisjointSetsTest, unionSet_whenDifferentSets)

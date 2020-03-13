@@ -95,7 +95,7 @@ namespace algolib
             /**!
              * \brief Checks whether given values solve this equation system
              * \param solution values to check
-             * \return ``true`` if solution is correct, otherwise ``false``
+             * \return `true` if solution is correct, otherwise `false`
              */
             bool is_solution(const std::array<double, N> & solution) const;
 
@@ -163,7 +163,8 @@ namespace algolib
                 {
                     swap(index_min, i);
 
-                    for(size_t j = i + 1; j < N; ++j){
+                    for(size_t j = i + 1; j < N; ++j)
+                    {
                         double param = -equations[j][i] / equations[i][i];
 
                         if(param != 0)

@@ -38,7 +38,7 @@ namespace algolib
             {
             }
 
-            fraction(long long int num, long long int denom = 1LL) : num{num}, denom{denom}
+            explicit fraction(long long int num, long long int denom = 1LL) : num{num}, denom{denom}
             {
                 if(denom == 0LL)
                     throw std::domain_error("Denominator equals zero");

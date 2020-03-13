@@ -38,9 +38,8 @@ namespace algolib
 
         // region graph
 
-        class graph
+        struct graph
         {
-        public:
             static constexpr weight_t INF =
                     std::numeric_limits<weight_t>::infinity();  //!< Oznaczenie nieskończoności.
 
@@ -94,10 +93,9 @@ namespace algolib
         // endregion
         // region weighted_graph
 
-        class weighted_graph : public virtual graph
+        struct weighted_graph : public virtual graph
         {
-        public:
-            virtual ~weighted_graph() = default;
+            ~weighted_graph() override = default;
 
             //! \return wektor krawędzi z wagami
             virtual std::vector<wedge_t> get_weighted_edges() const = 0;
@@ -128,7 +126,7 @@ namespace algolib
                 this->graphrepr.resize(n);
             }
 
-            virtual ~simple_graph() = default;
+            ~simple_graph() override = default;
             simple_graph(const simple_graph &) = default;
             simple_graph(simple_graph &&) = default;
             simple_graph & operator=(const simple_graph &) = default;

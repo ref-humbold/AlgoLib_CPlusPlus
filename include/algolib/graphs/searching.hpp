@@ -1,16 +1,14 @@
 /**!
  * \file searching.hpp
- * \brief ALGORYTMY PRZESZUKIWANIA GRAFU
+ * \brief Graph searching algorithms.
  */
 #ifndef SEARCHING_HPP_
 #define SEARCHING_HPP_
 
 #include <cstdlib>
-#include <algorithm>
-#include <queue>
-#include <stack>
-#include <vector>
+#include <initializer_list>
 #include "graph.hpp"
+#include "searching_strategy.hpp"
 
 namespace algolib
 {
@@ -19,26 +17,32 @@ namespace algolib
         /**!
          * \brief Algorytm BFS
          * \param gr graf
-         * \param root wierzchołek początkowy
+         * \param strategy strategia odwiedzania
+         * \param roots wierzchołki początkowe
          * \return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> bfs(const graph & gr, vertex_t root);
+        std::vector<bool> bfs(const graph & gr, searching_strategy & strategy,
+                              std::initializer_list<vertex_t> roots);
 
         /**!
          * \brief Iteracyjny algorytm DFS
          * \param gr graf
-         * \param root wierzchołek początkowy
+         * \param strategy strategia odwiedzania
+         * \param roots wierzchołki początkowe
          * \return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> dfsI(const graph & gr, vertex_t root);
+        std::vector<bool> dfsI(const graph & gr, searching_strategy & strategy,
+                               std::initializer_list<vertex_t> roots);
 
         /**!
          * \brief Rekurencyjny algorytm DFS
          * \param gr graf
-         * \param root wierzchołek początkowy
+         * \param strategy strategia odwiedzania
+         * \param roots wierzchołki początkowe
          * \return lista odwiedzonych wierzchołków
          */
-        std::vector<bool> dfsR(const graph & gr, vertex_t root);
+        std::vector<bool> dfsR(const graph & gr, searching_strategy & strategy,
+                               std::initializer_list<vertex_t> roots);
     }
 }
 
