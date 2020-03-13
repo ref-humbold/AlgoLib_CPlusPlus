@@ -1,9 +1,9 @@
 /**!
  * \file forest_graph.hpp
- * \brief STRUKTURY GRAFÓW DRZEW
+ * \brief Tree graph structure
  */
-#ifndef FOREST_GRAPH_HPP_
-#define FOREST_GRAPH_HPP_
+#ifndef TREE_GRAPH_HPP_
+#define TREE_GRAPH_HPP_
 
 #include <cstdlib>
 #include <exception>
@@ -27,26 +27,26 @@ namespace algolib
             explicit cycle_exception(const std::string & what_arg) : std::logic_error(what_arg)
             {
             }
+        };
 
-            explicit cycle_exception(const char * what_arg = "") : std::logic_error(what_arg)
+        class not_connected_exception : std::logic_error
+        {
+        public:
+            explicit not_connected_exception(const std::string & what_arg)
+                : std::logic_error(what_arg)
             {
             }
         };
 
-        class forest_graph : public undirected_graph
+        class tree_graph : public undirected_graph
         {
         public:
-            explicit forest_graph(int n, std::vector<edge_t> edges = std::vector<edge_t>());
-            ~forest_graph() override = default;
-            forest_graph(const forest_graph &) = default;
-            forest_graph(forest_graph &&) = default;
-            forest_graph & operator=(const forest_graph &) = default;
-            forest_graph & operator=(forest_graph &&) = default;
-
-            size_t get_trees_number() const
-            {
-                return components.size();
-            }
+            explicit tree_graph(int n, std::vector<edge_t> edges);
+            virtual ~tree_graph() = default;
+            tree_graph(const tree_graph &) = default;
+            tree_graph(tree_graph &&) = default;
+            tree_graph & operator=(const tree_graph &) = default;
+            tree_graph & operator=(tree_graph &&) = default;
 
             size_t get_vertices_number() const override
             {
@@ -58,7 +58,7 @@ namespace algolib
                 return graph.get_vertices();
             }
 
-            vertex_t add_vertex() override;
+            vertex_t add_vertex(const std::vector<vertex_t> & neighbours) override;
 
             size_t get_edges_number() const override
             {
@@ -87,18 +87,8 @@ namespace algolib
                 return graph.get_indegree(vertex);
             }
 
-            /**!
-             * \brief Sprawdzanie, czy wierzchołki należą do tego samego drzewa
-             * \param vertex1 pierwszy wierzchołek
-             * \param vertex2 drugi wierzchołek
-             * \return czy wierzchołki są w jednym drzewie
-             */
-            bool is_same_tree(vertex_t vertex1, vertex_t vertex2) const;
-
         private:
             undirected_simple_graph graph;
-
-            alst::disjoint_sets<vertex_t> components;
         };
     }
 }

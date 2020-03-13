@@ -35,7 +35,7 @@ TEST_F(UndirectedSimpleGraphTest, getVertices)
 
 TEST_F(UndirectedSimpleGraphTest, addVertex)
 {
-    vertex_t result = test_object.add_vertex();
+    vertex_t result = test_object.add_vertex(std::vector<vertex_t>());
 
     EXPECT_EQ(10, result);
     EXPECT_EQ(11, test_object.get_vertices_number());
