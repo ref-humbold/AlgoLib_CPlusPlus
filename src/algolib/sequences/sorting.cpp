@@ -1,5 +1,5 @@
 //! Vector sorting algorithms.
-#include "algolib/sequences/vector_sorting.hpp"
+#include "algolib/sequences/sorting.hpp"
 
 int impl::choose_pivot(int size)
 {

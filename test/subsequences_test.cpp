@@ -1,6 +1,6 @@
 //! TEST : Algorithms for subsequences.
 #include <gtest/gtest.h>
-#include "algolib/sequences/subseqs.hpp"
+#include "algolib/sequences/subsequences.hpp"
 
 TEST(MaximumSubarrayTest, maximumSubarray1)
 {

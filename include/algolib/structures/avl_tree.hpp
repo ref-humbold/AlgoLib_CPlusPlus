@@ -167,14 +167,13 @@ namespace algolib
             /*!
              * \brief Adds a new value to the tree
              * \param element value to be added
-             * \return iterator at the new element and \c true whether insert was successful,
-             * \brief otherwise \c false
+             * \return iterator at the new element and \code true whether insert was successful, otherwise \code false
              */
             std::pair<iterator, bool> insert(const_reference element);
 
             /*!
              * \brief Adds values from initializer list to the tree
-             * \param il An initializer list with new values
+             * \param il an initializer list with new values
              */
             void insert(std::initializer_list<value_type> il);
 
@@ -189,34 +188,22 @@ namespace algolib
             void clear();
 
         private:
-            //! \return root of the tree
             inner_ptr get_root() const
             {
                 return tree->get_parent();
             }
 
-            //! \param node node that will become the new root of the tree
             void set_root(inner_ptr node)
             {
                 tree->set_parent(node);
             }
 
-            /*!
-             * \brief Checks whether given node is a left child
-             * \param node node to be checked
-             * \return \c true if the node is left child, otherwise \c false
-             */
             bool is_left_child(inner_ptr node)
             {
                 return node->get_parent()->get_height() > 0
                        && node->get_parent()->get_left() == node;
             }
 
-            /*!
-             * \brief Checks whether given node is a right child
-             * \param node node to be checked
-             * \return \c true if the node is right child, otherwise \c false
-             */
             bool is_right_child(inner_ptr node)
             {
                 return node->get_parent()->get_height() > 0
@@ -224,44 +211,44 @@ namespace algolib
             }
 
             /*!
-             * \brief Determines the subtree where given value might be present
+             * \brief Determines the subtree where given value might be present.
              * \param node node
              * \param element value to find
-             * \return the node if it hold given value, otherwise left child if the value is less or
-             * \brief right child if the value is greater
+             * \return the node if it hold given value, otherwise left child if the value is less
+             * or right child if the value is greater
              */
             inner_ptr search(inner_ptr node, const_reference element) const;
 
             /*!
-             * \brief Searches for node that satisfies given predicate with given value
+             * \brief Searches for node that satisfies given predicate with given value.
              * \param element value for predicate
              * \param predicate predicate for node and argument value
-             * \return node that satisfies the predicate if any, otherwise \c nullptr
+             * \return node that satisfies the predicate if any, otherwise \code nullptr
              */
             inner_ptr find_node(const_reference element,
                                 std::function<bool(inner_ptr, const_reference)> predicate) const;
 
             /*!
-             * \brief Removes inner node from the tree
+             * \brief Removes inner node from the tree.
              * \param node node to be removed
              */
             void delete_node(inner_ptr node);
 
             /*!
-             * \brief Replaces the subtree rootted in one node with subtree of another node
+             * \brief Replaces the subtree rooted in one node with subtree of another node.
              * \param node1 root of the subtree to be replaced
              * \param node2 root of the new subtree
              */
             void replace_node(inner_ptr node1, inner_ptr node2);
 
             /*!
-             * \brief Rotates the node along the egde to its parent
+             * \brief Rotates the node along the edge to its parent.
              * \param node node to be rotated
              */
             void rotate(inner_ptr node);
 
             /**!
-             * \brief Restores balancing on a path from given node to the root
+             * \brief Restores balancing on a path from given node to the root.
              * \param node node to start balancing from
              */
             void balance(node_ptr node);
@@ -273,9 +260,9 @@ namespace algolib
              */
             int count_balance(node_ptr node);
 
-            header_ptr tree = new avl_header_node();  //!< The tree denoted by its header.
-            size_type elems = 0;  //!< Number of elements.
-            compare cmp;  //!< Comparator.
+            header_ptr tree = new avl_header_node();  //!< The tree denoted by its header
+            size_type elems = 0;  //!< Number of elements
+            compare cmp;  //!< Comparator
         };
 
         template <typename E, typename C>
@@ -686,8 +673,8 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_inner_node & avl_tree<E, C>::avl_inner_node::
-                operator=(const avl_tree<E, C>::avl_inner_node & node)
+        typename avl_tree<E, C>::avl_inner_node & avl_tree<E, C>::avl_inner_node::operator=(
+                const avl_tree<E, C>::avl_inner_node & node)
         {
             node_ptr left_orig = this->left;
             node_ptr right_orig = this->right;
@@ -793,8 +780,8 @@ namespace algolib
         };
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_header_node & avl_tree<E, C>::avl_header_node::
-                operator=(const avl_tree<E, C>::avl_header_node & node)
+        typename avl_tree<E, C>::avl_header_node & avl_tree<E, C>::avl_header_node::operator=(
+                const avl_tree<E, C>::avl_header_node & node)
         {
             node_ptr inner_orig = this->inner;
 
@@ -857,11 +844,11 @@ namespace algolib
 
             avl_iterator & operator++();
 
-            const avl_iterator operator++(int);
+            avl_iterator operator++(int) &;
 
             avl_iterator & operator--();
 
-            const avl_iterator operator--(int);
+            avl_iterator operator--(int) &;
 
             bool operator==(const avl_iterator & it) const;
 
@@ -892,7 +879,7 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        const typename avl_tree<E, C>::avl_iterator avl_tree<E, C>::avl_iterator::operator++(int)
+        typename avl_tree<E, C>::avl_iterator avl_tree<E, C>::avl_iterator::operator++(int) &
         {
             avl_tree<E, C>::avl_const_iterator result = *this;
 
@@ -924,7 +911,7 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        const typename avl_tree<E, C>::avl_iterator avl_tree<E, C>::avl_iterator::operator--(int)
+        typename avl_tree<E, C>::avl_iterator avl_tree<E, C>::avl_iterator::operator--(int) &
         {
             avl_tree<E, C>::avl_const_iterator result = *this;
 
@@ -964,7 +951,7 @@ namespace algolib
 
             ~avl_const_iterator() = default;
 
-            avl_const_iterator(const avl_iterator & it) : current_node{it.current_node}
+            explicit avl_const_iterator(const avl_iterator & it) : current_node{it.current_node}
             {
             }
 
@@ -1002,11 +989,11 @@ namespace algolib
 
             avl_const_iterator & operator++();
 
-            const avl_const_iterator operator++(int);
+            avl_const_iterator operator++(int) &;
 
             avl_const_iterator & operator--();
 
-            const avl_const_iterator operator--(int);
+            avl_const_iterator operator--(int) &;
 
             bool operator==(const avl_const_iterator & it) const;
 
@@ -1017,8 +1004,8 @@ namespace algolib
         };
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_const_iterator & avl_tree<E, C>::avl_const_iterator::
-                operator++()
+        typename avl_tree<E, C>::avl_const_iterator &
+                avl_tree<E, C>::avl_const_iterator::operator++()
         {
             if(current_node->get_height() > 0)
             {
@@ -1038,8 +1025,8 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        const typename avl_tree<E, C>::avl_const_iterator avl_tree<E, C>::avl_const_iterator::
-                operator++(int)
+        typename avl_tree<E, C>::avl_const_iterator
+                avl_tree<E, C>::avl_const_iterator::operator++(int) &
         {
             avl_tree<E, C>::avl_const_iterator result = *this;
 
@@ -1049,8 +1036,8 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        typename avl_tree<E, C>::avl_const_iterator & avl_tree<E, C>::avl_const_iterator::
-                operator--()
+        typename avl_tree<E, C>::avl_const_iterator &
+                avl_tree<E, C>::avl_const_iterator::operator--()
         {
             if(current_node->get_height() > 0)
             {
@@ -1072,8 +1059,8 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        const typename avl_tree<E, C>::avl_const_iterator avl_tree<E, C>::avl_const_iterator::
-                operator--(int)
+        typename avl_tree<E, C>::avl_const_iterator
+                avl_tree<E, C>::avl_const_iterator::operator--(int) &
         {
             avl_tree<E, C>::avl_const_iterator result = *this;
 
@@ -1083,15 +1070,15 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        bool avl_tree<E, C>::avl_const_iterator::
-                operator==(const avl_tree<E, C>::avl_const_iterator & it) const
+        bool avl_tree<E, C>::avl_const_iterator::operator==(
+                const avl_tree<E, C>::avl_const_iterator & it) const
         {
             return this->current_node == it.current_node;
         }
 
         template <typename E, typename C>
-        bool avl_tree<E, C>::avl_const_iterator::
-                operator!=(const avl_tree<E, C>::avl_const_iterator & it) const
+        bool avl_tree<E, C>::avl_const_iterator::operator!=(
+                const avl_tree<E, C>::avl_const_iterator & it) const
         {
             return this->current_node != it.current_node;
         }

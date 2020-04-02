@@ -94,6 +94,7 @@ namespace
                     }
                 }
             }
+
         return closest_points;
     }
 }

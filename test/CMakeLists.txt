@@ -25,7 +25,7 @@ set(SOURCES
     "primes_test.cpp"
     "searching_test.cpp"
     "strongly_connected_components_test.cpp"
-    "subseqs_test.cpp"
+    "subsequences_test.cpp"
     "suffix_array_test.cpp"
     "topological_sorting_test.cpp"
     "tree_graph_test.cpp"

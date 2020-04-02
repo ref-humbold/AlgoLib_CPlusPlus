@@ -45,8 +45,8 @@ set(MATHMAT_SOURCES
     "${MATHMAT}/maths.cpp"
     "${MATHMAT}/primes.cpp")
 set(SEQUENCES_SOURCES
-    "${SEQUENCES}/subseqs.cpp"
-    "${SEQUENCES}/vector_sorting.cpp")
+    "${SEQUENCES}/sorting.cpp"
+    "${SEQUENCES}/subsequences.cpp")
 set(STRUCTURES_SOURCES
     "${STRUCTURES}/avl_tree.cpp"
     "${STRUCTURES}/disjoint_sets.cpp")

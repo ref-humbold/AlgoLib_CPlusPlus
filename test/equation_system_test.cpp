@@ -33,7 +33,7 @@ TEST_F(EquationSystemTest, solve_whenSingleSolution_thenSolution)
     EXPECT_FALSE(test_object.is_solution({-2, -18, -36.5}));
 }
 
-TEST_F(EquationSystemTest, solve_whenNoSolution_thenThrowNoSolutionException)
+TEST_F(EquationSystemTest, solve_whenNoSolution_thenNoSolutionException)
 {
     // given
     test_object = alma::equation_system<3>({alma::equation<3>({2, 3, -2}, 15),
@@ -46,7 +46,7 @@ TEST_F(EquationSystemTest, solve_whenNoSolution_thenThrowNoSolutionException)
     EXPECT_FALSE(test_object.is_solution({-2, -18, -36.5}));
 }
 
-TEST_F(EquationSystemTest, solve_whenInfiniteSolutions_thenThrowInfiniteSolutionsException)
+TEST_F(EquationSystemTest, solve_whenInfiniteSolutions_thenInfiniteSolutionsException)
 {
     // given
     test_object = alma::equation_system<3>({alma::equation<3>({2, 3, -2}, 15),
