@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <vector>
-#include "tree_graph.hpp"
+#include "algolib/graphs/tree_graph.hpp"
 
 namespace impl
 {

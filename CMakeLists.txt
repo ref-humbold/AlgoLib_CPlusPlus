@@ -11,6 +11,7 @@ include_directories("include")
 set(ALGOLIB "src/algolib")
 set(GEOMETRY "${ALGOLIB}/geometry")
 set(GRAPHS "${ALGOLIB}/graphs")
+set(GRAPHS_ALGORITHMS "${GRAPHS}/algorithms")
 set(MATHMAT "${ALGOLIB}/mathmat")
 set(SEQUENCES "${ALGOLIB}/sequences")
 set(STRUCTURES "${ALGOLIB}/structures")
@@ -22,22 +23,23 @@ set(GEOMETRY_SOURCES
     "${GEOMETRY}/point2d.cpp"
     "${GEOMETRY}/points_sorting.cpp")
 set(GRAPHS_SOURCES
-    "${GRAPHS}/cutting.cpp"
-    "${GRAPHS}/dinic.cpp"
     "${GRAPHS}/directed_graph.cpp"
-    "${GRAPHS}/edmonds.cpp"
     "${GRAPHS}/graph.cpp"
-    "${GRAPHS}/lowest_common_ancestor.cpp"
-    "${GRAPHS}/matching.cpp"
-    "${GRAPHS}/minimal_spanning_tree.cpp"
     "${GRAPHS}/multipartite_graph.cpp"
-    "${GRAPHS}/paths.cpp"
-    "${GRAPHS}/strongly_connected_components.cpp"
-    "${GRAPHS}/searching.cpp"
-    "${GRAPHS}/searching_strategy.cpp"
-    "${GRAPHS}/topological_sorting.cpp"
     "${GRAPHS}/tree_graph.cpp"
     "${GRAPHS}/undirected_graph.cpp")
+set(GRAPHS_ALGORITHMS_SOURCES
+    "${GRAPHS_ALGORITHMS}/cutting.cpp"
+    "${GRAPHS_ALGORITHMS}/dinic.cpp"
+    "${GRAPHS_ALGORITHMS}/edmonds.cpp"
+    "${GRAPHS_ALGORITHMS}/lowest_common_ancestor.cpp"
+    "${GRAPHS_ALGORITHMS}/matching.cpp"
+    "${GRAPHS_ALGORITHMS}/minimal_spanning_tree.cpp"
+    "${GRAPHS_ALGORITHMS}/paths.cpp"
+    "${GRAPHS_ALGORITHMS}/strongly_connected_components.cpp"
+    "${GRAPHS_ALGORITHMS}/searching.cpp"
+    "${GRAPHS_ALGORITHMS}/searching_strategy.cpp"
+    "${GRAPHS_ALGORITHMS}/topological_sorting.cpp")
 set(MATHMAT_SOURCES
     "${MATHMAT}/equation.cpp"
     "${MATHMAT}/equation_system.cpp"
@@ -58,6 +60,7 @@ set(TEXT_SOURCES
 set(SOURCES
     "${GEOMETRY_SOURCES}"
     "${GRAPHS_SOURCES}"
+    "${GRAPHS_ALGORITHMS_SOURCES}"
     "${MATHMAT_SOURCES}"
     "${SEQUENCES_SOURCES}"
     "${STRUCTURES_SOURCES}"

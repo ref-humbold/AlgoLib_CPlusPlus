@@ -10,7 +10,7 @@
 #include <stdexcept>
 #include <queue>
 #include <vector>
-#include "multipartite_graph.hpp"
+#include "algolib/graphs/multipartite_graph.hpp"
 
 namespace impl
 {

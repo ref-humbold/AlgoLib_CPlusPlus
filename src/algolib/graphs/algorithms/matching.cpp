@@ -2,7 +2,7 @@
  * \file matching.cpp
  * \brief ALGORYTM HOPCROFTA-KARPA WYZNACZANIA SKOJARZEŃ W GRAFIE DWUDZIELNYM
  */
-#include "algolib/graphs/matching.hpp"
+#include "algolib/graphs/algorithms/matching.hpp"
 
 namespace algr = algolib::graphs;
 
@@ -18,9 +18,10 @@ std::vector<std::pair<int, int>> algr::match(const multipartite_graph<2> & partg
 
     std::vector<int> matching = augmenter.get_matching();
     std::vector<std::pair<int, int>> match_pairs;
+    std::vector<vertex_t> vertices_one = partgraph.get_vertices(1);
 
-    for(int v : partgraph.get_vertices(1))
-        match_pairs.push_back(std::make_pair(v, matching[v]));
+    std::transform(vertices_one.begin(), vertices_one.end(), std::back_inserter(match_pairs),
+                   [&](int v) { return std::make_pair(v, matching[v]); });
 
     return match_pairs;
 }

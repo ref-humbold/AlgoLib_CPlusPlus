@@ -1,5 +1,5 @@
 //! ALGORYTMY WYLICZANIA NAJKRÓTSZYCH ŚCIEŻEK W GRAFIE WAŻONYM
-#include "algolib/graphs/paths.hpp"
+#include "algolib/graphs/algorithms/paths.hpp"
 
 namespace algr = algolib::graphs;
 
@@ -78,11 +78,11 @@ std::vector<weight_t> algr::dijkstra(const weighted_graph & wgraph, vertex_t sou
 }
 
 std::vector<std::vector<weight_t>>
-    algr::floyd_warshall(const directed_weighted_simple_graph & diwgraph)
+        algr::floyd_warshall(const directed_weighted_simple_graph & diwgraph)
 {
     std::vector<std::vector<weight_t>> distances(
-        diwgraph.get_vertices_number(),
-        std::vector<weight_t>(diwgraph.get_vertices_number(), graph::INF));
+            diwgraph.get_vertices_number(),
+            std::vector<weight_t>(diwgraph.get_vertices_number(), graph::INF));
 
     for(const auto & v : diwgraph.get_vertices())
         distances[v][v] = 0.0;

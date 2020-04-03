@@ -1,5 +1,5 @@
 //! ALGORYTMY SORTOWANIA TOPOLOGICZNEGO
-#include "algolib/graphs/topological_sorting.hpp"
+#include "algolib/graphs/algorithms/topological_sorting.hpp"
 
 namespace algr = algolib::graphs;
 

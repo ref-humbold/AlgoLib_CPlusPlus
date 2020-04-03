@@ -1,5 +1,5 @@
 //! NAJNIŻSZY WSPÓLNY PRZODEK DWÓCH WIERZCHOŁKÓW W DRZEWIE
-#include "algolib/graphs/lowest_common_ancestor.hpp"
+#include "algolib/graphs/algorithms/lowest_common_ancestor.hpp"
 
 namespace algr = algolib::graphs;
 

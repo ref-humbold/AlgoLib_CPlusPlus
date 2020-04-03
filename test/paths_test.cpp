@@ -1,7 +1,7 @@
 //! TESTY DLA ALGORYTMÓW WYZNACZANIA NAJKRÓTSZYCH ŚCIEŻEK
 #include <gtest/gtest.h>
+#include "algolib/graphs/algorithms/paths.hpp"
 #include "algolib/graphs/directed_graph.hpp"
-#include "algolib/graphs/paths.hpp"
 #include "algolib/graphs/undirected_graph.hpp"
 
 namespace algr = algolib::graphs;

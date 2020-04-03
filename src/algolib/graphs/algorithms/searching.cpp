@@ -2,7 +2,7 @@
  * \file searching.cpp
  * \brief Graph searching algorithms.
  */
-#include "algolib/graphs/searching.hpp"
+#include "algolib/graphs/algorithms/searching.hpp"
 #include <algorithm>
 #include <queue>
 #include <stack>

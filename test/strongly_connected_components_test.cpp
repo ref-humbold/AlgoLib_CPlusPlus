@@ -4,7 +4,7 @@
  */
 #include <algorithm>
 #include <gtest/gtest.h>
-#include "algolib/graphs/strongly_connected_components.hpp"
+#include "algolib/graphs/algorithms/strongly_connected_components.hpp"
 
 namespace algr = algolib::graphs;
 

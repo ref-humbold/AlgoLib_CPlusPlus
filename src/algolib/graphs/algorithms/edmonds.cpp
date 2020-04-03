@@ -1,5 +1,5 @@
 //! ALGORYTM EDMONDSA-KARPA: MAKSYMALNY PRZEP�YW
-#include "algolib/graphs/edmonds.hpp"
+#include "algolib/graphs/algorithms/edmonds.hpp"
 
 constexpr double edmonds_flow_graph::INF;
 
@@ -44,7 +44,7 @@ bool edmonds_flow_graph::bfs(int source, int target)
             if(capacities[w][s] > 0 && augmenting_paths[s].first == -1)
             {
                 augmenting_paths[s] =
-                    std::make_pair(w, std::min(capacities[w][s], augmenting_paths[w].second));
+                        std::make_pair(w, std::min(capacities[w][s], augmenting_paths[w].second));
                 vertex_queue.push(s);
             }
         }
