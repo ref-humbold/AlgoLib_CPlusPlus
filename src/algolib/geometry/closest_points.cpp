@@ -74,45 +74,47 @@ namespace
 
         return closest_pair;
     }
-}
 
-// Searches for a pair of closest points in specified sublist of points.
-// Points are specified sorted by X coordinate and by Y coordinate.
-std::pair<alge::point2d, alge::point2d> search_closest(const std::vector<alge::point2d> & pointsX,
-                                                       const std::vector<alge::point2d> & pointsY,
-                                                       int index_begin = 0, int index_end = -1)
-{
-    index_begin = (index_begin + pointsX.size()) % pointsX.size();
-    index_end = (index_end + pointsX.size()) % pointsX.size();
+    // Searches for a pair of closest points in specified sublist of points.
+    // Points are specified sorted by X coordinate and by Y coordinate.
+    std::pair<alge::point2d, alge::point2d>
+            search_closest(const std::vector<alge::point2d> & pointsX,
+                           const std::vector<alge::point2d> & pointsY, int index_begin = 0,
+                           int index_end = -1)
+    {
+        index_begin = (index_begin + pointsX.size()) % pointsX.size();
+        index_end = (index_end + pointsX.size()) % pointsX.size();
 
-    if(index_end - index_begin == 1)
-        return std::make_pair(pointsX[index_begin], pointsX[index_end]);
+        if(index_end - index_begin == 1)
+            return std::make_pair(pointsX[index_begin], pointsX[index_end]);
 
-    if(index_end - index_begin == 2)
-        return search_three(pointsX, index_begin, index_end);
+        if(index_end - index_begin == 2)
+            return search_three(pointsX, index_begin, index_end);
 
-    int index_middle = (index_begin + index_end) / 2;
-    double middleX = (pointsX[index_middle].x() + pointsX[index_middle + 1].x()) / 2;
-    std::vector<alge::point2d> pointsYL, pointsYR;
+        int index_middle = (index_begin + index_end) / 2;
+        double middleX = (pointsX[index_middle].x() + pointsX[index_middle + 1].x()) / 2;
+        std::vector<alge::point2d> pointsYL, pointsYR;
 
-    for(auto & pt : pointsY)
-        if(pt.x() <= index_middle)
-            pointsYL.push_back(pt);
-        else
-            pointsYR.push_back(pt);
+        for(auto & pt : pointsY)
+            if(pt.x() <= index_middle)
+                pointsYL.push_back(pt);
+            else
+                pointsYR.push_back(pt);
 
-    std::pair<alge::point2d, alge::point2d> closestL =
-            search_closest(pointsX, pointsYL, index_begin, index_middle);
-    std::pair<alge::point2d, alge::point2d> closestR =
-            search_closest(pointsX, pointsYR, index_middle + 1, index_end);
-    std::pair<alge::point2d, alge::point2d> closest_pair =
-            distance(closestL.first, closestL.second) <= distance(closestR.first, closestR.second)
-                    ? closestL
-                    : closestR;
-    std::unique_ptr<std::pair<alge::point2d, alge::point2d>> belt_pair =
-            check_belt(pointsY, middleX, distance(closest_pair.first, closest_pair.second));
+        std::pair<alge::point2d, alge::point2d> closestL =
+                search_closest(pointsX, pointsYL, index_begin, index_middle);
+        std::pair<alge::point2d, alge::point2d> closestR =
+                search_closest(pointsX, pointsYR, index_middle + 1, index_end);
+        std::pair<alge::point2d, alge::point2d> closest_pair =
+                distance(closestL.first, closestL.second)
+                                <= distance(closestR.first, closestR.second)
+                        ? closestL
+                        : closestR;
+        std::unique_ptr<std::pair<alge::point2d, alge::point2d>> belt_pair =
+                check_belt(pointsY, middleX, distance(closest_pair.first, closest_pair.second));
 
-    return belt_pair ? *belt_pair : closest_pair;
+        return belt_pair ? *belt_pair : closest_pair;
+    }
 }
 
 std::pair<alge::point2d, alge::point2d>
