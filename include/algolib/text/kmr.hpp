@@ -17,9 +17,10 @@ namespace algolib
     namespace text
     {
         /*!
-         * \brief Budowa słownika podsłów bazowych
-         * \param text słowo
-         * \return słownik podsłów bazowych
+         * \brief Builds a base words dictionary for specified text using Karp-Miller-Rosenberg algorithm.
+         *
+         * \param text a text
+         * \return base words dictionary
          */
         std::map<std::string, int> kmr(const std::string & text);
     }

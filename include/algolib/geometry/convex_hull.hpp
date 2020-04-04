@@ -1,6 +1,6 @@
 /*!
  * \file convex_hull.hpp
- * \brief Graham's algorithm for convex hull on a plane
+ * \brief Algorithm for convex hull on a plane (monotone chain)
  */
 #ifndef CONVEX_HULL_HPP_
 #define CONVEX_HULL_HPP_
@@ -15,9 +15,10 @@ namespace algolib
     namespace geometry
     {
         /*!
-         * \brief Wyznacza otoczkę wypukłą
-         * \param points lista punktów na płaszczyźnie
-         * \return lista punktów otoczki
+         * \brief Constructs a convex hull of specified points.
+         *
+         * \param points a vector of points
+         * \return vector of hull points
          */
         std::vector<point2d> find_convex_hull(std::vector<point2d> points);
     }

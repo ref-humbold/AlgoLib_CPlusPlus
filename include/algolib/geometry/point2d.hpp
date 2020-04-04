@@ -1,6 +1,6 @@
 /*!
  * \file point2d.hpp
- * \brief Points on a plane
+ * \brief Structure of points on a plane
  */
 #ifndef POINT2D_HPP_
 #define POINT2D_HPP_

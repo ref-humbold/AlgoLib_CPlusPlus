@@ -1,8 +1,12 @@
+/*!
+ * \file points_sorting.cpp
+ * \brief Algorithms for points sorting
+ */
 #include "algolib/geometry/points_sorting.hpp"
 
 namespace alge = algolib::geometry;
 
-void alge::angle_sort(std::vector<alge::point2d> & points)
+void alge::sort_by_angle(std::vector<alge::point2d> & points)
 {
     auto comparator = [&](const alge::point2d & pt1, const alge::point2d & pt2) -> bool {
         double angle1 = pt1.angle(), angle2 = pt2.angle();

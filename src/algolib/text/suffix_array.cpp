@@ -1,4 +1,7 @@
-//! Suffix array structure.
+/*!
+ * \file suffix_array.cpp
+ * \brief Structure of suffix array
+ */
 #include "algolib/text/suffix_array.hpp"
 
 namespace alte = algolib::text;

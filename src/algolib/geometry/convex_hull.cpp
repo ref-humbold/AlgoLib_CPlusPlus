@@ -1,4 +1,7 @@
-//! Graham's algorithm for convex hull on a plane.
+/*!
+ * \file convex_hull.cpp
+ * \brief Algorithm for convex hull on a plane (monotone chain)
+ */
 #include "algolib/geometry/convex_hull.hpp"
 
 namespace alge = algolib::geometry;

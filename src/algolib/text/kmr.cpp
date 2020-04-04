@@ -1,10 +1,14 @@
-//! Karp-Miller-Rosenberg algorithm.
+/*!
+ * \file kmr.cpp
+ * \brief Karp-Miller-Rosenberg algorithm
+ */
 #include "algolib/text/kmr.hpp"
 
 namespace alte = algolib::text;
 
 namespace
 {
+    // Encodes single letters of specified text
     std::map<std::string, int> sign_letters(const std::string & text)
     {
         std::map<std::string, int> factors;
@@ -27,8 +31,9 @@ namespace
         return factors;
     }
 
-    void double_length(int new_length, const std::string & text,
-                       std::map<std::string, int> & factors)
+    // Encodes substring of specified length using already counted factors
+    void sign_new_length(int new_length, const std::string & text,
+                         std::map<std::string, int> & factors)
     {
         std::vector<std::tuple<int, int, int>> codes;
         int code_value = 0;
@@ -59,7 +64,7 @@ std::map<std::string, int> alte::kmr(const std::string & text)
     std::map<std::string, int> factors = sign_letters(text);
 
     for(size_t length = 2; length <= text.size(); length <<= 1)
-        double_length(length, text, factors);
+        sign_new_length(length, text, factors);
 
     return factors;
 }

@@ -1,6 +1,6 @@
 /*!
  * \file disjoint_sets.hpp
- * \brief Disjoint sets structure (union-find)
+ * \brief Structure of disjoint sets (union-find)
  */
 #ifndef DISJOINT_SETS_HPP_
 #define DISJOINT_SETS_HPP_
@@ -39,6 +39,7 @@ namespace algolib
             disjoint_sets & operator=(const disjoint_sets & ds) = default;
             disjoint_sets & operator=(disjoint_sets && ds) noexcept = default;
 
+            //! \return \code true if the structure is empty, otherwise \code false
             bool empty() const
             {
                 return sets == 0;
@@ -52,8 +53,9 @@ namespace algolib
 
             /*!
              * \brief Checks whether given element in one of the sets in the structure.
-             * \param element element
-             * \return  true if element belongs to the structure, otherwise false
+             *
+             * \param element an element
+             * \return \code true if element belongs to the structure, otherwise \code false
              */
             bool contains(const E & element) const
             {
@@ -62,28 +64,32 @@ namespace algolib
 
             /*!
              * \brief Adds new element to the set represented by another element.
-             * \param element new element
-             * \param repr representant of the set
+             *
+             * \param element a new element
+             * \param represent represent of the set
              */
-            void insert(const E & element, const E & repr);
+            void insert(const E & element, const E & represent);
 
             /*!
              * \brief Adds new element as a singleton set.
-             * \param element new element
+             *
+             * \param element a new element
              */
             void insert(const E & element);
 
             /*!
              * \brief Adds new elements to the set represented by another element.
+             *
              * \param first beginning of elements range
              * \param last end of elements range
-             * \param repr representant of the set
+             * \param represent represent of the set
              */
             template <typename InputIterator>
-            void insert(InputIterator first, InputIterator last, const E & repr);
+            void insert(InputIterator first, InputIterator last, const E & represent);
 
             /*!
              * \brief Adds new elements as singleton sets.
+             *
              * \param first beginning of elements range
              * \param last end of elements range
              */
@@ -92,21 +98,25 @@ namespace algolib
 
             /*!
              * \brief Finds represent of the set with given element.
-             * \param element element from the structure
+             *
+             * \param element an element
              * \return represent of the element
              */
             const E & operator[](const E & element);
 
             /*!
              * \brief Finds represent of the set with given element.
-             * \param element element from the structure
+             *
+             * \param element an element
              * \return represent of the element
              */
             const E & operator[](const E & element) const;
 
             /*!
-             * \brief Finds represent of the set with given element.
-             * \param element element from the structure
+             * \brief Finds a represent of the element.
+             *
+             * \param element an element
+             * \param default_value a value to return if the element not inside
              * \return represent of the element
              */
             const E & find_set(const E & element, const E & default_value)
@@ -122,8 +132,10 @@ namespace algolib
             }
 
             /*!
-             * \brief Finds represent of the set with given element.
-             * \param element element from the structure
+             * \brief Finds a represent of the element.
+             *
+             * \param element an element
+             * \param default_value a value to return if the element not inside
              * \return represent of the element
              */
             const E & find_set(const E & element, const E & default_value) const
@@ -140,6 +152,7 @@ namespace algolib
 
             /*!
              * \brief Performs union of two sets in the structure.
+             *
              * \param element1 element from the first set
              * \param element2 element from the second set
              */
@@ -147,23 +160,25 @@ namespace algolib
 
             /*!
              * \brief Tests whether two elements belong to the same set.
+             *
              * \param element1 element from the first set
              * \param element2 element from the second set
-             * \return true if both element are in the same set, otherwise false
+             * \return \code true if both element are in the same set, otherwise \code false
              */
             bool is_same_set(const E & element1, const E & element2);
 
             /*!
              * \brief Tests whether two elements belong to the same set.
+             *
              * \param element1 element from the first set
              * \param element2 element from the second set
-             * \return true if both element are in the same set, otherwise false
+             * \return \code true if both element are in the same set, otherwise \code false
              */
             bool is_same_set(const E & element1, const E & element2) const;
 
         private:
-            std::unordered_map<E, E> represents;  //!< Map of elements' represents
-            size_t sets;  //!< Number of sets
+            std::unordered_map<E, E> represents;  // Map of elements' represents
+            size_t sets;  // Number of sets
         };
 
         template <typename E>
@@ -178,15 +193,15 @@ namespace algolib
         }
 
         template <typename E>
-        void disjoint_sets<E>::insert(const E & element, const E & repr)
+        void disjoint_sets<E>::insert(const E & element, const E & represent)
         {
             if(contains(element))
                 throw std::invalid_argument("New value already present");
 
-            if(!contains(repr))
+            if(!contains(represent))
                 throw std::invalid_argument("Represent value not present");
 
-            represents.emplace(element, this->operator[](repr));
+            represents.emplace(element, this->operator[](represent));
         }
 
         template <typename E>
@@ -216,14 +231,14 @@ namespace algolib
 
         template <typename E>
         template <typename InputIterator>
-        void disjoint_sets<E>::insert(InputIterator first, InputIterator last, const E & repr)
+        void disjoint_sets<E>::insert(InputIterator first, InputIterator last, const E & represent)
         {
             for(InputIterator it = first; it != last; ++it)
                 if(contains(*it))
                     throw std::invalid_argument("New value already present");
 
             for(InputIterator it = first; it != last; ++it)
-                represents.emplace(*it, this->operator[](repr));
+                represents.emplace(*it, this->operator[](represent));
         }
 
         template <typename E>

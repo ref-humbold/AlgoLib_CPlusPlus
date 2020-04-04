@@ -1,4 +1,7 @@
-//! Points on a plane.
+/*!
+ * \file point2d.hpp
+ * \brief Structure of points on a plane
+ */
 #include "algolib/geometry/point2d.hpp"
 
 namespace alge = algolib::geometry;
