@@ -1,4 +1,7 @@
-//! Algorithms for subsequences.
+/**!
+ * \file subsequences.cpp
+ * \brief Algorithms for subsequences
+ */
 #include "algolib/sequences/subsequences.hpp"
 
 std::vector<double> algolib::maximum_subarray(const std::vector<double> & sequence)

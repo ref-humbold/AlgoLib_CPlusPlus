@@ -1,5 +1,5 @@
 /**!
- * \file subseqs.hpp
+ * \file subsequences.hpp
  * \brief Algorithms for subsequences
  */
 #ifndef SUBSEQS_HPP_
@@ -23,9 +23,10 @@ namespace impl
         int index_middle = (index_begin + index_end) / 2;
 
         if(order(sequence[index_elem], sequence[subseq_last[index_middle]]))
-            return search(sequence, subseq_last, index_middle + 1, index_end, index_elem);
-        else
-            return search(sequence, subseq_last, index_begin, index_middle, index_elem);
+            return search_ord(order, sequence, subseq_last, index_middle + 1, index_end,
+                              index_elem);
+
+        return search_ord(order, sequence, subseq_last, index_begin, index_middle, index_elem);
     }
 }
 
