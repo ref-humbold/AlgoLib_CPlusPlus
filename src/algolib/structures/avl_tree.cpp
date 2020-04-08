@@ -1,5 +1,5 @@
 /**!
  * \file avl_tree.cpp
- * \brief AVL tree structure
+ * \brief Structure of AVL tree
  */
 #include "algolib/structures/avl_tree.hpp"

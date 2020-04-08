@@ -1,6 +1,6 @@
 /**!
  * \file fraction.hpp
- * \brief Fractions structure
+ * \brief Structure of fraction
  */
 #ifndef FRACTION_HPP_
 #define FRACTION_HPP_
@@ -38,10 +38,11 @@ namespace algolib
             {
             }
 
-            explicit fraction(long long int num, long long int denom = 1LL) : num{num}, denom{denom}
+            explicit fraction(long long int numerator, long long int denominator = 1LL)
+                : numerator{numerator}, denominator{denominator}
             {
-                if(denom == 0LL)
-                    throw std::domain_error("Denominator equals zero");
+                if(denominator == 0LL)
+                    throw std::domain_error("Denominator cannot be equal to zero");
 
                 normalize();
             }
@@ -54,17 +55,17 @@ namespace algolib
 
             explicit operator double() const
             {
-                return (1.0 * num) / denom;
+                return (1.0 * numerator) / denominator;
             }
 
             explicit operator long long int() const
             {
-                return num / denom;
+                return numerator / denominator;
             }
 
             explicit operator int() const
             {
-                return static_cast<int>(num / denom);
+                return static_cast<int>(numerator / denominator);
             }
 
             fraction & operator+=(const fraction & f);
@@ -89,7 +90,7 @@ namespace algolib
         private:
             void normalize();
 
-            long long int num, denom;
+            long long int numerator, denominator;
         };
 
         fraction operator+(fraction f1, const fraction & f2);
@@ -114,7 +115,7 @@ namespace std
 
         result_type operator()(const argument_type & f)
         {
-            return hash<long long int>()(f.num) ^ hash<long long int>()(f.denom);
+            return hash<long long int>()(f.numerator) ^ hash<long long int>()(f.denominator);
         }
     };
 }

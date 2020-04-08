@@ -1,4 +1,7 @@
-//! Basic mathematics algorithms.
+/**!
+ * \file maths.cpp
+ * \brief Algorithms for basic mathematical computations
+ */
 #include "algolib/mathmat/maths.hpp"
 
 namespace alma = algolib::mathmat;
@@ -6,7 +9,8 @@ namespace alma = algolib::mathmat;
 long long int alma::gcd(long long int number1, long long int number2)
 {
     std::pair<long long int, long long int> number_pair =
-        std::make_pair(std::min(number1, number2), std::max(number1, number2));
+            std::make_pair(std::min(std::abs(number1), std::abs(number2)),
+                           std::max(std::abs(number1), std::abs(number2)));
 
     while(number_pair.first > 0)
         number_pair = std::make_pair(number_pair.second % number_pair.first, number_pair.first);
@@ -16,7 +20,8 @@ long long int alma::gcd(long long int number1, long long int number2)
 
 long long int alma::lcm(long long int number1, long long int number2)
 {
-    long long int min_number = std::min(number1, number2), max_number = std::max(number1, number2);
+    long long int min_number = std::min(std::abs(number1), std::abs(number2)),
+                  max_number = std::max(std::abs(number1), std::abs(number2));
 
     return max_number / gcd(number1, number2) * min_number;
 }

@@ -36,7 +36,7 @@ namespace algolib
             }
         };
 
-        // region graph
+#pragma region graph
 
         struct graph
         {
@@ -90,8 +90,8 @@ namespace algolib
             virtual size_t get_indegree(vertex_t vertex) const = 0;
         };
 
-        // endregion
-        // region weighted_graph
+#pragma endregion
+#pragma region weighted_graph
 
         struct weighted_graph : public virtual graph
         {
@@ -115,8 +115,8 @@ namespace algolib
             virtual std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const = 0;
         };
 
-        // endregion
-        // region simple_graph
+#pragma endregion
+#pragma region simple_graph
 
         class simple_graph : public virtual graph
         {
@@ -150,7 +150,7 @@ namespace algolib
             std::vector<std::set<wvertex_t>> graphrepr;  //!< Lista sąsiedztwa grafu.
         };
 
-        // endregion
+#pragma endregion
     }
 }
 

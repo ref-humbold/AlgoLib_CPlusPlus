@@ -3,12 +3,12 @@
 
 namespace algr = algolib::graphs;
 
-// region graph
+#pragma region graph
 
 constexpr weight_t algr::graph::INF;
 
-// endregion
-// region simple_graph
+#pragma endregion
+#pragma region simple_graph
 
 constexpr weight_t algr::simple_graph::DEFAULT_WEIGHT;
 
@@ -59,4 +59,4 @@ size_t algr::simple_graph::get_outdegree(vertex_t vertex) const
     return graphrepr[vertex].size();
 }
 
-// endregion
+#pragma endregion

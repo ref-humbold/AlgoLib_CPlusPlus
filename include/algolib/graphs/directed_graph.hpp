@@ -19,7 +19,7 @@ namespace algolib
 {
     namespace graphs
     {
-        // region directed_graph
+#pragma region directed_graph
 
         struct directed_graph : public virtual graph
         {
@@ -29,8 +29,8 @@ namespace algolib
             virtual void reverse() = 0;
         };
 
-        // endregion
-        // region directed_simple_graph
+#pragma endregion
+#pragma region directed_simple_graph
 
         class directed_simple_graph : public simple_graph, public directed_graph
         {
@@ -60,8 +60,8 @@ namespace algolib
             void reverse() override;
         };
 
-        // endregion
-        // region directed_weighted_simple_graph
+#pragma endregion
+#pragma region directed_weighted_simple_graph
 
         class directed_weighted_simple_graph : public directed_simple_graph, public weighted_graph
         {
@@ -95,7 +95,7 @@ namespace algolib
             void reverse() override;
         };
 
-        // endregion
+#pragma endregion
     }
 }
 

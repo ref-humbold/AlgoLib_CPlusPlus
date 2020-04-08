@@ -7,7 +7,7 @@
 
 namespace alma = algolib::mathmat;
 
-// region findPrimes
+#pragma region findPrimes
 
 TEST(PrimesTest, findPrimes_whenRangeIsDescending_thenEmptyResult)
 {
@@ -93,8 +93,8 @@ TEST(PrimesTest, findPrimes_whenRangeBoundariesAreSameAndComposite_thenEmptyResu
     EXPECT_TRUE(result.empty());
 }
 
-// endregion
-// region testFermat
+#pragma endregion
+#pragma region testFermat
 
 TEST(PrimesTest, testFermat_whenZero_thenFalse)
 {
@@ -138,8 +138,8 @@ TEST(PrimesTest, testFermat_whenCarmichaelNumber_thenFalse)
     EXPECT_FALSE(result);
 }
 
-// endregion
-// region testMiller
+#pragma endregion
+#pragma region testMiller
 
 TEST(PrimesTest, testMiller_whenZero_thenFalse)
 {
@@ -183,4 +183,4 @@ TEST(PrimesTest, testMiller_whenComposite2_thenFalse)
     EXPECT_FALSE(result);
 }
 
-// endregion
+#pragma endregion

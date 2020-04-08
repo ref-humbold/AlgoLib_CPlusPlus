@@ -1,6 +1,6 @@
 /*!
  * \file avl_tree.hpp
- * \brief AVL tree structure
+ * \brief Structure of AVL tree
  */
 #ifndef AVL_TREE_HPP_
 #define AVL_TREE_HPP_
@@ -18,7 +18,7 @@ namespace algolib
 {
     namespace structures
     {
-        // region avl_tree
+#pragma region avl_tree
 
         template <typename E, typename C = std::less<E>>
         class avl_tree
@@ -55,7 +55,7 @@ namespace algolib
             {
             }
 
-            avl_tree(std::initializer_list<value_type> il, const compare & cmp = compare())
+            explicit avl_tree(std::initializer_list<value_type> il, const compare & cmp = compare())
                 : cmp{cmp}
             {
                 insert(il);
@@ -151,34 +151,35 @@ namespace algolib
             }
 
             /*!
-             * \brief Checks whether given value is present in the tree
+             * \brief Checks whether specified value is present in the tree.
              * \param element value to check
              * \return iterator on the element if found, otherwise iterator at the end
              */
             iterator find(const_reference element);
 
             /*!
-             * \brief Checks whether given value is present in the tree
+             * \brief Checks whether specified value is present in the tree.
              * \param element value to check
              * \return iterator on the element if found, otherwise iterator at the end
              */
             const_iterator find(const_reference element) const;
 
             /*!
-             * \brief Adds a new value to the tree
+             * \brief Adds a new value to the tree.
              * \param element value to be added
-             * \return iterator at the new element and \code true whether insert was successful, otherwise \code false
+             * \return iterator at the new element and \code true whether insert was successful,
+             * otherwise \code false
              */
             std::pair<iterator, bool> insert(const_reference element);
 
             /*!
-             * \brief Adds values from initializer list to the tree
+             * \brief Adds values from initializer list to the tree.
              * \param il an initializer list with new values
              */
             void insert(std::initializer_list<value_type> il);
 
             /*!
-             * \brief Removes given element from the tree if present
+             * \brief Removes specified element from the tree if present.
              * \param element value to be removed
              * \return number of element removed
              */
@@ -210,59 +211,34 @@ namespace algolib
                        && node->get_parent()->get_right() == node;
             }
 
-            /*!
-             * \brief Determines the subtree where given value might be present.
-             * \param node node
-             * \param element value to find
-             * \return the node if it hold given value, otherwise left child if the value is less
-             * or right child if the value is greater
-             */
+            // Determines the subtree where given value might be present:
+            // - node if element is in it
+            // - left child if element is less than node's element
+            // - right child if element is greater than node's element
             inner_ptr search(inner_ptr node, const_reference element) const;
 
-            /*!
-             * \brief Searches for node that satisfies given predicate with given value.
-             * \param element value for predicate
-             * \param predicate predicate for node and argument value
-             * \return node that satisfies the predicate if any, otherwise \code nullptr
-             */
+            // Searches for node that satisfies specified predicate with specified value.
             inner_ptr find_node(const_reference element,
                                 std::function<bool(inner_ptr, const_reference)> predicate) const;
 
-            /*!
-             * \brief Removes inner node from the tree.
-             * \param node node to be removed
-             */
+            // Removes inner node from the tree.
             void delete_node(inner_ptr node);
 
-            /*!
-             * \brief Replaces the subtree rooted in one node with subtree of another node.
-             * \param node1 root of the subtree to be replaced
-             * \param node2 root of the new subtree
-             */
+            // Replaces the subtree rooted in one node with subtree of another node.
             void replace_node(inner_ptr node1, inner_ptr node2);
 
-            /*!
-             * \brief Rotates the node along the edge to its parent.
-             * \param node node to be rotated
-             */
+            // Rotates the node along the edge to its parent.
             void rotate(inner_ptr node);
 
-            /**!
-             * \brief Restores balancing on a path from given node to the root.
-             * \param node node to start balancing from
-             */
+            // Restores balancing on a path from specified node to the root.
             void balance(node_ptr node);
 
-            /*!
-             * \brief Counts current node balance
-             * \param node node
-             * \return balance value
-             */
+            // Counts current node balance.
             int count_balance(node_ptr node);
 
-            header_ptr tree = new avl_header_node();  //!< The tree denoted by its header
-            size_type elems = 0;  //!< Number of elements
-            compare cmp;  //!< Comparator
+            header_ptr tree = new avl_header_node();  // The tree denoted by its header
+            size_type elems = 0;  // Number of elements
+            compare cmp;  // Comparator
         };
 
         template <typename E, typename C>
@@ -522,8 +498,8 @@ namespace algolib
             return left_height - right_height;
         }
 
-        // endregion
-        // region avl_node
+#pragma endregion
+#pragma region avl_node
 
         template <typename E, typename C>
         struct avl_tree<E, C>::avl_node
@@ -544,24 +520,18 @@ namespace algolib
 
             virtual void set_parent(node_ptr node) = 0;
 
-            //! \brief Recounts the height of the node.
+            // Recounts the height of the node.
             virtual void count_height() = 0;
 
-            /*!
-             * \brief Searches in its subtree for the node with minimal value
-             * \return the node with minimal value
-             */
+            // Searches in its subtree for the node with minimal value.
             virtual node_ptr minimum() = 0;
 
-            /*!
-             * \brief Searches in its subtree for the node with maximal value
-             * \return the node with maximal value
-             */
+            // Searches in its subtree for the node with maximal value.
             virtual node_ptr maximum() = 0;
         };
 
-        // endregion
-        // region avl_inner_node
+#pragma endregion
+#pragma region avl_inner_node
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_inner_node : public avl_tree<E, C>::avl_node
@@ -595,12 +565,7 @@ namespace algolib
 
             void set_left(node_ptr node) override
             {
-                left = static_cast<inner_ptr>(node);
-
-                if(left != nullptr)
-                    left->set_parent(this);
-
-                count_height();
+                do_set_left(node);
             }
 
             inner_ptr get_right() override
@@ -610,12 +575,7 @@ namespace algolib
 
             void set_right(node_ptr node) override
             {
-                right = static_cast<inner_ptr>(node);
-
-                if(right != nullptr)
-                    right->set_parent(this);
-
-                count_height();
+                do_set_right(node);
             }
 
             node_ptr get_parent() override
@@ -628,7 +588,10 @@ namespace algolib
                 parent = node;
             }
 
-            void count_height() override;
+            void count_height() override
+            {
+                do_count_height();
+            }
 
             inner_ptr minimum() override
             {
@@ -643,6 +606,10 @@ namespace algolib
             value_type element;  //!< Value in the node.
 
         private:
+            void do_set_left(node_ptr node);
+            void do_set_right(node_ptr node);
+            void do_count_height();
+
             int height;  //!< Height of the node.
             inner_ptr left;  //!< Left child of the node.
             inner_ptr right;  //!< Right child of the node.
@@ -666,10 +633,10 @@ namespace algolib
               parent{nullptr}
         {
             if(node.left != nullptr)
-                set_left(new avl_inner_node(*node.left));
+                do_set_left(new avl_inner_node(*node.left));
 
             if(node.right != nullptr)
-                set_right(new avl_inner_node(*node.right));
+                do_set_right(new avl_inner_node(*node.right));
         }
 
         template <typename E, typename C>
@@ -690,7 +657,29 @@ namespace algolib
         }
 
         template <typename E, typename C>
-        void avl_tree<E, C>::avl_inner_node::count_height()
+        void avl_tree<E, C>::avl_inner_node::do_set_left(node_ptr node)
+        {
+            left = static_cast<inner_ptr>(node);
+
+            if(left != nullptr)
+                left->set_parent(this);
+
+            do_count_height();
+        }
+
+        template <typename E, typename C>
+        void avl_tree<E, C>::avl_inner_node::do_set_right(node_ptr node)
+        {
+            right = static_cast<inner_ptr>(node);
+
+            if(right != nullptr)
+                right->set_parent(this);
+
+            do_count_height();
+        }
+
+        template <typename E, typename C>
+        void avl_tree<E, C>::avl_inner_node::do_count_height()
         {
             int left_height = left == nullptr ? 0 : left->get_height();
             int right_height = right == nullptr ? 0 : right->get_height();
@@ -698,8 +687,8 @@ namespace algolib
             height = std::max(left_height, right_height) + 1;
         }
 
-        // endregion
-        // region avl_header_node
+#pragma endregion
+#pragma region avl_header_node
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_header_node : public avl_tree<E, C>::avl_node
@@ -718,7 +707,7 @@ namespace algolib
                 : avl_tree<E, C>::avl_node(), inner{nullptr}
             {
                 if(node.inner != nullptr)
-                    set_parent(new avl_inner_node(*node.inner));
+                    do_set_parent(new avl_inner_node(*node.inner));
             }
 
             avl_header_node(avl_header_node && node) = delete;
@@ -755,10 +744,7 @@ namespace algolib
 
             void set_parent(node_ptr node) override
             {
-                inner = static_cast<inner_ptr>(node);
-
-                if(inner != nullptr)
-                    inner->set_parent(this);
+                do_set_parent(node);
             }
 
             void count_height() override
@@ -776,6 +762,14 @@ namespace algolib
             }
 
         private:
+            void do_set_parent(node_ptr node)
+            {
+                inner = static_cast<inner_ptr>(node);
+
+                if(inner != nullptr)
+                    inner->set_parent(this);
+            }
+
             inner_ptr inner;  //!< The real tree denoted by its root.
         };
 
@@ -791,8 +785,8 @@ namespace algolib
             return *this;
         }
 
-        // endregion
-        // region avl_iterator
+#pragma endregion
+#pragma region avl_iterator
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_iterator
@@ -932,8 +926,8 @@ namespace algolib
             return this->current_node != it.current_node;
         }
 
-        // endregion
-        // region avl_const_iterator
+#pragma endregion
+#pragma region avl_const_iterator
 
         template <typename E, typename C>
         class avl_tree<E, C>::avl_const_iterator
@@ -1083,7 +1077,7 @@ namespace algolib
             return this->current_node != it.current_node;
         }
 
-        // endregion
+#pragma endregion
     }
 }
 

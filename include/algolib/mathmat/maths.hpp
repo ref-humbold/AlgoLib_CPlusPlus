@@ -1,6 +1,6 @@
 /**!
  * \file maths.hpp
- * \brief Basic mathematics algorithms
+ * \brief Algorithms for basic mathematical computations
  */
 #ifndef MATHS_HPP_
 #define MATHS_HPP_

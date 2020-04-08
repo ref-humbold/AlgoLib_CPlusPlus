@@ -1,6 +1,6 @@
 /*!
  * \file point2d.hpp
- * \brief Structure of points on a plane
+ * \brief Structure of point on a plane
  */
 #include "algolib/geometry/point2d.hpp"
 
