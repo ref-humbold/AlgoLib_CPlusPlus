@@ -9,10 +9,12 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
+#include <map>
 #include <queue>
 #include <string>
 #include <tuple>
 #include <vector>
+#include <limits>
 
 namespace algolib
 {
@@ -87,13 +89,13 @@ namespace algolib
             void init_array();
             void init_inv();
             void init_lcp();
-            std::vector<size_t> create_array(const std::vector<size_t> & t, size_t k);
+            std::vector<size_t> create_array(const std::vector<size_t> & t);
             std::vector<size_t> merge(const std::vector<size_t> & t0,
                                       const std::vector<size_t> & sa0,
                                       const std::vector<size_t> & tn12,
                                       const std::vector<size_t> & sa12);
             void sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
-                              size_t shift, size_t k);
+                              size_t shift);
             size_t get_elem(const std::vector<size_t> & v, size_t i);
 
             size_t length;

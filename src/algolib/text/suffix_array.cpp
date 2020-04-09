@@ -57,7 +57,7 @@ void alte::suffix_array::init_array()
 {
     std::vector<size_t> t(txt.begin(), txt.end());
 
-    suf_arr = create_array(t, 128);
+    suf_arr = create_array(t);
 }
 
 void alte::suffix_array::init_inv()
@@ -84,7 +84,7 @@ void alte::suffix_array::init_lcp()
         }
 }
 
-std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> & t, size_t k)
+std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> & t)
 {
     if(t.size() < 2)
         return std::vector<size_t>({0});
@@ -96,11 +96,12 @@ std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> &
         if(i % 3 != 0)
             t12.push_back(i);
 
-    sort_by_keys(t12, t, 2, k);
-    sort_by_keys(t12, t, 1, k);
-    sort_by_keys(t12, t, 0, k);
+    sort_by_keys(t12, t, 2);
+    sort_by_keys(t12, t, 1);
+    sort_by_keys(t12, t, 0);
 
-    size_t ix = 0, last0 = k, last1 = k, last2 = k;
+    size_t ix = 0, last0 = std::numeric_limits<size_t>::max(),
+           last1 = std::numeric_limits<size_t>::max(), last2 = std::numeric_limits<size_t>::max();
     std::vector<size_t> tn12(n02, 0);
 
     for(size_t i : t12)
@@ -123,7 +124,7 @@ std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> &
 
     if(ix < n02)
     {
-        sa12 = create_array(tn12, ix + 1);
+        sa12 = create_array(tn12);
 
         for(size_t i = 0; i < sa12.size(); ++i)
             tn12[sa12[i]] = i + 1;
@@ -140,7 +141,7 @@ std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> &
         if(i < n2)
             sa0.push_back(3 * i);
 
-    sort_by_keys(sa0, t, 0, k);
+    sort_by_keys(sa0, t, 0);
 
     return merge(t, sa0, tn12, sa12);
 }
@@ -192,15 +193,25 @@ std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
 }
 
 void alte::suffix_array::sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
-                                      size_t shift, size_t k)
+                                      size_t shift)
 {
-    std::queue<size_t> buckets[k];
+    std::map<size_t, std::queue<size_t>> buckets;
     size_t j = 0;
 
     for(int i : v)
-        buckets[get_elem(keys, i + shift)].push(i);
+    {
+        size_t k = get_elem(keys, i + shift);
 
-    for(std::queue<size_t> & e : buckets)
+        buckets.emplace(k, std::queue<size_t>());
+        buckets[k].push(i);
+    }
+
+    std::vector<std::queue<size_t>> queues;
+
+    std::transform(buckets.begin(), buckets.end(), std::back_inserter(queues),
+                   [](std::pair<size_t, std::queue<size_t>> p) { return p.second; });
+
+    for(std::queue<size_t> & e : queues)
         while(!e.empty())
         {
             v[j] = e.front();
