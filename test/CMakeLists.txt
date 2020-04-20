@@ -40,5 +40,5 @@ foreach(testsource ${SOURCES})
                           GTest::GTest
                           GTest::Main
                           "${PROJECT_SOURCE_DIR}/dist/libalgolib.so")
-    gtest_discover_tests(${testexec})
+    gtest_add_tests(TARGET ${testexec})
 endforeach(testsource ${SOURCES})
