@@ -13,6 +13,7 @@ set(SOURCES
     "avl_tree_test.cpp"
     "directed_graph_test.cpp"
     "disjoint_sets_test.cpp"
+    "double_heap_test.cpp"
     "equation_test.cpp"
     "equation_system_test.cpp"
     "fraction_test.cpp"
