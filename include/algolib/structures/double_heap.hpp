@@ -53,24 +53,43 @@ namespace algolib
                 return heap.empty();
             }
 
+            /*!
+             * \brief Retrieves minimal element from this double heap.
+             * \return minimal element
+             */
             const_reference front() const
             {
                 if(heap.size() == 0)
-                    throw std::out_of_range();
+                    throw std::out_of_range("Double heap is empty");
 
-                return heap[0];
+                return heap[INDEX_FRONT];
             }
 
+            /*!
+             * \brief Retrieves maximal element from this double heap.
+             * \return maximal element
+             */
             const_reference back() const
             {
-                return heap.size() <= 1 ? front() : heap[1];
+                return heap.size() <= 1 ? front() : heap[INDEX_BACK];
             }
 
+            /*!
+             * \brief Adds a new value to this double heap.
+             * \param element value to be added
+             */
             void push(const_reference element);
+
+            //! \brief Removes minimal element from this double heap.
             void pop_front();
+
+            //! \brief Removes maximal element from this double heap.
             void pop_back();
 
         private:
+            static const size_type INDEX_FRONT = 0;
+            static const size_type INDEX_BACK = 1;
+
             std::vector<E> heap;  // Heap respresentation
             Compare cmp;  // Comparator
         };
@@ -78,6 +97,8 @@ namespace algolib
         template <typename E, typename Compare>
         void double_heap<E, Compare>::push(const_reference element)
         {
+            heap.push_back(element);
+
             // TODO
         }
 
