@@ -136,9 +136,10 @@ TEST_F(DisjointSetsTest, findSet_whenPresent_thenRepresent)
     EXPECT_EQ(elem, result);
 }
 
-TEST_F(DisjointSetsTest, findSet_whenPresent_thenOutOfRange)
+TEST_F(DisjointSetsTest, findSet_whenAbsent_thenDefaultValue)
 {
     int default_value = 10;
+
     int result = test_object.find_set(22, default_value);
 
     EXPECT_EQ(default_value, result);
