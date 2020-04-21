@@ -179,6 +179,24 @@ TEST_F(DoubleHeapTest, popFront_whenSingleElement_thenThisElementRemoved)
     EXPECT_EQ(0, test_object.size());
 }
 
+TEST_F(DoubleHeapTest, popFront_whenMultipleCalls_thenSortedAscending)
+{
+    // given
+    std::vector<int> expected = numbers;
+
+    std::sort(expected.begin(), expected.end());
+    // when
+    std::vector<int> result;
+
+    while(!test_object.empty())
+    {
+        result.push_back(test_object.front());
+        test_object.pop_front();
+    }
+    // then
+    EXPECT_EQ(expected, result);
+}
+
 TEST_F(DoubleHeapTest, popBack_whenEmpty_thenOutOfRange)
 {
     // given
@@ -203,6 +221,24 @@ TEST_F(DoubleHeapTest, popBack_whenMultipleElements_thenMaximalElementRemoved)
     test_object.pop_back();
     // then
     EXPECT_EQ(numbers.size() - 1, test_object.size());
+}
+
+TEST_F(DoubleHeapTest, popBack_whenMultipleCalls_thenSortedDescending)
+{
+    // given
+    std::vector<int> expected = numbers;
+
+    std::sort(expected.rbegin(), expected.rend());
+    // when
+    std::vector<int> result;
+
+    while(!test_object.empty())
+    {
+        result.push_back(test_object.back());
+        test_object.pop_back();
+    }
+    // then
+    EXPECT_EQ(expected, result);
 }
 
 TEST_F(DoubleHeapTest, clear_whenNotEmpty_thenEmpty)

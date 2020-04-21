@@ -183,7 +183,7 @@ namespace algolib
                 }
                 else if(left_index < heap.size())
                     step_to_front(index, left_index);
-                else
+                else if(index < heap.size())
                     step_to_front(index, index - 1);
             }
         }
