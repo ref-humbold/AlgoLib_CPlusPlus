@@ -41,21 +41,20 @@ namespace algolib
             using const_reference = const value_type &;
             using pointer = value_type *;
             using const_pointer = const value_type *;
-
             using iterator = avl_iterator;
             using const_iterator = avl_const_iterator;
             using reverse_iterator = std::reverse_iterator<avl_iterator>;
             using const_reverse_iterator = std::reverse_iterator<avl_const_iterator>;
-
             using difference_type = typename std::iterator_traits<iterator>::difference_type;
             using size_type = size_t;
 
-            explicit avl_tree(const Compare & cmp = Compare()) : cmp{cmp}
+            explicit avl_tree(const Compare & comparator = Compare()) : comparator{comparator}
             {
             }
 
-            explicit avl_tree(std::initializer_list<value_type> il, const Compare & cmp = Compare())
-                : cmp{cmp}
+            explicit avl_tree(std::initializer_list<value_type> il,
+                              const Compare & comparator = Compare())
+                : comparator{comparator}
             {
                 for(const auto & e : il)
                     insert(e);
@@ -67,12 +66,12 @@ namespace algolib
             }
 
             avl_tree(const avl_tree & avl)
-                : tree{new avl_header_node(*avl.tree)}, elems{avl.elems}, cmp{avl.cmp}
+                : tree{new avl_header_node(*avl.tree)}, elems{avl.elems}, comparator{avl.comparator}
             {
             }
 
             avl_tree(avl_tree && avl) noexcept
-                : elems{std::move(avl.elems)}, cmp{std::move(avl.cmp)}
+                : elems{std::move(avl.elems)}, comparator{std::move(avl.comparator)}
             {
                 std::swap(this->tree, avl.tree);
             }
@@ -151,14 +150,14 @@ namespace algolib
             }
 
             /*!
-             * \brief Checks whether specified value is present in the tree.
+             * \brief Checks whether specified value is present in this tree.
              * \param element value to check
              * \return iterator on the element if found, otherwise iterator at the end
              */
             iterator find(const_reference element);
 
             /*!
-             * \brief Checks whether specified value is present in the tree.
+             * \brief Checks whether specified value is present in this tree.
              * \param element value to check
              * \return iterator on the element if found, otherwise iterator at the end
              */
@@ -179,7 +178,7 @@ namespace algolib
              */
             size_type erase(const_reference element);
 
-            //! \brief Removes all elements in the tree.
+            //! \brief Removes all elements in this tree.
             void clear();
 
         private:
@@ -232,7 +231,7 @@ namespace algolib
 
             header_ptr tree = new avl_header_node();  // The tree denoted by its header
             size_type elems = 0;  // Number of elements
-            Compare cmp;  // Comparator
+            Compare comparator;  // Comparator
         };
 
         template <typename E, typename Compare>
@@ -241,7 +240,7 @@ namespace algolib
             header_ptr tree_orig = this->tree;
 
             this->elems = avl.elems;
-            this->cmp = avl.cmp;
+            this->comparator = avl.comparator;
             this->tree = new avl_header_node(*avl.tree);
             delete tree_orig;
 
@@ -253,7 +252,7 @@ namespace algolib
         {
             std::swap(this->tree, avl.tree);
             std::swap(this->elems, avl.elems);
-            std::swap(this->cmp, avl.cmp);
+            std::swap(this->comparator, avl.comparator);
 
             return *this;
         }
@@ -266,7 +265,7 @@ namespace algolib
 
             std::function<bool(inner_ptr, const_reference)> equal =
                     [this](inner_ptr n, const_reference e) -> bool {
-                return !cmp(n->element, e) && !cmp(e, n->element);
+                return !comparator(n->element, e) && !comparator(e, n->element);
             };
             node_ptr the_node = find_node(element, equal);
 
@@ -282,7 +281,7 @@ namespace algolib
 
             std::function<bool(inner_ptr, const_reference)> equal =
                     [this](inner_ptr n, const_reference e) -> bool {
-                return !cmp(n->element, e) && !cmp(e, n->element);
+                return !comparator(n->element, e) && !comparator(e, n->element);
             };
             node_ptr the_node = find_node(element, equal);
 
@@ -297,7 +296,8 @@ namespace algolib
                     [this](inner_ptr n, const_reference e) -> bool {
                 inner_ptr child = search(n, e);
 
-                return child == nullptr || (!cmp(child->element, e) && !cmp(e, child->element));
+                return child == nullptr
+                       || (!comparator(child->element, e) && !comparator(e, child->element));
             };
             inner_ptr node_parent = find_node(element, child_equal);
 
@@ -318,7 +318,7 @@ namespace algolib
 
             auto new_node = new avl_inner_node(element);
 
-            if(cmp(element, node_parent->element))
+            if(comparator(element, node_parent->element))
                 node_parent->set_left(new_node);
             else
                 node_parent->set_right(new_node);
@@ -335,7 +335,7 @@ namespace algolib
         {
             std::function<bool(inner_ptr, const_reference)> equal =
                     [this](inner_ptr n, const_reference e) -> bool {
-                return !cmp(n->element, e) && !cmp(e, n->element);
+                return !comparator(n->element, e) && !comparator(e, n->element);
             };
             inner_ptr the_node = find_node(element, equal);
 
@@ -359,9 +359,9 @@ namespace algolib
         typename avl_tree<E, Compare>::inner_ptr
                 avl_tree<E, Compare>::search(inner_ptr node, const_reference element) const
         {
-            return cmp(element, node->element)
+            return comparator(element, node->element)
                            ? node->get_left()
-                           : cmp(node->element, element) ? node->get_right() : node;
+                           : comparator(node->element, element) ? node->get_right() : node;
         }
 
         template <typename E, typename Compare>

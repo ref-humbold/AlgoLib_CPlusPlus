@@ -63,46 +63,46 @@ TEST_F(DoubleHeapTest, size_whenEmpty_thenZero)
     EXPECT_EQ(0, result);
 }
 
-TEST_F(DoubleHeapTest, front_whenEmpty_thenOutOfRange)
+TEST_F(DoubleHeapTest, min_whenEmpty_thenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
     // when - then
-    EXPECT_THROW(test_object.front(), std::out_of_range);
+    EXPECT_THROW(test_object.min(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, front_whenNotEmpty_thenMinimalElement)
+TEST_F(DoubleHeapTest, min_whenNotEmpty_thenMinimalElement)
 {
     // when
-    int result = test_object.front();
+    int result = test_object.min();
     // then
     EXPECT_EQ(minimum, result);
 }
 
-TEST_F(DoubleHeapTest, back_whenEmpty_thenOutOfRange)
+TEST_F(DoubleHeapTest, max_whenEmpty_thenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
     // then
-    EXPECT_THROW(test_object.back(), std::out_of_range);
+    EXPECT_THROW(test_object.max(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, back_whenSingleElement_thenThisElement)
+TEST_F(DoubleHeapTest, max_whenSingleElement_thenThisElement)
 {
     // given
     int element = 19;
 
     test_object = alst::double_heap<int>({element});
     // when
-    int result = test_object.back();
+    int result = test_object.max();
     // then
     EXPECT_EQ(element, result);
 }
 
-TEST_F(DoubleHeapTest, back_whenMultipleElements_thenMaximalElement)
+TEST_F(DoubleHeapTest, max_whenMultipleElements_thenMaximalElement)
 {
     // when
-    int result = test_object.back();
+    int result = test_object.max();
     // then
     EXPECT_EQ(maximum, result);
 }
@@ -117,11 +117,11 @@ TEST_F(DoubleHeapTest, push_whenEmpty_thenAdded)
     test_object.push(element);
     // then
     ASSERT_EQ(1, test_object.size());
-    EXPECT_EQ(element, test_object.front());
-    EXPECT_EQ(element, test_object.back());
+    EXPECT_EQ(element, test_object.min());
+    EXPECT_EQ(element, test_object.max());
 }
 
-TEST_F(DoubleHeapTest, push_whenNewElementIsLess_thenAddedToFront)
+TEST_F(DoubleHeapTest, push_whenNewElementIsLess_thenAddedTomin)
 {
     // given
     int element = minimum - 1;
@@ -129,10 +129,10 @@ TEST_F(DoubleHeapTest, push_whenNewElementIsLess_thenAddedToFront)
     test_object.push(element);
     // then
     ASSERT_EQ(numbers.size() + 1, test_object.size());
-    EXPECT_EQ(element, test_object.front());
+    EXPECT_EQ(element, test_object.min());
 }
 
-TEST_F(DoubleHeapTest, push_whenNewElementIsGreater_thenAddedToBack)
+TEST_F(DoubleHeapTest, push_whenNewElementIsGreater_thenAddedTomax)
 {
     // given
     int element = maximum + 1;
@@ -140,7 +140,7 @@ TEST_F(DoubleHeapTest, push_whenNewElementIsGreater_thenAddedToBack)
     test_object.push(element);
     // then
     ASSERT_EQ(numbers.size() + 1, test_object.size());
-    EXPECT_EQ(element, test_object.back());
+    EXPECT_EQ(element, test_object.max());
 }
 
 TEST_F(DoubleHeapTest, push_whenNewElement_thenAdded)
@@ -149,37 +149,37 @@ TEST_F(DoubleHeapTest, push_whenNewElement_thenAdded)
     test_object.push(46);
     // then
     ASSERT_EQ(numbers.size() + 1, test_object.size());
-    EXPECT_EQ(minimum, test_object.front());
-    EXPECT_EQ(maximum, test_object.back());
+    EXPECT_EQ(minimum, test_object.min());
+    EXPECT_EQ(maximum, test_object.max());
 }
 
-TEST_F(DoubleHeapTest, popFront_whenEmpty_thenOutOfRange)
+TEST_F(DoubleHeapTest, popMin_whenEmpty_thenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
     // when - then
-    EXPECT_THROW(test_object.pop_front(), std::out_of_range);
+    EXPECT_THROW(test_object.pop_min(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, popFront_whenNotEmpty_thenMinimalElementRemoved)
+TEST_F(DoubleHeapTest, popMin_whenNotEmpty_thenMinimalElementRemoved)
 {
     // when
-    test_object.pop_front();
+    test_object.pop_min();
     // then
     EXPECT_EQ(numbers.size() - 1, test_object.size());
 }
 
-TEST_F(DoubleHeapTest, popFront_whenSingleElement_thenThisElementRemoved)
+TEST_F(DoubleHeapTest, popMin_whenSingleElement_thenThisElementRemoved)
 {
     // given
     test_object = alst::double_heap<int>({19});
     // when
-    test_object.pop_front();
+    test_object.pop_min();
     // then
     EXPECT_EQ(0, test_object.size());
 }
 
-TEST_F(DoubleHeapTest, popFront_whenMultipleCalls_thenSortedAscending)
+TEST_F(DoubleHeapTest, popMin_whenMultipleCalls_thenSortedAscending)
 {
     // given
     std::vector<int> expected = numbers;
@@ -190,40 +190,40 @@ TEST_F(DoubleHeapTest, popFront_whenMultipleCalls_thenSortedAscending)
 
     while(!test_object.empty())
     {
-        result.push_back(test_object.front());
-        test_object.pop_front();
+        result.push_back(test_object.min());
+        test_object.pop_min();
     }
     // then
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(DoubleHeapTest, popBack_whenEmpty_thenOutOfRange)
+TEST_F(DoubleHeapTest, popMax_whenEmpty_thenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
     // when - then
-    EXPECT_THROW(test_object.pop_back(), std::out_of_range);
+    EXPECT_THROW(test_object.pop_max(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, popBack_whenSingleElement_thenThisElementRemoved)
+TEST_F(DoubleHeapTest, popMax_whenSingleElement_thenThisElementRemoved)
 {
     // given
     test_object = alst::double_heap<int>({19});
     // when
-    test_object.pop_back();
+    test_object.pop_max();
     // then
     EXPECT_EQ(0, test_object.size());
 }
 
-TEST_F(DoubleHeapTest, popBack_whenMultipleElements_thenMaximalElementRemoved)
+TEST_F(DoubleHeapTest, popMax_whenMultipleElements_thenMaximalElementRemoved)
 {
     // when
-    test_object.pop_back();
+    test_object.pop_max();
     // then
     EXPECT_EQ(numbers.size() - 1, test_object.size());
 }
 
-TEST_F(DoubleHeapTest, popBack_whenMultipleCalls_thenSortedDescending)
+TEST_F(DoubleHeapTest, popMax_whenMultipleCalls_thenSortedDescending)
 {
     // given
     std::vector<int> expected = numbers;
@@ -234,8 +234,8 @@ TEST_F(DoubleHeapTest, popBack_whenMultipleCalls_thenSortedDescending)
 
     while(!test_object.empty())
     {
-        result.push_back(test_object.back());
-        test_object.pop_back();
+        result.push_back(test_object.max());
+        test_object.pop_max();
     }
     // then
     EXPECT_EQ(expected, result);
