@@ -118,9 +118,9 @@ namespace algolib
 
                 if(index % 2 == 1)
                 {
-                    if(compare(heap[index], heap[index - 1]))
+                    if(compare(*(heap.begin() + index), *(heap.begin() + index - 1)))
                     {
-                        std::swap(heap[index], heap[index - 1]);
+                        std::swap(*(heap.begin() + index), *(heap.begin() + index - 1));
                         move_to_min(index - 1);
                     }
                     else
@@ -130,9 +130,9 @@ namespace algolib
                 {
                     size_type new_index = ((index + 1) / 2 - 1) / 2 * 2 + 1;
 
-                    if(compare(heap[new_index], heap[index]))
+                    if(compare(*(heap.begin() + new_index), *(heap.begin() + index)))
                     {
-                        std::swap(heap[index], heap[new_index]);
+                        std::swap(*(heap.begin() + index), *(heap.begin() + new_index));
                         move_to_max(new_index);
                     }
                     else
@@ -147,7 +147,7 @@ namespace algolib
             if(heap.empty())
                 throw std::out_of_range("Double heap is empty");
 
-            heap[INDEX_MIN] = heap.back();
+            *(heap.begin() + INDEX_MIN) = heap.back();
             heap.pop_back();
             move_to_max(INDEX_MIN);
         }
@@ -158,7 +158,7 @@ namespace algolib
             if(heap.size() <= 1)
                 return pop_min();
 
-            heap[INDEX_MAX] = heap.back();
+            *(heap.begin() + INDEX_MAX) = heap.back();
             heap.pop_back();
             move_to_min(INDEX_MAX);
         }
@@ -179,7 +179,9 @@ namespace algolib
                 if(right_index < heap.size())
                 {
                     size_type child_index =
-                            compare(heap[right_index], heap[left_index]) ? left_index : right_index;
+                            compare(*(heap.begin() + right_index), *(heap.begin() + left_index))
+                                    ? left_index
+                                    : right_index;
 
                     step_to_min(index, child_index);
                 }
@@ -206,7 +208,9 @@ namespace algolib
                 if(right_index < heap.size())
                 {
                     size_type child_index =
-                            compare(heap[left_index], heap[right_index]) ? left_index : right_index;
+                            compare(*(heap.begin() + left_index), *(heap.begin() + right_index))
+                                    ? left_index
+                                    : right_index;
 
                     step_to_max(index, child_index);
                 }
@@ -220,9 +224,9 @@ namespace algolib
         template <typename E, typename Container, typename Compare>
         void double_heap<E, Container, Compare>::step_to_min(size_type index, size_type next_index)
         {
-            if(compare(heap[index], heap[next_index]))
+            if(compare(*(heap.begin() + index), *(heap.begin() + next_index)))
             {
-                std::swap(heap[index], heap[next_index]);
+                std::swap(*(heap.begin() + index), *(heap.begin() + next_index));
                 move_to_min(next_index);
             }
         }
@@ -230,9 +234,9 @@ namespace algolib
         template <typename E, typename Container, typename Compare>
         void double_heap<E, Container, Compare>::step_to_max(size_type index, size_type next_index)
         {
-            if(compare(heap[next_index], heap[index]))
+            if(compare(*(heap.begin() + next_index), *(heap.begin() + index)))
             {
-                std::swap(heap[index], heap[next_index]);
+                std::swap(*(heap.begin() + index), *(heap.begin() + next_index));
                 move_to_max(next_index);
             }
         }
