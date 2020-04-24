@@ -1,6 +1,6 @@
 /*!
  * \file avl_tree_test.cpp
- * \brief TEST: AVL tree
+ * \brief Tests: Structure of AVL tree
  */
 #include <gtest/gtest.h>
 #include "algolib/structures/avl_tree.hpp"
@@ -103,18 +103,37 @@ TEST_F(AVLTreeTest, copyAssignment_whenSelfAssignment_thenObjectUnchanged)
 
 TEST_F(AVLTreeTest, empty_whenNotEmpty_thenFalse)
 {
+    // when
     bool result = test_object.empty();
-
+    // then
     EXPECT_FALSE(result);
 }
 
 TEST_F(AVLTreeTest, empty_whenEmpty_thenTrue)
 {
     test_object = alst::avl_tree<int>();
-
+    // when
     bool result = test_object.empty();
-
+    // then
     EXPECT_TRUE(result);
+}
+
+TEST_F(AVLTreeTest, size_whenNotEmpty_thenNumberOfElements)
+{
+    // when
+    size_t result = test_object.size();
+    // then
+    EXPECT_EQ(numbers.size(), result);
+}
+
+TEST_F(AVLTreeTest, size_whenEmpty_thenZero)
+{
+    // given
+    test_object = alst::avl_tree<int>();
+    // when
+    size_t result = test_object.size();
+    // then
+    EXPECT_EQ(0, result);
 }
 
 TEST_F(AVLTreeTest, find_whenPresentElement_thenIteratorNotEnd)

@@ -44,7 +44,8 @@ set(SEQUENCES_SOURCES
     "${SEQUENCES}/subsequences.cpp")
 set(STRUCTURES_SOURCES
     "${STRUCTURES}/avl_tree.cpp"
-    "${STRUCTURES}/disjoint_sets.cpp")
+    "${STRUCTURES}/disjoint_sets.cpp"
+    "${STRUCTURES}/double_heap.cpp")
 set(TEXT_SOURCES
     "${TEXT}/kmp.cpp"
     "${TEXT}/kmr.cpp"
