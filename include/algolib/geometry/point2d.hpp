@@ -50,16 +50,21 @@ namespace algolib
                 return yCoord;
             }
 
-            double angle() const
+            double angle_rad() const
             {
-                double ang = atan2(yCoord, xCoord) * 180.0 / M_PI;
+                return atan2(yCoord, xCoord);
+            }
+
+            double angle_deg() const
+            {
+                double ang = angle_rad() * 180.0 / M_PI;
 
                 return yCoord >= 0.0 ? ang : ang + 360.0;
             }
 
             double radius() const
             {
-                return xCoord * xCoord + yCoord * yCoord;
+                return sqrt(xCoord * xCoord + yCoord * yCoord);
             }
 
             friend bool operator==(const point2d & p1, const point2d & p2);
@@ -76,8 +81,6 @@ namespace algolib
         private:
             double xCoord, yCoord;
         };
-
-        point2d p2d(double x, double y);
 
         bool operator==(const point2d & p1, const point2d & p2);
         bool operator!=(const point2d & p1, const point2d & p2);

@@ -6,11 +6,6 @@
 
 namespace alge = algolib::geometry;
 
-alge::point2d alge::p2d(double x, double y)
-{
-    return alge::point2d(x, y);
-}
-
 bool alge::operator==(const alge::point2d & p1, const alge::point2d & p2)
 {
     return p1.xCoord == p2.xCoord && p1.yCoord == p2.yCoord;
