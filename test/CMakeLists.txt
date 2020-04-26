@@ -32,9 +32,6 @@ set(SOURCES
     "tree_graph_test.cpp"
     "undirected_graph_test.cpp")
 
-# TESTS
-include(CTest)
-
 # OUTPUT
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${EXE_OUTPUT_DIR}/test")
 foreach(testsource ${SOURCES})

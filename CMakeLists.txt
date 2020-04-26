@@ -30,5 +30,6 @@ endif()
 add_subdirectory("${SRC_DIR}")
 
 if(GTEST_FOUND)
+    include(CTest)
     add_subdirectory("${TEST_DIR}")
 endif()
