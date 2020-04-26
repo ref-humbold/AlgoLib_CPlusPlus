@@ -4,6 +4,9 @@ bin/
 build/
 dist/
 
+# Doxygen output
+docs/
+
 # CLion
 .idea
 cmake-build-debug/
