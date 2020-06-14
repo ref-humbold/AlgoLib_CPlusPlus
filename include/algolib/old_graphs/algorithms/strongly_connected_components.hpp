@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <set>
 #include <vector>
-#include "algolib/graphs/directed_graph.hpp"
+#include "algolib/old_graphs/directed_graph.hpp"
 
 namespace impl
 {

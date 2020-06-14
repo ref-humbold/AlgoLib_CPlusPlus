@@ -1,9 +1,9 @@
 //! Tests: Graph searching algorithms
 #include <vector>
 #include <gtest/gtest.h>
-#include "algolib/graphs/algorithms/searching.hpp"
-#include "algolib/graphs/algorithms/searching_strategy.hpp"
-#include "algolib/graphs/directed_graph.hpp"
+#include "algolib/old_graphs/algorithms/searching.hpp"
+#include "algolib/old_graphs/algorithms/searching_strategy.hpp"
+#include "algolib/old_graphs/directed_graph.hpp"
 
 namespace algr = algolib::graphs;
 

@@ -7,7 +7,7 @@
 
 #include <cstdlib>
 #include <initializer_list>
-#include "algolib/graphs/graph.hpp"
+#include "algolib/old_graphs/graph.hpp"
 #include "searching_strategy.hpp"
 
 namespace algolib

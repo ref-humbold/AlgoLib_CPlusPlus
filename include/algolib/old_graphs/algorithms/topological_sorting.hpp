@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include "algolib/graphs/directed_graph.hpp"
+#include "algolib/old_graphs/directed_graph.hpp"
 
 namespace algolib
 {

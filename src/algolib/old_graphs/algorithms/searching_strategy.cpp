@@ -2,7 +2,7 @@
  * \file searching_strategy.cpp
  * \brief
  */
-#include "algolib/graphs/algorithms/searching_strategy.hpp"
+#include "algolib/old_graphs/algorithms/searching_strategy.hpp"
 
 namespace algr = algolib::graphs;
 

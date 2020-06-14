@@ -1,6 +1,6 @@
 //! Tests: Tree graph structure
 #include <gtest/gtest.h>
-#include "algolib/graphs/tree_graph.hpp"
+#include "algolib/old_graphs/tree_graph.hpp"
 
 namespace algr = algolib::graphs;
 

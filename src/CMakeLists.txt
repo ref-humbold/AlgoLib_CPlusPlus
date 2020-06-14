@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 #SOURCES
 set(ALGOLIB "algolib")
 set(GEOMETRY "${ALGOLIB}/geometry")
-set(GRAPHS "${ALGOLIB}/graphs")
+set(GRAPHS "${ALGOLIB}/old_graphs")
 set(GRAPHS_ALGORITHMS "${GRAPHS}/algorithms")
 set(MATHMAT "${ALGOLIB}/mathmat")
 set(SEQUENCES "${ALGOLIB}/sequences")

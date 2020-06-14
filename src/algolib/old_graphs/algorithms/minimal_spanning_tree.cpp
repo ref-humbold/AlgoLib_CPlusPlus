@@ -1,5 +1,5 @@
 //! ALGORYTMY WYZNACZAJĄCE MINIMALNE DRZEWO SPINAJĄCE
-#include "algolib/graphs/algorithms/minimal_spanning_tree.hpp"
+#include "algolib/old_graphs/algorithms/minimal_spanning_tree.hpp"
 
 namespace algr = algolib::graphs;
 namespace alst = algolib::structures;

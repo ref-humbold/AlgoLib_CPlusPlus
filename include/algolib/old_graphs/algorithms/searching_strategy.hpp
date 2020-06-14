@@ -5,7 +5,7 @@
 #ifndef SEARCHING_STRATEGY_HPP_
 #define SEARCHING_STRATEGY_HPP_
 
-#include "algolib/graphs/graph.hpp"
+#include "algolib/old_graphs/graph.hpp"
 
 namespace algolib
 {

@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <vector>
-#include "algolib/graphs/undirected_graph.hpp"
+#include "algolib/old_graphs/undirected_graph.hpp"
 
 namespace impl
 {

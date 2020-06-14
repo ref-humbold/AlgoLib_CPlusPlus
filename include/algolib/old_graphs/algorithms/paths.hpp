@@ -12,7 +12,7 @@
 #include <queue>
 #include <tuple>
 #include <vector>
-#include "algolib/graphs/directed_graph.hpp"
+#include "algolib/old_graphs/directed_graph.hpp"
 
 namespace algolib
 {
