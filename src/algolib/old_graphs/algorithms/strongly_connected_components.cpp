@@ -6,7 +6,7 @@
 
 namespace algr = algolib::graphs;
 
-impl::graph_components::graph_components(algr::directed_graph & digr) : digraph{digr}
+internal::graph_components::graph_components(algr::directed_graph & digr) : digraph{digr}
 {
     for(vertex_t v : this->digraph.get_vertices())
     {
@@ -15,7 +15,7 @@ impl::graph_components::graph_components(algr::directed_graph & digr) : digraph{
     }
 }
 
-std::vector<int> impl::graph_components::find_scc()
+std::vector<int> internal::graph_components::find_scc()
 {
     int timer = 0, component = 0;
 
@@ -39,7 +39,7 @@ std::vector<int> impl::graph_components::find_scc()
     return components;
 }
 
-int impl::graph_components::dfs_order(vertex_t vertex, int timer)
+int internal::graph_components::dfs_order(vertex_t vertex, int timer)
 {
     postorder[vertex].first = 0;
     ++timer;
@@ -53,7 +53,7 @@ int impl::graph_components::dfs_order(vertex_t vertex, int timer)
     return timer + 1;
 }
 
-void impl::graph_components::dfs_scc(vertex_t vertex, int component)
+void internal::graph_components::dfs_scc(vertex_t vertex, int component)
 {
     components[vertex] = component;
 
@@ -64,7 +64,7 @@ void impl::graph_components::dfs_scc(vertex_t vertex, int component)
 
 std::vector<std::set<vertex_t>> algr::find_scc(directed_graph & digraph)
 {
-    impl::graph_components gc(digraph);
+    internal::graph_components gc(digraph);
 
     std::vector<int> comps = gc.find_scc();
     std::vector<std::set<vertex_t>> components(*std::max_element(comps.begin(), comps.end()) + 1,

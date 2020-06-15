@@ -3,7 +3,7 @@
 
 namespace algr = algolib::graph;
 
-std::vector<edge_t> impl::graph_cutting::edge_cut()
+std::vector<edge_t> internal::graph_cutting::edge_cut()
 {
     std::vector<edge_t> bridges;
 
@@ -18,7 +18,7 @@ std::vector<edge_t> impl::graph_cutting::edge_cut()
     return bridges;
 }
 
-std::vector<vertex_t> impl::graph_cutting::vertex_cut()
+std::vector<vertex_t> internal::graph_cutting::vertex_cut()
 {
     std::vector<vertex_t> separators;
 
@@ -33,12 +33,12 @@ std::vector<vertex_t> impl::graph_cutting::vertex_cut()
     return separators;
 }
 
-bool impl::graph_cutting::has_bridge(vertex_t vertex)
+bool internal::graph_cutting::has_bridge(vertex_t vertex)
 {
     return low_values[vertex] == dfs_depths[vertex] && !is_dfs_root(vertex);
 }
 
-bool impl::graph_cutting::is_separator(vertex_t vertex)
+bool internal::graph_cutting::is_separator(vertex_t vertex)
 {
     return is_dfs_root(vertex)
                    ? dfs_children[vertex].size() > 1
@@ -46,7 +46,7 @@ bool impl::graph_cutting::is_separator(vertex_t vertex)
                                  [&](vertex_t ch) { return low_values[ch] >= dfs_depths[vertex]; });
 }
 
-void impl::graph_cutting::dfs(vertex_t vertex, vertex_t parent, int depth)
+void internal::graph_cutting::dfs(vertex_t vertex, vertex_t parent, int depth)
 {
     dfs_parents[vertex] = parent;
     dfs_depths[vertex] = depth;

@@ -3,9 +3,9 @@
 
 namespace algr = algolib::graphs;
 
-constexpr int impl::lca_finder::NO_TIME;
+constexpr int internal::lca_finder::NO_TIME;
 
-int impl::lca_finder::search_lca(int vertex1, int vertex2, int root)
+int internal::lca_finder::search_lca(int vertex1, int vertex2, int root)
 {
     dfs(root, root, 0);
 
@@ -17,7 +17,7 @@ int impl::lca_finder::search_lca(int vertex1, int vertex2, int root)
     return search(vertex1, vertex2);
 }
 
-int impl::lca_finder::search(int vertex1, int vertex2)
+int internal::lca_finder::search(int vertex1, int vertex2)
 {
     if(is_offspring(vertex1, vertex2))
         return vertex2;
@@ -36,7 +36,7 @@ int impl::lca_finder::search(int vertex1, int vertex2)
     return search(paths[vertex1][0], vertex2);
 }
 
-int impl::lca_finder::dfs(int vertex, int parent, int timer)
+int internal::lca_finder::dfs(int vertex, int parent, int timer)
 {
     pre_post_times[vertex].first = timer;
     paths[vertex].push_back(parent);
@@ -53,7 +53,7 @@ int impl::lca_finder::dfs(int vertex, int parent, int timer)
 
 int algr::find_lca(const tree_graph & treegraph, int vertex1, int vertex2, int root)
 {
-    impl::lca_finder finder(treegraph);
+    internal::lca_finder finder(treegraph);
 
     return finder.search_lca(vertex1, vertex2, root);
 }

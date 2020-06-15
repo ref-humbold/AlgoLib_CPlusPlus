@@ -12,7 +12,7 @@
 #include <vector>
 #include "algolib/old_graphs/multipartite_graph.hpp"
 
-namespace impl
+namespace internal
 {
     class match_augmenter
     {

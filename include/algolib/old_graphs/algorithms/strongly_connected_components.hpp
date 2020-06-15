@@ -11,7 +11,7 @@
 #include <vector>
 #include "algolib/old_graphs/directed_graph.hpp"
 
-namespace impl
+namespace internal
 {
     class graph_components
     {

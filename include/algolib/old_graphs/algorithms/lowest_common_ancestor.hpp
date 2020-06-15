@@ -10,7 +10,7 @@
 #include <vector>
 #include "algolib/old_graphs/tree_graph.hpp"
 
-namespace impl
+namespace internal
 {
     class lca_finder
     {

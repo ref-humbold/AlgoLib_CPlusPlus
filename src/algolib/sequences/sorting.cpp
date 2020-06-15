@@ -4,7 +4,7 @@
  */
 #include "algolib/sequences/sorting.hpp"
 
-int impl::choose_pivot(int size)
+int internal::choose_pivot(int size)
 {
     srand(time(nullptr));
 
@@ -21,7 +21,7 @@ int impl::choose_pivot(int size)
     return candidate3;
 }
 
-void impl::validate_indices(int size, int index_begin, int index_end)
+void internal::validate_indices(int size, int index_begin, int index_end)
 {
     if(index_begin < 0 || index_end > size)
         throw std::out_of_range("Sequence beginning index out of range");
