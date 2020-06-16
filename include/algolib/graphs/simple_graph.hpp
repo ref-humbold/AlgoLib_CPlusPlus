@@ -241,7 +241,7 @@ namespace algolib
                                  [&](const auto & e) { return e.get_neighbour(source); });
 
             if(pos == adjacent.end())
-                throw std::out_of_range();
+                throw std::out_of_range("No edge between the vertices");
 
             return *pos;
         }
