@@ -155,7 +155,7 @@ namespace internal
     void graph_representation<Vertex, VertexProperty, EdgeProperty>::validate(const Vertex & vertex)
     {
         if(graph_map.find(vertex) == graph_map.end())
-            throw std::invalid_argument();
+            throw std::invalid_argument("Vertex does not belong to the graph");
     }
 
     template <typename Vertex, typename VertexProperty, typename EdgeProperty>
@@ -164,11 +164,11 @@ namespace internal
     {
         if(graph_map.find(edge.source()) == graph_map.end()
            || graph_map.find(edge.destination()) == graph_map.end())
-            throw std::invalid_argument();
+            throw std::invalid_argument("Edge does not belong to the graph");
 
         if(existing && graph_map.at(edge.source()).find(edge) == graph_map.at(edge.source()).end()
            && graph_map.at(edge.destination()).find(edge) == graph_map.at(edge.destination()).end())
-            throw std::invalid_argument();
+            throw std::invalid_argument("Edge does not belong to the graph");
     }
 }
 

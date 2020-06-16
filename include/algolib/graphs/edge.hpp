@@ -70,7 +70,7 @@ namespace algolib
                 if(destination_ == vertex)
                     return source_;
 
-                throw std::invalid_argument();
+                throw std::invalid_argument("Edge is not adjacent to the vertex");
             }
 
             edge<Vertex> reversed() const

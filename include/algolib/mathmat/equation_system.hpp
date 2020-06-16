@@ -17,30 +17,18 @@ namespace algolib
 {
     namespace mathmat
     {
-        class infinite_solutions_exception : public std::runtime_error
+        class infinite_solutions_error : public std::runtime_error
         {
         public:
-            explicit infinite_solutions_exception(const std::string & what_arg)
-                : std::runtime_error(what_arg)
-            {
-            }
-
-            explicit infinite_solutions_exception(const char * what_arg = "")
-                : std::runtime_error(what_arg)
+            explicit infinite_solutions_error(const char * what_arg) : std::runtime_error(what_arg)
             {
             }
         };
 
-        class no_solution_exception : public std::runtime_error
+        class no_solution_error : public std::runtime_error
         {
         public:
-            explicit no_solution_exception(const std::string & what_arg)
-                : std::runtime_error(what_arg)
-            {
-            }
-
-            explicit no_solution_exception(const char * what_arg = "")
-                : std::runtime_error(what_arg)
+            explicit no_solution_error(const char * what_arg) : std::runtime_error(what_arg)
             {
             }
         };
@@ -75,8 +63,8 @@ namespace algolib
             /**!
              * \brief Computes the solution of this equation system
              * \return solution vector
-             * \throw infinite_solutions_exception
-             * \throw no_solution_exception
+             * \throw infinite_solutions_error
+             * \throw no_solution_error
              */
             std::array<double, N> solve();
 
@@ -121,10 +109,11 @@ namespace algolib
             gaussian_reduce();
 
             if(equations[N - 1][N - 1] == 0 && equations[N - 1].free == 0)
-                throw infinite_solutions_exception("");
+                throw infinite_solutions_error(
+                        "Equation system has an infinite number of solutions");
 
             if(equations[N - 1][N - 1] == 0 && equations[N - 1].free != 0)
-                throw no_solution_exception("");
+                throw no_solution_error("Equation system has no solution");
 
             std::array<double, N> solution;
 

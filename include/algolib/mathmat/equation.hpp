@@ -82,7 +82,7 @@ namespace algolib
         equation<N> & equation<N>::operator*=(double constant)
         {
             if(constant == 0)
-                throw std::domain_error("Constant cannot be zero");
+                throw std::domain_error("Constant cannot be equal to zero");
 
             for(size_t i = 0; i < N; ++i)
                 coefficients[i] *= constant;
@@ -95,7 +95,7 @@ namespace algolib
         void equation<N>::combine(const equation<N> & equation, double constant)
         {
             if(constant == 0)
-                throw std::domain_error("Constant cannot be zero");
+                throw std::domain_error("Constant cannot be equal to zero");
 
             for(size_t i = 0; i < N; ++i)
                 coefficients[i] += equation[i] * constant;
