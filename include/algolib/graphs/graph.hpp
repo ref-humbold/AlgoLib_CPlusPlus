@@ -36,28 +36,37 @@ namespace algolib
             virtual std::vector<edge<Vertex>> edges() const = 0;
 
             /*!
+             * \param source source vertex
+             * \param destination destination vertex
+             * \return the edge between the vertices
+             * \throw out_of_range if no edge
+             */
+            virtual edge<Vertex> get_edge(const Vertex & source,
+                                          const Vertex & destination) const = 0;
+
+            /*!
              * \param vertex a vertex from this graph
              * \return vector of neighbouring vertices
              */
-            virtual std::vector<Vertex> neighbours(Vertex vertex) const = 0;
+            virtual std::vector<Vertex> neighbours(const Vertex & vertex) const = 0;
 
             /*!
              * \param vertex a vertex from this graph
              * \return vector of edges adjacent to given vertex
              */
-            virtual std::vector<edge<Vertex>> adjacent_edges(Vertex vertex) const = 0;
+            virtual std::vector<edge<Vertex>> adjacent_edges(const Vertex & vertex) const = 0;
 
             /*!
              * \param vertex a vertex from this graph
              * \return the output degree of given vertex
              */
-            virtual size_t output_degree(Vertex vertex) const = 0;
+            virtual size_t output_degree(const Vertex & vertex) const = 0;
 
             /*!
              * \param vertex a vertex from this graph
              * \return the input degree of given vertex
              */
-            virtual size_t input_degree(Vertex vertex) const = 0;
+            virtual size_t input_degree(const Vertex & vertex) const = 0;
         };
     }
 }
