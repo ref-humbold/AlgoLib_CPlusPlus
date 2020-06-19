@@ -18,8 +18,8 @@ namespace algolib
 {
     namespace graphs
     {
-        template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
-        struct directed_graph : public graph<V, VP, EP>
+        template <typename V, typename VP, typename EP>
+        struct directed_graph : public virtual graph<V, VP, EP>
         {
             //! Reverses directions of edges in this graph.
             virtual void reverse() = 0;
@@ -33,7 +33,12 @@ namespace algolib
                                       public virtual directed_graph<V, VP, EP>
         {
         public:
-            explicit directed_simple_graph(std::vector<V> vertices = {})
+            using vertex_type = typename simple_graph<V, VP, EP>::vertex_type;
+            using edge_type = typename simple_graph<V, VP, EP>::edge_type;
+            using vertex_property_type = typename simple_graph<V, VP, EP>::vertex_property_type;
+            using edge_property_type = typename simple_graph<V, VP, EP>::edge_property_type;
+
+            explicit directed_simple_graph(const std::vector<vertex_type> & vertices = {})
                 : simple_graph<V, VP, EP>(vertices)
             {
             }
@@ -46,45 +51,48 @@ namespace algolib
 
             size_t edges_count() const override
             {
-                std::vector<std::unordered_set<edge<V>>> edges = this->representation.edges_set();
+                std::vector<std::unordered_set<edge_type>> edges = this->representation.edges_set();
 
                 return std::accumulate(edges.begin(), edges.end(), 0,
-                                       [](size_t acc, std::unordered_set<edge<V>> edges) {
+                                       [](size_t acc, std::unordered_set<edge_type> edges) {
                                            return acc + edges.size();
                                        });
             }
 
-            std::vector<edge<V>> edges() const override
+            std::vector<edge_type> edges() const override
             {
                 return this->representation.edges();
             }
 
-            size_t output_degree(const V & vertex) const override
+            size_t output_degree(const vertex_type & vertex) const override
             {
                 return this->representation.adjacent_edges(vertex).size();
             }
 
-            size_t input_degree(const V & vertex) const override;
-            edge<V> add_edge(const edge<V> & edge) override;
-            edge<V> add_edge(const edge<V> & edge, const EP & property) override;
+            size_t input_degree(const vertex_type & vertex) const override;
+            edge_type add_edge(const edge_type & edge) override;
+            edge_type add_edge(const edge_type & edge,
+                               const edge_property_type & property) override;
             void reverse() override;
             directed_graph<V, VP, EP> * reversed_copy() override;
         };
 
         template <typename V, typename VP, typename EP>
-        size_t directed_simple_graph<V, VP, EP>::input_degree(const V & vertex) const
+        size_t directed_simple_graph<V, VP, EP>::input_degree(const vertex_type & vertex) const
         {
             size_t degree = 0;
 
             for(const auto & edges : this->representation.edges_set())
                 degree += std::count_if(edges.begin(), edges.end(),
-                                        [&](edge<V> edge) { return edge.destination == vertex; });
+                                        [&](edge_type edge) { return edge.destination == vertex; });
 
             return degree;
         }
 
         template <typename V, typename VP, typename EP>
-        edge<V> directed_simple_graph<V, VP, EP>::add_edge(const edge<V> & edge)
+        typename directed_simple_graph<V, VP, EP>::edge_type
+                directed_simple_graph<V, VP, EP>::add_edge(
+                        const typename directed_simple_graph<V, VP, EP>::edge_type & edge)
         try
         {
             return get_edge(edge.source(), edge.destination());
@@ -96,8 +104,11 @@ namespace algolib
         }
 
         template <typename V, typename VP, typename EP>
-        edge<V> directed_simple_graph<V, VP, EP>::add_edge(const edge<V> & edge,
-                                                           const EP & property)
+        typename directed_simple_graph<V, VP, EP>::edge_type
+                directed_simple_graph<V, VP, EP>::add_edge(
+                        const typename directed_simple_graph<V, VP, EP>::edge_type & edge,
+                        const typename directed_simple_graph<V, VP, EP>::edge_property_type &
+                                property)
         try
         {
             return get_edge(edge.source(), edge.destination());
@@ -115,12 +126,12 @@ namespace algolib
             typename directed_simple_graph<V, VP, EP>::repr new_representation =
                     graph_representation(this->vertices());
 
-            for(const V & vertex : this->vertices())
+            for(const vertex_type & vertex : this->vertices())
                 new_representation[vertex] = this->representation[vertex];
 
-            for(const edge<V> & e : edges())
+            for(const edge_type & e : edges())
             {
-                edge<V> new_edge = e.reversed();
+                edge_type new_edge = e.reversed();
                 new_representation.add_edge_to_source(new_edge);
                 new_representation[new_edge] = this->representation[e];
             }

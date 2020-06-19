@@ -14,7 +14,7 @@ namespace algolib
 {
     namespace graphs
     {
-        template <typename V = size_t>
+        template <typename V>
         class edge;
 
         template <typename V>
