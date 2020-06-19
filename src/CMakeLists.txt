@@ -18,6 +18,7 @@ set(GEOMETRY_SOURCES
     "${GEOMETRY}/point2d.cpp"
     "${GEOMETRY}/points_sorting.cpp")
 set(GRAPHS_SOURCES
+    "${GRAPHS}/directed_graph.cpp"
     "${GRAPHS}/edge.cpp"
     "${GRAPHS}/graph.cpp"
     "${GRAPHS}/simple_graph.cpp")

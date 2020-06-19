@@ -9,7 +9,6 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-#include <initializer_list>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -20,15 +19,14 @@ namespace internal
 {
     namespace algr = algolib::graphs;
 
-    template <typename Vertex = size_t, typename VertexProperty = algr::none,
-              typename EdgeProperty = algr::none>
+    template <typename V = size_t, typename VP = algr::no_prop, typename EP = algr::no_prop>
     class graph_representation
     {
     public:
-        explicit graph_representation(const std::vector<Vertex> & vertices = {})
+        explicit graph_representation(const std::vector<V> & vertices = {})
         {
-            for(const Vertex & vertex : vertices)
-                graph_map.emplace(vertex, std::unordered_set<algr::edge<Vertex>>());
+            for(const V & vertex : vertices)
+                graph_map.emplace(vertex, std::unordered_set<algr::edge<V>>());
         }
 
         ~graph_representation() = default;
@@ -37,13 +35,13 @@ namespace internal
         graph_representation & operator=(const graph_representation &) = default;
         graph_representation & operator=(graph_representation &&) = default;
 
-        VertexProperty & operator[](const Vertex & vertex)
+        VP & operator[](const V & vertex)
         {
             validate(vertex);
             return vertex_properties[vertex];
         }
 
-        EdgeProperty & operator[](const algr::edge<Vertex> & edge)
+        EP & operator[](const algr::edge<V> & edge)
         {
             validate(edge, true);
             return edge_properties[edge];
@@ -54,27 +52,27 @@ namespace internal
             return graph_map.size();
         }
 
-        std::vector<Vertex> vertices();
-        std::vector<algr::edge<Vertex>> edges();
-        std::vector<std::unordered_set<algr::edge<Vertex>>> edges_set();
-        std::vector<algr::edge<Vertex>> adjacent_edges(const Vertex & vertex);
-        bool add_vertex(const Vertex & vertex);
-        void add_edge_to_source(const algr::edge<Vertex> & edge);
-        void add_edge_to_destination(const algr::edge<Vertex> & edge);
+        std::vector<V> vertices();
+        std::vector<algr::edge<V>> edges();
+        std::vector<std::unordered_set<algr::edge<V>>> edges_set();
+        std::vector<algr::edge<V>> adjacent_edges(const V & vertex);
+        bool add_vertex(const V & vertex);
+        void add_edge_to_source(const algr::edge<V> & edge);
+        void add_edge_to_destination(const algr::edge<V> & edge);
 
     private:
-        void validate(const Vertex & vertex);
-        void validate(const algr::edge<Vertex> & edge, bool existing);
+        void validate(const V & vertex);
+        void validate(const algr::edge<V> & edge, bool existing);
 
-        std::unordered_map<Vertex, std::unordered_set<algr::edge<Vertex>>> graph_map;
-        std::unordered_map<Vertex, VertexProperty> vertex_properties;
-        std::unordered_map<algr::edge<Vertex>, EdgeProperty> edge_properties;
+        std::unordered_map<V, std::unordered_set<algr::edge<V>>> graph_map;
+        std::unordered_map<V, VP> vertex_properties;
+        std::unordered_map<algr::edge<V>, EP> edge_properties;
     };
 
-    template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-    std::vector<Vertex> graph_representation<Vertex, VertexProperty, EdgeProperty>::vertices()
+    template <typename V, typename VP, typename EP>
+    std::vector<V> graph_representation<V, VP, EP>::vertices()
     {
-        std::vector<Vertex> v;
+        std::vector<V> v;
 
         for(auto it = graph_map.cbegin(); it != graph_map.cend(); ++it)
             v.push_back(it->first);
@@ -82,11 +80,10 @@ namespace internal
         return v;
     }
 
-    template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-    std::vector<algr::edge<Vertex>>
-            graph_representation<Vertex, VertexProperty, EdgeProperty>::edges()
+    template <typename V, typename VP, typename EP>
+    std::vector<algr::edge<V>> graph_representation<V, VP, EP>::edges()
     {
-        std::vector<algr::edge<Vertex>> v;
+        std::vector<algr::edge<V>> v;
 
         for(auto it = graph_map.cbegin(); it != graph_map.cend(); ++it)
             for(auto eit = it->second.cbegin(); eit != it->second.cend(); ++eit)
@@ -95,11 +92,10 @@ namespace internal
         return v;
     }
 
-    template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-    std::vector<std::unordered_set<algr::edge<Vertex>>>
-            graph_representation<Vertex, VertexProperty, EdgeProperty>::edges_set()
+    template <typename V, typename VP, typename EP>
+    std::vector<std::unordered_set<algr::edge<V>>> graph_representation<V, VP, EP>::edges_set()
     {
-        std::vector<std::unordered_set<algr::edge<Vertex>>> v;
+        std::vector<std::unordered_set<algr::edge<V>>> v;
 
         for(auto it = graph_map.cbegin(); it != graph_map.cend(); ++it)
             v.push_back(it->second);
@@ -107,12 +103,10 @@ namespace internal
         return v;
     }
 
-    template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-    std::vector<algr::edge<Vertex>>
-            graph_representation<Vertex, VertexProperty, EdgeProperty>::adjacent_edges(
-                    const Vertex & vertex)
+    template <typename V, typename VP, typename EP>
+    std::vector<algr::edge<V>> graph_representation<V, VP, EP>::adjacent_edges(const V & vertex)
     {
-        std::vector<algr::edge<Vertex>> v;
+        std::vector<algr::edge<V>> v;
 
         validate(vertex);
 
@@ -122,45 +116,41 @@ namespace internal
         return v;
     }
 
-    template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-    bool graph_representation<Vertex, VertexProperty, EdgeProperty>::add_vertex(
-            const Vertex & vertex)
+    template <typename V, typename VP, typename EP>
+    bool graph_representation<V, VP, EP>::add_vertex(const V & vertex)
     {
         if(graph_map.find(vertex) == graph_map.end())
         {
-            graph_map.emplace(vertex, std::unordered_set<algr::edge<Vertex>>());
+            graph_map.emplace(vertex, std::unordered_set<algr::edge<V>>());
             return true;
         }
 
         return false;
     }
 
-    template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-    void graph_representation<Vertex, VertexProperty, EdgeProperty>::add_edge_to_source(
-            const algr::edge<Vertex> & edge)
+    template <typename V, typename VP, typename EP>
+    void graph_representation<V, VP, EP>::add_edge_to_source(const algr::edge<V> & edge)
     {
         validate(edge, false);
         graph_map.at(edge.source()).insert(edge);
     }
 
-    template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-    void graph_representation<Vertex, VertexProperty, EdgeProperty>::add_edge_to_destination(
-            const algr::edge<Vertex> & edge)
+    template <typename V, typename VP, typename EP>
+    void graph_representation<V, VP, EP>::add_edge_to_destination(const algr::edge<V> & edge)
     {
         validate(edge, false);
         graph_map.at(edge.destination()).insert(edge);
     }
 
-    template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-    void graph_representation<Vertex, VertexProperty, EdgeProperty>::validate(const Vertex & vertex)
+    template <typename V, typename VP, typename EP>
+    void graph_representation<V, VP, EP>::validate(const V & vertex)
     {
         if(graph_map.find(vertex) == graph_map.end())
-            throw std::invalid_argument("Vertex does not belong to the graph");
+            throw std::invalid_argument("V does not belong to the graph");
     }
 
-    template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-    void graph_representation<Vertex, VertexProperty, EdgeProperty>::validate(
-            const algr::edge<Vertex> & edge, bool existing)
+    template <typename V, typename VP, typename EP>
+    void graph_representation<V, VP, EP>::validate(const algr::edge<V> & edge, bool existing)
     {
         if(graph_map.find(edge.source()) == graph_map.end()
            || graph_map.find(edge.destination()) == graph_map.end())
@@ -176,16 +166,14 @@ namespace algolib
 {
     namespace graphs
     {
-        template <typename Vertex = size_t, typename VertexProperty = none,
-                  typename EdgeProperty = none>
-        class simple_graph : public virtual graph<Vertex, VertexProperty, EdgeProperty>
+        template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
+        class simple_graph : public virtual graph<V, VP, EP>
         {
-        private:
-            using repr = internal::graph_representation<Vertex, VertexProperty, EdgeProperty>;
+        protected:
+            using repr = internal::graph_representation<V, VP, EP>;
 
         public:
-            explicit simple_graph(std::initializer_list<Vertex> vertices)
-                : representation{repr(vertices)}
+            explicit simple_graph(std::vector<V> vertices = {}) : representation{repr(vertices)}
             {
             }
 
@@ -195,47 +183,48 @@ namespace algolib
             simple_graph & operator=(const simple_graph &) = default;
             simple_graph & operator=(simple_graph &&) = default;
 
+            VP & operator[](const V & vertex)
+            {
+                return representation[vertex];
+            }
+
+            EP & operator[](const edge<V> & edge)
+            {
+                return representation[edge];
+            }
+
             size_t vertices_count() const override
             {
                 return representation.size();
             }
 
-            std::vector<Vertex> vertices() const override
+            std::vector<V> vertices() const override
             {
                 return representation.vertices();
             }
 
-            std::vector<edge<Vertex>> adjacent_edges(const Vertex & vertex) const override
+            std::vector<edge<V>> adjacent_edges(const V & vertex) const override
             {
                 return representation.adjacent_edges(vertex);
             }
 
-            edge<Vertex> get_edge(const Vertex & source, const Vertex & destination) const;
-            std::vector<Vertex> neighbours(const Vertex & vertex) const override;
+            edge<V> get_edge(const V & source, const V & destination) const override;
+            std::vector<V> neighbours(const V & vertex) const override;
+            bool add_vertex(const V & vertex);
+            bool add_vertex(const V & vertex, const VP & property);
+            virtual edge<V> add_edge(const V & source, const V & destination);
+            virtual edge<V> add_edge(const V & source, const V & destination, const EP & property);
+            virtual edge<V> add_edge(const edge<V> & edge) = 0;
+            virtual edge<V> add_edge(const edge<V> & edge, const EP & property) = 0;
 
-            bool add_vertex(const Vertex & vertex);
-
-            bool add_vertex(const Vertex & vertex, const VertexProperty & property);
-
-            virtual edge<Vertex> add_edge(const Vertex & source, const Vertex & destination) = 0;
-
-            virtual edge<Vertex> add_edge(const Vertex & source, const Vertex & destination,
-                                          const EdgeProperty & property) = 0;
-
-            virtual edge<Vertex> add_edge(const edge<Vertex> & edge) = 0;
-
-            virtual edge<Vertex> add_edge(const edge<Vertex> & edge,
-                                          const EdgeProperty & property) = 0;
-
-        private:
+        protected:
             repr representation;
         };
 
-        template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-        edge<Vertex> simple_graph<Vertex, VertexProperty, EdgeProperty>::get_edge(
-                const Vertex & source, const Vertex & destination) const
+        template <typename V, typename VP, typename EP>
+        edge<V> simple_graph<V, VP, EP>::get_edge(const V & source, const V & destination) const
         {
-            std::vector<edge<Vertex>> adjacent = representation.adjacent_edges(source);
+            std::vector<edge<V>> adjacent = representation.adjacent_edges(source);
 
             auto pos = std::find(adjacent.begin(), adjacent.end(),
                                  [&](const auto & e) { return e.get_neighbour(source); });
@@ -246,27 +235,25 @@ namespace algolib
             return *pos;
         }
 
-        template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-        std::vector<Vertex> simple_graph<Vertex, VertexProperty, EdgeProperty>::neighbours(
-                const Vertex & vertex) const
+        template <typename V, typename VP, typename EP>
+        std::vector<V> simple_graph<V, VP, EP>::neighbours(const V & vertex) const
         {
-            std::vector<Vertex> v;
-            std::vector<edge<Vertex>> adjacent = representation.adjacent_edges(vertex);
+            std::vector<V> v;
+            std::vector<edge<V>> adjacent = representation.adjacent_edges(vertex);
 
             std::transform(adjacent.begin(), adjacent.end(), std::back_inserter(v),
                            [&](const auto & e) { return e.get_neighbour(vertex); });
             return v;
         }
 
-        template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-        bool simple_graph<Vertex, VertexProperty, EdgeProperty>::add_vertex(const Vertex & vertex)
+        template <typename V, typename VP, typename EP>
+        bool simple_graph<V, VP, EP>::add_vertex(const V & vertex)
         {
             return representation.add_vertex(vertex);
         }
 
-        template <typename Vertex, typename VertexProperty, typename EdgeProperty>
-        bool simple_graph<Vertex, VertexProperty, EdgeProperty>::add_vertex(
-                const Vertex & vertex, const VertexProperty & property)
+        template <typename V, typename VP, typename EP>
+        bool simple_graph<V, VP, EP>::add_vertex(const V & vertex, const VP & property)
         {
             bool was_added = representation.add_vertex(vertex);
 
@@ -274,6 +261,19 @@ namespace algolib
                 representation[vertex] = property;
 
             return was_added;
+        }
+
+        template <typename V, typename VP, typename EP>
+        edge<V> simple_graph<V, VP, EP>::add_edge(const V & source, const V & destination)
+        {
+            return add_edge(edge<V>(source, destination));
+        }
+
+        template <typename V, typename VP, typename EP>
+        edge<V> simple_graph<V, VP, EP>::add_edge(const V & source, const V & destination,
+                                                  const EP & property)
+        {
+            return add_edge(edge<V>(source, destination), property);
         }
     }
 }

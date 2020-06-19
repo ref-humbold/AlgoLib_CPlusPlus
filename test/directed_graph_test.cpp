@@ -1,4 +1,7 @@
-//! TESTY DLA GRAFÓW SKIEROWANYCH
+/*!
+ * \file directed_graph_test.cpp
+ * \brief Tests: Structure of directed graph
+ */
 #include <gtest/gtest.h>
 #include "algolib/old_graphs/directed_graph.hpp"
 

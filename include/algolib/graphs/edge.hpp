@@ -14,55 +14,55 @@ namespace algolib
 {
     namespace graphs
     {
-        template <typename Vertex = size_t>
+        template <typename V = size_t>
         class edge;
 
-        template <typename Vertex>
-        bool operator==(const edge<Vertex> & e1, const edge<Vertex> & e2);
+        template <typename V>
+        bool operator==(const edge<V> & e1, const edge<V> & e2);
 
-        template <typename Vertex>
-        bool operator!=(const edge<Vertex> & e1, const edge<Vertex> & e2);
+        template <typename V>
+        bool operator!=(const edge<V> & e1, const edge<V> & e2);
 
-        template <typename Vertex>
-        std::ostream & operator<<(std::ostream & os, const edge<Vertex> & edge);
+        template <typename V>
+        std::ostream & operator<<(std::ostream & os, const edge<V> & edge);
     }
 }
 
 namespace std
 {
-    template <typename Vertex>
-    struct hash<algolib::graphs::edge<Vertex>>;
+    template <typename V>
+    struct hash<algolib::graphs::edge<V>>;
 }
 
 namespace algolib
 {
     namespace graphs
     {
-        template <typename Vertex>
+        template <typename V>
         class edge
         {
         public:
-            edge(Vertex source, Vertex destination) : source_{source}, destination_{destination}
+            edge(V source, V destination) : source_{source}, destination_{destination}
             {
             }
 
             ~edge() = default;
-            edge(const edge<Vertex> &) = default;
-            edge(edge<Vertex> &&) = default;
-            edge<Vertex> & operator=(const edge<Vertex> &) = default;
-            edge<Vertex> & operator=(edge<Vertex> &&) = default;
+            edge(const edge<V> &) = default;
+            edge(edge<V> &&) = default;
+            edge<V> & operator=(const edge<V> &) = default;
+            edge<V> & operator=(edge<V> &&) = default;
 
-            const Vertex & source() const
+            const V & source() const
             {
                 return source_;
             }
 
-            const Vertex & destination() const
+            const V & destination() const
             {
                 return destination_;
             }
 
-            Vertex get_neighbour(Vertex vertex) const
+            V get_neighbour(V vertex) const
             {
                 if(source_ == vertex)
                     return destination_;
@@ -73,36 +73,36 @@ namespace algolib
                 throw std::invalid_argument("Edge is not adjacent to the vertex");
             }
 
-            edge<Vertex> reversed() const
+            edge<V> reversed() const
             {
-                return edge<Vertex>(destination_, source_);
+                return edge<V>(destination_, source_);
             }
 
-            friend bool operator==<Vertex>(const edge<Vertex> & e1, const edge<Vertex> & e2);
-            friend bool operator!=<Vertex>(const edge<Vertex> & e1, const edge<Vertex> & e2);
-            friend std::ostream & operator<<<Vertex>(std::ostream & os, const edge<Vertex> & edge);
+            friend bool operator==<V>(const edge<V> & e1, const edge<V> & e2);
+            friend bool operator!=<V>(const edge<V> & e1, const edge<V> & e2);
+            friend std::ostream & operator<<<V>(std::ostream & os, const edge<V> & edge);
 
-            friend struct std::hash<edge<Vertex>>;
+            friend struct std::hash<edge<V>>;
 
         private:
-            Vertex source_;
-            Vertex destination_;
+            V source_;
+            V destination_;
         };
 
-        template <typename Vertex>
-        bool operator==(const edge<Vertex> & e1, const edge<Vertex> & e2)
+        template <typename V>
+        bool operator==(const edge<V> & e1, const edge<V> & e2)
         {
             return e1.source_ == e2.source_ && e1.destination_ == e2.destination_;
         }
 
-        template <typename Vertex>
-        bool operator!=(const edge<Vertex> & e1, const edge<Vertex> & e2)
+        template <typename V>
+        bool operator!=(const edge<V> & e1, const edge<V> & e2)
         {
             return !(e1 == e2);
         }
 
-        template <typename Vertex>
-        std::ostream & operator<<(std::ostream & os, const edge<Vertex> & edge)
+        template <typename V>
+        std::ostream & operator<<(std::ostream & os, const edge<V> & edge)
         {
             os << "Edge{" << edge.source_ << " -- " << edge.destination_ << "}";
             return os;
@@ -112,16 +112,16 @@ namespace algolib
 
 namespace std
 {
-    template <typename Vertex>
-    struct hash<algolib::graphs::edge<Vertex>>
+    template <typename V>
+    struct hash<algolib::graphs::edge<V>>
     {
-        using argument_type = algolib::graphs::edge<Vertex>;
+        using argument_type = algolib::graphs::edge<V>;
         using result_type = size_t;
 
         result_type operator()(const argument_type & edge)
         {
-            result_type source_hash = std::hash<Vertex>()(edge.source_);
-            result_type destination_hash = std::hash<Vertex>()(edge.destination_);
+            result_type source_hash = std::hash<V>()(edge.source_);
+            result_type destination_hash = std::hash<V>()(edge.destination_);
 
             return source_hash
                    ^ (destination_hash + 0x9e3779b9 + (source_hash << 6) + (source_hash >> 2));
