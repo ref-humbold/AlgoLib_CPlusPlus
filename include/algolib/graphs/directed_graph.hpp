@@ -51,9 +51,10 @@ namespace algolib
 
             size_t edges_count() const override
             {
-                std::vector<std::unordered_set<edge_type>> edges = this->representation.edges_set();
+                std::vector<std::unordered_set<edge_type>> edges_set =
+                        this->representation.edges_set();
 
-                return std::accumulate(edges.begin(), edges.end(), 0,
+                return std::accumulate(edges_set.begin(), edges_set.end(), 0,
                                        [](size_t acc, std::unordered_set<edge_type> edges) {
                                            return acc + edges.size();
                                        });

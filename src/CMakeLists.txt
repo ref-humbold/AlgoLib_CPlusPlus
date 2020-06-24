@@ -21,7 +21,8 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/directed_graph.cpp"
     "${GRAPHS}/edge.cpp"
     "${GRAPHS}/graph.cpp"
-    "${GRAPHS}/simple_graph.cpp")
+    "${GRAPHS}/simple_graph.cpp"
+    "${GRAPHS}/undirected_graph.cpp")
 set(GRAPHS_ALGORITHMS_SOURCES
     )
 set(MATHMAT_SOURCES
@@ -38,8 +39,6 @@ set(OLD_GRAPHS_SOURCES
     "${OLD_GRAPHS}/undirected_graph.cpp")
 set(OLD_GRAPHS_ALGORITHMS_SOURCES
     "${OLD_GRAPHS_ALGORITHMS}/cutting.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/dinic.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/edmonds.cpp"
     "${OLD_GRAPHS_ALGORITHMS}/lowest_common_ancestor.cpp"
     "${OLD_GRAPHS_ALGORITHMS}/matching.cpp"
     "${OLD_GRAPHS_ALGORITHMS}/minimal_spanning_tree.cpp"
