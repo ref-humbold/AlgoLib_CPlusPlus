@@ -32,6 +32,10 @@ namespace algolib
             using vertex_property_type = typename simple_graph<V, VP, EP>::vertex_property_type;
             using edge_property_type = typename simple_graph<V, VP, EP>::edge_property_type;
 
+        protected:
+            using repr = typename simple_graph<V, VP, EP>::repr;
+
+        public:
             explicit undirected_simple_graph(const std::vector<vertex_type> & vertices = {})
                 : simple_graph<V, VP, EP>(vertices)
             {
@@ -63,7 +67,7 @@ namespace algolib
         template <typename V, typename VP, typename EP>
         size_t undirected_simple_graph<V, VP, EP>::edges_count() const
         {
-            std::vector<std::unordered_set<edge_type>> edges_set = this->representation.edges();
+            std::vector<std::unordered_set<edge_type>> edges_set = this->representation.edges_set();
             std::unordered_set<edge_type> all_edges;
 
             for(const auto & edge_set : edges_set)
@@ -77,7 +81,7 @@ namespace algolib
         std::vector<typename undirected_simple_graph<V, VP, EP>::edge_type>
                 undirected_simple_graph<V, VP, EP>::edges() const
         {
-            std::vector<std::unordered_set<edge_type>> edges_set = this->representation.edges();
+            std::vector<std::unordered_set<edge_type>> edges_set = this->representation.edges_set();
             std::unordered_set<edge_type> all_edges;
 
             for(const auto & edge_set : edges_set)
@@ -93,7 +97,7 @@ namespace algolib
                         const typename undirected_simple_graph<V, VP, EP>::edge_type & edge)
         try
         {
-            return get_edge(edge.source(), edge.destination());
+            return this->get_edge(edge.source(), edge.destination());
         }
         catch(const std::out_of_range &)
         {
@@ -110,7 +114,7 @@ namespace algolib
                                 property)
         try
         {
-            return get_edge(edge.source(), edge.destination());
+            return this->get_edge(edge.source(), edge.destination());
         }
         catch(const std::out_of_range &)
         {

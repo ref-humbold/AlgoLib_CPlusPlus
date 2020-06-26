@@ -39,6 +39,10 @@ namespace algolib
             //! \return vector of edges
             virtual std::vector<edge_type> edges() const = 0;
 
+            virtual vertex_property_type & operator[](const vertex_type & vertex) = 0;
+
+            virtual edge_property_type & operator[](const edge_type & edge) = 0;
+
             /*!
              * \param source source vertex
              * \param destination destination vertex

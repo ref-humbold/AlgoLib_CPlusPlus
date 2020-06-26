@@ -24,6 +24,18 @@ namespace algolib
         bool operator!=(const edge<V> & e1, const edge<V> & e2);
 
         template <typename V>
+        bool operator<(const edge<V> & e1, const edge<V> & e2);
+
+        template <typename V>
+        bool operator<=(const edge<V> & e1, const edge<V> & e2);
+
+        template <typename V>
+        bool operator>(const edge<V> & e1, const edge<V> & e2);
+
+        template <typename V>
+        bool operator>=(const edge<V> & e1, const edge<V> & e2);
+
+        template <typename V>
         std::ostream & operator<<(std::ostream & os, const edge<V> & edge);
     }
 }
@@ -78,9 +90,15 @@ namespace algolib
                 return edge<V>(destination_, source_);
             }
 
-            friend bool operator==<V>(const edge<V> & e1, const edge<V> & e2);
-            friend bool operator!=<V>(const edge<V> & e1, const edge<V> & e2);
-            friend std::ostream & operator<<<V>(std::ostream & os, const edge<V> & edge);
+            // clang-format off
+            friend bool operator== <V>(const edge<V> & e1, const edge<V> & e2);
+            friend bool operator!= <V>(const edge<V> & e1, const edge<V> & e2);
+            friend bool operator< <V>(const edge<V> & e1, const edge<V> & e2);
+            friend bool operator<= <V>(const edge<V> & e1, const edge<V> & e2);
+            friend bool operator> <V>(const edge<V> & e1, const edge<V> & e2);
+            friend bool operator>= <V>(const edge<V> & e1, const edge<V> & e2);
+            friend std::ostream & operator<< <V>(std::ostream & os, const edge<V> & edge);
+            // clang-format on
 
             friend struct std::hash<edge<V>>;
 
@@ -102,6 +120,31 @@ namespace algolib
         }
 
         template <typename V>
+        bool operator<(const edge<V> & e1, const edge<V> & e2)
+        {
+            return e1.source_ < e2.source_
+                   || (!(e2.source_ < e1.source_) && e1.destination_ < e2.destination_);
+        }
+
+        template <typename V>
+        bool operator<=(const edge<V> & e1, const edge<V> & e2)
+        {
+            return !(e2 < e1);
+        }
+
+        template <typename V>
+        bool operator>(const edge<V> & e1, const edge<V> & e2)
+        {
+            return e2 < e1;
+        }
+
+        template <typename V>
+        bool operator>=(const edge<V> & e1, const edge<V> & e2)
+        {
+            return !(e1 < e2);
+        }
+
+        template <typename V>
         std::ostream & operator<<(std::ostream & os, const edge<V> & edge)
         {
             os << "Edge{" << edge.source_ << " -- " << edge.destination_ << "}";
@@ -118,7 +161,7 @@ namespace std
         using argument_type = algolib::graphs::edge<V>;
         using result_type = size_t;
 
-        result_type operator()(const argument_type & edge)
+        result_type operator()(const argument_type & edge) const
         {
             result_type source_hash = std::hash<V>()(edge.source_);
             result_type destination_hash = std::hash<V>()(edge.destination_);

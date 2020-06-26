@@ -38,6 +38,10 @@ namespace algolib
             using vertex_property_type = typename simple_graph<V, VP, EP>::vertex_property_type;
             using edge_property_type = typename simple_graph<V, VP, EP>::edge_property_type;
 
+        protected:
+            using repr = typename simple_graph<V, VP, EP>::repr;
+
+        public:
             explicit directed_simple_graph(const std::vector<vertex_type> & vertices = {})
                 : simple_graph<V, VP, EP>(vertices)
             {
@@ -84,8 +88,9 @@ namespace algolib
             size_t degree = 0;
 
             for(const auto & edges : this->representation.edges_set())
-                degree += std::count_if(edges.begin(), edges.end(),
-                                        [&](edge_type edge) { return edge.destination == vertex; });
+                degree += std::count_if(edges.begin(), edges.end(), [&](const edge_type & edge) {
+                    return edge.destination() == vertex;
+                });
 
             return degree;
         }
@@ -96,7 +101,7 @@ namespace algolib
                         const typename directed_simple_graph<V, VP, EP>::edge_type & edge)
         try
         {
-            return get_edge(edge.source(), edge.destination());
+            return this->get_edge(edge.source(), edge.destination());
         }
         catch(const std::out_of_range &)
         {
@@ -112,7 +117,7 @@ namespace algolib
                                 property)
         try
         {
-            return get_edge(edge.source(), edge.destination());
+            return this->get_edge(edge.source(), edge.destination());
         }
         catch(const std::out_of_range &)
         {
@@ -124,8 +129,7 @@ namespace algolib
         template <typename V, typename VP, typename EP>
         void directed_simple_graph<V, VP, EP>::reverse()
         {
-            typename directed_simple_graph<V, VP, EP>::repr new_representation =
-                    graph_representation(this->vertices());
+            repr new_representation = repr(this->vertices());
 
             for(const vertex_type & vertex : this->vertices())
                 new_representation[vertex] = this->representation[vertex];

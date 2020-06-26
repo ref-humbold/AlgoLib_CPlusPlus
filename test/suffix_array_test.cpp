@@ -24,7 +24,7 @@ TEST_F(SuffixArrayTest, size)
     EXPECT_EQ(11, result);
 }
 
-TEST_F(SuffixArrayTest, operatorIndex)
+TEST_F(SuffixArrayTest, operatorBrackets)
 {
     std::string result0 = test_object[0];
     std::string result1 = test_object[3];
