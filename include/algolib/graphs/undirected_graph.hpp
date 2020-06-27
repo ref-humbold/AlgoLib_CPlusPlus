@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <unordered_set>
 #include <vector>
+#include "directed_graph.hpp"
 #include "simple_graph.hpp"
 
 namespace algolib
@@ -62,6 +63,8 @@ namespace algolib
             edge_type add_edge(const edge_type & edge) override;
             edge_type add_edge(const edge_type & edge,
                                const edge_property_type & property) override;
+            directed_simple_graph<vertex_type, vertex_property_type, edge_property_type>
+                    as_directed() const;
         };
 
         template <typename V, typename VP, typename EP>
@@ -122,6 +125,34 @@ namespace algolib
             this->representation.add_edge_to_destination(edge);
             this->representation[edge] = property;
             return edge;
+        }
+
+        template <typename V, typename VP, typename EP>
+        directed_simple_graph<typename undirected_simple_graph<V, VP, EP>::vertex_type,
+                              typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
+                              typename undirected_simple_graph<V, VP, EP>::edge_property_type>
+                undirected_simple_graph<V, VP, EP>::as_directed() const
+        {
+            directed_simple_graph<vertex_type, vertex_property_type, edge_property_type> graph(
+                    this->vertices());
+
+            for(const vertex_type & vertex : this->vertices())
+                if(this->has_property(vertex))
+                    graph[vertex] = this->property(vertex);
+
+            for(const edge_type & edge : this->edges())
+                if(this->has_property(edge))
+                {
+                    graph.add_edge(edge, this->property(edge));
+                    graph.add_edge(edge.reversed(), this->property(edge));
+                }
+                else
+                {
+                    graph.add_edge(edge);
+                    graph.add_edge(edge.reversed());
+                }
+
+            return graph;
         }
     }
 }

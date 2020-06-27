@@ -70,6 +70,64 @@ TEST_F(DirectedSimpleGraphTest, operatorBrackets_whenNotExisting_thenInvalidArgu
     EXPECT_THROW(exec_edge2(), std::invalid_argument);
 }
 
+TEST_F(DirectedSimpleGraphTest, property_whenPresent_thenProperty)
+{
+    // given
+    graph_vp vertex_property = "abcd";
+    graph_ep edge_property = "efgh";
+    graph_v vertex = 5;
+    graph_e edge = test_object.add_edge_between(6, 7);
+
+    test_object[vertex] = vertex_property;
+    test_object[edge] = edge_property;
+    // when
+    graph_vp result_vertex = test_object.property(vertex);
+    graph_ep result_edge = test_object.property(edge);
+    // then
+    EXPECT_EQ(vertex_property, result_vertex);
+    EXPECT_EQ(edge_property, result_edge);
+}
+
+TEST_F(DirectedSimpleGraphTest, property_whenAbsent_thenOutOfRange)
+{
+    // given
+    graph_e edge = test_object.add_edge_between(6, 7);
+    // when
+    auto exec_vertex = [&]() { return test_object.property(4); };
+    auto exec_edge = [&]() { test_object.property(edge); };
+    // then
+    EXPECT_THROW(exec_vertex(), std::out_of_range);
+    EXPECT_THROW(exec_edge(), std::out_of_range);
+}
+
+TEST_F(DirectedSimpleGraphTest, hasProperty_whenPresent_thenTrue)
+{
+    // given
+    graph_v vertex = 2;
+    graph_e edge = test_object.add_edge_between(4, 8);
+
+    test_object[vertex] = "a";
+    test_object[edge] = "b";
+    // when
+    bool result_vertex = test_object.has_property(vertex);
+    bool result_edge = test_object.has_property(edge);
+    // then
+    EXPECT_TRUE(result_vertex);
+    EXPECT_TRUE(result_edge);
+}
+
+TEST_F(DirectedSimpleGraphTest, hasProperty_whenAbsent_thenFalse)
+{
+    // given
+    graph_e edge = test_object.add_edge_between(4, 8);
+    // when
+    bool result_vertex = test_object.has_property(2);
+    bool result_edge = test_object.has_property(edge);
+    // then
+    EXPECT_FALSE(result_vertex);
+    EXPECT_FALSE(result_edge);
+}
+
 TEST_F(DirectedSimpleGraphTest, verticesCount_thenNumberOfVertices)
 {
     // when
@@ -345,11 +403,11 @@ TEST_F(DirectedSimpleGraphTest, reversedCopy_thenNewGraphWithReversedEdges)
     test_object[vertex] = vertex_property;
     test_object[edge] = edge_property;
     // when
-    algr::directed_graph<int, std::string, std::string> * result = test_object.reversed_copy();
+    algr::directed_simple_graph<int, std::string, std::string> result = test_object.reversed_copy();
     // then
     std::vector<graph_v> expected_vertices = test_object.vertices();
-    std::vector<graph_v> result_vertices = result->vertices();
-    std::vector<graph_e> result_edges = result->edges();
+    std::vector<graph_v> result_vertices = result.vertices();
+    std::vector<graph_e> result_edges = result.edges();
 
     std::sort(expected_vertices.begin(), expected_vertices.end());
     std::sort(result_vertices.begin(), result_vertices.end());
@@ -360,8 +418,8 @@ TEST_F(DirectedSimpleGraphTest, reversedCopy_thenNewGraphWithReversedEdges)
                                     graph_e(5, 3), graph_e(6, 6), graph_e(6, 9), graph_e(7, 5),
                                     graph_e(8, 7), graph_e(9, 4)}),
               result_edges);
-    EXPECT_EQ(vertex_property, result->operator[](vertex));
-    EXPECT_EQ("", result->operator[](9));
-    EXPECT_EQ(edge_property, result->operator[](result->get_edge(2, 1)));
-    EXPECT_EQ("", result->operator[](result->get_edge(5, 3)));
+    EXPECT_EQ(vertex_property, result[vertex]);
+    EXPECT_EQ("", result[9]);
+    EXPECT_EQ(edge_property, result[result.get_edge(2, 1)]);
+    EXPECT_EQ("", result[result.get_edge(5, 3)]);
 }

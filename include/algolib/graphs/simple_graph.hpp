@@ -47,6 +47,42 @@ namespace internal
             return edge_properties[edge];
         }
 
+        const VP & property(const V & vertex) const
+        {
+            validate(vertex);
+
+            auto it = vertex_properties.find(vertex);
+
+            if(it == vertex_properties.end())
+                throw std::out_of_range("Property for vertex not found");
+
+            return it->second;
+        }
+
+        const EP & property(const E & edge) const
+        {
+            validate(edge, true);
+
+            auto it = edge_properties.find(edge);
+
+            if(it == edge_properties.end())
+                throw std::out_of_range("Property for edge not found");
+
+            return it->second;
+        }
+
+        bool has_property(const V & vertex) const
+        {
+            validate(vertex);
+            return vertex_properties.find(vertex) != vertex_properties.end();
+        }
+
+        bool has_property(const E & edge) const
+        {
+            validate(edge, true);
+            return edge_properties.find(edge) != edge_properties.end();
+        }
+
         size_t size() const
         {
             return graph_map.size();
@@ -185,14 +221,34 @@ namespace algolib
             simple_graph & operator=(const simple_graph &) = default;
             simple_graph & operator=(simple_graph &&) = default;
 
-            vertex_property_type & operator[](const vertex_type & vertex)
+            vertex_property_type & operator[](const vertex_type & vertex) override
             {
                 return this->representation[vertex];
             }
 
-            edge_property_type & operator[](const edge_type & edge)
+            edge_property_type & operator[](const edge_type & edge) override
             {
                 return this->representation[edge];
+            }
+
+            const vertex_property_type & property(const vertex_type & vertex) const override
+            {
+                return this->representation.property(vertex);
+            }
+
+            const edge_property_type & property(const edge_type & edge) const override
+            {
+                return this->representation.property(edge);
+            }
+
+            bool has_property(const vertex_type & vertex) const override
+            {
+                return this->representation.has_property(vertex);
+            }
+
+            bool has_property(const edge_type & edge) const override
+            {
+                return this->representation.has_property(edge);
             }
 
             size_t vertices_count() const override

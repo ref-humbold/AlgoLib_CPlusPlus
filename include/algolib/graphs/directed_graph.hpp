@@ -23,9 +23,6 @@ namespace algolib
         {
             //! Reverses directions of edges in this graph.
             virtual void reverse() = 0;
-
-            //! \return the copy of this graph with reversed directions of edges
-            virtual directed_graph<V, VP, EP> * reversed_copy() = 0;
         };
 
         template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
@@ -79,7 +76,10 @@ namespace algolib
             edge_type add_edge(const edge_type & edge,
                                const edge_property_type & property) override;
             void reverse() override;
-            directed_graph<V, VP, EP> * reversed_copy() override;
+
+            //! \return the copy of this graph with reversed directions of edges
+            directed_simple_graph<vertex_type, vertex_property_type, edge_property_type>
+                    reversed_copy() const;
         };
 
         template <typename V, typename VP, typename EP>
@@ -145,12 +145,15 @@ namespace algolib
         }
 
         template <typename V, typename VP, typename EP>
-        directed_graph<V, VP, EP> * directed_simple_graph<V, VP, EP>::reversed_copy()
+        directed_simple_graph<typename directed_simple_graph<V, VP, EP>::vertex_type,
+                              typename directed_simple_graph<V, VP, EP>::vertex_property_type,
+                              typename directed_simple_graph<V, VP, EP>::edge_property_type>
+                directed_simple_graph<V, VP, EP>::reversed_copy() const
         {
-            directed_graph<V, VP, EP> * reversed_graph =
-                    new directed_simple_graph<V, VP, EP>(*this);
+            directed_simple_graph<vertex_type, vertex_property_type, edge_property_type>
+                    reversed_graph = *this;
 
-            reversed_graph->reverse();
+            reversed_graph.reverse();
             return reversed_graph;
         }
     }
