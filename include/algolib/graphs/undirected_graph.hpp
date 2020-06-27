@@ -28,16 +28,9 @@ namespace algolib
                                         public virtual undirected_graph<V, VP, EP>
         {
         public:
-            using vertex_type = typename simple_graph<V, VP, EP>::vertex_type;
-            using edge_type = typename simple_graph<V, VP, EP>::edge_type;
-            using vertex_property_type = typename simple_graph<V, VP, EP>::vertex_property_type;
-            using edge_property_type = typename simple_graph<V, VP, EP>::edge_property_type;
-
-        protected:
-            using repr = typename simple_graph<V, VP, EP>::repr;
-
-        public:
-            explicit undirected_simple_graph(const std::vector<vertex_type> & vertices = {})
+            explicit undirected_simple_graph(
+                    const std::vector<typename undirected_simple_graph<V, VP, EP>::vertex_type> &
+                            vertices = {})
                 : simple_graph<V, VP, EP>(vertices)
             {
             }
@@ -48,33 +41,41 @@ namespace algolib
             undirected_simple_graph & operator=(const undirected_simple_graph &) = default;
             undirected_simple_graph & operator=(undirected_simple_graph &&) = default;
 
-            size_t output_degree(const vertex_type & vertex) const override
+            size_t output_degree(const typename undirected_simple_graph<V, VP, EP>::vertex_type &
+                                         vertex) const override
             {
                 return this->representation.adjacent_edges(vertex).size();
             }
 
-            size_t input_degree(const vertex_type & vertex) const override
+            size_t input_degree(const typename undirected_simple_graph<V, VP, EP>::vertex_type &
+                                        vertex) const override
             {
                 return this->representation.adjacent_edges(vertex).size();
             }
 
             size_t edges_count() const override;
-            std::vector<edge_type> edges() const override;
-            edge_type add_edge(const edge_type & edge) override;
-            edge_type add_edge(const edge_type & edge,
-                               const edge_property_type & property) override;
-            directed_simple_graph<vertex_type, vertex_property_type, edge_property_type>
+            std::vector<typename undirected_simple_graph<V, VP, EP>::edge_type>
+                    edges() const override;
+            typename undirected_simple_graph<V, VP, EP>::edge_type add_edge(
+                    const typename undirected_simple_graph<V, VP, EP>::edge_type & edge) override;
+            typename undirected_simple_graph<V, VP, EP>::edge_type
+                    add_edge(const typename undirected_simple_graph<V, VP, EP>::edge_type & edge,
+                             const typename undirected_simple_graph<V, VP, EP>::edge_property_type &
+                                     property) override;
+            directed_simple_graph<typename undirected_simple_graph<V, VP, EP>::vertex_type,
+                                  typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
+                                  typename undirected_simple_graph<V, VP, EP>::edge_property_type>
                     as_directed() const;
         };
 
         template <typename V, typename VP, typename EP>
         size_t undirected_simple_graph<V, VP, EP>::edges_count() const
         {
-            std::vector<std::unordered_set<edge_type>> edges_set = this->representation.edges_set();
-            std::unordered_set<edge_type> all_edges;
+            auto edges_set = this->representation.edges_set();
+            std::unordered_set<typename undirected_simple_graph<V, VP, EP>::edge_type> all_edges;
 
-            for(const auto & edge_set : edges_set)
-                for(const edge_type & edge : edge_set)
+            for(auto && edge_set : edges_set)
+                for(auto && edge : edge_set)
                     all_edges.insert(edge);
 
             return all_edges.size();
@@ -84,14 +85,15 @@ namespace algolib
         std::vector<typename undirected_simple_graph<V, VP, EP>::edge_type>
                 undirected_simple_graph<V, VP, EP>::edges() const
         {
-            std::vector<std::unordered_set<edge_type>> edges_set = this->representation.edges_set();
-            std::unordered_set<edge_type> all_edges;
+            auto edges_set = this->representation.edges_set();
+            std::unordered_set<typename undirected_simple_graph<V, VP, EP>::edge_type> all_edges;
 
-            for(const auto & edge_set : edges_set)
-                for(const edge_type & edge : edge_set)
+            for(auto && edge_set : edges_set)
+                for(auto && edge : edge_set)
                     all_edges.insert(edge);
 
-            return std::vector<edge_type>(all_edges.begin(), all_edges.end());
+            return std::vector<typename undirected_simple_graph<V, VP, EP>::edge_type>(
+                    all_edges.begin(), all_edges.end());
         }
 
         template <typename V, typename VP, typename EP>
@@ -133,14 +135,16 @@ namespace algolib
                               typename undirected_simple_graph<V, VP, EP>::edge_property_type>
                 undirected_simple_graph<V, VP, EP>::as_directed() const
         {
-            directed_simple_graph<vertex_type, vertex_property_type, edge_property_type> graph(
-                    this->vertices());
+            directed_simple_graph<typename undirected_simple_graph<V, VP, EP>::vertex_type,
+                                  typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
+                                  typename undirected_simple_graph<V, VP, EP>::edge_property_type>
+                    graph(this->vertices());
 
-            for(const vertex_type & vertex : this->vertices())
+            for(auto && vertex : this->vertices())
                 if(this->has_property(vertex))
                     graph[vertex] = this->property(vertex);
 
-            for(const edge_type & edge : this->edges())
+            for(auto && edge : this->edges())
                 if(this->has_property(edge))
                 {
                     graph.add_edge(edge, this->property(edge));
