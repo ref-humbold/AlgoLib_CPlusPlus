@@ -219,6 +219,16 @@ namespace algolib
             simple_graph & operator=(const simple_graph &) = default;
             simple_graph & operator=(simple_graph &&) = default;
 
+            size_t vertices_count() const override
+            {
+                return this->representation.size();
+            }
+
+            std::vector<typename simple_graph<V, VP, EP>::vertex_type> vertices() const override
+            {
+                return this->representation.vertices();
+            }
+
             typename simple_graph<V, VP, EP>::vertex_property_type & operator[](
                     const typename simple_graph<V, VP, EP>::vertex_type & vertex) override
             {
@@ -253,16 +263,6 @@ namespace algolib
                     const typename simple_graph<V, VP, EP>::edge_type & edge) const override
             {
                 return this->representation.has_property(edge);
-            }
-
-            size_t vertices_count() const override
-            {
-                return this->representation.size();
-            }
-
-            std::vector<typename simple_graph<V, VP, EP>::vertex_type> vertices() const override
-            {
-                return this->representation.vertices();
             }
 
             std::vector<typename simple_graph<V, VP, EP>::edge_type> adjacent_edges(
