@@ -20,6 +20,7 @@ namespace algolib
         template <typename V, typename VP, typename EP>
         struct undirected_graph : public virtual graph<V, VP, EP>
         {
+            ~undirected_graph() override = default;
         };
 
         template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>

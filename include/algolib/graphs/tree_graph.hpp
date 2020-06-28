@@ -29,7 +29,7 @@ namespace algolib
             {
             }
 
-            virtual ~tree_graph() = default;
+            ~tree_graph() override = default;
             tree_graph(const tree_graph &) = default;
             tree_graph(tree_graph &&) = default;
             tree_graph & operator=(const tree_graph &) = default;

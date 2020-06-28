@@ -25,7 +25,7 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/tree_graph.cpp"
     "${GRAPHS}/undirected_graph.cpp")
 set(GRAPHS_ALGORITHMS_SOURCES
-    )
+    "${GRAPHS_ALGORITHMS}/searching_strategy.cpp")
 set(MATHMAT_SOURCES
     "${MATHMAT}/equation.cpp"
     "${MATHMAT}/equation_system.cpp"

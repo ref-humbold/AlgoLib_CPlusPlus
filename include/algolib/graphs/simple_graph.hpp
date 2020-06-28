@@ -213,7 +213,7 @@ namespace algolib
             {
             }
 
-            virtual ~simple_graph() = default;
+            ~simple_graph() override = default;
             simple_graph(const simple_graph &) = default;
             simple_graph(simple_graph &&) = default;
             simple_graph & operator=(const simple_graph &) = default;

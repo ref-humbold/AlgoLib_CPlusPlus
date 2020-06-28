@@ -21,6 +21,8 @@ namespace algolib
         template <typename V, typename VP, typename EP>
         struct directed_graph : public virtual graph<V, VP, EP>
         {
+            ~directed_graph() override = default;
+
             //! Reverses directions of edges in this graph.
             virtual void reverse() = 0;
         };
