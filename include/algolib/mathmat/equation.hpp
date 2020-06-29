@@ -63,19 +63,19 @@ namespace algolib
         template <size_t N>
         std::pair<std::array<double, N>, double> equation<N>::values() const
         {
-            return std::make_pair(coefficients, free);
+            return std::make_pair(this->coefficients, this->free);
         }
 
         template <size_t N>
         double & equation<N>::operator[](size_t i)
         {
-            return coefficients.at(i);
+            return this->coefficients.at(i);
         }
 
         template <size_t N>
         double equation<N>::operator[](size_t i) const
         {
-            return coefficients.at(i);
+            return this->coefficients.at(i);
         }
 
         template <size_t N>
@@ -85,7 +85,7 @@ namespace algolib
                 throw std::domain_error("Constant cannot be zero");
 
             for(size_t i = 0; i < N; ++i)
-                coefficients[i] *= constant;
+                this->coefficients[i] *= constant;
 
             this->free *= constant;
             return *this;
@@ -98,7 +98,7 @@ namespace algolib
                 throw std::domain_error("Constant cannot be zero");
 
             for(size_t i = 0; i < N; ++i)
-                coefficients[i] += equation[i] * constant;
+                this->coefficients[i] += equation[i] * constant;
 
             this->free += equation.free * constant;
         }
@@ -109,9 +109,9 @@ namespace algolib
             double result = 0;
 
             for(size_t i = 0; i < N; ++i)
-                result += solution[i] * coefficients[i];
+                result += solution[i] * this->coefficients[i];
 
-            return result == free;
+            return result == this->free;
         }
     }
 }

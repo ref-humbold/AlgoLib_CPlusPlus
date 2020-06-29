@@ -56,22 +56,22 @@ namespace algolib
                               const Compare & comparator = Compare())
                 : comparator{comparator}
             {
-                for(const auto & e : il)
-                    insert(e);
+                for(auto && element : il)
+                    insert(element);
             }
 
             ~avl_tree()
             {
-                delete tree;
+                delete this->tree;
             }
 
             avl_tree(const avl_tree & avl)
-                : tree{new avl_header_node(*avl.tree)}, elems{avl.elems}, comparator{avl.comparator}
+                : tree{new avl_header_node(*avl.tree)}, count{avl.count}, comparator{avl.comparator}
             {
             }
 
             avl_tree(avl_tree && avl) noexcept
-                : elems{std::move(avl.elems)}, comparator{std::move(avl.comparator)}
+                : count{std::move(avl.count)}, comparator{std::move(avl.comparator)}
             {
                 std::swap(this->tree, avl.tree);
             }
@@ -81,72 +81,72 @@ namespace algolib
 
             const_iterator cbegin() const
             {
-                return const_iterator(get_root()->minimum());
+                return const_iterator(this->get_root()->minimum());
             }
 
             const_iterator cend() const
             {
-                return const_iterator(tree);
+                return const_iterator(this->tree);
             }
 
             const_reverse_iterator crbegin() const
             {
-                return const_reverse_iterator(cend());
+                return const_reverse_iterator(this->cend());
             }
 
             const_reverse_iterator crend() const
             {
-                return const_reverse_iterator(cbegin());
+                return const_reverse_iterator(this->cbegin());
             }
 
             iterator begin()
             {
-                return iterator(get_root()->minimum());
+                return iterator(this->get_root()->minimum());
             }
 
             const_iterator begin() const
             {
-                return cbegin();
+                return this->cbegin();
             }
 
             iterator end()
             {
-                return iterator(tree);
+                return iterator(this->tree);
             }
 
             const_iterator end() const
             {
-                return cend();
+                return this->cend();
             }
 
             reverse_iterator rbegin()
             {
-                return reverse_iterator(end());
+                return reverse_iterator(this->end());
             }
 
             const_reverse_iterator rbegin() const
             {
-                return crbegin();
+                return this->crbegin();
             }
 
             reverse_iterator rend()
             {
-                return reverse_iterator(begin());
+                return reverse_iterator(this->begin());
             }
 
             const_reverse_iterator rend() const
             {
-                return crend();
+                return this->crend();
             }
 
             size_type size() const
             {
-                return elems;
+                return this->count;
             }
 
             bool empty() const
             {
-                return get_root() == nullptr;
+                return this->get_root() == nullptr;
             }
 
             /*!
@@ -184,12 +184,12 @@ namespace algolib
         private:
             inner_ptr get_root() const
             {
-                return tree->get_parent();
+                return this->tree->get_parent();
             }
 
             void set_root(inner_ptr node)
             {
-                tree->set_parent(node);
+                this->tree->set_parent(node);
             }
 
             bool is_left_child(inner_ptr node)
@@ -230,7 +230,7 @@ namespace algolib
             int count_balance(node_ptr node);
 
             header_ptr tree = new avl_header_node();  // The tree denoted by its header
-            size_type elems = 0;  // Number of elements
+            size_type count = 0;  // Number of elements
             Compare comparator;  // Comparator
         };
 
@@ -239,7 +239,7 @@ namespace algolib
         {
             header_ptr tree_orig = this->tree;
 
-            this->elems = avl.elems;
+            this->count = avl.count;
             this->comparator = avl.comparator;
             this->tree = new avl_header_node(*avl.tree);
             delete tree_orig;
@@ -251,7 +251,7 @@ namespace algolib
         avl_tree<E, Compare> & avl_tree<E, Compare>::operator=(avl_tree<E, Compare> && avl) noexcept
         {
             std::swap(this->tree, avl.tree);
-            std::swap(this->elems, avl.elems);
+            std::swap(this->count, avl.count);
             std::swap(this->comparator, avl.comparator);
 
             return *this;
@@ -260,32 +260,32 @@ namespace algolib
         template <typename E, typename Compare>
         typename avl_tree<E, Compare>::iterator avl_tree<E, Compare>::find(const_reference element)
         {
-            if(empty())
-                return end();
+            if(this->empty())
+                return this->end();
 
-            std::function<bool(inner_ptr, const_reference)> equal =
-                    [this](inner_ptr n, const_reference e) -> bool {
+            std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
+                                                                           const_reference e) {
                 return !comparator(n->element, e) && !comparator(e, n->element);
             };
-            node_ptr the_node = find_node(element, equal);
+            node_ptr the_node = this->find_node(element, equal);
 
-            return the_node == nullptr ? end() : iterator(the_node);
+            return the_node == nullptr ? this->end() : iterator(the_node);
         }
 
         template <typename E, typename Compare>
         typename avl_tree<E, Compare>::const_iterator
                 avl_tree<E, Compare>::find(const_reference element) const
         {
-            if(empty())
-                return cend();
+            if(this->empty())
+                return this->cend();
 
-            std::function<bool(inner_ptr, const_reference)> equal =
-                    [this](inner_ptr n, const_reference e) -> bool {
+            std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
+                                                                           const_reference e) {
                 return !comparator(n->element, e) && !comparator(e, n->element);
             };
-            node_ptr the_node = find_node(element, equal);
+            node_ptr the_node = this->find_node(element, equal);
 
-            return the_node == nullptr ? cend() : const_iterator(the_node);
+            return the_node == nullptr ? this->cend() : const_iterator(the_node);
         }
 
         template <typename E, typename Compare>
@@ -293,38 +293,39 @@ namespace algolib
                 avl_tree<E, Compare>::insert(const_reference element)
         {
             std::function<bool(inner_ptr, const_reference)> child_equal =
-                    [this](inner_ptr n, const_reference e) -> bool {
-                inner_ptr child = search(n, e);
+                    [this](inner_ptr n, const_reference e) {
+                        inner_ptr child = this->search(n, e);
 
-                return child == nullptr
-                       || (!comparator(child->element, e) && !comparator(e, child->element));
-            };
-            inner_ptr node_parent = find_node(element, child_equal);
+                        return child == nullptr
+                               || (!this->comparator(child->element, e)
+                                   && !this->comparator(e, child->element));
+                    };
+            inner_ptr node_parent = this->find_node(element, child_equal);
 
             if(node_parent == nullptr)
             {
                 auto new_node = new avl_inner_node(element);
 
-                set_root(new_node);
-                ++elems;
+                this->set_root(new_node);
+                ++this->count;
 
                 return std::make_pair(iterator(new_node), true);
             }
 
-            inner_ptr the_node = search(node_parent, element);
+            inner_ptr the_node = this->search(node_parent, element);
 
             if(the_node != nullptr)
                 return std::make_pair(iterator(the_node), false);
 
             auto new_node = new avl_inner_node(element);
 
-            if(comparator(element, node_parent->element))
+            if(this->comparator(element, node_parent->element))
                 node_parent->set_left(new_node);
             else
                 node_parent->set_right(new_node);
 
-            balance(node_parent);
-            ++elems;
+            this->balance(node_parent);
+            ++this->count;
 
             return std::make_pair(iterator(new_node), true);
         }
@@ -333,16 +334,16 @@ namespace algolib
         typename avl_tree<E, Compare>::size_type
                 avl_tree<E, Compare>::erase(const_reference element)
         {
-            std::function<bool(inner_ptr, const_reference)> equal =
-                    [this](inner_ptr n, const_reference e) -> bool {
-                return !comparator(n->element, e) && !comparator(e, n->element);
+            std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
+                                                                           const_reference e) {
+                return !this->comparator(n->element, e) && !this->comparator(e, n->element);
             };
-            inner_ptr the_node = find_node(element, equal);
+            inner_ptr the_node = this->find_node(element, equal);
 
             if(the_node == nullptr)
                 return 0;
 
-            delete_node(the_node);
+            this->delete_node(the_node);
 
             return 1;
         }
@@ -350,18 +351,18 @@ namespace algolib
         template <typename E, typename Compare>
         void avl_tree<E, Compare>::clear()
         {
-            delete get_root();
-            set_root(nullptr);
-            elems = 0;
+            delete this->get_root();
+            this->set_root(nullptr);
+            this->count = 0;
         }
 
         template <typename E, typename Compare>
         typename avl_tree<E, Compare>::inner_ptr
                 avl_tree<E, Compare>::search(inner_ptr node, const_reference element) const
         {
-            return comparator(element, node->element)
+            return this->comparator(element, node->element)
                            ? node->get_left()
-                           : comparator(node->element, element) ? node->get_right() : node;
+                           : this->comparator(node->element, element) ? node->get_right() : node;
         }
 
         template <typename E, typename Compare>
@@ -369,10 +370,10 @@ namespace algolib
                 const_reference element,
                 std::function<bool(inner_ptr, const_reference)> predicate) const
         {
-            inner_ptr node = get_root();
+            inner_ptr node = this->get_root();
 
             while(node != nullptr && !predicate(node, element))
-                node = search(node, element);
+                node = this->search(node, element);
 
             return node;
         }
@@ -385,7 +386,7 @@ namespace algolib
                 inner_ptr succ = node->get_right()->minimum();
 
                 std::swap(succ->element, node->element);
-                delete_node(succ);
+                this->delete_node(succ);
             }
             else
             {
@@ -396,15 +397,15 @@ namespace algolib
                 {
                     node_ptr node_parent = node->get_parent();
 
-                    replace_node(node, child);
-                    balance(node_parent);
+                    this->replace_node(node, child);
+                    this->balance(node_parent);
                 }
                 else
-                    set_root(child);
+                    this->set_root(child);
 
                 node->set_left(nullptr);
                 node->set_right(nullptr);
-                --elems;
+                --this->count;
                 delete node;
             }
         }
@@ -412,12 +413,12 @@ namespace algolib
         template <typename E, typename Compare>
         void avl_tree<E, Compare>::replace_node(inner_ptr node1, inner_ptr node2)
         {
-            if(is_left_child(node1))
+            if(this->is_left_child(node1))
                 node1->get_parent()->set_left(node2);
-            else if(is_right_child(node1))
+            else if(this->is_right_child(node1))
                 node1->get_parent()->set_right(node2);
             else
-                set_root(node2);
+                this->set_root(node2);
 
             node1->set_parent(nullptr);
         }
@@ -425,20 +426,20 @@ namespace algolib
         template <typename E, typename Compare>
         void avl_tree<E, Compare>::rotate(inner_ptr node)
         {
-            if(is_right_child(node))
+            if(this->is_right_child(node))
             {
                 auto upper_node = static_cast<inner_ptr>(node->get_parent());
 
                 upper_node->set_right(node->get_left());
-                replace_node(upper_node, node);
+                this->replace_node(upper_node, node);
                 node->set_left(upper_node);
             }
-            else if(is_left_child(node))
+            else if(this->is_left_child(node))
             {
                 auto upper_node = static_cast<inner_ptr>(node->get_parent());
 
                 upper_node->set_left(node->get_right());
-                replace_node(upper_node, node);
+                this->replace_node(upper_node, node);
                 node->set_right(upper_node);
             }
         }
@@ -450,27 +451,27 @@ namespace algolib
             {
                 node->count_height();
 
-                int new_balance = count_balance(node);
+                int new_balance = this->count_balance(node);
                 auto rnode = static_cast<inner_ptr>(node);
 
                 if(new_balance >= 2)
                 {
-                    if(count_balance(node->get_left()) > 0)
-                        rotate(rnode->get_left());
-                    else if(count_balance(node->get_left()) < 0)
+                    if(this->count_balance(node->get_left()) > 0)
+                        this->rotate(rnode->get_left());
+                    else if(this->count_balance(node->get_left()) < 0)
                     {
-                        rotate(rnode->get_left()->get_right());
-                        rotate(rnode->get_left());
+                        this->rotate(rnode->get_left()->get_right());
+                        this->rotate(rnode->get_left());
                     }
                 }
                 else if(new_balance <= -2)
                 {
-                    if(count_balance(node->get_right()) < 0)
-                        rotate(rnode->get_right());
-                    else if(count_balance(node->get_right()) > 0)
+                    if(this->count_balance(node->get_right()) < 0)
+                        this->rotate(rnode->get_right());
+                    else if(this->count_balance(node->get_right()) > 0)
                     {
-                        rotate(rnode->get_right()->get_left());
-                        rotate(rnode->get_right());
+                        this->rotate(rnode->get_right()->get_left());
+                        this->rotate(rnode->get_right());
                     }
                 }
 
@@ -544,52 +545,52 @@ namespace algolib
 
             size_t get_height() override
             {
-                return height;
+                return this->height;
             }
 
             inner_ptr get_left() override
             {
-                return left;
+                return this->left;
             }
 
             void set_left(node_ptr node) override
             {
-                do_set_left(node);
+                this->do_set_left(node);
             }
 
             inner_ptr get_right() override
             {
-                return right;
+                return this->right;
             }
 
             void set_right(node_ptr node) override
             {
-                do_set_right(node);
+                this->do_set_right(node);
             }
 
             node_ptr get_parent() override
             {
-                return parent;
+                return this->parent;
             }
 
             void set_parent(node_ptr node) override
             {
-                parent = node;
+                this->parent = node;
             }
 
             void count_height() override
             {
-                do_count_height();
+                this->do_count_height();
             }
 
             inner_ptr minimum() override
             {
-                return left == nullptr ? this : left->minimum();
+                return this->left == nullptr ? this : this->left->minimum();
             }
 
             inner_ptr maximum() override
             {
-                return right == nullptr ? this : right->maximum();
+                return this->right == nullptr ? this : this->right->maximum();
             }
 
             value_type element;  //!< Value in the node.
@@ -599,17 +600,17 @@ namespace algolib
             void do_set_right(node_ptr node);
             void do_count_height();
 
-            int height;  //!< Height of the node.
-            inner_ptr left;  //!< Left child of the node.
-            inner_ptr right;  //!< Right child of the node.
-            node_ptr parent;  //!< Parent of the node.
+            int height;
+            inner_ptr left;
+            inner_ptr right;
+            node_ptr parent;
         };
 
         template <typename E, typename Compare>
         avl_tree<E, Compare>::avl_inner_node::~avl_inner_node()
         {
-            delete left;
-            delete right;
+            delete this->left;
+            delete this->right;
         }
 
         template <typename E, typename Compare>
@@ -623,10 +624,10 @@ namespace algolib
               parent{nullptr}
         {
             if(node.left != nullptr)
-                do_set_left(new avl_inner_node(*node.left));
+                this->do_set_left(new avl_inner_node(*node.left));
 
             if(node.right != nullptr)
-                do_set_right(new avl_inner_node(*node.right));
+                this->do_set_right(new avl_inner_node(*node.right));
         }
 
         template <typename E, typename Compare>
@@ -650,32 +651,32 @@ namespace algolib
         template <typename E, typename Compare>
         void avl_tree<E, Compare>::avl_inner_node::do_set_left(node_ptr node)
         {
-            left = static_cast<inner_ptr>(node);
+            this->left = static_cast<inner_ptr>(node);
 
-            if(left != nullptr)
-                left->set_parent(this);
+            if(this->left != nullptr)
+                this->left->set_parent(this);
 
-            do_count_height();
+            this->do_count_height();
         }
 
         template <typename E, typename Compare>
         void avl_tree<E, Compare>::avl_inner_node::do_set_right(node_ptr node)
         {
-            right = static_cast<inner_ptr>(node);
+            this->right = static_cast<inner_ptr>(node);
 
-            if(right != nullptr)
-                right->set_parent(this);
+            if(this->right != nullptr)
+                this->right->set_parent(this);
 
-            do_count_height();
+            this->do_count_height();
         }
 
         template <typename E, typename Compare>
         void avl_tree<E, Compare>::avl_inner_node::do_count_height()
         {
-            int left_height = left == nullptr ? 0 : left->get_height();
-            int right_height = right == nullptr ? 0 : right->get_height();
+            int left_height = this->left == nullptr ? 0 : this->left->get_height();
+            int right_height = this->right == nullptr ? 0 : this->right->get_height();
 
-            height = std::max(left_height, right_height) + 1;
+            this->height = std::max(left_height, right_height) + 1;
         }
 
 #pragma endregion
@@ -691,14 +692,14 @@ namespace algolib
 
             ~avl_header_node() override
             {
-                delete inner;
+                delete this->inner;
             }
 
             avl_header_node(const avl_header_node & node)
                 : avl_tree<E, Compare>::avl_node(), inner{nullptr}
             {
                 if(node.inner != nullptr)
-                    do_set_parent(new avl_inner_node(*node.inner));
+                    this->do_set_parent(new avl_inner_node(*node.inner));
             }
 
             avl_header_node(avl_header_node && node) = delete;
@@ -730,12 +731,12 @@ namespace algolib
 
             inner_ptr get_parent() override
             {
-                return inner;
+                return this->inner;
             }
 
             void set_parent(node_ptr node) override
             {
-                do_set_parent(node);
+                this->do_set_parent(node);
             }
 
             void count_height() override
@@ -755,13 +756,13 @@ namespace algolib
         private:
             void do_set_parent(node_ptr node)
             {
-                inner = static_cast<inner_ptr>(node);
+                this->inner = static_cast<inner_ptr>(node);
 
-                if(inner != nullptr)
-                    inner->set_parent(this);
+                if(this->inner != nullptr)
+                    this->inner->set_parent(this);
             }
 
-            inner_ptr inner;  //!< The real tree denoted by its root.
+            inner_ptr inner;
         };
 
         template <typename E, typename Compare>
@@ -820,7 +821,7 @@ namespace algolib
 
             reference operator*() const
             {
-                return static_cast<inner_ptr>(current_node)->element;
+                return static_cast<inner_ptr>(this->current_node)->element;
             }
 
             pointer operator->() const
@@ -848,17 +849,17 @@ namespace algolib
         typename avl_tree<E, Compare>::avl_iterator &
                 avl_tree<E, Compare>::avl_iterator::operator++()
         {
-            if(current_node->get_height() > 0)
+            if(this->current_node->get_height() > 0)
             {
-                if(current_node->get_right() != nullptr)
-                    current_node = current_node->get_right()->minimum();
+                if(this->current_node->get_right() != nullptr)
+                    this->current_node = this->current_node->get_right()->minimum();
                 else
                 {
-                    while(current_node->get_parent()->get_height() > 0
-                          && current_node->get_parent()->get_left() != current_node)
-                        current_node = current_node->get_parent();
+                    while(this->current_node->get_parent()->get_height() > 0
+                          && this->current_node->get_parent()->get_left() != this->current_node)
+                        this->current_node = this->current_node->get_parent();
 
-                    current_node = current_node->get_parent();
+                    this->current_node = this->current_node->get_parent();
                 }
             }
 
@@ -872,7 +873,6 @@ namespace algolib
             avl_tree<E, Compare>::avl_const_iterator result = *this;
 
             ++(*this);
-
             return result;
         }
 
@@ -880,21 +880,21 @@ namespace algolib
         typename avl_tree<E, Compare>::avl_iterator &
                 avl_tree<E, Compare>::avl_iterator::operator--()
         {
-            if(current_node->get_height() > 0)
+            if(this->current_node->get_height() > 0)
             {
-                if(current_node->get_left() != nullptr)
-                    current_node = current_node->get_left()->maximum();
+                if(this->current_node->get_left() != nullptr)
+                    this->current_node = this->current_node->get_left()->maximum();
                 else
                 {
-                    while(current_node->get_parent()->get_height() > 0
-                          && current_node->get_parent()->get_right() != current_node)
-                        current_node = current_node->get_parent();
+                    while(this->current_node->get_parent()->get_height() > 0
+                          && this->current_node->get_parent()->get_right() != this->current_node)
+                        this->current_node = this->current_node->get_parent();
 
-                    current_node = current_node->get_parent();
+                    this->current_node = this->current_node->get_parent();
                 }
             }
             else
-                current_node = current_node->get_parent()->maximum();
+                this->current_node = this->current_node->get_parent()->maximum();
 
             return *this;
         }
@@ -906,7 +906,6 @@ namespace algolib
             avl_tree<E, Compare>::avl_const_iterator result = *this;
 
             --(*this);
-
             return result;
         }
 
@@ -958,20 +957,18 @@ namespace algolib
             avl_const_iterator & operator=(const avl_const_iterator & it)
             {
                 this->current_node = it.current_node;
-
                 return *this;
             }
 
             avl_const_iterator & operator=(avl_const_iterator && it) noexcept
             {
                 this->current_node = it.current_node;
-
                 return *this;
             }
 
             reference operator*() const
             {
-                return static_cast<inner_ptr>(current_node)->element;
+                return static_cast<inner_ptr>(this->current_node)->element;
             }
 
             pointer operator->() const
@@ -999,17 +996,17 @@ namespace algolib
         typename avl_tree<E, Compare>::avl_const_iterator &
                 avl_tree<E, Compare>::avl_const_iterator::operator++()
         {
-            if(current_node->get_height() > 0)
+            if(this->current_node->get_height() > 0)
             {
-                if(current_node->get_right() != nullptr)
-                    current_node = current_node->get_right()->minimum();
+                if(this->current_node->get_right() != nullptr)
+                    this->current_node = this->current_node->get_right()->minimum();
                 else
                 {
-                    while(current_node->get_parent()->get_height() > 0
-                          && current_node->get_parent()->get_left() != current_node)
-                        current_node = current_node->get_parent();
+                    while(this->current_node->get_parent()->get_height() > 0
+                          && this->current_node->get_parent()->get_left() != this->current_node)
+                        this->current_node = this->current_node->get_parent();
 
-                    current_node = current_node->get_parent();
+                    this->current_node = this->current_node->get_parent();
                 }
             }
 
@@ -1023,7 +1020,6 @@ namespace algolib
             avl_tree<E, Compare>::avl_const_iterator result = *this;
 
             ++(*this);
-
             return result;
         }
 
@@ -1031,21 +1027,21 @@ namespace algolib
         typename avl_tree<E, Compare>::avl_const_iterator &
                 avl_tree<E, Compare>::avl_const_iterator::operator--()
         {
-            if(current_node->get_height() > 0)
+            if(this->current_node->get_height() > 0)
             {
-                if(current_node->get_left() != nullptr)
-                    current_node = current_node->get_left()->maximum();
+                if(this->current_node->get_left() != nullptr)
+                    this->current_node = this->current_node->get_left()->maximum();
                 else
                 {
-                    while(current_node->get_parent()->get_height() > 0
-                          && current_node->get_parent()->get_right() != current_node)
-                        current_node = current_node->get_parent();
+                    while(this->current_node->get_parent()->get_height() > 0
+                          && this->current_node->get_parent()->get_right() != this->current_node)
+                        this->current_node = this->current_node->get_parent();
 
-                    current_node = current_node->get_parent();
+                    this->current_node = this->current_node->get_parent();
                 }
             }
             else
-                current_node = current_node->get_parent()->maximum();
+                this->current_node = this->current_node->get_parent()->maximum();
 
             return *this;
         }
