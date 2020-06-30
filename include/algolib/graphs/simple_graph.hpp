@@ -176,7 +176,7 @@ namespace internal
     void graph_representation<V, E, VP, EP>::validate(const V & vertex) const
     {
         if(graph_map.find(vertex) == graph_map.end())
-            throw std::invalid_argument("V does not belong to the graph");
+            throw std::invalid_argument("Vertex does not belong to the graph");
     }
 
     template <typename V, typename E, typename VP, typename EP>

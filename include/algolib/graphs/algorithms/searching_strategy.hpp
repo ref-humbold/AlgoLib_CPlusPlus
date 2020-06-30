@@ -16,7 +16,7 @@ namespace algolib
 
             virtual void for_root(const V & root) = 0;
 
-            virtual void on_enter(const V & vertex) = 0;
+            virtual void on_entry(const V & vertex) = 0;
 
             virtual void on_next_vertex(const V & vertex, const V & neighbour) = 0;
 
@@ -45,7 +45,7 @@ namespace algolib
             {
             }
 
-            void on_enter(const V & vertex) override
+            void on_entry(const V & vertex) override
             {
             }
 
