@@ -22,6 +22,7 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/edge.cpp"
     "${GRAPHS}/graph.cpp"
     "${GRAPHS}/simple_graph.cpp"
+    "${GRAPHS}/multipartite_graph.cpp"
     "${GRAPHS}/tree_graph.cpp"
     "${GRAPHS}/undirected_graph.cpp")
 set(GRAPHS_ALGORITHMS_SOURCES
