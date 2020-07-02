@@ -29,7 +29,7 @@ namespace algolib
         };
 
         template <size_t N, typename V = size_t, typename VP = no_prop, typename EP = no_prop>
-        class multipartite_graph : virtual undirected_graph<V, VP, EP>
+        class multipartite_graph : public virtual undirected_graph<V, VP, EP>
         {
         protected:
             using graph_t = undirected_simple_graph<
@@ -250,7 +250,8 @@ namespace algolib
                         const typename multipartite_graph<N, V, VP, EP>::vertex_type & source,
                         const typename multipartite_graph<N, V, VP, EP>::vertex_type & destination)
         {
-            return this->add_edge(multipartite_graph<N, V, VP, EP>::edge_type(source, destination));
+            return this->add_edge(
+                    typename multipartite_graph<N, V, VP, EP>::edge_type(source, destination));
         }
 
         template <size_t N, typename V, typename VP, typename EP>
@@ -261,8 +262,9 @@ namespace algolib
                         const typename multipartite_graph<N, V, VP, EP>::edge_property_type &
                                 property)
         {
-            return this->add_edge(multipartite_graph<N, V, VP, EP>::edge_type(source, destination),
-                                  property);
+            return this->add_edge(
+                    typename multipartite_graph<N, V, VP, EP>::edge_type(source, destination),
+                    property);
         }
 
         template <size_t N, typename V, typename VP, typename EP>

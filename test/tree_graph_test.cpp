@@ -49,7 +49,7 @@ TEST_F(TreeGraphTest, operatorBrackets_whenSettingProperty_thenProperty)
     EXPECT_EQ(edge_property, result_edge);
 }
 
-TEST_F(TreeGraphTest, vertices_count_then_number_of_vertices)
+TEST_F(TreeGraphTest, verticesCount_thenNumberOfVertices)
 {
     // when
     size_t result = test_object.vertices_count();
@@ -57,7 +57,7 @@ TEST_F(TreeGraphTest, vertices_count_then_number_of_vertices)
     EXPECT_EQ(8, result);
 }
 
-TEST_F(TreeGraphTest, vertices_then_all_vertices)
+TEST_F(TreeGraphTest, vertices_thenAllVertices)
 {
     // when
     std::vector<graph_v> result = test_object.vertices();
@@ -67,7 +67,7 @@ TEST_F(TreeGraphTest, vertices_then_all_vertices)
     EXPECT_EQ(std::vector<graph_v>({0, 1, 2, 3, 4, 5, 6, 7}), result);
 }
 
-TEST_F(TreeGraphTest, add_vertex_when_new_vertex_then_created_edge)
+TEST_F(TreeGraphTest, addVertex_whenNewVertex_thenCreatedEdge)
 {
     // given
     graph_v new_vertex = 13, neighbour = 5;
@@ -84,7 +84,7 @@ TEST_F(TreeGraphTest, add_vertex_when_new_vertex_then_created_edge)
     EXPECT_EQ(edge_property, test_object[result]);
 }
 
-TEST_F(TreeGraphTest, add_vertex_when_existing_vertex_then_invalid_argument)
+TEST_F(TreeGraphTest, addVertex_whenExistingVertex_thenInvalidArgument)
 {
     // given
     graph_v vertex = 6;
@@ -99,7 +99,7 @@ TEST_F(TreeGraphTest, add_vertex_when_existing_vertex_then_invalid_argument)
     EXPECT_EQ(vertex_property, test_object[vertex]);
 }
 
-TEST_F(TreeGraphTest, edges_count_then_number_of_edges)
+TEST_F(TreeGraphTest, edgesCount_thenNumberOfEdges)
 {
     // when
     size_t result = test_object.edges_count();
@@ -107,7 +107,7 @@ TEST_F(TreeGraphTest, edges_count_then_number_of_edges)
     EXPECT_EQ(7, result);
 }
 
-TEST_F(TreeGraphTest, edges_then_all_edges)
+TEST_F(TreeGraphTest, edges_thenAllEdges)
 {
     // when
     std::vector<graph_e> result = test_object.edges();
@@ -119,7 +119,7 @@ TEST_F(TreeGraphTest, edges_then_all_edges)
               result);
 }
 
-TEST_F(TreeGraphTest, get_edge_when_in_direction_then_edge)
+TEST_F(TreeGraphTest, getEdge_whenInDirection_thenEdge)
 {
     // given
     graph_v source = 7, destination = 2;
@@ -130,7 +130,7 @@ TEST_F(TreeGraphTest, get_edge_when_in_direction_then_edge)
     EXPECT_EQ(destination, result.destination());
 }
 
-TEST_F(TreeGraphTest, neighbours_then_destination_vertices_of_outgoing_edges)
+TEST_F(TreeGraphTest, neighbours_thenDestinationVerticesOfOutgoingEdges)
 {
     // when
     std::vector<graph_v> result = test_object.neighbours(1);
@@ -140,7 +140,7 @@ TEST_F(TreeGraphTest, neighbours_then_destination_vertices_of_outgoing_edges)
     EXPECT_EQ(std::vector<graph_v>({0, 4, 5}), result);
 }
 
-TEST_F(TreeGraphTest, adjacent_edges_then_outgoing_edges)
+TEST_F(TreeGraphTest, adjacentEdges_thenOutgoingEdges)
 {
     // when
     std::vector<graph_e> result = test_object.adjacent_edges(1);
@@ -150,7 +150,7 @@ TEST_F(TreeGraphTest, adjacent_edges_then_outgoing_edges)
     EXPECT_EQ(std::vector<graph_e>({graph_e(1, 0), graph_e(4, 1), graph_e(5, 1)}), result);
 }
 
-TEST_F(TreeGraphTest, output_degree_then_number_of_outgoing_edges)
+TEST_F(TreeGraphTest, outputDegree_thenNumberOfOutgoingEdges)
 {
     // when
     size_t result = test_object.output_degree(1);
@@ -158,7 +158,7 @@ TEST_F(TreeGraphTest, output_degree_then_number_of_outgoing_edges)
     EXPECT_EQ(3, result);
 }
 
-TEST_F(TreeGraphTest, input_degree_then_number_of_incoming_edges)
+TEST_F(TreeGraphTest, inputDegree_thenNumberOfIncomingEdges)
 {
     // when
     size_t result = test_object.input_degree(1);

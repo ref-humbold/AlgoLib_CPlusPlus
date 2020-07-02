@@ -12,6 +12,7 @@
 #include <unordered_set>
 #include <vector>
 #include "directed_graph.hpp"
+#include "simple_graph.hpp"
 
 namespace algolib
 {

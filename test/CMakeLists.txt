@@ -21,6 +21,7 @@ set(SOURCES
     "lowest_common_ancestor_test.cpp"
     "maths_test.cpp"
     "minimal_spanning_tree_test.cpp"
+    "multipartite_graph_test.cpp"
     "paths_test.cpp"
     "points_sorting_test.cpp"
     "primes_test.cpp"
