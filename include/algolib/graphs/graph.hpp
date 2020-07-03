@@ -41,15 +41,11 @@ namespace algolib
 
             virtual vertex_property_type & operator[](const vertex_type & vertex) = 0;
 
+            virtual const vertex_property_type & operator[](const vertex_type & vertex) const = 0;
+
             virtual edge_property_type & operator[](const edge_type & edge) = 0;
 
-            virtual const vertex_property_type & property(const vertex_type & vertex) const = 0;
-
-            virtual const edge_property_type & property(const edge_type & edge) const = 0;
-
-            virtual bool has_property(const vertex_type & vertex) const = 0;
-
-            virtual bool has_property(const edge_type & edge) const = 0;
+            virtual const edge_property_type & operator[](const edge_type & edge) const = 0;
 
             /*!
              * \param source source vertex

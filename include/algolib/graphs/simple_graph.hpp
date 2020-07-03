@@ -26,7 +26,7 @@ namespace internal
         explicit graph_representation(const std::vector<V> & vertices = {})
         {
             for(const V & vertex : vertices)
-                graph_map.emplace(vertex, std::unordered_set<E>());
+                this->add_vertex(vertex);
         }
 
         ~graph_representation() = default;
@@ -37,55 +37,43 @@ namespace internal
 
         VP & operator[](const V & vertex)
         {
-            validate(vertex);
-            return vertex_properties[vertex];
+            this->validate(vertex);
+            return this->vertex_properties[vertex];
+        }
+
+        const VP & operator[](const V & vertex) const
+        {
+            this->validate(vertex);
+
+            auto it = this->vertex_properties.find(vertex);
+
+            if(it == this->vertex_properties.end())
+                return this->default_vertex_property;
+
+            return it->second;
         }
 
         EP & operator[](const E & edge)
         {
-            validate(edge, true);
-            return edge_properties[edge];
+            this->validate(edge, true);
+            return this->edge_properties[edge];
         }
 
-        const VP & property(const V & vertex) const
+        const EP & operator[](const E & edge) const
         {
-            validate(vertex);
+            this->validate(edge, true);
 
-            auto it = vertex_properties.find(vertex);
+            auto it = this->edge_properties.find(edge);
 
-            if(it == vertex_properties.end())
-                throw std::out_of_range("Property for vertex not found");
+            if(it == this->edge_properties.end())
+                return this->default_edge_property;
 
             return it->second;
-        }
-
-        const EP & property(const E & edge) const
-        {
-            validate(edge, true);
-
-            auto it = edge_properties.find(edge);
-
-            if(it == edge_properties.end())
-                throw std::out_of_range("Property for edge not found");
-
-            return it->second;
-        }
-
-        bool has_property(const V & vertex) const
-        {
-            validate(vertex);
-            return vertex_properties.find(vertex) != vertex_properties.end();
-        }
-
-        bool has_property(const E & edge) const
-        {
-            validate(edge, true);
-            return edge_properties.find(edge) != edge_properties.end();
         }
 
         size_t size() const
         {
-            return graph_map.size();
+            return this->graph_map.size();
         }
 
         std::vector<V> vertices() const;
@@ -100,6 +88,8 @@ namespace internal
         void validate(const V & vertex) const;
         void validate(const E & edge, bool existing) const;
 
+        VP default_vertex_property;
+        EP default_edge_property;
         std::unordered_map<V, std::unordered_set<E>> graph_map;
         std::unordered_map<V, VP> vertex_properties;
         std::unordered_map<E, EP> edge_properties;
@@ -110,7 +100,7 @@ namespace internal
     {
         std::vector<V> v;
 
-        for(auto it = graph_map.cbegin(); it != graph_map.cend(); ++it)
+        for(auto && it = this->graph_map.cbegin(); it != this->graph_map.cend(); ++it)
             v.push_back(it->first);
 
         return v;
@@ -121,7 +111,7 @@ namespace internal
     {
         std::vector<E> v;
 
-        for(auto it = graph_map.cbegin(); it != graph_map.cend(); ++it)
+        for(auto && it = this->graph_map.cbegin(); it != this->graph_map.cend(); ++it)
             for(auto eit = it->second.cbegin(); eit != it->second.cend(); ++eit)
                 v.push_back(*eit);
 
@@ -133,7 +123,7 @@ namespace internal
     {
         std::vector<std::unordered_set<E>> v;
 
-        for(auto it = graph_map.cbegin(); it != graph_map.cend(); ++it)
+        for(auto && it = this->graph_map.cbegin(); it != this->graph_map.cend(); ++it)
             v.push_back(it->second);
 
         return v;
@@ -144,9 +134,10 @@ namespace internal
     {
         std::vector<E> v;
 
-        validate(vertex);
+        this->validate(vertex);
 
-        for(auto it = graph_map.at(vertex).cbegin(); it != graph_map.at(vertex).cend(); ++it)
+        for(auto && it = this->graph_map.at(vertex).cbegin();
+            it != this->graph_map.at(vertex).cend(); ++it)
             v.push_back(*it);
 
         return v;
@@ -161,33 +152,36 @@ namespace internal
     template <typename V, typename E, typename VP, typename EP>
     void graph_representation<V, E, VP, EP>::add_edge_to_source(const E & edge)
     {
-        validate(edge, false);
-        graph_map.at(edge.source()).insert(edge);
+        this->validate(edge, false);
+        this->graph_map.at(edge.source()).insert(edge);
     }
 
     template <typename V, typename E, typename VP, typename EP>
     void graph_representation<V, E, VP, EP>::add_edge_to_destination(const E & edge)
     {
-        validate(edge, false);
-        graph_map.at(edge.destination()).insert(edge);
+        this->validate(edge, false);
+        this->graph_map.at(edge.destination()).insert(edge);
     }
 
     template <typename V, typename E, typename VP, typename EP>
     void graph_representation<V, E, VP, EP>::validate(const V & vertex) const
     {
-        if(graph_map.find(vertex) == graph_map.end())
+        if(this->graph_map.find(vertex) == this->graph_map.end())
             throw std::invalid_argument("Vertex does not belong to the graph");
     }
 
     template <typename V, typename E, typename VP, typename EP>
     void graph_representation<V, E, VP, EP>::validate(const E & edge, bool existing) const
     {
-        if(graph_map.find(edge.source()) == graph_map.end()
-           || graph_map.find(edge.destination()) == graph_map.end())
+        if(this->graph_map.find(edge.source()) == this->graph_map.end()
+           || this->graph_map.find(edge.destination()) == this->graph_map.end())
             throw std::invalid_argument("Edge does not belong to the graph");
 
-        if(existing && graph_map.at(edge.source()).find(edge) == graph_map.at(edge.source()).end()
-           && graph_map.at(edge.destination()).find(edge) == graph_map.at(edge.destination()).end())
+        if(existing
+           && this->graph_map.at(edge.source()).find(edge)
+                      == this->graph_map.at(edge.source()).end()
+           && this->graph_map.at(edge.destination()).find(edge)
+                      == this->graph_map.at(edge.destination()).end())
             throw std::invalid_argument("Edge does not belong to the graph");
     }
 }
@@ -235,34 +229,22 @@ namespace algolib
                 return this->representation[vertex];
             }
 
+            const typename simple_graph<V, VP, EP>::vertex_property_type & operator[](
+                    const typename simple_graph<V, VP, EP>::vertex_type & vertex) const override
+            {
+                return this->representation[vertex];
+            }
+
             typename simple_graph<V, VP, EP>::edge_property_type &
                     operator[](const typename simple_graph<V, VP, EP>::edge_type & edge) override
             {
                 return this->representation[edge];
             }
 
-            const typename simple_graph<V, VP, EP>::vertex_property_type & property(
-                    const typename simple_graph<V, VP, EP>::vertex_type & vertex) const override
-            {
-                return this->representation.property(vertex);
-            }
-
-            const typename simple_graph<V, VP, EP>::edge_property_type & property(
+            const typename simple_graph<V, VP, EP>::edge_property_type & operator[](
                     const typename simple_graph<V, VP, EP>::edge_type & edge) const override
             {
-                return this->representation.property(edge);
-            }
-
-            bool has_property(
-                    const typename simple_graph<V, VP, EP>::vertex_type & vertex) const override
-            {
-                return this->representation.has_property(vertex);
-            }
-
-            bool has_property(
-                    const typename simple_graph<V, VP, EP>::edge_type & edge) const override
-            {
-                return this->representation.has_property(edge);
+                return this->representation[edge];
             }
 
             std::vector<typename simple_graph<V, VP, EP>::edge_type> adjacent_edges(

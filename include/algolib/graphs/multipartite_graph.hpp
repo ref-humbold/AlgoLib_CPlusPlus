@@ -90,36 +90,24 @@ namespace algolib
                 return this->graph[vertex];
             }
 
+            const typename multipartite_graph<N, V, VP, EP>::vertex_property_type & operator[](
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex)
+                    const override
+            {
+                return this->graph[vertex];
+            }
+
             typename multipartite_graph<N, V, VP, EP>::edge_property_type & operator[](
                     const typename multipartite_graph<N, V, VP, EP>::edge_type & edge) override
             {
                 return this->graph[edge];
             }
 
-            const typename multipartite_graph<N, V, VP, EP>::vertex_property_type &
-                    property(const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex)
-                            const override
-            {
-                return this->graph.property(vertex);
-            }
-
             const typename multipartite_graph<N, V, VP, EP>::edge_property_type &
-                    property(const typename multipartite_graph<N, V, VP, EP>::edge_type & edge)
+                    operator[](const typename multipartite_graph<N, V, VP, EP>::edge_type & edge)
                             const override
             {
-                return this->graph.property(edge);
-            }
-
-            bool has_property(const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex)
-                    const override
-            {
-                return this->graph.has_property(vertex);
-            }
-
-            bool has_property(const typename multipartite_graph<N, V, VP, EP>::edge_type & edge)
-                    const override
-            {
-                return this->graph.has_property(edge);
+                return this->graph[edge];
             }
 
             typename multipartite_graph<N, V, VP, EP>::edge_type

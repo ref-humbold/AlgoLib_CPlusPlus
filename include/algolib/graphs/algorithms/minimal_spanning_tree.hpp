@@ -25,7 +25,7 @@ namespace internal
 
         bool operator()(const E & edge1, const E & edge2) const
         {
-            return graph.property(edge2).weight() < graph.property(edge1).weight();
+            return graph[edge2].weight() < graph[edge1].weight();
         }
 
         const algolib::graphs::undirected_simple_graph<V, VP, EP> & graph;
@@ -41,7 +41,7 @@ namespace internal
 
         bool operator()(const std::pair<E, V> & pair1, const std::pair<E, V> & pair2) const
         {
-            return graph.property(pair2.first).weight() < graph.property(pair1.first).weight();
+            return graph[pair2.first].weight() < graph[pair1.first].weight();
         }
 
         const algolib::graphs::undirected_simple_graph<V, VP, EP> & graph;
@@ -88,12 +88,7 @@ namespace algolib
                 edge_queue.pop();
 
                 if(!vertex_sets.is_same_set(edge.source(), edge.destination()))
-                {
-                    if(graph.has_property(edge))
-                        mst.add_edge(edge, graph.property(edge));
-                    else
-                        mst.add_edge(edge);
-                }
+                    mst.add_edge(edge, graph[edge]);
 
                 vertex_sets.union_set(edge.source(), edge.destination());
             }
@@ -145,10 +140,7 @@ namespace algolib
 
                 if(insert_result.second)
                 {
-                    if(graph.has_property(edge))
-                        mst.add_edge(edge, graph.property(edge));
-                    else
-                        mst.add_edge(edge);
+                    mst.add_edge(edge, graph[edge]);
 
                     for(auto && adjacent_edge : graph.adjacent_edges(vertex))
                     {

@@ -142,20 +142,13 @@ namespace algolib
                     graph(this->vertices());
 
             for(auto && vertex : this->vertices())
-                if(this->has_property(vertex))
-                    graph[vertex] = this->property(vertex);
+                graph[vertex] = this->operator[](vertex);
 
             for(auto && edge : this->edges())
-                if(this->has_property(edge))
-                {
-                    graph.add_edge(edge, this->property(edge));
-                    graph.add_edge(edge.reversed(), this->property(edge));
-                }
-                else
-                {
-                    graph.add_edge(edge);
-                    graph.add_edge(edge.reversed());
-                }
+            {
+                graph.add_edge(edge, this->operator[](edge));
+                graph.add_edge(edge.reversed(), this->operator[](edge));
+            }
 
             return graph;
         }

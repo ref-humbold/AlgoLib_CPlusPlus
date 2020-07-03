@@ -185,7 +185,7 @@ TEST_F(AVLTreeTest, iterator_whenIterativeForLoop_thenSortedElements)
     std::vector<int> result;
     std::vector<int> sorted_numbers = numbers;
 
-    for(auto it = test_object.begin(); it != test_object.end(); ++it)
+    for(auto && it = test_object.begin(); it != test_object.end(); ++it)
         result.push_back(*it);
 
     std::sort(sorted_numbers.begin(), sorted_numbers.end());
@@ -228,7 +228,7 @@ TEST_F(AVLTreeTest, reverseIterator_whenIterativeForLoop_thenReverseSortedElemen
     std::vector<int> result;
     std::vector<int> reversed_numbers = numbers;
 
-    for(auto it = test_object.rbegin(); it != test_object.rend(); ++it)
+    for(auto && it = test_object.rbegin(); it != test_object.rend(); ++it)
         result.push_back(*it);
 
     std::sort(reversed_numbers.rbegin(), reversed_numbers.rend());
@@ -241,7 +241,7 @@ TEST_F(AVLTreeTest, reverseIterator_whenIterativeForLoopForConstObject_thenRever
     std::vector<int> result;
     std::vector<int> reversed_numbers = numbers;
 
-    for(auto it = const_test_object.rbegin(); it != const_test_object.rend(); ++it)
+    for(auto && it = const_test_object.rbegin(); it != const_test_object.rend(); ++it)
         result.push_back(*it);
 
     std::sort(reversed_numbers.rbegin(), reversed_numbers.rend());

@@ -61,33 +61,22 @@ namespace algolib
                 return this->graph[vertex];
             }
 
+            const typename tree_graph<V, VP, EP>::vertex_property_type & operator[](
+                    const typename tree_graph<V, VP, EP>::vertex_type & vertex) const override
+            {
+                return this->graph[vertex];
+            }
+
             typename tree_graph<V, VP, EP>::edge_property_type &
                     operator[](const typename tree_graph<V, VP, EP>::edge_type & edge) override
             {
                 return this->graph[edge];
             }
 
-            const typename tree_graph<V, VP, EP>::vertex_property_type & property(
-                    const typename tree_graph<V, VP, EP>::vertex_type & vertex) const override
+            const typename tree_graph<V, VP, EP>::edge_property_type & operator[](
+                    const typename tree_graph<V, VP, EP>::edge_type & edge) const override
             {
-                return this->graph.property(vertex);
-            }
-
-            const typename tree_graph<V, VP, EP>::edge_property_type &
-                    property(const typename tree_graph<V, VP, EP>::edge_type & edge) const override
-            {
-                return this->graph.property(edge);
-            }
-
-            bool has_property(
-                    const typename tree_graph<V, VP, EP>::vertex_type & vertex) const override
-            {
-                return this->graph.has_property(vertex);
-            }
-
-            bool has_property(const typename tree_graph<V, VP, EP>::edge_type & edge) const override
-            {
-                return this->graph.has_property(edge);
+                return this->graph[edge];
             }
 
             typename tree_graph<V, VP, EP>::edge_type get_edge(
