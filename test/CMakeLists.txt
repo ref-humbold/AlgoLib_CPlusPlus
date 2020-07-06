@@ -11,6 +11,7 @@ find_package(Threads REQUIRED)
 # SOURCES
 set(SOURCES
     "avl_tree_test.cpp"
+    "cutting_test.cpp"
     "directed_graph_test.cpp"
     "disjoint_sets_test.cpp"
     "double_heap_test.cpp"

@@ -26,6 +26,8 @@ set(GRAPHS_SOURCES
     "${GRAPHS}/tree_graph.cpp"
     "${GRAPHS}/undirected_graph.cpp")
 set(GRAPHS_ALGORITHMS_SOURCES
+    "${GRAPHS_ALGORITHMS}/cutting.cpp"
+    "${GRAPHS_ALGORITHMS}/minimal_spanning_tree.cpp"
     "${GRAPHS_ALGORITHMS}/searching.cpp"
     "${GRAPHS_ALGORITHMS}/searching_strategy.cpp")
 set(MATHMAT_SOURCES
