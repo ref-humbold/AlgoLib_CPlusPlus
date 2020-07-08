@@ -34,30 +34,25 @@ namespace algolib
         template <typename V>
         struct empty_strategy : public virtual dfs_strategy<V>
         {
-            empty_strategy() = default;
             ~empty_strategy() override = default;
-            empty_strategy(const empty_strategy &) = default;
-            empty_strategy(empty_strategy &&) = default;
-            empty_strategy & operator=(const empty_strategy &) = default;
-            empty_strategy & operator=(empty_strategy &&) = default;
 
-            void for_root(const V & root) override
+            void for_root(const V &) override
             {
             }
 
-            void on_entry(const V & vertex) override
+            void on_entry(const V &) override
             {
             }
 
-            void on_next_vertex(const V & vertex, const V & neighbour) override
+            void on_next_vertex(const V &, const V &) override
             {
             }
 
-            void on_exit(const V & vertex) override
+            void on_exit(const V &) override
             {
             }
 
-            void on_edge_to_visited(const V & vertex, const V & neighbour) override
+            void on_edge_to_visited(const V &, const V &) override
             {
             }
         };

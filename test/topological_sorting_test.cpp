@@ -1,80 +1,118 @@
-//! TESTY DLA ALGORYTMÓW SORTOWANIA TOPOLOGICZNEGO"""
+/*!
+ * \file topological_sorting_test.cpp
+ * \brief Tests: Algorithms for topological sorting of a directed graph
+ */
 #include <gtest/gtest.h>
-#include "algolib/old_graphs/algorithms/topological_sorting.hpp"
+#include "algolib/graphs/algorithms/topological_sorting.hpp"
 
 namespace algr = algolib::graphs;
 
-TEST(TopologicalSortingTest, sortTopological1_whenAcyclicGraph)
+using graph_t = algr::directed_simple_graph<>;
+using graph_v = graph_t::vertex_type;
+
+TEST(TopologicalSortingTest, sortTopological1_whenAcyclicGraph_thenTopologicalOrder)
 {
-    algr::directed_simple_graph graph(
-            6, std::vector<edge_t>({std::make_tuple(0, 2), std::make_tuple(0, 4),
-                                    std::make_tuple(1, 0), std::make_tuple(1, 4),
-                                    std::make_tuple(3, 1), std::make_tuple(3, 0),
-                                    std::make_tuple(3, 2), std::make_tuple(5, 1),
-                                    std::make_tuple(5, 2), std::make_tuple(5, 4)}));
-
-    std::vector<vertex_t> result = sort_topological1(graph);
-
-    EXPECT_EQ(std::vector<vertex_t>({3, 5, 1, 0, 2, 4}), result);
+    // given
+    graph_t graph({0, 1, 2, 3, 4, 5});
+    graph.add_edge_between(0, 2);
+    graph.add_edge_between(0, 4), graph.add_edge_between(1, 0);
+    graph.add_edge_between(1, 4);
+    graph.add_edge_between(3, 1);
+    graph.add_edge_between(3, 0);
+    graph.add_edge_between(3, 2);
+    graph.add_edge_between(5, 1);
+    graph.add_edge_between(5, 2);
+    graph.add_edge_between(5, 4);
+    // when
+    std::vector<graph_v> result = sort_topological1(graph);
+    // then
+    EXPECT_EQ(std::vector<graph_v>({3, 5, 1, 0, 2, 4}), result);
 }
 
-TEST(TopologicalSortingTest, sortTopological1_whenCyclicGraph)
+TEST(TopologicalSortingTest, sortTopological1_whenCyclicGraph_thenDirectedCyclicGraphError)
 {
-    algr::directed_simple_graph graph(
-            6, std::vector<edge_t>(
-                       {std::make_tuple(0, 2), std::make_tuple(0, 4), std::make_tuple(1, 0),
-                        std::make_tuple(1, 4), std::make_tuple(2, 1), std::make_tuple(3, 1),
-                        std::make_tuple(3, 0), std::make_tuple(3, 2), std::make_tuple(5, 1),
-                        std::make_tuple(5, 2), std::make_tuple(5, 4)}));
-
-    EXPECT_THROW(sort_topological1(graph), algr::directed_cyclic_graph_exception);
+    // given
+    graph_t graph({0, 1, 2, 3, 4, 5});
+    graph.add_edge_between(0, 2);
+    graph.add_edge_between(0, 4);
+    graph.add_edge_between(1, 0);
+    graph.add_edge_between(1, 4);
+    graph.add_edge_between(2, 1);
+    graph.add_edge_between(3, 1);
+    graph.add_edge_between(3, 0);
+    graph.add_edge_between(3, 2);
+    graph.add_edge_between(5, 1);
+    graph.add_edge_between(5, 2);
+    graph.add_edge_between(5, 4);
+    // when
+    auto exec = [&]() { return sort_topological1(graph); };
+    // then
+    EXPECT_THROW(exec(), algr::directed_cyclic_graph_error);
 }
 
-TEST(TopologicalSortingTest, sortTopological1_whenEmptyGraph)
+TEST(TopologicalSortingTest, sortTopological1_whenEmptyGraph_thenNaturalOrder)
 {
-    algr::directed_simple_graph graph(6);
-
-    std::vector<vertex_t> result = sort_topological1(graph);
-
-    EXPECT_EQ(std::vector<vertex_t>({0, 1, 2, 3, 4, 5}), result);
+    // given
+    graph_t graph({0, 1, 2, 3, 4, 5});
+    // when
+    std::vector<graph_v> result = sort_topological1(graph);
+    // then
+    EXPECT_EQ(graph.vertices(), result);
 }
 
-TEST(TopologicalSortingTest, sortTopological2_whenAcyclicGraph)
+TEST(TopologicalSortingTest, sortTopological2_whenAcyclicGraph_thenTopologicalOrder)
 {
-    algr::directed_simple_graph graph(
-            6, std::vector<edge_t>({std::make_tuple(0, 2), std::make_tuple(0, 4),
-                                    std::make_tuple(1, 0), std::make_tuple(1, 4),
-                                    std::make_tuple(3, 1), std::make_tuple(3, 0),
-                                    std::make_tuple(3, 2), std::make_tuple(5, 1),
-                                    std::make_tuple(5, 2), std::make_tuple(5, 4)}));
+    // given
+    graph_t graph({0, 1, 2, 3, 4, 5});
+    graph.add_edge_between(0, 2);
+    graph.add_edge_between(0, 4);
+    graph.add_edge_between(1, 0);
+    graph.add_edge_between(1, 4);
+    graph.add_edge_between(3, 1);
+    graph.add_edge_between(3, 0);
+    graph.add_edge_between(3, 2);
+    graph.add_edge_between(5, 1);
+    graph.add_edge_between(5, 2);
+    graph.add_edge_between(5, 4);
 
-    std::vector<vertex_t> result = sort_topological2(graph);
-    std::vector<std::vector<vertex_t>> expecteds = {
-            std::vector<vertex_t>({3, 5, 1, 0, 2, 4}), std::vector<vertex_t>({5, 3, 1, 0, 2, 4}),
-            std::vector<vertex_t>({3, 5, 1, 0, 4, 2}), std::vector<vertex_t>({5, 3, 1, 0, 4, 2})};
-
+    std::vector<std::vector<graph_v>> expecteds = {
+            std::vector<graph_v>({3, 5, 1, 0, 2, 4}), std::vector<graph_v>({5, 3, 1, 0, 2, 4}),
+            std::vector<graph_v>({3, 5, 1, 0, 4, 2}), std::vector<graph_v>({5, 3, 1, 0, 4, 2})};
+    // when
+    std::vector<graph_v> result = sort_topological2(graph);
+    // then
     EXPECT_TRUE(
             std::any_of(expecteds.begin(), expecteds.end(),
-                        [&](const std::vector<vertex_t> expected) { return expected == result; }));
+                        [&](const std::vector<graph_v> expected) { return expected == result; }));
 }
 
-TEST(TopologicalSortingTest, sortTopological2_whenCyclicGraph)
+TEST(TopologicalSortingTest, sortTopological2_whenCyclicGraph_thenDirectedCyclicGraphError)
 {
-    algr::directed_simple_graph graph(
-            6, std::vector<edge_t>(
-                       {std::make_tuple(0, 2), std::make_tuple(0, 4), std::make_tuple(1, 0),
-                        std::make_tuple(1, 4), std::make_tuple(2, 1), std::make_tuple(3, 1),
-                        std::make_tuple(3, 0), std::make_tuple(3, 2), std::make_tuple(5, 1),
-                        std::make_tuple(5, 2), std::make_tuple(5, 4)}));
-
-    EXPECT_THROW(sort_topological2(graph), algr::directed_cyclic_graph_exception);
+    // given
+    graph_t graph({0, 1, 2, 3, 4, 5});
+    graph.add_edge_between(0, 2);
+    graph.add_edge_between(0, 4);
+    graph.add_edge_between(1, 0);
+    graph.add_edge_between(1, 4);
+    graph.add_edge_between(2, 1);
+    graph.add_edge_between(3, 1);
+    graph.add_edge_between(3, 0);
+    graph.add_edge_between(3, 2);
+    graph.add_edge_between(5, 1);
+    graph.add_edge_between(5, 2);
+    graph.add_edge_between(5, 4);
+    // when
+    auto exec = [&]() { return sort_topological2(graph); };
+    // then
+    EXPECT_THROW(exec(), algr::directed_cyclic_graph_error);
 }
 
-TEST(TopologicalSortingTest, sortTopological2_whenEmptyGraph)
+TEST(TopologicalSortingTest, sortTopological2_whenEmptyGraph_thenNaturalOrder)
 {
-    algr::directed_simple_graph graph(6);
-
-    std::vector<vertex_t> result = sort_topological2(graph);
-
-    EXPECT_EQ(std::vector<vertex_t>({0, 1, 2, 3, 4, 5}), result);
+    // given
+    algr::directed_simple_graph<> graph({0, 1, 2, 3, 4, 5});
+    // when
+    std::vector<graph_v> result = sort_topological2(graph);
+    // then
+    EXPECT_EQ(graph.vertices(), result);
 }

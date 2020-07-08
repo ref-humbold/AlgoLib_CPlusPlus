@@ -10,7 +10,7 @@ namespace algr = algolib::graphs;
 template <typename V>
 struct test_strategy : public algr::dfs_strategy<V>
 {
-    void for_root(const V & vertex) override
+    void for_root(const V &) override
     {
     }
 
@@ -19,7 +19,7 @@ struct test_strategy : public algr::dfs_strategy<V>
         this->entries.push_back(vertex);
     }
 
-    void on_next_vertex(const V & vertex, const V & neighbour) override
+    void on_next_vertex(const V &, const V &) override
     {
     }
 
@@ -28,7 +28,7 @@ struct test_strategy : public algr::dfs_strategy<V>
         this->exits.push_back(vertex);
     }
 
-    void on_edge_to_visited(const V & vertex, const V & neighbour) override
+    void on_edge_to_visited(const V &, const V &) override
     {
     }
 

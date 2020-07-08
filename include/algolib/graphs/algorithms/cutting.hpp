@@ -25,7 +25,9 @@ namespace internal
         {
         }
 
-        void for_root(const V & root) override
+        ~cutting_strategy() override = default;
+
+        void for_root(const V &) override
         {
         }
 
