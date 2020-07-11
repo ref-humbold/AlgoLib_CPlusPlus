@@ -81,7 +81,7 @@ namespace algolib
          */
         template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
         std::vector<typename directed_graph<V, VP, EP>::vertex_type>
-                sort_topological1(const directed_graph<V, VP, EP> & graph)
+                sort_topological_using_inputs(const directed_graph<V, VP, EP> & graph)
         {
             std::vector<typename directed_graph<V, VP, EP>::vertex_type> order;
 
@@ -135,7 +135,7 @@ namespace algolib
          */
         template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
         std::vector<typename directed_graph<V, VP, EP>::vertex_type>
-                sort_topological2(const directed_graph<V, VP, EP> & graph)
+                sort_topological_using_dfs(const directed_graph<V, VP, EP> & graph)
         {
             if(graph.edges_count() == 0)
                 return graph.vertices();

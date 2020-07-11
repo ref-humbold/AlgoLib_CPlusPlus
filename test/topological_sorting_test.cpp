@@ -10,7 +10,7 @@ namespace algr = algolib::graphs;
 using graph_t = algr::directed_simple_graph<>;
 using graph_v = graph_t::vertex_type;
 
-TEST(TopologicalSortingTest, sortTopological1_whenAcyclicGraph_thenTopologicalOrder)
+TEST(TopologicalSortingTest, sortTopologicalUsingInputs_whenAcyclicGraph_thenTopologicalOrder)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
@@ -24,12 +24,13 @@ TEST(TopologicalSortingTest, sortTopological1_whenAcyclicGraph_thenTopologicalOr
     graph.add_edge_between(5, 2);
     graph.add_edge_between(5, 4);
     // when
-    std::vector<graph_v> result = sort_topological1(graph);
+    std::vector<graph_v> result = sort_topological_using_inputs(graph);
     // then
     EXPECT_EQ(std::vector<graph_v>({3, 5, 1, 0, 2, 4}), result);
 }
 
-TEST(TopologicalSortingTest, sortTopological1_whenCyclicGraph_thenDirectedCyclicGraphError)
+TEST(TopologicalSortingTest,
+     sortTopologicalUsingInputs_whenCyclicGraph_thenDirectedCyclicGraphError)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
@@ -45,22 +46,22 @@ TEST(TopologicalSortingTest, sortTopological1_whenCyclicGraph_thenDirectedCyclic
     graph.add_edge_between(5, 2);
     graph.add_edge_between(5, 4);
     // when
-    auto exec = [&]() { return sort_topological1(graph); };
+    auto exec = [&]() { return sort_topological_using_inputs(graph); };
     // then
     EXPECT_THROW(exec(), algr::directed_cyclic_graph_error);
 }
 
-TEST(TopologicalSortingTest, sortTopological1_whenEmptyGraph_thenNaturalOrder)
+TEST(TopologicalSortingTest, sortTopologicalUsingInputs_whenEmptyGraph_thenVertices)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
     // when
-    std::vector<graph_v> result = sort_topological1(graph);
+    std::vector<graph_v> result = sort_topological_using_inputs(graph);
     // then
     EXPECT_EQ(graph.vertices(), result);
 }
 
-TEST(TopologicalSortingTest, sortTopological2_whenAcyclicGraph_thenTopologicalOrder)
+TEST(TopologicalSortingTest, sortTopologicalUsingDFS_whenAcyclicGraph_thenTopologicalOrder)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
@@ -79,14 +80,14 @@ TEST(TopologicalSortingTest, sortTopological2_whenAcyclicGraph_thenTopologicalOr
             std::vector<graph_v>({3, 5, 1, 0, 2, 4}), std::vector<graph_v>({5, 3, 1, 0, 2, 4}),
             std::vector<graph_v>({3, 5, 1, 0, 4, 2}), std::vector<graph_v>({5, 3, 1, 0, 4, 2})};
     // when
-    std::vector<graph_v> result = sort_topological2(graph);
+    std::vector<graph_v> result = sort_topological_using_dfs(graph);
     // then
     EXPECT_TRUE(
             std::any_of(expecteds.begin(), expecteds.end(),
                         [&](const std::vector<graph_v> expected) { return expected == result; }));
 }
 
-TEST(TopologicalSortingTest, sortTopological2_whenCyclicGraph_thenDirectedCyclicGraphError)
+TEST(TopologicalSortingTest, sortTopologicalUsingDFS_whenCyclicGraph_thenDirectedCyclicGraphError)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
@@ -102,17 +103,17 @@ TEST(TopologicalSortingTest, sortTopological2_whenCyclicGraph_thenDirectedCyclic
     graph.add_edge_between(5, 2);
     graph.add_edge_between(5, 4);
     // when
-    auto exec = [&]() { return sort_topological2(graph); };
+    auto exec = [&]() { return sort_topological_using_dfs(graph); };
     // then
     EXPECT_THROW(exec(), algr::directed_cyclic_graph_error);
 }
 
-TEST(TopologicalSortingTest, sortTopological2_whenEmptyGraph_thenNaturalOrder)
+TEST(TopologicalSortingTest, sortTopologicalUsingDFS_whenEmptyGraph_thenVertices)
 {
     // given
     algr::directed_simple_graph<> graph({0, 1, 2, 3, 4, 5});
     // when
-    std::vector<graph_v> result = sort_topological2(graph);
+    std::vector<graph_v> result = sort_topological_using_dfs(graph);
     // then
     EXPECT_EQ(graph.vertices(), result);
 }
