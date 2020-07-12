@@ -26,7 +26,7 @@ namespace algolib
             using vertex_type = typename tree_graph<V, VP, EP>::vertex_type;
 
         private:
-            class lca_strategy;
+            struct lca_strategy;
 
         public:
             lowest_common_ancestor(const tree_graph<V, VP, EP> & graph, const vertex_type & root)
@@ -117,10 +117,9 @@ namespace algolib
 #pragma region lca_strategy
 
         template <typename V, typename VP, typename EP>
-        class lowest_common_ancestor<V, VP, EP>::lca_strategy
+        struct lowest_common_ancestor<V, VP, EP>::lca_strategy
             : public dfs_strategy<typename lowest_common_ancestor<V, VP, EP>::vertex_type>
         {
-        public:
             using vertex_type = typename lowest_common_ancestor<V, VP, EP>::vertex_type;
 
             lca_strategy() : timer{0}
@@ -149,15 +148,13 @@ namespace algolib
                 ++this->timer;
             }
 
-            void on_edge_to_visited(const vertex_type &, const V &) override
+            void on_edge_to_visited(const vertex_type &, const vertex_type &) override
             {
             }
 
             std::unordered_map<vertex_type, vertex_type> parents;
             std::unordered_map<vertex_type, int> pre_times;
             std::unordered_map<vertex_type, int> post_times;
-
-        private:
             int timer;
         };
 

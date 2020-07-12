@@ -32,10 +32,8 @@ namespace algolib
         };
 
         template <typename V>
-        struct empty_strategy : public virtual dfs_strategy<V>
+        struct empty_strategy : public dfs_strategy<V>
         {
-            ~empty_strategy() override = default;
-
             void for_root(const V &) override
             {
             }

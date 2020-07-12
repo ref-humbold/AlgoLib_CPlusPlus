@@ -31,6 +31,7 @@ set(GRAPHS_ALGORITHMS_SOURCES
     "${GRAPHS_ALGORITHMS}/minimal_spanning_tree.cpp"
     "${GRAPHS_ALGORITHMS}/searching.cpp"
     "${GRAPHS_ALGORITHMS}/searching_strategy.cpp"
+    "${GRAPHS_ALGORITHMS}/strongly_connected_components.cpp"
     "${GRAPHS_ALGORITHMS}/topological_sorting.cpp")
 set(MATHMAT_SOURCES
     "${MATHMAT}/equation.cpp"
