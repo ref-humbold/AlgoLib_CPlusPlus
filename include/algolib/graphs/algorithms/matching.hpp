@@ -45,10 +45,11 @@ namespace internal
     };
 
     template <typename V, typename VP, typename EP>
+    constexpr double match_augmenter<V, VP, EP>::INFINITY;
+
+    template <typename V, typename VP, typename EP>
     bool match_augmenter<V, VP, EP>::augment_match()
     {
-#include <iostream>
-
         std::unordered_set<typename graph_t::vertex_type> visited;
         std::unordered_map<typename graph_t::vertex_type, double> distances;
 

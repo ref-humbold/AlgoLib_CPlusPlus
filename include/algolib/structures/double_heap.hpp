@@ -108,6 +108,14 @@ namespace algolib
         };
 
         template <typename E, typename Container, typename Compare>
+        constexpr typename double_heap<E, Container, Compare>::size_type
+                double_heap<E, Container, Compare>::INDEX_MIN;
+
+        template <typename E, typename Container, typename Compare>
+        constexpr typename double_heap<E, Container, Compare>::size_type
+                double_heap<E, Container, Compare>::INDEX_MAX;
+
+        template <typename E, typename Container, typename Compare>
         void double_heap<E, Container, Compare>::push(const_reference element)
         {
             heap.push_back(element);
