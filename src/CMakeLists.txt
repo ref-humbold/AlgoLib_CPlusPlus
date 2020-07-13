@@ -28,6 +28,7 @@ set(GRAPHS_SOURCES
 set(GRAPHS_ALGORITHMS_SOURCES
     "${GRAPHS_ALGORITHMS}/cutting.cpp"
     "${GRAPHS_ALGORITHMS}/lowest_common_ancestor.cpp"
+    "${GRAPHS_ALGORITHMS}/matching.cpp"
     "${GRAPHS_ALGORITHMS}/minimal_spanning_tree.cpp"
     "${GRAPHS_ALGORITHMS}/searching.cpp"
     "${GRAPHS_ALGORITHMS}/searching_strategy.cpp"

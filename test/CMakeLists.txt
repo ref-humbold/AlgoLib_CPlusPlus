@@ -20,6 +20,7 @@ set(SOURCES
     "fraction_test.cpp"
     "kmp_test.cpp"
     "lowest_common_ancestor_test.cpp"
+    "matching_test.cpp"
     "maths_test.cpp"
     "minimal_spanning_tree_test.cpp"
     "multipartite_graph_test.cpp"

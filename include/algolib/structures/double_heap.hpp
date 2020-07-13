@@ -100,11 +100,11 @@ namespace algolib
             void step_to_min(size_type index, size_type next_index);
             void step_to_max(size_type index, size_type next_index);
 
-            static const size_type INDEX_MIN = 0;
-            static const size_type INDEX_MAX = 1;
+            static constexpr size_type INDEX_MIN = 0;
+            static constexpr size_type INDEX_MAX = 1;
 
-            container_type heap;  // Heap respresentation
-            Compare compare;  // Comparator
+            container_type heap;
+            Compare compare;
         };
 
         template <typename E, typename Container, typename Compare>
