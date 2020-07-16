@@ -102,7 +102,7 @@ namespace algolib
          * \param graph an undirected graph
          * \return vector of edges in the edge cut
          */
-        template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
+        template <typename V, typename VP, typename EP>
         std::vector<typename undirected_graph<V, VP, EP>::edge_type>
                 find_edge_cut(const undirected_graph<V, VP, EP> & graph)
         {
@@ -123,7 +123,7 @@ namespace algolib
          * \param graph an undirected graph
          * \return vector of vertices in the vertex cut
          */
-        template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
+        template <typename V, typename VP, typename EP>
         std::vector<typename undirected_graph<V, VP, EP>::vertex_type>
                 find_vertex_cut(const undirected_graph<V, VP, EP> & graph)
         {

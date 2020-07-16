@@ -9,45 +9,44 @@
 
 namespace algr = algolib::graphs;
 
-class weighted
+class weighted_impl : public algr::weighted
 {
 public:
-    explicit weighted(double weight = 0) : weight_{weight}
+    explicit weighted_impl(weight_type weight = 0) : weighted(), weight_{weight}
     {
     }
 
-    double weight() const
+    const weight_type & weight() const override
     {
         return weight_;
     }
 
 private:
-    double weight_;
+    weight_type weight_;
 };
 
 class MinimalSpanningTreeTest : public ::testing::Test
 {
 public:
-    using graph_t = algr::undirected_simple_graph<size_t, algr::no_prop, weighted>;
+    using graph_t = algr::undirected_simple_graph<size_t, algr::no_prop, weighted_impl>;
     using graph_v = graph_t::vertex_type;
     using graph_e = graph_t::edge_type;
 
-protected:
-    graph_t graph;
-
-public:
     MinimalSpanningTreeTest() : graph{graph_t({0, 1, 2, 3, 4})}
     {
-        graph.add_edge_between(0, 1, weighted(-1));
-        graph.add_edge_between(0, 2, weighted(4));
-        graph.add_edge_between(1, 2, weighted(9));
-        graph.add_edge_between(1, 3, weighted(7));
-        graph.add_edge_between(1, 4, weighted(12));
-        graph.add_edge_between(2, 4, weighted(6));
-        graph.add_edge_between(3, 4, weighted(3));
+        graph.add_edge_between(0, 1, weighted_impl(-1));
+        graph.add_edge_between(0, 2, weighted_impl(4));
+        graph.add_edge_between(1, 2, weighted_impl(9));
+        graph.add_edge_between(1, 3, weighted_impl(7));
+        graph.add_edge_between(1, 4, weighted_impl(12));
+        graph.add_edge_between(2, 4, weighted_impl(6));
+        graph.add_edge_between(3, 4, weighted_impl(3));
     }
 
     ~MinimalSpanningTreeTest() override = default;
+
+protected:
+    graph_t graph;
 };
 
 TEST_F(MinimalSpanningTreeTest, kruskal_thenMST)

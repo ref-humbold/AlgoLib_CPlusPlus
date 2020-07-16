@@ -8,15 +8,12 @@
 #include <cstdlib>
 #include <vector>
 #include "edge.hpp"
+#include "properties.hpp"
 
 namespace algolib
 {
     namespace graphs
     {
-        struct no_prop
-        {
-        };
-
         template <typename V, typename VP, typename EP>
         struct graph
         {
@@ -24,6 +21,8 @@ namespace algolib
             using edge_type = edge<vertex_type>;
             using vertex_property_type = VP;
             using edge_property_type = EP;
+
+            struct vertex_pair_hash;
 
             virtual ~graph() = default;
 
@@ -79,6 +78,22 @@ namespace algolib
              * \return the input degree of given vertex
              */
             virtual size_t input_degree(const vertex_type & vertex) const = 0;
+        };
+
+        template <typename V, typename VP, typename EP>
+        struct graph<V, VP, EP>::vertex_pair_hash
+        {
+            using argument_type = std::pair<vertex_type, vertex_type>;
+            using result_type = size_t;
+
+            result_type operator()(const argument_type & pair) const
+            {
+                result_type first_hash = std::hash<V>()(pair.first);
+                result_type second_hash = std::hash<V>()(pair.second);
+
+                return first_hash
+                       ^ (second_hash + 0x9e3779b9 + (first_hash << 6) + (first_hash >> 2));
+            }
         };
     }
 }

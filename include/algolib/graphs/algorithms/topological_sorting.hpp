@@ -79,7 +79,7 @@ namespace algolib
          * \return topological order of vertices
          * \throws directed_cyclic_graph_error if given graph contains a cycle
          */
-        template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
+        template <typename V, typename VP, typename EP>
         std::vector<typename directed_graph<V, VP, EP>::vertex_type>
                 sort_topological_using_inputs(const directed_graph<V, VP, EP> & graph)
         {
@@ -133,7 +133,7 @@ namespace algolib
          * \return topological order of vertices
          * \throws directed_cyclic_graph_error if given graph contains a cycle
          */
-        template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
+        template <typename V, typename VP, typename EP>
         std::vector<typename directed_graph<V, VP, EP>::vertex_type>
                 sort_topological_using_dfs(const directed_graph<V, VP, EP> & graph)
         {

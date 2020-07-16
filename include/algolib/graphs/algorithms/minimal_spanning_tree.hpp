@@ -15,11 +15,12 @@
 
 namespace internal
 {
+    namespace algr = algolib::graphs;
+
     template <typename V, typename E, typename VP, typename EP>
     struct kruskal_cmp
     {
-        explicit kruskal_cmp(const algolib::graphs::undirected_simple_graph<V, VP, EP> & graph)
-            : graph{graph}
+        explicit kruskal_cmp(const algr::undirected_simple_graph<V, VP, EP> & graph) : graph{graph}
         {
         }
 
@@ -28,14 +29,13 @@ namespace internal
             return graph[edge2].weight() < graph[edge1].weight();
         }
 
-        const algolib::graphs::undirected_simple_graph<V, VP, EP> & graph;
+        const algr::undirected_simple_graph<V, VP, EP> & graph;
     };
 
     template <typename V, typename E, typename VP, typename EP>
     struct prim_cmp
     {
-        explicit prim_cmp(const algolib::graphs::undirected_simple_graph<V, VP, EP> & graph)
-            : graph{graph}
+        explicit prim_cmp(const algr::undirected_simple_graph<V, VP, EP> & graph) : graph{graph}
         {
         }
 
@@ -44,7 +44,7 @@ namespace internal
             return graph[pair2.first].weight() < graph[pair1.first].weight();
         }
 
-        const algolib::graphs::undirected_simple_graph<V, VP, EP> & graph;
+        const algr::undirected_simple_graph<V, VP, EP> & graph;
     };
 }
 
