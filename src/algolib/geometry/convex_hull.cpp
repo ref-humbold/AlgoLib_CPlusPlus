@@ -33,12 +33,12 @@ std::vector<alge::point2d> alge::find_convex_hull(std::vector<alge::point2d> poi
     hull.push_back(points[0]);
     hull.push_back(points[1]);
 
-    for(auto it = points.begin() + 2; it != points.end(); ++it)
+    for(auto && it = points.begin() + 2; it != points.end(); ++it)
         add_point(*it, hull, 1);
 
     size_t upper_size = hull.size();
 
-    for(auto it = points.rbegin() + 1; it != points.rend(); ++it)
+    for(auto && it = points.rbegin() + 1; it != points.rend(); ++it)
         add_point(*it, hull, upper_size);
 
     hull.pop_back();

@@ -1,12 +1,16 @@
-//! STRUKTURY GRAFÓW WIELODZIELNYCH
+/*!
+ * \file multipartite_graph.hpp
+ * \brief Structure of multipartite graph
+ */
 #ifndef MULTIPARTITE_GRAPH_HPP_
 #define MULTIPARTITE_GRAPH_HPP_
 
 #include <cstdlib>
 #include <exception>
 #include <stdexcept>
+#include <algorithm>
+#include <string>
 #include <vector>
-#include "directed_graph.hpp"
 #include "undirected_graph.hpp"
 
 using namespace std::string_literals;
@@ -15,22 +19,43 @@ namespace algolib
 {
     namespace graphs
     {
-        class graph_partition_exception : public std::logic_error
+        class graph_partition_error : std::logic_error
         {
         public:
-            explicit graph_partition_exception(const std::string & what_arg)
+            explicit graph_partition_error(const std::string & what_arg)
                 : std::logic_error(what_arg)
             {
             }
         };
 
-        template <size_t N>
-        class multipartite_graph : public undirected_graph
+        template <size_t N, typename V = size_t, typename VP = no_prop, typename EP = no_prop>
+        class multipartite_graph : public virtual undirected_graph<V, VP, EP>
         {
+        protected:
+            using graph_t = undirected_simple_graph<
+                    typename multipartite_graph<N, V, VP, EP>::vertex_type,
+                    typename multipartite_graph<N, V, VP, EP>::vertex_property_type,
+                    typename multipartite_graph<N, V, VP, EP>::edge_property_type>;
+
         public:
-            explicit multipartite_graph(int n) : graph{undirected_simple_graph(n)}
+            explicit multipartite_graph(
+                    std::vector<std::vector<typename multipartite_graph<N, V, VP, EP>::vertex_type>>
+                            vertices)
             {
-                groups.resize(n, 1);
+                if(vertices.size() > N)
+                    throw graph_partition_error(
+                            "Cannot add vertices to group "s + std::to_string(vertices.size())
+                            + ", graph contains only "s + std::to_string(N) + " groups"s);
+
+                int i = 0;
+
+                for(auto && group_vertices : vertices)
+                {
+                    for(auto && vertex : group_vertices)
+                        this->add_vertex(i, vertex);
+
+                    ++i;
+                }
             }
 
             ~multipartite_graph() override = default;
@@ -39,178 +64,221 @@ namespace algolib
             multipartite_graph & operator=(const multipartite_graph &) = default;
             multipartite_graph & operator=(multipartite_graph &&) = default;
 
-            /**!
-             * \param group numer grupy wierzchołków
-             * \return liczba wierzchołków z zadanej grupy
-             */
-            size_t get_vertices_number(size_t group = 0) const;
-
-            /**!
-             * \param group numer grupy wierzchołków
-             * \return numery wierzchołków z zadanej grupy
-             */
-            std::vector<vertex_t> get_vertices(size_t group = 0) const;
-
-            /**!
-             * \brief Dodawanie nowego wierzchołka do zadanej grupy.
-             * \param group numer grupy
-             * \param neighbours sąsiedzi nowego wierzchołka
-             * \return oznaczenie wierzchołka
-             */
-            vertex_t add_vertex(size_t group, const std::vector<vertex_t> & neighbours);
-
-            vertex_t add_vertex(const std::vector<vertex_t> & neighbours) override
+            size_t vertices_count() const
             {
-                return add_vertex(1, neighbours);
+                return this->graph.vertices_count();
             }
 
-            size_t get_edges_number() const override
+            size_t edges_count() const override
             {
-                return graph.get_edges_number();
+                return this->graph.edges_count();
             }
 
-            std::vector<edge_t> get_edges() const override
+            std::vector<typename multipartite_graph<N, V, VP, EP>::vertex_type> vertices() const
             {
-                return graph.get_edges();
+                return this->graph.vertices();
             }
 
-            void add_edge(vertex_t vertex1, vertex_t vertex2) override;
-
-            /**!
-             * \param vertex: numer wierzchołka
-             * \param group: numer grupy sąsiadów
-             * \return generator sąsiadów wierzchołka z zadanej grupy
-             */
-            std::vector<vertex_t> get_neighbours(vertex_t vertex, size_t group = 0) const;
-
-            size_t get_outdegree(vertex_t vertex) const override
+            std::vector<typename multipartite_graph<N, V, VP, EP>::edge_type> edges() const override
             {
-                return graph.get_outdegree(vertex);
+                return this->graph.edges();
             }
 
-            size_t get_indegree(vertex_t vertex) const override
+            typename multipartite_graph<N, V, VP, EP>::vertex_property_type & operator[](
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex) override
             {
-                return graph.get_indegree(vertex);
+                return this->graph[vertex];
             }
 
-            /**!
-             * \brief Sprawdzanie, czy wierzchołek nalezy do zadanej grupy.
-             * \param vertex wierzchołek
-             * \param group numer grupy
-             * \return czy wierzchołek jest w grupie
-             */
-            bool is_in_group(vertex_t vertex, size_t group) const;
+            const typename multipartite_graph<N, V, VP, EP>::vertex_property_type & operator[](
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex)
+                    const override
+            {
+                return this->graph[vertex];
+            }
 
-            /**!
-             * \brief Sprawdzanie, czy wierzchołki należą do tej samej grupy.
-             * \param vertex1 pierwszy wierzchołek
-             * \param vertex2 drugi wierzchołek
-             * \return czy wierzchołki są w jednej grupie
-             */
-            bool is_same_group(vertex_t vertex1, vertex_t vertex2) const;
+            typename multipartite_graph<N, V, VP, EP>::edge_property_type & operator[](
+                    const typename multipartite_graph<N, V, VP, EP>::edge_type & edge) override
+            {
+                return this->graph[edge];
+            }
+
+            const typename multipartite_graph<N, V, VP, EP>::edge_property_type &
+                    operator[](const typename multipartite_graph<N, V, VP, EP>::edge_type & edge)
+                            const override
+            {
+                return this->graph[edge];
+            }
+
+            typename multipartite_graph<N, V, VP, EP>::edge_type
+                    get_edge(const typename multipartite_graph<N, V, VP, EP>::vertex_type & source,
+                             const typename multipartite_graph<N, V, VP, EP>::vertex_type &
+                                     destination) const override
+            {
+                return this->graph.get_edge(source, destination);
+            }
+
+            std::vector<typename multipartite_graph<N, V, VP, EP>::edge_type> adjacent_edges(
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex)
+                    const override
+            {
+                return this->graph.adjacent_edges(vertex);
+            }
+
+            std::vector<typename multipartite_graph<N, V, VP, EP>::vertex_type> neighbours(
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex)
+                    const override
+            {
+                return this->graph.neighbours(vertex);
+            }
+
+            size_t output_degree(const typename multipartite_graph<N, V, VP, EP>::vertex_type &
+                                         vertex) const override
+            {
+                return this->graph.output_degree(vertex);
+            }
+
+            size_t input_degree(const typename multipartite_graph<N, V, VP, EP>::vertex_type &
+                                        vertex) const override
+            {
+                return graph.input_degree(vertex);
+            }
+
+            std::vector<typename multipartite_graph<N, V, VP, EP>::vertex_type>
+                    vertices_from_group(size_t group_number) const;
+            bool add_vertex(size_t group_number,
+                            const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex);
+            bool add_vertex(size_t group_number,
+                            const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex,
+                            const typename multipartite_graph<N, V, VP, EP>::vertex_property_type &
+                                    property);
+            typename multipartite_graph<N, V, VP, EP>::edge_type add_edge_between(
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & source,
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & destination);
+            typename multipartite_graph<N, V, VP, EP>::edge_type add_edge_between(
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & source,
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & destination,
+                    const typename multipartite_graph<N, V, VP, EP>::edge_property_type & property);
+            typename multipartite_graph<N, V, VP, EP>::edge_type
+                    add_edge(const typename multipartite_graph<N, V, VP, EP>::edge_type & edge);
+            typename multipartite_graph<N, V, VP, EP>::edge_type add_edge(
+                    const typename multipartite_graph<N, V, VP, EP>::edge_type & edge,
+                    const typename multipartite_graph<N, V, VP, EP>::edge_property_type & property);
 
         private:
-            undirected_simple_graph graph;  //!< Struktura grafu wielodzielnego.
-            std::vector<size_t> groups;  //!< Numery grup wierzchołków.
+            bool are_in_same_group(
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex1,
+                    const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex2) const
+            {
+                return this->vertex_group_map.at(vertex1) == this->vertex_group_map.at(vertex2);
+            }
+
+            void validate_group(size_t group_number) const
+            {
+                if(group_number >= N)
+                    throw std::out_of_range("Invalid group number "s + std::to_string(group_number)
+                                            + ", graph contains only " + std::to_string(N)
+                                            + " groups"s);
+            }
+
+            graph_t graph;
+            std::unordered_map<typename multipartite_graph<N, V, VP, EP>::vertex_type, size_t>
+                    vertex_group_map;
         };
 
-        template <size_t N>
-        size_t multipartite_graph<N>::get_vertices_number(size_t group) const
+        template <size_t N, typename V, typename VP, typename EP>
+        std::vector<typename multipartite_graph<N, V, VP, EP>::vertex_type>
+                multipartite_graph<N, V, VP, EP>::vertices_from_group(size_t group_number) const
         {
-            if(group == 0)
-                return graph.get_vertices_number();
+            std::vector<typename multipartite_graph<N, V, VP, EP>::vertex_type> group_vertices;
 
-            int num = 0;
+            this->validate_group(group_number);
 
-            for(const auto & v : graph.get_vertices())
-                if(groups[v] == group)
-                    ++num;
+            for(auto && p : this->vertex_group_map)
+                if(p.second == group_number)
+                    group_vertices.push_back(p.first);
 
-            return num;
+            return group_vertices;
         }
 
-        template <size_t N>
-        std::vector<vertex_t> multipartite_graph<N>::get_vertices(size_t group) const
+        template <size_t N, typename V, typename VP, typename EP>
+        bool multipartite_graph<N, V, VP, EP>::add_vertex(
+                size_t group_number,
+                const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex)
         {
-            std::vector<vertex_t> vertices;
+            this->validate_group(group_number);
 
-            if(group == 0)
-                return graph.get_vertices();
+            bool was_added = this->graph.add_vertex(vertex);
 
-            for(const auto & v : graph.get_vertices())
-                if(groups[v] == group)
-                    vertices.push_back(v);
+            if(was_added)
+                this->vertex_group_map.emplace(vertex, group_number);
 
-            return vertices;
+            return was_added;
         }
 
-        template <size_t N>
-        vertex_t multipartite_graph<N>::add_vertex(size_t group,
-                                                   const std::vector<vertex_t> & neighbours)
+        template <size_t N, typename V, typename VP, typename EP>
+        bool multipartite_graph<N, V, VP, EP>::add_vertex(
+                size_t group_number,
+                const typename multipartite_graph<N, V, VP, EP>::vertex_type & vertex,
+                const typename multipartite_graph<N, V, VP, EP>::vertex_property_type & property)
         {
-            if(group == 0)
-                throw std::invalid_argument("Cannot add vertex to group 0");
+            this->validate_group(group_number);
 
-            vertex_t v = graph.add_vertex(neighbours);
+            bool was_added = this->graph.add_vertex(vertex, property);
 
-            groups.push_back(group);
+            if(was_added)
+                this->vertex_group_map.emplace(vertex, group_number);
 
-            return v;
+            return was_added;
         }
 
-        template <size_t N>
-        void multipartite_graph<N>::add_edge(vertex_t vertex1, vertex_t vertex2)
+        template <size_t N, typename V, typename VP, typename EP>
+        typename multipartite_graph<N, V, VP, EP>::edge_type
+                multipartite_graph<N, V, VP, EP>::add_edge_between(
+                        const typename multipartite_graph<N, V, VP, EP>::vertex_type & source,
+                        const typename multipartite_graph<N, V, VP, EP>::vertex_type & destination)
         {
-            if(vertex1 >= get_vertices_number())
-                throw no_such_vertex_exception(std::to_string(vertex1));
-
-            if(vertex2 >= get_vertices_number())
-                throw no_such_vertex_exception(std::to_string(vertex2));
-
-            if(is_same_group(vertex1, vertex2))
-                throw graph_partition_exception("Vertices in the same part."s);
-
-            graph.add_edge(vertex1, vertex2);
+            return this->add_edge(
+                    typename multipartite_graph<N, V, VP, EP>::edge_type(source, destination));
         }
 
-        template <size_t N>
-        std::vector<vertex_t> multipartite_graph<N>::get_neighbours(vertex_t vertex,
-                                                                    size_t group) const
+        template <size_t N, typename V, typename VP, typename EP>
+        typename multipartite_graph<N, V, VP, EP>::edge_type
+                multipartite_graph<N, V, VP, EP>::add_edge_between(
+                        const typename multipartite_graph<N, V, VP, EP>::vertex_type & source,
+                        const typename multipartite_graph<N, V, VP, EP>::vertex_type & destination,
+                        const typename multipartite_graph<N, V, VP, EP>::edge_property_type &
+                                property)
         {
-            std::vector<vertex_t> vertices;
-
-            if(vertex >= get_vertices_number())
-                throw no_such_vertex_exception(std::to_string(vertex));
-
-            if(group == 0)
-                return graph.get_neighbours(vertex);
-
-            for(const auto & v : graph.get_neighbours(vertex))
-                if(groups[v] == group)
-                    vertices.push_back(v);
-
-            return vertices;
+            return this->add_edge(
+                    typename multipartite_graph<N, V, VP, EP>::edge_type(source, destination),
+                    property);
         }
 
-        template <size_t N>
-        bool multipartite_graph<N>::is_in_group(vertex_t vertex, size_t group) const
+        template <size_t N, typename V, typename VP, typename EP>
+        typename multipartite_graph<N, V, VP, EP>::edge_type
+                multipartite_graph<N, V, VP, EP>::add_edge(
+                        const typename multipartite_graph<N, V, VP, EP>::edge_type & edge)
         {
-            if(vertex >= get_vertices_number())
-                throw no_such_vertex_exception(std::to_string(vertex));
+            if(this->are_in_same_group(edge.source(), edge.destination()))
+                throw graph_partition_error(
+                        "Cannot create an edge between vertices in the same group"s);
 
-            return groups[vertex] == group;
+            return this->graph.add_edge(edge);
         }
 
-        template <size_t N>
-        bool multipartite_graph<N>::is_same_group(vertex_t vertex1, vertex_t vertex2) const
+        template <size_t N, typename V, typename VP, typename EP>
+        typename multipartite_graph<N, V, VP, EP>::edge_type
+                multipartite_graph<N, V, VP, EP>::add_edge(
+                        const typename multipartite_graph<N, V, VP, EP>::edge_type & edge,
+                        const typename multipartite_graph<N, V, VP, EP>::edge_property_type &
+                                property)
         {
-            if(vertex1 >= get_vertices_number())
-                throw no_such_vertex_exception(std::to_string(vertex1));
+            if(this->are_in_same_group(edge.source(), edge.destination()))
+                throw graph_partition_error(
+                        "Cannot create an edge between vertices in the same group"s);
 
-            if(vertex2 >= get_vertices_number())
-                throw no_such_vertex_exception(std::to_string(vertex2));
-
-            return groups[vertex1] == groups[vertex2];
+            return this->graph.add_edge(edge, property);
         }
     }
 }

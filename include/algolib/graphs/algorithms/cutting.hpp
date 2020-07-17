@@ -1,103 +1,145 @@
 /**!
  * \file cutting.hpp
- * \brief WYSZUKIWANIE MOSTÓW I PUNKTÓW ARTYKULACJI W GRAFIE
+ * \brief Algorithms for graph cutting (edge cut and vertex cut)
  */
 #ifndef CUTTING_HPP_
 #define CUTTING_HPP_
 
 #include <cstdlib>
+#include <cmath>
 #include <algorithm>
+#include <unordered_map>
 #include <vector>
+#include <limits>
+#include "algolib/graphs/algorithms/searching.hpp"
 #include "algolib/graphs/undirected_graph.hpp"
 
-namespace impl
+namespace internal
 {
-    class graph_cutting
+    namespace algr = algolib::graphs;
+
+    template <typename V>
+    struct cutting_strategy : public algr::dfs_strategy<V>
     {
-    public:
-        explicit graph_cutting(const algolib::graphs::undirected_graph & graph) : graph{graph}
+        cutting_strategy() : depth{0}
         {
-            dfs_parents.resize(graph.get_vertices_number(), graph.get_vertices_number());
-            dfs_children.resize(graph.get_vertices_number(), std::vector<vertex_t>());
-            dfs_depths.resize(graph.get_vertices_number(), -1);
-            low_values.resize(graph.get_vertices_number(), -1);
         }
 
-        /**!
-         * \brief Znajdowanie mostów
-         * \return lista krawędzi będących mostami
-         */
-        std::vector<edge_t> edge_cut();
+        ~cutting_strategy() override = default;
 
-        /**!
-         * \brief Znajdowanie punktów artykulacji
-         * \return lista punktów artykulacji
-         */
-        std::vector<vertex_t> vertex_cut();
-
-    private:
-        /**!
-         * \brief Sprawdzanie, czy od wierzchołka wychodzi krawędź będąca mostem
-         * \param vertex wierzchołek
-         * \return czy wierzchołek incydentny z mostem
-         */
-        bool has_bridge(vertex_t vertex);
-
-        /**!
-         * \brief Sprawdzanie, czy wierzchołek jest punktem artykulacji
-         * \param vertex wierzchołek
-         * \return czy wierzchołek to punkt artykulacji
-         */
-        bool is_separator(vertex_t vertex);
-
-        /**!
-         * \brief Sprawdzanie, czy wierzchołek jest korzeniem drzewa DFS
-         * \param vertex wierzchołek
-         * \return czy wierzchołek to korzeń
-         */
-        bool is_dfs_root(vertex_t vertex)
+        void for_root(const V &) override
         {
-            return dfs_depths[vertex] == 0;
         }
 
-        /**!
-         * \brief Algorytm DFS wyliczający funkcję LOW
-         * \param vertex aktualny wierzchołek
-         * \param parent ojciec wierzchołka
-         * \param depth głębokość
-         */
-        void dfs(vertex_t vertex, vertex_t parent, int depth);
+        void on_entry(const V & vertex) override
+        {
+            this->dfs_depths.emplace(vertex, depth);
+            this->low_values.emplace(vertex, depth);
+            this->dfs_children.emplace(vertex, std::vector<V>());
+            ++depth;
+        }
 
-        const algolib::graphs::undirected_graph & graph;  //!< Reprezentacja grafu nieskierowanego.
-        std::vector<vertex_t> dfs_parents;  //!< Ojciec wierzchołka w drzewie DFS.
-        std::vector<std::vector<vertex_t>> dfs_children;  //!< Lista synów w drzewie DFS.
-        std::vector<int> dfs_depths;  //!< Głębokość wierzchołka w drzewie DFS.
-        std::vector<int> low_values;  //!< Wartości funkcji LOW dla wierzchołków.
+        void on_next_vertex(const V & vertex, const V & neighbour) override
+        {
+            this->dfs_parents.emplace(neighbour, vertex);
+            this->dfs_children[vertex].push_back(neighbour);
+        }
+
+        void on_exit(const V & vertex) override
+        {
+            int minimal_low_value = std::numeric_limits<int>::max();
+
+            for(auto && child : this->dfs_children[vertex])
+                minimal_low_value = std::min(this->low_values[child], minimal_low_value);
+
+            this->low_values[vertex] = std::min(this->low_values[vertex], minimal_low_value);
+            --depth;
+        }
+
+        void on_edge_to_visited(const V & vertex, const V & neighbour) override
+        {
+            if(neighbour != this->dfs_parents[vertex])
+                this->low_values[vertex] =
+                        std::min(this->low_values[vertex], this->dfs_depths[neighbour]);
+        }
+
+        bool has_bridge(const V & vertex)
+        {
+            return !this->is_dfs_root(vertex)
+                   && this->low_values[vertex] == this->dfs_depths[vertex];
+        }
+
+        bool is_separator(const V & vertex)
+        {
+            if(this->is_dfs_root(vertex))
+                return dfs_children[vertex].size() > 1;
+
+            return std::any_of(this->dfs_children[vertex].begin(), this->dfs_children[vertex].end(),
+                               [&](const V & child) {
+                                   return this->low_values[child] >= this->dfs_depths[vertex];
+                               });
+        }
+
+        bool is_dfs_root(const V & vertex)
+        {
+            return this->dfs_depths[vertex] == 0;
+        }
+
+        std::unordered_map<V, V> dfs_parents;
+        std::unordered_map<V, std::vector<V>> dfs_children;
+        std::unordered_map<V, int> dfs_depths;
+        std::unordered_map<V, int> low_values;
+        int depth;
     };
 }
 
 namespace algolib
 {
-    namespace graph
+    namespace graphs
     {
         /**!
-         * \brief Wyznaczanie mostów w grafie
-         * \param ugraph graf nieskierowany
-         * \return lista krawędzi będących mostami
+         * \brief Finds an edge cut of given graph.
+         * \param graph an undirected graph
+         * \return vector of edges in the edge cut
          */
-        std::vector<edge_t> find_edge_cut(const algolib::graphs::undirected_graph & ugraph)
+        template <typename V, typename VP, typename EP>
+        std::vector<typename undirected_graph<V, VP, EP>::edge_type>
+                find_edge_cut(const undirected_graph<V, VP, EP> & graph)
         {
-            return impl::graph_cutting(ugraph).edge_cut();
+            std::vector<typename undirected_graph<V, VP, EP>::edge_type> bridges;
+            internal::cutting_strategy<typename undirected_graph<V, VP, EP>::vertex_type> strategy;
+
+            dfs_recursive(graph, strategy, graph.vertices());
+
+            for(auto && vertex : graph.vertices())
+                if(strategy.has_bridge(vertex))
+                    bridges.push_back(graph.get_edge(vertex, strategy.dfs_parents[vertex]));
+
+            return bridges;
         }
 
         /**!
-         * \brief Wyznaczanie punktów artykulacji w grafie
-         * \param ugraph graf nieskierowany
-         * \return lista punktów artykulacji
+         * \brief Finds a vertex cut of given graph.
+         * \param graph an undirected graph
+         * \return vector of vertices in the vertex cut
          */
-        std::vector<vertex_t> find_vertex_cut(const algolib::graphs::undirected_graph & ugraph)
+        template <typename V, typename VP, typename EP>
+        std::vector<typename undirected_graph<V, VP, EP>::vertex_type>
+                find_vertex_cut(const undirected_graph<V, VP, EP> & graph)
         {
-            return impl::graph_cutting(ugraph).vertex_cut();
+            std::vector<typename undirected_graph<V, VP, EP>::vertex_type> separators;
+            internal::cutting_strategy<typename undirected_graph<V, VP, EP>::vertex_type> strategy;
+            std::vector<typename undirected_graph<V, VP, EP>::vertex_type> vertices =
+                    graph.vertices();
+
+            dfs_recursive(graph, strategy, vertices);
+
+            std::copy_if(vertices.begin(), vertices.end(), std::back_inserter(separators),
+                         [&](const typename undirected_graph<V, VP, EP>::vertex_type & vertex) {
+                             return strategy.is_separator(vertex);
+                         });
+
+            return separators;
         }
     }
 }

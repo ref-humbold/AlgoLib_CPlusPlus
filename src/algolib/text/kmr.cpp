@@ -21,7 +21,7 @@ namespace
         sort(letters.begin(), letters.end());
         factors.emplace(letters[0], code_value);
 
-        for(auto it = letters.begin() + 1; it != letters.end(); ++it)
+        for(auto && it = letters.begin() + 1; it != letters.end(); ++it)
             if(*it != *(it - 1))
             {
                 ++code_value;
@@ -49,7 +49,7 @@ namespace
         sort(codes.begin(), codes.end());
         factors.emplace(text.substr(std::get<2>(codes[0]), new_length), code_value);
 
-        for(auto it = codes.begin() + 1; it != codes.end(); ++it)
+        for(auto && it = codes.begin() + 1; it != codes.end(); ++it)
             if(std::get<0>(*it) != std::get<0>(*(it - 1))
                || std::get<1>(*it) != std::get<1>(*(it - 1)))
             {

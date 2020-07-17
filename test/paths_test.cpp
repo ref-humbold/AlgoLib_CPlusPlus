@@ -1,4 +1,8 @@
-//! TESTY DLA ALGORYTMÓW WYZNACZANIA NAJKRÓTSZYCH ŚCIEŻEK
+/**!
+ * \file paths_test.cpp
+ * \brief Tests: Algorithms for shortest paths in graph
+ */
+#include <vector>
 #include <gtest/gtest.h>
 #include "algolib/graphs/algorithms/paths.hpp"
 #include "algolib/graphs/directed_graph.hpp"
@@ -6,169 +10,206 @@
 
 namespace algr = algolib::graphs;
 
-TEST(PathsTest, bellmanFord_whenDirectedGraph)
+class weighted_impl : public algr::weighted
 {
-    algr::directed_weighted_simple_graph diwgraph(
-            10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
-                                      std::make_tuple(1, 7, 12.0), std::make_tuple(2, 1, -2.0),
-                                      std::make_tuple(2, 4, 6.0), std::make_tuple(2, 6, 8.0),
-                                      std::make_tuple(3, 0, 3.0), std::make_tuple(3, 7, 5.0),
-                                      std::make_tuple(4, 5, 1.0), std::make_tuple(4, 3, 10.0),
-                                      std::make_tuple(5, 6, 4.0), std::make_tuple(5, 8, 2.0),
-                                      std::make_tuple(6, 5, 7.0), std::make_tuple(7, 5, 2.0),
-                                      std::make_tuple(7, 8, 6.0), std::make_tuple(8, 9, 10.0),
-                                      std::make_tuple(9, 6, 3.0)}));
+public:
+    explicit weighted_impl(weight_type weight = 0) : weighted(), weight_{weight}
+    {
+    }
 
-    int source = 1;
+    const weight_type & weight() const override
+    {
+        return weight_;
+    }
 
-    std::vector<double> result = algr::bellman_ford(diwgraph, source);
+private:
+    weight_type weight_;
+};
 
-    EXPECT_EQ(std::vector<double>(
-                      {20.0, 0.0, algr::graph::INF, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0}),
-              result);
+class PathsTest : public ::testing::Test
+{
+public:
+    using dgraph_t = algr::directed_simple_graph<size_t, algr::no_prop, weighted_impl>;
+    using dgraph_v = dgraph_t::vertex_type;
+
+    using ugraph_t = algr::undirected_simple_graph<size_t, algr::no_prop, weighted_impl>;
+    using ugraph_v = ugraph_t::vertex_type;
+
+    using weight_t = weighted_impl::weight_type;
+
+    PathsTest()
+        : dgraph{dgraph_t({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})},
+          ugraph{ugraph_t({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})}
+    {
+        dgraph.add_edge_between(0, 1, weighted_impl(4.0));
+        dgraph.add_edge_between(1, 4, weighted_impl(7.0));
+        dgraph.add_edge_between(1, 7, weighted_impl(12.0));
+        dgraph.add_edge_between(2, 4, weighted_impl(6.0));
+        dgraph.add_edge_between(2, 6, weighted_impl(8.0));
+        dgraph.add_edge_between(3, 0, weighted_impl(3.0));
+        dgraph.add_edge_between(3, 7, weighted_impl(5.0));
+        dgraph.add_edge_between(4, 5, weighted_impl(1.0));
+        dgraph.add_edge_between(4, 3, weighted_impl(10.0));
+        dgraph.add_edge_between(5, 6, weighted_impl(4.0));
+        dgraph.add_edge_between(5, 8, weighted_impl(2.0));
+        dgraph.add_edge_between(6, 5, weighted_impl(7.0));
+        dgraph.add_edge_between(7, 5, weighted_impl(2.0));
+        dgraph.add_edge_between(7, 8, weighted_impl(6.0));
+        dgraph.add_edge_between(8, 9, weighted_impl(10.0));
+        dgraph.add_edge_between(9, 6, weighted_impl(3.0));
+
+        ugraph.add_edge_between(0, 1, weighted_impl(4.0));
+        ugraph.add_edge_between(1, 4, weighted_impl(7.0));
+        ugraph.add_edge_between(1, 7, weighted_impl(12.0));
+        ugraph.add_edge_between(2, 6, weighted_impl(8.0));
+        ugraph.add_edge_between(3, 0, weighted_impl(3.0));
+        ugraph.add_edge_between(3, 7, weighted_impl(5.0));
+        ugraph.add_edge_between(4, 5, weighted_impl(1.0));
+        ugraph.add_edge_between(4, 3, weighted_impl(10.0));
+        ugraph.add_edge_between(5, 8, weighted_impl(2.0));
+        ugraph.add_edge_between(7, 5, weighted_impl(2.0));
+        ugraph.add_edge_between(7, 8, weighted_impl(6.0));
+        ugraph.add_edge_between(9, 6, weighted_impl(3.0));
+    }
+
+    ~PathsTest() override = default;
+
+protected:
+    std::unordered_map<dgraph_v, weight_t> from_list(const std::vector<weight_t> & distances)
+    {
+        std::unordered_map<dgraph_v, weight_t> map;
+
+        for(size_t i = 0; i < distances.size(); ++i)
+            map.emplace(i, distances[i]);
+
+        return map;
+    }
+
+    std::unordered_map<std::pair<dgraph_v, dgraph_v>, weight_t, typename dgraph_t::vertex_pair_hash>
+            from_matrix(const std::vector<std::vector<weight_t>> & distances)
+    {
+        std::unordered_map<std::pair<dgraph_v, dgraph_v>, weight_t,
+                           typename dgraph_t::vertex_pair_hash>
+                map;
+
+        for(size_t i = 0; i < distances.size(); ++i)
+            for(size_t j = 0; j < distances[i].size(); ++j)
+                map.emplace(std::make_pair(i, j), distances[i][j]);
+
+        return map;
+    }
+
+    dgraph_t dgraph;
+    ugraph_t ugraph;
+
+    weight_t inf = weighted_impl::infinity;
+};
+
+TEST_F(PathsTest, bellmanFord__whenDirectedGraph)
+{
+    // given
+    std::vector<weight_t> distances = {20, 0, inf, 17, 7, 8, 12, 12, 10, 20};
+    auto expected = from_list(distances);
+
+    dgraph.add_edge_between(2, 1, weighted_impl(-2));
+    // when
+    auto result = bellman_ford(dgraph, 1);
+    // then
+    EXPECT_EQ(expected, result);
 }
 
-TEST(PathsTest, bellmanFord_whenUndirectedGraph)
+TEST_F(PathsTest, bellmanFord__whenUndirectedGraph)
 {
-    algr::undirected_weighted_simple_graph uwgraph(
-            10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
-                                      std::make_tuple(1, 7, 12.0), std::make_tuple(2, 6, 8.0),
-                                      std::make_tuple(3, 0, 3.0), std::make_tuple(3, 7, 5.0),
-                                      std::make_tuple(4, 5, 1.0), std::make_tuple(4, 3, 10.0),
-                                      std::make_tuple(5, 8, 2.0), std::make_tuple(7, 5, 2.0),
-                                      std::make_tuple(7, 8, 6.0), std::make_tuple(9, 6, 3.0)}));
-    int source = 1;
-
-    std::vector<double> result = algr::bellman_ford(uwgraph, source);
-    double i = algr::graph::INF;
-
-    EXPECT_EQ(std::vector<double>({4.0, 0.0, i, 7.0, 7.0, 8.0, i, 10.0, 10.0, i}), result);
+    // given
+    std::vector<weight_t> distances = {4, 0, inf, 7, 7, 8, inf, 10, 10, inf};
+    auto expected = from_list(distances);
+    // when
+    auto result = bellman_ford(ugraph.as_directed(), 1);
+    // then
+    EXPECT_EQ(expected, result);
 }
 
-TEST(PathsTest, bellmanFord_whenNegativeCycle)
+TEST_F(PathsTest, bellmanFord__whenNegativeCycle_thenLogicError)
 {
-    algr::directed_weighted_simple_graph diwgraph(
-            10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
-                                      std::make_tuple(1, 7, 12.0), std::make_tuple(8, 3, -20.0),
-                                      std::make_tuple(2, 4, 6.0), std::make_tuple(2, 6, 8.0),
-                                      std::make_tuple(3, 0, 3.0), std::make_tuple(3, 7, 5.0),
-                                      std::make_tuple(4, 5, 1.0), std::make_tuple(4, 3, 10.0),
-                                      std::make_tuple(5, 6, 4.0), std::make_tuple(5, 8, 2.0),
-                                      std::make_tuple(6, 5, 7.0), std::make_tuple(7, 5, 2.0),
-                                      std::make_tuple(7, 8, 6.0), std::make_tuple(8, 9, 10.0),
-                                      std::make_tuple(9, 6, 3.0)}));
-    int source = 1;
-
-    EXPECT_THROW(algr::bellman_ford(diwgraph, source), std::logic_error);
+    // given
+    dgraph.add_edge_between(8, 3, weighted_impl(-20.0));
+    // when
+    auto exec = [&]() { return bellman_ford(dgraph, 1); };
+    // then
+    EXPECT_THROW(exec(), std::logic_error);
 }
 
-TEST(PathsTest, dijkstra_whenDirectedGraph)
+TEST_F(PathsTest, dijkstra__when_directed_graph)
 {
-    algr::directed_weighted_simple_graph diwgraph(
-            10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
-                                      std::make_tuple(1, 7, 12.0), std::make_tuple(2, 4, 6.0),
-                                      std::make_tuple(2, 6, 8.0), std::make_tuple(3, 0, 3.0),
-                                      std::make_tuple(3, 7, 5.0), std::make_tuple(4, 5, 1.0),
-                                      std::make_tuple(4, 3, 10.0), std::make_tuple(5, 6, 4.0),
-                                      std::make_tuple(5, 8, 2.0), std::make_tuple(6, 5, 7.0),
-                                      std::make_tuple(7, 5, 2.0), std::make_tuple(7, 8, 6.0),
-                                      std::make_tuple(8, 9, 10.0), std::make_tuple(9, 6, 3.0)}));
-    int source = 1;
-
-    std::vector<double> result = algr::dijkstra(diwgraph, source);
-
-    EXPECT_EQ(std::vector<double>(
-                      {20.0, 0.0, algr::graph::INF, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0}),
-              result);
+    // given
+    std::vector<weight_t> distances = {20, 0, inf, 17, 7, 8, 12, 12, 10, 20};
+    auto expected = from_list(distances);
+    // when
+    auto result = dijkstra(dgraph, 1);
+    // then
+    EXPECT_EQ(expected, result);
 }
 
-TEST(PathsTest, dijkstra_whenUndirectedGraph)
+TEST_F(PathsTest, dijkstra__when_undirected_graph)
 {
-    algr::undirected_weighted_simple_graph uwgraph(
-            10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
-                                      std::make_tuple(1, 7, 12.0), std::make_tuple(2, 6, 8.0),
-                                      std::make_tuple(3, 0, 3.0), std::make_tuple(3, 7, 5.0),
-                                      std::make_tuple(4, 5, 1.0), std::make_tuple(4, 3, 10.0),
-                                      std::make_tuple(5, 8, 2.0), std::make_tuple(7, 5, 2.0),
-                                      std::make_tuple(7, 8, 6.0), std::make_tuple(9, 6, 3.0)}));
-    int source = 1;
-
-    std::vector<double> result = algr::dijkstra(uwgraph, source);
-    double i = algr::graph::INF;
-
-    EXPECT_EQ(std::vector<double>({4.0, 0.0, i, 7.0, 7.0, 8.0, i, 10.0, 10.0, i}), result);
+    // given
+    std::vector<weight_t> distances = {4, 0, inf, 7, 7, 8, inf, 10, 10, inf};
+    auto expected = from_list(distances);
+    // when
+    auto result = dijkstra(ugraph, 1);
+    // then
+    EXPECT_EQ(expected, result);
 }
 
-TEST(PathsTest, dijkstra_whenNegativeEdge)
+TEST_F(PathsTest, dijkstra__when_negative_edge__then_value_error)
 {
-    algr::directed_weighted_simple_graph diwgraph(
-            10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
-                                      std::make_tuple(1, 7, 12.0), std::make_tuple(2, 4, 6.0),
-                                      std::make_tuple(2, 6, 8.0), std::make_tuple(3, 0, 3.0),
-                                      std::make_tuple(3, 7, 5.0), std::make_tuple(4, 5, 1.0),
-                                      std::make_tuple(4, 3, 10.0), std::make_tuple(5, 6, 4.0),
-                                      std::make_tuple(5, 8, 2.0), std::make_tuple(6, 5, 7.0),
-                                      std::make_tuple(7, 5, 2.0), std::make_tuple(7, 8, 6.0),
-                                      std::make_tuple(8, 9, 10.0), std::make_tuple(9, 6, 3.0),
-                                      std::make_tuple(2, 1, -2.0)}));
-    int source = 1;
-
-    EXPECT_THROW(algr::dijkstra(diwgraph, source), std::logic_error);
+    // given
+    dgraph.add_edge_between(2, 1, weighted_impl(-2));
+    // when
+    auto exec = [&]() { return dijkstra(dgraph, 1); };
+    // then
+    EXPECT_THROW(exec(), std::logic_error);
 }
 
-TEST(PathsTest, floydWarshall_whenDirectedGraph)
+TEST_F(PathsTest, floyd_warshall__when_directed_graph)
 {
-    algr::directed_weighted_simple_graph diwgraph(
-            10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
-                                      std::make_tuple(1, 7, 12.0), std::make_tuple(2, 4, 6.0),
-                                      std::make_tuple(2, 6, 8.0), std::make_tuple(3, 0, 3.0),
-                                      std::make_tuple(3, 7, 5.0), std::make_tuple(4, 5, 1.0),
-                                      std::make_tuple(4, 3, 10.0), std::make_tuple(5, 6, 4.0),
-                                      std::make_tuple(5, 8, 2.0), std::make_tuple(6, 5, 7.0),
-                                      std::make_tuple(7, 5, 2.0), std::make_tuple(7, 8, 6.0),
-                                      std::make_tuple(8, 9, 10.0), std::make_tuple(9, 6, 3.0),
-                                      std::make_tuple(2, 1, -2.0)}));
-
-    std::vector<std::vector<double>> result = algr::floyd_warshall(diwgraph);
-    double i = algr::graph::INF;
-
-    EXPECT_EQ(std::vector<std::vector<double>>(
-                      {std::vector<double>({0.0, 4.0, i, 21.0, 11.0, 12.0, 16.0, 16.0, 14.0, 24.0}),
-                       std::vector<double>({20.0, 0.0, i, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0}),
-                       std::vector<double>({18.0, -2.0, 0.0, 15.0, 5.0, 6.0, 8.0, 10.0, 8.0, 18.0}),
-                       std::vector<double>({3.0, 7.0, i, 0.0, 14.0, 7.0, 11.0, 5.0, 9.0, 19.0}),
-                       std::vector<double>({13.0, 17.0, i, 10.0, 0.0, 1.0, 5.0, 15.0, 3.0, 13.0}),
-                       std::vector<double>({i, i, i, i, i, 0.0, 4.0, i, 2.0, 12.0}),
-                       std::vector<double>({i, i, i, i, i, 7.0, 0, i, 9.0, 19.0}),
-                       std::vector<double>({i, i, i, i, i, 2.0, 6.0, 0.0, 4.0, 14.0}),
-                       std::vector<double>({i, i, i, i, i, 20.0, 13.0, i, 0.0, 10.0}),
-                       std::vector<double>({i, i, i, i, i, 10.0, 3.0, i, 12.0, 0.0})}),
-              result);
+    // given
+    std::vector<std::vector<weight_t>> distances = {
+            {0, 4, inf, 21, 11, 12, 16, 16, 14, 24},
+            {20, 0, inf, 17, 7, 8, 12, 12, 10, 20},
+            {18, -2, 0, 15, 5, 6, 8, 10, 8, 18},
+            {3, 7, inf, 0, 14, 7, 11, 5, 9, 19},
+            {13, 17, inf, 10, 0, 1, 5, 15, 3, 13},
+            {inf, inf, inf, inf, inf, 0, 4, inf, 2, 12},
+            {inf, inf, inf, inf, inf, 7, 0, inf, 9, 19},
+            {inf, inf, inf, inf, inf, 2, 6, 0, 4, 14},
+            {inf, inf, inf, inf, inf, 20, 13, inf, 0, 10},
+            {inf, inf, inf, inf, inf, 10, 3, inf, 12, 0},
+    };
+    auto expected = from_matrix(distances);
+    dgraph.add_edge_between(2, 1, weighted_impl(-2));
+    // when
+    auto result = floyd_warshall(dgraph);
+    // then
+    EXPECT_EQ(expected, result);
 }
 
-TEST(PathsTest, floydWarshall_whenUndirectedGraph)
+TEST_F(PathsTest, floyd_warshall__when_undirected_graph)
 {
-    algr::undirected_weighted_simple_graph uwgraph(
-            10, std::vector<wedge_t>({std::make_tuple(0, 1, 4.0), std::make_tuple(1, 4, 7.0),
-                                      std::make_tuple(1, 7, 12.0), std::make_tuple(2, 6, 8.0),
-                                      std::make_tuple(3, 0, 3.0), std::make_tuple(3, 7, 5.0),
-                                      std::make_tuple(4, 5, 1.0), std::make_tuple(4, 3, 10.0),
-                                      std::make_tuple(5, 8, 2.0), std::make_tuple(7, 5, 2.0),
-                                      std::make_tuple(7, 8, 6.0), std::make_tuple(9, 6, 3.0)}));
-
-    std::vector<std::vector<double>> result = algr::floyd_warshall(uwgraph);
-    double i = algr::graph::INF;
-
-    EXPECT_EQ(std::vector<std::vector<double>>(
-                      {std::vector<double>({0.0, 4.0, i, 3.0, 11.0, 10.0, i, 8.0, 12.0, i}),
-                       std::vector<double>({4.0, 0.0, i, 7.0, 7.0, 8.0, i, 10.0, 10.0, i}),
-                       std::vector<double>({i, i, 0.0, i, i, i, 8.0, i, i, 11.0}),
-                       std::vector<double>({3.0, 7.0, i, 0.0, 8.0, 7.0, i, 5.0, 9.0, i}),
-                       std::vector<double>({11.0, 7.0, i, 8.0, 0.0, 1.0, i, 3.0, 3.0, i}),
-                       std::vector<double>({10.0, 8.0, i, 7.0, 1.0, 0.0, i, 2.0, 2.0, i}),
-                       std::vector<double>({i, i, 8.0, i, i, i, 0.0, i, i, 3.0}),
-                       std::vector<double>({8.0, 10.0, i, 5.0, 3.0, 2.0, i, 0.0, 4.0, i}),
-                       std::vector<double>({12.0, 10.0, i, 9.0, 3.0, 2.0, i, 4.0, 0.0, i}),
-                       std::vector<double>({i, i, 11.0, i, i, i, 3.0, i, i, 0.0})}),
-              result);
+    // given
+    std::vector<std::vector<weight_t>> distances = {{0, 4, inf, 3, 11, 10, inf, 8, 12, inf},
+                                                    {4, 0, inf, 7, 7, 8, inf, 10, 10, inf},
+                                                    {inf, inf, 0, inf, inf, inf, 8, inf, inf, 11},
+                                                    {3, 7, inf, 0, 8, 7, inf, 5, 9, inf},
+                                                    {11, 7, inf, 8, 0, 1, inf, 3, 3, inf},
+                                                    {10, 8, inf, 7, 1, 0, inf, 2, 2, inf},
+                                                    {inf, inf, 8, inf, inf, inf, 0, inf, inf, 3},
+                                                    {8, 10, inf, 5, 3, 2, inf, 0, 4, inf},
+                                                    {12, 10, inf, 9, 3, 2, inf, 4, 0, inf},
+                                                    {inf, inf, 11, inf, inf, inf, 3, inf, inf, 0}};
+    auto expected = from_matrix(distances);
+    // when
+    auto result = floyd_warshall(ugraph.as_directed());
+    // then
+    EXPECT_EQ(expected, result);
 }

@@ -94,7 +94,7 @@ alma::fraction alma::operator-(alma::fraction f)
 alma::fraction alma::operator~(alma::fraction f)
 {
     if(f.numerator == 0)
-        throw std::domain_error("Inversing zero.");
+        throw std::domain_error("Inversing zero");
 
     std::swap(f.numerator, f.denominator);
     f.normalize();

@@ -10,7 +10,7 @@
 #include <vector>
 #include <functional>
 
-namespace impl
+namespace internal
 {
     template <typename T>
     int search_ord(const std::function<bool(T, T)> & order, const std::vector<T> & sequence,
@@ -54,8 +54,8 @@ namespace algolib
             }
             else
             {
-                int index = impl::search_ord(order, sequence, subseq_last, 0,
-                                             subseq_last.size() - 1, i);
+                int index = internal::search_ord(order, sequence, subseq_last, 0,
+                                                 subseq_last.size() - 1, i);
 
                 subseq_last[index] = i;
                 previous_elems[i] = index > 0 ? subseq_last[index - 1] : -1;

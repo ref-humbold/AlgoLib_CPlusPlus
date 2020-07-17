@@ -1,156 +1,100 @@
 /*!
  * \file graph.hpp
- * \brief Struktury grafów
+ * \brief Structure of basic graph
  */
 #ifndef GRAPH_HPP_
 #define GRAPH_HPP_
 
 #include <cstdlib>
-#include <exception>
-#include <stdexcept>
-#include <algorithm>
-#include <set>
-#include <tuple>
 #include <vector>
-#include <limits>
-#include <numeric>
-
-using weight_t = double;
-using vertex_t = size_t;
-using wvertex_t = std::tuple<vertex_t, weight_t>;
-using edge_t = std::tuple<vertex_t, vertex_t>;
-using wedge_t = std::tuple<vertex_t, vertex_t, weight_t>;
-
-using namespace std::string_literals;
+#include "edge.hpp"
+#include "properties.hpp"
 
 namespace algolib
 {
     namespace graphs
     {
-        class no_such_vertex_exception : public std::logic_error
-        {
-        public:
-            explicit no_such_vertex_exception(const std::string & vertex)
-                : std::logic_error("No vertex "s + vertex)
-            {
-            }
-        };
-
-#pragma region graph
-
+        template <typename V, typename VP, typename EP>
         struct graph
         {
-            static constexpr weight_t INF =
-                    std::numeric_limits<weight_t>::infinity();  //!< Oznaczenie nieskończoności.
+            using vertex_type = V;
+            using edge_type = edge<vertex_type>;
+            using vertex_property_type = VP;
+            using edge_property_type = EP;
+
+            struct vertex_pair_hash;
 
             virtual ~graph() = default;
 
-            //! \return liczba wierzchołków
-            virtual size_t get_vertices_number() const = 0;
+            //! \return number of vertices
+            virtual size_t vertices_count() const = 0;
 
-            //! \return wektor wierzchołków
-            virtual std::vector<vertex_t> get_vertices() const = 0;
+            //! \return number of edges
+            virtual size_t edges_count() const = 0;
 
-            /*!
-             * \brief Dodawanie nowego wierzchołka
-             * \param neighbours sąsiedzi nowego wierzchołka
-             * \return oznaczenie wierzchołka
-             */
-            virtual vertex_t add_vertex(const std::vector<vertex_t> & neighbours) = 0;
+            //! \return vector of vertices
+            virtual std::vector<vertex_type> vertices() const = 0;
 
-            //! \return liczba krawędzi
-            virtual size_t get_edges_number() const = 0;
+            //! \return vector of edges
+            virtual std::vector<edge_type> edges() const = 0;
 
-            //! \return wektor krawędzi
-            virtual std::vector<edge_t> get_edges() const = 0;
+            virtual vertex_property_type & operator[](const vertex_type & vertex) = 0;
 
-            /*!
-             * \brief Dodawanie nowej krawędzi
-             * \param v początkowy wierzchołek
-             * \param u końcowy wierzchołek
-             */
-            virtual void add_edge(vertex_t vertex1, vertex_t vertex2) = 0;
+            virtual const vertex_property_type & operator[](const vertex_type & vertex) const = 0;
+
+            virtual edge_property_type & operator[](const edge_type & edge) = 0;
+
+            virtual const edge_property_type & operator[](const edge_type & edge) const = 0;
 
             /*!
-             * \param v numer wierzchołka
-             * \return wektor sąsiadów wierzchołka
+             * \param source source vertex
+             * \param destination destination vertex
+             * \return the edge between the vertices
+             * \throw out_of_range if no edge
              */
-            virtual std::vector<vertex_t> get_neighbours(vertex_t vertex) const = 0;
+            virtual edge_type get_edge(const vertex_type & source,
+                                       const vertex_type & destination) const = 0;
 
             /*!
-             * \param v numer wierzchołka
-             * \return stopień wyjściowy wierzchołka
+             * \param vertex a vertex from this graph
+             * \return vector of neighbouring vertices
              */
-            virtual size_t get_outdegree(vertex_t vertex) const = 0;
+            virtual std::vector<vertex_type> neighbours(const vertex_type & vertex) const = 0;
 
             /*!
-             * \param v numer wierzchołka
-             * \return stopień wejściowy wierzchołka
+             * \param vertex a vertex from this graph
+             * \return vector of edges adjacent to given vertex
              */
-            virtual size_t get_indegree(vertex_t vertex) const = 0;
+            virtual std::vector<edge<V>> adjacent_edges(const vertex_type & vertex) const = 0;
+
+            /*!
+             * \param vertex a vertex from this graph
+             * \return the output degree of given vertex
+             */
+            virtual size_t output_degree(const vertex_type & vertex) const = 0;
+
+            /*!
+             * \param vertex a vertex from this graph
+             * \return the input degree of given vertex
+             */
+            virtual size_t input_degree(const vertex_type & vertex) const = 0;
         };
 
-#pragma endregion
-#pragma region weighted_graph
-
-        struct weighted_graph : public virtual graph
+        template <typename V, typename VP, typename EP>
+        struct graph<V, VP, EP>::vertex_pair_hash
         {
-            ~weighted_graph() override = default;
+            using argument_type = std::pair<vertex_type, vertex_type>;
+            using result_type = size_t;
 
-            //! \return wektor krawędzi z wagami
-            virtual std::vector<wedge_t> get_weighted_edges() const = 0;
-
-            /*!
-             * \brief Dodawanie nowej krawędzi z jej wagą
-             * \param v początkowy wierzchołek
-             * \param u końcowy wierzchołek
-             * \param wg waga krawędzi
-             */
-            virtual void add_weighted_edge(vertex_t vertex1, vertex_t vertex2, weight_t weight) = 0;
-
-            /*!
-             * \param v numer wierzchołka
-             * \return wektor sąsiadów wierzchołka z wagami
-             */
-            virtual std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const = 0;
-        };
-
-#pragma endregion
-#pragma region simple_graph
-
-        class simple_graph : public virtual graph
-        {
-        public:
-            explicit simple_graph(int n)
+            result_type operator()(const argument_type & pair) const
             {
-                this->graphrepr.resize(n);
+                result_type first_hash = std::hash<V>()(pair.first);
+                result_type second_hash = std::hash<V>()(pair.second);
+
+                return first_hash
+                       ^ (second_hash + 0x9e3779b9 + (first_hash << 6) + (first_hash >> 2));
             }
-
-            ~simple_graph() override = default;
-            simple_graph(const simple_graph &) = default;
-            simple_graph(simple_graph &&) = default;
-            simple_graph & operator=(const simple_graph &) = default;
-            simple_graph & operator=(simple_graph &&) = default;
-
-            size_t get_vertices_number() const override
-            {
-                return graphrepr.size();
-            }
-
-            std::vector<vertex_t> get_vertices() const override;
-
-            vertex_t add_vertex(const std::vector<vertex_t> & neighbours) override;
-
-            std::vector<vertex_t> get_neighbours(vertex_t vertex) const override;
-
-            size_t get_outdegree(vertex_t vertex) const override;
-
-        protected:
-            static constexpr weight_t DEFAULT_WEIGHT = 1.0;  //!< Domyślna waga krawędzi.
-            std::vector<std::set<wvertex_t>> graphrepr;  //!< Lista sąsiedztwa grafu.
         };
-
-#pragma endregion
     }
 }
 

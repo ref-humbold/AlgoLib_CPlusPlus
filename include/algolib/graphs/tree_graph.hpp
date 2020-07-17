@@ -1,95 +1,163 @@
-/**!
- * \file forest_graph.hpp
- * \brief Tree graph structure
+/*!
+ * \file tree_graph.hpp
+ * \brief Structure of tree graph
  */
 #ifndef TREE_GRAPH_HPP_
 #define TREE_GRAPH_HPP_
 
 #include <cstdlib>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
-#include <tuple>
 #include <vector>
-#include "algolib/structures/disjoint_sets.hpp"
-#include "graph.hpp"
 #include "undirected_graph.hpp"
-
-namespace alst = algolib::structures;
 
 namespace algolib
 {
     namespace graphs
     {
-        class cycle_exception : std::logic_error
+        template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
+        class tree_graph : public virtual undirected_graph<V, VP, EP>
         {
+        protected:
+            using graph_t =
+                    undirected_simple_graph<typename tree_graph<V, VP, EP>::vertex_type,
+                                            typename tree_graph<V, VP, EP>::vertex_property_type,
+                                            typename tree_graph<V, VP, EP>::edge_property_type>;
+
         public:
-            explicit cycle_exception(const std::string & what_arg) : std::logic_error(what_arg)
+            explicit tree_graph(const typename tree_graph<V, VP, EP>::vertex_type & vertex)
+                : graph{graph_t({vertex})}
             {
             }
-        };
 
-        class not_connected_exception : std::logic_error
-        {
-        public:
-            explicit not_connected_exception(const std::string & what_arg)
-                : std::logic_error(what_arg)
-            {
-            }
-        };
-
-        class tree_graph : public undirected_graph
-        {
-        public:
-            explicit tree_graph(int n, std::vector<edge_t> edges);
-            virtual ~tree_graph() = default;
+            ~tree_graph() override = default;
             tree_graph(const tree_graph &) = default;
             tree_graph(tree_graph &&) = default;
             tree_graph & operator=(const tree_graph &) = default;
             tree_graph & operator=(tree_graph &&) = default;
 
-            size_t get_vertices_number() const override
+            size_t vertices_count() const override
             {
-                return graph.get_vertices_number();
+                return this->graph.vertices_count();
             }
 
-            std::vector<vertex_t> get_vertices() const override
+            size_t edges_count() const override
             {
-                return graph.get_vertices();
+                return this->graph.edges_count();
             }
 
-            vertex_t add_vertex(const std::vector<vertex_t> & neighbours) override;
-
-            size_t get_edges_number() const override
+            std::vector<typename tree_graph<V, VP, EP>::vertex_type> vertices() const override
             {
-                return graph.get_edges_number();
+                return this->graph.vertices();
             }
 
-            std::vector<edge_t> get_edges() const override
+            std::vector<typename tree_graph<V, VP, EP>::edge_type> edges() const override
             {
-                return graph.get_edges();
+                return this->graph.edges();
             }
 
-            void add_edge(vertex_t vertex1, vertex_t vertex2) override;
-
-            std::vector<vertex_t> get_neighbours(vertex_t vertex) const override
+            typename tree_graph<V, VP, EP>::vertex_property_type &
+                    operator[](const typename tree_graph<V, VP, EP>::vertex_type & vertex) override
             {
-                return graph.get_neighbours(vertex);
+                return this->graph[vertex];
             }
 
-            size_t get_outdegree(vertex_t vertex) const override
+            const typename tree_graph<V, VP, EP>::vertex_property_type & operator[](
+                    const typename tree_graph<V, VP, EP>::vertex_type & vertex) const override
             {
-                return graph.get_outdegree(vertex);
+                return this->graph[vertex];
             }
 
-            size_t get_indegree(vertex_t vertex) const override
+            typename tree_graph<V, VP, EP>::edge_property_type &
+                    operator[](const typename tree_graph<V, VP, EP>::edge_type & edge) override
             {
-                return graph.get_indegree(vertex);
+                return this->graph[edge];
             }
+
+            const typename tree_graph<V, VP, EP>::edge_property_type & operator[](
+                    const typename tree_graph<V, VP, EP>::edge_type & edge) const override
+            {
+                return this->graph[edge];
+            }
+
+            typename tree_graph<V, VP, EP>::edge_type get_edge(
+                    const typename tree_graph<V, VP, EP>::vertex_type & source,
+                    const typename tree_graph<V, VP, EP>::vertex_type & destination) const override
+            {
+                return this->graph.get_edge(source, destination);
+            }
+
+            std::vector<typename tree_graph<V, VP, EP>::edge_type> adjacent_edges(
+                    const typename tree_graph<V, VP, EP>::vertex_type & vertex) const override
+            {
+                return this->graph.adjacent_edges(vertex);
+            }
+
+            std::vector<typename tree_graph<V, VP, EP>::vertex_type> neighbours(
+                    const typename tree_graph<V, VP, EP>::vertex_type & vertex) const override
+            {
+                return this->graph.neighbours(vertex);
+            }
+
+            size_t output_degree(
+                    const typename tree_graph<V, VP, EP>::vertex_type & vertex) const override
+            {
+                return this->graph.output_degree(vertex);
+            }
+
+            size_t input_degree(
+                    const typename tree_graph<V, VP, EP>::vertex_type & vertex) const override
+            {
+                return this->graph.input_degree(vertex);
+            }
+
+            directed_simple_graph<typename undirected_simple_graph<V, VP, EP>::vertex_type,
+                                  typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
+                                  typename undirected_simple_graph<V, VP, EP>::edge_property_type>
+                    as_directed() const
+            {
+                return this->graph.as_directed();
+            }
+
+            const typename tree_graph<V, VP, EP>::edge_type
+                    add_vertex(const typename tree_graph<V, VP, EP>::vertex_type & vertex,
+                               const typename tree_graph<V, VP, EP>::vertex_type & neighbour);
+            const typename tree_graph<V, VP, EP>::edge_type add_vertex(
+                    const typename tree_graph<V, VP, EP>::vertex_type & vertex,
+                    const typename tree_graph<V, VP, EP>::vertex_type & neighbour,
+                    const typename tree_graph<V, VP, EP>::vertex_property_type & vertex_property,
+                    const typename tree_graph<V, VP, EP>::edge_property_type & edge_property);
 
         private:
-            undirected_simple_graph graph;
+            graph_t graph;
         };
+
+        template <typename V, typename VP, typename EP>
+        const typename tree_graph<V, VP, EP>::edge_type tree_graph<V, VP, EP>::add_vertex(
+                const typename tree_graph<V, VP, EP>::vertex_type & vertex,
+                const typename tree_graph<V, VP, EP>::vertex_type & neighbour)
+        {
+            bool was_added = this->graph.add_vertex(vertex);
+
+            if(!was_added)
+                throw std::invalid_argument("Vertex already exists");
+
+            return this->graph.add_edge_between(vertex, neighbour);
+        }
+
+        template <typename V, typename VP, typename EP>
+        const typename tree_graph<V, VP, EP>::edge_type tree_graph<V, VP, EP>::add_vertex(
+                const typename tree_graph<V, VP, EP>::vertex_type & vertex,
+                const typename tree_graph<V, VP, EP>::vertex_type & neighbour,
+                const typename tree_graph<V, VP, EP>::vertex_property_type & vertex_property,
+                const typename tree_graph<V, VP, EP>::edge_property_type & edge_property)
+        {
+            bool was_added = this->graph.add_vertex(vertex, vertex_property);
+
+            if(!was_added)
+                throw std::invalid_argument("Vertex already exists");
+
+            return this->graph.add_edge_between(vertex, neighbour, edge_property);
+        }
     }
 }
 

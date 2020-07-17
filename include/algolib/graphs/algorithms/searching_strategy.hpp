@@ -1,92 +1,58 @@
 /*!
  * \file searching_strategy.hpp
- * \brief
+ * \brief Strategies for graph searching
  */
 #ifndef SEARCHING_STRATEGY_HPP_
 #define SEARCHING_STRATEGY_HPP_
-
-#include "algolib/graphs/graph.hpp"
 
 namespace algolib
 {
     namespace graphs
     {
-        struct searching_strategy
+        template <typename V>
+        struct bfs_strategy
         {
-            virtual ~searching_strategy() = default;
+            virtual ~bfs_strategy() = default;
 
-            virtual void preprocess(vertex_t vertex) = 0;
+            virtual void for_root(const V & root) = 0;
 
-            virtual void for_neighbour(vertex_t vertex, vertex_t neighbour) = 0;
+            virtual void on_entry(const V & vertex) = 0;
 
-            virtual void postprocess(vertex_t vertex) = 0;
+            virtual void on_next_vertex(const V & vertex, const V & neighbour) = 0;
 
-            virtual void on_cycle(vertex_t vertex, vertex_t neighbour) = 0;
+            virtual void on_exit(const V & vertex) = 0;
         };
 
-        struct empty_strategy : public virtual searching_strategy
+        template <typename V>
+        struct dfs_strategy : public virtual bfs_strategy<V>
         {
-            empty_strategy() = default;
-            ~empty_strategy() override = default;
-            empty_strategy(const empty_strategy &) = default;
-            empty_strategy(empty_strategy &&) = default;
-            empty_strategy & operator=(const empty_strategy &) = default;
-            empty_strategy & operator=(empty_strategy &&) = default;
+            ~dfs_strategy() override = default;
 
-            void preprocess(vertex_t) override
-            {
-            }
-
-            void for_neighbour(vertex_t, vertex_t) override
-            {
-            }
-
-            void postprocess(vertex_t) override
-            {
-            }
-
-            void on_cycle(vertex_t, vertex_t) override
-            {
-            }
+            virtual void on_edge_to_visited(const V & vertex, const V & neighbour) = 0;
         };
 
-        class timer_strategy : public virtual searching_strategy
+        template <typename V>
+        struct empty_strategy : public dfs_strategy<V>
         {
-        public:
-            explicit timer_strategy(const graph & graph);
-
-            ~timer_strategy() override = default;
-            timer_strategy(const timer_strategy &) = default;
-            timer_strategy(timer_strategy &&) = default;
-            timer_strategy & operator=(const timer_strategy &) = default;
-            timer_strategy & operator=(timer_strategy &&) = default;
-
-            size_t pre_time(vertex_t vertex)
-            {
-                return pre_times[vertex];
-            }
-
-            size_t post_time(vertex_t vertex)
-            {
-                return post_times[vertex];
-            }
-
-            void preprocess(vertex_t vertex) override;
-
-            void for_neighbour(vertex_t, vertex_t) override
+            void for_root(const V &) override
             {
             }
 
-            void postprocess(vertex_t vertex) override;
-
-            void on_cycle(vertex_t, vertex_t) override
+            void on_entry(const V &) override
             {
             }
 
-        private:
-            size_t timer;
-            std::vector<size_t> pre_times;
-            std::vector<size_t> post_times;
+            void on_next_vertex(const V &, const V &) override
+            {
+            }
+
+            void on_exit(const V &) override
+            {
+            }
+
+            void on_edge_to_visited(const V &, const V &) override
+            {
+            }
         };
     }
 }

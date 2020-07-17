@@ -1,6 +1,6 @@
 /*!
  * \file directed_graph.hpp
- * \brief Struktury grafów skierowanych
+ * \brief Structure of directed graph
  */
 #ifndef DIRECTED_GRAPH_HPP_
 #define DIRECTED_GRAPH_HPP_
@@ -9,93 +9,163 @@
 #include <exception>
 #include <stdexcept>
 #include <algorithm>
-#include <set>
-#include <tuple>
+#include <unordered_set>
 #include <vector>
 #include <numeric>
-#include "undirected_graph.hpp"
+#include "simple_graph.hpp"
 
 namespace algolib
 {
     namespace graphs
     {
-#pragma region directed_graph
-
-        struct directed_graph : public virtual graph
+        template <typename V, typename VP, typename EP>
+        struct directed_graph : public virtual graph<V, VP, EP>
         {
             ~directed_graph() override = default;
 
-            //! \brief Odwracanie skierowania grafu.
+            //! Reverses directions of edges in this graph.
             virtual void reverse() = 0;
         };
 
-#pragma endregion
-#pragma region directed_simple_graph
-
-        class directed_simple_graph : public simple_graph, public directed_graph
+        template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
+        class directed_simple_graph : public simple_graph<V, VP, EP>,
+                                      public virtual directed_graph<V, VP, EP>
         {
+        protected:
+            using repr = typename simple_graph<V, VP, EP>::repr;
+
         public:
-            explicit directed_simple_graph(int n, const std::vector<edge_t> & edges = {})
-                : simple_graph(n)
+            explicit directed_simple_graph(
+                    const std::vector<typename directed_simple_graph<V, VP, EP>::vertex_type> &
+                            vertices = {})
+                : simple_graph<V, VP, EP>(vertices)
             {
-                for(const auto & e : edges)
-                    add_edge(std::get<0>(e), std::get<1>(e));
             }
 
-            directed_simple_graph(const undirected_simple_graph & ugraph);
             ~directed_simple_graph() override = default;
             directed_simple_graph(const directed_simple_graph &) = default;
             directed_simple_graph(directed_simple_graph &&) = default;
             directed_simple_graph & operator=(const directed_simple_graph &) = default;
             directed_simple_graph & operator=(directed_simple_graph &&) = default;
 
-            size_t get_edges_number() const override;
+            size_t edges_count() const override
+            {
+                auto edges_set = this->representation.edges_set();
 
-            std::vector<edge_t> get_edges() const override;
+                return std::accumulate(
+                        edges_set.begin(), edges_set.end(), 0,
+                        [](size_t acc,
+                           std::unordered_set<typename directed_simple_graph<V, VP, EP>::edge_type>
+                                   edges) { return acc + edges.size(); });
+            }
 
-            void add_edge(vertex_t vertex1, vertex_t vertex2) override;
+            std::vector<typename directed_simple_graph<V, VP, EP>::edge_type> edges() const override
+            {
+                return this->representation.edges();
+            }
 
-            size_t get_indegree(vertex_t vertex) const override;
+            size_t output_degree(const typename directed_simple_graph<V, VP, EP>::vertex_type &
+                                         vertex) const override
+            {
+                return this->representation.adjacent_edges(vertex).size();
+            }
 
+            size_t input_degree(const typename directed_simple_graph<V, VP, EP>::vertex_type &
+                                        vertex) const override;
+            typename directed_simple_graph<V, VP, EP>::edge_type add_edge(
+                    const typename directed_simple_graph<V, VP, EP>::edge_type & edge) override;
+            typename directed_simple_graph<V, VP, EP>::edge_type
+                    add_edge(const typename directed_simple_graph<V, VP, EP>::edge_type & edge,
+                             const typename directed_simple_graph<V, VP, EP>::edge_property_type &
+                                     property) override;
             void reverse() override;
+
+            //! \return the copy of this graph with reversed directions of edges
+            directed_simple_graph<typename directed_simple_graph<V, VP, EP>::vertex_type,
+                                  typename directed_simple_graph<V, VP, EP>::vertex_property_type,
+                                  typename directed_simple_graph<V, VP, EP>::edge_property_type>
+                    reversed_copy() const;
         };
 
-#pragma endregion
-#pragma region directed_weighted_simple_graph
-
-        class directed_weighted_simple_graph : public directed_simple_graph, public weighted_graph
+        template <typename V, typename VP, typename EP>
+        size_t directed_simple_graph<V, VP, EP>::input_degree(
+                const typename directed_simple_graph<V, VP, EP>::vertex_type & vertex) const
         {
-        public:
-            explicit directed_weighted_simple_graph(int n, const std::vector<edge_t> & edges = {})
-                : directed_simple_graph(n, edges)
+            size_t degree = 0;
+
+            for(auto && edges : this->representation.edges_set())
+                degree += std::count_if(
+                        edges.begin(), edges.end(),
+                        [&](const typename directed_simple_graph<V, VP, EP>::edge_type & edge) {
+                            return edge.destination() == vertex;
+                        });
+
+            return degree;
+        }
+
+        template <typename V, typename VP, typename EP>
+        typename directed_simple_graph<V, VP, EP>::edge_type
+                directed_simple_graph<V, VP, EP>::add_edge(
+                        const typename directed_simple_graph<V, VP, EP>::edge_type & edge)
+        try
+        {
+            return this->get_edge(edge.source(), edge.destination());
+        }
+        catch(const std::out_of_range &)
+        {
+            this->representation.add_edge_to_source(edge);
+            return edge;
+        }
+
+        template <typename V, typename VP, typename EP>
+        typename directed_simple_graph<V, VP, EP>::edge_type
+                directed_simple_graph<V, VP, EP>::add_edge(
+                        const typename directed_simple_graph<V, VP, EP>::edge_type & edge,
+                        const typename directed_simple_graph<V, VP, EP>::edge_property_type &
+                                property)
+        try
+        {
+            return this->get_edge(edge.source(), edge.destination());
+        }
+        catch(const std::out_of_range &)
+        {
+            this->representation.add_edge_to_source(edge);
+            this->representation[edge] = property;
+            return edge;
+        }
+
+        template <typename V, typename VP, typename EP>
+        void directed_simple_graph<V, VP, EP>::reverse()
+        {
+            repr new_representation = repr(this->vertices());
+
+            for(auto && vertex : this->vertices())
+                new_representation[vertex] = this->representation[vertex];
+
+            for(auto && e : edges())
             {
+                auto new_edge = e.reversed();
+                new_representation.add_edge_to_source(new_edge);
+                new_representation[new_edge] = this->representation[e];
             }
 
-            directed_weighted_simple_graph(int n, std::vector<wedge_t> edges)
-                : directed_simple_graph(n)
-            {
-                for(const auto & e : edges)
-                    add_weighted_edge(std::get<0>(e), std::get<1>(e), std::get<2>(e));
-            }
+            this->representation = new_representation;
+        }
 
-            directed_weighted_simple_graph(const undirected_weighted_simple_graph & uwgraph);
-            ~directed_weighted_simple_graph() override = default;
-            directed_weighted_simple_graph(const directed_weighted_simple_graph &) = default;
-            directed_weighted_simple_graph(directed_weighted_simple_graph &&) = default;
-            directed_weighted_simple_graph &
-                    operator=(const directed_weighted_simple_graph &) = default;
-            directed_weighted_simple_graph & operator=(directed_weighted_simple_graph &&) = default;
+        template <typename V, typename VP, typename EP>
+        directed_simple_graph<typename directed_simple_graph<V, VP, EP>::vertex_type,
+                              typename directed_simple_graph<V, VP, EP>::vertex_property_type,
+                              typename directed_simple_graph<V, VP, EP>::edge_property_type>
+                directed_simple_graph<V, VP, EP>::reversed_copy() const
+        {
+            directed_simple_graph<typename directed_simple_graph<V, VP, EP>::vertex_type,
+                                  typename directed_simple_graph<V, VP, EP>::vertex_property_type,
+                                  typename directed_simple_graph<V, VP, EP>::edge_property_type>
+                    reversed_graph = *this;
 
-            std::vector<wedge_t> get_weighted_edges() const override;
-
-            void add_weighted_edge(vertex_t vertex1, vertex_t vertex2, weight_t weight) override;
-
-            std::vector<wvertex_t> get_weighted_neighbours(vertex_t vertex) const override;
-
-            void reverse() override;
-        };
-
-#pragma endregion
+            reversed_graph.reverse();
+            return reversed_graph;
+        }
     }
 }
 
