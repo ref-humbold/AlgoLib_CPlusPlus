@@ -6,8 +6,6 @@ set(GEOMETRY "${ALGOLIB}/geometry")
 set(GRAPHS "${ALGOLIB}/graphs")
 set(GRAPHS_ALGORITHMS "${GRAPHS}/algorithms")
 set(MATHMAT "${ALGOLIB}/mathmat")
-set(OLD_GRAPHS "${ALGOLIB}/old_graphs")
-set(OLD_GRAPHS_ALGORITHMS "${OLD_GRAPHS}/algorithms")
 set(SEQUENCES "${ALGOLIB}/sequences")
 set(STRUCTURES "${ALGOLIB}/structures")
 set(TEXT "${ALGOLIB}/text")
@@ -41,22 +39,6 @@ set(MATHMAT_SOURCES
     "${MATHMAT}/fraction.cpp"
     "${MATHMAT}/maths.cpp"
     "${MATHMAT}/primes.cpp")
-set(OLD_GRAPHS_SOURCES
-    "${OLD_GRAPHS}/directed_graph.cpp"
-    "${OLD_GRAPHS}/graph.cpp"
-    "${OLD_GRAPHS}/multipartite_graph.cpp"
-    "${OLD_GRAPHS}/tree_graph.cpp"
-    "${OLD_GRAPHS}/undirected_graph.cpp")
-set(OLD_GRAPHS_ALGORITHMS_SOURCES
-    "${OLD_GRAPHS_ALGORITHMS}/cutting.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/lowest_common_ancestor.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/matching.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/minimal_spanning_tree.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/paths.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/strongly_connected_components.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/searching.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/searching_strategy.cpp"
-    "${OLD_GRAPHS_ALGORITHMS}/topological_sorting.cpp")
 set(SEQUENCES_SOURCES
     "${SEQUENCES}/sorting.cpp"
     "${SEQUENCES}/subsequences.cpp")
