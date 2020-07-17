@@ -27,7 +27,7 @@ namespace algolib
             explicit disjoint_sets(std::initializer_list<E> universe) : sets{universe.size()}
             {
                 for(E e : universe)
-                    represents.emplace(e, e);
+                    this->represents.emplace(e, e);
             }
 
             template <typename InputIterator>
@@ -42,13 +42,13 @@ namespace algolib
             //! \return \code true if the structure is empty, otherwise \code false
             bool empty() const
             {
-                return sets == 0;
+                return this->sets == 0;
             }
 
             //! \return number of sets
             size_t size() const
             {
-                return sets;
+                return this->sets;
             }
 
             /*!
@@ -59,7 +59,7 @@ namespace algolib
              */
             bool contains(const E & element) const
             {
-                return represents.find(element) != represents.end();
+                return this->represents.find(element) != this->represents.end();
             }
 
             /*!
@@ -120,15 +120,13 @@ namespace algolib
              * \return represent of the element
              */
             const E & find_set(const E & element, const E & default_value)
+            try
             {
-                try
-                {
-                    return this->operator[](element);
-                }
-                catch(const std::out_of_range & e)
-                {
-                    return default_value;
-                }
+                return this->operator[](element);
+            }
+            catch(const std::out_of_range & e)
+            {
+                return default_value;
             }
 
             /*!
@@ -139,15 +137,13 @@ namespace algolib
              * \return represent of the element
              */
             const E & find_set(const E & element, const E & default_value) const
+            try
             {
-                try
-                {
-                    return this->operator[](element);
-                }
-                catch(const std::out_of_range & e)
-                {
-                    return default_value;
-                }
+                return this->operator[](element);
+            }
+            catch(const std::out_of_range & e)
+            {
+                return default_value;
             }
 
             /*!
@@ -177,8 +173,8 @@ namespace algolib
             bool is_same_set(const E & element1, const E & element2) const;
 
         private:
-            std::unordered_map<E, E> represents;  // Map of elements' represents
-            size_t sets;  // Number of sets
+            std::unordered_map<E, E> represents;
+            size_t sets;
         };
 
         template <typename E>
@@ -187,31 +183,31 @@ namespace algolib
         {
             for(InputIterator it = first; it != last; ++it)
             {
-                represents.emplace(*it, *it);
-                ++sets;
+                this->represents.emplace(*it, *it);
+                ++this->sets;
             }
         }
 
         template <typename E>
         void disjoint_sets<E>::insert(const E & element, const E & represent)
         {
-            if(contains(element))
+            if(this->contains(element))
                 throw std::invalid_argument("New value already present");
 
-            if(!contains(represent))
+            if(!this->contains(represent))
                 throw std::invalid_argument("Represent value not present");
 
-            represents.emplace(element, this->operator[](represent));
+            this->represents.emplace(element, this->operator[](represent));
         }
 
         template <typename E>
         void disjoint_sets<E>::insert(const E & element)
         {
-            if(contains(element))
+            if(this->contains(element))
                 throw std::invalid_argument("New value already present");
 
-            represents.emplace(element, element);
-            sets++;
+            this->represents.emplace(element, element);
+            this->sets++;
         }
 
         template <typename E>
@@ -219,13 +215,13 @@ namespace algolib
         void disjoint_sets<E>::insert(InputIterator first, InputIterator last)
         {
             for(InputIterator it = first; it != last; ++it)
-                if(contains(*it))
+                if(this->contains(*it))
                     throw std::invalid_argument("New value already present");
 
             for(InputIterator it = first; it != last; ++it)
             {
-                represents.emplace(*it, *it);
-                sets++;
+                this->represents.emplace(*it, *it);
+                this->sets++;
             }
         }
 
@@ -234,37 +230,38 @@ namespace algolib
         void disjoint_sets<E>::insert(InputIterator first, InputIterator last, const E & represent)
         {
             for(InputIterator it = first; it != last; ++it)
-                if(contains(*it))
+                if(this->contains(*it))
                     throw std::invalid_argument("New value already present");
 
             for(InputIterator it = first; it != last; ++it)
-                represents.emplace(*it, this->operator[](represent));
+                this->represents.emplace(*it, this->operator[](represent));
         }
 
         template <typename E>
         const E & disjoint_sets<E>::operator[](const E & element)
         {
-            if(represents.at(element) != element)
-                represents[element] = this->operator[](represents[element]);
+            if(this->represents.at(element) != element)
+                this->represents[element] = this->operator[](this->represents[element]);
 
-            return represents.at(element);
+            return this->represents.at(element);
         }
 
         template <typename E>
         const E & disjoint_sets<E>::operator[](const E & element) const
         {
-            return represents.at(element) == element ? element
-                                                     : this->operator[](represents.at(element));
+            return this->represents.at(element) == element
+                           ? element
+                           : this->operator[](this->represents.at(element));
         }
 
         template <typename E>
         void disjoint_sets<E>::union_set(const E & element1, const E & element2)
         {
-            if(is_same_set(element1, element2))
+            if(this->is_same_set(element1, element2))
                 return;
 
-            represents[this->operator[](element1)] = this->operator[](element2);
-            --sets;
+            this->represents[this->operator[](element1)] = this->operator[](element2);
+            --this->sets;
         }
 
         template <typename E>

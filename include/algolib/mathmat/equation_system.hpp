@@ -94,13 +94,13 @@ namespace algolib
         template <size_t N>
         equation<N> & equation_system<N>::operator[](size_t i)
         {
-            return equations.at(i);
+            return this->equations.at(i);
         }
 
         template <size_t N>
         const equation<N> & equation_system<N>::operator[](size_t i) const
         {
-            return equations.at(i);
+            return this->equations.at(i);
         }
 
         template <size_t N>
@@ -108,25 +108,25 @@ namespace algolib
         {
             gaussian_reduce();
 
-            if(equations[N - 1][N - 1] == 0 && equations[N - 1].free == 0)
+            if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free == 0)
                 throw infinite_solutions_error(
                         "Equation system has an infinite number of solutions");
 
-            if(equations[N - 1][N - 1] == 0 && equations[N - 1].free != 0)
+            if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free != 0)
                 throw no_solution_error("Equation system has no solution");
 
             std::array<double, N> solution;
 
-            solution.back() = equations[N - 1].free / equations[N - 1][N - 1];
+            solution.back() = this->equations[N - 1].free / this->equations[N - 1][N - 1];
 
             for(int i = N - 2; i >= 0; --i)
             {
-                double value = equations[i].free;
+                double value = this->equations[i].free;
 
                 for(int j = N - 1; j > i; --j)
-                    value -= equations[i][j] * solution[j];
+                    value -= this->equations[i][j] * solution[j];
 
-                solution[i] = value / equations[i][i];
+                solution[i] = value / this->equations[i][i];
             }
 
             return solution;
@@ -141,23 +141,23 @@ namespace algolib
 
                 for(size_t j = i + 1; j < N; ++j)
                 {
-                    double min_coef = equations[index_min][i];
-                    double act_coef = equations[j][i];
+                    double min_coef = this->equations[index_min][i];
+                    double act_coef = this->equations[j][i];
 
                     if(act_coef != 0 && (min_coef == 0 || std::abs(act_coef) < std::abs(min_coef)))
                         index_min = j;
                 }
 
-                if(equations[index_min][i] != 0)
+                if(this->equations[index_min][i] != 0)
                 {
                     swap(index_min, i);
 
                     for(size_t j = i + 1; j < N; ++j)
                     {
-                        double param = -equations[j][i] / equations[i][i];
+                        double param = -this->equations[j][i] / this->equations[i][i];
 
                         if(param != 0)
-                            equations[j].combine(equations[i], param);
+                            this->equations[j].combine(this->equations[i], param);
                     }
                 }
             }
@@ -166,14 +166,14 @@ namespace algolib
         template <size_t N>
         void equation_system<N>::swap(size_t i, size_t j)
         {
-            std::swap(equations.at(i), equations.at(j));
+            std::swap(this->equations.at(i), this->equations.at(j));
         }
 
         template <size_t N>
         bool equation_system<N>::is_solution(const std::array<double, N> & solution) const
         {
             return std::all_of(
-                    equations.begin(), equations.end(),
+                    this->equations.begin(), this->equations.end(),
                     [this, solution](const equation<N> & eq) { return eq.is_solution(solution); });
         }
     }
