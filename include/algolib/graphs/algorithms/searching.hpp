@@ -66,143 +66,140 @@ namespace internal
     }
 }
 
-namespace algolib
+namespace algolib::graphs
 {
-    namespace graphs
-    {
-        /**!
+    /**!
          * \brief Breadth-first search algorithm.
          * \param graph_ a graph
          * \param strategy a searching strategy
          * \param roots starting vertices
          * \return vector of visited vertices
          */
-        template <typename V, typename VP, typename EP>
-        std::vector<V> bfs(const graph<V, VP, EP> & graph_,
-                           bfs_strategy<typename graph<V, VP, EP>::vertex_type> & strategy,
-                           std::vector<typename graph<V, VP, EP>::vertex_type> roots)
-        {
-            std::unordered_set<V> reached;
-            std::queue<V> vertex_queue;
+    template <typename V, typename VP, typename EP>
+    std::vector<V> bfs(const graph<V, VP, EP> & graph_,
+                       bfs_strategy<typename graph<V, VP, EP>::vertex_type> & strategy,
+                       std::vector<typename graph<V, VP, EP>::vertex_type> roots)
+    {
+        std::unordered_set<V> reached;
+        std::queue<V> vertex_queue;
 
-            for(auto && root : roots)
-                if(reached.find(root) == reached.end())
+        for(auto && root : roots)
+            if(reached.find(root) == reached.end())
+            {
+                strategy.for_root(root);
+                vertex_queue.push(root);
+                reached.insert(root);
+
+                while(!vertex_queue.empty())
                 {
-                    strategy.for_root(root);
-                    vertex_queue.push(root);
-                    reached.insert(root);
+                    V vertex = vertex_queue.front();
 
-                    while(!vertex_queue.empty())
-                    {
-                        V vertex = vertex_queue.front();
+                    vertex_queue.pop();
+                    strategy.on_entry(vertex);
 
-                        vertex_queue.pop();
-                        strategy.on_entry(vertex);
+                    for(auto && neighbour : graph_.neighbours(vertex))
+                        if(reached.find(neighbour) == reached.end())
+                        {
+                            strategy.on_next_vertex(vertex, neighbour);
+                            reached.insert(neighbour);
+                            vertex_queue.push(neighbour);
+                        }
 
-                        for(auto && neighbour : graph_.neighbours(vertex))
-                            if(reached.find(neighbour) == reached.end())
-                            {
-                                strategy.on_next_vertex(vertex, neighbour);
-                                reached.insert(neighbour);
-                                vertex_queue.push(neighbour);
-                            }
-
-                        strategy.on_exit(vertex);
-                    }
+                    strategy.on_exit(vertex);
                 }
+            }
 
-            return std::vector<V>(reached.begin(), reached.end());
-        }
+        return std::vector<V>(reached.begin(), reached.end());
+    }
 
-        /**!
+    /**!
          * \brief Iterative depth-first search algorithm.
          * \param graph_ a graph
          * \param strategy a searching strategy
          * \param roots starting vertices
          * \return vector of visited vertices
          */
-        template <typename V, typename VP, typename EP>
-        std::vector<V> dfs_iterative(const graph<V, VP, EP> & graph_, dfs_strategy<V> & strategy,
-                                     std::vector<V> roots)
-        {
-            std::vector<V> visited;
-            std::unordered_map<V, int> reached;
-            std::stack<V> vertex_stack;
-            int iteration = 1;
+    template <typename V, typename VP, typename EP>
+    std::vector<V> dfs_iterative(const graph<V, VP, EP> & graph_, dfs_strategy<V> & strategy,
+                                 std::vector<V> roots)
+    {
+        std::vector<V> visited;
+        std::unordered_map<V, int> reached;
+        std::stack<V> vertex_stack;
+        int iteration = 1;
 
-            for(auto && root : roots)
-                if(reached.find(root) == reached.end())
+        for(auto && root : roots)
+            if(reached.find(root) == reached.end())
+            {
+                strategy.for_root(root);
+                vertex_stack.push(root);
+
+                while(!vertex_stack.empty())
                 {
-                    strategy.for_root(root);
-                    vertex_stack.push(root);
+                    V vertex = vertex_stack.top();
 
-                    while(!vertex_stack.empty())
+                    vertex_stack.pop();
+
+                    auto insert_result = reached.emplace(vertex, iteration);
+
+                    if(insert_result.second)
                     {
-                        V vertex = vertex_stack.top();
+                        strategy.on_entry(vertex);
 
-                        vertex_stack.pop();
-
-                        auto insert_result = reached.emplace(vertex, iteration);
-
-                        if(insert_result.second)
+                        for(auto && neighbour : graph_.neighbours(vertex))
                         {
-                            strategy.on_entry(vertex);
+                            auto it = reached.find(neighbour);
 
-                            for(auto && neighbour : graph_.neighbours(vertex))
+                            if(it == reached.end())
                             {
-                                auto it = reached.find(neighbour);
-
-                                if(it == reached.end())
-                                {
-                                    strategy.on_next_vertex(vertex, neighbour);
-                                    vertex_stack.push(neighbour);
-                                }
-                                else if(it->second == iteration)
-                                    strategy.on_edge_to_visited(vertex, neighbour);
+                                strategy.on_next_vertex(vertex, neighbour);
+                                vertex_stack.push(neighbour);
                             }
-
-                            strategy.on_exit(vertex);
-                            reached[vertex] = -iteration;
+                            else if(it->second == iteration)
+                                strategy.on_edge_to_visited(vertex, neighbour);
                         }
-                    }
 
-                    ++iteration;
+                        strategy.on_exit(vertex);
+                        reached[vertex] = -iteration;
+                    }
                 }
 
-            std::transform(reached.begin(), reached.end(), std::back_inserter(visited),
-                           [](std::pair<V, int> p) { return p.first; });
+                ++iteration;
+            }
 
-            return visited;
-        }
+        std::transform(reached.begin(), reached.end(), std::back_inserter(visited),
+                       [](std::pair<V, int> p) { return p.first; });
 
-        /**!
+        return visited;
+    }
+
+    /**!
          * \brief Recursive depth-first search algorithm.
          * \param graph_ a graph
          * \param strategy a searching strategy
          * \param roots starting vertices
          * \return vector of visited vertices
          */
-        template <typename V, typename VP, typename EP>
-        std::vector<V> dfs_recursive(const graph<V, VP, EP> & graph_, dfs_strategy<V> & strategy,
-                                     std::vector<V> roots)
-        {
-            std::vector<V> visited;
-            internal::dfs_recursive_state<V> state;
+    template <typename V, typename VP, typename EP>
+    std::vector<V> dfs_recursive(const graph<V, VP, EP> & graph_, dfs_strategy<V> & strategy,
+                                 std::vector<V> roots)
+    {
+        std::vector<V> visited;
+        internal::dfs_recursive_state<V> state;
 
-            for(auto && root : roots)
-                if(state.reached.find(root) == state.reached.end())
-                {
-                    strategy.for_root(root);
-                    state.vertex = root;
-                    internal::dfs_recursive_step(graph_, strategy, state);
-                    ++state.iteration;
-                }
+        for(auto && root : roots)
+            if(state.reached.find(root) == state.reached.end())
+            {
+                strategy.for_root(root);
+                state.vertex = root;
+                internal::dfs_recursive_step(graph_, strategy, state);
+                ++state.iteration;
+            }
 
-            std::transform(state.reached.begin(), state.reached.end(), std::back_inserter(visited),
-                           [](std::pair<V, int> p) { return p.first; });
+        std::transform(state.reached.begin(), state.reached.end(), std::back_inserter(visited),
+                       [](std::pair<V, int> p) { return p.first; });
 
-            return visited;
-        }
+        return visited;
     }
 }
 

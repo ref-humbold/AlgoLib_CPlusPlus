@@ -9,12 +9,9 @@
 #include <cmath>
 #include <iostream>
 
-namespace algolib
+namespace algolib::geometry
 {
-    namespace geometry
-    {
-        class point2d;
-    }
+    class point2d;
 }
 
 namespace std
@@ -23,72 +20,69 @@ namespace std
     struct hash<algolib::geometry::point2d>;
 }
 
-namespace algolib
+namespace algolib::geometry
 {
-    namespace geometry
+    class point2d
     {
-        class point2d
+    public:
+        point2d(double x, double y) : x_{x}, y_{y}
         {
-        public:
-            point2d(double x, double y) : x_{x}, y_{y}
-            {
-            }
+        }
 
-            ~point2d() = default;
-            point2d(const point2d &) = default;
-            point2d(point2d &&) = default;
-            point2d & operator=(const point2d &) = default;
-            point2d & operator=(point2d &&) = default;
+        ~point2d() = default;
+        point2d(const point2d &) = default;
+        point2d(point2d &&) = default;
+        point2d & operator=(const point2d &) = default;
+        point2d & operator=(point2d &&) = default;
 
-            double x() const
-            {
-                return x_;
-            }
+        double x() const
+        {
+            return x_;
+        }
 
-            double y() const
-            {
-                return y_;
-            }
+        double y() const
+        {
+            return y_;
+        }
 
-            double angle_rad() const
-            {
-                return atan2(y_, x_);
-            }
+        double angle_rad() const
+        {
+            return atan2(y_, x_);
+        }
 
-            double angle_deg() const
-            {
-                double ang = angle_rad() * 180.0 / M_PI;
+        double angle_deg() const
+        {
+            double ang = angle_rad() * 180.0 / M_PI;
 
-                return y_ >= 0.0 ? ang : ang + 360.0;
-            }
+            return y_ >= 0.0 ? ang : ang + 360.0;
+        }
 
-            double radius() const
-            {
-                return hypot(x_, y_);
-            }
+        double radius() const
+        {
+            return hypot(x_, y_);
+        }
 
-            friend bool operator==(const point2d & p1, const point2d & p2);
-            friend bool operator!=(const point2d & p1, const point2d & p2);
-            friend bool operator<(const point2d & p1, const point2d & p2);
-            friend bool operator<=(const point2d & p1, const point2d & p2);
-            friend bool operator>(const point2d & p1, const point2d & p2);
-            friend bool operator>=(const point2d & p1, const point2d & p2);
-            friend std::ostream & operator<<(std::ostream & os, const point2d & p);
+        friend bool operator==(const point2d & p1, const point2d & p2);
+        friend bool operator!=(const point2d & p1, const point2d & p2);
+        friend bool operator<(const point2d & p1, const point2d & p2);
+        friend bool operator<=(const point2d & p1, const point2d & p2);
+        friend bool operator>(const point2d & p1, const point2d & p2);
+        friend bool operator>=(const point2d & p1, const point2d & p2);
+        friend std::ostream & operator<<(std::ostream & os, const point2d & p);
 
-            friend struct std::hash<point2d>;
+        friend struct std::hash<point2d>;
 
-        private:
-            double x_, y_;
-        };
+    private:
+        double x_, y_;
+    };
 
-        bool operator==(const point2d & p1, const point2d & p2);
-        bool operator!=(const point2d & p1, const point2d & p2);
-        bool operator<(const point2d & p1, const point2d & p2);
-        bool operator<=(const point2d & p1, const point2d & p2);
-        bool operator>(const point2d & p1, const point2d & p2);
-        bool operator>=(const point2d & p1, const point2d & p2);
-        std::ostream & operator<<(std::ostream & os, const point2d & p);
-    }
+    bool operator==(const point2d & p1, const point2d & p2);
+    bool operator!=(const point2d & p1, const point2d & p2);
+    bool operator<(const point2d & p1, const point2d & p2);
+    bool operator<=(const point2d & p1, const point2d & p2);
+    bool operator>(const point2d & p1, const point2d & p2);
+    bool operator>=(const point2d & p1, const point2d & p2);
+    std::ostream & operator<<(std::ostream & os, const point2d & p);
 }
 
 namespace std

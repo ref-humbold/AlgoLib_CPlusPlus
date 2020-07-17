@@ -30,7 +30,7 @@ namespace internal
     }
 }
 
-namespace algolib
+namespace algolib::sequences
 {
     /*!
      * \brief Constructs longest ordered subsequence

@@ -86,46 +86,44 @@ namespace internal
 #pragma endregion
 }
 
-namespace algolib
+namespace algolib::graphs
 {
-    namespace graphs
-    {
-        /*!
+    /*!
          * \brief Finds strongly connected components in given directed graph.
          * \param graph a directed graph
          * \return list of vertices in strongly connected components
          */
-        template <typename V, typename VP, typename EP>
-        std::vector<std::unordered_set<typename directed_graph<V, VP, EP>::vertex_type>>
-                find_scc(const directed_simple_graph<V, VP, EP> & graph)
-        {
-            internal::post_order_strategy<typename directed_graph<V, VP, EP>::vertex_type>
-                    post_order_strategy;
+    template <typename V, typename VP, typename EP>
+    std::vector<std::unordered_set<typename directed_graph<V, VP, EP>::vertex_type>>
+            find_scc(const directed_simple_graph<V, VP, EP> & graph)
+    {
+        internal::post_order_strategy<typename directed_graph<V, VP, EP>::vertex_type>
+                post_order_strategy;
 
-            dfs_recursive(graph, post_order_strategy, graph.vertices());
+        dfs_recursive(graph, post_order_strategy, graph.vertices());
 
-            std::vector<std::pair<typename directed_graph<V, VP, EP>::vertex_type, int>> entries;
-            std::vector<typename directed_graph<V, VP, EP>::vertex_type> vertices;
+        std::vector<std::pair<typename directed_graph<V, VP, EP>::vertex_type, int>> entries;
+        std::vector<typename directed_graph<V, VP, EP>::vertex_type> vertices;
 
-            std::copy(std::begin(post_order_strategy.post_times),
-                      std::end(post_order_strategy.post_times), std::back_inserter(entries));
-            std::sort(
-                    entries.begin(), entries.end(),
-                    [](const std::pair<typename directed_graph<V, VP, EP>::vertex_type, int> & e1,
-                       const std::pair<typename directed_graph<V, VP, EP>::vertex_type, int> & e2) {
-                        return e2.second < e1.second;
-                    });
-            std::transform(entries.begin(), entries.end(), std::back_inserter(vertices),
-                           [](const std::pair<typename directed_graph<V, VP, EP>::vertex_type,
-                                              int> & entry) { return entry.first; });
+        std::copy(std::begin(post_order_strategy.post_times),
+                  std::end(post_order_strategy.post_times), std::back_inserter(entries));
+        std::sort(entries.begin(), entries.end(),
+                  [](const std::pair<typename directed_graph<V, VP, EP>::vertex_type, int> & e1,
+                     const std::pair<typename directed_graph<V, VP, EP>::vertex_type, int> & e2) {
+                      return e2.second < e1.second;
+                  });
+        std::transform(
+                entries.begin(), entries.end(), std::back_inserter(vertices),
+                [](const std::pair<typename directed_graph<V, VP, EP>::vertex_type, int> & entry) {
+                    return entry.first;
+                });
 
-            directed_simple_graph<V, VP, EP> reversed_graph = graph.reversed_copy();
-            internal::scc_strategy<typename directed_graph<V, VP, EP>::vertex_type> scc_strategy;
+        directed_simple_graph<V, VP, EP> reversed_graph = graph.reversed_copy();
+        internal::scc_strategy<typename directed_graph<V, VP, EP>::vertex_type> scc_strategy;
 
-            dfs_recursive(reversed_graph, scc_strategy, vertices);
+        dfs_recursive(reversed_graph, scc_strategy, vertices);
 
-            return scc_strategy.components;
-        }
+        return scc_strategy.components;
     }
 }
 

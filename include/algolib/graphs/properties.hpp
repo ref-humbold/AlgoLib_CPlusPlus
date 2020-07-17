@@ -7,23 +7,20 @@
 
 #include <limits>
 
-namespace algolib
+namespace algolib::graphs
 {
-    namespace graphs
+    struct no_prop
     {
-        struct no_prop
-        {
-        };
+    };
 
-        struct weighted
-        {
-            using weight_type = double;
+    struct weighted
+    {
+        using weight_type = double;
 
-            virtual const weight_type & weight() const = 0;
+        virtual const weight_type & weight() const = 0;
 
-            static constexpr weight_type infinity = std::numeric_limits<double>::infinity();
-        };
-    }
+        static constexpr weight_type infinity = std::numeric_limits<double>::infinity();
+    };
 }
 
 #endif

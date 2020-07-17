@@ -13,12 +13,9 @@
 #include <string>
 #include "maths.hpp"
 
-namespace algolib
+namespace algolib::mathmat
 {
-    namespace mathmat
-    {
-        class fraction;
-    }
+    class fraction;
 }
 
 namespace std
@@ -27,82 +24,79 @@ namespace std
     struct hash<algolib::mathmat::fraction>;
 }
 
-namespace algolib
+namespace algolib::mathmat
 {
-    namespace mathmat
+    class fraction
     {
-        class fraction
+    public:
+        fraction() : fraction(0LL)
         {
-        public:
-            fraction() : fraction(0LL)
-            {
-            }
+        }
 
-            explicit fraction(long long int numerator, long long int denominator = 1LL)
-                : numerator{numerator}, denominator{denominator}
-            {
-                if(denominator == 0LL)
-                    throw std::domain_error("Denominator cannot be equal to zero");
+        explicit fraction(long long int numerator, long long int denominator = 1LL)
+            : numerator{numerator}, denominator{denominator}
+        {
+            if(denominator == 0LL)
+                throw std::domain_error("Denominator cannot be equal to zero");
 
-                normalize();
-            }
+            normalize();
+        }
 
-            ~fraction() = default;
-            fraction(const fraction &) = default;
-            fraction(fraction &&) = default;
-            fraction & operator=(const fraction &) = default;
-            fraction & operator=(fraction &&) = default;
+        ~fraction() = default;
+        fraction(const fraction &) = default;
+        fraction(fraction &&) = default;
+        fraction & operator=(const fraction &) = default;
+        fraction & operator=(fraction &&) = default;
 
-            explicit operator double() const
-            {
-                return (1.0 * numerator) / denominator;
-            }
+        explicit operator double() const
+        {
+            return (1.0 * numerator) / denominator;
+        }
 
-            explicit operator long long int() const
-            {
-                return numerator / denominator;
-            }
+        explicit operator long long int() const
+        {
+            return numerator / denominator;
+        }
 
-            explicit operator int() const
-            {
-                return static_cast<int>(numerator / denominator);
-            }
+        explicit operator int() const
+        {
+            return static_cast<int>(numerator / denominator);
+        }
 
-            fraction & operator+=(const fraction & f);
-            fraction & operator-=(const fraction & f);
-            fraction & operator*=(const fraction & f);
-            fraction & operator/=(const fraction & f);
+        fraction & operator+=(const fraction & f);
+        fraction & operator-=(const fraction & f);
+        fraction & operator*=(const fraction & f);
+        fraction & operator/=(const fraction & f);
 
-            friend fraction operator+(fraction f1, const fraction & f2);
-            friend fraction operator-(fraction f1, const fraction & f2);
-            friend fraction operator*(fraction f1, const fraction & f2);
-            friend fraction operator/(fraction f1, const fraction & f2);
-            friend fraction operator-(fraction f);
-            friend fraction operator~(fraction f);
+        friend fraction operator+(fraction f1, const fraction & f2);
+        friend fraction operator-(fraction f1, const fraction & f2);
+        friend fraction operator*(fraction f1, const fraction & f2);
+        friend fraction operator/(fraction f1, const fraction & f2);
+        friend fraction operator-(fraction f);
+        friend fraction operator~(fraction f);
 
-            friend bool operator==(const fraction & f1, const fraction & f2);
-            friend bool operator!=(const fraction & f1, const fraction & f2);
+        friend bool operator==(const fraction & f1, const fraction & f2);
+        friend bool operator!=(const fraction & f1, const fraction & f2);
 
-            friend std::ostream & operator<<(std::ostream & os, const fraction & f);
+        friend std::ostream & operator<<(std::ostream & os, const fraction & f);
 
-            friend struct std::hash<fraction>;
+        friend struct std::hash<fraction>;
 
-        private:
-            void normalize();
+    private:
+        void normalize();
 
-            long long int numerator, denominator;
-        };
+        long long int numerator, denominator;
+    };
 
-        fraction operator+(fraction f1, const fraction & f2);
-        fraction operator-(fraction f1, const fraction & f2);
-        fraction operator*(fraction f1, const fraction & f2);
-        fraction operator/(fraction f1, const fraction & f2);
-        fraction operator-(fraction f);
-        fraction operator~(fraction f);
-        bool operator==(const fraction & f1, const fraction & f2);
-        bool operator!=(const fraction & f1, const fraction & f2);
-        std::ostream & operator<<(std::ostream & os, const fraction & f);
-    }
+    fraction operator+(fraction f1, const fraction & f2);
+    fraction operator-(fraction f1, const fraction & f2);
+    fraction operator*(fraction f1, const fraction & f2);
+    fraction operator/(fraction f1, const fraction & f2);
+    fraction operator-(fraction f);
+    fraction operator~(fraction f);
+    bool operator==(const fraction & f1, const fraction & f2);
+    bool operator!=(const fraction & f1, const fraction & f2);
+    std::ostream & operator<<(std::ostream & os, const fraction & f);
 }
 
 namespace std

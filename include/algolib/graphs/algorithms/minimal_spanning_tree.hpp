@@ -48,112 +48,109 @@ namespace internal
     };
 }
 
-namespace algolib
+namespace algolib::graphs
 {
-    namespace graphs
-    {
-        namespace alst = algolib::structures;
+    namespace alst = algolib::structures;
 
-        /**!
+    /**!
          * \brief Kruskal algorithm.
          * \param graph an undirected weighted graph
          * \return the minimal spanning tree
          */
-        template <typename V, typename VP, typename EP>
-        undirected_simple_graph<V, VP, EP> kruskal(const undirected_simple_graph<V, VP, EP> & graph)
+    template <typename V, typename VP, typename EP>
+    undirected_simple_graph<V, VP, EP> kruskal(const undirected_simple_graph<V, VP, EP> & graph)
+    {
+        using cmp = internal::kruskal_cmp<
+                typename undirected_simple_graph<V, VP, EP>::vertex_type,
+                typename undirected_simple_graph<V, VP, EP>::edge_type,
+                typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
+                typename undirected_simple_graph<V, VP, EP>::edge_property_type>;
+
+        undirected_simple_graph<V, VP, EP> mst(graph.vertices());
+        std::vector<typename undirected_simple_graph<V, VP, EP>::vertex_type> vertices =
+                graph.vertices();
+        alst::disjoint_sets<typename undirected_simple_graph<V, VP, EP>::vertex_type> vertex_sets(
+                vertices.begin(), vertices.end());
+        auto edge_queue = std::priority_queue<
+                typename undirected_simple_graph<V, VP, EP>::edge_type,
+                std::vector<typename undirected_simple_graph<V, VP, EP>::edge_type>, cmp>(
+                cmp(graph));
+
+        for(auto && edge : graph.edges())
+            edge_queue.push(edge);
+
+        while(vertex_sets.size() > 1 && !edge_queue.empty())
         {
-            using cmp = internal::kruskal_cmp<
-                    typename undirected_simple_graph<V, VP, EP>::vertex_type,
-                    typename undirected_simple_graph<V, VP, EP>::edge_type,
-                    typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
-                    typename undirected_simple_graph<V, VP, EP>::edge_property_type>;
+            auto edge = edge_queue.top();
 
-            undirected_simple_graph<V, VP, EP> mst(graph.vertices());
-            std::vector<typename undirected_simple_graph<V, VP, EP>::vertex_type> vertices =
-                    graph.vertices();
-            alst::disjoint_sets<typename undirected_simple_graph<V, VP, EP>::vertex_type>
-                    vertex_sets(vertices.begin(), vertices.end());
-            auto edge_queue = std::priority_queue<
-                    typename undirected_simple_graph<V, VP, EP>::edge_type,
-                    std::vector<typename undirected_simple_graph<V, VP, EP>::edge_type>, cmp>(
-                    cmp(graph));
+            edge_queue.pop();
 
-            for(auto && edge : graph.edges())
-                edge_queue.push(edge);
+            if(!vertex_sets.is_same_set(edge.source(), edge.destination()))
+                mst.add_edge(edge, graph[edge]);
 
-            while(vertex_sets.size() > 1 && !edge_queue.empty())
-            {
-                auto edge = edge_queue.top();
-
-                edge_queue.pop();
-
-                if(!vertex_sets.is_same_set(edge.source(), edge.destination()))
-                    mst.add_edge(edge, graph[edge]);
-
-                vertex_sets.union_set(edge.source(), edge.destination());
-            }
-
-            return mst;
+            vertex_sets.union_set(edge.source(), edge.destination());
         }
 
-        /**!
+        return mst;
+    }
+
+    /**!
          * \brief Prim algorithm.
          * \param graph an undirected weighted graph
          * \param source starting vertex
          * \return the minimal spanning tree
          */
-        template <typename V, typename VP, typename EP>
-        undirected_simple_graph<V, VP, EP>
-                prim(const undirected_simple_graph<V, VP, EP> & graph,
-                     typename undirected_simple_graph<V, VP, EP>::vertex_type source)
+    template <typename V, typename VP, typename EP>
+    undirected_simple_graph<V, VP, EP>
+            prim(const undirected_simple_graph<V, VP, EP> & graph,
+                 typename undirected_simple_graph<V, VP, EP>::vertex_type source)
+    {
+        using ev_pair = std::pair<typename undirected_simple_graph<V, VP, EP>::edge_type,
+                                  typename undirected_simple_graph<V, VP, EP>::vertex_type>;
+        using cmp = internal::prim_cmp<
+                typename undirected_simple_graph<V, VP, EP>::vertex_type,
+                typename undirected_simple_graph<V, VP, EP>::edge_type,
+                typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
+                typename undirected_simple_graph<V, VP, EP>::edge_property_type>;
+
+        undirected_simple_graph<V, VP, EP> mst(graph.vertices());
+        std::unordered_set<typename undirected_simple_graph<V, VP, EP>::vertex_type> visited;
+        auto queue = std::priority_queue<ev_pair, std::vector<ev_pair>, cmp>(cmp(graph));
+
+        visited.insert(source);
+
+        for(auto && adjacent_edge : graph.adjacent_edges(source))
         {
-            using ev_pair = std::pair<typename undirected_simple_graph<V, VP, EP>::edge_type,
-                                      typename undirected_simple_graph<V, VP, EP>::vertex_type>;
-            using cmp = internal::prim_cmp<
-                    typename undirected_simple_graph<V, VP, EP>::vertex_type,
-                    typename undirected_simple_graph<V, VP, EP>::edge_type,
-                    typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
-                    typename undirected_simple_graph<V, VP, EP>::edge_property_type>;
+            auto neighbour = adjacent_edge.get_neighbour(source);
 
-            undirected_simple_graph<V, VP, EP> mst(graph.vertices());
-            std::unordered_set<typename undirected_simple_graph<V, VP, EP>::vertex_type> visited;
-            auto queue = std::priority_queue<ev_pair, std::vector<ev_pair>, cmp>(cmp(graph));
+            if(neighbour != source)
+                queue.push(std::make_pair(adjacent_edge, neighbour));
+        }
 
-            visited.insert(source);
+        while(!queue.empty())
+        {
+            auto edge = queue.top().first;
+            auto vertex = queue.top().second;
 
-            for(auto && adjacent_edge : graph.adjacent_edges(source))
+            queue.pop();
+
+            auto insert_result = visited.insert(vertex);
+
+            if(insert_result.second)
             {
-                auto neighbour = adjacent_edge.get_neighbour(source);
+                mst.add_edge(edge, graph[edge]);
 
-                if(neighbour != source)
-                    queue.push(std::make_pair(adjacent_edge, neighbour));
-            }
-
-            while(!queue.empty())
-            {
-                auto edge = queue.top().first;
-                auto vertex = queue.top().second;
-
-                queue.pop();
-
-                auto insert_result = visited.insert(vertex);
-
-                if(insert_result.second)
+                for(auto && adjacent_edge : graph.adjacent_edges(vertex))
                 {
-                    mst.add_edge(edge, graph[edge]);
+                    auto neighbour = adjacent_edge.get_neighbour(vertex);
 
-                    for(auto && adjacent_edge : graph.adjacent_edges(vertex))
-                    {
-                        auto neighbour = adjacent_edge.get_neighbour(vertex);
-
-                        if(visited.find(neighbour) == visited.end())
-                            queue.push(std::make_pair(adjacent_edge, neighbour));
-                    }
+                    if(visited.find(neighbour) == visited.end())
+                        queue.push(std::make_pair(adjacent_edge, neighbour));
                 }
             }
-
-            return mst;
         }
+
+        return mst;
     }
 }
 

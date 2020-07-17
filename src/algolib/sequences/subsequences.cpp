@@ -4,7 +4,9 @@
  */
 #include "algolib/sequences/subsequences.hpp"
 
-std::vector<double> algolib::maximum_subarray(const std::vector<double> & sequence)
+namespace alse = algolib::sequences;
+
+std::vector<double> alse::maximum_subarray(const std::vector<double> & sequence)
 {
     std::pair<double, std::vector<double>> actual, maximal;
 
@@ -32,7 +34,7 @@ std::vector<double> algolib::maximum_subarray(const std::vector<double> & sequen
     return maximal.second;
 }
 
-double algolib::maximal_subsum(const std::vector<double> & sequence)
+double alse::maximal_subsum(const std::vector<double> & sequence)
 {
     size_t size = 1;
 
