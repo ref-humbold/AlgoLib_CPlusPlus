@@ -69,10 +69,6 @@ namespace algolib
 
             friend bool operator==(const point2d & p1, const point2d & p2);
             friend bool operator!=(const point2d & p1, const point2d & p2);
-            friend bool operator<(const point2d & p1, const point2d & p2);
-            friend bool operator<=(const point2d & p1, const point2d & p2);
-            friend bool operator>(const point2d & p1, const point2d & p2);
-            friend bool operator>=(const point2d & p1, const point2d & p2);
             friend std::ostream & operator<<(std::ostream & os, const point2d & p);
 
             friend struct std::hash<point2d>;
@@ -83,10 +79,6 @@ namespace algolib
 
         bool operator==(const point2d & p1, const point2d & p2);
         bool operator!=(const point2d & p1, const point2d & p2);
-        bool operator<(const point2d & p1, const point2d & p2);
-        bool operator<=(const point2d & p1, const point2d & p2);
-        bool operator>(const point2d & p1, const point2d & p2);
-        bool operator>=(const point2d & p1, const point2d & p2);
         std::ostream & operator<<(std::ostream & os, const point2d & p);
     }
 }
