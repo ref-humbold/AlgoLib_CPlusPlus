@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <initializer_list>
 #include <unordered_map>
+#include <optional>
 
 namespace algolib::structures
 {
@@ -106,33 +107,31 @@ namespace algolib::structures
         /*!
          * \brief Finds a represent of the element.
          * \param element an element
-         * \param default_value a value to return if the element not inside
-         * \return represent of the element
+         * \return optional of represent of the element
          */
-        const E & find_set(const E & element, const E & default_value)
+        std::optional<E> find_set(const E & element)
         try
         {
-            return this->operator[](element);
+            return std::optional<E>(this->operator[](element));
         }
         catch(const std::out_of_range & e)
         {
-            return default_value;
+            return std::nullopt;
         }
 
         /*!
          * \brief Finds a represent of the element.
          * \param element an element
-         * \param default_value a value to return if the element not inside
-         * \return represent of the element
+         * \return optional of represent of the element
          */
-        const E & find_set(const E & element, const E & default_value) const
+        std::optional<E> find_set(const E & element) const
         try
         {
-            return this->operator[](element);
+            return std::optional<E>(this->operator[](element));
         }
         catch(const std::out_of_range & e)
         {
-            return default_value;
+            return std::nullopt;
         }
 
         /*!
