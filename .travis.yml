@@ -18,5 +18,5 @@ before_install:
   - cd build
 install:
   - cmake ..
-  - make
+  - make -s
 script: ctest -T test

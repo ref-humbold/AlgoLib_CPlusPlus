@@ -70,7 +70,7 @@ namespace internal
     void validate_indices(int size, int index_begin, int index_end);
 }
 
-namespace algolib
+namespace algolib::sequences
 {
     /*!
      * \brief Mutowalne sortowanie ciągu przez kopcowanie

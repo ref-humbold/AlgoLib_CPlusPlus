@@ -93,54 +93,50 @@ namespace internal
     };
 }
 
-namespace algolib
+namespace algolib::graphs
 {
-    namespace graphs
+    /*!
+     * \brief Finds an edge cut of given graph.
+     * \param graph an undirected graph
+     * \return vector of edges in the edge cut
+     */
+    template <typename V, typename VP, typename EP>
+    std::vector<typename undirected_graph<V, VP, EP>::edge_type>
+            find_edge_cut(const undirected_graph<V, VP, EP> & graph)
     {
-        /**!
-         * \brief Finds an edge cut of given graph.
-         * \param graph an undirected graph
-         * \return vector of edges in the edge cut
-         */
-        template <typename V, typename VP, typename EP>
-        std::vector<typename undirected_graph<V, VP, EP>::edge_type>
-                find_edge_cut(const undirected_graph<V, VP, EP> & graph)
-        {
-            std::vector<typename undirected_graph<V, VP, EP>::edge_type> bridges;
-            internal::cutting_strategy<typename undirected_graph<V, VP, EP>::vertex_type> strategy;
+        std::vector<typename undirected_graph<V, VP, EP>::edge_type> bridges;
+        internal::cutting_strategy<typename undirected_graph<V, VP, EP>::vertex_type> strategy;
 
-            dfs_recursive(graph, strategy, graph.vertices());
+        dfs_recursive(graph, strategy, graph.vertices());
 
-            for(auto && vertex : graph.vertices())
-                if(strategy.has_bridge(vertex))
-                    bridges.push_back(graph.get_edge(vertex, strategy.dfs_parents[vertex]));
+        for(auto && vertex : graph.vertices())
+            if(strategy.has_bridge(vertex))
+                bridges.push_back(graph.get_edge(vertex, strategy.dfs_parents[vertex]));
 
-            return bridges;
-        }
+        return bridges;
+    }
 
-        /**!
-         * \brief Finds a vertex cut of given graph.
-         * \param graph an undirected graph
-         * \return vector of vertices in the vertex cut
-         */
-        template <typename V, typename VP, typename EP>
-        std::vector<typename undirected_graph<V, VP, EP>::vertex_type>
-                find_vertex_cut(const undirected_graph<V, VP, EP> & graph)
-        {
-            std::vector<typename undirected_graph<V, VP, EP>::vertex_type> separators;
-            internal::cutting_strategy<typename undirected_graph<V, VP, EP>::vertex_type> strategy;
-            std::vector<typename undirected_graph<V, VP, EP>::vertex_type> vertices =
-                    graph.vertices();
+    /*!
+     * \brief Finds a vertex cut of given graph.
+     * \param graph an undirected graph
+     * \return vector of vertices in the vertex cut
+     */
+    template <typename V, typename VP, typename EP>
+    std::vector<typename undirected_graph<V, VP, EP>::vertex_type>
+            find_vertex_cut(const undirected_graph<V, VP, EP> & graph)
+    {
+        std::vector<typename undirected_graph<V, VP, EP>::vertex_type> separators;
+        internal::cutting_strategy<typename undirected_graph<V, VP, EP>::vertex_type> strategy;
+        std::vector<typename undirected_graph<V, VP, EP>::vertex_type> vertices = graph.vertices();
 
-            dfs_recursive(graph, strategy, vertices);
+        dfs_recursive(graph, strategy, vertices);
 
-            std::copy_if(vertices.begin(), vertices.end(), std::back_inserter(separators),
-                         [&](const typename undirected_graph<V, VP, EP>::vertex_type & vertex) {
-                             return strategy.is_separator(vertex);
-                         });
+        std::copy_if(vertices.begin(), vertices.end(), std::back_inserter(separators),
+                     [&](const typename undirected_graph<V, VP, EP>::vertex_type & vertex) {
+                         return strategy.is_separator(vertex);
+                     });
 
-            return separators;
-        }
+        return separators;
     }
 }
 

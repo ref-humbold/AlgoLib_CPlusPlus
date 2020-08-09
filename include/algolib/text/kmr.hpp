@@ -12,18 +12,14 @@
 #include <tuple>
 #include <vector>
 
-namespace algolib
+namespace algolib::text
 {
-    namespace text
-    {
-        /*!
-         * \brief Builds a base words dictionary for specified text using Karp-Miller-Rosenberg algorithm.
-         *
-         * \param text a text
-         * \return base words dictionary
-         */
-        std::map<std::string, int> kmr(const std::string & text);
-    }
+    /*!
+     * \brief Builds a base words dictionary for specified text using Karp-Miller-Rosenberg algorithm.
+     * \param text a text
+     * \return base words dictionary
+     */
+    std::map<std::string, int> kmr(const std::string & text);
 }
 
 #endif

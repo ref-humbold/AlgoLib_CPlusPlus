@@ -10,18 +10,14 @@
 #include <vector>
 #include "points_sorting.hpp"
 
-namespace algolib
+namespace algolib::geometry
 {
-    namespace geometry
-    {
-        /*!
-         * \brief Constructs a convex hull of specified points.
-         *
-         * \param points a vector of points
-         * \return vector of hull points
-         */
-        std::vector<point2d> find_convex_hull(std::vector<point2d> points);
-    }
+    /*!
+     * \brief Constructs a convex hull of specified points.
+     * \param points a vector of points
+     * \return vector of hull points
+     */
+    std::vector<point2d> find_convex_hull(std::vector<point2d> points);
 }
 
 #endif
