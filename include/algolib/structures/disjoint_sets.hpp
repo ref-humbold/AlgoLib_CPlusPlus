@@ -50,73 +50,65 @@ namespace algolib::structures
         }
 
         /*!
-             * \brief Checks whether given element in one of the sets in the structure.
-             *
-             * \param element an element
-             * \return \code true if element belongs to the structure, otherwise \code false
-             */
+         * \brief Checks whether given element in one of the sets in the structure.
+         * \param element an element
+         * \return \code true if element belongs to the structure, otherwise \code false
+         */
         bool contains(const E & element) const
         {
             return this->represents.find(element) != this->represents.end();
         }
 
         /*!
-             * \brief Adds new element to the set represented by another element.
-             *
-             * \param element a new element
-             * \param represent represent of the set
-             */
+         * \brief Adds new element to the set represented by another element.
+         * \param element a new element
+         * \param represent represent of the set
+         */
         void insert(const E & element, const E & represent);
 
         /*!
-             * \brief Adds new element as a singleton set.
-             *
-             * \param element a new element
-             */
+         * \brief Adds new element as a singleton set.
+         * \param element a new element
+         */
         void insert(const E & element);
 
         /*!
-             * \brief Adds new elements to the set represented by another element.
-             *
-             * \param first beginning of elements range
-             * \param last end of elements range
-             * \param represent represent of the set
-             */
+         * \brief Adds new elements to the set represented by another element.
+         * \param first beginning of elements range
+         * \param last end of elements range
+         * \param represent represent of the set
+         */
         template <typename InputIterator>
         void insert(InputIterator first, InputIterator last, const E & represent);
 
         /*!
-             * \brief Adds new elements as singleton sets.
-             *
-             * \param first beginning of elements range
-             * \param last end of elements range
-             */
+         * \brief Adds new elements as singleton sets.
+         * \param first beginning of elements range
+         * \param last end of elements range
+         */
         template <typename InputIterator>
         void insert(InputIterator first, InputIterator last);
 
         /*!
-             * \brief Finds represent of the set with given element.
-             *
-             * \param element an element
-             * \return represent of the element
-             */
+         * \brief Finds represent of the set with given element.
+         * \param element an element
+         * \return represent of the element
+         */
         const E & operator[](const E & element);
 
         /*!
-             * \brief Finds represent of the set with given element.
-             *
-             * \param element an element
-             * \return represent of the element
-             */
+         * \brief Finds represent of the set with given element.
+         * \param element an element
+         * \return represent of the element
+         */
         const E & operator[](const E & element) const;
 
         /*!
-             * \brief Finds a represent of the element.
-             *
-             * \param element an element
-             * \param default_value a value to return if the element not inside
-             * \return represent of the element
-             */
+         * \brief Finds a represent of the element.
+         * \param element an element
+         * \param default_value a value to return if the element not inside
+         * \return represent of the element
+         */
         const E & find_set(const E & element, const E & default_value)
         try
         {
@@ -128,12 +120,11 @@ namespace algolib::structures
         }
 
         /*!
-             * \brief Finds a represent of the element.
-             *
-             * \param element an element
-             * \param default_value a value to return if the element not inside
-             * \return represent of the element
-             */
+         * \brief Finds a represent of the element.
+         * \param element an element
+         * \param default_value a value to return if the element not inside
+         * \return represent of the element
+         */
         const E & find_set(const E & element, const E & default_value) const
         try
         {
@@ -145,29 +136,26 @@ namespace algolib::structures
         }
 
         /*!
-             * \brief Performs union of two sets in the structure.
-             *
-             * \param element1 element from the first set
-             * \param element2 element from the second set
-             */
+         * \brief Performs union of two sets in the structure.
+         * \param element1 element from the first set
+         * \param element2 element from the second set
+         */
         void union_set(const E & element1, const E & element2);
 
         /*!
-             * \brief Tests whether two elements belong to the same set.
-             *
-             * \param element1 element from the first set
-             * \param element2 element from the second set
-             * \return \code true if both element are in the same set, otherwise \code false
-             */
+         * \brief Tests whether two elements belong to the same set.
+         * \param element1 element from the first set
+         * \param element2 element from the second set
+         * \return \code true if both element are in the same set, otherwise \code false
+         */
         bool is_same_set(const E & element1, const E & element2);
 
         /*!
-             * \brief Tests whether two elements belong to the same set.
-             *
-             * \param element1 element from the first set
-             * \param element2 element from the second set
-             * \return \code true if both element are in the same set, otherwise \code false
-             */
+         * \brief Tests whether two elements belong to the same set.
+         * \param element1 element from the first set
+         * \param element2 element from the second set
+         * \return \code true if both element are in the same set, otherwise \code false
+         */
         bool is_same_set(const E & element1, const E & element2) const;
 
     private:

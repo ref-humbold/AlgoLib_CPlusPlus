@@ -95,11 +95,11 @@ namespace internal
 
 namespace algolib::graphs
 {
-    /**!
-         * \brief Finds an edge cut of given graph.
-         * \param graph an undirected graph
-         * \return vector of edges in the edge cut
-         */
+    /*!
+     * \brief Finds an edge cut of given graph.
+     * \param graph an undirected graph
+     * \return vector of edges in the edge cut
+     */
     template <typename V, typename VP, typename EP>
     std::vector<typename undirected_graph<V, VP, EP>::edge_type>
             find_edge_cut(const undirected_graph<V, VP, EP> & graph)
@@ -116,11 +116,11 @@ namespace algolib::graphs
         return bridges;
     }
 
-    /**!
-         * \brief Finds a vertex cut of given graph.
-         * \param graph an undirected graph
-         * \return vector of vertices in the vertex cut
-         */
+    /*!
+     * \brief Finds a vertex cut of given graph.
+     * \param graph an undirected graph
+     * \return vector of vertices in the vertex cut
+     */
     template <typename V, typename VP, typename EP>
     std::vector<typename undirected_graph<V, VP, EP>::vertex_type>
             find_vertex_cut(const undirected_graph<V, VP, EP> & graph)

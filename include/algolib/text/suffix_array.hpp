@@ -51,36 +51,35 @@ namespace algolib::text
         }
 
         /*!
-             * \param i an index in suffix array
-             * \return suffix
-             */
+         * \param i an index in suffix array
+         * \return suffix
+         */
         std::string at(size_t i) const;
 
         /*!
-             * \param i an index in suffix array
-             * \return suffix
-             */
+         * \param i an index in suffix array
+         * \return suffix
+         */
         std::string operator[](size_t i) const;
 
         /*!
-             * \param i an index in suffix array
-             * \return index in text where the suffix begins
-             */
+         * \param i an index in suffix array
+         * \return index in text where the suffix begins
+         */
         size_t index_at(size_t i) const;
 
         /*!
-             * \param suf an index in text denoting suffix
-             * \return index of suffix in this array
-             */
+         * \param suf an index in text denoting suffix
+         * \return index of suffix in this array
+         */
         size_t index_of(size_t suf) const;
 
         /*!
-             * \brief Counts longest common prefix of two suffixes.
-             *
-             * \param suf1 an index in text denoting first suffix
-             * \param suf2 an index in text denoting second suffix
-             * \return length of longest common prefix
-             */
+         * \brief Counts longest common prefix of two suffixes.
+         * \param suf1 an index in text denoting first suffix
+         * \param suf2 an index in text denoting second suffix
+         * \return length of longest common prefix
+         */
         size_t lcp(size_t suf1, size_t suf2) const;
 
     private:

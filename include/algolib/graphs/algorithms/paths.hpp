@@ -32,11 +32,11 @@ namespace internal
 namespace algolib::graphs
 {
     /*!
-         * \briefBellman-Ford algorithm.
-         * \param graph a directed graph with weighted edges
-         * \param source source vertex
-         * \return map of vertices' distances
-         */
+     * \briefBellman-Ford algorithm.
+     * \param graph a directed graph with weighted edges
+     * \param source source vertex
+     * \return map of vertices' distances
+     */
     template <typename V, typename VP, typename EP>
     std::unordered_map<typename directed_graph<V, VP, EP>::vertex_type,
                        typename directed_graph<V, VP, EP>::edge_property_type::weight_type>
@@ -68,12 +68,12 @@ namespace algolib::graphs
         return distances;
     }
 
-    /**!
-         * \brief Dijkstra algorithm.
-         * \param graph_ a graph with weighted edges (weights are not negative)
-         * \param source source vertex
-         * \return map of vertices' distances
-         */
+    /*!
+     * \brief Dijkstra algorithm.
+     * \param graph_ a graph with weighted edges (weights are not negative)
+     * \param source source vertex
+     * \return map of vertices' distances
+     */
     template <typename V, typename VP, typename EP>
     std::unordered_map<typename directed_graph<V, VP, EP>::vertex_type,
                        typename directed_graph<V, VP, EP>::edge_property_type::weight_type>
@@ -123,11 +123,11 @@ namespace algolib::graphs
         return distances;
     }
 
-    /**!
-         * \brief Floyd-Warshall algorithm.
-         * \param graph a directed graph with weighted edges
-         * \return map of distances between all pairs of vertices
-         */
+    /*!
+     * \brief Floyd-Warshall algorithm.
+     * \param graph a directed graph with weighted edges
+     * \return map of distances between all pairs of vertices
+     */
     template <typename V, typename VP, typename EP>
     std::unordered_map<std::pair<typename directed_graph<V, VP, EP>::vertex_type,
                                  typename directed_graph<V, VP, EP>::vertex_type>,

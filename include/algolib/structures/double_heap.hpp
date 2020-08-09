@@ -54,9 +54,9 @@ namespace algolib::structures
         }
 
         /*!
-             * \brief Retrieves minimal element from this double heap.
-             * \return minimal element
-             */
+         * \brief Retrieves minimal element from this double heap.
+         * \return minimal element
+         */
         const_reference min() const
         {
             if(this->heap.empty())
@@ -66,18 +66,18 @@ namespace algolib::structures
         }
 
         /*!
-             * \brief Retrieves maximal element from this double heap.
-             * \return maximal element
-             */
+         * \brief Retrieves maximal element from this double heap.
+         * \return maximal element
+         */
         const_reference max() const
         {
             return this->heap.size() <= 1 ? min() : *(this->heap.begin() + INDEX_MAX);
         }
 
         /*!
-             * \brief Adds a new value to this double heap.
-             * \param element value to be added
-             */
+         * \brief Adds a new value to this double heap.
+         * \param element value to be added
+         */
         void push(const_reference element);
 
         //! \brief Removes minimal element from this double heap.

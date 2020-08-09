@@ -38,11 +38,11 @@ namespace algolib::graphs
         }
 
         /*!
-             * \brief Finds a lowest common ancestor of two vertices in a rooted tree.
-             * \param vertex1 first vertex
-             * \param vertex2 second vertex
-             * \return lowest common ancestor of given vertices
-             */
+         * \brief Finds a lowest common ancestor of two vertices in a rooted tree.
+         * \param vertex1 first vertex
+         * \param vertex2 second vertex
+         * \return lowest common ancestor of given vertices
+         */
         int find(const vertex_type & vertex1, const vertex_type & vertex2)
         {
             if(this->empty)

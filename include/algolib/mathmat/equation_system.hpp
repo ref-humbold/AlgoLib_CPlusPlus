@@ -1,4 +1,4 @@
-/**!
+/*!
  * \file equation_system.hpp
  * \brief Structure of linear equation system with Gauss elimination algorithm
  */
@@ -46,43 +46,43 @@ namespace algolib::mathmat
         equation_system & operator=(const equation_system & es) = default;
         equation_system & operator=(equation_system && es) = default;
 
-        /**!
-             * \param i index of equation
-             * \return equation object
-             */
+        /*!
+         * \param i index of equation
+         * \return equation object
+         */
         equation<N> & operator[](size_t i);
 
-        /**!
-             * \param i index of equation
-             * \return equation object
-             */
+        /*!
+         * \param i index of equation
+         * \return equation object
+         */
         const equation<N> & operator[](size_t i) const;
 
-        /**!
-             * \brief Computes the solution of this equation system
-             * \return solution vector
-             * \throw infinite_solutions_error
-             * \throw no_solution_error
-             */
+        /*!
+         * \brief Computes the solution of this equation system
+         * \return solution vector
+         * \throw infinite_solutions_error
+         * \throw no_solution_error
+         */
         std::array<double, N> solve();
 
-        /**!
-             * \brief Gauss elimination algorithm
-             */
+        /*!
+         * \brief Gauss elimination algorithm
+         */
         void gaussian_reduce();
 
-        /**!
-             * \brief Swaps two equations
-             * \param i index of first equation
-             * \param j index of second equation
-             */
+        /*!
+         * \brief Swaps two equations
+         * \param i index of first equation
+         * \param j index of second equation
+         */
         void swap(size_t i, size_t j);
 
-        /**!
-             * \brief Checks whether given values solve this equation system
-             * \param solution values to check
-             * \return `true` if solution is correct, otherwise `false`
-             */
+        /*!
+         * \brief Checks whether given values solve this equation system
+         * \param solution values to check
+         * \return `true` if solution is correct, otherwise `false`
+         */
         bool is_solution(const std::array<double, N> & solution) const;
 
     private:

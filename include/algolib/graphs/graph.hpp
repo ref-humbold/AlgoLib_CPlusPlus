@@ -45,36 +45,36 @@ namespace algolib::graphs
         virtual const edge_property_type & operator[](const edge_type & edge) const = 0;
 
         /*!
-             * \param source source vertex
-             * \param destination destination vertex
-             * \return the edge between the vertices
-             * \throw out_of_range if no edge
-             */
+         * \param source source vertex
+         * \param destination destination vertex
+         * \return the edge between the vertices
+         * \throw out_of_range if no edge
+         */
         virtual edge_type get_edge(const vertex_type & source,
                                    const vertex_type & destination) const = 0;
 
         /*!
-             * \param vertex a vertex from this graph
-             * \return vector of neighbouring vertices
-             */
+         * \param vertex a vertex from this graph
+         * \return vector of neighbouring vertices
+         */
         virtual std::vector<vertex_type> neighbours(const vertex_type & vertex) const = 0;
 
         /*!
-             * \param vertex a vertex from this graph
-             * \return vector of edges adjacent to given vertex
-             */
+         * \param vertex a vertex from this graph
+         * \return vector of edges adjacent to given vertex
+         */
         virtual std::vector<edge<V>> adjacent_edges(const vertex_type & vertex) const = 0;
 
         /*!
-             * \param vertex a vertex from this graph
-             * \return the output degree of given vertex
-             */
+         * \param vertex a vertex from this graph
+         * \return the output degree of given vertex
+         */
         virtual size_t output_degree(const vertex_type & vertex) const = 0;
 
         /*!
-             * \param vertex a vertex from this graph
-             * \return the input degree of given vertex
-             */
+         * \param vertex a vertex from this graph
+         * \return the input degree of given vertex
+         */
         virtual size_t input_degree(const vertex_type & vertex) const = 0;
     };
 

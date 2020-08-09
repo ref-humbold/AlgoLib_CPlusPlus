@@ -148,32 +148,32 @@ namespace algolib::structures
         }
 
         /*!
-             * \brief Checks whether specified value is present in this tree.
-             * \param element value to check
-             * \return iterator on the element if found, otherwise iterator at the end
-             */
+         * \brief Checks whether specified value is present in this tree.
+         * \param element value to check
+         * \return iterator on the element if found, otherwise iterator at the end
+         */
         iterator find(const_reference element);
 
         /*!
-             * \brief Checks whether specified value is present in this tree.
-             * \param element value to check
-             * \return iterator on the element if found, otherwise iterator at the end
-             */
+         * \brief Checks whether specified value is present in this tree.
+         * \param element value to check
+         * \return iterator on the element if found, otherwise iterator at the end
+         */
         const_iterator find(const_reference element) const;
 
         /*!
-             * \brief Adds a new value to the tree.
-             * \param element value to be added
-             * \return iterator at the new element and \code true whether insert was successful,
-             * otherwise \code false
-             */
+         * \brief Adds a new value to the tree.
+         * \param element value to be added
+         * \return iterator at the new element and \code true whether insert was successful,
+         * otherwise \code false
+         */
         std::pair<iterator, bool> insert(const_reference element);
 
         /*!
-             * \brief Removes specified element from the tree if present.
-             * \param element value to be removed
-             * \return number of element removed
-             */
+         * \brief Removes specified element from the tree if present.
+         * \param element value to be removed
+         * \return number of element removed
+         */
         size_type erase(const_reference element);
 
         //! \brief Removes all elements in this tree.

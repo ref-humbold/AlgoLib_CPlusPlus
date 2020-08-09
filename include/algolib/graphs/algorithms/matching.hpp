@@ -150,10 +150,10 @@ namespace internal
 namespace algolib::graphs
 {
     /*!
-         * \brief Finds maximal matching in given bipartite graph.
-         * \param graph a bipartite graph
-         * \return map of matched vertices
-         */
+     * \brief Finds maximal matching in given bipartite graph.
+     * \param graph a bipartite graph
+     * \return map of matched vertices
+     */
     template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
     std::unordered_map<typename multipartite_graph<2, V, VP, EP>::vertex_type,
                        typename multipartite_graph<2, V, VP, EP>::vertex_type>

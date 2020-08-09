@@ -89,10 +89,10 @@ namespace internal
 namespace algolib::graphs
 {
     /*!
-         * \brief Finds strongly connected components in given directed graph.
-         * \param graph a directed graph
-         * \return list of vertices in strongly connected components
-         */
+     * \brief Finds strongly connected components in given directed graph.
+     * \param graph a directed graph
+     * \return list of vertices in strongly connected components
+     */
     template <typename V, typename VP, typename EP>
     std::vector<std::unordered_set<typename directed_graph<V, VP, EP>::vertex_type>>
             find_scc(const directed_simple_graph<V, VP, EP> & graph)

@@ -68,13 +68,13 @@ namespace internal
 
 namespace algolib::graphs
 {
-    /**!
-         * \brief Breadth-first search algorithm.
-         * \param graph_ a graph
-         * \param strategy a searching strategy
-         * \param roots starting vertices
-         * \return vector of visited vertices
-         */
+    /*!
+     * \brief Breadth-first search algorithm.
+     * \param graph_ a graph
+     * \param strategy a searching strategy
+     * \param roots starting vertices
+     * \return vector of visited vertices
+     */
     template <typename V, typename VP, typename EP>
     std::vector<V> bfs(const graph<V, VP, EP> & graph_,
                        bfs_strategy<typename graph<V, VP, EP>::vertex_type> & strategy,
@@ -112,13 +112,13 @@ namespace algolib::graphs
         return std::vector<V>(reached.begin(), reached.end());
     }
 
-    /**!
-         * \brief Iterative depth-first search algorithm.
-         * \param graph_ a graph
-         * \param strategy a searching strategy
-         * \param roots starting vertices
-         * \return vector of visited vertices
-         */
+    /*!
+     * \brief Iterative depth-first search algorithm.
+     * \param graph_ a graph
+     * \param strategy a searching strategy
+     * \param roots starting vertices
+     * \return vector of visited vertices
+     */
     template <typename V, typename VP, typename EP>
     std::vector<V> dfs_iterative(const graph<V, VP, EP> & graph_, dfs_strategy<V> & strategy,
                                  std::vector<V> roots)
@@ -173,13 +173,13 @@ namespace algolib::graphs
         return visited;
     }
 
-    /**!
-         * \brief Recursive depth-first search algorithm.
-         * \param graph_ a graph
-         * \param strategy a searching strategy
-         * \param roots starting vertices
-         * \return vector of visited vertices
-         */
+    /*!
+     * \brief Recursive depth-first search algorithm.
+     * \param graph_ a graph
+     * \param strategy a searching strategy
+     * \param roots starting vertices
+     * \return vector of visited vertices
+     */
     template <typename V, typename VP, typename EP>
     std::vector<V> dfs_recursive(const graph<V, VP, EP> & graph_, dfs_strategy<V> & strategy,
                                  std::vector<V> roots)
