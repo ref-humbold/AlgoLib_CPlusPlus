@@ -82,7 +82,9 @@ namespace algolib
         vector2d operator/(vector2d v, double c);
         vector2d operator/(double c, vector2d v);
         std::ostream & operator<<(std::ostream & os, const vector2d & v);
-    };
+
+        double area(const vector2d & v1, const vector2d & v2);
+    }
 }
 
 namespace std

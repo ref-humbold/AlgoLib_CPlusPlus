@@ -14,7 +14,8 @@ set(GEOMETRY_SOURCES
     "${GEOMETRY}/closest_points.cpp"
     "${GEOMETRY}/convex_hull.cpp"
     "${GEOMETRY}/point2d.cpp"
-    "${GEOMETRY}/points_sorting.cpp")
+    "${GEOMETRY}/points_sorting.cpp"
+    "${GEOMETRY}/vector2d.cpp")
 set(GRAPHS_SOURCES
     "${GRAPHS}/directed_graph.cpp"
     "${GRAPHS}/edge.cpp"

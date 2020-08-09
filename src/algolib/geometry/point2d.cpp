@@ -21,3 +21,8 @@ std::ostream & alge::operator<<(std::ostream & os, const alge::point2d & p)
     os << "(" << p.x_ << ", " << p.y_ << ")";
     return os;
 }
+
+alge::point2d alge::translate(const alge::point2d & p, const alge::vector2d & v)
+{
+    return point2d(p.x() + v.x(), p.y() + v.y());
+}

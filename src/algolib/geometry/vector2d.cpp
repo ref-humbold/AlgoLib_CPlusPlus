@@ -68,3 +68,8 @@ std::ostream & alge::operator<<(std::ostream & os, const alge::vector2d & v)
     os << "[" << v.x_ << ", " << v.y_ << "]";
     return os;
 }
+
+double alge::area(const alge::vector2d & v1, const alge::vector2d & v2)
+{
+    return v1.x() * v2.y() - v1.y() * v2.x();
+}
