@@ -131,18 +131,18 @@ TEST_F(DisjointSetsTest, getItem_whenPresent_thenOutOfRange)
 TEST_F(DisjointSetsTest, findSet_whenPresent_thenRepresent)
 {
     int elem = 4;
-    int result = test_object.find_set(elem, 10);
 
-    EXPECT_EQ(elem, result);
+    std::optional<int> result = test_object.find_set(elem);
+
+    ASSERT_TRUE(result);
+    EXPECT_EQ(elem, *result);
 }
 
 TEST_F(DisjointSetsTest, findSet_whenAbsent_thenDefaultValue)
 {
-    int default_value = 10;
+    std::optional<int> result = test_object.find_set(22);
 
-    int result = test_object.find_set(22, default_value);
-
-    EXPECT_EQ(default_value, result);
+    EXPECT_FALSE(result);
 }
 
 TEST_F(DisjointSetsTest, unionSet_whenDifferentSets)

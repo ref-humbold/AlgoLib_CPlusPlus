@@ -147,32 +147,28 @@ namespace internal
     }
 }
 
-namespace algolib
+namespace algolib::graphs
 {
-    namespace graphs
+    /*!
+     * \brief Finds maximal matching in given bipartite graph.
+     * \param graph a bipartite graph
+     * \return map of matched vertices
+     */
+    template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
+    std::unordered_map<typename multipartite_graph<2, V, VP, EP>::vertex_type,
+                       typename multipartite_graph<2, V, VP, EP>::vertex_type>
+            match(const multipartite_graph<2, V, VP, EP> & graph)
     {
-        /*!
-         * \brief Finds maximal matching in given bipartite graph.
-         * \param graph a bipartite graph
-         * \return map of matched vertices
-         */
-        template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
-        std::unordered_map<typename multipartite_graph<2, V, VP, EP>::vertex_type,
-                           typename multipartite_graph<2, V, VP, EP>::vertex_type>
-                match(const multipartite_graph<2, V, VP, EP> & graph)
-        {
-            internal::match_augmenter<
-                    typename multipartite_graph<2, V, VP, EP>::vertex_type,
-                    typename multipartite_graph<2, V, VP, EP>::vertex_property_type,
-                    typename multipartite_graph<2, V, VP, EP>::edge_property_type>
-                    augmenter(graph);
-            bool was_augmented = true;
+        internal::match_augmenter<typename multipartite_graph<2, V, VP, EP>::vertex_type,
+                                  typename multipartite_graph<2, V, VP, EP>::vertex_property_type,
+                                  typename multipartite_graph<2, V, VP, EP>::edge_property_type>
+                augmenter(graph);
+        bool was_augmented = true;
 
-            while(was_augmented)
-                was_augmented = augmenter.augment_match();
+        while(was_augmented)
+            was_augmented = augmenter.augment_match();
 
-            return augmenter.matching;
-        }
+        return augmenter.matching;
     }
 }
 

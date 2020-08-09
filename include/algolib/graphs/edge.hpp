@@ -10,34 +10,31 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace algolib
+namespace algolib::graphs
 {
-    namespace graphs
-    {
-        template <typename V>
-        class edge;
+    template <typename V>
+    class edge;
 
-        template <typename V>
-        bool operator==(const edge<V> & e1, const edge<V> & e2);
+    template <typename V>
+    bool operator==(const edge<V> & e1, const edge<V> & e2);
 
-        template <typename V>
-        bool operator!=(const edge<V> & e1, const edge<V> & e2);
+    template <typename V>
+    bool operator!=(const edge<V> & e1, const edge<V> & e2);
 
-        template <typename V>
-        bool operator<(const edge<V> & e1, const edge<V> & e2);
+    template <typename V>
+    bool operator<(const edge<V> & e1, const edge<V> & e2);
 
-        template <typename V>
-        bool operator<=(const edge<V> & e1, const edge<V> & e2);
+    template <typename V>
+    bool operator<=(const edge<V> & e1, const edge<V> & e2);
 
-        template <typename V>
-        bool operator>(const edge<V> & e1, const edge<V> & e2);
+    template <typename V>
+    bool operator>(const edge<V> & e1, const edge<V> & e2);
 
-        template <typename V>
-        bool operator>=(const edge<V> & e1, const edge<V> & e2);
+    template <typename V>
+    bool operator>=(const edge<V> & e1, const edge<V> & e2);
 
-        template <typename V>
-        std::ostream & operator<<(std::ostream & os, const edge<V> & edge);
-    }
+    template <typename V>
+    std::ostream & operator<<(std::ostream & os, const edge<V> & edge);
 }
 
 namespace std
@@ -46,51 +43,49 @@ namespace std
     struct hash<algolib::graphs::edge<V>>;
 }
 
-namespace algolib
+namespace algolib::graphs
 {
-    namespace graphs
+    template <typename V>
+    class edge
     {
-        template <typename V>
-        class edge
+    public:
+        edge(V source, V destination) : source_{source}, destination_{destination}
         {
-        public:
-            edge(V source, V destination) : source_{source}, destination_{destination}
-            {
-            }
+        }
 
-            ~edge() = default;
-            edge(const edge<V> &) = default;
-            edge(edge<V> &&) = default;
-            edge<V> & operator=(const edge<V> &) = default;
-            edge<V> & operator=(edge<V> &&) = default;
+        ~edge() = default;
+        edge(const edge<V> &) = default;
+        edge(edge<V> &&) = default;
+        edge<V> & operator=(const edge<V> &) = default;
+        edge<V> & operator=(edge<V> &&) = default;
 
-            const V & source() const
-            {
-                return source_;
-            }
+        const V & source() const
+        {
+            return source_;
+        }
 
-            const V & destination() const
-            {
+        const V & destination() const
+        {
+            return destination_;
+        }
+
+        V get_neighbour(V vertex) const
+        {
+            if(source_ == vertex)
                 return destination_;
-            }
 
-            V get_neighbour(V vertex) const
-            {
-                if(source_ == vertex)
-                    return destination_;
+            if(destination_ == vertex)
+                return source_;
 
-                if(destination_ == vertex)
-                    return source_;
+            throw std::invalid_argument("Edge is not adjacent to the vertex");
+        }
 
-                throw std::invalid_argument("Edge is not adjacent to the vertex");
-            }
+        edge<V> reversed() const
+        {
+            return edge<V>(destination_, source_);
+        }
 
-            edge<V> reversed() const
-            {
-                return edge<V>(destination_, source_);
-            }
-
-            // clang-format off
+        // clang-format off
             friend bool operator== <V>(const edge<V> & e1, const edge<V> & e2);
             friend bool operator!= <V>(const edge<V> & e1, const edge<V> & e2);
             friend bool operator< <V>(const edge<V> & e1, const edge<V> & e2);
@@ -98,58 +93,57 @@ namespace algolib
             friend bool operator> <V>(const edge<V> & e1, const edge<V> & e2);
             friend bool operator>= <V>(const edge<V> & e1, const edge<V> & e2);
             friend std::ostream & operator<< <V>(std::ostream & os, const edge<V> & edge);
-            // clang-format on
+        // clang-format on
 
-            friend struct std::hash<edge<V>>;
+        friend struct std::hash<edge<V>>;
 
-        private:
-            V source_;
-            V destination_;
-        };
+    private:
+        V source_;
+        V destination_;
+    };
 
-        template <typename V>
-        bool operator==(const edge<V> & e1, const edge<V> & e2)
-        {
-            return e1.source_ == e2.source_ && e1.destination_ == e2.destination_;
-        }
+    template <typename V>
+    bool operator==(const edge<V> & e1, const edge<V> & e2)
+    {
+        return e1.source_ == e2.source_ && e1.destination_ == e2.destination_;
+    }
 
-        template <typename V>
-        bool operator!=(const edge<V> & e1, const edge<V> & e2)
-        {
-            return !(e1 == e2);
-        }
+    template <typename V>
+    bool operator!=(const edge<V> & e1, const edge<V> & e2)
+    {
+        return !(e1 == e2);
+    }
 
-        template <typename V>
-        bool operator<(const edge<V> & e1, const edge<V> & e2)
-        {
-            return e1.source_ < e2.source_
-                   || (!(e2.source_ < e1.source_) && e1.destination_ < e2.destination_);
-        }
+    template <typename V>
+    bool operator<(const edge<V> & e1, const edge<V> & e2)
+    {
+        return e1.source_ < e2.source_
+               || (!(e2.source_ < e1.source_) && e1.destination_ < e2.destination_);
+    }
 
-        template <typename V>
-        bool operator<=(const edge<V> & e1, const edge<V> & e2)
-        {
-            return !(e2 < e1);
-        }
+    template <typename V>
+    bool operator<=(const edge<V> & e1, const edge<V> & e2)
+    {
+        return !(e2 < e1);
+    }
 
-        template <typename V>
-        bool operator>(const edge<V> & e1, const edge<V> & e2)
-        {
-            return e2 < e1;
-        }
+    template <typename V>
+    bool operator>(const edge<V> & e1, const edge<V> & e2)
+    {
+        return e2 < e1;
+    }
 
-        template <typename V>
-        bool operator>=(const edge<V> & e1, const edge<V> & e2)
-        {
-            return !(e1 < e2);
-        }
+    template <typename V>
+    bool operator>=(const edge<V> & e1, const edge<V> & e2)
+    {
+        return !(e1 < e2);
+    }
 
-        template <typename V>
-        std::ostream & operator<<(std::ostream & os, const edge<V> & edge)
-        {
-            os << "Edge{" << edge.source_ << " -- " << edge.destination_ << "}";
-            return os;
-        }
+    template <typename V>
+    std::ostream & operator<<(std::ostream & os, const edge<V> & edge)
+    {
+        os << "Edge{" << edge.source_ << " -- " << edge.destination_ << "}";
+        return os;
     }
 }
 
