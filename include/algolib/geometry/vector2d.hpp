@@ -63,7 +63,6 @@ namespace algolib
             friend vector2d operator*(vector2d v, double c);
             friend vector2d operator*(double c, vector2d v);
             friend vector2d operator/(vector2d v, double c);
-            friend vector2d operator/(double c, vector2d v);
             friend std::ostream & operator<<(std::ostream & os, const vector2d & v);
 
             friend struct std::hash<vector2d>;
@@ -80,7 +79,6 @@ namespace algolib
         vector2d operator*(vector2d v, double c);
         vector2d operator*(double c, vector2d v);
         vector2d operator/(vector2d v, double c);
-        vector2d operator/(double c, vector2d v);
         std::ostream & operator<<(std::ostream & os, const vector2d & v);
 
         double area(const vector2d & v1, const vector2d & v2);
