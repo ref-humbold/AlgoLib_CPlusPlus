@@ -1,5 +1,5 @@
 /*!
- * \file point2d.hpp
+ * \file point2d.cpp
  * \brief Structure of point on a plane
  */
 #include "algolib/geometry/point2d.hpp"
@@ -20,9 +20,4 @@ std::ostream & alge::operator<<(std::ostream & os, const alge::point2d & p)
 {
     os << "(" << p.x_ << ", " << p.y_ << ")";
     return os;
-}
-
-alge::point2d alge::translate(const alge::point2d & p, const alge::vector2d & v)
-{
-    return point2d(p.x() + v.x(), p.y() + v.y());
 }

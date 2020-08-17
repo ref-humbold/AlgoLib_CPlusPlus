@@ -60,12 +60,7 @@ namespace algolib::geometry
 
         double radius() const
         {
-            return hypot(x_, y_);
-        }
-
-        vector2d radius_vector() const
-        {
-            return vector2d(x_, y_);
+            return sqrt(x_ * x_ + y_ * y_);
         }
 
         friend bool operator==(const point2d & p1, const point2d & p2);
@@ -81,8 +76,6 @@ namespace algolib::geometry
     bool operator==(const point2d & p1, const point2d & p2);
     bool operator!=(const point2d & p1, const point2d & p2);
     std::ostream & operator<<(std::ostream & os, const point2d & p);
-
-    point2d translate(const point2d & p, const vector2d & v);
 }
 
 namespace std

@@ -40,6 +40,8 @@ namespace algolib
             vector2d & operator=(const vector2d &) = default;
             vector2d & operator=(vector2d &&) = default;
 
+            static double area(const vector2d & v1, const vector2d & v2);
+
             double x() const
             {
                 return x_;
@@ -52,7 +54,7 @@ namespace algolib
 
             double length() const
             {
-                return hypot(x_, y_);
+                return sqrt(x_ * x_ + y_ * y_);
             }
 
             friend bool operator==(const vector2d & v1, const vector2d & v2);
@@ -80,8 +82,6 @@ namespace algolib
         vector2d operator*(double c, vector2d v);
         vector2d operator/(vector2d v, double c);
         std::ostream & operator<<(std::ostream & os, const vector2d & v);
-
-        double area(const vector2d & v1, const vector2d & v2);
     }
 }
 
