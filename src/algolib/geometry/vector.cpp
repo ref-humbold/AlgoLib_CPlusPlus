@@ -13,6 +13,34 @@ double alge::vector2d::area(const alge::vector2d & v1, const alge::vector2d & v2
     return v1.x() * v2.y() - v1.y() * v2.x();
 }
 
+alge::vector2d & alge::vector2d::operator+=(const alge::vector2d & v)
+{
+    x_ += v.x();
+    y_ += v.y();
+    return *this;
+}
+
+alge::vector2d & alge::vector2d::operator-=(const alge::vector2d & v)
+{
+    x_ -= v.x();
+    y_ -= v.y();
+    return *this;
+}
+
+alge::vector2d & alge::vector2d::operator*=(double c)
+{
+    x_ *= c;
+    y_ *= c;
+    return *this;
+}
+
+alge::vector2d & alge::vector2d::operator/=(double c)
+{
+    x_ /= c;
+    y_ /= c;
+    return *this;
+}
+
 bool alge::operator==(const alge::vector2d & v1, const alge::vector2d & v2)
 {
     return v1.x_ == v2.x_ && v1.y_ == v2.y_;
@@ -25,15 +53,13 @@ bool alge::operator!=(const alge::vector2d & v1, const alge::vector2d & v2)
 
 alge::vector2d alge::operator+(alge::vector2d v1, const alge::vector2d & v2)
 {
-    v1.x_ += v2.x_;
-    v1.y_ += v2.y_;
+    v1 += v2;
     return v1;
 }
 
 alge::vector2d alge::operator-(alge::vector2d v1, const alge::vector2d & v2)
 {
-    v1.x_ -= v2.x_;
-    v1.y_ -= v2.y_;
+    v1 -= v2;
     return v1;
 }
 
@@ -44,22 +70,19 @@ double alge::operator*(const alge::vector2d & v1, const alge::vector2d & v2)
 
 alge::vector2d alge::operator*(alge::vector2d v, double c)
 {
-    v.x_ *= c;
-    v.y_ *= c;
+    v *= c;
     return v;
 }
 
 alge::vector2d alge::operator*(double c, alge::vector2d v)
 {
-    v.x_ *= c;
-    v.y_ *= c;
+    v *= c;
     return v;
 }
 
 alge::vector2d alge::operator/(alge::vector2d v, double c)
 {
-    v.x_ /= c;
-    v.y_ /= c;
+    v /= c;
     return v;
 }
 
@@ -83,6 +106,34 @@ double alge::vector3d::volume(const alge::vector3d & v1, const alge::vector3d & 
     return v1 * (v2 ^ v3);
 }
 
+alge::vector3d & alge::vector3d::operator+=(const alge::vector3d & v)
+{
+    x_ += v.x();
+    y_ += v.y();
+    return *this;
+}
+
+alge::vector3d & alge::vector3d::operator-=(const alge::vector3d & v)
+{
+    x_ -= v.x();
+    y_ -= v.y();
+    return *this;
+}
+
+alge::vector3d & alge::vector3d::operator*=(double c)
+{
+    x_ *= c;
+    y_ *= c;
+    return *this;
+}
+
+alge::vector3d & alge::vector3d::operator/=(double c)
+{
+    x_ /= c;
+    y_ /= c;
+    return *this;
+}
+
 bool alge::operator==(const alge::vector3d & v1, const alge::vector3d & v2)
 {
     return v1.x_ == v2.x_ && v1.y_ == v2.y_ && v1.z_ == v2.z_;
@@ -95,17 +146,13 @@ bool alge::operator!=(const alge::vector3d & v1, const alge::vector3d & v2)
 
 alge::vector3d alge::operator+(alge::vector3d v1, const alge::vector3d & v2)
 {
-    v1.x_ += v2.x_;
-    v1.y_ += v2.y_;
-    v1.z_ += v2.z_;
+    v1 += v2;
     return v1;
 }
 
 alge::vector3d alge::operator-(alge::vector3d v1, const alge::vector3d & v2)
 {
-    v1.x_ -= v2.x_;
-    v1.y_ -= v2.y_;
-    v1.z_ -= v2.z_;
+    v1 -= v2;
     return v1;
 }
 
@@ -116,25 +163,19 @@ double alge::operator*(const alge::vector3d & v1, const alge::vector3d & v2)
 
 alge::vector3d alge::operator*(alge::vector3d v, double c)
 {
-    v.x_ *= c;
-    v.y_ *= c;
-    v.z_ *= c;
+    v *= c;
     return v;
 }
 
 alge::vector3d alge::operator*(double c, alge::vector3d v)
 {
-    v.x_ *= c;
-    v.y_ *= c;
-    v.z_ *= c;
+    v *= c;
     return v;
 }
 
 alge::vector3d alge::operator/(alge::vector3d v, double c)
 {
-    v.x_ /= c;
-    v.y_ /= c;
-    v.z_ /= c;
+    v /= c;
     return v;
 }
 

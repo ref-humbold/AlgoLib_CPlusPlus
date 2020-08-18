@@ -59,6 +59,11 @@ namespace algolib::geometry
             return sqrt(x_ * x_ + y_ * y_);
         }
 
+        vector2d & operator+=(const vector2d & v);
+        vector2d & operator-=(const vector2d & v);
+        vector2d & operator*=(double c);
+        vector2d & operator/=(double c);
+
         friend bool operator==(const vector2d & v1, const vector2d & v2);
         friend bool operator!=(const vector2d & v1, const vector2d & v2);
         friend vector2d operator+(vector2d v1, const vector2d & v2);
@@ -127,6 +132,11 @@ namespace algolib::geometry
         {
             return sqrt(x_ * x_ + y_ * y_ + z_ * z_);
         }
+
+        vector3d & operator+=(const vector3d & v);
+        vector3d & operator-=(const vector3d & v);
+        vector3d & operator*=(double c);
+        vector3d & operator/=(double c);
 
         friend bool operator==(const vector3d & v1, const vector3d & v2);
         friend bool operator!=(const vector3d & v1, const vector3d & v2);
