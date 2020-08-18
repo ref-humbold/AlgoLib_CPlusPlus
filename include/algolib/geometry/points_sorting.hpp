@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <vector>
-#include "point2d.hpp"
+#include "point.hpp"
 
 namespace algolib::geometry
 {

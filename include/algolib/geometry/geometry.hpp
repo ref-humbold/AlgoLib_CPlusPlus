@@ -1,14 +1,14 @@
 /*!
  * \file geometry.hpp
- * \brief Basic geometrical operations
+ * \brief Basic geometric operations
  */
 #ifndef GEOMETRY_HPP_
 #define GEOMETRY_HPP_
 
 #include <cstdlib>
 #include <cmath>
-#include "point3d.hpp"
-#include "vector3d.hpp"
+#include "point.hpp"
+#include "vector.hpp"
 
 namespace algolib::geometry
 {

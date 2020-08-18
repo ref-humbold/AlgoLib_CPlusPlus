@@ -1,6 +1,6 @@
 /*!
  * \file geometry.cpp
- * \brief Basic geometrical operations
+ * \brief Basic geometric operations
  */
 #include "algolib/geometry/geometry.hpp"
 
