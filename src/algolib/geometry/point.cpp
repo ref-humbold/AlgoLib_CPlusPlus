@@ -8,6 +8,8 @@ namespace alge = algolib::geometry;
 
 #pragma region point2d
 
+const alge::point2d alge::point2d::zero = alge::point2d(0.0, 0.0);
+
 bool alge::operator==(const alge::point2d & p1, const alge::point2d & p2)
 {
     return p1.x_ == p2.x_ && p1.y_ == p2.y_;
@@ -26,6 +28,8 @@ std::ostream & alge::operator<<(std::ostream & os, const alge::point2d & p)
 
 #pragma endregion
 #pragma region point3d
+
+const alge::point3d alge::point3d::zero = alge::point3d(0.0, 0.0, 0.0);
 
 bool alge::operator==(const alge::point3d & p1, const alge::point3d & p2)
 {

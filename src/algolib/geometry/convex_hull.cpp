@@ -3,6 +3,8 @@
  * \brief Algorithm for convex hull on a plane (monotone chain)
  */
 #include "algolib/geometry/convex_hull.hpp"
+#include <algorithm>
+#include "algolib/geometry/points_sorting.hpp"
 
 namespace alge = algolib::geometry;
 

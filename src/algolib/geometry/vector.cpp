@@ -8,6 +8,8 @@ namespace alge = algolib::geometry;
 
 #pragma region vector2d
 
+const alge::vector2d alge::vector2d::zero = alge::vector2d(0.0, 0.0);
+
 double alge::vector2d::area(const alge::vector2d & v1, const alge::vector2d & v2)
 {
     return v1.x() * v2.y() - v1.y() * v2.x();
@@ -94,6 +96,8 @@ std::ostream & alge::operator<<(std::ostream & os, const alge::vector2d & v)
 
 #pragma endregion
 #pragma region vector3d
+
+const alge::vector3d alge::vector3d::zero = alge::vector3d(0.0, 0.0, 0.0);
 
 double alge::vector3d::area(const alge::vector3d & v1, const alge::vector3d & v2)
 {

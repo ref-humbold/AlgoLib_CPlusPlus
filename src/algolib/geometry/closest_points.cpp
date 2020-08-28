@@ -3,19 +3,16 @@
  * \brief Algorithm for pair of closest points on a plane
  */
 #include "algolib/geometry/closest_points.hpp"
+#include <cmath>
 #include <memory>
+#include <algorithm>
+#include "algolib/geometry/geometry.hpp"
+#include "algolib/geometry/points_sorting.hpp"
 
 namespace alge = algolib::geometry;
 
 namespace
 {
-    double distance(const alge::point2d & pt1, const alge::point2d & pt2)
-    {
-        double dx = pt1.x() - pt2.x(), dy = pt1.y() - pt2.y();
-
-        return dx * dx + dy * dy;
-    }
-
     // Finds closest pair of points among three of them.
     std::pair<alge::point2d, alge::point2d> search_three(const std::vector<alge::point2d> & pointsX,
                                                          int index_begin, int index_end)

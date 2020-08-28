@@ -76,6 +76,8 @@ namespace algolib::geometry
 
         friend struct std::hash<vector2d>;
 
+        static const vector2d zero;
+
     private:
         double x_, y_;
     };
@@ -150,6 +152,8 @@ namespace algolib::geometry
         friend std::ostream & operator<<(std::ostream & os, const vector3d & v);
 
         friend struct std::hash<vector3d>;
+
+        static const vector3d zero;
 
     private:
         double x_, y_, z_;
