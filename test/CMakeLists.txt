@@ -9,35 +9,58 @@ set(THREADS_PREFER_PTHREAD_FLAG true)
 find_package(Threads REQUIRED)
 
 # SOURCES
-set(SOURCES
-    "avl_tree_test.cpp"
-    "cutting_test.cpp"
-    "directed_graph_test.cpp"
-    "disjoint_sets_test.cpp"
-    "double_heap_test.cpp"
-    "equation_test.cpp"
-    "equation_system_test.cpp"
-    "fraction_test.cpp"
-    "kmp_test.cpp"
-    "lowest_common_ancestor_test.cpp"
-    "matching_test.cpp"
-    "maths_test.cpp"
-    "minimal_spanning_tree_test.cpp"
-    "multipartite_graph_test.cpp"
-    "paths_test.cpp"
-    "points_sorting_test.cpp"
-    "primes_test.cpp"
-    "searching_test.cpp"
-    "strongly_connected_components_test.cpp"
-    "subsequences_test.cpp"
-    "suffix_array_test.cpp"
-    "topological_sorting_test.cpp"
-    "tree_graph_test.cpp"
-    "undirected_graph_test.cpp")
+set(GEOMETRY_TEST "geometry")
+set(GRAPHS_TEST "graphs")
+set(GRAPHS_ALGORITHMS_TEST "${GRAPHS_TEST}/algorithms")
+set(MATHMAT_TEST "mathmat")
+set(SEQUENCES_TEST "sequences")
+set(STRUCTURES_TEST "structures")
+set(TEXT_TEST "text")
+
+set(GEOMETRY_TEST_SOURCES
+    "${GEOMETRY_TEST}/points_sorting_test.cpp")
+set(GRAPHS_TEST_SOURCES
+    "${GRAPHS_TEST}/directed_graph_test.cpp"
+    "${GRAPHS_TEST}/multipartite_graph_test.cpp"
+    "${GRAPHS_TEST}/tree_graph_test.cpp"
+    "${GRAPHS_TEST}/undirected_graph_test.cpp")
+set(GRAPHS_ALGORITHMS_TEST_SOURCES
+    "${GRAPHS_ALGORITHMS_TEST}/cutting_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/lowest_common_ancestor_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/matching_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/minimal_spanning_tree_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/paths_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/searching_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/strongly_connected_components_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/topological_sorting_test.cpp")
+set(MATHMAT_TEST_SOURCES
+    "${MATHMAT_TEST}/equation_test.cpp"
+    "${MATHMAT_TEST}/equation_system_test.cpp"
+    "${MATHMAT_TEST}/fraction_test.cpp"
+    "${MATHMAT_TEST}/maths_test.cpp"
+    "${MATHMAT_TEST}/primes_test.cpp")
+set(SEQUENCES_TEST_SOURCES
+    "${SEQUENCES_TEST}/subsequences_test.cpp")
+set(STRUCTURES_TEST_SOURCES
+    "${STRUCTURES_TEST}/avl_tree_test.cpp"
+    "${STRUCTURES_TEST}/disjoint_sets_test.cpp"
+    "${STRUCTURES_TEST}/double_heap_test.cpp")
+set(TEXT_TEST_SOURCES
+    "${TEXT_TEST}/kmp_test.cpp"
+    "${TEXT_TEST}/suffix_array_test.cpp")
+
+set(TEST_SOURCES
+    "${GEOMETRY_TEST_SOURCES}"
+    "${GRAPHS_TEST_SOURCES}"
+    "${GRAPHS_ALGORITHMS_TEST_SOURCES}"
+    "${MATHMAT_TEST_SOURCES}"
+    "${SEQUENCES_TEST_SOURCES}"
+    "${STRUCTURES_TEST_SOURCES}"
+    "${TEXT_TEST_SOURCES}")
 
 # OUTPUT
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${EXE_OUTPUT_DIR}/test")
-foreach(testsource ${SOURCES})
+foreach(testsource ${TEST_SOURCES})
     get_filename_component(testexec ${testsource} NAME_WE)
     add_executable(${testexec} ${testsource})
     target_link_libraries(${testexec}
@@ -45,4 +68,4 @@ foreach(testsource ${SOURCES})
                         GTest::Main
                         "${LIB_OUTPUT_DIR}/libalgolib.so")
     gtest_add_tests(TARGET ${testexec})
-endforeach(testsource ${SOURCES})
+endforeach(testsource ${TEST_SOURCES})
