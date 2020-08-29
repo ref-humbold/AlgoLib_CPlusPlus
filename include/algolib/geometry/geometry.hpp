@@ -11,9 +11,9 @@
 
 namespace algolib::geometry
 {
-    vector2d vector(const point2d & begin, const point2d & end);
+    vector2d make_vector(const point2d & begin, const point2d & end);
 
-    vector3d vector(const point3d & begin, const point3d & end);
+    vector3d make_vector(const point3d & begin, const point3d & end);
 
     double distance(const point2d & p1, const point2d & p2);
 

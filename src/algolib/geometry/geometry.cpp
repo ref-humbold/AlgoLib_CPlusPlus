@@ -7,12 +7,12 @@
 
 namespace alge = algolib::geometry;
 
-alge::vector2d alge::vector(const alge::point2d & begin, const point2d & end)
+alge::vector2d alge::make_vector(const alge::point2d & begin, const point2d & end)
 {
     return vector2d(end.x() - begin.x(), end.y() - begin.y());
 }
 
-alge::vector3d alge::vector(const alge::point3d & begin, const point3d & end)
+alge::vector3d alge::make_vector(const alge::point3d & begin, const point3d & end)
 {
     return vector3d(end.x() - begin.x(), end.y() - begin.y(), end.z() - begin.z());
 }
