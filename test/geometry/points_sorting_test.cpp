@@ -1,10 +1,13 @@
-//! Tests: Points sorting algorithms.
+/*!
+ * \file points_sorting_test.cpp
+ * \brief Tests: Algorithms for points sorting
+ */
 #include <gtest/gtest.h>
 #include "algolib/geometry/points_sorting.hpp"
 
 namespace alge = algolib::geometry;
 
-TEST(PointsSortingTest, angleSort)
+TEST(PointsSortingTest, sortByAngle)
 {
     std::vector<alge::point2d> sequence = {
             alge::point2d(0.0, 0.0),  alge::point2d(-2.0, -3.0), alge::point2d(-3.0, -2.0),
@@ -21,7 +24,7 @@ TEST(PointsSortingTest, angleSort)
               sequence);
 }
 
-TEST(PointsSortingTest, angleSort_whenAllEqual)
+TEST(PointsSortingTest, sortByAngle_whenAllEqual)
 {
     std::vector<alge::point2d> sequence = {
             alge::point2d(1.0, 2.0), alge::point2d(1.0, 2.0), alge::point2d(1.0, 2.0),
@@ -37,7 +40,7 @@ TEST(PointsSortingTest, angleSort_whenAllEqual)
               sequence);
 }
 
-TEST(PointsSortingTest, angleSort_whenEmptyVector)
+TEST(PointsSortingTest, sortByAngle_whenEmptyVector)
 {
     std::vector<alge::point2d> sequence;
 

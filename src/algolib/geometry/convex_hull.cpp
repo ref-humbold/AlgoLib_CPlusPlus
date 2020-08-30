@@ -20,7 +20,7 @@ namespace
     void add_point(const alge::point2d & point, std::vector<alge::point2d> & hull, size_t min_size)
     {
         while(hull.size() > min_size
-              && cross_product(*(hull.end() - 2), *(hull.end() - 1), point) <= 0)
+              && cross_product(*(hull.end() - 2), *(hull.end() - 1), point) >= 0)
             hull.pop_back();
 
         hull.push_back(point);
@@ -30,6 +30,9 @@ namespace
 std::vector<alge::point2d> alge::find_convex_hull(std::vector<alge::point2d> points)
 {
     std::vector<alge::point2d> hull;
+
+    if(points.size() < 3)
+        return hull;
 
     sort_by_x(points);
     hull.push_back(points[0]);
