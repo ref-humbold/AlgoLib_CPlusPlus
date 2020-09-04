@@ -13,18 +13,34 @@
 namespace algolib::geometry
 {
     /*!
-     * \brief Mutably sorts points with respect to their coordinates.
-     * First sorts by X coordinate, then by Y coordinate.
+     * \brief Mutably sorts points with respect to their X coordinate. Sorting is guaranteed to be stable.
      * \param points vector of points
      */
     void sort_by_x(std::vector<point2d> & points);
 
     /*!
-     * \brief Mutably sorts points with respect to their coordinates.
-     * First sorts by Y coordinate, then by X coordinate.
+     * \brief Mutably sorts points with respect to their X coordinate. Sorting is guaranteed to be stable.
+     * \param points vector of points
+     */
+    void sort_by_x(std::vector<point3d> & points);
+
+    /*!
+     * \brief Mutably sorts points with respect to their Y coordinate. Sorting is guaranteed to be stable.
      * \param points vector of points
      */
     void sort_by_y(std::vector<point2d> & points);
+
+    /*!
+     * \brief Mutably sorts points with respect to their Y coordinate. Sorting is guaranteed to be stable.
+     * \param points vector of points
+     */
+    void sort_by_y(std::vector<point3d> & points);
+
+    /*!
+     * \brief Mutably sorts points with respect to their Z coordinate. Sorting is guaranteed to be stable.
+     * \param points vector of points
+     */
+    void sort_by_z(std::vector<point3d> & points);
 
     /*!
      * \brief Mutably sorts points with respect to their polar coordinates.
