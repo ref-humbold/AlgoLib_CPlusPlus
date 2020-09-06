@@ -147,7 +147,7 @@ namespace algolib::geometry
     vector<M> vector<N>::project() const
     {
         if(M == 0)
-            throw std::out_of_range();
+            throw std::out_of_range("Dimensions count has to be positive");
 
         if(M == N)
             return *this;
