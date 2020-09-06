@@ -8,8 +8,6 @@ namespace alge = algolib::geometry;
 
 #pragma region vector2d
 
-const alge::vector2d alge::vector2d::zero = alge::vector2d(0.0, 0.0);
-
 double alge::vector2d::area(const alge::vector2d & v1, const alge::vector2d & v2)
 {
     return v1.x() * v2.y() - v1.y() * v2.x();
@@ -38,6 +36,9 @@ alge::vector2d & alge::vector2d::operator*=(double c)
 
 alge::vector2d & alge::vector2d::operator/=(double c)
 {
+    if(c == 0)
+        throw std::domain_error("Division by zero");
+
     x_ /= c;
     y_ /= c;
     return *this;
@@ -97,8 +98,6 @@ std::ostream & alge::operator<<(std::ostream & os, const alge::vector2d & v)
 #pragma endregion
 #pragma region vector3d
 
-const alge::vector3d alge::vector3d::zero = alge::vector3d(0.0, 0.0, 0.0);
-
 double alge::vector3d::area(const alge::vector3d & v1, const alge::vector3d & v2)
 {
     return (v1 ^ v2).length();
@@ -133,6 +132,9 @@ alge::vector3d & alge::vector3d::operator*=(double c)
 
 alge::vector3d & alge::vector3d::operator/=(double c)
 {
+    if(c == 0)
+        throw std::domain_error("Division by zero");
+
     x_ /= c;
     y_ /= c;
     return *this;
