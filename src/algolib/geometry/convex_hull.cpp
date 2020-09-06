@@ -4,8 +4,8 @@
  */
 #include "algolib/geometry/convex_hull.hpp"
 #include <algorithm>
-#include "algolib/geometry/geometry.hpp"
 #include "algolib/geometry/points_sorting.hpp"
+#include "algolib/geometry/vector.hpp"
 
 namespace alge = algolib::geometry;
 
@@ -14,7 +14,8 @@ namespace
     double cross_product(const alge::point2d & pt1, const alge::point2d & pt2,
                          const alge::point2d & pt3)
     {
-        return alge::vector2d::area(alge::make_vector(pt2, pt1), alge::make_vector(pt2, pt3));
+        return alge::vector2d::area(alge::vector2d::between(pt2, pt1),
+                                    alge::vector2d::between(pt2, pt3));
     }
 
     std::vector<alge::point2d> create_half_hull(const std::vector<alge::point2d> & points)

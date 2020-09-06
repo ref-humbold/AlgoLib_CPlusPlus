@@ -11,6 +11,7 @@
 #include <array>
 #include <iostream>
 #include <numeric>
+#include "point.hpp"
 
 namespace algolib::geometry
 {
@@ -79,6 +80,8 @@ namespace algolib::geometry
         vector & operator=(const vector &) = default;
         vector & operator=(vector &&) = default;
 
+        static vector<N> between(const point<N> begin, const point<N> & end);
+
         double operator[](size_t i) const;
         double length() const;
 
@@ -110,6 +113,17 @@ namespace algolib::geometry
 
     template <>
     class vector<0>;
+
+    template <size_t N>
+    vector<N> vector<N>::between(const point<N> begin, const point<N> & end)
+    {
+        std::array<double, N> coords;
+
+        for(size_t i = 1; i <= N; ++i)
+            coords[i] = end[i] - begin[i];
+
+        return vector<N>(coords);
+    }
 
     template <size_t N>
     double vector<N>::operator[](size_t i) const
@@ -259,6 +273,11 @@ namespace algolib::geometry
         vector2d & operator=(const vector2d &) = default;
         vector2d & operator=(vector2d &&) = default;
 
+        static vector2d between(const point2d begin, const point2d & end)
+        {
+            return vector2d(end.x() - begin.x(), end.y() - begin.y());
+        }
+
         static double area(const vector2d & v1, const vector2d & v2);
 
         static vector2d from_vector(const vector<2> & v)
@@ -336,6 +355,11 @@ namespace algolib::geometry
         vector3d(vector3d &&) = default;
         vector3d & operator=(const vector3d &) = default;
         vector3d & operator=(vector3d &&) = default;
+
+        static vector3d between(const point3d begin, const point3d & end)
+        {
+            return vector3d(end.x() - begin.x(), end.y() - begin.y(), end.z() - begin.z());
+        }
 
         static double area(const vector3d & v1, const vector3d & v2);
         static double volume(const vector3d & v1, const vector3d & v2, const vector3d & v3);
