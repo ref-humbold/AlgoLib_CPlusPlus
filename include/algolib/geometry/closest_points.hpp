@@ -6,10 +6,8 @@
 #define CLOSEST_POINTS_HPP_
 
 #include <cstdlib>
-#include <cmath>
-#include <algorithm>
 #include <vector>
-#include "points_sorting.hpp"
+#include "point.hpp"
 
 namespace algolib::geometry
 {

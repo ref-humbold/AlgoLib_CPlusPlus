@@ -13,8 +13,10 @@ set(TEXT "${ALGOLIB}/text")
 set(GEOMETRY_SOURCES
     "${GEOMETRY}/closest_points.cpp"
     "${GEOMETRY}/convex_hull.cpp"
-    "${GEOMETRY}/point2d.cpp"
-    "${GEOMETRY}/points_sorting.cpp")
+    "${GEOMETRY}/geometry.cpp"
+    "${GEOMETRY}/point.cpp"
+    "${GEOMETRY}/points_sorting.cpp"
+    "${GEOMETRY}/vector.cpp")
 set(GRAPHS_SOURCES
     "${GRAPHS}/directed_graph.cpp"
     "${GRAPHS}/edge.cpp"
