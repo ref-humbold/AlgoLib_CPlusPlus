@@ -66,11 +66,6 @@ alge::vector2d alge::operator-(alge::vector2d v1, const alge::vector2d & v2)
     return v1;
 }
 
-double alge::operator*(const alge::vector2d & v1, const alge::vector2d & v2)
-{
-    return v1.x_ * v2.x_ + v1.y_ * v2.y_;
-}
-
 alge::vector2d alge::operator*(alge::vector2d v, double c)
 {
     v *= c;
@@ -95,18 +90,23 @@ std::ostream & alge::operator<<(std::ostream & os, const alge::vector2d & v)
     return os;
 }
 
+double alge::dot(const alge::vector2d & v1, const alge::vector2d & v2)
+{
+    return v1.x_ * v2.x_ + v1.y_ * v2.y_;
+}
+
 #pragma endregion
 #pragma region vector3d
 
 double alge::vector3d::area(const alge::vector3d & v1, const alge::vector3d & v2)
 {
-    return (v1 ^ v2).length();
+    return cross(v1, v2).length();
 }
 
 double alge::vector3d::volume(const alge::vector3d & v1, const alge::vector3d & v2,
                               const alge::vector3d & v3)
 {
-    return v1 * (v2 ^ v3);
+    return dot(v1, cross(v2, v3));
 }
 
 alge::vector3d & alge::vector3d::operator+=(const alge::vector3d & v)
@@ -162,11 +162,6 @@ alge::vector3d alge::operator-(alge::vector3d v1, const alge::vector3d & v2)
     return v1;
 }
 
-double alge::operator*(const alge::vector3d & v1, const alge::vector3d & v2)
-{
-    return v1.x_ * v2.x_ + v1.y_ * v2.y_ + v1.z_ * v2.z_;
-}
-
 alge::vector3d alge::operator*(alge::vector3d v, double c)
 {
     v *= c;
@@ -185,16 +180,21 @@ alge::vector3d alge::operator/(alge::vector3d v, double c)
     return v;
 }
 
-alge::vector3d alge::operator^(const alge::vector3d & v1, const alge::vector3d & v2)
-{
-    return vector3d(v1.y_ * v2.z_ - v1.z_ * v2.y_, v1.z_ * v2.x_ - v1.x_ * v2.z_,
-                    v1.x_ * v2.y_ - v1.y_ * v2.x_);
-}
-
 std::ostream & alge::operator<<(std::ostream & os, const alge::vector3d & v)
 {
     os << "[" << v.x_ << ", " << v.y_ << ", " << v.z_ << "]";
     return os;
+}
+
+double alge::dot(const alge::vector3d & v1, const alge::vector3d & v2)
+{
+    return v1.x_ * v2.x_ + v1.y_ * v2.y_ + v1.z_ * v2.z_;
+}
+
+alge::vector3d alge::cross(const alge::vector3d & v1, const alge::vector3d & v2)
+{
+    return vector3d(v1.y_ * v2.z_ - v1.z_ * v2.y_, v1.z_ * v2.x_ - v1.x_ * v2.z_,
+                    v1.x_ * v2.y_ - v1.y_ * v2.x_);
 }
 
 #pragma endregion

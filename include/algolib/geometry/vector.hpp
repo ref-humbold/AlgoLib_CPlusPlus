@@ -31,9 +31,6 @@ namespace algolib::geometry
     vector<N> operator-(vector<N> v1, const vector<N> & v2);
 
     template <size_t N>
-    double operator*(const vector<N> & v1, const vector<N> & v2);
-
-    template <size_t N>
     vector<N> operator*(vector<N> v, double c);
 
     template <size_t N>
@@ -44,6 +41,9 @@ namespace algolib::geometry
 
     template <size_t N>
     std::ostream & operator<<(std::ostream & os, const vector<N> & v);
+
+    template <size_t N>
+    double dot(const vector<N> & v1, const vector<N> & v2);
 
     class vector2d;
 
@@ -98,11 +98,11 @@ namespace algolib::geometry
         friend bool operator!= <N>(const vector<N> & v1, const vector<N> & v2);
         friend vector<N> operator+ <N>(vector<N> v1, const vector<N> & v2);
         friend vector<N> operator- <N>(vector<N> v1, const vector<N> & v2);
-        friend double operator* <N>(const vector<N> & v1, const vector<N> & v2);
         friend vector<N> operator* <N>(vector<N> v, double c);
         friend vector<N> operator* <N>(double c, vector<N> v);
         friend vector<N> operator/ <N>(vector<N> v, double c);
         friend std::ostream & operator<< <N>(std::ostream & os, const vector<N> & v);
+        friend double dot <N>(const vector<N> & v1, const vector<N> & v2);
         // clang-format on
 
         friend struct std::hash<vector<N>>;
@@ -214,17 +214,6 @@ namespace algolib::geometry
     }
 
     template <size_t N>
-    double operator*(const vector<N> & v1, const vector<N> & v2)
-    {
-        double dot;
-
-        for(size_t i = 0; i < N; ++i)
-            dot += v1.coordinates[i] * v2.coordinates[i];
-
-        return dot;
-    }
-
-    template <size_t N>
     vector<N> operator*(vector<N> v, double c)
     {
         v *= c;
@@ -255,6 +244,17 @@ namespace algolib::geometry
 
         os << "]";
         return os;
+    }
+
+    template <size_t N>
+    double dot(const vector<N> & v1, const vector<N> & v2)
+    {
+        double dot_product;
+
+        for(size_t i = 0; i < N; ++i)
+            dot_product += v1.coordinates[i] * v2.coordinates[i];
+
+        return dot_product;
     }
 
 #pragma endregion
@@ -314,11 +314,11 @@ namespace algolib::geometry
         friend bool operator!=(const vector2d & v1, const vector2d & v2);
         friend vector2d operator+(vector2d v1, const vector2d & v2);
         friend vector2d operator-(vector2d v1, const vector2d & v2);
-        friend double operator*(const vector2d & v1, const vector2d & v2);
         friend vector2d operator*(vector2d v, double c);
         friend vector2d operator*(double c, vector2d v);
         friend vector2d operator/(vector2d v, double c);
         friend std::ostream & operator<<(std::ostream & os, const vector2d & v);
+        friend double dot(const vector2d & v1, const vector2d & v2);
 
         friend struct std::hash<vector2d>;
 
@@ -330,11 +330,11 @@ namespace algolib::geometry
     bool operator!=(const vector2d & v1, const vector2d & v2);
     vector2d operator+(vector2d v1, const vector2d & v2);
     vector2d operator-(vector2d v1, const vector2d & v2);
-    double operator*(const vector2d & v1, const vector2d & v2);
     vector2d operator*(vector2d v, double c);
     vector2d operator*(double c, vector2d v);
     vector2d operator/(vector2d v, double c);
     std::ostream & operator<<(std::ostream & os, const vector2d & v);
+    double dot(const vector2d & v1, const vector2d & v2);
 
 #pragma endregion
 #pragma region vector3d
@@ -403,12 +403,12 @@ namespace algolib::geometry
         friend bool operator!=(const vector3d & v1, const vector3d & v2);
         friend vector3d operator+(vector3d v1, const vector3d & v2);
         friend vector3d operator-(vector3d v1, const vector3d & v2);
-        friend double operator*(const vector3d & v1, const vector3d & v2);
         friend vector3d operator*(vector3d v, double c);
         friend vector3d operator*(double c, vector3d v);
         friend vector3d operator/(vector3d v, double c);
-        friend vector3d operator^(const vector3d & v1, const vector3d & v2);
         friend std::ostream & operator<<(std::ostream & os, const vector3d & v);
+        friend double dot(const vector3d & v1, const vector3d & v2);
+        friend vector3d cross(const vector3d & v1, const vector3d & v2);
 
         friend struct std::hash<vector3d>;
 
@@ -420,12 +420,12 @@ namespace algolib::geometry
     bool operator!=(const vector3d & v1, const vector3d & v2);
     vector3d operator+(vector3d v1, const vector3d & v2);
     vector3d operator-(vector3d v1, const vector3d & v2);
-    double operator*(const vector3d & v1, const vector3d & v2);
     vector3d operator*(vector3d v, double c);
     vector3d operator*(double c, vector3d v);
     vector3d operator/(vector3d v, double c);
-    vector3d operator^(const vector3d & v1, const vector3d & v2);
     std::ostream & operator<<(std::ostream & os, const vector3d & v);
+    double dot(const vector3d & v1, const vector3d & v2);
+    vector3d cross(const vector3d & v1, const vector3d & v2);
 
 #pragma endregion
 }
