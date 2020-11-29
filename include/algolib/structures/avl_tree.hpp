@@ -5,14 +5,14 @@
 #ifndef AVL_TREE_HPP_
 #define AVL_TREE_HPP_
 
-#include <cstdlib>
 #include <cmath>
-#include <exception>
-#include <stdexcept>
+#include <cstdlib>
 #include <algorithm>
+#include <exception>
+#include <functional>
 #include <initializer_list>
 #include <iterator>
-#include <functional>
+#include <stdexcept>
 
 namespace algolib::structures
 {
@@ -223,7 +223,7 @@ namespace algolib::structures
         void balance(node_ptr node);
 
         // Counts current node balance.
-        int count_balance(node_ptr node);
+        int count_balance(inner_ptr node);
 
         header_ptr tree = new avl_header_node();  // The tree denoted by its header
         size_type count = 0;  // Number of elements
@@ -355,9 +355,13 @@ namespace algolib::structures
     typename avl_tree<E, Compare>::inner_ptr
             avl_tree<E, Compare>::search(inner_ptr node, const_reference element) const
     {
-        return this->comparator(element, node->element)
-                       ? node->get_left()
-                       : this->comparator(node->element, element) ? node->get_right() : node;
+        if(this->comparator(element, node->element))
+            return node->get_left();
+
+        if(this->comparator(node->element, element))
+            return node->get_right();
+
+        return node;
     }
 
     template <typename E, typename Compare>
@@ -443,39 +447,39 @@ namespace algolib::structures
     {
         while(node->get_height() > 0)
         {
-            node->count_height();
-
-            int new_balance = this->count_balance(node);
-            auto rnode = static_cast<inner_ptr>(node);
+            inner_ptr the_node = static_cast<inner_ptr>(node);
+            int new_balance = this->count_balance(the_node);
 
             if(new_balance >= 2)
             {
-                if(this->count_balance(node->get_left()) > 0)
-                    this->rotate(rnode->get_left());
-                else if(this->count_balance(node->get_left()) < 0)
+                if(this->count_balance(the_node->get_left()) > 0)
+                    this->rotate(the_node->get_left());
+                else if(this->count_balance(the_node->get_left()) < 0)
                 {
-                    this->rotate(rnode->get_left()->get_right());
-                    this->rotate(rnode->get_left());
+                    this->rotate(the_node->get_left()->get_right());
+                    this->rotate(the_node->get_left());
                 }
             }
             else if(new_balance <= -2)
             {
-                if(this->count_balance(node->get_right()) < 0)
-                    this->rotate(rnode->get_right());
-                else if(this->count_balance(node->get_right()) > 0)
+                if(this->count_balance(the_node->get_right()) < 0)
+                    this->rotate(the_node->get_right());
+                else if(this->count_balance(the_node->get_right()) > 0)
                 {
-                    this->rotate(rnode->get_right()->get_left());
-                    this->rotate(rnode->get_right());
+                    this->rotate(the_node->get_right()->get_left());
+                    this->rotate(the_node->get_right());
                 }
             }
 
-            node = node->get_parent();
+            node = the_node->get_parent();
         }
     }
 
     template <typename E, typename Compare>
-    int avl_tree<E, Compare>::count_balance(avl_tree<E, Compare>::node_ptr node)
+    int avl_tree<E, Compare>::count_balance(avl_tree<E, Compare>::inner_ptr node)
     {
+        node->count_height();
+
         int left_height = node->get_left() == nullptr ? 0 : node->get_left()->get_height();
         int right_height = node->get_right() == nullptr ? 0 : node->get_right()->get_height();
 
@@ -503,9 +507,6 @@ namespace algolib::structures
         virtual node_ptr get_parent() = 0;
 
         virtual void set_parent(node_ptr node) = 0;
-
-        // Recounts the height of the node.
-        virtual void count_height() = 0;
 
         // Searches in its subtree for the node with minimal value.
         virtual node_ptr minimum() = 0;
@@ -572,11 +573,6 @@ namespace algolib::structures
             this->parent = node;
         }
 
-        void count_height() override
-        {
-            this->do_count_height();
-        }
-
         inner_ptr minimum() override
         {
             return this->left == nullptr ? this : this->left->minimum();
@@ -587,12 +583,14 @@ namespace algolib::structures
             return this->right == nullptr ? this : this->right->maximum();
         }
 
+        // Recounts the height of the node.
+        void count_height();
+
         value_type element;  //!< Value in the node.
 
     private:
         void do_set_left(node_ptr node);
         void do_set_right(node_ptr node);
-        void do_count_height();
 
         int height;
         inner_ptr left;
@@ -642,6 +640,15 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
+    void avl_tree<E, Compare>::avl_inner_node::count_height()
+    {
+        int left_height = this->left == nullptr ? 0 : this->left->get_height();
+        int right_height = this->right == nullptr ? 0 : this->right->get_height();
+
+        this->height = std::max(left_height, right_height) + 1;
+    }
+
+    template <typename E, typename Compare>
     void avl_tree<E, Compare>::avl_inner_node::do_set_left(node_ptr node)
     {
         this->left = static_cast<inner_ptr>(node);
@@ -649,7 +656,7 @@ namespace algolib::structures
         if(this->left != nullptr)
             this->left->set_parent(this);
 
-        this->do_count_height();
+        this->count_height();
     }
 
     template <typename E, typename Compare>
@@ -660,16 +667,7 @@ namespace algolib::structures
         if(this->right != nullptr)
             this->right->set_parent(this);
 
-        this->do_count_height();
-    }
-
-    template <typename E, typename Compare>
-    void avl_tree<E, Compare>::avl_inner_node::do_count_height()
-    {
-        int left_height = this->left == nullptr ? 0 : this->left->get_height();
-        int right_height = this->right == nullptr ? 0 : this->right->get_height();
-
-        this->height = std::max(left_height, right_height) + 1;
+        this->count_height();
     }
 
 #pragma endregion
@@ -730,10 +728,6 @@ namespace algolib::structures
         void set_parent(node_ptr node) override
         {
             this->do_set_parent(node);
-        }
-
-        void count_height() override
-        {
         }
 
         node_ptr minimum() override
