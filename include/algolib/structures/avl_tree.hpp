@@ -478,8 +478,6 @@ namespace algolib::structures
     template <typename E, typename Compare>
     int avl_tree<E, Compare>::count_balance(avl_tree<E, Compare>::inner_ptr node)
     {
-        node->count_height();
-
         int left_height = node->get_left() == nullptr ? 0 : node->get_left()->get_height();
         int right_height = node->get_right() == nullptr ? 0 : node->get_right()->get_height();
 
@@ -550,7 +548,7 @@ namespace algolib::structures
 
         void set_left(node_ptr node) override
         {
-            this->do_set_left(node);
+            this->do_set_left(static_cast<inner_ptr>(node));
         }
 
         inner_ptr get_right() override
@@ -560,7 +558,7 @@ namespace algolib::structures
 
         void set_right(node_ptr node) override
         {
-            this->do_set_right(node);
+            this->do_set_right(static_cast<inner_ptr>(node));
         }
 
         node_ptr get_parent() override
@@ -583,14 +581,12 @@ namespace algolib::structures
             return this->right == nullptr ? this : this->right->maximum();
         }
 
-        // Recounts the height of the node.
-        void count_height();
-
         value_type element;  //!< Value in the node.
 
     private:
-        void do_set_left(node_ptr node);
-        void do_set_right(node_ptr node);
+        void count_height();
+        void do_set_left(inner_ptr node);
+        void do_set_right(inner_ptr node);
 
         int height;
         inner_ptr left;
@@ -649,9 +645,9 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    void avl_tree<E, Compare>::avl_inner_node::do_set_left(node_ptr node)
+    void avl_tree<E, Compare>::avl_inner_node::do_set_left(inner_ptr node)
     {
-        this->left = static_cast<inner_ptr>(node);
+        this->left = node;
 
         if(this->left != nullptr)
             this->left->set_parent(this);
@@ -660,9 +656,9 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    void avl_tree<E, Compare>::avl_inner_node::do_set_right(node_ptr node)
+    void avl_tree<E, Compare>::avl_inner_node::do_set_right(inner_ptr node)
     {
-        this->right = static_cast<inner_ptr>(node);
+        this->right = node;
 
         if(this->right != nullptr)
             this->right->set_parent(this);
@@ -727,7 +723,7 @@ namespace algolib::structures
 
         void set_parent(node_ptr node) override
         {
-            this->do_set_parent(node);
+            this->do_set_parent(static_cast<inner_ptr>(node));
         }
 
         node_ptr minimum() override
@@ -741,9 +737,9 @@ namespace algolib::structures
         }
 
     private:
-        void do_set_parent(node_ptr node)
+        void do_set_parent(inner_ptr node)
         {
-            this->inner = static_cast<inner_ptr>(node);
+            this->inner = node;
 
             if(this->inner != nullptr)
                 this->inner->set_parent(this);
