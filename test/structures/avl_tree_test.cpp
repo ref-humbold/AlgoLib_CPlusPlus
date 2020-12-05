@@ -111,6 +111,7 @@ TEST_F(AVLTreeTest, empty_whenNotEmpty_thenFalse)
 
 TEST_F(AVLTreeTest, empty_whenEmpty_thenTrue)
 {
+    // given
     test_object = alst::avl_tree<int>();
     // when
     bool result = test_object.empty();
@@ -191,6 +192,18 @@ TEST_F(AVLTreeTest, iterator_whenIterativeForLoop_thenSortedElements)
     std::sort(sorted_numbers.begin(), sorted_numbers.end());
 
     EXPECT_EQ(sorted_numbers, result);
+}
+
+TEST_F(AVLTreeTest, iterator_whenEmptyTree_thenNoElements)
+{
+    // given
+    test_object = alst::avl_tree<int>();
+    std::vector<int> result;
+    // when
+    for(auto && it = test_object.begin(); it != test_object.end(); ++it)
+        result.push_back(*it);
+    // then
+    EXPECT_EQ(std::vector<int>(), result);
 }
 
 TEST_F(AVLTreeTest, iterator_whenRangeBasedForLoop_thenSortedElements)

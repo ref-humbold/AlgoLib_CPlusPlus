@@ -79,7 +79,7 @@ namespace algolib::structures
 
         const_iterator cbegin() const
         {
-            return const_iterator(this->get_root()->minimum());
+            return const_iterator(this->tree->minimum());
         }
 
         const_iterator cend() const
@@ -99,7 +99,7 @@ namespace algolib::structures
 
         iterator begin()
         {
-            return iterator(this->get_root()->minimum());
+            return iterator(this->tree->minimum());
         }
 
         const_iterator begin() const
@@ -728,12 +728,16 @@ namespace algolib::structures
 
         node_ptr minimum() override
         {
-            return this;
+            return this->get_parent() == nullptr
+                           ? static_cast<node_ptr>(this)
+                           : static_cast<node_ptr>(this->get_parent()->minimum());
         }
 
         node_ptr maximum() override
         {
-            return this;
+            return this->get_parent() == nullptr
+                           ? static_cast<node_ptr>(this)
+                           : static_cast<node_ptr>(this->get_parent()->maximum());
         }
 
     private:
@@ -875,7 +879,7 @@ namespace algolib::structures
             }
         }
         else
-            this->current_node = this->current_node->get_parent()->maximum();
+            this->current_node = this->current_node->maximum();
 
         return *this;
     }
@@ -1022,7 +1026,7 @@ namespace algolib::structures
             }
         }
         else
-            this->current_node = this->current_node->get_parent()->maximum();
+            this->current_node = this->current_node->maximum();
 
         return *this;
     }
@@ -1034,7 +1038,6 @@ namespace algolib::structures
         avl_tree<E, Compare>::avl_const_iterator result = *this;
 
         --(*this);
-
         return result;
     }
 
