@@ -3,30 +3,47 @@
  * \brief Structure of base words map using Karp-Miller-Rosenberg algorithm
  */
 #include "algolib/text/base_words_map.hpp"
+#include <exception>
+#include <stdexcept>
 
 namespace alte = algolib::text;
 
-size_t alte::base_words_map::code(size_t start, size_t end = std::string::npos)
+std::pair<size_t, size_t> alte::base_words_map::code(size_t start, size_t length)
 {
+    if(start > text_.size())
+        throw std::out_of_range("Starting index out of range");
+
+    size_t end = length > text_.size() - start ? text_.size() : start + length;
+
+    if(end <= start)
+        return {0, 0};
+
+    auto it = factors.find(std::make_pair(start, end));
+
+    if(it != factors.end())
+        return {it->second, 0};
+
+    size_t n = get_max_length(end - start);
+    return {factors[std::make_pair(start, start + n)], factors[std::make_pair(end - n, end)]};
 }
 
 void alte::base_words_map::create()
 {
-    size_t currentLength = 2;
-    size_t codeValue = extend(
+    size_t current_length = 2;
+    size_t code_value = extend(
             1, 0, [&](size_t i, size_t length) -> std::tuple<size_t, size_t, size_t, size_t> {
                 return {text_[i], 1 + text_[i], i, i + length};
             });
 
-    while(currentLength <= text_.length())
+    while(current_length <= text_.length())
     {
-        codeValue = extend(
-                currentLength, codeValue,
+        code_value = extend(
+                current_length, code_value,
                 [&](size_t i, size_t length) -> std::tuple<size_t, size_t, size_t, size_t> {
                     return {factors.at(std::make_pair(i, i + length / 2)),
                             factors.at(std::make_pair(i + length / 2, i + length)), i, i + length};
                 });
-        currentLength *= 2;
+        current_length *= 2;
     }
 }
 
@@ -34,6 +51,25 @@ size_t alte::base_words_map::extend(
         size_t length, size_t code_value,
         std::function<std::tuple<size_t, size_t, size_t, size_t>(size_t, size_t)> func)
 {
+    std::pair<size_t, size_t> previous_code = {0, 0};
+    std::vector<std::tuple<size_t, size_t, size_t, size_t>> codes;
+
+    for(size_t i = 0; i <= text_.size() - length; ++i)
+        codes.push_back(func(i, length));
+
+    sort(codes.begin(), codes.end());
+
+    for(auto && code : codes)
+    {
+        if(std::get<0>(code) != previous_code.first && std::get<1>(code) != previous_code.second)
+        {
+            ++code_value;
+            previous_code = std::make_pair(std::get<0>(code), std::get<1>(code));
+        }
+
+        factors.emplace(std::make_pair(std::get<2>(code), std::get<3>(code)), code_value);
+    }
+
     return code_value;
 }
 

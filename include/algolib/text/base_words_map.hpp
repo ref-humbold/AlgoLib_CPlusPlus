@@ -33,7 +33,7 @@ namespace algolib::text
             return text_;
         }
 
-        size_t code(size_t start, size_t end = std::string::npos);
+        std::pair<size_t, size_t> code(size_t start, size_t length = std::string::npos);
 
     private:
         void create();
