@@ -8,7 +8,7 @@
 
 namespace alte = algolib::text;
 
-std::pair<size_t, size_t> alte::base_words_map::code(size_t start, size_t length)
+alte::base_words_map::code_t alte::base_words_map::code(size_t start, size_t length)
 {
     if(start > text_.size())
         throw std::out_of_range("Starting index out of range");
@@ -51,7 +51,7 @@ size_t alte::base_words_map::extend(
         size_t length, size_t code_value,
         std::function<std::tuple<size_t, size_t, size_t, size_t>(size_t, size_t)> func)
 {
-    std::pair<size_t, size_t> previous_code = {0, 0};
+    code_t previous_code = {0, 0};
     std::vector<std::tuple<size_t, size_t, size_t, size_t>> codes;
 
     for(size_t i = 0; i <= text_.size() - length; ++i)
@@ -61,7 +61,7 @@ size_t alte::base_words_map::extend(
 
     for(auto && code : codes)
     {
-        std::pair<size_t, size_t> code_pair = std::make_pair(std::get<0>(code), std::get<1>(code));
+        code_t code_pair = std::make_pair(std::get<0>(code), std::get<1>(code));
 
         if(code_pair != previous_code)
         {

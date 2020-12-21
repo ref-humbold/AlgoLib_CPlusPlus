@@ -23,7 +23,7 @@ public:
 TEST_F(BaseWordsMapTest, code_whenEmpty_thenZeroAndZero)
 {
     // when
-    std::pair<size_t, size_t> result = test_object.code(4, 0);
+    alte::base_words_map::code_t result = test_object.code(4, 0);
     // then
     EXPECT_EQ(std::make_pair(0UL, 0UL), result);
 }
@@ -31,10 +31,10 @@ TEST_F(BaseWordsMapTest, code_whenEmpty_thenZeroAndZero)
 TEST_F(BaseWordsMapTest, code_whenSingleCharacter_thenCodeAndZero)
 {
     // when
-    std::pair<size_t, size_t> result1 = test_object.code(1, 1);  // i
-    std::pair<size_t, size_t> result2 = test_object.code(0, 1);  // m
-    std::pair<size_t, size_t> result3 = test_object.code(8, 1);  // p
-    std::pair<size_t, size_t> result4 = test_object.code(3, 1);  // s
+    alte::base_words_map::code_t result1 = test_object.code(1, 1);  // i
+    alte::base_words_map::code_t result2 = test_object.code(0, 1);  // m
+    alte::base_words_map::code_t result3 = test_object.code(8, 1);  // p
+    alte::base_words_map::code_t result4 = test_object.code(3, 1);  // s
     // then
     EXPECT_EQ(std::make_pair(1UL, 0UL), result1);
     EXPECT_EQ(std::make_pair(2UL, 0UL), result2);
@@ -45,11 +45,11 @@ TEST_F(BaseWordsMapTest, code_whenSingleCharacter_thenCodeAndZero)
 TEST_F(BaseWordsMapTest, code_whenBaseWord_thenCodeAndZero)
 {
     // when
-    std::pair<size_t, size_t> result1 = test_object.code(0, 1);  // m
-    std::pair<size_t, size_t> result2 = test_object.code(4, 2);  // is
-    std::pair<size_t, size_t> result3 = test_object.code(8, 2);  // pp
-    std::pair<size_t, size_t> result4 = test_object.code(7);  // ippi
-    std::pair<size_t, size_t> result5 = test_object.code(3, 4);  // siss
+    alte::base_words_map::code_t result1 = test_object.code(0, 1);  // m
+    alte::base_words_map::code_t result2 = test_object.code(4, 2);  // is
+    alte::base_words_map::code_t result3 = test_object.code(8, 2);  // pp
+    alte::base_words_map::code_t result4 = test_object.code(7);  // ippi
+    alte::base_words_map::code_t result5 = test_object.code(3, 4);  // siss
     // then
     EXPECT_EQ(std::make_pair(2UL, 0UL), result1);
     EXPECT_EQ(std::make_pair(6UL, 0UL), result2);
@@ -61,8 +61,8 @@ TEST_F(BaseWordsMapTest, code_whenBaseWord_thenCodeAndZero)
 TEST_F(BaseWordsMapTest, code_whenComposedWord_thenCodeAndCode)
 {
     // when
-    std::pair<size_t, size_t> result1 = test_object.code(0, 3);  // mis
-    std::pair<size_t, size_t> result2 = test_object.code(0);  // mississippi
+    alte::base_words_map::code_t result1 = test_object.code(0, 3);  // mis
+    alte::base_words_map::code_t result2 = test_object.code(0);  // mississippi
     // then
     EXPECT_EQ(std::make_pair(7UL, 6UL), result1);
     EXPECT_EQ(std::make_pair(20UL, 21UL), result2);

@@ -17,6 +17,8 @@ namespace algolib::text
     class base_words_map
     {
     public:
+        using code_t = std::pair<size_t, size_t>;
+
         explicit base_words_map(const std::string & text) : text_{text}
         {
             create();
@@ -33,7 +35,7 @@ namespace algolib::text
             return text_;
         }
 
-        std::pair<size_t, size_t> code(size_t start, size_t length = std::string::npos);
+        code_t code(size_t start, size_t length = std::string::npos);
 
     private:
         void create();
