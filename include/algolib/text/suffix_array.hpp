@@ -6,15 +6,15 @@
 #define SUFFIX_ARRAY_HPP_
 
 #include <cstdlib>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
+#include <exception>
+#include <limits>
 #include <map>
 #include <queue>
+#include <stdexcept>
 #include <string>
 #include <tuple>
 #include <vector>
-#include <limits>
 
 namespace algolib::text
 {

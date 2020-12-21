@@ -49,8 +49,8 @@ set(STRUCTURES_SOURCES
     "${STRUCTURES}/disjoint_sets.cpp"
     "${STRUCTURES}/double_heap.cpp")
 set(TEXT_SOURCES
+    "${TEXT}/base_words_map.cpp"
     "${TEXT}/kmp.cpp"
-    "${TEXT}/kmr.cpp"
     "${TEXT}/suffix_array.cpp")
 
 set(SOURCES
