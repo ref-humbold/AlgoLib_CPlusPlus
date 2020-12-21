@@ -35,7 +35,7 @@ void alte::base_words_map::create()
                 return {text_[i], 1 + text_[i], i, i + length};
             });
 
-    while(current_length <= text_.length())
+    while(current_length <= text_.size())
     {
         code_value = extend(
                 current_length, code_value,
@@ -61,10 +61,12 @@ size_t alte::base_words_map::extend(
 
     for(auto && code : codes)
     {
-        if(std::get<0>(code) != previous_code.first && std::get<1>(code) != previous_code.second)
+        std::pair<size_t, size_t> code_pair = std::make_pair(std::get<0>(code), std::get<1>(code));
+
+        if(code_pair != previous_code)
         {
             ++code_value;
-            previous_code = std::make_pair(std::get<0>(code), std::get<1>(code));
+            previous_code = code_pair;
         }
 
         factors.emplace(std::make_pair(std::get<2>(code), std::get<3>(code)), code_value);

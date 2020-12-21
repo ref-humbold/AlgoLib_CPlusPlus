@@ -47,6 +47,7 @@ set(STRUCTURES_TEST_SOURCES
     "${STRUCTURES_TEST}/disjoint_sets_test.cpp"
     "${STRUCTURES_TEST}/double_heap_test.cpp")
 set(TEXT_TEST_SOURCES
+    "${TEXT_TEST}/base_words_map_test.cpp"
     "${TEXT_TEST}/kmp_test.cpp"
     "${TEXT_TEST}/suffix_array_test.cpp")
 
