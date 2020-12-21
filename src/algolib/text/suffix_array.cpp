@@ -8,7 +8,7 @@ namespace alte = algolib::text;
 
 std::string alte::suffix_array::at(size_t i) const
 {
-    if(i >= length)
+    if(i >= size_)
         throw std::out_of_range("Suffix array index out of range");
 
     return operator[](i);
@@ -16,12 +16,12 @@ std::string alte::suffix_array::at(size_t i) const
 
 std::string alte::suffix_array::operator[](size_t i) const
 {
-    return txt.substr(suf_arr[i], std::string::npos);
+    return text_.substr(suf_arr[i], std::string::npos);
 }
 
 size_t alte::suffix_array::index_at(size_t i) const
 {
-    if(i >= length)
+    if(i >= size_)
         throw std::out_of_range("Suffix array index out of range");
 
     return suf_arr[i];
@@ -29,7 +29,7 @@ size_t alte::suffix_array::index_at(size_t i) const
 
 size_t alte::suffix_array::index_of(size_t suf) const
 {
-    if(suf >= length)
+    if(suf >= size_)
         throw std::out_of_range("Text index out of range");
 
     return inv_arr[suf];
@@ -37,11 +37,11 @@ size_t alte::suffix_array::index_of(size_t suf) const
 
 size_t alte::suffix_array::lcp(size_t suf1, size_t suf2) const
 {
-    if(suf1 >= length || suf2 >= length)
+    if(suf1 >= size_ || suf2 >= size_)
         throw std::out_of_range("Text index out of range");
 
     if(suf1 == suf2)
-        return length - suf1;
+        return size_ - suf1;
 
     size_t i1 = std::min(inv_arr[suf1], inv_arr[suf2]);
     size_t i2 = std::max(inv_arr[suf1], inv_arr[suf2]);
@@ -55,29 +55,29 @@ size_t alte::suffix_array::lcp(size_t suf1, size_t suf2) const
 
 void alte::suffix_array::init_array()
 {
-    std::vector<size_t> t(txt.begin(), txt.end());
+    std::vector<size_t> t(text_.begin(), text_.end());
 
     suf_arr = create_array(t);
 }
 
 void alte::suffix_array::init_inv()
 {
-    inv_arr.resize(length);
+    inv_arr.resize(size_);
 
-    for(size_t i = 0; i < length; ++i)
+    for(size_t i = 0; i < size_; ++i)
         inv_arr[suf_arr[i]] = i;
 }
 
 void alte::suffix_array::init_lcp()
 {
-    lcp_arr.resize(length);
+    lcp_arr.resize(size_);
 
-    for(size_t i = 0, len = 0; i < length; ++i, len = len == 0 ? 0 : len - 1)
+    for(size_t i = 0, len = 0; i < size_; ++i, len = len == 0 ? 0 : len - 1)
         if(inv_arr[i] >= 1)
         {
             size_t j = suf_arr[inv_arr[i] - 1];
 
-            while(i + len < length && j + len < length && txt[i + len] == txt[j + len])
+            while(i + len < size_ && j + len < size_ && text_[i + len] == text_[j + len])
                 ++len;
 
             lcp_arr[inv_arr[i]] = len;
