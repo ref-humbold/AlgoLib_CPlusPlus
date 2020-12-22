@@ -6,22 +6,22 @@
 #define SUFFIX_ARRAY_HPP_
 
 #include <cstdlib>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
+#include <exception>
+#include <limits>
 #include <map>
 #include <queue>
+#include <stdexcept>
 #include <string>
 #include <tuple>
 #include <vector>
-#include <limits>
 
 namespace algolib::text
 {
     class suffix_array
     {
     public:
-        explicit suffix_array(const std::string & s) : length{s.length()}, txt{s}
+        explicit suffix_array(const std::string & text) : size_{text.size()}, text_{text}
         {
             init_array();
             init_inv();
@@ -41,13 +41,13 @@ namespace algolib::text
         //! \return text for suffix array
         std::string text() const
         {
-            return txt;
+            return text_;
         }
 
         //! \return length of suffix array
         size_t size() const
         {
-            return length;
+            return size_;
         }
 
         /*!
@@ -93,8 +93,8 @@ namespace algolib::text
         void sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys, size_t shift);
         size_t get_elem(const std::vector<size_t> & v, size_t i);
 
-        size_t length;
-        std::string txt;
+        size_t size_;
+        std::string text_;
         std::vector<size_t> suf_arr;
         std::vector<size_t> inv_arr;
         std::vector<size_t> lcp_arr;
