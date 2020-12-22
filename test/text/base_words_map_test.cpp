@@ -48,7 +48,7 @@ TEST_F(BaseWordsMapTest, code_whenBaseWord_thenCodeAndZero)
     alte::base_words_map::code_t result1 = test_object.code(0, 1);  // m
     alte::base_words_map::code_t result2 = test_object.code(4, 2);  // is
     alte::base_words_map::code_t result3 = test_object.code(8, 2);  // pp
-    alte::base_words_map::code_t result4 = test_object.code(7);  // ippi
+    alte::base_words_map::code_t result4 = test_object.code(7, 8);  // ippi
     alte::base_words_map::code_t result5 = test_object.code(3, 4);  // siss
     // then
     EXPECT_EQ(std::make_pair(2UL, 0UL), result1);
@@ -66,4 +66,12 @@ TEST_F(BaseWordsMapTest, code_whenComposedWord_thenCodeAndCode)
     // then
     EXPECT_EQ(std::make_pair(7UL, 6UL), result1);
     EXPECT_EQ(std::make_pair(20UL, 21UL), result2);
+}
+
+TEST_F(BaseWordsMapTest, code_whenStartExceedsLength_thenOutOfRange)
+{
+    // when
+    auto exec = [&]() { return test_object.code(20, 1); };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
 }
