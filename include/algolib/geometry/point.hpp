@@ -5,8 +5,8 @@
 #ifndef POINT_HPP_
 #define POINT_HPP_
 
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
 #include <algorithm>
 #include <array>
 #include <exception>
@@ -282,7 +282,7 @@ namespace std
 
         result_type operator()(const argument_type & p)
         {
-            size_t full_hash;
+            size_t full_hash = 0;
 
             for(auto && c : p.coordinates)
             {

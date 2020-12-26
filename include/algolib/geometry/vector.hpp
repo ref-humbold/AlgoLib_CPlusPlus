@@ -5,8 +5,8 @@
 #ifndef VECTOR_HPP_
 #define VECTOR_HPP_
 
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
 #include <algorithm>
 #include <array>
 #include <iostream>
@@ -80,7 +80,7 @@ namespace algolib::geometry
         vector & operator=(const vector &) = default;
         vector & operator=(vector &&) = default;
 
-        static vector<N> between(const point<N> begin, const point<N> & end);
+        static vector<N> between(const point<N> & begin, const point<N> & end);
 
         double operator[](size_t i) const;
         double length() const;
@@ -115,11 +115,11 @@ namespace algolib::geometry
     class vector<0>;
 
     template <size_t N>
-    vector<N> vector<N>::between(const point<N> begin, const point<N> & end)
+    vector<N> vector<N>::between(const point<N> & begin, const point<N> & end)
     {
         std::array<double, N> coords;
 
-        for(size_t i = 1; i <= N; ++i)
+        for(size_t i = 0; i < N; ++i)
             coords[i] = end[i] - begin[i];
 
         return vector<N>(coords);
@@ -249,7 +249,7 @@ namespace algolib::geometry
     template <size_t N>
     double dot(const vector<N> & v1, const vector<N> & v2)
     {
-        double dot_product;
+        double dot_product = 0.0;
 
         for(size_t i = 0; i < N; ++i)
             dot_product += v1.coordinates[i] * v2.coordinates[i];
@@ -273,7 +273,7 @@ namespace algolib::geometry
         vector2d & operator=(const vector2d &) = default;
         vector2d & operator=(vector2d &&) = default;
 
-        static vector2d between(const point2d begin, const point2d & end)
+        static vector2d between(const point2d & begin, const point2d & end)
         {
             return vector2d(end.x() - begin.x(), end.y() - begin.y());
         }
@@ -356,7 +356,7 @@ namespace algolib::geometry
         vector3d & operator=(const vector3d &) = default;
         vector3d & operator=(vector3d &&) = default;
 
-        static vector3d between(const point3d begin, const point3d & end)
+        static vector3d between(const point3d & begin, const point3d & end)
         {
             return vector3d(end.x() - begin.x(), end.y() - begin.y(), end.z() - begin.z());
         }
@@ -440,7 +440,7 @@ namespace std
 
         result_type operator()(const argument_type & v)
         {
-            size_t full_hash;
+            size_t full_hash = 0;
 
             for(auto && c : v.coordinates)
             {
