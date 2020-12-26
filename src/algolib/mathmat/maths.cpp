@@ -46,7 +46,7 @@ long long int alma::mult_mod(long long int factor1, long long int factor2,
             result = modulo == 0 ? result + factor1 : (result + factor1) % modulo;
 
         factor1 = modulo == 0 ? factor1 + factor1 : (factor1 + factor1) % modulo;
-        factor2 >>= 1;
+        factor2 /= 2;
     }
 
     return result;
@@ -69,7 +69,7 @@ long long int alma::power_mod(long long int base, long long int exponent,
             result = mult_mod(result, base, modulo);
 
         base = mult_mod(base, base, modulo);
-        exponent >>= 1;
+        exponent /= 2;
     }
 
     return result;
