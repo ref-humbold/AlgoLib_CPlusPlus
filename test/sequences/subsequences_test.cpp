@@ -1,4 +1,7 @@
-//! TEST : Algorithms for subsequences.
+/*!
+ * \file sorting_test.cpp
+ * \brief Tests: Algorithms for subsequences
+ */
 #include <gtest/gtest.h>
 #include "algolib/sequences/subsequences.hpp"
 

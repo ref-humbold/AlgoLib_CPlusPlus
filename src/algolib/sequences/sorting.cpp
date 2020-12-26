@@ -3,11 +3,12 @@
  * \brief Algorithms for sorting vectors
  */
 #include "algolib/sequences/sorting.hpp"
+#include <ctime>
+#include <exception>
+#include <stdexcept>
 
-int internal::choose_pivot(int size)
+size_t internal::choose_pivot(size_t size)
 {
-    srand(time(nullptr));
-
     int candidate1 = rand() % size, candidate2 = rand() % size, candidate3 = rand() % size;
 
     if(std::min(candidate2, candidate3) <= candidate1
@@ -21,11 +22,11 @@ int internal::choose_pivot(int size)
     return candidate3;
 }
 
-void internal::validate_indices(int size, int index_begin, int index_end)
+void internal::validate_indices(size_t size, size_t index_begin, size_t index_end)
 {
-    if(index_begin < 0 || index_end > size)
+    if(index_begin > size)
         throw std::out_of_range("Sequence beginning index out of range");
 
-    if(index_end < 0 || index_end > size)
+    if(index_end > size)
         throw std::out_of_range("Sequence ending index out of range");
 }
