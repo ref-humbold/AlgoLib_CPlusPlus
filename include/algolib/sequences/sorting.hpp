@@ -1,19 +1,23 @@
 /*!
- * \file vector_sorting.hpp
+ * \file sorting.hpp
  * \brief Algorithms for sorting vectors
  */
-#ifndef VECTOR_SORTING_HPP_
-#define VECTOR_SORTING_HPP_
+#ifndef SORTING_HPP_
+#define SORTING_HPP_
 
 #include <cmath>
 #include <cstdlib>
-#include <exception>
 #include <limits>
-#include <stdexcept>
+#include <random>
 #include <vector>
 
 namespace internal
 {
+    size_t choose_pivot(std::uniform_int_distribution<size_t> & distribution,
+                        std::default_random_engine & rand_eng);
+
+    void validate_indices(size_t size, size_t index_begin, size_t index_end);
+
     template <typename T>
     void move_down(std::vector<T> & heap, size_t vertex, size_t index_begin, size_t index_end)
     {
@@ -64,18 +68,57 @@ namespace internal
             sequence[index_begin + i] = ordered[i];
     }
 
-    size_t choose_pivot(size_t size);
+    template <typename T>
+    void do_top_down_merge_sort(std::vector<T> & sequence, size_t index_begin, size_t index_end)
+    {
+        if(index_end - index_begin <= 1)
+            return;
 
-    void validate_indices(size_t size, size_t index_begin, size_t index_end);
+        size_t index_middle = (index_begin + index_end) / 2;
+
+        do_top_down_merge_sort(sequence, index_begin, index_middle);
+        do_top_down_merge_sort(sequence, index_middle, index_end);
+        internal::merge(sequence, index_begin, index_middle, index_end);
+    }
+
+    template <typename T>
+    void do_quick_sort(std::default_random_engine & rand_eng, std::vector<T> & sequence,
+                       size_t index_begin, size_t index_end)
+    {
+        if(index_end - index_begin <= 1)
+            return;
+
+        std::uniform_int_distribution<size_t> distribution(index_begin, index_end - 1);
+        size_t index_pivot = index_begin, index_front = index_begin + 1, index_back = index_end - 1;
+        size_t random_pivot = internal::choose_pivot(distribution, rand_eng);
+
+        std::swap(sequence[index_pivot], sequence[random_pivot]);
+
+        while(index_pivot < index_back)
+            if(sequence[index_front] < sequence[index_pivot])
+            {
+                std::swap(sequence[index_front], sequence[index_pivot]);
+                index_pivot = index_front;
+                ++index_front;
+            }
+            else
+            {
+                std::swap(sequence[index_front], sequence[index_back]);
+                --index_back;
+            }
+
+        do_quick_sort(rand_eng, sequence, index_begin, index_pivot);
+        do_quick_sort(rand_eng, sequence, index_pivot + 1, index_end);
+    }
 }
 
 namespace algolib::sequences
 {
     /*!
-     * \brief Mutowalne sortowanie ciągu przez kopcowanie
-     * \param sequence ciąg
-     * \param index_begin początkowy indeks ciągu
-     * \param index_end końcowy indeks ciągu
+     * \brief Mutably sorts given sequence using a heap.
+     * \param sequence a sequence of elements
+     * \param index_begin index of sequence beginning
+     * \param index_end index of sequence end
      */
     template <typename T>
     void heap_sort(std::vector<T> & sequence, size_t index_begin = 0,
@@ -105,10 +148,10 @@ namespace algolib::sequences
     }
 
     /*!
-     * \brief Mutowalne sortowanie ciągu przez scalanie top-down
-     * \param sequence ciąg
-     * \param index_begin początkowy indeks ciągu
-     * \param index_end końcowy indeks ciągu
+     * \brief Mutably sorts given sequence using a top-down merge-sort algorithm.
+     * \param sequence a sequence of elements
+     * \param index_begin index of sequence beginning
+     * \param index_end index of sequence end
      */
     template <typename T>
     void top_down_merge_sort(std::vector<T> & sequence, size_t index_begin = 0,
@@ -118,22 +161,14 @@ namespace algolib::sequences
             index_end = sequence.size();
 
         internal::validate_indices(sequence.size(), index_begin, index_end);
-
-        if(index_end - index_begin <= 1)
-            return;
-
-        size_t index_middle = (index_begin + index_end) / 2;
-
-        top_down_merge_sort(sequence, index_begin, index_middle);
-        top_down_merge_sort(sequence, index_middle, index_end);
-        internal::merge(sequence, index_begin, index_middle, index_end);
+        internal::do_top_down_merge_sort(sequence, index_begin, index_end);
     }
 
     /*!
-     * \brief Mutowalne sortowanie ciągu przez scalanie bottom-up
-     * \param sequence ciąg
-     * \param index_begin początkowy indeks ciągu
-     * \param index_end końcowy indeks ciągu
+     * \brief Mutably sorts given sequence using a bottom-up merge-sort algorithm.
+     * \param sequence a sequence of elements
+     * \param index_begin index of sequence beginning
+     * \param index_end index of sequence end
      */
     template <typename T>
     void bottom_up_merge_sort(std::vector<T> & sequence, size_t index_begin = 0,
@@ -147,50 +182,29 @@ namespace algolib::sequences
         if(index_end - index_begin <= 1)
             return;
 
-        for(size_t i = 2; i < 2 * (index_end - index_begin); i *= 2)
-            for(size_t j = index_begin; j < index_end; j += i)
-                internal::merge(sequence, j, std::min(j + i / 2, index_end),
-                                std::min(j + i, index_end));
+        for(size_t half_step = 2; half_step < 2 * (index_end - index_begin); half_step *= 2)
+            for(size_t i = index_begin; i < index_end; i += half_step)
+                internal::merge(sequence, i, std::min(i + half_step / 2, index_end),
+                                std::min(i + half_step, index_end));
     }
 
     /*!
-     * \brief Mutowalne szybkie sortowanie ciągu
-     * \param sequence ciąg
-     * \param index_begin początkowy indeks ciągu
-     * \param index_end końcowy indeks ciągu
+     * \brief Mutably sorts given sequence using a quick-sort algorithm.
+     * \param sequence a sequence of elements
+     * \param index_begin index of sequence beginning
+     * \param index_end index of sequence end
      */
     template <typename T>
     void quick_sort(std::vector<T> & sequence, size_t index_begin = 0,
                     size_t index_end = std::numeric_limits<size_t>::max())
     {
+        std::default_random_engine rand_eng;
+
         if(index_end == std::numeric_limits<size_t>::max())
             index_end = sequence.size();
 
         internal::validate_indices(sequence.size(), index_begin, index_end);
-
-        if(index_end - index_begin <= 1)
-            return;
-
-        size_t index_pivot = index_begin, index_front = index_begin + 1, index_back = index_end - 1;
-        size_t rdpv = index_begin + internal::choose_pivot(index_end - index_begin);
-
-        std::swap(sequence[index_pivot], sequence[rdpv]);
-
-        while(index_pivot < index_back)
-            if(sequence[index_front] < sequence[index_pivot])
-            {
-                std::swap(sequence[index_front], sequence[index_pivot]);
-                index_pivot = index_front;
-                ++index_front;
-            }
-            else
-            {
-                std::swap(sequence[index_front], sequence[index_back]);
-                --index_back;
-            }
-
-        quick_sort(sequence, index_begin, index_pivot);
-        quick_sort(sequence, index_pivot + 1, index_end);
+        internal::do_quick_sort(rand_eng, sequence, index_begin, index_end);
     }
 }
 
