@@ -68,22 +68,22 @@ bool alma::test_miller(long long int number)
     if(number < 2 || number % 2 == 0 || number % 3 == 0)
         return false;
 
-    long long int multip = number - 1;
+    long long int multiplier = number - 1;
     std::default_random_engine rand_eng;
     std::uniform_int_distribution<long long int> distribution(1, number - 1);
 
-    while(multip % 2 == 0)
-        multip /= 2;
+    while(multiplier % 2 == 0)
+        multiplier /= 2;
 
     for(int i = 0; i < 17; ++i)
     {
         long long int witness = distribution(rand_eng);
 
-        if(power_mod(witness, multip, number) != 1)
+        if(power_mod(witness, multiplier, number) != 1)
         {
             std::vector<long long int> exponents;
 
-            for(long long int d = multip; d <= number / 2; d *= 2)
+            for(long long int d = multiplier; d <= number / 2; d *= 2)
                 exponents.push_back(d);
 
             if(std::all_of(exponents.begin(), exponents.end(), [&](long long int d) {
