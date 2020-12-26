@@ -3,6 +3,7 @@
  * \brief Algorithms for prime numbers
  */
 #include "algolib/mathmat/primes.hpp"
+#include <random>
 
 namespace alma = algolib::mathmat;
 
@@ -45,11 +46,14 @@ bool alma::test_fermat(long long int number)
     if(number < 2 || number % 2 == 0 || number % 3 == 0)
         return false;
 
-    for(int i = 0; i < 12; ++i)
-    {
-        long long int rdv = 2 + rand() % (number - 3);
+    std::default_random_engine rand_eng;
+    std::uniform_int_distribution<long long int> distribution(2, number - 1);
 
-        if(gcd(rdv, number) > 1 || power_mod(rdv, number - 1, number) != 1)
+    for(int i = 0; i < 17; ++i)
+    {
+        long long int witness = distribution(rand_eng);
+
+        if(gcd(witness, number) > 1 || power_mod(witness, number - 1, number) != 1)
             return false;
     }
 
@@ -65,26 +69,26 @@ bool alma::test_miller(long long int number)
         return false;
 
     long long int multip = number - 1;
+    std::default_random_engine rand_eng;
+    std::uniform_int_distribution<long long int> distribution(1, number - 1);
 
     while(multip % 2 == 0)
-        multip >>= 1;
+        multip /= 2;
 
-    for(int i = 0; i < 12; ++i)
+    for(int i = 0; i < 17; ++i)
     {
-        long long int rdv = 1 + rand() % (number - 1);
+        long long int witness = distribution(rand_eng);
 
-        if(power_mod(rdv, multip, number) != 1)
+        if(power_mod(witness, multip, number) != 1)
         {
-            bool is_composite = true;
+            std::vector<long long int> exponents;
 
-            for(long long int d = multip; d <= number / 2; d <<= 1)
-            {
-                long long int pwm = power_mod(rdv, d, number);
+            for(long long int d = multip; d <= number / 2; d *= 2)
+                exponents.push_back(d);
 
-                is_composite = is_composite && pwm != number - 1;
-            }
-
-            if(is_composite)
+            if(std::all_of(exponents.begin(), exponents.end(), [&](long long int d) {
+                   return power_mod(witness, d, number) != number - 1;
+               }))
                 return false;
         }
     }
