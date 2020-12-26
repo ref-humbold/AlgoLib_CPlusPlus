@@ -69,15 +69,15 @@ namespace internal
     }
 
     template <typename T>
-    void do_top_down_merge_sort(std::vector<T> & sequence, size_t index_begin, size_t index_end)
+    void do_merge_sort(std::vector<T> & sequence, size_t index_begin, size_t index_end)
     {
         if(index_end - index_begin <= 1)
             return;
 
         size_t index_middle = (index_begin + index_end) / 2;
 
-        do_top_down_merge_sort(sequence, index_begin, index_middle);
-        do_top_down_merge_sort(sequence, index_middle, index_end);
+        do_merge_sort(sequence, index_begin, index_middle);
+        do_merge_sort(sequence, index_middle, index_end);
         internal::merge(sequence, index_begin, index_middle, index_end);
     }
 
@@ -161,7 +161,7 @@ namespace algolib::sequences
             index_end = sequence.size();
 
         internal::validate_indices(sequence.size(), index_begin, index_end);
-        internal::do_top_down_merge_sort(sequence, index_begin, index_end);
+        internal::do_merge_sort(sequence, index_begin, index_end);
     }
 
     /*!
