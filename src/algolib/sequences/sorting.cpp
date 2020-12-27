@@ -1,25 +1,20 @@
 /*!
- * \file vector_sorting.cpp
+ * \file sorting.cpp
  * \brief Algorithms for sorting vectors
  */
 #include "algolib/sequences/sorting.hpp"
-#include <ctime>
+#include <algorithm>
 #include <exception>
 #include <stdexcept>
 
-size_t internal::choose_pivot(size_t size)
+size_t internal::choose_pivot(std::uniform_int_distribution<size_t> & distribution,
+                              std::default_random_engine & rand_eng)
 {
-    int candidate1 = rand() % size, candidate2 = rand() % size, candidate3 = rand() % size;
+    std::vector<size_t> candidates = {distribution(rand_eng), distribution(rand_eng),
+                                      distribution(rand_eng)};
 
-    if(std::min(candidate2, candidate3) <= candidate1
-       && candidate1 <= std::max(candidate2, candidate3))
-        return candidate1;
-
-    if(std::min(candidate1, candidate3) <= candidate2
-       && candidate2 <= std::max(candidate1, candidate3))
-        return candidate2;
-
-    return candidate3;
+    std::sort(candidates.begin(), candidates.end());
+    return candidates[1];
 }
 
 void internal::validate_indices(size_t size, size_t index_begin, size_t index_end)
