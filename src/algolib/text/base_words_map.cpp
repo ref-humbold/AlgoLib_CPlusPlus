@@ -29,22 +29,18 @@ alte::base_words_map::code_t alte::base_words_map::code(size_t start, size_t len
 
 void alte::base_words_map::create()
 {
-    size_t current_length = 2;
     size_t code_value = extend(
             1, 0, [&](size_t i, size_t length) -> std::tuple<size_t, size_t, size_t, size_t> {
                 return {text_[i], 1 + text_[i], i, i + length};
             });
 
-    while(current_length <= text_.size())
-    {
+    for(size_t current_length = 2; current_length <= text_.size(); current_length *= 2)
         code_value = extend(
                 current_length, code_value,
                 [&](size_t i, size_t length) -> std::tuple<size_t, size_t, size_t, size_t> {
                     return {factors.at(std::make_pair(i, i + length / 2)),
                             factors.at(std::make_pair(i + length / 2, i + length)), i, i + length};
                 });
-        current_length *= 2;
-    }
 }
 
 size_t alte::base_words_map::extend(
