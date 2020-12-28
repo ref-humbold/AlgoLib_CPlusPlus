@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 project(AlgoLib_CPlusPlus VERSION 0.0)
 
 # PROPERTIES
+set(LIB_NAME algolib)
+
 set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 set(TEST_DIR "${PROJECT_SOURCE_DIR}/test")
@@ -18,18 +20,18 @@ find_package(GTest)
 find_package(Doxygen)
 
 # SOURCES
-include_directories("${INCLUDE_DIR}")
+include_directories(${INCLUDE_DIR})
 
 # DOCS
 if(DOXYGEN_FOUND)
-    set(DOXYGEN_OUTPUT_DIRECTORY "${DOCS_OUTPUT_DIR}")
-    doxygen_add_docs(docs "${INCLUDE_DIR}")
+    set(DOXYGEN_OUTPUT_DIRECTORY ${DOCS_OUTPUT_DIR})
+    doxygen_add_docs(docs ${INCLUDE_DIR})
 endif()
 
 # OUTPUT
-add_subdirectory("${SRC_DIR}")
+add_subdirectory(${SRC_DIR})
 
 if(GTEST_FOUND)
     include(CTest)
-    add_subdirectory("${TEST_DIR}")
+    add_subdirectory(${TEST_DIR})
 endif()
