@@ -12,7 +12,7 @@ namespace algr = algolib::graphs;
 using graph_v = algr::undirected_simple_graph<>::vertex_type;
 using graph_e = algr::undirected_simple_graph<>::edge_type;
 
-TEST(CuttingTest, findEdgeCut_whenPresentBridges_thenBridges)
+TEST(CuttingTest, findEdgeCut_WhenPresentBridges_ThenBridges)
 {
     // given
     algr::undirected_simple_graph<> graph({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
@@ -40,7 +40,7 @@ TEST(CuttingTest, findEdgeCut_whenPresentBridges_thenBridges)
     EXPECT_EQ(std::vector<graph_e>({graph.get_edge(0, 7), graph.get_edge(5, 6)}), result);
 }
 
-TEST(CuttingTest, findEdgeCut_whenNoBridges_thenEmptyVector)
+TEST(CuttingTest, findEdgeCut_WhenNoBridges_ThenEmptyVector)
 {
     // given
     algr::undirected_simple_graph<> graph({0, 1, 2, 3, 4, 5});
@@ -57,7 +57,7 @@ TEST(CuttingTest, findEdgeCut_whenNoBridges_thenEmptyVector)
     EXPECT_EQ(std::vector<graph_e>(), result);
 }
 
-TEST(CuttingTest, findVertexSeparators_whenPresentSeparators_thenSeparators)
+TEST(CuttingTest, findVertexSeparators_WhenPresentSeparators_ThenSeparators)
 {
     // given
     algr::undirected_simple_graph<> graph({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
@@ -85,7 +85,7 @@ TEST(CuttingTest, findVertexSeparators_whenPresentSeparators_thenSeparators)
     EXPECT_EQ(std::vector<graph_v>({0, 1, 5, 7}), result);
 }
 
-TEST(CuttingTest, findVertexSeparators_whenNoSeparators_thenEmptyVector)
+TEST(CuttingTest, findVertexSeparators_WhenNoSeparators_ThenEmptyVector)
 {
     // given
     algr::undirected_simple_graph<> graph({0, 1, 2, 3, 4, 5});

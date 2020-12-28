@@ -10,7 +10,7 @@ namespace algr = algolib::graphs;
 using graph_t = algr::multipartite_graph<2>;
 using graph_v = graph_t::vertex_type;
 
-TEST(MatchingTest, match_whenMatchingExists_thenMaximalMatching)
+TEST(MatchingTest, match_WhenMatchingExists_ThenMaximalMatching)
 {
     // given
     graph_t graph({{0, 2, 4, 6}, {1, 3, 5, 7}});
@@ -29,7 +29,7 @@ TEST(MatchingTest, match_whenMatchingExists_thenMaximalMatching)
     EXPECT_EQ(expected, result);
 }
 
-TEST(MatchingTest, match_whenVerticesOnlyInGroup0_thenEmpty)
+TEST(MatchingTest, match_WhenVerticesOnlyInGroup0_ThenEmpty)
 {
     // given
     graph_t graph({{0, 1, 2, 3, 4}});
@@ -39,7 +39,7 @@ TEST(MatchingTest, match_whenVerticesOnlyInGroup0_thenEmpty)
     EXPECT_TRUE(result.empty());
 }
 
-TEST(MatchingTest, match_whenVerticesOnlyInGroup1__thenEmpty)
+TEST(MatchingTest, match_WhenVerticesOnlyInGroup1__ThenEmpty)
 {
     // given
     graph_t graph({{}, {0, 1, 2, 3, 4}});

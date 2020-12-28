@@ -7,7 +7,7 @@
 
 namespace alge = algolib::geometry;
 
-TEST(PointsSortingTest, sortByX_when2D_thenSortedStablyAscendingByFirstCoordinate)
+TEST(PointsSortingTest, sortByX_When2D_ThenSortedStablyAscendingByFirstCoordinate)
 {
     // given
     std::vector<alge::point2d> sequence = {
@@ -25,7 +25,7 @@ TEST(PointsSortingTest, sortByX_when2D_thenSortedStablyAscendingByFirstCoordinat
               sequence);
 }
 
-TEST(PointsSortingTest, sortByX_when3D_thenSortedStablyAscendingByFirstCoordinate)
+TEST(PointsSortingTest, sortByX_When3D_ThenSortedStablyAscendingByFirstCoordinate)
 {
     // given
     std::vector<alge::point3d> sequence = {
@@ -44,7 +44,7 @@ TEST(PointsSortingTest, sortByX_when3D_thenSortedStablyAscendingByFirstCoordinat
               sequence);
 }
 
-TEST(PointsSortingTest, sortByY_when2D_thenSortedStablyAscendingByFirstCoordinate)
+TEST(PointsSortingTest, sortByY_When2D_ThenSortedStablyAscendingByFirstCoordinate)
 {
     // given
     std::vector<alge::point2d> sequence = {
@@ -62,7 +62,7 @@ TEST(PointsSortingTest, sortByY_when2D_thenSortedStablyAscendingByFirstCoordinat
               sequence);
 }
 
-TEST(PointsSortingTest, sortByY_when3D_thenSortedStablyAscendingByFirstCoordinate)
+TEST(PointsSortingTest, sortByY_When3D_ThenSortedStablyAscendingByFirstCoordinate)
 {
     // given
     std::vector<alge::point3d> sequence = {
@@ -81,7 +81,7 @@ TEST(PointsSortingTest, sortByY_when3D_thenSortedStablyAscendingByFirstCoordinat
               sequence);
 }
 
-TEST(PointsSortingTest, sortByZ_when3D_thenSortedStablyAscendingByFirstCoordinate)
+TEST(PointsSortingTest, sortByZ_When3D_ThenSortedStablyAscendingByFirstCoordinate)
 {
     // given
     std::vector<alge::point3d> sequence = {

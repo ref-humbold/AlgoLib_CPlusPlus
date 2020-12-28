@@ -10,7 +10,7 @@ namespace algr = algolib::graphs;
 using graph_t = algr::directed_simple_graph<>;
 using graph_v = graph_t::vertex_type;
 
-TEST(TopologicalSortingTest, sortTopologicalUsingInputs_whenAcyclicGraph_thenTopologicalOrder)
+TEST(TopologicalSortingTest, sortTopologicalUsingInputs_WhenAcyclicGraph_ThenTopologicalOrder)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
@@ -30,7 +30,7 @@ TEST(TopologicalSortingTest, sortTopologicalUsingInputs_whenAcyclicGraph_thenTop
 }
 
 TEST(TopologicalSortingTest,
-     sortTopologicalUsingInputs_whenCyclicGraph_thenDirectedCyclicGraphError)
+     sortTopologicalUsingInputs_WhenCyclicGraph_ThenDirectedCyclicGraphError)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
@@ -51,7 +51,7 @@ TEST(TopologicalSortingTest,
     EXPECT_THROW(exec(), algr::directed_cyclic_graph_error);
 }
 
-TEST(TopologicalSortingTest, sortTopologicalUsingInputs_whenEmptyGraph_thenVertices)
+TEST(TopologicalSortingTest, sortTopologicalUsingInputs_WhenEmptyGraph_ThenVertices)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
@@ -61,7 +61,7 @@ TEST(TopologicalSortingTest, sortTopologicalUsingInputs_whenEmptyGraph_thenVerti
     EXPECT_EQ(graph.vertices(), result);
 }
 
-TEST(TopologicalSortingTest, sortTopologicalUsingDFS_whenAcyclicGraph_thenTopologicalOrder)
+TEST(TopologicalSortingTest, sortTopologicalUsingDFS_WhenAcyclicGraph_ThenTopologicalOrder)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
@@ -87,7 +87,7 @@ TEST(TopologicalSortingTest, sortTopologicalUsingDFS_whenAcyclicGraph_thenTopolo
                         [&](const std::vector<graph_v> expected) { return expected == result; }));
 }
 
-TEST(TopologicalSortingTest, sortTopologicalUsingDFS_whenCyclicGraph_thenDirectedCyclicGraphError)
+TEST(TopologicalSortingTest, sortTopologicalUsingDFS_WhenCyclicGraph_ThenDirectedCyclicGraphError)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
@@ -108,7 +108,7 @@ TEST(TopologicalSortingTest, sortTopologicalUsingDFS_whenCyclicGraph_thenDirecte
     EXPECT_THROW(exec(), algr::directed_cyclic_graph_error);
 }
 
-TEST(TopologicalSortingTest, sortTopologicalUsingDFS_whenEmptyGraph_thenVertices)
+TEST(TopologicalSortingTest, sortTopologicalUsingDFS_WhenEmptyGraph_ThenVertices)
 {
     // given
     algr::directed_simple_graph<> graph({0, 1, 2, 3, 4, 5});

@@ -23,7 +23,7 @@ public:
     virtual ~EquationSystemTest() = default;
 };
 
-TEST_F(EquationSystemTest, solve_whenSingleSolution_thenSolution)
+TEST_F(EquationSystemTest, solve_WhenSingleSolution_ThenSolution)
 {
     // when
     std::array<double, 3> result = test_object.solve();
@@ -33,7 +33,7 @@ TEST_F(EquationSystemTest, solve_whenSingleSolution_thenSolution)
     EXPECT_FALSE(test_object.is_solution({-2, -18, -36.5}));
 }
 
-TEST_F(EquationSystemTest, solve_whenNoSolution_thenNoSolutionError)
+TEST_F(EquationSystemTest, solve_WhenNoSolution_ThenNoSolutionError)
 {
     // given
     test_object = alma::equation_system<3>({alma::equation<3>({2, 3, -2}, 15),
@@ -46,7 +46,7 @@ TEST_F(EquationSystemTest, solve_whenNoSolution_thenNoSolutionError)
     EXPECT_FALSE(test_object.is_solution({-2, -18, -36.5}));
 }
 
-TEST_F(EquationSystemTest, solve_whenInfiniteSolutions_thenInfiniteSolutionsError)
+TEST_F(EquationSystemTest, solve_WhenInfiniteSolutions_ThenInfiniteSolutionsError)
 {
     // given
     test_object = alma::equation_system<3>({alma::equation<3>({2, 3, -2}, 15),

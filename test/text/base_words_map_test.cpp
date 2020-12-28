@@ -20,7 +20,7 @@ public:
     ~BaseWordsMapTest() override = default;
 };
 
-TEST_F(BaseWordsMapTest, code_whenEmpty_thenZeroAndZero)
+TEST_F(BaseWordsMapTest, code_WhenEmpty_ThenZeroAndZero)
 {
     // when
     alte::base_words_map::code_t result = test_object.code(4, 0);
@@ -28,7 +28,7 @@ TEST_F(BaseWordsMapTest, code_whenEmpty_thenZeroAndZero)
     EXPECT_EQ(std::make_pair(0UL, 0UL), result);
 }
 
-TEST_F(BaseWordsMapTest, code_whenSingleCharacter_thenCodeAndZero)
+TEST_F(BaseWordsMapTest, code_WhenSingleCharacter_ThenCodeAndZero)
 {
     // when
     alte::base_words_map::code_t result1 = test_object.code(1, 1);  // i
@@ -42,7 +42,7 @@ TEST_F(BaseWordsMapTest, code_whenSingleCharacter_thenCodeAndZero)
     EXPECT_EQ(std::make_pair(4UL, 0UL), result4);
 }
 
-TEST_F(BaseWordsMapTest, code_whenBaseWord_thenCodeAndZero)
+TEST_F(BaseWordsMapTest, code_WhenBaseWord_ThenCodeAndZero)
 {
     // when
     alte::base_words_map::code_t result1 = test_object.code(0, 1);  // m
@@ -58,7 +58,7 @@ TEST_F(BaseWordsMapTest, code_whenBaseWord_thenCodeAndZero)
     EXPECT_EQ(std::make_pair(16UL, 0UL), result5);
 }
 
-TEST_F(BaseWordsMapTest, code_whenComposedWord_thenCodeAndCode)
+TEST_F(BaseWordsMapTest, code_WhenComposedWord_ThenCodeAndCode)
 {
     // when
     alte::base_words_map::code_t result1 = test_object.code(0, 3);  // mis
@@ -68,7 +68,7 @@ TEST_F(BaseWordsMapTest, code_whenComposedWord_thenCodeAndCode)
     EXPECT_EQ(std::make_pair(20UL, 21UL), result2);
 }
 
-TEST_F(BaseWordsMapTest, code_whenStartExceedsLength_thenOutOfRange)
+TEST_F(BaseWordsMapTest, code_WhenStartExceedsLength_ThenOutOfRange)
 {
     // when
     auto exec = [&]() { return test_object.code(20, 1); };

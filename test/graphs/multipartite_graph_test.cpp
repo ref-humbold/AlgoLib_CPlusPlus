@@ -32,7 +32,7 @@ public:
     ~MultipartiteGraphTest() override = default;
 };
 
-TEST_F(MultipartiteGraphTest, operatorBrackets_whenSettingProperty_thenProperty)
+TEST_F(MultipartiteGraphTest, operatorBrackets_WhenSettingProperty_ThenProperty)
 {
     // given
     graph_vp vertex_property = "x";
@@ -50,7 +50,7 @@ TEST_F(MultipartiteGraphTest, operatorBrackets_whenSettingProperty_thenProperty)
     EXPECT_EQ(edge_property, result_edge);
 }
 
-TEST_F(MultipartiteGraphTest, verticesCount_thenNumberOfVertices)
+TEST_F(MultipartiteGraphTest, verticesCount_ThenNumberOfVertices)
 {
     // when
     size_t result = test_object.vertices_count();
@@ -58,7 +58,7 @@ TEST_F(MultipartiteGraphTest, verticesCount_thenNumberOfVertices)
     EXPECT_EQ(10, result);
 }
 
-TEST_F(MultipartiteGraphTest, vertices_thenAllVertices)
+TEST_F(MultipartiteGraphTest, vertices_ThenAllVertices)
 {
     // when
     std::vector<graph_v> result = test_object.vertices();
@@ -68,7 +68,7 @@ TEST_F(MultipartiteGraphTest, vertices_thenAllVertices)
     EXPECT_EQ(std::vector<graph_v>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), result);
 }
 
-TEST_F(MultipartiteGraphTest, get_verticesFromGroup_whenValidGroup_thenVertices)
+TEST_F(MultipartiteGraphTest, get_verticesFromGroup_WhenValidGroup_ThenVertices)
 {
     // when
     std::vector<graph_v> result = test_object.vertices_from_group(2);
@@ -78,7 +78,7 @@ TEST_F(MultipartiteGraphTest, get_verticesFromGroup_whenValidGroup_thenVertices)
     EXPECT_EQ(std::vector<graph_v>({5, 6, 7, 8}), result);
 }
 
-TEST_F(MultipartiteGraphTest, verticesFromGroup_whenInvalidGroup_thenOutOfRange)
+TEST_F(MultipartiteGraphTest, verticesFromGroup_WhenInvalidGroup_ThenOutOfRange)
 {
     // when
     auto execution = [&]() { return test_object.vertices_from_group(14); };
@@ -86,7 +86,7 @@ TEST_F(MultipartiteGraphTest, verticesFromGroup_whenInvalidGroup_thenOutOfRange)
     EXPECT_THROW(execution(), std::out_of_range);
 }
 
-TEST_F(MultipartiteGraphTest, addVertex_whenNewVertex_thenTrue)
+TEST_F(MultipartiteGraphTest, addVertex_WhenNewVertex_ThenTrue)
 {
     // given
     graph_v new_vertex = 13;
@@ -100,7 +100,7 @@ TEST_F(MultipartiteGraphTest, addVertex_whenNewVertex_thenTrue)
     EXPECT_EQ(vertex_property, test_object[new_vertex]);
 }
 
-TEST_F(MultipartiteGraphTest, addVertex_whenExistingVertex_thenFalse)
+TEST_F(MultipartiteGraphTest, addVertex_WhenExistingVertex_ThenFalse)
 {
     // given
     graph_v vertex = 6;
@@ -115,7 +115,7 @@ TEST_F(MultipartiteGraphTest, addVertex_whenExistingVertex_thenFalse)
     EXPECT_EQ(vertex_property, test_object[vertex]);
 }
 
-TEST_F(MultipartiteGraphTest, addVertex_whenInvalidGroup_thenOutOfRange)
+TEST_F(MultipartiteGraphTest, addVertex_WhenInvalidGroup_ThenOutOfRange)
 {
     // when
     auto execution = [&]() { return test_object.add_vertex(-3, 19); };
@@ -123,7 +123,7 @@ TEST_F(MultipartiteGraphTest, addVertex_whenInvalidGroup_thenOutOfRange)
     EXPECT_THROW(execution(), std::out_of_range);
 }
 
-TEST_F(MultipartiteGraphTest, edgesCount_thenNumberOfEdges)
+TEST_F(MultipartiteGraphTest, edgesCount_ThenNumberOfEdges)
 {
     // when
     size_t result = test_object.edges_count();
@@ -131,7 +131,7 @@ TEST_F(MultipartiteGraphTest, edgesCount_thenNumberOfEdges)
     EXPECT_EQ(5, result);
 }
 
-TEST_F(MultipartiteGraphTest, edges_thenAllEdges)
+TEST_F(MultipartiteGraphTest, edges_ThenAllEdges)
 {
     // when
     std::vector<graph_e> result = test_object.edges();
@@ -143,7 +143,7 @@ TEST_F(MultipartiteGraphTest, edges_thenAllEdges)
               result);
 }
 
-TEST_F(MultipartiteGraphTest, getEdge_whenExists_thenEdge)
+TEST_F(MultipartiteGraphTest, getEdge_WhenExists_ThenEdge)
 {
     // given
     graph_v source = 2, destination = 9;
@@ -154,7 +154,7 @@ TEST_F(MultipartiteGraphTest, getEdge_whenExists_thenEdge)
     EXPECT_EQ(destination, result.destination());
 }
 
-TEST_F(MultipartiteGraphTest, addEdgeBetween_whenNewEdge_thenCreatedEdge)
+TEST_F(MultipartiteGraphTest, addEdgeBetween_WhenNewEdge_ThenCreatedEdge)
 {
     // given
     graph_v vertex1 = 2, vertex2 = 8;
@@ -168,7 +168,7 @@ TEST_F(MultipartiteGraphTest, addEdgeBetween_whenNewEdge_thenCreatedEdge)
     EXPECT_EQ(std::vector<graph_v>({vertex1}), test_object.neighbours(vertex2));
 }
 
-TEST_F(MultipartiteGraphTest, addEdgeBetween_whenDuplicatedEdge_thenExistingEdge)
+TEST_F(MultipartiteGraphTest, addEdgeBetween_WhenDuplicatedEdge_ThenExistingEdge)
 {
     // given
     graph_v source = 8, destination = 3;
@@ -179,7 +179,7 @@ TEST_F(MultipartiteGraphTest, addEdgeBetween_whenDuplicatedEdge_thenExistingEdge
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(MultipartiteGraphTest, addEdgeBetween_when_sameGroup_thenGraphPartitionError)
+TEST_F(MultipartiteGraphTest, addEdgeBetween_When_sameGroup_ThenGraphPartitionError)
 {
     // when
     auto execution = [&]() { return test_object.add_edge_between(5, 8); };
@@ -187,7 +187,7 @@ TEST_F(MultipartiteGraphTest, addEdgeBetween_when_sameGroup_thenGraphPartitionEr
     EXPECT_THROW(execution(), algr::graph_partition_error);
 }
 
-TEST_F(MultipartiteGraphTest, neighbours_thenDestinationVerticesOfOutgoingEdges)
+TEST_F(MultipartiteGraphTest, neighbours_ThenDestinationVerticesOfOutgoingEdges)
 {
     // when
     std::vector<graph_v> result = test_object.neighbours(9);
@@ -197,7 +197,7 @@ TEST_F(MultipartiteGraphTest, neighbours_thenDestinationVerticesOfOutgoingEdges)
     EXPECT_EQ(std::vector<graph_v>({2, 7}), result);
 }
 
-TEST_F(MultipartiteGraphTest, adjacentEdges_thenOutgoingEdges)
+TEST_F(MultipartiteGraphTest, adjacentEdges_ThenOutgoingEdges)
 {
     // when
     std::vector<graph_e> result = test_object.adjacent_edges(9);
@@ -207,7 +207,7 @@ TEST_F(MultipartiteGraphTest, adjacentEdges_thenOutgoingEdges)
     EXPECT_EQ(std::vector<graph_e>({graph_e(2, 9), graph_e(7, 9)}), result);
 }
 
-TEST_F(MultipartiteGraphTest, outputDegree_thenNumberOfOutgoingEdges)
+TEST_F(MultipartiteGraphTest, outputDegree_ThenNumberOfOutgoingEdges)
 {
     // when
     size_t result = test_object.output_degree(9);
@@ -215,7 +215,7 @@ TEST_F(MultipartiteGraphTest, outputDegree_thenNumberOfOutgoingEdges)
     EXPECT_EQ(2, result);
 }
 
-TEST_F(MultipartiteGraphTest, inputDegree_thenNumberOfIncomingEdges)
+TEST_F(MultipartiteGraphTest, inputDegree_ThenNumberOfIncomingEdges)
 {
     // when
     size_t result = test_object.input_degree(9);

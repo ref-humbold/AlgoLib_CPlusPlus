@@ -34,7 +34,7 @@ public:
     ~LowestCommonAncestorTest() override = default;
 };
 
-TEST_F(LowestCommonAncestorTest, find_whenSameVertex_thenVertexIsLCA)
+TEST_F(LowestCommonAncestorTest, find_WhenSameVertex_ThenVertexIsLCA)
 {
     // given
     vertex_t vertex = 6;
@@ -44,7 +44,7 @@ TEST_F(LowestCommonAncestorTest, find_whenSameVertex_thenVertexIsLCA)
     EXPECT_EQ(vertex, result);
 }
 
-TEST_F(LowestCommonAncestorTest, find_whenVerticesInDifferentSubtrees_thenLCA)
+TEST_F(LowestCommonAncestorTest, find_WhenVerticesInDifferentSubtrees_ThenLCA)
 {
     // when
     vertex_t result = test_object.find(5, 7);
@@ -52,7 +52,7 @@ TEST_F(LowestCommonAncestorTest, find_whenVerticesInDifferentSubtrees_thenLCA)
     EXPECT_EQ(1, result);
 }
 
-TEST_F(LowestCommonAncestorTest, find_whenVerticesSwapped_thenSameLCA)
+TEST_F(LowestCommonAncestorTest, find_WhenVerticesSwapped_ThenSameLCA)
 {
     // when
     vertex_t result1 = test_object.find(5, 7);
@@ -62,7 +62,7 @@ TEST_F(LowestCommonAncestorTest, find_whenVerticesSwapped_thenSameLCA)
     EXPECT_EQ(result1, result2);
 }
 
-TEST_F(LowestCommonAncestorTest, find_whenRootIsCommonAncestor_thenRoot)
+TEST_F(LowestCommonAncestorTest, find_WhenRootIsCommonAncestor_ThenRoot)
 {
     // when
     vertex_t result = test_object.find(3, 9);
@@ -70,7 +70,7 @@ TEST_F(LowestCommonAncestorTest, find_whenRootIsCommonAncestor_thenRoot)
     EXPECT_EQ(test_object.root(), result);
 }
 
-TEST_F(LowestCommonAncestorTest, find_whenVerticesAreOnSamePathFromRoot_thenLCAIsCloserToRoot)
+TEST_F(LowestCommonAncestorTest, find_WhenVerticesAreOnSamePathFromRoot_ThenLCAIsCloserToRoot)
 {
     // given
     vertex_t vertex1 = 8, vertex2 = 2;
@@ -80,7 +80,7 @@ TEST_F(LowestCommonAncestorTest, find_whenVerticesAreOnSamePathFromRoot_thenLCAI
     EXPECT_EQ(vertex2, result);
 }
 
-TEST_F(LowestCommonAncestorTest, find_whenRootIsOneOfVertices_thenRoot)
+TEST_F(LowestCommonAncestorTest, find_WhenRootIsOneOfVertices_ThenRoot)
 {
     // when
     vertex_t result = test_object.find(4, test_object.root());

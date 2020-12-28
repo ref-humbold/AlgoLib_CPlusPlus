@@ -4,7 +4,7 @@
 
 namespace alte = algolib::text;
 
-TEST(KMPTest, kmp_whenPatternFoundOnce)
+TEST(KMPTest, kmp_WhenPatternFoundOnce)
 {
     std::string text = "abcde";
     std::string pattern = "a";
@@ -14,7 +14,7 @@ TEST(KMPTest, kmp_whenPatternFoundOnce)
     EXPECT_EQ(std::vector<size_t>({0}), result);
 }
 
-TEST(KMPTest, kmp_whenPatternFoundTwice)
+TEST(KMPTest, kmp_WhenPatternFoundTwice)
 {
     std::string text = "abcdae";
     std::string pattern = "a";
@@ -24,7 +24,7 @@ TEST(KMPTest, kmp_whenPatternFoundTwice)
     EXPECT_EQ(std::vector<size_t>({0, 4}), result);
 }
 
-TEST(KMPTest, kmp_whenPatternFoundTwiceAndIntersects)
+TEST(KMPTest, kmp_WhenPatternFoundTwiceAndIntersects)
 {
     std::string text = "aaabcde";
     std::string pattern = "aa";
@@ -34,7 +34,7 @@ TEST(KMPTest, kmp_whenPatternFoundTwiceAndIntersects)
     EXPECT_EQ(std::vector<size_t>({0, 1}), result);
 }
 
-TEST(KMPTest, kmp_whenPatternNotFound)
+TEST(KMPTest, kmp_WhenPatternNotFound)
 {
     std::string text = "abcde";
     std::string pattern = "x";
@@ -44,7 +44,7 @@ TEST(KMPTest, kmp_whenPatternNotFound)
     EXPECT_EQ(std::vector<size_t>(), result);
 }
 
-TEST(KMPTest, kmp_whenPatternIsEmptyString)
+TEST(KMPTest, kmp_WhenPatternIsEmptyString)
 {
     std::string text = "abcde";
     std::string pattern = "";
@@ -54,7 +54,7 @@ TEST(KMPTest, kmp_whenPatternIsEmptyString)
     EXPECT_EQ(std::vector<size_t>(), result);
 }
 
-TEST(KMPTest, kmp_whenTextIsEmptyString)
+TEST(KMPTest, kmp_WhenTextIsEmptyString)
 {
     std::string text = "";
     std::string pattern = "a";

@@ -91,7 +91,7 @@ TEST_F(AVLTreeTest, moveAssignment)
         EXPECT_NE(move_object.end(), move_object.find(e));
 }
 
-TEST_F(AVLTreeTest, copyAssignment_whenSelfAssignment_thenObjectUnchanged)
+TEST_F(AVLTreeTest, copyAssignment_WhenSelfAssignment_ThenObjectUnchanged)
 {
     test_object = test_object;
 
@@ -101,7 +101,7 @@ TEST_F(AVLTreeTest, copyAssignment_whenSelfAssignment_thenObjectUnchanged)
         EXPECT_NE(test_object.end(), test_object.find(e));
 }
 
-TEST_F(AVLTreeTest, empty_whenNotEmpty_thenFalse)
+TEST_F(AVLTreeTest, empty_WhenNotEmpty_ThenFalse)
 {
     // when
     bool result = test_object.empty();
@@ -109,7 +109,7 @@ TEST_F(AVLTreeTest, empty_whenNotEmpty_thenFalse)
     EXPECT_FALSE(result);
 }
 
-TEST_F(AVLTreeTest, empty_whenEmpty_thenTrue)
+TEST_F(AVLTreeTest, empty_WhenEmpty_ThenTrue)
 {
     // given
     test_object = alst::avl_tree<int>();
@@ -119,7 +119,7 @@ TEST_F(AVLTreeTest, empty_whenEmpty_thenTrue)
     EXPECT_TRUE(result);
 }
 
-TEST_F(AVLTreeTest, size_whenNotEmpty_thenNumberOfElements)
+TEST_F(AVLTreeTest, size_WhenNotEmpty_ThenNumberOfElements)
 {
     // when
     size_t result = test_object.size();
@@ -127,7 +127,7 @@ TEST_F(AVLTreeTest, size_whenNotEmpty_thenNumberOfElements)
     EXPECT_EQ(numbers.size(), result);
 }
 
-TEST_F(AVLTreeTest, size_whenEmpty_thenZero)
+TEST_F(AVLTreeTest, size_WhenEmpty_ThenZero)
 {
     // given
     test_object = alst::avl_tree<int>();
@@ -137,7 +137,7 @@ TEST_F(AVLTreeTest, size_whenEmpty_thenZero)
     EXPECT_EQ(0, result);
 }
 
-TEST_F(AVLTreeTest, find_whenPresentElement_thenIteratorNotEnd)
+TEST_F(AVLTreeTest, find_WhenPresentElement_ThenIteratorNotEnd)
 {
     for(auto i : numbers)
     {
@@ -147,7 +147,7 @@ TEST_F(AVLTreeTest, find_whenPresentElement_thenIteratorNotEnd)
     }
 }
 
-TEST_F(AVLTreeTest, find_whenAbsentElement_thenIteratorEnd)
+TEST_F(AVLTreeTest, find_WhenAbsentElement_ThenIteratorEnd)
 {
     std::vector<int> elems = {111, 140, 187};
 
@@ -159,7 +159,7 @@ TEST_F(AVLTreeTest, find_whenAbsentElement_thenIteratorEnd)
     }
 }
 
-TEST_F(AVLTreeTest, find_whenConstObjectAndPresentElement_thenIteratorNotEnd)
+TEST_F(AVLTreeTest, find_WhenConstObjectAndPresentElement_ThenIteratorNotEnd)
 {
     for(auto i : numbers)
     {
@@ -169,7 +169,7 @@ TEST_F(AVLTreeTest, find_whenConstObjectAndPresentElement_thenIteratorNotEnd)
     }
 }
 
-TEST_F(AVLTreeTest, find_whenConstObjectAndAbsentElement_thenIteratorEnd)
+TEST_F(AVLTreeTest, find_WhenConstObjectAndAbsentElement_ThenIteratorEnd)
 {
     std::vector<int> elems = {111, 140, 187};
 
@@ -181,7 +181,7 @@ TEST_F(AVLTreeTest, find_whenConstObjectAndAbsentElement_thenIteratorEnd)
     }
 }
 
-TEST_F(AVLTreeTest, iterator_whenIterativeForLoop_thenSortedElements)
+TEST_F(AVLTreeTest, iterator_WhenIterativeForLoop_ThenSortedElements)
 {
     std::vector<int> result;
     std::vector<int> sorted_numbers = numbers;
@@ -194,7 +194,7 @@ TEST_F(AVLTreeTest, iterator_whenIterativeForLoop_thenSortedElements)
     EXPECT_EQ(sorted_numbers, result);
 }
 
-TEST_F(AVLTreeTest, iterator_whenRangeBasedForLoop_thenSortedElements)
+TEST_F(AVLTreeTest, iterator_WhenRangeBasedForLoop_ThenSortedElements)
 {
     std::vector<int> result;
     std::vector<int> sorted_numbers = numbers;
@@ -207,7 +207,7 @@ TEST_F(AVLTreeTest, iterator_whenRangeBasedForLoop_thenSortedElements)
     EXPECT_EQ(sorted_numbers, result);
 }
 
-TEST_F(AVLTreeTest, iterator_whenEmpty_thenNoElements)
+TEST_F(AVLTreeTest, iterator_WhenEmpty_ThenNoElements)
 {
     // given
     test_object = alst::avl_tree<int>();
@@ -219,7 +219,7 @@ TEST_F(AVLTreeTest, iterator_whenEmpty_thenNoElements)
     EXPECT_EQ(std::vector<int>(), result);
 }
 
-TEST_F(AVLTreeTest, constIterator_whenAccessElement_thenSortedElements)
+TEST_F(AVLTreeTest, constIterator_WhenAccessElement_ThenSortedElements)
 {
     std::vector<int> sorted_numbers = numbers;
     auto test_it = test_object.cbegin();
@@ -236,7 +236,7 @@ TEST_F(AVLTreeTest, constIterator_whenAccessElement_thenSortedElements)
     }
 }
 
-TEST_F(AVLTreeTest, reverseIterator_whenIterativeForLoop_thenReverseSortedElements)
+TEST_F(AVLTreeTest, reverseIterator_WhenIterativeForLoop_ThenReverseSortedElements)
 {
     std::vector<int> result;
     std::vector<int> reversed_numbers = numbers;
@@ -249,7 +249,7 @@ TEST_F(AVLTreeTest, reverseIterator_whenIterativeForLoop_thenReverseSortedElemen
     EXPECT_EQ(reversed_numbers, result);
 }
 
-TEST_F(AVLTreeTest, reverseIterator_whenIterativeForLoopForConstObject_thenReverseSortedElements)
+TEST_F(AVLTreeTest, reverseIterator_WhenIterativeForLoopForConstObject_ThenReverseSortedElements)
 {
     std::vector<int> result;
     std::vector<int> reversed_numbers = numbers;
@@ -262,7 +262,7 @@ TEST_F(AVLTreeTest, reverseIterator_whenIterativeForLoopForConstObject_thenRever
     EXPECT_EQ(reversed_numbers, result);
 }
 
-TEST_F(AVLTreeTest, reverseIterator_whenEmpty_thenNoElements)
+TEST_F(AVLTreeTest, reverseIterator_WhenEmpty_ThenNoElements)
 {
     // given
     test_object = alst::avl_tree<int>();
@@ -274,7 +274,7 @@ TEST_F(AVLTreeTest, reverseIterator_whenEmpty_thenNoElements)
     EXPECT_EQ(std::vector<int>(), result);
 }
 
-TEST_F(AVLTreeTest, constReverseIterator_whenAccessElement_thenReverseSortedElements)
+TEST_F(AVLTreeTest, constReverseIterator_WhenAccessElement_ThenReverseSortedElements)
 {
     std::vector<int> sorted_numbers = numbers;
     auto test_it = test_object.crbegin();
@@ -291,7 +291,7 @@ TEST_F(AVLTreeTest, constReverseIterator_whenAccessElement_thenReverseSortedElem
     }
 }
 
-TEST_F(AVLTreeTest, insert_whenNewElement_thenIteratorNotEndAndTrue)
+TEST_F(AVLTreeTest, insert_WhenNewElement_ThenIteratorNotEndAndTrue)
 {
     std::vector<int> elems = {111, 140, 187};
 
@@ -308,7 +308,7 @@ TEST_F(AVLTreeTest, insert_whenNewElement_thenIteratorNotEndAndTrue)
     EXPECT_EQ(numbers.size() + elems.size(), test_object.size());
 }
 
-TEST_F(AVLTreeTest, insert_whenPresentElement_thenIteratorEndAndFalse)
+TEST_F(AVLTreeTest, insert_WhenPresentElement_ThenIteratorEndAndFalse)
 {
     std::vector<int> elems = {14, 24, 30, 45};
 
@@ -325,7 +325,7 @@ TEST_F(AVLTreeTest, insert_whenPresentElement_thenIteratorEndAndFalse)
     EXPECT_EQ(numbers.size(), test_object.size());
 }
 
-TEST_F(AVLTreeTest, erase_whenPresentElement_thenNotFound)
+TEST_F(AVLTreeTest, erase_WhenPresentElement_ThenNotFound)
 {
     std::vector<int> elems = {14, 24, 30, 45};
 
@@ -340,7 +340,7 @@ TEST_F(AVLTreeTest, erase_whenPresentElement_thenNotFound)
     EXPECT_EQ(numbers.size() - elems.size(), test_object.size());
 }
 
-TEST_F(AVLTreeTest, erase_whenErasingRootFromTwoElements_thenOneElementRemoved_1)
+TEST_F(AVLTreeTest, erase_WhenErasingRootFromTwoElements_ThenOneElementRemoved_1)
 {
     int root = 27;
     int elem = 11;
@@ -355,7 +355,7 @@ TEST_F(AVLTreeTest, erase_whenErasingRootFromTwoElements_thenOneElementRemoved_1
     EXPECT_EQ(1, test_object.size());
 }
 
-TEST_F(AVLTreeTest, erase_whenErasingRootFromTwoElements_thenOneElementRemoved_2)
+TEST_F(AVLTreeTest, erase_WhenErasingRootFromTwoElements_ThenOneElementRemoved_2)
 {
     int root = 11;
     int elem = 27;
@@ -370,7 +370,7 @@ TEST_F(AVLTreeTest, erase_whenErasingRootFromTwoElements_thenOneElementRemoved_2
     EXPECT_EQ(1, test_object.size());
 }
 
-TEST_F(AVLTreeTest, erase_whenOneElement_thenOneElementRemovedAndEmptyTree)
+TEST_F(AVLTreeTest, erase_WhenOneElement_ThenOneElementRemovedAndEmptyTree)
 {
     int root = 0;
 
@@ -384,7 +384,7 @@ TEST_F(AVLTreeTest, erase_whenOneElement_thenOneElementRemovedAndEmptyTree)
     EXPECT_EQ(0, test_object.size());
 }
 
-TEST_F(AVLTreeTest, erase_whenEmpty_thenZeroElementsRemovedAndEmptyTree)
+TEST_F(AVLTreeTest, erase_WhenEmpty_ThenZeroElementsRemovedAndEmptyTree)
 {
     test_object = alst::avl_tree<int>();
 
@@ -395,7 +395,7 @@ TEST_F(AVLTreeTest, erase_whenEmpty_thenZeroElementsRemovedAndEmptyTree)
     EXPECT_EQ(0, test_object.size());
 }
 
-TEST_F(AVLTreeTest, erase_whenAbsentElement_thenZeroElementsRemoved)
+TEST_F(AVLTreeTest, erase_WhenAbsentElement_ThenZeroElementsRemoved)
 {
     std::vector<int> elems = {111, 140, 187};
 
@@ -410,7 +410,7 @@ TEST_F(AVLTreeTest, erase_whenAbsentElement_thenZeroElementsRemoved)
     EXPECT_EQ(numbers.size(), test_object.size());
 }
 
-TEST_F(AVLTreeTest, clear_whenNotEmpty_thenEmpty)
+TEST_F(AVLTreeTest, clear_WhenNotEmpty_ThenEmpty)
 {
     test_object.clear();
 

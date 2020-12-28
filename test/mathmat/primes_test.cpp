@@ -9,14 +9,14 @@ namespace alma = algolib::mathmat;
 
 #pragma region findPrimes
 
-TEST(PrimesTest, findPrimes_whenRangeIsDescending_thenEmptyResult)
+TEST(PrimesTest, findPrimes_WhenRangeIsDescending_ThenEmptyResult)
 {
     std::vector<size_t> result = alma::find_primes(100, 30);
 
     EXPECT_TRUE(result.empty());
 }
 
-TEST(PrimesTest, findPrimes_whenSingleMaximumAndRangeFromZero_thenSameResult)
+TEST(PrimesTest, findPrimes_WhenSingleMaximumAndRangeFromZero_ThenSameResult)
 {
     std::vector<size_t> result1 = alma::find_primes(100);
     std::vector<size_t> result2 = alma::find_primes(0, 100);
@@ -24,7 +24,7 @@ TEST(PrimesTest, findPrimes_whenSingleMaximumAndRangeFromZero_thenSameResult)
     EXPECT_EQ(result1, result2);
 }
 
-TEST(PrimesTest, findPrimes_whenSingleMaximum_thenPrimesFromZero)
+TEST(PrimesTest, findPrimes_WhenSingleMaximum_ThenPrimesFromZero)
 {
     std::vector<size_t> result = alma::find_primes(100);
 
@@ -33,7 +33,7 @@ TEST(PrimesTest, findPrimes_whenSingleMaximum_thenPrimesFromZero)
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenMaximumIsPrime_thenMaximumIsNotContained)
+TEST(PrimesTest, findPrimes_WhenMaximumIsPrime_ThenMaximumIsNotContained)
 {
     std::vector<size_t> result = alma::find_primes(67);
 
@@ -42,14 +42,14 @@ TEST(PrimesTest, findPrimes_whenMaximumIsPrime_thenMaximumIsNotContained)
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenMaximumIsLessThanTwo_thenEmptyResult)
+TEST(PrimesTest, findPrimes_WhenMaximumIsLessThanTwo_ThenEmptyResult)
 {
     std::vector<size_t> result = alma::find_primes(1);
 
     EXPECT_TRUE(result.empty());
 }
 
-TEST(PrimesTest, findPrimes_whenRange_thenPrimesInsideRange)
+TEST(PrimesTest, findPrimes_WhenRange_ThenPrimesInsideRange)
 {
     std::vector<size_t> result = alma::find_primes(30, 200);
 
@@ -59,7 +59,7 @@ TEST(PrimesTest, findPrimes_whenRange_thenPrimesInsideRange)
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenMinimumLessThanSquareRootOfMaximum_thenPrimesInsideRange)
+TEST(PrimesTest, findPrimes_WhenMinimumLessThanSquareRootOfMaximum_ThenPrimesInsideRange)
 {
     std::vector<size_t> result = alma::find_primes(5, 150);
 
@@ -69,7 +69,7 @@ TEST(PrimesTest, findPrimes_whenMinimumLessThanSquareRootOfMaximum_thenPrimesIns
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenRangeBoundariesArePrimes_thenLeftBoundaryIsIncluded)
+TEST(PrimesTest, findPrimes_WhenRangeBoundariesArePrimes_ThenLeftBoundaryIsIncluded)
 {
     std::vector<size_t> result = alma::find_primes(137, 317);
 
@@ -79,14 +79,14 @@ TEST(PrimesTest, findPrimes_whenRangeBoundariesArePrimes_thenLeftBoundaryIsInclu
               result);
 }
 
-TEST(PrimesTest, findPrimes_whenRangeBoundariesAreSameAndPrime_thenEmptyResult)
+TEST(PrimesTest, findPrimes_WhenRangeBoundariesAreSameAndPrime_ThenEmptyResult)
 {
     std::vector<size_t> result = alma::find_primes(41, 41);
 
     EXPECT_TRUE(result.empty());
 }
 
-TEST(PrimesTest, findPrimes_whenRangeBoundariesAreSameAndComposite_thenEmptyResult)
+TEST(PrimesTest, findPrimes_WhenRangeBoundariesAreSameAndComposite_ThenEmptyResult)
 {
     std::vector<size_t> result = alma::find_primes(91, 91);
 
@@ -96,42 +96,42 @@ TEST(PrimesTest, findPrimes_whenRangeBoundariesAreSameAndComposite_thenEmptyResu
 #pragma endregion
 #pragma region testFermat
 
-TEST(PrimesTest, testFermat_whenZero_thenFalse)
+TEST(PrimesTest, testFermat_WhenZero_ThenFalse)
 {
     bool result = alma::test_fermat(0);
 
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTest, testFermat_whenOne_thenFalse)
+TEST(PrimesTest, testFermat_WhenOne_ThenFalse)
 {
     bool result = alma::test_fermat(1);
 
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTest, testFermat_whenTwo_thenTrue)
+TEST(PrimesTest, testFermat_WhenTwo_ThenTrue)
 {
     bool result = alma::test_fermat(2);
 
     EXPECT_TRUE(result);
 }
 
-TEST(PrimesTest, testFermat_whenPrime_thenTrue)
+TEST(PrimesTest, testFermat_WhenPrime_ThenTrue)
 {
     bool result = alma::test_fermat(1013);
 
     EXPECT_TRUE(result);
 }
 
-TEST(PrimesTest, testFermat_whenComposite_thenFalse)
+TEST(PrimesTest, testFermat_WhenComposite_ThenFalse)
 {
     bool result = alma::test_fermat(1001);
 
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTest, testFermat_whenCarmichaelNumber_thenFalse)
+TEST(PrimesTest, testFermat_WhenCarmichaelNumber_ThenFalse)
 {
     bool result = alma::test_fermat(1105);  // 1105 = 5 * 13 * 17 is a Carmichael number
 
@@ -141,42 +141,42 @@ TEST(PrimesTest, testFermat_whenCarmichaelNumber_thenFalse)
 #pragma endregion
 #pragma region testMiller
 
-TEST(PrimesTest, testMiller_whenZero_thenFalse)
+TEST(PrimesTest, testMiller_WhenZero_ThenFalse)
 {
     bool result = alma::test_miller(0);
 
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTest, testMiller_whenOne_thenFalse)
+TEST(PrimesTest, testMiller_WhenOne_ThenFalse)
 {
     bool result = alma::test_miller(1);
 
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTest, testMiller_whenTwo_thenTrue)
+TEST(PrimesTest, testMiller_WhenTwo_ThenTrue)
 {
     bool result = alma::test_miller(2);
 
     EXPECT_TRUE(result);
 }
 
-TEST(PrimesTest, testMiller_whenPrime_thenTrue)
+TEST(PrimesTest, testMiller_WhenPrime_ThenTrue)
 {
     bool result = alma::test_miller(1013);
 
     EXPECT_TRUE(result);
 }
 
-TEST(PrimesTest, testMiller_whenComposite1_thenFalse)
+TEST(PrimesTest, testMiller_WhenComposite1_ThenFalse)
 {
     bool result = alma::test_miller(1001);
 
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTest, testMiller_whenComposite2_thenFalse)
+TEST(PrimesTest, testMiller_WhenComposite2_ThenFalse)
 {
     bool result = alma::test_miller(1105);
 

@@ -7,7 +7,7 @@
 
 namespace alge = algolib::geometry;
 
-TEST(ConvexHullTest, findConvexHull_whenOnePoint_thenEmptyConvexHull)
+TEST(ConvexHullTest, findConvexHull_WhenOnePoint_ThenEmptyConvexHull)
 {
     // when
     std::vector<alge::point2d> result = alge::find_convex_hull({alge::point2d(3.0, 2.0)});
@@ -15,7 +15,7 @@ TEST(ConvexHullTest, findConvexHull_whenOnePoint_thenEmptyConvexHull)
     EXPECT_TRUE(result.empty());
 }
 
-TEST(ConvexHullTest, findConvexHull_whenTwoPoints_thenEmptyConvexHull)
+TEST(ConvexHullTest, findConvexHull_WhenTwoPoints_ThenEmptyConvexHull)
 {
     // when
     std::vector<alge::point2d> result =
@@ -24,7 +24,7 @@ TEST(ConvexHullTest, findConvexHull_whenTwoPoints_thenEmptyConvexHull)
     EXPECT_TRUE(result.empty());
 }
 
-TEST(ConvexHullTest, findConvexHull_whenThreePoints_thenThesePointsAreConvexHull)
+TEST(ConvexHullTest, findConvexHull_WhenThreePoints_ThenThesePointsAreConvexHull)
 {
     // given
     std::vector<alge::point2d> points = {alge::point2d(1.0, -1.0), alge::point2d(5.0, 1.0),
@@ -35,7 +35,7 @@ TEST(ConvexHullTest, findConvexHull_whenThreePoints_thenThesePointsAreConvexHull
     EXPECT_EQ(points, result);
 }
 
-TEST(ConvexHullTest, findConvexHull_thenPointsInConvexHull)
+TEST(ConvexHullTest, findConvexHull_ThenPointsInConvexHull)
 {
     // when
     std::vector<alge::point2d> result = alge::find_convex_hull(
@@ -52,7 +52,7 @@ TEST(ConvexHullTest, findConvexHull_thenPointsInConvexHull)
               result);
 }
 
-TEST(ConvexHullTest, findConvexHull_whenMultiplePointsAreCollinear_thenConvexHullOmitsInnerPoints)
+TEST(ConvexHullTest, findConvexHull_WhenMultiplePointsAreCollinear_ThenConvexHullOmitsInnerPoints)
 {
     // when
     std::vector<alge::point2d> result = alge::find_convex_hull(

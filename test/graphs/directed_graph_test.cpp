@@ -28,7 +28,7 @@ public:
     ~DirectedSimpleGraphTest() override = default;
 };
 
-TEST_F(DirectedSimpleGraphTest, operatorBrackets_whenSettingProperty_thenProperty)
+TEST_F(DirectedSimpleGraphTest, operatorBrackets_WhenSettingProperty_ThenProperty)
 {
     // given
     graph_vp vertex_property = "x";
@@ -46,7 +46,7 @@ TEST_F(DirectedSimpleGraphTest, operatorBrackets_whenSettingProperty_thenPropert
     EXPECT_EQ(edge_property, result_edge);
 }
 
-TEST_F(DirectedSimpleGraphTest, operatorBrackets_whenNoProperty_thenDefault)
+TEST_F(DirectedSimpleGraphTest, operatorBrackets_WhenNoProperty_ThenDefault)
 {
     // given
     graph_e edge = test_object.add_edge_between(6, 7);
@@ -58,7 +58,7 @@ TEST_F(DirectedSimpleGraphTest, operatorBrackets_whenNoProperty_thenDefault)
     EXPECT_EQ("", result_edge);
 }
 
-TEST_F(DirectedSimpleGraphTest, operatorBrackets_whenNotExisting_thenInvalidArgument)
+TEST_F(DirectedSimpleGraphTest, operatorBrackets_WhenNotExisting_ThenInvalidArgument)
 {
     // when
     auto exec_vertex = [&]() { return test_object[14]; };
@@ -70,7 +70,7 @@ TEST_F(DirectedSimpleGraphTest, operatorBrackets_whenNotExisting_thenInvalidArgu
     EXPECT_THROW(exec_edge2(), std::invalid_argument);
 }
 
-TEST_F(DirectedSimpleGraphTest, verticesCount_thenNumberOfVertices)
+TEST_F(DirectedSimpleGraphTest, verticesCount_ThenNumberOfVertices)
 {
     // when
     size_t result = test_object.vertices_count();
@@ -78,7 +78,7 @@ TEST_F(DirectedSimpleGraphTest, verticesCount_thenNumberOfVertices)
     EXPECT_EQ(10, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, vertices_thenAllVertices)
+TEST_F(DirectedSimpleGraphTest, vertices_ThenAllVertices)
 {
     // when
     std::vector<graph_v> result = test_object.vertices();
@@ -88,7 +88,7 @@ TEST_F(DirectedSimpleGraphTest, vertices_thenAllVertices)
     EXPECT_EQ(std::vector<graph_v>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), result);
 }
 
-TEST_F(DirectedSimpleGraphTest, addVertex_whenNewVertex_thenTrue)
+TEST_F(DirectedSimpleGraphTest, addVertex_WhenNewVertex_ThenTrue)
 {
     // given
     graph_v new_vertex = 13;
@@ -102,7 +102,7 @@ TEST_F(DirectedSimpleGraphTest, addVertex_whenNewVertex_thenTrue)
     EXPECT_EQ(vertex_property, test_object[new_vertex]);
 }
 
-TEST_F(DirectedSimpleGraphTest, addVertex_whenExistingVertex_thenFalse)
+TEST_F(DirectedSimpleGraphTest, addVertex_WhenExistingVertex_ThenFalse)
 {
     // given
     graph_v vertex = 6;
@@ -117,7 +117,7 @@ TEST_F(DirectedSimpleGraphTest, addVertex_whenExistingVertex_thenFalse)
     EXPECT_EQ(vertex_property, test_object[vertex]);
 }
 
-TEST_F(DirectedSimpleGraphTest, edgesCount_thenNumberOfEdges)
+TEST_F(DirectedSimpleGraphTest, edgesCount_ThenNumberOfEdges)
 {
     // given
     test_object.add_edge_between(7, 7);
@@ -134,7 +134,7 @@ TEST_F(DirectedSimpleGraphTest, edgesCount_thenNumberOfEdges)
     EXPECT_EQ(7, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, edges_thenAllEdges)
+TEST_F(DirectedSimpleGraphTest, edges_ThenAllEdges)
 {
     // given
     test_object.add_edge_between(7, 7);
@@ -155,7 +155,7 @@ TEST_F(DirectedSimpleGraphTest, edges_thenAllEdges)
               result);
 }
 
-TEST_F(DirectedSimpleGraphTest, getEdge_whenInDirection_thenEdge)
+TEST_F(DirectedSimpleGraphTest, getEdge_WhenInDirection_ThenEdge)
 {
     // given
     graph_v source = 9, destination = 5;
@@ -168,7 +168,7 @@ TEST_F(DirectedSimpleGraphTest, getEdge_whenInDirection_thenEdge)
     EXPECT_EQ(destination, result.destination());
 }
 
-TEST_F(DirectedSimpleGraphTest, getEdge_whenReversedDirection_thenOutOfRange)
+TEST_F(DirectedSimpleGraphTest, getEdge_WhenReversedDirection_ThenOutOfRange)
 {
     // given
     graph_v source = 9, destination = 5;
@@ -180,7 +180,7 @@ TEST_F(DirectedSimpleGraphTest, getEdge_whenReversedDirection_thenOutOfRange)
     EXPECT_THROW(exec(), std::out_of_range);
 }
 
-TEST_F(DirectedSimpleGraphTest, getEdge_whenNotExists_thenOutOfRange)
+TEST_F(DirectedSimpleGraphTest, getEdge_WhenNotExists_ThenOutOfRange)
 {
     // when
     auto exec = [&]() { return test_object.get_edge(1, 2); };
@@ -188,7 +188,7 @@ TEST_F(DirectedSimpleGraphTest, getEdge_whenNotExists_thenOutOfRange)
     EXPECT_THROW(exec(), std::out_of_range);
 }
 
-TEST_F(DirectedSimpleGraphTest, addEdgeBetween_whenNewEdge_thenCreatedEdge)
+TEST_F(DirectedSimpleGraphTest, addEdgeBetween_WhenNewEdge_ThenCreatedEdge)
 {
     // given
     graph_ep edge_property = "zxcvb";
@@ -209,7 +209,7 @@ TEST_F(DirectedSimpleGraphTest, addEdgeBetween_whenNewEdge_thenCreatedEdge)
     EXPECT_EQ(std::vector<graph_v>(), test_object.neighbours(5));
 }
 
-TEST_F(DirectedSimpleGraphTest, addEdgeBetween_whenDuplicatedEdge_thenExistingEdge)
+TEST_F(DirectedSimpleGraphTest, addEdgeBetween_WhenDuplicatedEdge_ThenExistingEdge)
 {
     // given
     graph_v source = 3, destination = 7;
@@ -220,7 +220,7 @@ TEST_F(DirectedSimpleGraphTest, addEdgeBetween_whenDuplicatedEdge_thenExistingEd
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, adjacentEdges_thenOutgoingEdges)
+TEST_F(DirectedSimpleGraphTest, adjacentEdges_ThenOutgoingEdges)
 {
     // given
     test_object.add_edge_between(1, 1);
@@ -240,7 +240,7 @@ TEST_F(DirectedSimpleGraphTest, adjacentEdges_thenOutgoingEdges)
               result);
 }
 
-TEST_F(DirectedSimpleGraphTest, neighbours_thenDestinationVerticesOfOutgoingEdges)
+TEST_F(DirectedSimpleGraphTest, neighbours_ThenDestinationVerticesOfOutgoingEdges)
 {
     // given
     test_object.add_edge_between(1, 1);
@@ -258,7 +258,7 @@ TEST_F(DirectedSimpleGraphTest, neighbours_thenDestinationVerticesOfOutgoingEdge
     EXPECT_EQ(std::vector<graph_v>({1, 3, 4, 7, 9}), result);
 }
 
-TEST_F(DirectedSimpleGraphTest, outputDegree_thenNumberOfOutgoingEdges)
+TEST_F(DirectedSimpleGraphTest, outputDegree_ThenNumberOfOutgoingEdges)
 {
     // given
     test_object.add_edge_between(1, 1);
@@ -274,7 +274,7 @@ TEST_F(DirectedSimpleGraphTest, outputDegree_thenNumberOfOutgoingEdges)
     EXPECT_EQ(5, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, inputDegree_thenNumberOfIncomingEdges)
+TEST_F(DirectedSimpleGraphTest, inputDegree_ThenNumberOfIncomingEdges)
 {
     // given
     test_object.add_edge_between(1, 1);
@@ -290,7 +290,7 @@ TEST_F(DirectedSimpleGraphTest, inputDegree_thenNumberOfIncomingEdges)
     EXPECT_EQ(5, result);
 }
 
-TEST_F(DirectedSimpleGraphTest, reverse_thenAllEdgesHaveReversedDirection)
+TEST_F(DirectedSimpleGraphTest, reverse_ThenAllEdgesHaveReversedDirection)
 {
     // given
     graph_v vertex = 5;
@@ -325,7 +325,7 @@ TEST_F(DirectedSimpleGraphTest, reverse_thenAllEdgesHaveReversedDirection)
     EXPECT_EQ("", test_object[test_object.get_edge(5, 3)]);
 }
 
-TEST_F(DirectedSimpleGraphTest, reversedCopy_thenNewGraphWithReversedEdges)
+TEST_F(DirectedSimpleGraphTest, reversedCopy_ThenNewGraphWithReversedEdges)
 {
     // given
     graph_v vertex = 5;

@@ -11,7 +11,7 @@ namespace algr = algolib::graphs;
 using graph_t = algr::directed_simple_graph<>;
 using graph_v = graph_t::vertex_type;
 
-TEST(StronglyConnectedComponentsTest, findSCC_whenManyComponents_thenAllListed)
+TEST(StronglyConnectedComponentsTest, findSCC_WhenManyComponents_ThenAllListed)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
@@ -40,7 +40,7 @@ TEST(StronglyConnectedComponentsTest, findSCC_whenManyComponents_thenAllListed)
         EXPECT_NE(result.end(), std::find(std::begin(result), std::end(result), scc));
 }
 
-TEST(StronglyConnectedComponentsTest, findSCC_whenSingeleComponent_thenAllVertices)
+TEST(StronglyConnectedComponentsTest, findSCC_WhenSingeleComponent_ThenAllVertices)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5, 6});
@@ -61,7 +61,7 @@ TEST(StronglyConnectedComponentsTest, findSCC_whenSingeleComponent_thenAllVertic
     EXPECT_EQ(expected, result);
 }
 
-TEST(StronglyConnectedComponentsTest, findSCC_whenEmptyGraph_thenEachVertexIsComponent)
+TEST(StronglyConnectedComponentsTest, findSCC_WhenEmptyGraph_ThenEachVertexIsComponent)
 {
     // given
     graph_t graph({0, 1, 2, 3});

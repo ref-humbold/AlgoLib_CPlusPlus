@@ -25,7 +25,7 @@ TEST(MaximumSubarrayTest, maximumSubarray2)
     EXPECT_EQ(std::vector<double>({7.7, 2.1, 0.8, 4.0}), result);
 }
 
-TEST(MaximumSubarrayTest, maximumSubarray_whenAllElementsAreNegative)
+TEST(MaximumSubarrayTest, maximumSubarray_WhenAllElementsAreNegative)
 {
     std::vector<double> sequence = {-9.0, -2.4, -3.07, -1.93, -12.67};
 
@@ -52,7 +52,7 @@ TEST(MaximumSubarrayTest, maximalSubsum2)
     EXPECT_DOUBLE_EQ(14.6, result);
 }
 
-TEST(MaximumSubarrayTest, maximalSubsum_whenAllElementsAreNegative)
+TEST(MaximumSubarrayTest, maximalSubsum_WhenAllElementsAreNegative)
 {
     std::vector<double> sequence = {-9.0, -2.4, -3.07, -1.93, -12.67};
 

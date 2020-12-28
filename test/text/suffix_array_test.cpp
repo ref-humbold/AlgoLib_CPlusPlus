@@ -53,7 +53,7 @@ TEST_F(SuffixArrayTest, at)
     EXPECT_EQ("ssippi", result3);
 }
 
-TEST_F(SuffixArrayTest, at_whenOutOfRange)
+TEST_F(SuffixArrayTest, at_WhenOutOfRange)
 {
     EXPECT_THROW(test_object.at(20), std::out_of_range);
 }
@@ -71,7 +71,7 @@ TEST_F(SuffixArrayTest, indexAt)
     EXPECT_EQ(5, result3);
 }
 
-TEST_F(SuffixArrayTest, indexAt_whenOutOfRange)
+TEST_F(SuffixArrayTest, indexAt_WhenOutOfRange)
 {
     EXPECT_THROW(test_object.index_at(20), std::out_of_range);
 }
@@ -89,33 +89,33 @@ TEST_F(SuffixArrayTest, indexOf)
     EXPECT_EQ(5, result3);
 }
 
-TEST_F(SuffixArrayTest, indexOf_whenOutOfRange)
+TEST_F(SuffixArrayTest, indexOf_WhenOutOfRange)
 {
     EXPECT_THROW(test_object.index_of(20), std::out_of_range);
 }
 
-TEST_F(SuffixArrayTest, lcp_whenSameSuffix)
+TEST_F(SuffixArrayTest, lcp_WhenSameSuffix)
 {
     size_t result = test_object.lcp(4, 4);
 
     EXPECT_EQ(7, result);
 }
 
-TEST_F(SuffixArrayTest, lcp_whenDifferentSuffix1)
+TEST_F(SuffixArrayTest, lcp_WhenDifferentSuffix1)
 {
     size_t result = test_object.lcp(1, 10);
 
     EXPECT_EQ(1, result);
 }
 
-TEST_F(SuffixArrayTest, lcp_whenDifferentSuffix2)
+TEST_F(SuffixArrayTest, lcp_WhenDifferentSuffix2)
 {
     size_t result = test_object.lcp(9, 6);
 
     EXPECT_EQ(0, result);
 }
 
-TEST_F(SuffixArrayTest, lcp_whenSwapSuffix)
+TEST_F(SuffixArrayTest, lcp_WhenSwapSuffix)
 {
     size_t result0 = test_object.lcp(2, 5);
     size_t result1 = test_object.lcp(5, 2);

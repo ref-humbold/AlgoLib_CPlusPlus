@@ -6,7 +6,7 @@ namespace alma = algolib::mathmat;
 
 #pragma region gcd
 
-TEST(MathsTest, gcd_whenNumbersAreComposite_thenReturnsGCD)
+TEST(MathsTest, gcd_WhenNumbersAreComposite_ThenReturnsGCD)
 {
     long long int number1 = 161LL;
     long long int number2 = 46LL;
@@ -16,7 +16,7 @@ TEST(MathsTest, gcd_whenNumbersAreComposite_thenReturnsGCD)
     EXPECT_EQ(23LL, result);
 }
 
-TEST(MathsTest, gcd_whenNumbersArePrime_thenReturnsOne)
+TEST(MathsTest, gcd_WhenNumbersArePrime_ThenReturnsOne)
 {
     long long int number1 = 127LL;
     long long int number2 = 41LL;
@@ -26,7 +26,7 @@ TEST(MathsTest, gcd_whenNumbersArePrime_thenReturnsOne)
     EXPECT_EQ(1LL, result);
 }
 
-TEST(MathsTest, gcd_whenNumbersAreMutuallyPrime_thenReturnsOne)
+TEST(MathsTest, gcd_WhenNumbersAreMutuallyPrime_ThenReturnsOne)
 {
     long long int number1 = 119LL;
     long long int number2 = 57LL;
@@ -36,7 +36,7 @@ TEST(MathsTest, gcd_whenNumbersAreMutuallyPrime_thenReturnsOne)
     EXPECT_EQ(1LL, result);
 }
 
-TEST(MathsTest, gcd_whenNumber1IsMultipleOfNumber2_thenReturnsNumber2)
+TEST(MathsTest, gcd_WhenNumber1IsMultipleOfNumber2_ThenReturnsNumber2)
 {
     long long int number1 = 272LL;
     long long int number2 = 34LL;
@@ -46,7 +46,7 @@ TEST(MathsTest, gcd_whenNumber1IsMultipleOfNumber2_thenReturnsNumber2)
     EXPECT_EQ(number2, result);
 }
 
-TEST(MathsTest, gcd_whenNumber2IsZero_thenReturnsNumber1)
+TEST(MathsTest, gcd_WhenNumber2IsZero_ThenReturnsNumber1)
 {
     long long int number1 = 96LL;
     long long int number2 = 0LL;
@@ -59,7 +59,7 @@ TEST(MathsTest, gcd_whenNumber2IsZero_thenReturnsNumber1)
 #pragma endregion
 #pragma region lcm
 
-TEST(MathsTest, lcm_whenNumbersAreComposite_thenReturnsLCM)
+TEST(MathsTest, lcm_WhenNumbersAreComposite_ThenReturnsLCM)
 {
     long long int number1 = 161LL;
     long long int number2 = 46LL;
@@ -69,7 +69,7 @@ TEST(MathsTest, lcm_whenNumbersAreComposite_thenReturnsLCM)
     EXPECT_EQ(322LL, result);
 }
 
-TEST(MathsTest, lcm_whenNumbersArePrime_thenReturnsProduct)
+TEST(MathsTest, lcm_WhenNumbersArePrime_ThenReturnsProduct)
 {
     long long int number1 = 127LL;
     long long int number2 = 41LL;
@@ -79,7 +79,7 @@ TEST(MathsTest, lcm_whenNumbersArePrime_thenReturnsProduct)
     EXPECT_EQ(5207LL, result);
 }
 
-TEST(MathsTest, lcm_whenNumbersAreMutuallyPrime_thenReturnsProduct)
+TEST(MathsTest, lcm_WhenNumbersAreMutuallyPrime_ThenReturnsProduct)
 {
     long long int number1 = 119LL;
     long long int number2 = 57LL;
@@ -89,7 +89,7 @@ TEST(MathsTest, lcm_whenNumbersAreMutuallyPrime_thenReturnsProduct)
     EXPECT_EQ(6783LL, result);
 }
 
-TEST(MathsTest, lcm_whenNumber1IsMultipleOfNumber2_thenReturnsNumber1)
+TEST(MathsTest, lcm_WhenNumber1IsMultipleOfNumber2_ThenReturnsNumber1)
 {
     long long int number1 = 272LL;
     long long int number2 = 34LL;
@@ -99,7 +99,7 @@ TEST(MathsTest, lcm_whenNumber1IsMultipleOfNumber2_thenReturnsNumber1)
     EXPECT_EQ(number1, result);
 }
 
-TEST(MathsTest, lcm_whenNumber2IsZero_thenReturnsZero)
+TEST(MathsTest, lcm_WhenNumber2IsZero_ThenReturnsZero)
 {
     long long int number1 = 96LL;
     long long int number2 = 0LL;
@@ -112,7 +112,7 @@ TEST(MathsTest, lcm_whenNumber2IsZero_thenReturnsZero)
 #pragma endregion
 #pragma region powerMod
 
-TEST(MathsTest, powerMod_whenBaseIsZero_thenReturnsZero)
+TEST(MathsTest, powerMod_WhenBaseIsZero_ThenReturnsZero)
 {
     long long int number1 = 0LL;
     long long int number2 = 14LL;
@@ -123,7 +123,7 @@ TEST(MathsTest, powerMod_whenBaseIsZero_thenReturnsZero)
     EXPECT_EQ(0LL, result);
 }
 
-TEST(MathsTest, powerMod_whenExponentIsZero_thenReturnsOne)
+TEST(MathsTest, powerMod_WhenExponentIsZero_ThenReturnsOne)
 {
     long long int number1 = 14LL;
     long long int number2 = 0LL;
@@ -134,7 +134,7 @@ TEST(MathsTest, powerMod_whenExponentIsZero_thenReturnsOne)
     EXPECT_EQ(1LL, result);
 }
 
-TEST(MathsTest, powerMod_whenBaseAndExponentAreZero_thenThrowsDomainError)
+TEST(MathsTest, powerMod_WhenBaseAndExponentAreZero_ThenThrowsDomainError)
 {
     long long int number1 = 0LL;
     long long int number2 = 0LL;
@@ -143,7 +143,7 @@ TEST(MathsTest, powerMod_whenBaseAndExponentAreZero_thenThrowsDomainError)
     EXPECT_THROW(alma::power_mod(number1, number2, number3), std::domain_error);
 }
 
-TEST(MathsTest, powerMod_whenBaseAndExponentArePositive)
+TEST(MathsTest, powerMod_WhenBaseAndExponentArePositive)
 {
     long long int number1 = 3LL;
     long long int number2 = 10LL;
@@ -154,7 +154,7 @@ TEST(MathsTest, powerMod_whenBaseAndExponentArePositive)
     EXPECT_EQ(59049LL, result);
 }
 
-TEST(MathsTest, powerMod_whenBaseIsNegativeAndExponentIsEven)
+TEST(MathsTest, powerMod_WhenBaseIsNegativeAndExponentIsEven)
 {
     long long int number1 = -3LL;
     long long int number2 = 10LL;
@@ -165,7 +165,7 @@ TEST(MathsTest, powerMod_whenBaseIsNegativeAndExponentIsEven)
     EXPECT_EQ(59049LL, result);
 }
 
-TEST(MathsTest, powerMod_whenBaseIsNegativeAndExponentIsOdd)
+TEST(MathsTest, powerMod_WhenBaseIsNegativeAndExponentIsOdd)
 {
     long long int number1 = -3LL;
     long long int number2 = 9LL;
@@ -176,7 +176,7 @@ TEST(MathsTest, powerMod_whenBaseIsNegativeAndExponentIsOdd)
     EXPECT_EQ(-19683LL, result);
 }
 
-TEST(MathsTest, powerMod_whenExponentIsNegative_thenThrowsDomainError)
+TEST(MathsTest, powerMod_WhenExponentIsNegative_ThenThrowsDomainError)
 {
     long long int number1 = 3LL;
     long long int number2 = -10LL;
@@ -185,7 +185,7 @@ TEST(MathsTest, powerMod_whenExponentIsNegative_thenThrowsDomainError)
     EXPECT_THROW(alma::power_mod(number1, number2, number3), std::domain_error);
 }
 
-TEST(MathsTest, powerMod_whenModuloAndBaseArePositive)
+TEST(MathsTest, powerMod_WhenModuloAndBaseArePositive)
 {
     long long int number1 = 5LL;
     long long int number2 = 11LL;
@@ -196,7 +196,7 @@ TEST(MathsTest, powerMod_whenModuloAndBaseArePositive)
     EXPECT_EQ(8125LL, result);
 }
 
-TEST(MathsTest, powerMod_whenModuloIsPositiveAndBaseIsNegative)
+TEST(MathsTest, powerMod_WhenModuloIsPositiveAndBaseIsNegative)
 {
     long long int number1 = -5LL;
     long long int number2 = 11LL;
@@ -210,7 +210,7 @@ TEST(MathsTest, powerMod_whenModuloIsPositiveAndBaseIsNegative)
 #pragma endregion
 #pragma region multMod
 
-TEST(MathsTest, multMod_whenFactor1IsZero_thenReturnsZero)
+TEST(MathsTest, multMod_WhenFactor1IsZero_ThenReturnsZero)
 {
     long long int number1 = 0LL;
     long long int number2 = 14LL;
@@ -221,7 +221,7 @@ TEST(MathsTest, multMod_whenFactor1IsZero_thenReturnsZero)
     EXPECT_EQ(0LL, result);
 }
 
-TEST(MathsTest, multMod_whenFactor2IsZero_thenReturnsZero)
+TEST(MathsTest, multMod_WhenFactor2IsZero_ThenReturnsZero)
 {
     long long int number1 = 14LL;
     long long int number2 = 0LL;
@@ -232,7 +232,7 @@ TEST(MathsTest, multMod_whenFactor2IsZero_thenReturnsZero)
     EXPECT_EQ(0LL, result);
 }
 
-TEST(MathsTest, multMod_whenFactorsAreZero_thenReturnsZero)
+TEST(MathsTest, multMod_WhenFactorsAreZero_ThenReturnsZero)
 {
     long long int number1 = 0LL;
     long long int number2 = 0LL;
@@ -243,7 +243,7 @@ TEST(MathsTest, multMod_whenFactorsAreZero_thenReturnsZero)
     EXPECT_EQ(0LL, result);
 }
 
-TEST(MathsTest, multMod_whenFactor1IsNegativeAndFactor2IsPositive)
+TEST(MathsTest, multMod_WhenFactor1IsNegativeAndFactor2IsPositive)
 {
     long long int number1 = -3LL;
     long long int number2 = 10LL;
@@ -254,7 +254,7 @@ TEST(MathsTest, multMod_whenFactor1IsNegativeAndFactor2IsPositive)
     EXPECT_EQ(-30LL, result);
 }
 
-TEST(MathsTest, multMod_whenFactor1IsPositiveAndFactor2IsNegative)
+TEST(MathsTest, multMod_WhenFactor1IsPositiveAndFactor2IsNegative)
 {
     long long int number1 = 3LL;
     long long int number2 = -10LL;
@@ -265,7 +265,7 @@ TEST(MathsTest, multMod_whenFactor1IsPositiveAndFactor2IsNegative)
     EXPECT_EQ(-30LL, result);
 }
 
-TEST(MathsTest, multMod_whenFactorsAreNegative)
+TEST(MathsTest, multMod_WhenFactorsAreNegative)
 {
     long long int number1 = -3LL;
     long long int number2 = -10LL;
@@ -276,7 +276,7 @@ TEST(MathsTest, multMod_whenFactorsAreNegative)
     EXPECT_EQ(30LL, result);
 }
 
-TEST(MathsTest, multMod_whenModuloAndFactorsArePositive)
+TEST(MathsTest, multMod_WhenModuloAndFactorsArePositive)
 {
     long long int number1 = 547LL;
     long long int number2 = 312LL;
@@ -287,7 +287,7 @@ TEST(MathsTest, multMod_whenModuloAndFactorsArePositive)
     EXPECT_EQ(664LL, result);
 }
 
-TEST(MathsTest, multMod_whenModuloIsPositiveAndFactor1IsNegative)
+TEST(MathsTest, multMod_WhenModuloIsPositiveAndFactor1IsNegative)
 {
     long long int number1 = -547LL;
     long long int number2 = 312LL;
@@ -298,7 +298,7 @@ TEST(MathsTest, multMod_whenModuloIsPositiveAndFactor1IsNegative)
     EXPECT_EQ(9336LL, result);
 }
 
-TEST(MathsTest, multMod_whenModuloIsPositiveAndFactor2IsNegative)
+TEST(MathsTest, multMod_WhenModuloIsPositiveAndFactor2IsNegative)
 {
     long long int number1 = 547LL;
     long long int number2 = -312LL;
@@ -309,7 +309,7 @@ TEST(MathsTest, multMod_whenModuloIsPositiveAndFactor2IsNegative)
     EXPECT_EQ(9336LL, result);
 }
 
-TEST(MathsTest, multMod_whenModuloIsPositiveAndFactorsAreNegative)
+TEST(MathsTest, multMod_WhenModuloIsPositiveAndFactorsAreNegative)
 {
     long long int number1 = -547LL;
     long long int number2 = -312LL;

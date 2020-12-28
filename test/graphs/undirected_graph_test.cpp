@@ -27,7 +27,7 @@ public:
     ~UndirectedSimpleGraphTest() override = default;
 };
 
-TEST_F(UndirectedSimpleGraphTest, operatorBrackets_whenSettingProperty_thenProperty)
+TEST_F(UndirectedSimpleGraphTest, operatorBrackets_WhenSettingProperty_ThenProperty)
 {
     // given
     graph_vp vertex_property = "x";
@@ -45,7 +45,7 @@ TEST_F(UndirectedSimpleGraphTest, operatorBrackets_whenSettingProperty_thenPrope
     EXPECT_EQ(edge_property, result_edge);
 }
 
-TEST_F(UndirectedSimpleGraphTest, operatorBrackets_whenNoProperty_thenDefault)
+TEST_F(UndirectedSimpleGraphTest, operatorBrackets_WhenNoProperty_ThenDefault)
 {
     // given
     graph_e edge = test_object.add_edge_between(6, 7);
@@ -57,7 +57,7 @@ TEST_F(UndirectedSimpleGraphTest, operatorBrackets_whenNoProperty_thenDefault)
     EXPECT_EQ("", result_edge);
 }
 
-TEST_F(UndirectedSimpleGraphTest, operatorBrackets_whenNotExisting_thenInvalidArgument)
+TEST_F(UndirectedSimpleGraphTest, operatorBrackets_WhenNotExisting_ThenInvalidArgument)
 {
     // when
     auto exec_vertex = [&]() { return test_object[14]; };
@@ -69,7 +69,7 @@ TEST_F(UndirectedSimpleGraphTest, operatorBrackets_whenNotExisting_thenInvalidAr
     EXPECT_THROW(exec_edge2(), std::invalid_argument);
 }
 
-TEST_F(UndirectedSimpleGraphTest, verticesCount_thenNumberOfVertices)
+TEST_F(UndirectedSimpleGraphTest, verticesCount_ThenNumberOfVertices)
 {
     // when
     size_t result = test_object.vertices_count();
@@ -77,7 +77,7 @@ TEST_F(UndirectedSimpleGraphTest, verticesCount_thenNumberOfVertices)
     EXPECT_EQ(10, result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, vertices_thenAllVertices)
+TEST_F(UndirectedSimpleGraphTest, vertices_ThenAllVertices)
 {
     // when
     std::vector<graph_v> result = test_object.vertices();
@@ -87,7 +87,7 @@ TEST_F(UndirectedSimpleGraphTest, vertices_thenAllVertices)
     EXPECT_EQ(std::vector<graph_v>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, addVertex_whenNewVertex_thenTrue)
+TEST_F(UndirectedSimpleGraphTest, addVertex_WhenNewVertex_ThenTrue)
 {
     // given
     graph_v new_vertex = 13;
@@ -101,7 +101,7 @@ TEST_F(UndirectedSimpleGraphTest, addVertex_whenNewVertex_thenTrue)
     EXPECT_EQ(vertex_property, test_object[new_vertex]);
 }
 
-TEST_F(UndirectedSimpleGraphTest, addVertex_whenExistingVertex_thenFalse)
+TEST_F(UndirectedSimpleGraphTest, addVertex_WhenExistingVertex_ThenFalse)
 {
     // given
     graph_v vertex = 6;
@@ -116,7 +116,7 @@ TEST_F(UndirectedSimpleGraphTest, addVertex_whenExistingVertex_thenFalse)
     EXPECT_EQ(vertex_property, test_object[vertex]);
 }
 
-TEST_F(UndirectedSimpleGraphTest, edgesCount_thenNumberOfEdges)
+TEST_F(UndirectedSimpleGraphTest, edgesCount_ThenNumberOfEdges)
 {
     // given
     test_object.add_edge_between(7, 7);
@@ -133,7 +133,7 @@ TEST_F(UndirectedSimpleGraphTest, edgesCount_thenNumberOfEdges)
     EXPECT_EQ(6, result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, edges_thenAllEdges)
+TEST_F(UndirectedSimpleGraphTest, edges_ThenAllEdges)
 {
     // given
     test_object.add_edge_between(7, 7);
@@ -154,7 +154,7 @@ TEST_F(UndirectedSimpleGraphTest, edges_thenAllEdges)
               result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, getEdge_whenInDirection_thenEdge)
+TEST_F(UndirectedSimpleGraphTest, getEdge_WhenInDirection_ThenEdge)
 {
     // given
     graph_v source = 5, destination = 9;
@@ -167,7 +167,7 @@ TEST_F(UndirectedSimpleGraphTest, getEdge_whenInDirection_thenEdge)
     EXPECT_EQ(destination, result.destination());
 }
 
-TEST_F(UndirectedSimpleGraphTest, getEdge_whenReversedDirection_thenEdge)
+TEST_F(UndirectedSimpleGraphTest, getEdge_WhenReversedDirection_ThenEdge)
 {
     // given
     graph_v source = 9, destination = 5;
@@ -180,7 +180,7 @@ TEST_F(UndirectedSimpleGraphTest, getEdge_whenReversedDirection_thenEdge)
     EXPECT_EQ(destination, result.destination());
 }
 
-TEST_F(UndirectedSimpleGraphTest, getEdge_whenNotExists_thenOutOfRange)
+TEST_F(UndirectedSimpleGraphTest, getEdge_WhenNotExists_ThenOutOfRange)
 {
     // when
     auto exec = [&]() { return test_object.get_edge(1, 2); };
@@ -188,7 +188,7 @@ TEST_F(UndirectedSimpleGraphTest, getEdge_whenNotExists_thenOutOfRange)
     EXPECT_THROW(exec(), std::out_of_range);
 }
 
-TEST_F(UndirectedSimpleGraphTest, addEdgeBetween_whenNewEdge_thenCreatedEdge)
+TEST_F(UndirectedSimpleGraphTest, addEdgeBetween_WhenNewEdge_ThenCreatedEdge)
 {
     // given
     graph_ep edge_property = "asdfgh";
@@ -208,7 +208,7 @@ TEST_F(UndirectedSimpleGraphTest, addEdgeBetween_whenNewEdge_thenCreatedEdge)
     EXPECT_EQ(std::vector<graph_v>({1}), test_object.neighbours(5));
 }
 
-TEST_F(UndirectedSimpleGraphTest, addEdgeBetween_whenDuplicatedEdge_thenExistingEdge)
+TEST_F(UndirectedSimpleGraphTest, addEdgeBetween_WhenDuplicatedEdge_ThenExistingEdge)
 {
     // given
     graph_v source = 3, destination = 7;
@@ -219,7 +219,7 @@ TEST_F(UndirectedSimpleGraphTest, addEdgeBetween_whenDuplicatedEdge_thenExisting
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, adjacentEdges_thenOutgoingEdges)
+TEST_F(UndirectedSimpleGraphTest, adjacentEdges_ThenOutgoingEdges)
 {
     // given
     test_object.add_edge_between(1, 1);
@@ -239,7 +239,7 @@ TEST_F(UndirectedSimpleGraphTest, adjacentEdges_thenOutgoingEdges)
               result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, neighbours_thenDestinationVerticesOfOutgoingEdges)
+TEST_F(UndirectedSimpleGraphTest, neighbours_ThenDestinationVerticesOfOutgoingEdges)
 {
     // given
     test_object.add_edge_between(1, 1);
@@ -257,7 +257,7 @@ TEST_F(UndirectedSimpleGraphTest, neighbours_thenDestinationVerticesOfOutgoingEd
     EXPECT_EQ(std::vector<graph_v>({1, 2, 3, 4, 6, 7, 9}), result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, outputDegree_thenNumberOfOutgoingEdges)
+TEST_F(UndirectedSimpleGraphTest, outputDegree_ThenNumberOfOutgoingEdges)
 {
     // given
     test_object.add_edge_between(1, 1);
@@ -273,7 +273,7 @@ TEST_F(UndirectedSimpleGraphTest, outputDegree_thenNumberOfOutgoingEdges)
     EXPECT_EQ(7, result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, inputDegree_thenNumberOfIncomingEdges)
+TEST_F(UndirectedSimpleGraphTest, inputDegree_ThenNumberOfIncomingEdges)
 {
     // given
     test_object.add_edge_between(1, 1);
@@ -289,7 +289,7 @@ TEST_F(UndirectedSimpleGraphTest, inputDegree_thenNumberOfIncomingEdges)
     EXPECT_EQ(7, result);
 }
 
-TEST_F(UndirectedSimpleGraphTest, asDirected_thenDirectedGraph)
+TEST_F(UndirectedSimpleGraphTest, asDirected_ThenDirectedGraph)
 {
     // given
     graph_v vertex = 5;

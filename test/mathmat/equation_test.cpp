@@ -20,7 +20,7 @@ public:
     virtual ~EquationTest() = default;
 };
 
-TEST_F(EquationTest, imul_whenConstantIsNonZero_thenMultiplied)
+TEST_F(EquationTest, imul_WhenConstantIsNonZero_ThenMultiplied)
 {
     // when
     test_object *= 2;
@@ -29,13 +29,13 @@ TEST_F(EquationTest, imul_whenConstantIsNonZero_thenMultiplied)
     EXPECT_EQ(30, test_object.free);
 }
 
-TEST_F(EquationTest, imul_whenConstantIsZero_thenDomainError)
+TEST_F(EquationTest, imul_WhenConstantIsZero_ThenDomainError)
 {
     // when - then
     EXPECT_THROW(test_object *= 0, std::domain_error);
 }
 
-TEST_F(EquationTest, combine_whenConstantIsNonZero_thenCombined)
+TEST_F(EquationTest, combine_WhenConstantIsNonZero_ThenCombined)
 {
     // when
     test_object.combine(alma::equation<4>({1, -1, 4, 10}, 5), -2);
@@ -44,7 +44,7 @@ TEST_F(EquationTest, combine_whenConstantIsNonZero_thenCombined)
     EXPECT_EQ(5, test_object.free);
 }
 
-TEST_F(EquationTest, combine_whenNoConstant_thenAddEquation)
+TEST_F(EquationTest, combine_WhenNoConstant_ThenAddEquation)
 {
     // when
     test_object.combine(alma::equation<4>({1, -1, 4, 10}, 5));
@@ -53,7 +53,7 @@ TEST_F(EquationTest, combine_whenNoConstant_thenAddEquation)
     EXPECT_EQ(20, test_object.free);
 }
 
-TEST_F(EquationTest, combine_whenConstantIsZero_thenDomainError)
+TEST_F(EquationTest, combine_WhenConstantIsZero_ThenDomainError)
 {
     // when - then
     EXPECT_THROW(test_object.combine(alma::equation<4>({1, -1, 10, 7}, 5), 0), std::domain_error);

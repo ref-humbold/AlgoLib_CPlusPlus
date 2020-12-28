@@ -27,7 +27,7 @@ public:
     ~DoubleHeapTest() override = default;
 };
 
-TEST_F(DoubleHeapTest, empty_whenNotEmpty_thenFalse)
+TEST_F(DoubleHeapTest, empty_WhenNotEmpty_ThenFalse)
 {
     // when
     bool result = test_object.empty();
@@ -35,7 +35,7 @@ TEST_F(DoubleHeapTest, empty_whenNotEmpty_thenFalse)
     EXPECT_FALSE(result);
 }
 
-TEST_F(DoubleHeapTest, empty_whenEmpty_thenTrue)
+TEST_F(DoubleHeapTest, empty_WhenEmpty_ThenTrue)
 {
     // given
     test_object = alst::double_heap<int>();
@@ -45,7 +45,7 @@ TEST_F(DoubleHeapTest, empty_whenEmpty_thenTrue)
     EXPECT_TRUE(result);
 }
 
-TEST_F(DoubleHeapTest, size_whenNotEmpty_thenNumberOfElements)
+TEST_F(DoubleHeapTest, size_WhenNotEmpty_ThenNumberOfElements)
 {
     // when
     size_t result = test_object.size();
@@ -53,7 +53,7 @@ TEST_F(DoubleHeapTest, size_whenNotEmpty_thenNumberOfElements)
     EXPECT_EQ(numbers.size(), result);
 }
 
-TEST_F(DoubleHeapTest, size_whenEmpty_thenZero)
+TEST_F(DoubleHeapTest, size_WhenEmpty_ThenZero)
 {
     // given
     test_object = alst::double_heap<int>();
@@ -63,7 +63,7 @@ TEST_F(DoubleHeapTest, size_whenEmpty_thenZero)
     EXPECT_EQ(0, result);
 }
 
-TEST_F(DoubleHeapTest, min_whenEmpty_thenOutOfRange)
+TEST_F(DoubleHeapTest, min_WhenEmpty_ThenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
@@ -71,7 +71,7 @@ TEST_F(DoubleHeapTest, min_whenEmpty_thenOutOfRange)
     EXPECT_THROW(test_object.min(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, min_whenNotEmpty_thenMinimalElement)
+TEST_F(DoubleHeapTest, min_WhenNotEmpty_ThenMinimalElement)
 {
     // when
     int result = test_object.min();
@@ -79,7 +79,7 @@ TEST_F(DoubleHeapTest, min_whenNotEmpty_thenMinimalElement)
     EXPECT_EQ(minimum, result);
 }
 
-TEST_F(DoubleHeapTest, max_whenEmpty_thenOutOfRange)
+TEST_F(DoubleHeapTest, max_WhenEmpty_ThenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
@@ -87,7 +87,7 @@ TEST_F(DoubleHeapTest, max_whenEmpty_thenOutOfRange)
     EXPECT_THROW(test_object.max(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, max_whenSingleElement_thenThisElement)
+TEST_F(DoubleHeapTest, max_WhenSingleElement_ThenThisElement)
 {
     // given
     int element = 19;
@@ -99,7 +99,7 @@ TEST_F(DoubleHeapTest, max_whenSingleElement_thenThisElement)
     EXPECT_EQ(element, result);
 }
 
-TEST_F(DoubleHeapTest, max_whenMultipleElements_thenMaximalElement)
+TEST_F(DoubleHeapTest, max_WhenMultipleElements_ThenMaximalElement)
 {
     // when
     int result = test_object.max();
@@ -107,7 +107,7 @@ TEST_F(DoubleHeapTest, max_whenMultipleElements_thenMaximalElement)
     EXPECT_EQ(maximum, result);
 }
 
-TEST_F(DoubleHeapTest, push_whenEmpty_thenAdded)
+TEST_F(DoubleHeapTest, push_WhenEmpty_ThenAdded)
 {
     // given
     int element = 19;
@@ -121,7 +121,7 @@ TEST_F(DoubleHeapTest, push_whenEmpty_thenAdded)
     EXPECT_EQ(element, test_object.max());
 }
 
-TEST_F(DoubleHeapTest, push_whenNewElementIsLess_thenAddedTomin)
+TEST_F(DoubleHeapTest, push_WhenNewElementIsLess_ThenAddedTomin)
 {
     // given
     int element = minimum - 1;
@@ -132,7 +132,7 @@ TEST_F(DoubleHeapTest, push_whenNewElementIsLess_thenAddedTomin)
     EXPECT_EQ(element, test_object.min());
 }
 
-TEST_F(DoubleHeapTest, push_whenNewElementIsGreater_thenAddedTomax)
+TEST_F(DoubleHeapTest, push_WhenNewElementIsGreater_ThenAddedTomax)
 {
     // given
     int element = maximum + 1;
@@ -143,7 +143,7 @@ TEST_F(DoubleHeapTest, push_whenNewElementIsGreater_thenAddedTomax)
     EXPECT_EQ(element, test_object.max());
 }
 
-TEST_F(DoubleHeapTest, push_whenNewElement_thenAdded)
+TEST_F(DoubleHeapTest, push_WhenNewElement_ThenAdded)
 {
     // when
     test_object.push(46);
@@ -153,7 +153,7 @@ TEST_F(DoubleHeapTest, push_whenNewElement_thenAdded)
     EXPECT_EQ(maximum, test_object.max());
 }
 
-TEST_F(DoubleHeapTest, popMin_whenEmpty_thenOutOfRange)
+TEST_F(DoubleHeapTest, popMin_WhenEmpty_ThenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
@@ -161,7 +161,7 @@ TEST_F(DoubleHeapTest, popMin_whenEmpty_thenOutOfRange)
     EXPECT_THROW(test_object.pop_min(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, popMin_whenNotEmpty_thenMinimalElementRemoved)
+TEST_F(DoubleHeapTest, popMin_WhenNotEmpty_ThenMinimalElementRemoved)
 {
     // when
     test_object.pop_min();
@@ -169,7 +169,7 @@ TEST_F(DoubleHeapTest, popMin_whenNotEmpty_thenMinimalElementRemoved)
     EXPECT_EQ(numbers.size() - 1, test_object.size());
 }
 
-TEST_F(DoubleHeapTest, popMin_whenSingleElement_thenThisElementRemoved)
+TEST_F(DoubleHeapTest, popMin_WhenSingleElement_ThenThisElementRemoved)
 {
     // given
     test_object = alst::double_heap<int>({19});
@@ -179,7 +179,7 @@ TEST_F(DoubleHeapTest, popMin_whenSingleElement_thenThisElementRemoved)
     EXPECT_EQ(0, test_object.size());
 }
 
-TEST_F(DoubleHeapTest, popMin_whenMultipleCalls_thenSortedAscending)
+TEST_F(DoubleHeapTest, popMin_WhenMultipleCalls_ThenSortedAscending)
 {
     // given
     std::vector<int> expected = numbers;
@@ -197,7 +197,7 @@ TEST_F(DoubleHeapTest, popMin_whenMultipleCalls_thenSortedAscending)
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(DoubleHeapTest, popMax_whenEmpty_thenOutOfRange)
+TEST_F(DoubleHeapTest, popMax_WhenEmpty_ThenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
@@ -205,7 +205,7 @@ TEST_F(DoubleHeapTest, popMax_whenEmpty_thenOutOfRange)
     EXPECT_THROW(test_object.pop_max(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, popMax_whenSingleElement_thenThisElementRemoved)
+TEST_F(DoubleHeapTest, popMax_WhenSingleElement_ThenThisElementRemoved)
 {
     // given
     test_object = alst::double_heap<int>({19});
@@ -215,7 +215,7 @@ TEST_F(DoubleHeapTest, popMax_whenSingleElement_thenThisElementRemoved)
     EXPECT_EQ(0, test_object.size());
 }
 
-TEST_F(DoubleHeapTest, popMax_whenMultipleElements_thenMaximalElementRemoved)
+TEST_F(DoubleHeapTest, popMax_WhenMultipleElements_ThenMaximalElementRemoved)
 {
     // when
     test_object.pop_max();
@@ -223,7 +223,7 @@ TEST_F(DoubleHeapTest, popMax_whenMultipleElements_thenMaximalElementRemoved)
     EXPECT_EQ(numbers.size() - 1, test_object.size());
 }
 
-TEST_F(DoubleHeapTest, popMax_whenMultipleCalls_thenSortedDescending)
+TEST_F(DoubleHeapTest, popMax_WhenMultipleCalls_ThenSortedDescending)
 {
     // given
     std::vector<int> expected = numbers;
@@ -241,7 +241,7 @@ TEST_F(DoubleHeapTest, popMax_whenMultipleCalls_thenSortedDescending)
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(DoubleHeapTest, clear_whenNotEmpty_thenEmpty)
+TEST_F(DoubleHeapTest, clear_WhenNotEmpty_ThenEmpty)
 {
     // when
     test_object.clear();

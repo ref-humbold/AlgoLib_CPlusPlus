@@ -85,7 +85,7 @@ public:
 
 #pragma region bfs
 
-TEST_F(SearchingTest, bfs_whenUndirectedGraphAndSingleRoot_thenVisitedVertices)
+TEST_F(SearchingTest, bfs_WhenUndirectedGraphAndSingleRoot_ThenVisitedVertices)
 {
     //when
     std::vector<ugraph_v> result = algr::bfs(undirected_graph, eu_strategy, {0});
@@ -95,7 +95,7 @@ TEST_F(SearchingTest, bfs_whenUndirectedGraphAndSingleRoot_thenVisitedVertices)
     EXPECT_EQ(std::vector<ugraph_v>({0, 1, 3, 4, 5, 7, 8}), result);
 }
 
-TEST_F(SearchingTest, bfs_whenUndirectedGraphAndManyRoots_thenAllVisited)
+TEST_F(SearchingTest, bfs_WhenUndirectedGraphAndManyRoots_ThenAllVisited)
 {
     // given
     std::vector<ugraph_v> vertices = undirected_graph.vertices();
@@ -112,7 +112,7 @@ TEST_F(SearchingTest, bfs_whenUndirectedGraphAndManyRoots_thenAllVisited)
     EXPECT_EQ(vertices, u_strategy.exits);
 }
 
-TEST_F(SearchingTest, bfs_whenUndirectedGraphAndNoRoots_thenNoVisited)
+TEST_F(SearchingTest, bfs_WhenUndirectedGraphAndNoRoots_ThenNoVisited)
 {
     // when
     std::vector<ugraph_v> result = algr::bfs(undirected_graph, eu_strategy, {});
@@ -120,7 +120,7 @@ TEST_F(SearchingTest, bfs_whenUndirectedGraphAndNoRoots_thenNoVisited)
     EXPECT_TRUE(result.empty());
 }
 
-TEST_F(SearchingTest, bfs_whenDirectedGraphAndSingleRoot_thenVisitedVertices)
+TEST_F(SearchingTest, bfs_WhenDirectedGraphAndSingleRoot_ThenVisitedVertices)
 {
     // when
     std::vector<dgraph_v> result = algr::bfs(directed_graph, ed_strategy, {1});
@@ -130,7 +130,7 @@ TEST_F(SearchingTest, bfs_whenDirectedGraphAndSingleRoot_thenVisitedVertices)
     EXPECT_EQ(std::vector<dgraph_v>({0, 1, 3, 4, 7}), result);
 }
 
-TEST_F(SearchingTest, bfs_whenDirectedGraphAndManyRoots_thenAllVisited)
+TEST_F(SearchingTest, bfs_WhenDirectedGraphAndManyRoots_ThenAllVisited)
 {
     // given
     std::vector<ugraph_v> vertices = undirected_graph.vertices();
@@ -150,7 +150,7 @@ TEST_F(SearchingTest, bfs_whenDirectedGraphAndManyRoots_thenAllVisited)
 #pragma endregion
 #pragma region dfs_iterative
 
-TEST_F(SearchingTest, dfsIterative_whenUndirectedGraphAndSingleRoot_thenVisitedVisited)
+TEST_F(SearchingTest, dfsIterative_WhenUndirectedGraphAndSingleRoot_ThenVisitedVisited)
 {
     // when
     std::vector<ugraph_v> result = algr::dfs_iterative(undirected_graph, eu_strategy, {0});
@@ -160,7 +160,7 @@ TEST_F(SearchingTest, dfsIterative_whenUndirectedGraphAndSingleRoot_thenVisitedV
     EXPECT_EQ(std::vector<ugraph_v>({0, 1, 3, 4, 5, 7, 8}), result);
 }
 
-TEST_F(SearchingTest, dfsIterative_whenUndirectedGraphAndManyRoots_thenAllVisited)
+TEST_F(SearchingTest, dfsIterative_WhenUndirectedGraphAndManyRoots_ThenAllVisited)
 {
     // given
     std::vector<ugraph_v> vertices = undirected_graph.vertices();
@@ -177,7 +177,7 @@ TEST_F(SearchingTest, dfsIterative_whenUndirectedGraphAndManyRoots_thenAllVisite
     EXPECT_EQ(vertices, u_strategy.exits);
 }
 
-TEST_F(SearchingTest, dfsIterative_whenUndirectedGraphAndNoRoots_thenNoVisited)
+TEST_F(SearchingTest, dfsIterative_WhenUndirectedGraphAndNoRoots_ThenNoVisited)
 {
     // when
     std::vector<ugraph_v> result = algr::dfs_iterative(undirected_graph, eu_strategy, {});
@@ -185,7 +185,7 @@ TEST_F(SearchingTest, dfsIterative_whenUndirectedGraphAndNoRoots_thenNoVisited)
     EXPECT_TRUE(result.empty());
 }
 
-TEST_F(SearchingTest, dfsIterative_whenDirectedGraphAndSingleRoot_thenVisitedVisited)
+TEST_F(SearchingTest, dfsIterative_WhenDirectedGraphAndSingleRoot_ThenVisitedVisited)
 {
     // when
     std::vector<dgraph_v> result = algr::dfs_iterative(directed_graph, ed_strategy, {1});
@@ -195,7 +195,7 @@ TEST_F(SearchingTest, dfsIterative_whenDirectedGraphAndSingleRoot_thenVisitedVis
     EXPECT_EQ(std::vector<dgraph_v>({0, 1, 3, 4, 7}), result);
 }
 
-TEST_F(SearchingTest, dfsIterative_whenDirectedGraphAndManyRoots_thenAllVisited)
+TEST_F(SearchingTest, dfsIterative_WhenDirectedGraphAndManyRoots_ThenAllVisited)
 {
     // given
     std::vector<ugraph_v> vertices = undirected_graph.vertices();
@@ -215,7 +215,7 @@ TEST_F(SearchingTest, dfsIterative_whenDirectedGraphAndManyRoots_thenAllVisited)
 #pragma endregion
 #pragma region dfs_recursive
 
-TEST_F(SearchingTest, dfsRecursive_whenUndirectedGraphAndSingleRoot_thenVisitedVisited)
+TEST_F(SearchingTest, dfsRecursive_WhenUndirectedGraphAndSingleRoot_ThenVisitedVisited)
 {
     // when
     std::vector<ugraph_v> result = algr::dfs_recursive(undirected_graph, eu_strategy, {0});
@@ -225,7 +225,7 @@ TEST_F(SearchingTest, dfsRecursive_whenUndirectedGraphAndSingleRoot_thenVisitedV
     EXPECT_EQ(std::vector<ugraph_v>({0, 1, 3, 4, 5, 7, 8}), result);
 }
 
-TEST_F(SearchingTest, dfsRecursive_whenUndirectedGraphAndManyRoots_thenAllVisited)
+TEST_F(SearchingTest, dfsRecursive_WhenUndirectedGraphAndManyRoots_ThenAllVisited)
 {
     // given
     std::vector<ugraph_v> vertices = undirected_graph.vertices();
@@ -242,7 +242,7 @@ TEST_F(SearchingTest, dfsRecursive_whenUndirectedGraphAndManyRoots_thenAllVisite
     EXPECT_EQ(vertices, u_strategy.exits);
 }
 
-TEST_F(SearchingTest, dfsRecursive_whenUndirectedGraphAndNoRoots_thenNoVisited)
+TEST_F(SearchingTest, dfsRecursive_WhenUndirectedGraphAndNoRoots_ThenNoVisited)
 {
     // when
     std::vector<ugraph_v> result = algr::dfs_recursive(undirected_graph, eu_strategy, {});
@@ -250,7 +250,7 @@ TEST_F(SearchingTest, dfsRecursive_whenUndirectedGraphAndNoRoots_thenNoVisited)
     EXPECT_TRUE(result.empty());
 }
 
-TEST_F(SearchingTest, dfsRecursive_whenDirectedGraphAndSingleRoot_thenVisitedVisited)
+TEST_F(SearchingTest, dfsRecursive_WhenDirectedGraphAndSingleRoot_ThenVisitedVisited)
 {
     // when
     std::vector<dgraph_v> result = algr::dfs_recursive(directed_graph, ed_strategy, {1});
@@ -260,7 +260,7 @@ TEST_F(SearchingTest, dfsRecursive_whenDirectedGraphAndSingleRoot_thenVisitedVis
     EXPECT_EQ(std::vector<dgraph_v>({0, 1, 3, 4, 7}), result);
 }
 
-TEST_F(SearchingTest, dfsRecursive_whenDirectedGraphAndManyRoots_thenAllVisited)
+TEST_F(SearchingTest, dfsRecursive_WhenDirectedGraphAndManyRoots_ThenAllVisited)
 {
     // given
     std::vector<ugraph_v> vertices = undirected_graph.vertices();

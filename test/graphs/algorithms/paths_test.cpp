@@ -105,7 +105,7 @@ protected:
     weight_t inf = weighted_impl::infinity;
 };
 
-TEST_F(PathsTest, bellmanFord__whenDirectedGraph)
+TEST_F(PathsTest, bellmanFord__WhenDirectedGraph)
 {
     // given
     std::vector<weight_t> distances = {20, 0, inf, 17, 7, 8, 12, 12, 10, 20};
@@ -118,7 +118,7 @@ TEST_F(PathsTest, bellmanFord__whenDirectedGraph)
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(PathsTest, bellmanFord__whenUndirectedGraph)
+TEST_F(PathsTest, bellmanFord__WhenUndirectedGraph)
 {
     // given
     std::vector<weight_t> distances = {4, 0, inf, 7, 7, 8, inf, 10, 10, inf};
@@ -129,7 +129,7 @@ TEST_F(PathsTest, bellmanFord__whenUndirectedGraph)
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(PathsTest, bellmanFord__whenNegativeCycle_thenLogicError)
+TEST_F(PathsTest, bellmanFord__WhenNegativeCycle_ThenLogicError)
 {
     // given
     dgraph.add_edge_between(8, 3, weighted_impl(-20.0));
@@ -139,7 +139,7 @@ TEST_F(PathsTest, bellmanFord__whenNegativeCycle_thenLogicError)
     EXPECT_THROW(exec(), std::logic_error);
 }
 
-TEST_F(PathsTest, dijkstra__when_directed_graph)
+TEST_F(PathsTest, dijkstra__When_directed_graph)
 {
     // given
     std::vector<weight_t> distances = {20, 0, inf, 17, 7, 8, 12, 12, 10, 20};
@@ -150,7 +150,7 @@ TEST_F(PathsTest, dijkstra__when_directed_graph)
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(PathsTest, dijkstra__when_undirected_graph)
+TEST_F(PathsTest, dijkstra__When_undirected_graph)
 {
     // given
     std::vector<weight_t> distances = {4, 0, inf, 7, 7, 8, inf, 10, 10, inf};
@@ -161,7 +161,7 @@ TEST_F(PathsTest, dijkstra__when_undirected_graph)
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(PathsTest, dijkstra__when_negative_edge__then_value_error)
+TEST_F(PathsTest, dijkstra__When_negative_edge__Then_value_error)
 {
     // given
     dgraph.add_edge_between(2, 1, weighted_impl(-2));
@@ -171,7 +171,7 @@ TEST_F(PathsTest, dijkstra__when_negative_edge__then_value_error)
     EXPECT_THROW(exec(), std::logic_error);
 }
 
-TEST_F(PathsTest, floyd_warshall__when_directed_graph)
+TEST_F(PathsTest, floyd_warshall__When_directed_graph)
 {
     // given
     std::vector<std::vector<weight_t>> distances = {
@@ -194,7 +194,7 @@ TEST_F(PathsTest, floyd_warshall__when_directed_graph)
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(PathsTest, floyd_warshall__when_undirected_graph)
+TEST_F(PathsTest, floyd_warshall__When_undirected_graph)
 {
     // given
     std::vector<std::vector<weight_t>> distances = {{0, 4, inf, 3, 11, 10, inf, 8, 12, inf},
