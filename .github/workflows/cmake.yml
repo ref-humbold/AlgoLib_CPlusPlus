@@ -9,6 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: APT Install GTest
+      shell: bash
+      working-directory: ${{github.workspace}}
+      run: sudo apt-get install libgtest-dev
+      
     - name: Install GTest
       shell: bash
       working-directory: ${{github.workspace}}
