@@ -9,6 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install GTest
+      shell: bash
+      working-directory: ${{github.workspace}}
+      run: $GITHUB_WORKSPACE/ci/install_gtest.sh
+
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
 
