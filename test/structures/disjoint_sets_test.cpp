@@ -1,5 +1,5 @@
 /*!
- * \file disjoint_sets_test.c4pp
+ * \file disjoint_sets_test.cpp
  * \brief Tests: Disjoint sets structure (union-find)
  */
 #include <gtest/gtest.h>

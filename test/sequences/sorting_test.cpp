@@ -1,4 +1,3 @@
-
 /*!
  * \file sorting_test.cpp
  * \brief Tests: Algorithms for sorting vectors

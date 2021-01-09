@@ -1,4 +1,7 @@
-//! TESTY DLA UŁAMKÓW
+/**!
+ * \file fraction_test.cpp
+ * \brief Tests: Structure of fraction
+ */
 #include <gtest/gtest.h>
 #include "algolib/mathmat/fraction.hpp"
 

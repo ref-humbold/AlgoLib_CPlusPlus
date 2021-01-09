@@ -1,5 +1,5 @@
 /*!
- * \file sorting_test.cpp
+ * \file subsequences_test.cpp
  * \brief Tests: Algorithms for subsequences
  */
 #include <gtest/gtest.h>

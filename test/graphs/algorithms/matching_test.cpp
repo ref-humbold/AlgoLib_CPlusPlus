@@ -1,5 +1,5 @@
 /**!
- * \file matching.hpp
+ * \file matching_test.hpp
  * \brief Tests: Hopcroft-Karp algorithm for matching in bipartite graph
  */
 #include <gtest/gtest.h>

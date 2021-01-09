@@ -1,5 +1,5 @@
 /*!
- * \file minimal_spanning_tree_test.cpp
+ * \file cutting_test.cpp
  * \brief Tests: Algorithms for graph cutting (edge cut and vertex cut)
  */
 #include <algorithm>

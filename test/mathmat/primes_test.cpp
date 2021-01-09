@@ -1,5 +1,5 @@
 /*!
- * \file avl_tree_test.cpp
+ * \file primes_test.cpp
  * \brief TEST: Algorithms for prime numbers
  */
 #include <gtest/gtest.h>

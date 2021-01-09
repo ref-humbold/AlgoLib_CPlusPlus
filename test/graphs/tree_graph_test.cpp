@@ -1,4 +1,7 @@
-//! Tests: Tree graph structure
+/*!
+ * \file tree_graph_test.cpp
+ * \brief Tests: Structure of tree graph
+ */
 #include <gtest/gtest.h>
 #include "algolib/graphs/tree_graph.hpp"
 

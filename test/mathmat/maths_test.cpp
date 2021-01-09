@@ -1,4 +1,7 @@
-//! TESTY DLA ALGORYTMÓW MATEMATYCZNYCH
+/**!
+ * \file maths_test.cpp
+ * \brief Tests: Algorithms for basic mathematical computations
+ */
 #include <gtest/gtest.h>
 #include "algolib/mathmat/maths.hpp"
 

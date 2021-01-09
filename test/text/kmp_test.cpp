@@ -1,4 +1,7 @@
-//! TESTY DLA ALGORYTMU KNUTHA-MORRISA-PRATTA
+/*!
+ * \file kmp_test.cpp
+ * \brief Tests: Knuth-Morris-Pratt algorithm
+ */
 #include <gtest/gtest.h>
 #include "algolib/text/kmp.hpp"
 

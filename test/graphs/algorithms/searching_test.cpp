@@ -1,4 +1,7 @@
-//! Tests: Graph searching algorithms
+/**!
+ * \file searching_test.cpp
+ * \brief Tests: Graph searching algorithms
+ */
 #include <vector>
 #include <gtest/gtest.h>
 #include "algolib/graphs/algorithms/searching.hpp"
