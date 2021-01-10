@@ -33,8 +33,8 @@ namespace internal
         }
 
         V vertex;
-        int iteration;
-        std::unordered_map<V, int> reached;
+        int iteration = 1;
+        std::unordered_map<V, int> reached = {};
     };
 
     // Single step of recursive DFS.

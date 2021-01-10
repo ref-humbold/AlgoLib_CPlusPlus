@@ -18,8 +18,8 @@ TEST(TopologicalSortingTest, sortTopologicalByInputs_WhenAcyclicGraph_ThenTopolo
     graph.add_edge_between(0, 4);
     graph.add_edge_between(1, 0);
     graph.add_edge_between(1, 4);
-    graph.add_edge_between(3, 1);
     graph.add_edge_between(3, 0);
+    graph.add_edge_between(3, 1);
     graph.add_edge_between(3, 2);
     graph.add_edge_between(5, 1);
     graph.add_edge_between(5, 2);
@@ -39,8 +39,8 @@ TEST(TopologicalSortingTest, sortTopologicalByInputs_WhenCyclicGraph_ThenDirecte
     graph.add_edge_between(1, 0);
     graph.add_edge_between(1, 4);
     graph.add_edge_between(2, 1);
-    graph.add_edge_between(3, 1);
     graph.add_edge_between(3, 0);
+    graph.add_edge_between(3, 1);
     graph.add_edge_between(3, 2);
     graph.add_edge_between(5, 1);
     graph.add_edge_between(5, 2);
