@@ -31,4 +31,4 @@ jobs:
     - name: Test
       working-directory: ${{github.workspace}}/build
       shell: bash
-      run: ctest
+      run: ctest -V --no-compress-output -T test

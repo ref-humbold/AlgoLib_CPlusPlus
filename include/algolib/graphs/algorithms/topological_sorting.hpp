@@ -6,10 +6,10 @@
 #define TOPOLOGICAL_SORTING_HPP_
 
 #include <cstdlib>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
+#include <exception>
 #include <queue>
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -76,7 +76,7 @@ namespace algolib::graphs
      */
     template <typename V, typename VP, typename EP>
     std::vector<typename directed_graph<V, VP, EP>::vertex_type>
-            sort_topological_using_inputs(const directed_graph<V, VP, EP> & graph)
+            sort_topological_by_inputs(const directed_graph<V, VP, EP> & graph)
     {
         std::vector<typename directed_graph<V, VP, EP>::vertex_type> order;
 
@@ -130,7 +130,7 @@ namespace algolib::graphs
      */
     template <typename V, typename VP, typename EP>
     std::vector<typename directed_graph<V, VP, EP>::vertex_type>
-            sort_topological_using_dfs(const directed_graph<V, VP, EP> & graph)
+            sort_topological_by_dfs(const directed_graph<V, VP, EP> & graph)
     {
         if(graph.edges_count() == 0)
             return graph.vertices();
