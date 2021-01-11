@@ -11,8 +11,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: APT Install
-          command: sudo apt-get install build-essential cmake libgtest-dev
+          name: APT Install build-essential
+          command: sudo apt-get update && sudo apt-get install build-essential cmake libgtest-dev
+      - run:
+          name: APT Install CMake + GTest
+          command: sudo apt-get update && sudo apt-get install cmake libgtest-dev
       - run:
           name: Create Build Environment
           command: cmake -E make_directory build
