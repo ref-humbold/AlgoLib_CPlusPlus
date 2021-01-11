@@ -6,6 +6,14 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        include:
+          - cc: gcc
+            cxx: g++
+          - cc: clang
+            cxx: clang++
+
     steps:
     - uses: actions/checkout@v2
 
@@ -21,7 +29,7 @@ jobs:
     - name: Configure CMake
       working-directory: ${{github.workspace}}/build
       shell: bash
-      run: cmake $GITHUB_WORKSPACE
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
 
     - name: Build
       working-directory: ${{github.workspace}}/build
