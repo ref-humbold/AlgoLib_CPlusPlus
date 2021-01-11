@@ -8,4 +8,4 @@ mkdir build && \
 cd build && \
 cmake .. && \
 make && \
-cp *.a /usr/local/lib/"
+find . -name *.a -exec cp {} /usr/local/lib/ \;"
