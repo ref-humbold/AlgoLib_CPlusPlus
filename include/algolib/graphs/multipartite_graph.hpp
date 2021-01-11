@@ -6,9 +6,9 @@
 #define MULTIPARTITE_GRAPH_HPP_
 
 #include <cstdlib>
+#include <algorithm>
 #include <exception>
 #include <stdexcept>
-#include <algorithm>
 #include <string>
 #include <vector>
 #include "undirected_graph.hpp"
@@ -61,7 +61,7 @@ namespace algolib::graphs
         multipartite_graph & operator=(const multipartite_graph &) = default;
         multipartite_graph & operator=(multipartite_graph &&) = default;
 
-        size_t vertices_count() const
+        size_t vertices_count() const override
         {
             return this->graph.vertices_count();
         }
@@ -71,7 +71,8 @@ namespace algolib::graphs
             return this->graph.edges_count();
         }
 
-        std::vector<typename multipartite_graph<N, V, VP, EP>::vertex_type> vertices() const
+        std::vector<typename multipartite_graph<N, V, VP, EP>::vertex_type>
+                vertices() const override
         {
             return this->graph.vertices();
         }

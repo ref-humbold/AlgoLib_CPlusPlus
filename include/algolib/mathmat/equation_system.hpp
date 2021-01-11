@@ -5,12 +5,12 @@
 #ifndef EQUATION_SYSTEM_HPP_
 #define EQUATION_SYSTEM_HPP_
 
-#include <cstdlib>
 #include <cmath>
-#include <exception>
-#include <stdexcept>
+#include <cstdlib>
 #include <algorithm>
 #include <array>
+#include <exception>
+#include <stdexcept>
 #include "equation.hpp"
 
 namespace algolib::mathmat
@@ -169,9 +169,8 @@ namespace algolib::mathmat
     template <size_t N>
     bool equation_system<N>::is_solution(const std::array<double, N> & solution) const
     {
-        return std::all_of(
-                this->equations.begin(), this->equations.end(),
-                [this, solution](const equation<N> & eq) { return eq.is_solution(solution); });
+        return std::all_of(this->equations.begin(), this->equations.end(),
+                           [&](const equation<N> & eq) { return eq.is_solution(solution); });
     }
 }
 
