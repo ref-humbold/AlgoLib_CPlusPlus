@@ -1,0 +1,32 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    working_directory: ~/AlgoLib_CPlusPlus
+    docker:
+      - image: cimg/base:stable
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - run:
+          name: Create Build Environment
+          command: cmake -E make_directory build
+      - run:
+          name: Configure CMake
+          working_directory: build
+          command: cmake ..
+      - run:
+          name: Build
+          working_directory: build
+          command: make -s
+      - run:
+          name: Test
+          working_directory: build
+          command: ctest -V --no-compress-output -T test
+
+workflows:
+  main:
+    jobs:
+      - build-and-test
