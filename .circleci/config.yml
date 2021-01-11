@@ -2,6 +2,13 @@ version: 2.1
 
 jobs:
   build-and-test:
+    parameters:
+      cc:
+        type: string
+        default: gcc
+      cxx:
+        type: string
+        default: g++
     working_directory: ~/AlgoLib_CPlusPlus
     docker:
       - image: cimg/base:stable
@@ -11,18 +18,21 @@ jobs:
     steps:
       - checkout
       - run:
-          name: APT Install build-essential
-          command: sudo apt-get update && sudo apt-get install build-essential
+          name: APT Install Compilers
+          command: sudo apt-get update && sudo apt-get install build-essential clang
       - run:
           name: APT Install CMake + GTest
           command: sudo apt-get update && sudo apt-get install cmake libgtest-dev
+      - run:
+          name: Install GTest
+          command: ./ci/install_gtest.sh
       - run:
           name: Create Build Environment
           command: cmake -E make_directory build
       - run:
           name: Configure CMake
           working_directory: build
-          command: cmake ..
+          command: cmake .. -DCMAKE_C_COMPILER=<< parameters.cc >> -DCMAKE_CXX_COMPILER=<< parameters.cxx >>
       - run:
           name: Build
           working_directory: build
@@ -35,4 +45,9 @@ jobs:
 workflows:
   main:
     jobs:
-      - build-and-test
+      - build-and-test:
+        cc: "gcc"
+        cxx: "g++"
+      - build-and-test:
+        cc: "clang"
+        cxx: "clang++"
