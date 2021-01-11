@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: APT Install build-essential
-          command: sudo apt-get update && sudo apt-get install build-essential cmake libgtest-dev
+          command: sudo apt-get update && sudo apt-get install build-essential
       - run:
           name: APT Install CMake + GTest
           command: sudo apt-get update && sudo apt-get install cmake libgtest-dev
