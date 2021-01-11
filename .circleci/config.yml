@@ -46,8 +46,8 @@ workflows:
   main:
     jobs:
       - build-and-test:
-        cc: "gcc"
-        cxx: "g++"
+          cc: "gcc"
+          cxx: "g++"
       - build-and-test:
-        cc: "clang"
-        cxx: "clang++"
+          cc: "clang"
+          cxx: "clang++"
