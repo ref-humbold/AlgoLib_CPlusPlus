@@ -18,6 +18,7 @@ set(STRUCTURES_TEST "structures")
 set(TEXT_TEST "text")
 
 set(GEOMETRY_TEST_SOURCES
+    "${GEOMETRY_TEST}/closest_points_test.cpp"
     "${GEOMETRY_TEST}/convex_hull_test.cpp"
     "${GEOMETRY_TEST}/points_sorting_test.cpp")
 set(GRAPHS_TEST_SOURCES

@@ -4,8 +4,8 @@
  */
 #include "algolib/geometry/closest_points.hpp"
 #include <cmath>
-#include <memory>
 #include <algorithm>
+#include <memory>
 #include "algolib/geometry/geometry.hpp"
 #include "algolib/geometry/points_sorting.hpp"
 
@@ -18,11 +18,9 @@ namespace
                                                          int index_begin, int index_end)
     {
         int index_middle = index_begin + 1;
-        double distance12, distance23, distance31;
-
-        distance12 = distance(pointsX[index_begin], pointsX[index_middle]);
-        distance23 = distance(pointsX[index_middle], pointsX[index_end]);
-        distance31 = distance(pointsX[index_begin], pointsX[index_end]);
+        double distance12 = distance(pointsX[index_begin], pointsX[index_middle]);
+        double distance23 = distance(pointsX[index_middle], pointsX[index_end]);
+        double distance31 = distance(pointsX[index_begin], pointsX[index_end]);
 
         if(distance12 <= distance23 && distance12 <= distance31)
             return std::make_pair(pointsX[index_begin], pointsX[index_middle]);
@@ -63,8 +61,12 @@ namespace
 
                     if(actual_distance < min_distance)
                     {
+                        std::vector<alge::point2d> closest = {pt1, pt2};
+
+                        alge::sort_by_x(closest);
                         min_distance = actual_distance;
-                        closest_pair.reset(new std::pair<alge::point2d, alge::point2d>(pt1, pt2));
+                        closest_pair.reset(new std::pair<alge::point2d, alge::point2d>(closest[0],
+                                                                                       closest[1]));
                     }
                 }
             }
@@ -81,6 +83,9 @@ namespace
     {
         index_begin = (index_begin + pointsX.size()) % pointsX.size();
         index_end = (index_end + pointsX.size()) % pointsX.size();
+
+        if(index_end == index_begin)
+            return std::make_pair(pointsX[index_begin], pointsX[index_begin]);
 
         if(index_end - index_begin == 1)
             return std::make_pair(pointsX[index_begin], pointsX[index_end]);
@@ -122,6 +127,5 @@ std::pair<alge::point2d, alge::point2d>
 
     alge::sort_by_x(pointsX);
     alge::sort_by_y(pointsY);
-
     return search_closest(pointsX, pointsY);
 }
