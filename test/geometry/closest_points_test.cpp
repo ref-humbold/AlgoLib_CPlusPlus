@@ -33,3 +33,13 @@ TEST(ClosestPointsTest, findClosestPoints_WhenThreePoints_ThenPairOfClosestPoint
     // then
     EXPECT_EQ(std::make_pair(alge::point2d(1, 1), alge::point2d(3, 2)), result);
 }
+
+TEST(ClosestPointsTest, findClosestPoints_WhenMultiplePoints_ThenPairOfClosestPoints)
+{
+    // when
+    std::pair<alge::point2d, alge::point2d> result = alge::find_closest_points(
+            {alge::point2d(1, 1), alge::point2d(-2, 2), alge::point2d(-4, 4), alge::point2d(3, -3),
+             alge::point2d(0, -5), alge::point2d(1, 0), alge::point2d(-7, 2), alge::point2d(4, 5)});
+    // then
+    EXPECT_EQ(std::make_pair(alge::point2d(1, 1), alge::point2d(1, 0)), result);
+}
