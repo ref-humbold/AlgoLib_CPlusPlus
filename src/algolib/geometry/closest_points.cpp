@@ -76,6 +76,7 @@ namespace
 
     // Searches for a pair of closest points in specified sublist of points.
     // Points are specified sorted by X coordinate and by Y coordinate.
+    // (index_begin & index_end inclusive)
     std::pair<alge::point2d, alge::point2d>
             search_closest(const std::vector<alge::point2d> & pointsX,
                            const std::vector<alge::point2d> & pointsY, int index_begin = 0,
@@ -84,10 +85,7 @@ namespace
         index_begin = (index_begin + pointsX.size()) % pointsX.size();
         index_end = (index_end + pointsX.size()) % pointsX.size();
 
-        if(index_end == index_begin)
-            return std::make_pair(pointsX[index_begin], pointsX[index_begin]);
-
-        if(index_end - index_begin == 1)
+        if(index_end - index_begin <= 1)
             return std::make_pair(pointsX[index_begin], pointsX[index_end]);
 
         if(index_end - index_begin == 2)
