@@ -20,26 +20,50 @@ alte::trie::trie(const alte::trie & t) : tree{new alte::trie::trie_node(*t.tree)
 
 alte::trie::trie(alte::trie && t) noexcept
 {
-    std::swap(this->tree, t.tree);
+    std::swap(tree, t.tree);
 }
 
 alte::trie & alte::trie::operator=(const alte::trie & t)
 {
-    node_ptr old_tree = this->tree;
+    node_ptr old_tree = tree;
 
-    this->tree = new trie_node(*t.tree);
+    tree = new trie_node(*t.tree);
     delete old_tree;
     return *this;
 }
 
 alte::trie & alte::trie::operator=(alte::trie && t) noexcept
 {
-    std::swap(this->tree, t.tree);
+    std::swap(tree, t.tree);
     return *this;
 }
 
-void alte::trie::add(const std::string & text)
+void alte::trie::insert(const std::string & text)
 {
+    node_ptr node = tree;
+
+    for(auto && character : text)
+    {
+        node->insert(character, new trie_node);
+        node = node->at(character);
+    }
+
+    node->terminus = true;
+}
+
+bool alte::trie::find(const std::string & text)
+{
+    node_ptr node = tree;
+
+    for(auto && character : text)
+    {
+        node = node->at(character);
+
+        if(node == nullptr)
+            return false;
+    }
+
+    return true;
 }
 
 #pragma endregion
@@ -48,30 +72,23 @@ void alte::trie::add(const std::string & text)
 alte::trie::trie_node::trie_node(const alte::trie::trie_node & node) : terminus{node.terminus}
 {
     for(auto && p : node.children)
-        this->children.emplace(p.first, new trie_node(*p.second));
+        children.emplace(p.first, new trie_node(*p.second));
 }
 
 typename alte::trie::trie_node & alte::trie::trie_node::operator=(const trie::trie_node & node)
 {
-    std::unordered_map<char, node_ptr> old_children = this->children;
+    std::unordered_map<char, node_ptr> old_children = children;
 
-    this->terminus = node.terminus;
-    this->children.clear();
+    terminus = node.terminus;
+    children.clear();
 
     for(auto && p : node.children)
-        this->children.emplace(p.first, new trie_node(*p.second));
+        children.emplace(p.first, new trie_node(*p.second));
 
     for(auto && p : old_children)
         delete p.second;
 
     return *this;
-}
-
-typename alte::trie::node_ptr alte::trie::trie_node::operator[](char character)
-{
-    auto it = this->children.find(character);
-
-    return it == this->children.end() ? nullptr : it->second;
 }
 
 #pragma endregion

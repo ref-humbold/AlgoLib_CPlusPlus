@@ -6,6 +6,8 @@
 #define TRIE_HPP_
 
 #include <cstdlib>
+#include <exception>
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
 
@@ -28,7 +30,8 @@ namespace algolib::text
         trie & operator=(const trie & t);
         trie & operator=(trie && t) noexcept;
 
-        void add(const std::string & text);
+        void insert(const std::string & text);
+        bool find(const std::string & text);
 
     private:
         node_ptr tree = nullptr;
@@ -53,15 +56,33 @@ namespace algolib::text
         trie_node & operator=(const trie_node & node);
         trie_node & operator=(trie_node &&) = delete;
 
-        void set_terminus()
+        node_ptr & operator[](char character)
         {
-            this->terminus = true;
+            return children[character];
         }
 
-        node_ptr operator[](char character);
+        node_ptr at(char character) const
+        {
+            try
+            {
+                return children.at(character);
+            }
+            catch(const std::out_of_range &)
+            {
+                return nullptr;
+            }
+        }
+
+        bool insert(char character, node_ptr node)
+        {
+            auto it = children.emplace(character, node);
+
+            return it.second;
+        }
+
+        bool terminus = false;
 
     private:
-        bool terminus = false;
         std::unordered_map<char, node_ptr> children;
     };
 
