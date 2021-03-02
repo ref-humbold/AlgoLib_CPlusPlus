@@ -8,10 +8,19 @@ namespace alte = algolib::text;
 
 #pragma region trie
 
+alte::trie::trie() : tree{new alte::trie::trie_node()}
+{
+}
+
+alte::trie::trie(std::initializer_list<std::string> il) : alte::trie::trie()
+{
+    for(auto && element : il)
+        insert(element);
+}
+
 alte::trie::~trie()
 {
-    if(tree != nullptr)
-        delete tree;
+    delete tree;
 }
 
 alte::trie::trie(const alte::trie & t) : tree{new alte::trie::trie_node(*t.tree)}
@@ -63,7 +72,7 @@ bool alte::trie::find(const std::string & text)
             return false;
     }
 
-    return true;
+    return node->terminus == true;
 }
 
 #pragma endregion

@@ -7,6 +7,7 @@
 
 #include <cstdlib>
 #include <exception>
+#include <initializer_list>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -23,7 +24,8 @@ namespace algolib::text
         using node_ptr = trie_node *;
 
     public:
-        trie() = default;
+        trie();
+        explicit trie(std::initializer_list<std::string> il);
         ~trie();
         trie(const trie & t);
         trie(trie && t) noexcept;
@@ -34,7 +36,7 @@ namespace algolib::text
         bool find(const std::string & text);
 
     private:
-        node_ptr tree = nullptr;
+        node_ptr tree;
     };
 
 #pragma endregion
@@ -62,15 +64,13 @@ namespace algolib::text
         }
 
         node_ptr at(char character) const
+        try
         {
-            try
-            {
-                return children.at(character);
-            }
-            catch(const std::out_of_range &)
-            {
-                return nullptr;
-            }
+            return children.at(character);
+        }
+        catch(const std::out_of_range &)
+        {
+            return nullptr;
         }
 
         bool insert(char character, node_ptr node)
