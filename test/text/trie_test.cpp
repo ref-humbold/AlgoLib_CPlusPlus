@@ -64,3 +64,33 @@ TEST_F(TrieTest, find_WhenAbsentPrefix_ThenFalse)
     // then
     EXPECT_FALSE(result);
 }
+
+TEST_F(TrieTest, insert_WhenPresent_ThenNothingChanged)
+{
+    // given
+    std::string text = "abcd";
+    // when
+    test_object.insert(text);
+    // then
+    EXPECT_TRUE(test_object.find(text));
+}
+
+TEST_F(TrieTest, insert_WhenAbsent_ThenAdded)
+{
+    // given
+    std::string text = "abxx";
+    // when
+    test_object.insert(text);
+    // then
+    EXPECT_TRUE(test_object.find(text));
+}
+
+TEST_F(TrieTest, find_WhenAbsentPrefix_ThenAdded)
+{
+    // given
+    std::string text = "xy";
+    // when
+    test_object.insert(text);
+    // then
+    EXPECT_TRUE(test_object.find(text));
+}
