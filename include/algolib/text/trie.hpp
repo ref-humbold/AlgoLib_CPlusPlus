@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <exception>
 #include <initializer_list>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -21,21 +22,43 @@ namespace algolib::text
     private:
         class trie_node;
 
-        using node_ptr = trie_node *;
+        using node_ptr = std::shared_ptr<trie_node>;
 
     public:
-        trie();
-        explicit trie(std::initializer_list<std::string> il);
-        ~trie();
-        trie(const trie & t);
-        trie(trie && t) noexcept;
+        trie() : tree{std::make_shared<trie_node>()}
+        {
+        }
+
+        explicit trie(std::initializer_list<std::string> il) : trie()
+        {
+            for(auto && element : il)
+                insert(element);
+        }
+
+        trie(const trie & t) : tree{std::make_shared<trie_node>(*t.tree)}
+        {
+        }
+
+        trie(trie && t) noexcept
+        {
+            std::swap(tree, t.tree);
+        }
+
         trie & operator=(const trie & t);
-        trie & operator=(trie && t) noexcept;
+
+        trie & operator=(trie && t) noexcept
+        {
+            std::swap(tree, t.tree);
+            return *this;
+        }
 
         void insert(const std::string & text);
         bool find(const std::string & text);
+        void remove(const std::string & text);
 
     private:
+        bool remove_node(const std::string & text, node_ptr node, size_t i);
+
         node_ptr tree;
     };
 
@@ -46,21 +69,15 @@ namespace algolib::text
     {
     public:
         trie_node() = default;
-
-        ~trie_node()
-        {
-            for(auto && p : children)
-                delete p.second;
-        }
-
+        ~trie_node() = default;
         trie_node(const trie_node & node);
         trie_node(trie_node &&) = delete;
         trie_node & operator=(const trie_node & node);
         trie_node & operator=(trie_node &&) = delete;
 
-        node_ptr & operator[](char character)
+        bool empty()
         {
-            return children[character];
+            return children.empty();
         }
 
         node_ptr at(char character) const
@@ -78,6 +95,11 @@ namespace algolib::text
             auto it = children.emplace(character, node);
 
             return it.second;
+        }
+
+        void erase(char character)
+        {
+            children.erase(character);
         }
 
         bool terminus = false;
