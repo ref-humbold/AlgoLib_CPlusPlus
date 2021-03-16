@@ -25,7 +25,7 @@ namespace algolib::text
         using node_ptr = std::shared_ptr<trie_node>;
 
     public:
-        trie() : tree{std::make_shared<trie_node>()}
+        trie() : tree{std::make_shared<trie_node>()}, size_{0}
         {
         }
 
@@ -35,13 +35,14 @@ namespace algolib::text
                 insert(element);
         }
 
-        trie(const trie & t) : tree{std::make_shared<trie_node>(*t.tree)}
+        trie(const trie & t) : tree{std::make_shared<trie_node>(*t.tree)}, size_{t.size_}
         {
         }
 
         trie(trie && t) noexcept
         {
             std::swap(tree, t.tree);
+            std::swap(size_, t.size_);
         }
 
         trie & operator=(const trie & t);
@@ -49,17 +50,25 @@ namespace algolib::text
         trie & operator=(trie && t) noexcept
         {
             std::swap(tree, t.tree);
+            std::swap(size_, t.size_);
             return *this;
         }
 
+        size_t size() const
+        {
+            return size_;
+        }
+
+        bool empty() const;
+        bool find(const std::string & text) const;
         void insert(const std::string & text);
-        bool find(const std::string & text);
-        void remove(const std::string & text);
+        void erase(const std::string & text);
 
     private:
         bool remove_node(const std::string & text, node_ptr node, size_t i);
 
         node_ptr tree;
+        size_t size_;
     };
 
 #pragma endregion

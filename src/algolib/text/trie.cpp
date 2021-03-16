@@ -11,23 +11,16 @@ namespace alte = algolib::text;
 alte::trie & alte::trie::operator=(const alte::trie & t)
 {
     tree.reset(new trie_node(*t.tree));
+    size_ = t.size_;
     return *this;
 }
 
-void alte::trie::insert(const std::string & text)
+bool alte::trie::empty() const
 {
-    node_ptr node = tree;
-
-    for(auto && character : text)
-    {
-        node->insert(character, std::make_shared<trie_node>());
-        node = node->at(character);
-    }
-
-    node->terminus = true;
+    return tree->empty();
 }
 
-bool alte::trie::find(const std::string & text)
+bool alte::trie::find(const std::string & text) const
 {
     node_ptr node = tree;
 
@@ -42,7 +35,24 @@ bool alte::trie::find(const std::string & text)
     return node->terminus == true;
 }
 
-void alte::trie::remove(const std::string & text)
+void alte::trie::insert(const std::string & text)
+{
+    node_ptr node = tree;
+
+    for(auto && character : text)
+    {
+        node->insert(character, std::make_shared<trie_node>());
+        node = node->at(character);
+    }
+
+    if(!node->terminus)
+    {
+        size_++;
+        node->terminus = true;
+    }
+}
+
+void alte::trie::erase(const std::string & text)
 {
     if(text.length() > 0)
         remove_node(text, tree, 0);
@@ -50,9 +60,12 @@ void alte::trie::remove(const std::string & text)
 
 bool alte::trie::remove_node(const std::string & text, alte::trie::node_ptr node, size_t i)
 {
-    if(i == text.length())
+    if(i == text.length() && node->terminus)
+    {
+        size_--;
         node->terminus = false;
-    else
+    }
+    else if(i < text.length())
     {
         node_ptr next_node = node->at(text.at(i));
 
