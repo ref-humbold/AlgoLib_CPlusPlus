@@ -8,10 +8,38 @@ namespace alte = algolib::text;
 
 #pragma region trie
 
+alte::trie::trie() : tree{new alte::trie::trie_node}
+{
+}
+
+alte::trie::~trie()
+{
+    delete tree;
+}
+
+alte::trie::trie(const alte::trie & t) : tree{new alte::trie::trie_node(*t.tree)}, size_{t.size_}
+{
+}
+
+alte::trie::trie(alte::trie && t) noexcept : tree{nullptr}, size_{std::move(t.size_)}
+{
+    std::swap(tree, t.tree);
+}
+
 alte::trie & alte::trie::operator=(const alte::trie & t)
 {
-    tree.reset(new trie_node(*t.tree));
+    node_ptr old_tree = tree;
+
+    tree = new trie_node(*t.tree);
     size_ = t.size_;
+    delete old_tree;
+    return *this;
+}
+
+alte::trie & alte::trie::operator=(alte::trie && t) noexcept
+{
+    std::swap(tree, t.tree);
+    std::swap(size_, t.size_);
     return *this;
 }
 
@@ -41,7 +69,7 @@ void alte::trie::insert(const std::string & text)
 
     for(auto && character : text)
     {
-        node->insert(character, std::make_shared<trie_node>());
+        node->insert(character, new trie_node);
         node = node->at(character);
     }
 
@@ -82,7 +110,7 @@ bool alte::trie::remove_node(const std::string & text, alte::trie::node_ptr node
 alte::trie::trie_node::trie_node(const alte::trie::trie_node & node) : terminus{node.terminus}
 {
     for(auto && p : node.children)
-        children.emplace(p.first, std::make_shared<trie_node>(*p.second));
+        children.emplace(p.first, new trie_node(*p.second));
 }
 
 typename alte::trie::trie_node & alte::trie::trie_node::operator=(const trie::trie_node & node)
@@ -90,7 +118,10 @@ typename alte::trie::trie_node & alte::trie::trie_node::operator=(const trie::tr
     std::unordered_map<char, node_ptr> new_children;
 
     for(auto && p : node.children)
-        new_children.emplace(p.first, std::make_shared<trie_node>(*p.second));
+    {
+        new_children.emplace(p.first, new trie_node(*p.second));
+        delete p.second;
+    }
 
     children = new_children;
     terminus = node.terminus;

@@ -56,7 +56,7 @@ TEST_F(AVLTreeTest, moveConstructor)
 
 TEST_F(AVLTreeTest, copyAssignment)
 {
-    alst::avl_tree<int> copy_object({119});
+    alst::avl_tree<int> copy_object = {119};
 
     ASSERT_NE(copy_object.end(), copy_object.find(119));
 
@@ -79,7 +79,7 @@ TEST_F(AVLTreeTest, copyAssignment)
 
 TEST_F(AVLTreeTest, moveAssignment)
 {
-    alst::avl_tree<int> move_object({119});
+    alst::avl_tree<int> move_object = {119};
 
     ASSERT_NE(move_object.end(), move_object.find(119));
 

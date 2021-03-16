@@ -8,7 +8,6 @@
 #include <cstdlib>
 #include <exception>
 #include <initializer_list>
-#include <memory>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -22,37 +21,22 @@ namespace algolib::text
     private:
         class trie_node;
 
-        using node_ptr = std::shared_ptr<trie_node>;
+        using node_ptr = trie_node *;
 
     public:
-        trie() : tree{std::make_shared<trie_node>()}, size_{0}
-        {
-        }
+        trie();
 
-        explicit trie(std::initializer_list<std::string> il) : trie()
+        trie(std::initializer_list<std::string> il) : trie()
         {
             for(auto && element : il)
                 insert(element);
         }
 
-        trie(const trie & t) : tree{std::make_shared<trie_node>(*t.tree)}, size_{t.size_}
-        {
-        }
-
-        trie(trie && t) noexcept
-        {
-            std::swap(tree, t.tree);
-            std::swap(size_, t.size_);
-        }
-
+        ~trie();
+        trie(const trie & t);
+        trie(trie && t) noexcept;
         trie & operator=(const trie & t);
-
-        trie & operator=(trie && t) noexcept
-        {
-            std::swap(tree, t.tree);
-            std::swap(size_, t.size_);
-            return *this;
-        }
+        trie & operator=(trie && t) noexcept;
 
         size_t size() const
         {
@@ -68,7 +52,7 @@ namespace algolib::text
         bool remove_node(const std::string & text, node_ptr node, size_t i);
 
         node_ptr tree;
-        size_t size_;
+        size_t size_ = 0;
     };
 
 #pragma endregion
