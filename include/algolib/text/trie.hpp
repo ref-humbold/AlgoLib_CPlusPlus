@@ -83,17 +83,12 @@ namespace algolib::text
             return nullptr;
         }
 
-        bool insert(char character, node_ptr node)
+        void insert(char character, node_ptr node)
         {
-            auto it = children.emplace(character, node);
-
-            return it.second;
+            children.emplace(character, node);
         }
 
-        void erase(char character)
-        {
-            children.erase(character);
-        }
+        void erase(char character);
 
         bool terminus = false;
 

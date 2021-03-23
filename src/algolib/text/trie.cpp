@@ -60,7 +60,7 @@ bool alte::trie::find(const std::string & text) const
             return false;
     }
 
-    return node->terminus == true;
+    return node->terminus;
 }
 
 void alte::trie::insert(const std::string & text)
@@ -126,6 +126,14 @@ typename alte::trie::trie_node & alte::trie::trie_node::operator=(const trie::tr
     children = new_children;
     terminus = node.terminus;
     return *this;
+}
+
+void alte::trie::trie_node::erase(char character)
+{
+    node_ptr child = at(character);
+
+    delete child;
+    children.erase(character);
 }
 
 #pragma endregion
