@@ -63,12 +63,12 @@ namespace algolib::structures
         }
 
         avl_tree(const avl_tree & avl)
-            : tree{new avl_header_node(*avl.tree)}, count{avl.count}, comparator{avl.comparator}
+            : tree{new avl_header_node(*avl.tree)}, size_{avl.size_}, comparator{avl.comparator}
         {
         }
 
         avl_tree(avl_tree && avl) noexcept
-            : count{std::move(avl.count)}, comparator{std::move(avl.comparator)}
+            : size_{std::move(avl.size_)}, comparator{std::move(avl.comparator)}
         {
             std::swap(this->tree, avl.tree);
         }
@@ -138,7 +138,7 @@ namespace algolib::structures
 
         size_type size() const
         {
-            return this->count;
+            return this->size_;
         }
 
         bool empty() const
@@ -221,11 +221,11 @@ namespace algolib::structures
         // Restores balancing on a path from specified node to the root.
         void balance(node_ptr node);
 
-        // Counts current node balance.
-        int count_balance(inner_ptr node);
+        // size_s current node balance.
+        int size__balance(inner_ptr node);
 
         header_ptr tree = new avl_header_node();  // The tree denoted by its header
-        size_type count = 0;  // Number of elements
+        size_type size_ = 0;  // Number of elements
         Compare comparator;  // Comparator
     };
 
@@ -234,7 +234,7 @@ namespace algolib::structures
     {
         header_ptr tree_orig = this->tree;
 
-        this->count = avl.count;
+        this->size_ = avl.size_;
         this->comparator = avl.comparator;
         this->tree = new avl_header_node(*avl.tree);
         delete tree_orig;
@@ -246,7 +246,7 @@ namespace algolib::structures
     avl_tree<E, Compare> & avl_tree<E, Compare>::operator=(avl_tree<E, Compare> && avl) noexcept
     {
         std::swap(this->tree, avl.tree);
-        std::swap(this->count, avl.count);
+        std::swap(this->size_, avl.size_);
         std::swap(this->comparator, avl.comparator);
 
         return *this;
@@ -302,7 +302,7 @@ namespace algolib::structures
             auto new_node = new avl_inner_node(element);
 
             this->set_root(new_node);
-            ++this->count;
+            ++this->size_;
 
             return std::make_pair(iterator(new_node), true);
         }
@@ -320,7 +320,7 @@ namespace algolib::structures
             node_parent->set_right(new_node);
 
         this->balance(node_parent);
-        ++this->count;
+        ++this->size_;
 
         return std::make_pair(iterator(new_node), true);
     }
@@ -347,7 +347,7 @@ namespace algolib::structures
     {
         delete this->get_root();
         this->set_root(nullptr);
-        this->count = 0;
+        this->size_ = 0;
     }
 
     template <typename E, typename Compare>
@@ -402,7 +402,7 @@ namespace algolib::structures
 
             node->set_left(nullptr);
             node->set_right(nullptr);
-            --this->count;
+            --this->size_;
             delete node;
         }
     }
@@ -447,13 +447,13 @@ namespace algolib::structures
         while(node->get_height() > 0)
         {
             inner_ptr the_node = static_cast<inner_ptr>(node);
-            int new_balance = this->count_balance(the_node);
+            int new_balance = this->size__balance(the_node);
 
             if(new_balance >= 2)
             {
-                if(this->count_balance(the_node->get_left()) > 0)
+                if(this->size__balance(the_node->get_left()) > 0)
                     this->rotate(the_node->get_left());
-                else if(this->count_balance(the_node->get_left()) < 0)
+                else if(this->size__balance(the_node->get_left()) < 0)
                 {
                     this->rotate(the_node->get_left()->get_right());
                     this->rotate(the_node->get_left());
@@ -461,9 +461,9 @@ namespace algolib::structures
             }
             else if(new_balance <= -2)
             {
-                if(this->count_balance(the_node->get_right()) < 0)
+                if(this->size__balance(the_node->get_right()) < 0)
                     this->rotate(the_node->get_right());
-                else if(this->count_balance(the_node->get_right()) > 0)
+                else if(this->size__balance(the_node->get_right()) > 0)
                 {
                     this->rotate(the_node->get_right()->get_left());
                     this->rotate(the_node->get_right());
@@ -475,7 +475,7 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    int avl_tree<E, Compare>::count_balance(avl_tree<E, Compare>::inner_ptr node)
+    int avl_tree<E, Compare>::size__balance(avl_tree<E, Compare>::inner_ptr node)
     {
         int left_height = node->get_left() == nullptr ? 0 : node->get_left()->get_height();
         int right_height = node->get_right() == nullptr ? 0 : node->get_right()->get_height();
@@ -583,7 +583,7 @@ namespace algolib::structures
         value_type element;  //!< Value in the node.
 
     private:
-        void count_height();
+        void size__height();
         void do_set_left(inner_ptr node);
         void do_set_right(inner_ptr node);
 
@@ -635,7 +635,7 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    void avl_tree<E, Compare>::avl_inner_node::count_height()
+    void avl_tree<E, Compare>::avl_inner_node::size__height()
     {
         int left_height = this->left == nullptr ? 0 : this->left->get_height();
         int right_height = this->right == nullptr ? 0 : this->right->get_height();
@@ -651,7 +651,7 @@ namespace algolib::structures
         if(this->left != nullptr)
             this->left->set_parent(this);
 
-        this->count_height();
+        this->size__height();
     }
 
     template <typename E, typename Compare>
@@ -662,7 +662,7 @@ namespace algolib::structures
         if(this->right != nullptr)
             this->right->set_parent(this);
 
-        this->count_height();
+        this->size__height();
     }
 
 #pragma endregion

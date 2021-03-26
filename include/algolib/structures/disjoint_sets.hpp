@@ -6,12 +6,12 @@
 #define DISJOINT_SETS_HPP_
 
 #include <cstdlib>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
+#include <exception>
 #include <initializer_list>
-#include <unordered_map>
 #include <optional>
+#include <stdexcept>
+#include <unordered_map>
 
 namespace algolib::structures
 {
@@ -19,11 +19,11 @@ namespace algolib::structures
     class disjoint_sets
     {
     public:
-        disjoint_sets() : sets{0}
+        disjoint_sets() : size_{0}
         {
         }
 
-        explicit disjoint_sets(std::initializer_list<E> universe) : sets{universe.size()}
+        explicit disjoint_sets(std::initializer_list<E> universe) : size_{universe.size()}
         {
             for(E e : universe)
                 this->represents.emplace(e, e);
@@ -41,13 +41,13 @@ namespace algolib::structures
         //! \return \code true if the structure is empty, otherwise \code false
         bool empty() const
         {
-            return this->sets == 0;
+            return this->size_ == 0;
         }
 
         //! \return number of sets
         size_t size() const
         {
-            return this->sets;
+            return this->size_;
         }
 
         /*!
@@ -159,17 +159,17 @@ namespace algolib::structures
 
     private:
         std::unordered_map<E, E> represents;
-        size_t sets;
+        size_t size_;
     };
 
     template <typename E>
     template <typename InputIterator>
-    disjoint_sets<E>::disjoint_sets(InputIterator first, InputIterator last) : sets{0}
+    disjoint_sets<E>::disjoint_sets(InputIterator first, InputIterator last) : disjoint_sets()
     {
         for(InputIterator it = first; it != last; ++it)
         {
             this->represents.emplace(*it, *it);
-            ++this->sets;
+            ++this->size_;
         }
     }
 
@@ -192,7 +192,7 @@ namespace algolib::structures
             throw std::invalid_argument("New value already present");
 
         this->represents.emplace(element, element);
-        this->sets++;
+        this->size_++;
     }
 
     template <typename E>
@@ -206,7 +206,7 @@ namespace algolib::structures
         for(InputIterator it = first; it != last; ++it)
         {
             this->represents.emplace(*it, *it);
-            this->sets++;
+            this->size_++;
         }
     }
 
@@ -246,7 +246,7 @@ namespace algolib::structures
             return;
 
         this->represents[this->operator[](element1)] = this->operator[](element2);
-        --this->sets;
+        --this->size_;
     }
 
     template <typename E>

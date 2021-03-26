@@ -32,12 +32,12 @@ TEST(StronglyConnectedComponentsTest, findSCC_WhenManyComponents_ThenAllListed)
 
     std::vector<std::unordered_set<graph_v>> expected = {{0, 1, 3, 4}, {2}, {5}, {6, 7, 8, 9}};
     // when
-    std::vector<std::unordered_set<graph_v>> result = find_scc(graph);
+    std::vector<std::unordered_set<graph_v>> result = algr::find_scc(graph);
     // then
     ASSERT_EQ(4, result.size());
 
     for(auto && scc : expected)
-        EXPECT_NE(result.end(), std::find(std::begin(result), std::end(result), scc));
+        EXPECT_TRUE(std::find(result.begin(), result.end(), scc) != result.end());
 }
 
 TEST(StronglyConnectedComponentsTest, findSCC_WhenSingeleComponent_ThenAllVertices)
@@ -55,7 +55,7 @@ TEST(StronglyConnectedComponentsTest, findSCC_WhenSingeleComponent_ThenAllVertic
 
     std::vector<std::unordered_set<graph_v>> expected = {{0, 1, 2, 3, 4, 5, 6}};
     // when
-    std::vector<std::unordered_set<graph_v>> result = find_scc(graph);
+    std::vector<std::unordered_set<graph_v>> result = algr::find_scc(graph);
     // then
     ASSERT_EQ(1, result.size());
     EXPECT_EQ(expected, result);
@@ -67,10 +67,10 @@ TEST(StronglyConnectedComponentsTest, findSCC_WhenEmptyGraph_ThenEachVertexIsCom
     graph_t graph({0, 1, 2, 3});
     std::vector<std::unordered_set<graph_v>> expected = {{0}, {1}, {2}, {3}};
     // when
-    std::vector<std::unordered_set<graph_v>> result = find_scc(graph);
+    std::vector<std::unordered_set<graph_v>> result = algr::find_scc(graph);
     // then
     ASSERT_EQ(4, result.size());
 
     for(auto && scc : expected)
-        EXPECT_NE(result.end(), std::find(std::begin(result), std::end(result), scc));
+        EXPECT_TRUE(std::find(result.begin(), result.end(), scc) != result.end());
 }
