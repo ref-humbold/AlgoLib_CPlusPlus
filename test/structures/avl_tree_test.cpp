@@ -51,14 +51,14 @@ TEST_F(AVLTreeTest, moveConstructor)
     ASSERT_EQ(numbers.size(), move_object.size());
 
     for(const auto & e : numbers)
-        EXPECT_NE(move_object.end(), move_object.find(e));
+        EXPECT_TRUE(move_object.find(e) != move_object.end());
 }
 
 TEST_F(AVLTreeTest, copyAssignment)
 {
     alst::avl_tree<int> copy_object({119});
 
-    ASSERT_NE(copy_object.end(), copy_object.find(119));
+    ASSERT_TRUE(copy_object.find(119) != copy_object.end());
 
     copy_object = test_object;
 
@@ -81,14 +81,14 @@ TEST_F(AVLTreeTest, moveAssignment)
 {
     alst::avl_tree<int> move_object({119});
 
-    ASSERT_NE(move_object.end(), move_object.find(119));
+    ASSERT_TRUE(move_object.find(119) != move_object.end());
 
     move_object = std::move(test_object);
 
     ASSERT_EQ(numbers.size(), move_object.size());
 
     for(const auto & e : numbers)
-        EXPECT_NE(move_object.end(), move_object.find(e));
+        EXPECT_TRUE(move_object.find(e) != move_object.end());
 }
 
 TEST_F(AVLTreeTest, copyAssignment_WhenSelfAssignment_ThenObjectUnchanged)
@@ -98,7 +98,7 @@ TEST_F(AVLTreeTest, copyAssignment_WhenSelfAssignment_ThenObjectUnchanged)
     ASSERT_EQ(numbers.size(), test_object.size());
 
     for(const auto & e : numbers)
-        EXPECT_NE(test_object.end(), test_object.find(e));
+        EXPECT_TRUE(test_object.find(e) != test_object.end());
 }
 
 TEST_F(AVLTreeTest, empty_WhenNotEmpty_ThenFalse)
@@ -143,7 +143,7 @@ TEST_F(AVLTreeTest, find_WhenPresentElement_ThenIteratorNotEnd)
     {
         auto result = test_object.find(i);
 
-        EXPECT_NE(test_object.end(), result);
+        EXPECT_TRUE(result != test_object.end());
     }
 }
 
@@ -155,7 +155,7 @@ TEST_F(AVLTreeTest, find_WhenAbsentElement_ThenIteratorEnd)
     {
         auto result = test_object.find(i);
 
-        EXPECT_EQ(test_object.end(), result);
+        EXPECT_FALSE(result != test_object.end());
     }
 }
 
@@ -165,7 +165,7 @@ TEST_F(AVLTreeTest, find_WhenConstObjectAndPresentElement_ThenIteratorNotEnd)
     {
         auto result = const_test_object.find(i);
 
-        EXPECT_NE(const_test_object.end(), result);
+        EXPECT_TRUE(result != const_test_object.end());
     }
 }
 
@@ -177,7 +177,7 @@ TEST_F(AVLTreeTest, find_WhenConstObjectAndAbsentElement_ThenIteratorEnd)
     {
         auto result = const_test_object.find(i);
 
-        EXPECT_EQ(const_test_object.end(), result);
+        EXPECT_FALSE(result != const_test_object.end());
     }
 }
 
@@ -300,9 +300,9 @@ TEST_F(AVLTreeTest, insert_WhenNewElement_ThenIteratorNotEndAndTrue)
         auto result = test_object.insert(i);
 
         ASSERT_TRUE(result.second);
-        EXPECT_NE(test_object.end(), result.first);
+        EXPECT_TRUE(result.first != test_object.end());
         EXPECT_EQ(i, *result.first);
-        EXPECT_NE(test_object.end(), test_object.find(i));
+        EXPECT_TRUE(test_object.find(i) != test_object.end());
     }
 
     EXPECT_EQ(numbers.size() + elems.size(), test_object.size());
@@ -317,9 +317,9 @@ TEST_F(AVLTreeTest, insert_WhenPresentElement_ThenIteratorEndAndFalse)
         auto result = test_object.insert(i);
 
         ASSERT_FALSE(result.second);
-        EXPECT_NE(test_object.end(), result.first);
+        EXPECT_TRUE(result.first != test_object.end());
         EXPECT_EQ(i, *result.first);
-        EXPECT_NE(test_object.end(), test_object.find(i));
+        EXPECT_TRUE(test_object.find(i) != test_object.end());
     }
 
     EXPECT_EQ(numbers.size(), test_object.size());
@@ -334,7 +334,7 @@ TEST_F(AVLTreeTest, erase_WhenPresentElement_ThenNotFound)
         size_t result = test_object.erase(i);
 
         EXPECT_EQ(1, result);
-        EXPECT_EQ(test_object.end(), test_object.find(i));
+        EXPECT_FALSE(test_object.find(i) != test_object.end());
     }
 
     EXPECT_EQ(numbers.size() - elems.size(), test_object.size());
@@ -350,8 +350,8 @@ TEST_F(AVLTreeTest, erase_WhenErasingRootFromTwoElements_ThenOneElementRemoved_1
     size_t result = test_object.erase(root);
 
     EXPECT_EQ(1, result);
-    EXPECT_EQ(test_object.end(), test_object.find(root));
-    EXPECT_NE(test_object.end(), test_object.find(elem));
+    EXPECT_FALSE(test_object.find(root) != test_object.end());
+    EXPECT_TRUE(test_object.find(elem) != test_object.end());
     EXPECT_EQ(1, test_object.size());
 }
 
@@ -365,8 +365,8 @@ TEST_F(AVLTreeTest, erase_WhenErasingRootFromTwoElements_ThenOneElementRemoved_2
     size_t result = test_object.erase(root);
 
     EXPECT_EQ(1, result);
-    EXPECT_EQ(test_object.end(), test_object.find(root));
-    EXPECT_NE(test_object.end(), test_object.find(elem));
+    EXPECT_FALSE(test_object.find(root) != test_object.end());
+    EXPECT_TRUE(test_object.find(elem) != test_object.end());
     EXPECT_EQ(1, test_object.size());
 }
 
@@ -379,7 +379,7 @@ TEST_F(AVLTreeTest, erase_WhenOneElement_ThenOneElementRemovedAndEmptyTree)
     size_t result = test_object.erase(root);
 
     EXPECT_EQ(1, result);
-    EXPECT_EQ(test_object.end(), test_object.find(root));
+    EXPECT_FALSE(test_object.find(root) != test_object.end());
     EXPECT_TRUE(test_object.empty());
     EXPECT_EQ(0, test_object.size());
 }
@@ -404,7 +404,7 @@ TEST_F(AVLTreeTest, erase_WhenAbsentElement_ThenZeroElementsRemoved)
         size_t result = test_object.erase(i);
 
         EXPECT_EQ(0, result);
-        EXPECT_EQ(test_object.end(), test_object.find(i));
+        EXPECT_FALSE(test_object.find(i) != test_object.end());
     }
 
     EXPECT_EQ(numbers.size(), test_object.size());
