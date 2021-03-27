@@ -62,7 +62,7 @@ namespace algolib::text
     {
     public:
         trie_node() = default;
-        ~trie_node() = default;
+        ~trie_node();
         trie_node(const trie_node & node);
         trie_node(trie_node &&) = delete;
         trie_node & operator=(const trie_node & node);
@@ -83,9 +83,11 @@ namespace algolib::text
             return nullptr;
         }
 
-        void insert(char character, node_ptr node)
+        bool insert(char character, node_ptr node)
         {
-            children.emplace(character, node);
+            auto p = children.emplace(character, node);
+
+            return p.second;
         }
 
         void erase(char character);

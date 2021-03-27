@@ -69,7 +69,12 @@ void alte::trie::insert(const std::string & text)
 
     for(auto && character : text)
     {
-        node->insert(character, new trie_node);
+        node_ptr new_node = new trie_node;
+        bool inserted = node->insert(character, new_node);
+
+        if(!inserted)
+            delete new_node;
+
         node = node->at(character);
     }
 
@@ -107,6 +112,12 @@ bool alte::trie::remove_node(const std::string & text, alte::trie::node_ptr node
 #pragma endregion
 #pragma region trie_node
 
+alte::trie::trie_node::~trie_node()
+{
+    for(auto && p : children)
+        delete p.second;
+}
+
 alte::trie::trie_node::trie_node(const alte::trie::trie_node & node) : terminus{node.terminus}
 {
     for(auto && p : node.children)
@@ -115,16 +126,14 @@ alte::trie::trie_node::trie_node(const alte::trie::trie_node & node) : terminus{
 
 typename alte::trie::trie_node & alte::trie::trie_node::operator=(const trie::trie_node & node)
 {
-    std::unordered_map<char, node_ptr> new_children;
+    std::unordered_map<char, node_ptr> old_children = children;
 
-    for(auto && p : node.children)
-    {
-        new_children.emplace(p.first, new trie_node(*p.second));
-        delete p.second;
-    }
-
-    children = new_children;
+    children = node.children;
     terminus = node.terminus;
+
+    for(auto && p : old_children)
+        delete p.second;
+
     return *this;
 }
 
