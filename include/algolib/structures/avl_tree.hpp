@@ -50,8 +50,7 @@ namespace algolib::structures
         {
         }
 
-        explicit avl_tree(std::initializer_list<value_type> il,
-                          const Compare & comparator = Compare())
+        avl_tree(std::initializer_list<value_type> il, const Compare & comparator = Compare())
             : comparator{comparator}
         {
             for(auto && element : il)

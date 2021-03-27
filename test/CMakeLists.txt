@@ -51,7 +51,8 @@ set(STRUCTURES_TEST_SOURCES
 set(TEXT_TEST_SOURCES
     "${TEXT_TEST}/base_words_map_test.cpp"
     "${TEXT_TEST}/kmp_test.cpp"
-    "${TEXT_TEST}/suffix_array_test.cpp")
+    "${TEXT_TEST}/suffix_array_test.cpp"
+    "${TEXT_TEST}/trie_test.cpp")
 
 set(TEST_SOURCES
     "${GEOMETRY_TEST_SOURCES}"

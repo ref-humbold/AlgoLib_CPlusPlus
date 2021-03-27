@@ -51,7 +51,8 @@ set(STRUCTURES_SOURCES
 set(TEXT_SOURCES
     "${TEXT}/base_words_map.cpp"
     "${TEXT}/kmp.cpp"
-    "${TEXT}/suffix_array.cpp")
+    "${TEXT}/suffix_array.cpp"
+    "${TEXT}/trie.cpp")
 
 set(SOURCES
     "${GEOMETRY_SOURCES}"
