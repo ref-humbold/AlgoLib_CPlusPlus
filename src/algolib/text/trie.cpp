@@ -85,18 +85,19 @@ bool alte::trie::remove_node(const std::string & text, alte::trie::node_ptr node
 
 alte::trie::trie_node::trie_node(const alte::trie::trie_node & node) : terminus{node.terminus}
 {
-    for(auto && p : node.children)
-        children.emplace(p.first, new trie_node(*p.second));
+    for(size_t i = 0; i < node.children.size(); ++i)
+        if(node.children[i])
+            children[i].reset(new trie_node(*node.children[i]));
 }
 
 typename alte::trie::trie_node & alte::trie::trie_node::operator=(const trie::trie_node & node)
 {
-    std::unordered_map<char, node_uptr> new_children;
+    for(size_t i = 0; i < node.children.size(); ++i)
+        if(node.children[i])
+            children[i].reset(new trie_node(*node.children[i]));
+        else
+            children[i].reset(nullptr);
 
-    for(auto && p : node.children)
-        children.emplace(p.first, new trie_node(*p.second));
-
-    children = std::move(new_children);
     terminus = node.terminus;
     return *this;
 }

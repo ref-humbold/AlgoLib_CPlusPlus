@@ -6,6 +6,8 @@
 #define TRIE_HPP_
 
 #include <cstdlib>
+#include <algorithm>
+#include <array>
 #include <exception>
 #include <initializer_list>
 #include <memory>
@@ -77,9 +79,10 @@ namespace algolib::text
         trie_node & operator=(const trie_node & node);
         trie_node & operator=(trie_node &&) = default;
 
-        bool empty()
+        bool empty() const
         {
-            return children.empty();
+            return std::all_of(children.begin(), children.end(),
+                               [](const node_uptr & child) { return !child; });
         }
 
         node_ptr at(char character) const
@@ -94,18 +97,19 @@ namespace algolib::text
 
         void insert(char character, node_uptr node)
         {
-            children.emplace(character, std::move(node));
+            if(!children[character])
+                children[character] = std::move(node);
         }
 
         void erase(char character)
         {
-            children.erase(character);
+            children[character].reset(nullptr);
         }
 
         bool terminus = false;
 
     private:
-        std::unordered_map<char, node_uptr> children;
+        std::array<node_uptr, 256> children;
     };
 
 #pragma endregion
