@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <exception>
 #include <initializer_list>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -22,9 +23,10 @@ namespace algolib::text
         class trie_node;
 
         using node_ptr = trie_node *;
+        using node_uptr = std::unique_ptr<trie_node>;
 
     public:
-        trie();
+        trie() = default;
 
         trie(std::initializer_list<std::string> il) : trie()
         {
@@ -32,11 +34,18 @@ namespace algolib::text
                 insert(element);
         }
 
-        ~trie();
+        ~trie() = default;
         trie(const trie & t);
-        trie(trie && t) noexcept;
+        trie(trie && t) noexcept = default;
+
         trie & operator=(const trie & t);
-        trie & operator=(trie && t) noexcept;
+
+        trie & operator=(trie && t) noexcept
+        {
+            std::swap(tree, t.tree);
+            std::swap(size_, t.size_);
+            return *this;
+        }
 
         size_t size() const
         {
@@ -51,7 +60,7 @@ namespace algolib::text
     private:
         bool remove_node(const std::string & text, node_ptr node, size_t i);
 
-        node_ptr tree;
+        node_uptr tree = std::make_unique<trie_node>();
         size_t size_ = 0;
     };
 
@@ -62,11 +71,11 @@ namespace algolib::text
     {
     public:
         trie_node() = default;
-        ~trie_node();
+        ~trie_node() = default;
         trie_node(const trie_node & node);
-        trie_node(trie_node &&) = delete;
+        trie_node(trie_node &&) = default;
         trie_node & operator=(const trie_node & node);
-        trie_node & operator=(trie_node &&) = delete;
+        trie_node & operator=(trie_node &&) = default;
 
         bool empty()
         {
@@ -76,26 +85,27 @@ namespace algolib::text
         node_ptr at(char character) const
         try
         {
-            return children.at(character);
+            return children.at(character).get();
         }
         catch(const std::out_of_range &)
         {
             return nullptr;
         }
 
-        bool insert(char character, node_ptr node)
+        void insert(char character, node_uptr node)
         {
-            auto p = children.emplace(character, node);
-
-            return p.second;
+            children.emplace(character, std::move(node));
         }
 
-        void erase(char character);
+        void erase(char character)
+        {
+            children.erase(character);
+        }
 
         bool terminus = false;
 
     private:
-        std::unordered_map<char, node_ptr> children;
+        std::unordered_map<char, node_uptr> children;
     };
 
 #pragma endregion
