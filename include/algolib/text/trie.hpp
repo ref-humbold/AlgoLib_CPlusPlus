@@ -25,15 +25,20 @@ namespace algolib::text
         class trie_node;
 
         using node_ptr = trie_node *;
-        using node_uptr = std::unique_ptr<trie_node>;
+        using node_uniq_ptr = std::unique_ptr<trie_node>;
 
     public:
         trie() = default;
 
-        trie(std::initializer_list<std::string> il) : trie()
+        template <typename InputIterator>
+        trie(InputIterator first, InputIterator last)
         {
-            for(auto && element : il)
-                insert(element);
+            for(InputIterator it = first; it != last; ++it)
+                insert(*it);
+        }
+
+        trie(std::initializer_list<std::string> il) : trie(il.begin(), il.end())
+        {
         }
 
         ~trie() = default;
@@ -55,14 +60,33 @@ namespace algolib::text
         }
 
         bool empty() const;
+
+        /*!
+         * \brief Checks whether specified text is present in the trie.
+         * \param text text to check
+         * \return \code true whether text was found in trie otherwise \code false
+         */
         bool find(const std::string & text) const;
+
+        /*!
+         * \brief Adds a new text to the trie.
+         * \param text text to be added
+         */
         void insert(const std::string & text);
+
+        /*!
+         * \brief Removes specified text from the trie if present.
+         * \param text text to be removed
+         */
         void erase(const std::string & text);
+
+        //! \brief Removes all elements in the trie.
+        void clear();
 
     private:
         bool remove_node(const std::string & text, node_ptr node, size_t i);
 
-        node_uptr tree = std::make_unique<trie_node>();
+        node_uniq_ptr tree = std::make_unique<trie_node>();
         size_t size_ = 0;
     };
 
@@ -82,7 +106,7 @@ namespace algolib::text
         bool empty() const
         {
             return std::all_of(children.begin(), children.end(),
-                               [](const node_uptr & child) { return !child; });
+                               [](const node_uniq_ptr & child) { return !child; });
         }
 
         node_ptr at(char character) const
@@ -95,7 +119,7 @@ namespace algolib::text
             return nullptr;
         }
 
-        void insert(char character, node_uptr node)
+        void insert(char character, node_uniq_ptr node)
         {
             if(!children[character])
                 children[character] = std::move(node);
@@ -109,7 +133,7 @@ namespace algolib::text
         bool terminus = false;
 
     private:
-        std::array<node_uptr, 256> children;
+        std::array<node_uniq_ptr, 256> children;
     };
 
 #pragma endregion

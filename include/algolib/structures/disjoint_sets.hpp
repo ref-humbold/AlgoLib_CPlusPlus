@@ -23,14 +23,12 @@ namespace algolib::structures
         {
         }
 
-        explicit disjoint_sets(std::initializer_list<E> universe) : size_{universe.size()}
-        {
-            for(E e : universe)
-                this->represents.emplace(e, e);
-        }
-
         template <typename InputIterator>
         disjoint_sets(InputIterator first, InputIterator last);
+
+        disjoint_sets(std::initializer_list<E> il) : disjoint_sets(il.begin(), il.end())
+        {
+        }
 
         ~disjoint_sets() = default;
         disjoint_sets(const disjoint_sets & ds) = default;

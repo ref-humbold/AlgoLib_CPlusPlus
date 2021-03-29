@@ -10,17 +10,15 @@ namespace alst = algolib::structures;
 class DoubleHeapTest : public ::testing::Test
 {
 protected:
-    alst::double_heap<int> test_object;
     const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};
-    const int minimum;
-    const int maximum;
+    const int minimum, maximum;
+    alst::double_heap<int> test_object;
 
 public:
     DoubleHeapTest()
-        : test_object{alst::double_heap<int>(
-                {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26})},
-          minimum{*std::min_element(numbers.begin(), numbers.end())},
-          maximum{*std::max_element(numbers.begin(), numbers.end())}
+        : minimum{*std::min_element(numbers.begin(), numbers.end())},
+          maximum{*std::max_element(numbers.begin(), numbers.end())},
+          test_object{numbers.begin(), numbers.end()}
     {
     }
 

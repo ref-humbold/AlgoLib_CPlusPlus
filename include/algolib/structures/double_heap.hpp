@@ -7,8 +7,8 @@
 
 #include <cstdlib>
 #include <exception>
-#include <stdexcept>
 #include <initializer_list>
+#include <stdexcept>
 #include <vector>
 
 namespace algolib::structures
@@ -29,12 +29,17 @@ namespace algolib::structures
         {
         }
 
-        explicit double_heap(std::initializer_list<value_type> il,
-                             const Compare & compare = Compare())
+        template <typename InputIterator>
+        double_heap(InputIterator first, InputIterator last, const Compare & compare = Compare())
             : heap{Container()}, compare{compare}
         {
-            for(const auto & e : il)
-                this->push(e);
+            for(InputIterator it = first; it != last; ++it)
+                this->push(*it);
+        }
+
+        double_heap(std::initializer_list<value_type> il, const Compare & compare = Compare())
+            : double_heap(il.begin(), il.end(), compare)
+        {
         }
 
         ~double_heap() = default;

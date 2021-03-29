@@ -62,6 +62,12 @@ void alte::trie::erase(const std::string & text)
         remove_node(text, tree.get(), 0);
 }
 
+void alte::trie::clear()
+{
+    tree.reset(new trie_node);
+    size_ = 0;
+}
+
 bool alte::trie::remove_node(const std::string & text, alte::trie::node_ptr node, size_t i)
 {
     if(i == text.length() && node->terminus)

@@ -46,15 +46,21 @@ namespace algolib::structures
         using difference_type = typename std::iterator_traits<iterator>::difference_type;
         using size_type = size_t;
 
-        explicit avl_tree(const Compare & comparator = Compare()) : comparator{comparator}
+        explicit avl_tree(const Compare & compare = Compare()) : compare{compare}
         {
         }
 
-        avl_tree(std::initializer_list<value_type> il, const Compare & comparator = Compare())
-            : comparator{comparator}
+        template <typename InputIterator>
+        avl_tree(InputIterator first, InputIterator last, const Compare & compare = Compare())
+            : compare{compare}
         {
-            for(auto && element : il)
-                insert(element);
+            for(InputIterator it = first; it != last; ++it)
+                this->insert(*it);
+        }
+
+        avl_tree(std::initializer_list<value_type> il, const Compare & compare = Compare())
+            : avl_tree(il.begin(), il.end(), compare)
+        {
         }
 
         ~avl_tree()
@@ -63,12 +69,12 @@ namespace algolib::structures
         }
 
         avl_tree(const avl_tree & avl)
-            : tree{new avl_header_node(*avl.tree)}, size_{avl.size_}, comparator{avl.comparator}
+            : tree{new avl_header_node(*avl.tree)}, size_{avl.size_}, compare{avl.compare}
         {
         }
 
         avl_tree(avl_tree && avl) noexcept
-            : size_{std::move(avl.size_)}, comparator{std::move(avl.comparator)}
+            : size_{std::move(avl.size_)}, compare{std::move(avl.compare)}
         {
             std::swap(this->tree, avl.tree);
         }
@@ -147,14 +153,14 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Checks whether specified value is present in this tree.
+         * \brief Checks whether specified value is present in the tree.
          * \param element value to check
          * \return iterator on the element if found, otherwise iterator at the end
          */
         iterator find(const_reference element);
 
         /*!
-         * \brief Checks whether specified value is present in this tree.
+         * \brief Checks whether specified value is present in the tree.
          * \param element value to check
          * \return iterator on the element if found, otherwise iterator at the end
          */
@@ -175,7 +181,7 @@ namespace algolib::structures
          */
         size_type erase(const_reference element);
 
-        //! \brief Removes all elements in this tree.
+        //! \brief Removes all elements in the tree.
         void clear();
 
     private:
@@ -226,7 +232,7 @@ namespace algolib::structures
 
         header_ptr tree = new avl_header_node();  // The tree denoted by its header
         size_type size_ = 0;  // Number of elements
-        Compare comparator;  // Comparator
+        Compare compare;  // Comparator
     };
 
     template <typename E, typename Compare>
@@ -235,7 +241,7 @@ namespace algolib::structures
         header_ptr tree_orig = this->tree;
 
         this->size_ = avl.size_;
-        this->comparator = avl.comparator;
+        this->compare = avl.compare;
         this->tree = new avl_header_node(*avl.tree);
         delete tree_orig;
 
@@ -247,7 +253,7 @@ namespace algolib::structures
     {
         std::swap(this->tree, avl.tree);
         std::swap(this->size_, avl.size_);
-        std::swap(this->comparator, avl.comparator);
+        std::swap(this->compare, avl.compare);
 
         return *this;
     }
@@ -260,7 +266,7 @@ namespace algolib::structures
 
         std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
                                                                        const_reference e) {
-            return !comparator(n->element, e) && !comparator(e, n->element);
+            return !compare(n->element, e) && !compare(e, n->element);
         };
         node_ptr the_node = this->find_node(element, equal);
 
@@ -276,7 +282,7 @@ namespace algolib::structures
 
         std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
                                                                        const_reference e) {
-            return !comparator(n->element, e) && !comparator(e, n->element);
+            return !compare(n->element, e) && !compare(e, n->element);
         };
         node_ptr the_node = this->find_node(element, equal);
 
@@ -292,8 +298,7 @@ namespace algolib::structures
             inner_ptr child = this->search(n, e);
 
             return child == nullptr
-                   || (!this->comparator(child->element, e)
-                       && !this->comparator(e, child->element));
+                   || (!this->compare(child->element, e) && !this->compare(e, child->element));
         };
         inner_ptr node_parent = this->find_node(element, child_equal);
 
@@ -314,7 +319,7 @@ namespace algolib::structures
 
         auto new_node = new avl_inner_node(element);
 
-        if(this->comparator(element, node_parent->element))
+        if(this->compare(element, node_parent->element))
             node_parent->set_left(new_node);
         else
             node_parent->set_right(new_node);
@@ -330,7 +335,7 @@ namespace algolib::structures
     {
         std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
                                                                        const_reference e) {
-            return !this->comparator(n->element, e) && !this->comparator(e, n->element);
+            return !this->compare(n->element, e) && !this->compare(e, n->element);
         };
         inner_ptr the_node = this->find_node(element, equal);
 
@@ -354,10 +359,10 @@ namespace algolib::structures
     typename avl_tree<E, Compare>::inner_ptr
             avl_tree<E, Compare>::search(inner_ptr node, const_reference element) const
     {
-        if(this->comparator(element, node->element))
+        if(this->compare(element, node->element))
             return node->get_left();
 
-        if(this->comparator(node->element, element))
+        if(this->compare(node->element, element))
             return node->get_right();
 
         return node;

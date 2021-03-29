@@ -11,11 +11,11 @@ namespace alte = algolib::text;
 class TrieTest : public ::testing::Test
 {
 protected:
-    alte::trie test_object;
     const std::vector<std::string> texts = {"abcd", "ab", "xyz"};
+    alte::trie test_object;
 
 public:
-    TrieTest() : test_object{alte::trie({"abcd", "ab", "xyz"})}
+    TrieTest() : test_object{texts.begin(), texts.end()}
     {
     }
 
@@ -74,7 +74,7 @@ TEST_F(TrieTest, moveAssignment)
         EXPECT_TRUE(copy_object.find(text));
 }
 
-TEST_F(TrieTest, copyAssignment_WhenSelfAssignment_ThenObjectUnchanged)
+TEST_F(TrieTest, copyAssignment_WhenSelfAssignment_ThenObjectUn)
 {
     // when
     test_object = test_object;
@@ -145,7 +145,7 @@ TEST_F(TrieTest, find_WhenAbsentPrefix_ThenFalse)
     EXPECT_FALSE(result);
 }
 
-TEST_F(TrieTest, insert_WhenPresent_ThenNothingChanged)
+TEST_F(TrieTest, insert_WhenPresent_ThenNothing)
 {
     // given
     std::string text = "abcd";
@@ -189,7 +189,7 @@ TEST_F(TrieTest, erase_WhenPresent_ThenRemoved)
     EXPECT_EQ(texts.size() - 1, test_object.size());
 }
 
-TEST_F(TrieTest, erase_WhenAbsent_ThenNothingChanged)
+TEST_F(TrieTest, erase_WhenAbsent_ThenNothing)
 {
     // given
     std::string text = "abxx";
@@ -200,7 +200,7 @@ TEST_F(TrieTest, erase_WhenAbsent_ThenNothingChanged)
     EXPECT_EQ(texts.size(), test_object.size());
 }
 
-TEST_F(TrieTest, erase_WhenAbsentPrefix_ThenNothingChanged)
+TEST_F(TrieTest, erase_WhenAbsentPrefix_ThenNothing)
 {
     // given
     std::string text = "xy";
@@ -210,4 +210,13 @@ TEST_F(TrieTest, erase_WhenAbsentPrefix_ThenNothingChanged)
     ASSERT_TRUE(test_object.find("xyz"));
     EXPECT_FALSE(test_object.find(text));
     EXPECT_EQ(texts.size(), test_object.size());
+}
+
+TEST_F(TrieTest, clear_WhenNotEmpty_ThenEmpty)
+{
+    // when
+    test_object.clear();
+    // then
+    EXPECT_TRUE(test_object.empty());
+    EXPECT_EQ(0, test_object.size());
 }

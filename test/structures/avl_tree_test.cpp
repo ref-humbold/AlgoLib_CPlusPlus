@@ -10,15 +10,14 @@ namespace alst = algolib::structures;
 class AVLTreeTest : public ::testing::Test
 {
 protected:
+    const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};
     alst::avl_tree<int> test_object;
     const alst::avl_tree<int> const_test_object;
-    const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};
 
 public:
     AVLTreeTest()
-        : test_object{alst::avl_tree<int>({10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26})},
-          const_test_object{
-                  alst::avl_tree<int>({10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26})}
+        : test_object{numbers.begin(), numbers.end()},
+          const_test_object{numbers.begin(), numbers.end()}
     {
     }
 

@@ -13,7 +13,7 @@ protected:
     alst::disjoint_sets<int> test_object;
 
 public:
-    DisjointSetsTest() : test_object{alst::disjoint_sets<int>({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})}
+    DisjointSetsTest() : test_object{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
     {
     }
 
