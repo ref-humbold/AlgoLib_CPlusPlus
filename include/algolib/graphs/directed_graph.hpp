@@ -6,12 +6,12 @@
 #define DIRECTED_GRAPH_HPP_
 
 #include <cstdlib>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
+#include <exception>
+#include <numeric>
+#include <stdexcept>
 #include <unordered_set>
 #include <vector>
-#include <numeric>
 #include "simple_graph.hpp"
 
 namespace algolib::graphs
@@ -21,7 +21,7 @@ namespace algolib::graphs
     {
         ~directed_graph() override = default;
 
-        //! Reverses directions of edges in this graph.
+        //! Reverses directions of edges in the graph.
         virtual void reverse() = 0;
     };
 
@@ -78,7 +78,7 @@ namespace algolib::graphs
                                  property) override;
         void reverse() override;
 
-        //! \return the copy of this graph with reversed directions of edges
+        //! \return the copy of the graph with reversed directions of edges
         directed_simple_graph<typename directed_simple_graph<V, VP, EP>::vertex_type,
                               typename directed_simple_graph<V, VP, EP>::vertex_property_type,
                               typename directed_simple_graph<V, VP, EP>::edge_property_type>

@@ -70,7 +70,7 @@ namespace algolib::text
 
         /*!
          * \param suf an index in text denoting suffix
-         * \return index of suffix in this array
+         * \return index of suffix in the array
          */
         size_t index_of(size_t suf) const;
 

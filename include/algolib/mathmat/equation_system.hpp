@@ -59,7 +59,7 @@ namespace algolib::mathmat
         const equation<N> & operator[](size_t i) const;
 
         /*!
-         * \brief Computes the solution of this equation system
+         * \brief Computes the solution of the equation system
          * \return solution vector
          * \throw infinite_solutions_error
          * \throw no_solution_error
@@ -79,7 +79,7 @@ namespace algolib::mathmat
         void swap(size_t i, size_t j);
 
         /*!
-         * \brief Checks whether given values solve this equation system
+         * \brief Checks whether given values solve the equation system
          * \param solution values to check
          * \return `true` if solution is correct, otherwise `false`
          */

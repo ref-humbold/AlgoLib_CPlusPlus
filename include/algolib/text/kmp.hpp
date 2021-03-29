@@ -14,8 +14,8 @@ namespace algolib::text
 {
     /*!
      * \brief Searches for pattern occurrences in specified text using Knuth-Morris-Pratt algorithm.
-     * \param text a text
-     * \param pattern a pattern to search for
+     * \param text text to be searched in
+     * \param pattern pattern to be searched for
      * \return vector of pattern occurrence positions
      */
     std::vector<size_t> kmp(const std::string & text, const std::string & pattern);

@@ -30,19 +30,25 @@ namespace algolib::text
         base_words_map & operator=(const base_words_map &) = default;
         base_words_map & operator=(base_words_map &&) = default;
 
-        const std::string & text()
+        const std::string & text() const
         {
             return text_;
         }
 
-        code_t code(size_t start, size_t length = std::string::npos);
+        /*!
+         * \brief Retrieves code of a substring denoted by starting index and length.
+         * \param start starting index
+         * \param length length of a substring
+         * \return the code of the substring
+         */
+        code_t code(size_t start, size_t length = std::string::npos) const;
 
     private:
         void create();
         size_t extend(
                 size_t length, size_t code_value,
                 std::function<std::tuple<size_t, size_t, size_t, size_t>(size_t, size_t)> func);
-        size_t get_max_length(size_t n);
+        size_t get_max_length(size_t n) const;
 
         std::string text_;
         std::map<std::pair<size_t, size_t>, size_t> factors;

@@ -54,25 +54,25 @@ namespace algolib::graphs
                                    const vertex_type & destination) const = 0;
 
         /*!
-         * \param vertex a vertex from this graph
+         * \param vertex a vertex from the graph
          * \return vector of neighbouring vertices
          */
         virtual std::vector<vertex_type> neighbours(const vertex_type & vertex) const = 0;
 
         /*!
-         * \param vertex a vertex from this graph
+         * \param vertex a vertex from the graph
          * \return vector of edges adjacent to given vertex
          */
         virtual std::vector<edge<V>> adjacent_edges(const vertex_type & vertex) const = 0;
 
         /*!
-         * \param vertex a vertex from this graph
+         * \param vertex a vertex from the graph
          * \return the output degree of given vertex
          */
         virtual size_t output_degree(const vertex_type & vertex) const = 0;
 
         /*!
-         * \param vertex a vertex from this graph
+         * \param vertex a vertex from the graph
          * \return the input degree of given vertex
          */
         virtual size_t input_degree(const vertex_type & vertex) const = 0;

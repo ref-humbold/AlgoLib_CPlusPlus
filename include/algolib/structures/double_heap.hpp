@@ -59,7 +59,7 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Retrieves minimal element from this double heap.
+         * \brief Retrieves minimal element from the double heap.
          * \return minimal element
          */
         const_reference min() const
@@ -71,7 +71,7 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Retrieves maximal element from this double heap.
+         * \brief Retrieves maximal element from the double heap.
          * \return maximal element
          */
         const_reference max() const
@@ -80,18 +80,18 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Adds a new value to this double heap.
+         * \brief Adds a new value to the double heap.
          * \param element value to be added
          */
         void push(const_reference element);
 
-        //! \brief Removes minimal element from this double heap.
+        //! \brief Removes minimal element from the double heap.
         void pop_min();
 
-        //! \brief Removes maximal element from this double heap.
+        //! \brief Removes maximal element from the double heap.
         void pop_max();
 
-        //! \brief Removes all elements in this double heap.
+        //! \brief Removes all elements in the double heap.
         void clear()
         {
             this->heap = Container();

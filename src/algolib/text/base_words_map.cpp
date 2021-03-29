@@ -8,7 +8,7 @@
 
 namespace alte = algolib::text;
 
-alte::base_words_map::code_t alte::base_words_map::code(size_t start, size_t length)
+alte::base_words_map::code_t alte::base_words_map::code(size_t start, size_t length) const
 {
     if(start > text_.size())
         throw std::out_of_range("Starting index out of range");
@@ -24,7 +24,7 @@ alte::base_words_map::code_t alte::base_words_map::code(size_t start, size_t len
         return {it->second, 0};
 
     size_t n = get_max_length(end - start);
-    return {factors[std::make_pair(start, start + n)], factors[std::make_pair(end - n, end)]};
+    return {factors.at(std::make_pair(start, start + n)), factors.at(std::make_pair(end - n, end))};
 }
 
 void alte::base_words_map::create()
@@ -71,7 +71,7 @@ size_t alte::base_words_map::extend(
     return code_value;
 }
 
-size_t alte::base_words_map::get_max_length(size_t n)
+size_t alte::base_words_map::get_max_length(size_t n) const
 {
     size_t prev = 0, power = 1;
 
