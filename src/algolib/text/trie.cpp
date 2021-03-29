@@ -24,7 +24,7 @@ bool alte::trie::empty() const
     return tree->empty();
 }
 
-bool alte::trie::find(const std::string & text) const
+bool alte::trie::contains(const std::string & text) const
 {
     node_ptr node = tree.get();
 

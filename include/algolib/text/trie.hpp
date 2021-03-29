@@ -63,10 +63,10 @@ namespace algolib::text
 
         /*!
          * \brief Checks whether specified text is present in the trie.
-         * \param text text to check
-         * \return \code true whether text was found in trie otherwise \code false
+         * \param text text to be checked
+         * \return \code true whether text was found in trie, otherwise \code false
          */
-        bool find(const std::string & text) const;
+        bool contains(const std::string & text) const;
 
         /*!
          * \brief Adds a new text to the trie.
@@ -80,10 +80,11 @@ namespace algolib::text
          */
         void erase(const std::string & text);
 
-        //! \brief Removes all elements in the trie.
+        //! \brief Removes all texts in the trie.
         void clear();
 
     private:
+        // Removes node for a character in text at specified index.
         bool remove_node(const std::string & text, node_ptr node, size_t i);
 
         node_uniq_ptr tree = std::make_unique<trie_node>();

@@ -30,7 +30,7 @@ TEST_F(TrieTest, copyConstructor)
     ASSERT_EQ(test_object.size(), copy_object.size());
 
     for(auto && text : texts)
-        EXPECT_TRUE(copy_object.find(text));
+        EXPECT_TRUE(copy_object.contains(text));
 }
 
 TEST_F(TrieTest, moveConstructor)
@@ -41,7 +41,7 @@ TEST_F(TrieTest, moveConstructor)
     ASSERT_EQ(texts.size(), copy_object.size());
 
     for(auto && text : texts)
-        EXPECT_TRUE(copy_object.find(text));
+        EXPECT_TRUE(copy_object.contains(text));
 }
 
 TEST_F(TrieTest, copyAssignment)
@@ -49,14 +49,14 @@ TEST_F(TrieTest, copyAssignment)
     // given
     alte::trie copy_object = {"zxcvb"};
 
-    ASSERT_TRUE(copy_object.find("zxcvb"));
+    ASSERT_TRUE(copy_object.contains("zxcvb"));
     // when
     copy_object = test_object;
     // then
     ASSERT_EQ(test_object.size(), copy_object.size());
 
     for(auto && text : texts)
-        EXPECT_TRUE(copy_object.find(text));
+        EXPECT_TRUE(copy_object.contains(text));
 }
 
 TEST_F(TrieTest, moveAssignment)
@@ -64,14 +64,14 @@ TEST_F(TrieTest, moveAssignment)
     // given
     alte::trie copy_object = {"zxcvb"};
 
-    ASSERT_TRUE(copy_object.find("zxcvb"));
+    ASSERT_TRUE(copy_object.contains("zxcvb"));
     // when
     copy_object = std::move(test_object);
     // then
     ASSERT_EQ(texts.size(), copy_object.size());
 
     for(auto && text : texts)
-        EXPECT_TRUE(copy_object.find(text));
+        EXPECT_TRUE(copy_object.contains(text));
 }
 
 TEST_F(TrieTest, copyAssignment_WhenSelfAssignment_ThenObjectUn)
@@ -82,7 +82,7 @@ TEST_F(TrieTest, copyAssignment_WhenSelfAssignment_ThenObjectUn)
     ASSERT_EQ(texts.size(), test_object.size());
 
     for(auto && text : texts)
-        EXPECT_TRUE(test_object.find(text));
+        EXPECT_TRUE(test_object.contains(text));
 }
 
 TEST_F(TrieTest, empty_WhenEmpty_ThenTrue)
@@ -121,26 +121,26 @@ TEST_F(TrieTest, size_WhenNotEmpty_ThenNumberOfTexts)
     EXPECT_EQ(texts.size(), result);
 }
 
-TEST_F(TrieTest, find_WhenPresent_ThenTrue)
+TEST_F(TrieTest, contains_WhenPresent_ThenTrue)
 {
     // when
-    bool result = test_object.find("abcd");
+    bool result = test_object.contains("abcd");
     // then
     EXPECT_TRUE(result);
 }
 
-TEST_F(TrieTest, find_WhenAbsent_ThenFalse)
+TEST_F(TrieTest, contains_WhenAbsent_ThenFalse)
 {
     // when
-    bool result = test_object.find("abxx");
+    bool result = test_object.contains("abxx");
     // then
     EXPECT_FALSE(result);
 }
 
-TEST_F(TrieTest, find_WhenAbsentPrefix_ThenFalse)
+TEST_F(TrieTest, contains_WhenAbsentPrefix_ThenFalse)
 {
     // when
-    bool result = test_object.find("xy");
+    bool result = test_object.contains("xy");
     // then
     EXPECT_FALSE(result);
 }
@@ -152,7 +152,7 @@ TEST_F(TrieTest, insert_WhenPresent_ThenNothing)
     // when
     test_object.insert(text);
     // then
-    ASSERT_TRUE(test_object.find(text));
+    ASSERT_TRUE(test_object.contains(text));
     EXPECT_EQ(texts.size(), test_object.size());
 }
 
@@ -163,7 +163,7 @@ TEST_F(TrieTest, insert_WhenAbsent_ThenAdded)
     // when
     test_object.insert(text);
     // then
-    ASSERT_TRUE(test_object.find(text));
+    ASSERT_TRUE(test_object.contains(text));
     EXPECT_EQ(texts.size() + 1, test_object.size());
 }
 
@@ -174,7 +174,7 @@ TEST_F(TrieTest, insert_WhenAbsentPrefix_ThenAdded)
     // when
     test_object.insert(text);
     // then
-    ASSERT_TRUE(test_object.find(text));
+    ASSERT_TRUE(test_object.contains(text));
     EXPECT_EQ(texts.size() + 1, test_object.size());
 }
 
@@ -185,7 +185,7 @@ TEST_F(TrieTest, erase_WhenPresent_ThenRemoved)
     // when
     test_object.erase(text);
     // then
-    ASSERT_FALSE(test_object.find(text));
+    ASSERT_FALSE(test_object.contains(text));
     EXPECT_EQ(texts.size() - 1, test_object.size());
 }
 
@@ -196,7 +196,7 @@ TEST_F(TrieTest, erase_WhenAbsent_ThenNothing)
     // when
     test_object.erase(text);
     // then
-    ASSERT_FALSE(test_object.find(text));
+    ASSERT_FALSE(test_object.contains(text));
     EXPECT_EQ(texts.size(), test_object.size());
 }
 
@@ -207,8 +207,8 @@ TEST_F(TrieTest, erase_WhenAbsentPrefix_ThenNothing)
     // when
     test_object.erase(text);
     // then
-    ASSERT_TRUE(test_object.find("xyz"));
-    EXPECT_FALSE(test_object.find(text));
+    ASSERT_TRUE(test_object.contains("xyz"));
+    EXPECT_FALSE(test_object.contains(text));
     EXPECT_EQ(texts.size(), test_object.size());
 }
 

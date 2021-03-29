@@ -154,17 +154,37 @@ namespace algolib::structures
 
         /*!
          * \brief Checks whether specified value is present in the tree.
-         * \param element value to check
+         * \param element value to be checked
          * \return iterator on the element if found, otherwise iterator at the end
          */
         iterator find(const_reference element);
 
         /*!
          * \brief Checks whether specified value is present in the tree.
-         * \param element value to check
+         * \param element value to be checked
          * \return iterator on the element if found, otherwise iterator at the end
          */
         const_iterator find(const_reference element) const;
+
+        /*!
+         * \brief Checks whether specified value is present in the tree.
+         * \param element value to be checked
+         * \return \code true whether text was found in trie, otherwise \code false
+         */
+        bool contains(const_reference element)
+        {
+            return this->find(element) != this->end();
+        }
+
+        /*!
+         * \brief Checks whether specified value is present in the tree.
+         * \param element value to be checked
+         * \return \code true whether text was found in trie, otherwise \code false
+         */
+        bool contains(const_reference element) const
+        {
+            return this->find(element) != this->cend();
+        }
 
         /*!
          * \brief Adds a new value to the tree.
