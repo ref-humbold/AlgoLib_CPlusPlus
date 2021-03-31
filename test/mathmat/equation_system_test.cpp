@@ -7,24 +7,13 @@
 
 namespace alma = algolib::mathmat;
 
-class EquationSystemTest : public ::testing::Test
+TEST(EquationSystemTest, solve_WhenSingleSolution_ThenSolution)
 {
-protected:
-    alma::equation_system<3> test_object;
+    // given
+    alma::equation_system<3> test_object({alma::equation<3>({2, 3, -2}, 15),
+                                          alma::equation<3>({7, -1, 0}, 4),
+                                          alma::equation<3>({-1, 6, 4}, 9)});
 
-public:
-    EquationSystemTest()
-        : test_object{alma::equation_system<3>({alma::equation<3>({2, 3, -2}, 15),
-                                                alma::equation<3>({7, -1, 0}, 4),
-                                                alma::equation<3>({-1, 6, 4}, 9)})}
-    {
-    }
-
-    virtual ~EquationSystemTest() = default;
-};
-
-TEST_F(EquationSystemTest, solve_WhenSingleSolution_ThenSolution)
-{
     // when
     std::array<double, 3> result = test_object.solve();
     // then
@@ -33,12 +22,12 @@ TEST_F(EquationSystemTest, solve_WhenSingleSolution_ThenSolution)
     EXPECT_FALSE(test_object.is_solution({-2, -18, -36.5}));
 }
 
-TEST_F(EquationSystemTest, solve_WhenNoSolution_ThenNoSolutionError)
+TEST(EquationSystemTest, solve_WhenNoSolution_ThenNoSolutionError)
 {
     // given
-    test_object = alma::equation_system<3>({alma::equation<3>({2, 3, -2}, 15),
-                                            alma::equation<3>({7, -1, 0}, 4),
-                                            alma::equation<3>({-1, -1.5, 1}, -1)});
+    alma::equation_system<3> test_object({alma::equation<3>({2, 3, -2}, 15),
+                                          alma::equation<3>({7, -1, 0}, 4),
+                                          alma::equation<3>({-1, -1.5, 1}, -1)});
 
     // when - then
     ASSERT_THROW(test_object.solve(), alma::no_solution_error);
@@ -46,12 +35,12 @@ TEST_F(EquationSystemTest, solve_WhenNoSolution_ThenNoSolutionError)
     EXPECT_FALSE(test_object.is_solution({-2, -18, -36.5}));
 }
 
-TEST_F(EquationSystemTest, solve_WhenInfiniteSolutions_ThenInfiniteSolutionsError)
+TEST(EquationSystemTest, solve_WhenInfiniteSolutions_ThenInfiniteSolutionsError)
 {
     // given
-    test_object = alma::equation_system<3>({alma::equation<3>({2, 3, -2}, 15),
-                                            alma::equation<3>({7, -1, 0}, 4),
-                                            alma::equation<3>({4, 6, -4}, 30)});
+    alma::equation_system<3> test_object({alma::equation<3>({2, 3, -2}, 15),
+                                          alma::equation<3>({7, -1, 0}, 4),
+                                          alma::equation<3>({4, 6, -4}, 30)});
 
     // when - then
     ASSERT_THROW(test_object.solve(), alma::infinite_solutions_error);

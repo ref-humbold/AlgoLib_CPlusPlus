@@ -81,9 +81,9 @@ TEST_F(MultipartiteGraphTest, get_verticesFromGroup_WhenValidGroup_ThenVertices)
 TEST_F(MultipartiteGraphTest, verticesFromGroup_WhenInvalidGroup_ThenOutOfRange)
 {
     // when
-    auto execution = [&]() { return test_object.vertices_from_group(14); };
+    auto exec = [&]() { return test_object.vertices_from_group(14); };
     // then
-    EXPECT_THROW(execution(), std::out_of_range);
+    EXPECT_THROW(exec(), std::out_of_range);
 }
 
 TEST_F(MultipartiteGraphTest, addVertex_WhenNewVertex_ThenTrue)
@@ -118,9 +118,9 @@ TEST_F(MultipartiteGraphTest, addVertex_WhenExistingVertex_ThenFalse)
 TEST_F(MultipartiteGraphTest, addVertex_WhenInvalidGroup_ThenOutOfRange)
 {
     // when
-    auto execution = [&]() { return test_object.add_vertex(-3, 19); };
+    auto exec = [&]() { return test_object.add_vertex(-3, 19); };
     // then
-    EXPECT_THROW(execution(), std::out_of_range);
+    EXPECT_THROW(exec(), std::out_of_range);
 }
 
 TEST_F(MultipartiteGraphTest, edgesCount_ThenNumberOfEdges)
@@ -182,9 +182,9 @@ TEST_F(MultipartiteGraphTest, addEdgeBetween_WhenDuplicatedEdge_ThenExistingEdge
 TEST_F(MultipartiteGraphTest, addEdgeBetween_When_sameGroup_ThenGraphPartitionError)
 {
     // when
-    auto execution = [&]() { return test_object.add_edge_between(5, 8); };
+    auto exec = [&]() { return test_object.add_edge_between(5, 8); };
     // then
-    EXPECT_THROW(execution(), algr::graph_partition_error);
+    EXPECT_THROW(exec(), algr::graph_partition_error);
 }
 
 TEST_F(MultipartiteGraphTest, neighbours_ThenDestinationVerticesOfOutgoingEdges)
