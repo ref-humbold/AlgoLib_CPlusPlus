@@ -106,19 +106,19 @@ namespace algolib::mathmat
     {
         gaussian_reduce();
 
-        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].values().second == 0)
+        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free == 0)
             throw infinite_solutions_error("Equation system has an infinite number of solutions");
 
-        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].values().second != 0)
+        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free != 0)
             throw no_solution_error("Equation system has no solution");
 
         std::array<double, N> solution;
 
-        solution.back() = this->equations[N - 1].values().second / this->equations[N - 1][N - 1];
+        solution.back() = this->equations[N - 1].free / this->equations[N - 1][N - 1];
 
         for(int i = N - 2; i >= 0; --i)
         {
-            double value = this->equations[i].values().second;
+            double value = this->equations[i].free;
 
             for(int j = N - 1; j > i; --j)
                 value -= this->equations[i][j] * solution[j];

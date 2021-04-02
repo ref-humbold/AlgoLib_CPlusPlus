@@ -102,14 +102,6 @@ namespace algolib::mathmat
         }
 
         /*!
-         * \return pair of coefficients and free value
-         */
-        std::pair<std::array<double, N>, double> values() const
-        {
-            return std::make_pair(this->coefficients, this->free);
-        }
-
-        /*!
          * Transforms equation through a linear combination with another equation.
          * \param equation equation
          * \param constant linear combination constant
@@ -132,7 +124,6 @@ namespace algolib::mathmat
         friend std::ostream & operator<< <N>(std::ostream & os, const equation<N> & eq);
         // clang-format on
 
-    private:
         std::array<double, N> coefficients;
         double free;
     };
