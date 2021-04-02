@@ -5,17 +5,33 @@
 #ifndef EQUATION_HPP_
 #define EQUATION_HPP_
 
-#include <cstdlib>
 #include <cmath>
-#include <exception>
-#include <stdexcept>
+#include <cstdlib>
 #include <algorithm>
 #include <array>
+#include <exception>
+#include <iostream>
+#include <stdexcept>
 
 namespace algolib::mathmat
 {
     template <size_t N>
     class equation;
+
+    template <size_t N>
+    equation<N> operator+(equation<N> eq1, const equation<N> & eq2);
+
+    template <size_t N>
+    equation<N> operator-(equation<N> eq1, const equation<N> & eq2);
+
+    template <size_t N>
+    equation<N> operator*(equation<N> eq1, double constant);
+
+    template <size_t N>
+    equation<N> operator/(equation<N> eq1, double constant);
+
+    template <size_t N>
+    std::ostream & operator<<(std::ostream & os, const equation<N> & eq);
 }
 
 namespace std
@@ -30,7 +46,10 @@ namespace algolib::mathmat
     class equation
     {
     public:
-        explicit equation(const std::array<double, N> & coefficients, double free);
+        equation(const std::array<double, N> & coefficients, double free)
+            : coefficients{coefficients}, free{free}
+        {
+        }
 
         ~equation() = default;
         equation(const equation & eq) = default;
@@ -38,39 +57,104 @@ namespace algolib::mathmat
         equation & operator=(const equation & eq) = default;
         equation & operator=(equation && eq) noexcept = default;
 
-        std::pair<std::array<double, N>, double> values() const;
-        double & operator[](size_t i);
-        double operator[](size_t i) const;
+        /*!
+         * Adds another equation to the equation.
+         * \param equation equation to be added
+         */
+        equation & operator+=(const equation<N> & equation);
+
+        /*!
+         * Subtracts another equation from the equation.
+         * \param equation equation to be subtracted
+         */
+        equation & operator-=(const equation<N> & equation);
+
+        /*!
+         * Multiplies equation by a constant.
+         * \param constant constant
+         * \throws domain_error if constant is zero
+         */
         equation & operator*=(double constant);
-        void combine(const equation<N> & equation, double constant = 1);
+
+        /*!
+         * Divides equation by a constant.
+         * \param constant constant
+         * \throws domain_error if constant is zero
+         */
+        equation & operator/=(double constant);
+
+        /*!
+         * \param i index of coefficient
+         * \return i-th coefficient
+         */
+        double & operator[](size_t i)
+        {
+            return this->coefficients.at(i);
+        }
+
+        /*!
+         * \param i index of coefficient
+         * \return i-th coefficient
+         */
+        double operator[](size_t i) const
+        {
+            return this->coefficients.at(i);
+        }
+
+        /*!
+         * \return pair of coefficients and free value
+         */
+        std::pair<std::array<double, N>, double> values() const
+        {
+            return std::make_pair(this->coefficients, this->free);
+        }
+
+        /*!
+         * Transforms equation through a linear combination with another equation.
+         * \param equation equation
+         * \param constant linear combination constant
+         * \throws domain_error if constant is zero
+         */
+        void combine(const equation<N> & equation, double constant);
+
+        /*!
+         * \brief Checks whether given values solve the equation
+         * \param solution values to be checked
+         * \return `true` if solution is correct, otherwise `false`
+         */
         bool is_solution(const std::array<double, N> & solution) const;
 
+        // clang-format off
+        friend equation<N> operator+ <N>(equation<N> eq1, const equation<N> & eq2);
+        friend equation<N> operator- <N>(equation<N> eq1, const equation<N> & eq2);
+        friend equation<N> operator* <N>(equation<N> eq1, double constant);
+        friend equation<N> operator/ <N>(equation<N> eq1, double constant);
+        friend std::ostream & operator<< <N>(std::ostream & os, const equation<N> & eq);
+        // clang-format on
+
+    private:
         std::array<double, N> coefficients;
         double free;
     };
 
     template <size_t N>
-    equation<N>::equation(const std::array<double, N> & coefficients, double free)
-        : coefficients{coefficients}, free{free}
+    equation<N> & equation<N>::operator+=(const equation<N> & equation)
     {
+        for(size_t i = 0; i < N; ++i)
+            this->coefficients[i] += equation[i];
+
+        this->free += equation.free;
+        return *this;
     }
 
     template <size_t N>
-    std::pair<std::array<double, N>, double> equation<N>::values() const
+    equation<N> & equation<N>::operator-=(const equation<N> & equation)
     {
-        return std::make_pair(this->coefficients, this->free);
-    }
+        for(size_t i = 0; i < N; ++i)
+            this->coefficients[i] -= equation[i];
 
-    template <size_t N>
-    double & equation<N>::operator[](size_t i)
-    {
-        return this->coefficients.at(i);
-    }
-
-    template <size_t N>
-    double equation<N>::operator[](size_t i) const
-    {
-        return this->coefficients.at(i);
+        this->free -= equation.free;
+        return *this;
     }
 
     template <size_t N>
@@ -87,15 +171,28 @@ namespace algolib::mathmat
     }
 
     template <size_t N>
+    equation<N> & equation<N>::operator/=(double constant)
+    {
+        if(constant == 0)
+            throw std::domain_error("Constant cannot be equal to zero");
+
+        for(size_t i = 0; i < N; ++i)
+            this->coefficients[i] /= constant;
+
+        this->free /= constant;
+        return *this;
+    }
+
+    template <size_t N>
     void equation<N>::combine(const equation<N> & equation, double constant)
     {
         if(constant == 0)
             throw std::domain_error("Constant cannot be equal to zero");
 
         for(size_t i = 0; i < N; ++i)
-            this->coefficients[i] += equation[i] * constant;
+            this->coefficients[i] += constant * equation[i];
 
-        this->free += equation.free * constant;
+        this->free += constant * equation.free;
     }
 
     template <size_t N>
@@ -107,6 +204,50 @@ namespace algolib::mathmat
             result += solution[i] * this->coefficients[i];
 
         return result == this->free;
+    }
+
+    template <size_t N>
+    equation<N> operator+(equation<N> eq1, const equation<N> & eq2)
+    {
+        eq1 += eq2;
+        return eq1;
+    }
+
+    template <size_t N>
+    equation<N> operator-(equation<N> eq1, const equation<N> & eq2)
+    {
+        eq1 -= eq2;
+        return eq1;
+    }
+
+    template <size_t N>
+    equation<N> operator*(equation<N> eq1, double constant)
+    {
+        eq1 *= constant;
+        return eq1;
+    }
+
+    template <size_t N>
+    equation<N> operator/(equation<N> eq1, double constant)
+    {
+        eq1 /= constant;
+        return eq1;
+    }
+
+    template <size_t N>
+    std::ostream & operator<<(std::ostream & os, const equation<N> & eq)
+    {
+        for(size_t i = 0; i < eq.coefficients.size(); ++i)
+            if(eq.coefficients[i] != 0)
+            {
+                if(i > 0)
+                    os << " + ";
+
+                os << eq.coefficients[i] << " x_" << i;
+            }
+
+        os << " = " << eq.free;
+        return os;
     }
 }
 
