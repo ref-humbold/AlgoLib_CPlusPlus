@@ -21,16 +21,6 @@ public:
     virtual ~EquationTest() = default;
 };
 
-TEST_F(EquationTest, operatorLeftShift_ThenStringRepresentation)
-{
-    // given
-    std::ostringstream stream;
-    // when
-    stream << test_object;
-    // then
-    EXPECT_EQ("2 x_0 + 3 x_1 + -2 x_3 = 15", stream.str());
-}
-
 TEST_F(EquationTest, operatorPlus_ThenAddingEquations)
 {
     // when
@@ -69,10 +59,10 @@ TEST_F(EquationTest, operatorAsterisk_WhenConstantIsZero_ThenDomainError)
 TEST_F(EquationTest, operatorSlash_WhenConstantIsNonZero_ThenDividingEquations)
 {
     // when
-    alma::equation<4> result = test_object / 2;
+    alma::equation<4> result = test_object / -2;
     // then
-    EXPECT_EQ((std::array<double, 4>{1, 1.5, 0, -1}), result.coefficients);
-    EXPECT_EQ(7.5, result.free);
+    EXPECT_EQ((std::array<double, 4>{-1, -1.5, 0, 1}), result.coefficients);
+    EXPECT_EQ(-7.5, result.free);
 }
 
 TEST_F(EquationTest, operatorSlash_WhenConstantIsZero_ThenDomainError)
@@ -98,4 +88,14 @@ TEST_F(EquationTest, combine_WhenConstantIsZero_ThenDomainError)
     auto exec = [&]() { return test_object.combine(alma::equation<4>({1, -1, 10, 7}, 5), 0); };
     // then
     EXPECT_THROW(exec(), std::domain_error);
+}
+
+TEST_F(EquationTest, operatorLeftShift_ThenStringRepresentation)
+{
+    // given
+    std::ostringstream stream;
+    // when
+    stream << test_object;
+    // then
+    EXPECT_EQ("2 x_0 + 3 x_1 + -2 x_3 = 15", stream.str());
 }

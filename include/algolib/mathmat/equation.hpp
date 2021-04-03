@@ -72,31 +72,51 @@ namespace algolib::mathmat
         /*!
          * Multiplies equation by a constant.
          * \param constant constant
-         * \throws domain_error if constant is zero
+         * \throw domain_error if constant is zero
          */
         equation & operator*=(double constant);
 
         /*!
          * Divides equation by a constant.
          * \param constant constant
-         * \throws domain_error if constant is zero
+         * \throw domain_error if constant is zero
          */
         equation & operator/=(double constant);
 
         /*!
-         * \param i index of coefficient
-         * \return i-th coefficient
+         * \param i index of a variable
+         * \return coefficient by i-th variable
          */
         double & operator[](size_t i)
+        {
+            return this->coefficients[i];
+        }
+
+        /*!
+         * \param i index of a variable
+         * \return coefficient by i-th variable
+         */
+        const double & operator[](size_t i) const
+        {
+            return this->coefficients[i];
+        }
+
+        /*!
+         * \param i index of a variable
+         * \return coefficient by i-th variable
+         * \throw out_of_range if index is out of range
+         */
+        double & at(size_t i)
         {
             return this->coefficients.at(i);
         }
 
         /*!
-         * \param i index of coefficient
-         * \return i-th coefficient
+         * \param i index of a variable
+         * \return coefficient by i-th variable
+         * \throw out_of_range if index is out of range
          */
-        double operator[](size_t i) const
+        const double & at(size_t i) const
         {
             return this->coefficients.at(i);
         }
@@ -105,7 +125,7 @@ namespace algolib::mathmat
          * Transforms equation through a linear combination with another equation.
          * \param equation equation
          * \param constant linear combination constant
-         * \throws domain_error if constant is zero
+         * \throw domain_error if constant is zero
          */
         void combine(const equation<N> & equation, double constant);
 

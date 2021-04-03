@@ -5,8 +5,8 @@
 #ifndef FRACTION_HPP_
 #define FRACTION_HPP_
 
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
 #include <exception>
 #include <iostream>
 #include <stdexcept>
@@ -109,7 +109,10 @@ namespace std
 
         result_type operator()(const argument_type & f)
         {
-            return hash<long long int>()(f.numerator) ^ hash<long long int>()(f.denominator);
+            size_t n_hash = hash<double>()(f.numerator);
+            size_t y_hash = hash<double>()(f.denominator);
+
+            return n_hash ^ (y_hash + 0x9e3779b9 + (n_hash << 6) + (n_hash >> 2));
         }
     };
 }

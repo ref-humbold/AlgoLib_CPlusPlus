@@ -2,12 +2,13 @@
  * \file fraction_test.cpp
  * \brief Tests: Structure of fraction
  */
+#include <sstream>
 #include <gtest/gtest.h>
 #include "algolib/mathmat/fraction.hpp"
 
 namespace alma = algolib::mathmat;
 
-TEST(FractionTest, inverse_WhenPositive)
+TEST(FractionTest, operatorTilde_WhenPositive_ThenInversed)
 {
     // given
     alma::fraction frac(7, 19);
@@ -17,7 +18,7 @@ TEST(FractionTest, inverse_WhenPositive)
     EXPECT_EQ(alma::fraction(19, 7), result);
 }
 
-TEST(FractionTest, inverse_WhenNegative)
+TEST(FractionTest, operatorTilde_WhenNegative_ThenInversed)
 {
     // given
     alma::fraction frac(-7, 19);
@@ -27,7 +28,7 @@ TEST(FractionTest, inverse_WhenNegative)
     EXPECT_EQ(alma::fraction(-19, 7), result);
 }
 
-TEST(FractionTest, inverse_WhenZero_ThenThrowsDomainError)
+TEST(FractionTest, operatorTilde_WhenZero_ThenDomainError)
 {
     // given
     alma::fraction frac(0);
@@ -37,7 +38,7 @@ TEST(FractionTest, inverse_WhenZero_ThenThrowsDomainError)
     EXPECT_THROW(exec(), std::domain_error);
 }
 
-TEST(FractionTest, reverse_WhenPositive)
+TEST(FractionTest, operatorUnaryMinus_WhenPositive_ThenNegative)
 {
     // given
     alma::fraction frac(7, 19);
@@ -47,7 +48,7 @@ TEST(FractionTest, reverse_WhenPositive)
     EXPECT_EQ(alma::fraction(-7, 19), result);
 }
 
-TEST(FractionTest, reverse_WhenNegative)
+TEST(FractionTest, operatorUnaryMinus_WhenNegative_ThenPositive)
 {
     // given
     alma::fraction frac(-7, 19);
@@ -57,7 +58,7 @@ TEST(FractionTest, reverse_WhenNegative)
     EXPECT_EQ(alma::fraction(7, 19), result);
 }
 
-TEST(FractionTest, reverse_WhenZero_ThenZero)
+TEST(FractionTest, operatorUnaryMinus_WhenZero_ThenZero)
 {
     // given
     alma::fraction frac(0);
@@ -67,7 +68,7 @@ TEST(FractionTest, reverse_WhenZero_ThenZero)
     EXPECT_EQ(alma::fraction(0), result);
 }
 
-TEST(FractionTest, convertToDouble)
+TEST(FractionTest, operatorDouble_ThenDoubleValue)
 {
     // given
     alma::fraction frac(-129, 20);
@@ -77,7 +78,7 @@ TEST(FractionTest, convertToDouble)
     EXPECT_EQ(-6.45, result);
 }
 
-TEST(FractionTest, convertToInt)
+TEST(FractionTest, operatorInt_ThenIntegerValueRoundedTowardsZero)
 {
     // given
     alma::fraction frac(-129, 20);
@@ -87,12 +88,13 @@ TEST(FractionTest, convertToInt)
     EXPECT_EQ(-6, result);
 }
 
-TEST(FractionTest, hash_WhenFraction_ThenXor)
+TEST(FractionTest, operatorShiftLeft_ThenStringRepresentation)
 {
     // given
-    alma::fraction frac(-129, 20);
+    alma::fraction frac(129, -20);
+    std::ostringstream stream;
     // when
-    size_t result = std::hash<alma::fraction>()(frac);
+    stream << frac;
     // then
-    EXPECT_EQ(-129 ^ 20, result);
+    EXPECT_EQ("-129/20", stream.str());
 }
