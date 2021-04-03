@@ -29,19 +29,7 @@ namespace algolib::mathmat
     class fraction
     {
     public:
-        fraction() : fraction(0LL)
-        {
-        }
-
-        explicit fraction(long long int numerator, long long int denominator = 1LL)
-            : numerator{numerator}, denominator{denominator}
-        {
-            if(denominator == 0LL)
-                throw std::domain_error("Denominator cannot be equal to zero");
-
-            normalize();
-        }
-
+        fraction(long long int numerator = 0LL, long long int denominator = 1LL);
         ~fraction() = default;
         fraction(const fraction &) = default;
         fraction(fraction &&) = default;
@@ -61,6 +49,11 @@ namespace algolib::mathmat
         explicit operator int() const
         {
             return static_cast<int>(numerator / denominator);
+        }
+
+        operator bool() const
+        {
+            return numerator != 0;
         }
 
         fraction & operator+=(const fraction & f);

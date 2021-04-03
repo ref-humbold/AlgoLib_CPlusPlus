@@ -8,6 +8,56 @@
 
 namespace alma = algolib::mathmat;
 
+TEST(FractionTest, operatorDouble_ThenDoubleValue)
+{
+    // given
+    alma::fraction frac(-129, 20);
+    // when
+    double result = static_cast<double>(frac);
+    // then
+    EXPECT_EQ(-6.45, result);
+}
+
+TEST(FractionTest, operatorInt_ThenIntegerValueRoundedTowardsZero)
+{
+    // given
+    alma::fraction frac(-129, 20);
+    // when
+    int result = static_cast<int>(frac);
+    // then
+    EXPECT_EQ(-6, result);
+}
+
+TEST(FractionTest, operatorBool_WhenZero_ThenFalse)
+{
+    // given
+    alma::fraction frac;
+    // when
+    bool result = static_cast<bool>(frac);
+    // then
+    EXPECT_FALSE(result);
+}
+
+TEST(FractionTest, operatorBool_WhenPositive_ThenTrue)
+{
+    // given
+    alma::fraction frac(129, 20);
+    // when
+    bool result = static_cast<bool>(frac);
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorBool_WhenNegative_ThenTrue)
+{
+    // given
+    alma::fraction frac(129, -20);
+    // when
+    bool result = static_cast<bool>(frac);
+    // then
+    EXPECT_TRUE(result);
+}
+
 TEST(FractionTest, operatorTilde_WhenPositive_ThenInversed)
 {
     // given
@@ -66,26 +116,6 @@ TEST(FractionTest, operatorUnaryMinus_WhenZero_ThenZero)
     alma::fraction result = -frac;
     // then
     EXPECT_EQ(alma::fraction(0), result);
-}
-
-TEST(FractionTest, operatorDouble_ThenDoubleValue)
-{
-    // given
-    alma::fraction frac(-129, 20);
-    // when
-    double result = static_cast<double>(frac);
-    // then
-    EXPECT_EQ(-6.45, result);
-}
-
-TEST(FractionTest, operatorInt_ThenIntegerValueRoundedTowardsZero)
-{
-    // given
-    alma::fraction frac(-129, 20);
-    // when
-    int result = static_cast<int>(frac);
-    // then
-    EXPECT_EQ(-6, result);
 }
 
 TEST(FractionTest, operatorShiftLeft_ThenStringRepresentation)

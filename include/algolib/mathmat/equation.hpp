@@ -42,6 +42,8 @@ namespace std
 
 namespace algolib::mathmat
 {
+#pragma region equation
+
     template <size_t N>
     class equation
     {
@@ -216,6 +218,8 @@ namespace algolib::mathmat
 
         return result == this->free;
     }
+
+#pragma endregion
 
     template <size_t N>
     equation<N> operator+(equation<N> eq1, const equation<N> & eq2)

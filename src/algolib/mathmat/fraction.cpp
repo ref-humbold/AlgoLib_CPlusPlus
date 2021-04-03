@@ -6,18 +6,15 @@
 
 namespace alma = algolib::mathmat;
 
-void alma::fraction::normalize()
+#pragma region fraction
+
+alma::fraction::fraction(long long int numerator, long long int denominator)
+    : numerator{numerator}, denominator{denominator}
 {
-    if(denominator < 0)
-    {
-        numerator = -numerator;
-        denominator = -denominator;
-    }
+    if(denominator == 0LL)
+        throw std::domain_error("Denominator is zero");
 
-    long long int gcd_val = gcd(numerator, denominator);
-
-    numerator /= gcd_val;
-    denominator /= gcd_val;
+    normalize();
 }
 
 alma::fraction & alma::fraction::operator+=(const alma::fraction & f)
@@ -56,49 +53,59 @@ alma::fraction & alma::fraction::operator/=(const alma::fraction & f)
     return *this;
 }
 
+void alma::fraction::normalize()
+{
+    if(denominator < 0)
+    {
+        numerator = -numerator;
+        denominator = -denominator;
+    }
+
+    long long int gcd_val = gcd(numerator, denominator);
+
+    numerator /= gcd_val;
+    denominator /= gcd_val;
+}
+
+#pragma endregion
+
 alma::fraction alma::operator+(alma::fraction f1, const alma::fraction & f2)
 {
     f1 += f2;
-
     return f1;
 }
 
 alma::fraction alma::operator-(alma::fraction f1, const alma::fraction & f2)
 {
     f1 -= f2;
-
     return f1;
 }
 
 alma::fraction alma::operator*(alma::fraction f1, const alma::fraction & f2)
 {
     f1 *= f2;
-
     return f1;
 }
 
 alma::fraction alma::operator/(alma::fraction f1, const alma::fraction & f2)
 {
     f1 /= f2;
-
     return f1;
 }
 
 alma::fraction alma::operator-(alma::fraction f)
 {
     f.numerator = -f.numerator;
-
     return f;
 }
 
 alma::fraction alma::operator~(alma::fraction f)
 {
     if(f.numerator == 0)
-        throw std::domain_error("Inversing zero");
+        throw std::domain_error("Inverting zero");
 
     std::swap(f.numerator, f.denominator);
     f.normalize();
-
     return f;
 }
 
