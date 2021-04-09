@@ -17,8 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: APT Install
-      run: sudo apt-get install libgtest-dev
+    - name: APT Install Compilers
+      run: sudo apt-get update && sudo apt-get install build-essential clang
+
+    - name: APT Install CMake + GTest
+      run: sudo apt-get update && sudo apt-get install cmake libgtest-dev
 
     - name: Install GTest
       run: $GITHUB_WORKSPACE/ci/install_gtest.sh
