@@ -25,10 +25,10 @@ namespace algolib::mathmat
     equation<N> operator-(equation<N> eq1, const equation<N> & eq2);
 
     template <size_t N>
-    equation<N> operator*(equation<N> eq1, double constant);
+    equation<N> operator*(equation<N> eq, double constant);
 
     template <size_t N>
-    equation<N> operator/(equation<N> eq1, double constant);
+    equation<N> operator/(equation<N> eq, double constant);
 
     template <size_t N>
     std::ostream & operator<<(std::ostream & os, const equation<N> & eq);
@@ -236,17 +236,17 @@ namespace algolib::mathmat
     }
 
     template <size_t N>
-    equation<N> operator*(equation<N> eq1, double constant)
+    equation<N> operator*(equation<N> eq, double constant)
     {
-        eq1 *= constant;
-        return eq1;
+        eq *= constant;
+        return eq;
     }
 
     template <size_t N>
-    equation<N> operator/(equation<N> eq1, double constant)
+    equation<N> operator/(equation<N> eq, double constant)
     {
-        eq1 /= constant;
-        return eq1;
+        eq /= constant;
+        return eq;
     }
 
     template <size_t N>

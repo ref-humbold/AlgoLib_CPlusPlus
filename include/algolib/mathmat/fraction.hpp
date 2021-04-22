@@ -70,6 +70,10 @@ namespace algolib::mathmat
 
         friend bool operator==(const fraction & f1, const fraction & f2);
         friend bool operator!=(const fraction & f1, const fraction & f2);
+        friend bool operator<(const fraction & f1, const fraction & f2);
+        friend bool operator<=(const fraction & f1, const fraction & f2);
+        friend bool operator>(const fraction & f1, const fraction & f2);
+        friend bool operator>=(const fraction & f1, const fraction & f2);
 
         friend std::ostream & operator<<(std::ostream & os, const fraction & f);
 
@@ -77,6 +81,7 @@ namespace algolib::mathmat
 
     private:
         void normalize();
+        std::pair<long long int, long long int> common(const fraction & f) const;
 
         long long int numerator, denominator;
     };
@@ -89,6 +94,10 @@ namespace algolib::mathmat
     fraction operator~(fraction f);
     bool operator==(const fraction & f1, const fraction & f2);
     bool operator!=(const fraction & f1, const fraction & f2);
+    bool operator<(const fraction & f1, const fraction & f2);
+    bool operator<=(const fraction & f1, const fraction & f2);
+    bool operator>(const fraction & f1, const fraction & f2);
+    bool operator>=(const fraction & f1, const fraction & f2);
     std::ostream & operator<<(std::ostream & os, const fraction & f);
 }
 

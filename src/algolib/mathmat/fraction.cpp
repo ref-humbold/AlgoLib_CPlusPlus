@@ -67,6 +67,15 @@ void alma::fraction::normalize()
     denominator /= gcd_val;
 }
 
+std::pair<long long int, long long int> alma::fraction::common(const alma::fraction & f) const
+{
+    long common_denominator = lcm(denominator, f.denominator);
+    long this_numerator = common_denominator / denominator * numerator;
+    long other_numerator = common_denominator / f.denominator * f.numerator;
+
+    return {this_numerator, other_numerator};
+}
+
 #pragma endregion
 
 alma::fraction alma::operator+(alma::fraction f1, const alma::fraction & f2)
@@ -119,9 +128,36 @@ bool alma::operator!=(const alma::fraction & f1, const alma::fraction & f2)
     return !(f1 == f2);
 }
 
+bool alma::operator<(const alma::fraction & f1, const alma::fraction & f2)
+{
+    std::pair<long long int, long long int> numerators = f1.common(f2);
+
+    return numerators.first < numerators.second;
+}
+
+bool alma::operator<=(const alma::fraction & f1, const alma::fraction & f2)
+{
+    std::pair<long long int, long long int> numerators = f1.common(f2);
+
+    return numerators.first <= numerators.second;
+}
+
+bool alma::operator>(const alma::fraction & f1, const alma::fraction & f2)
+{
+    std::pair<long long int, long long int> numerators = f1.common(f2);
+
+    return numerators.first > numerators.second;
+}
+
+bool alma::operator>=(const alma::fraction & f1, const alma::fraction & f2)
+{
+    std::pair<long long int, long long int> numerators = f1.common(f2);
+
+    return numerators.first >= numerators.second;
+}
+
 std::ostream & alma::operator<<(std::ostream & os, const alma::fraction & f)
 {
     os << f.numerator << "/" << f.denominator;
-
     return os;
 }
