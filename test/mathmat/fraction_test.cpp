@@ -18,12 +18,12 @@ TEST(FractionTest, operatorDouble_ThenDoubleValue)
     EXPECT_EQ(-6.45, result);
 }
 
-TEST(FractionTest, operatorInt_ThenIntegerValueRoundedTowardsZero)
+TEST(FractionTest, operatorLongLongInt_ThenIntegerValueRoundedTowardsZero)
 {
     // given
     alma::fraction frac(-129, 20);
     // when
-    int result = static_cast<int>(frac);
+    long long int result = static_cast<long long int>(frac);
     // then
     EXPECT_EQ(-6, result);
 }

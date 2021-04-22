@@ -8,7 +8,8 @@ namespace alma = algolib::mathmat;
 
 #pragma region fraction
 
-alma::fraction::fraction(long long int numerator, long long int denominator)
+alma::fraction::fraction(alma::fraction::integral_type numerator,
+                         alma::fraction::integral_type denominator)
     : numerator{numerator}, denominator{denominator}
 {
     if(denominator == 0LL)
@@ -61,13 +62,14 @@ void alma::fraction::normalize()
         denominator = -denominator;
     }
 
-    long long int gcd_val = gcd(numerator, denominator);
+    alma::fraction::integral_type gcd_val = gcd(numerator, denominator);
 
     numerator /= gcd_val;
     denominator /= gcd_val;
 }
 
-std::pair<long long int, long long int> alma::fraction::common(const alma::fraction & f) const
+std::pair<alma::fraction::integral_type, alma::fraction::integral_type>
+        alma::fraction::common(const alma::fraction & f) const
 {
     long common_denominator = lcm(denominator, f.denominator);
     long this_numerator = common_denominator / denominator * numerator;
@@ -130,28 +132,32 @@ bool alma::operator!=(const alma::fraction & f1, const alma::fraction & f2)
 
 bool alma::operator<(const alma::fraction & f1, const alma::fraction & f2)
 {
-    std::pair<long long int, long long int> numerators = f1.common(f2);
+    std::pair<alma::fraction::integral_type, alma::fraction::integral_type> numerators =
+            f1.common(f2);
 
     return numerators.first < numerators.second;
 }
 
 bool alma::operator<=(const alma::fraction & f1, const alma::fraction & f2)
 {
-    std::pair<long long int, long long int> numerators = f1.common(f2);
+    std::pair<alma::fraction::integral_type, alma::fraction::integral_type> numerators =
+            f1.common(f2);
 
     return numerators.first <= numerators.second;
 }
 
 bool alma::operator>(const alma::fraction & f1, const alma::fraction & f2)
 {
-    std::pair<long long int, long long int> numerators = f1.common(f2);
+    std::pair<alma::fraction::integral_type, alma::fraction::integral_type> numerators =
+            f1.common(f2);
 
     return numerators.first > numerators.second;
 }
 
 bool alma::operator>=(const alma::fraction & f1, const alma::fraction & f2)
 {
-    std::pair<long long int, long long int> numerators = f1.common(f2);
+    std::pair<alma::fraction::integral_type, alma::fraction::integral_type> numerators =
+            f1.common(f2);
 
     return numerators.first >= numerators.second;
 }
