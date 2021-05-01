@@ -28,23 +28,40 @@ namespace algolib::mathmat
 {
     class fraction
     {
-    private:
-        using integral_type = long long int;
-
     public:
-        fraction(integral_type numerator = 0LL, integral_type denominator = 1LL);
+        fraction(long long numerator = 0LL, long long denominator = 1LL);
         ~fraction() = default;
         fraction(const fraction &) = default;
         fraction(fraction &&) = default;
         fraction & operator=(const fraction &) = default;
         fraction & operator=(fraction &&) = default;
 
+        operator float() const
+        {
+            return (1.0f * numerator) / denominator;
+        }
+
         operator double() const
         {
             return (1.0 * numerator) / denominator;
         }
 
-        operator long long int() const
+        operator long double() const
+        {
+            return (1.0L * numerator) / denominator;
+        }
+
+        operator int() const
+        {
+            return static_cast<int>(numerator / denominator);
+        }
+
+        operator long() const
+        {
+            return static_cast<long>(numerator / denominator);
+        }
+
+        operator long long() const
         {
             return numerator / denominator;
         }
@@ -79,9 +96,9 @@ namespace algolib::mathmat
 
     private:
         void normalize();
-        std::pair<integral_type, integral_type> common(const fraction & f) const;
+        std::pair<long long, long long> common(const fraction & f) const;
 
-        integral_type numerator, denominator;
+        long long numerator, denominator;
     };
 
     fraction operator+(fraction f1, const fraction & f2);

@@ -6,9 +6,9 @@
 
 namespace alma = algolib::mathmat;
 
-long long int alma::gcd(long long int number1, long long int number2)
+long long alma::gcd(long long number1, long long number2)
 {
-    std::pair<long long int, long long int> number_pair =
+    std::pair<long long, long long> number_pair =
             std::make_pair(std::min(std::abs(number1), std::abs(number2)),
                            std::max(std::abs(number1), std::abs(number2)));
 
@@ -18,18 +18,17 @@ long long int alma::gcd(long long int number1, long long int number2)
     return number_pair.second;
 }
 
-long long int alma::lcm(long long int number1, long long int number2)
+long long alma::lcm(long long number1, long long number2)
 {
-    long long int min_number = std::min(std::abs(number1), std::abs(number2)),
-                  max_number = std::max(std::abs(number1), std::abs(number2));
+    long long min_number = std::min(std::abs(number1), std::abs(number2)),
+              max_number = std::max(std::abs(number1), std::abs(number2));
 
     return max_number / gcd(number1, number2) * min_number;
 }
 
-long long int alma::mult_mod(long long int factor1, long long int factor2,
-                             unsigned long long int modulo)
+long long alma::mult_mod(long long factor1, long long factor2, unsigned long long modulo)
 {
-    long long int result = 0;
+    long long result = 0;
 
     if(factor1 < 0 && factor2 < 0)
         return mult_mod(-factor1, -factor2, modulo);
@@ -52,10 +51,9 @@ long long int alma::mult_mod(long long int factor1, long long int factor2,
     return result;
 }
 
-long long int alma::power_mod(long long int base, long long int exponent,
-                              unsigned long long int modulo)
+long long alma::power_mod(long long base, long long exponent, unsigned long long modulo)
 {
-    long long int result = 1;
+    long long result = 1;
 
     if(exponent < 0)
         throw std::domain_error("Negative exponent.");

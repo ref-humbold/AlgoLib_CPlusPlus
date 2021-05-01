@@ -14,17 +14,17 @@
 namespace algolib::mathmat
 {
     /*!
-     * \brief Wyznaczanie liczb pierwszych na przedziale domkniętym lewostronnie
-     * \param min_number dolna granica przedziału
-     * \param max_number górna granica przedziału
-     * \return lista liczb pierwszych
+     * \brief Finds prime numbers inside a range of integers.
+     * \param minNumber minimal number in range, inclusive
+     * \param maxNumber maximal number in range, exclusive
+     * \return vector of prime numbers
      */
     std::vector<size_t> find_primes(size_t min_number, size_t max_number);
 
     /*!
-     * \brief Wyznaczanie liczb pierwszych od zera
-     * \param max_number górna granica
-     * \return lista liczb pierwszych
+     * \brief Finds prime numbers inside a range of integers starting from 0.
+     * \param maxNumber maximal number in range, exclusive
+     * \return vector of prime numbers
      */
     inline std::vector<size_t> find_primes(size_t max_number)
     {
@@ -32,18 +32,18 @@ namespace algolib::mathmat
     }
 
     /*!
-     * \brief Test pierwszości Fermata
-     * \param number testowana liczba
-     * \return czy liczba prawdopodobnie jest pierwsza
+     * \brief Checks whether specified number is prime running Fermat's prime test.
+     * \param number number to check
+     * \return \c true if the number is probably prime, otherwise \c false
      */
-    bool test_fermat(long long int number);
+    bool test_fermat(long long number);
 
     /*!
-     * \brief Test pierwszości Millera-Rabina
-     * \param number testowana liczba
-     * \return czy liczba prawdopodobnie jest pierwsza
+     * \brief Checks whether specified number is prime running Miller-Rabin's prime test.
+     * \param number number to check
+     * \return {@code true} if the number is probably prime, otherwise {@code false}
      */
-    bool test_miller(long long int number);
+    bool test_miller(long long number);
 }
 
 #endif

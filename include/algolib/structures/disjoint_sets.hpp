@@ -36,7 +36,7 @@ namespace algolib::structures
         disjoint_sets & operator=(const disjoint_sets & ds) = default;
         disjoint_sets & operator=(disjoint_sets && ds) noexcept = default;
 
-        //! \return \code true if the structure is empty, otherwise \code false
+        //! \return \c true if the structure is empty, otherwise \c false
         bool empty() const
         {
             return this->size_ == 0;
@@ -51,7 +51,7 @@ namespace algolib::structures
         /*!
          * \brief Checks whether given element in one of the sets in the structure.
          * \param element an element
-         * \return \code true if element belongs to the structure, otherwise \code false
+         * \return \c true if element belongs to the structure, otherwise \c false
          */
         bool contains(const E & element) const
         {
@@ -143,7 +143,7 @@ namespace algolib::structures
          * \brief Tests whether two elements belong to the same set.
          * \param element1 element from the first set
          * \param element2 element from the second set
-         * \return \code true if both element are in the same set, otherwise \code false
+         * \return \c true if both element are in the same set, otherwise \c false
          */
         bool is_same_set(const E & element1, const E & element2);
 
@@ -151,7 +151,7 @@ namespace algolib::structures
          * \brief Tests whether two elements belong to the same set.
          * \param element1 element from the first set
          * \param element2 element from the second set
-         * \return \code true if both element are in the same set, otherwise \code false
+         * \return \c true if both element are in the same set, otherwise \c false
          */
         bool is_same_set(const E & element1, const E & element2) const;
 

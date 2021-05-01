@@ -169,7 +169,7 @@ namespace algolib::structures
         /*!
          * \brief Checks whether specified value is present in the tree.
          * \param element value to be checked
-         * \return \code true whether text was found in trie, otherwise \code false
+         * \return \c true whether text was found in trie, otherwise \c false
          */
         bool contains(const_reference element)
         {
@@ -179,7 +179,7 @@ namespace algolib::structures
         /*!
          * \brief Checks whether specified value is present in the tree.
          * \param element value to be checked
-         * \return \code true whether text was found in trie, otherwise \code false
+         * \return \c true whether text was found in trie, otherwise \c false
          */
         bool contains(const_reference element) const
         {
@@ -189,8 +189,8 @@ namespace algolib::structures
         /*!
          * \brief Adds a new value to the tree.
          * \param element value to be added
-         * \return iterator at the new element and \code true whether insert was successful,
-         * otherwise \code false
+         * \return iterator at the new element and \c true whether insert was successful,
+         * otherwise \c false
          */
         std::pair<iterator, bool> insert(const_reference element);
 

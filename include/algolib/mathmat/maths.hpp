@@ -5,49 +5,47 @@
 #ifndef MATHS_HPP_
 #define MATHS_HPP_
 
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
+#include <algorithm>
 #include <exception>
 #include <stdexcept>
-#include <algorithm>
 
 namespace algolib::mathmat
 {
     /*!
-     * \brief Największy wspólny dzielnik dwóch liczb
-     * \param number1 pierwsza liczba
-     * \param number2 druga liczba
-     * \return największy wspólny dzielnik
+     * \brief Counts a greatest common divisor of two numbers.
+     * \param number1 a first number
+     * \param number2 a second number
+     * \return greatest common divisor
      */
-    long long int gcd(long long int number1, long long int number2);
+    long long gcd(long long number1, long long number2);
 
     /*!
-     * \brief Najmniejsza wspólna wielokrotność dwóch liczb
-     * \param number1 pierwsza liczba
-     * \param number2 druga liczba
-     * \return najmniejsza wspólna wielokrotność
+     * \brief Counts a lowest common multiple of two numbers.
+     * \param number1 a first number
+     * \param number2 a second number
+     * \return lowest common multiple
      */
-    long long int lcm(long long int number1, long long int number2);
+    long long lcm(long long number1, long long number2);
 
     /*!
-     * \brief Szybkie mnożenie binarne modulowane
-     * \param factor1 mnnożna
-     * \param factor2 mnożnik
-     * \param modulo modulo
-     * \return wynik mnożenia wzięty modulo
+     * \brief Performs a fast multiplication of two numbers with modulo taken.
+     * \param factor1 a first factor
+     * \param factor2 a second factor
+     * \param modulo a modulo value
+     * \return multiplication result with modulo taken
      */
-    long long int mult_mod(long long int factor1, long long int factor2,
-                           unsigned long long int modulo);
+    long long mult_mod(long long factor1, long long factor2, unsigned long long modulo);
 
     /*!
-     * \brief Szybkie potęgowanie binarne modulowane
-     * \param base podstawa
-     * \param exponent wykładnik
-     * \param modulo modulo
-     * \return wynik potęgowania wzięty modulo
+     * \brief Performs a fast exponentiation of two numbers with modulo taken.
+     * \param base a base value
+     * \param exponent an exponent value
+     * \param modulo a modulo value
+     * \return exponentiation result with modulo taken
      */
-    long long int power_mod(long long int base, long long int exponent,
-                            unsigned long long int modulo);
+    long long power_mod(long long base, long long exponent, unsigned long long modulo);
 }
 
 #endif

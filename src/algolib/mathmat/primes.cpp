@@ -38,7 +38,7 @@ std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
     return primes;
 }
 
-bool alma::test_fermat(long long int number)
+bool alma::test_fermat(long long number)
 {
     if(number == 2 || number == 3)
         return true;
@@ -47,11 +47,11 @@ bool alma::test_fermat(long long int number)
         return false;
 
     std::default_random_engine rand_eng;
-    std::uniform_int_distribution<long long int> distribution(2, number - 1);
+    std::uniform_int_distribution<long long> distribution(2, number - 1);
 
     for(int i = 0; i < 17; ++i)
     {
-        long long int witness = distribution(rand_eng);
+        long long witness = distribution(rand_eng);
 
         if(gcd(witness, number) > 1 || power_mod(witness, number - 1, number) != 1)
             return false;
@@ -60,7 +60,7 @@ bool alma::test_fermat(long long int number)
     return true;
 }
 
-bool alma::test_miller(long long int number)
+bool alma::test_miller(long long number)
 {
     if(number == 2 || number == 3)
         return true;
@@ -68,25 +68,25 @@ bool alma::test_miller(long long int number)
     if(number < 2 || number % 2 == 0 || number % 3 == 0)
         return false;
 
-    long long int multiplicand = number - 1;
+    long long multiplicand = number - 1;
     std::default_random_engine rand_eng;
-    std::uniform_int_distribution<long long int> distribution(1, number - 1);
+    std::uniform_int_distribution<long long> distribution(1, number - 1);
 
     while(multiplicand % 2 == 0)
         multiplicand /= 2;
 
     for(int i = 0; i < 17; ++i)
     {
-        long long int witness = distribution(rand_eng);
+        long long witness = distribution(rand_eng);
 
         if(power_mod(witness, multiplicand, number) != 1)
         {
-            std::vector<long long int> exponents;
+            std::vector<long long> exponents;
 
-            for(long long int d = multiplicand; d <= number / 2; d *= 2)
+            for(long long d = multiplicand; d <= number / 2; d *= 2)
                 exponents.push_back(d);
 
-            if(std::all_of(exponents.begin(), exponents.end(), [&](long long int d) {
+            if(std::all_of(exponents.begin(), exponents.end(), [&](long long d) {
                    return power_mod(witness, d, number) != number - 1;
                }))
                 return false;

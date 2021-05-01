@@ -64,7 +64,7 @@ namespace algolib::text
         /*!
          * \brief Checks whether specified text is present in the trie.
          * \param text text to be checked
-         * \return \code true whether text was found in trie, otherwise \code false
+         * \return \c true whether text was found in trie, otherwise \c false
          */
         bool contains(const std::string & text) const;
 
