@@ -38,6 +38,52 @@ std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
     return primes;
 }
 
+#pragma region test_fermat
+
+bool alma::test_fermat(int number)
+{
+    if(number == 2 || number == 3)
+        return true;
+
+    if(number < 2 || number % 2 == 0 || number % 3 == 0)
+        return false;
+
+    std::default_random_engine rand_eng;
+    std::uniform_int_distribution<int> distribution(2, number - 1);
+
+    for(int i = 0; i < 17; ++i)
+    {
+        int witness = distribution(rand_eng);
+
+        if(gcd(witness, number) > 1 || power_mod(witness, number - 1, number) != 1)
+            return false;
+    }
+
+    return true;
+}
+
+bool alma::test_fermat(long number)
+{
+    if(number == 2 || number == 3)
+        return true;
+
+    if(number < 2 || number % 2 == 0 || number % 3 == 0)
+        return false;
+
+    std::default_random_engine rand_eng;
+    std::uniform_int_distribution<long> distribution(2, number - 1);
+
+    for(int i = 0; i < 17; ++i)
+    {
+        long witness = distribution(rand_eng);
+
+        if(gcd(witness, number) > 1 || power_mod(witness, number - 1, number) != 1)
+            return false;
+    }
+
+    return true;
+}
+
 bool alma::test_fermat(long long number)
 {
     if(number == 2 || number == 3)
@@ -55,6 +101,79 @@ bool alma::test_fermat(long long number)
 
         if(gcd(witness, number) > 1 || power_mod(witness, number - 1, number) != 1)
             return false;
+    }
+
+    return true;
+}
+
+#pragma endregion
+#pragma region test_miller
+
+bool alma::test_miller(int number)
+{
+    if(number == 2 || number == 3)
+        return true;
+
+    if(number < 2 || number % 2 == 0 || number % 3 == 0)
+        return false;
+
+    int multiplicand = number - 1;
+    std::default_random_engine rand_eng;
+    std::uniform_int_distribution<int> distribution(1, number - 1);
+
+    while(multiplicand % 2 == 0)
+        multiplicand /= 2;
+
+    for(int i = 0; i < 17; ++i)
+    {
+        int witness = distribution(rand_eng);
+
+        if(power_mod(witness, multiplicand, number) != 1)
+        {
+            std::vector<int> exponents;
+
+            for(int d = multiplicand; d <= number / 2; d *= 2)
+                exponents.push_back(d);
+
+            if(std::all_of(exponents.begin(), exponents.end(),
+                           [&](int d) { return power_mod(witness, d, number) != number - 1; }))
+                return false;
+        }
+    }
+
+    return true;
+}
+
+bool alma::test_miller(long number)
+{
+    if(number == 2 || number == 3)
+        return true;
+
+    if(number < 2 || number % 2 == 0 || number % 3 == 0)
+        return false;
+
+    long multiplicand = number - 1;
+    std::default_random_engine rand_eng;
+    std::uniform_int_distribution<long> distribution(1, number - 1);
+
+    while(multiplicand % 2 == 0)
+        multiplicand /= 2;
+
+    for(int i = 0; i < 17; ++i)
+    {
+        long witness = distribution(rand_eng);
+
+        if(power_mod(witness, multiplicand, number) != 1)
+        {
+            std::vector<long> exponents;
+
+            for(long d = multiplicand; d <= number / 2; d *= 2)
+                exponents.push_back(d);
+
+            if(std::all_of(exponents.begin(), exponents.end(),
+                           [&](long d) { return power_mod(witness, d, number) != number - 1; }))
+                return false;
+        }
     }
 
     return true;
@@ -95,3 +214,5 @@ bool alma::test_miller(long long number)
 
     return true;
 }
+
+#pragma endregion

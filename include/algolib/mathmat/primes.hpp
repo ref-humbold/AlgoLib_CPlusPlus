@@ -31,6 +31,22 @@ namespace algolib::mathmat
         return find_primes(0, max_number);
     }
 
+#pragma region test_fermat
+
+    /*!
+     * \brief Checks whether specified number is prime running Fermat's prime test.
+     * \param number number to check
+     * \return \c true if the number is probably prime, otherwise \c false
+     */
+    bool test_fermat(int number);
+
+    /*!
+     * \brief Checks whether specified number is prime running Fermat's prime test.
+     * \param number number to check
+     * \return \c true if the number is probably prime, otherwise \c false
+     */
+    bool test_fermat(long number);
+
     /*!
      * \brief Checks whether specified number is prime running Fermat's prime test.
      * \param number number to check
@@ -38,12 +54,31 @@ namespace algolib::mathmat
      */
     bool test_fermat(long long number);
 
+#pragma endregion
+#pragma region test_miller
+
+    /*!
+     * \brief Checks whether specified number is prime running Miller-Rabin's prime test.
+     * \param number number to check
+     * \return {@code true} if the number is probably prime, otherwise {@code false}
+     */
+    bool test_miller(int number);
+
+    /*!
+     * \brief Checks whether specified number is prime running Miller-Rabin's prime test.
+     * \param number number to check
+     * \return {@code true} if the number is probably prime, otherwise {@code false}
+     */
+    bool test_miller(long number);
+
     /*!
      * \brief Checks whether specified number is prime running Miller-Rabin's prime test.
      * \param number number to check
      * \return {@code true} if the number is probably prime, otherwise {@code false}
      */
     bool test_miller(long long number);
+
+#pragma endregion
 }
 
 #endif
