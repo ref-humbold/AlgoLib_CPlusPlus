@@ -18,7 +18,7 @@ TEST(FractionTest, operatorDouble_ThenDoubleValue)
     EXPECT_EQ(-6.45, result);
 }
 
-TEST(FractionTest, operatorLongLongInt_ThenIntegerValueRoundedTowardsZero)
+TEST(FractionTest, operatorLongLong_ThenIntegerValueRoundedTowardsZero)
 {
     // given
     alma::fraction frac(-129, 20);
@@ -86,6 +86,16 @@ TEST(FractionTest, operatorTilde_WhenZero_ThenDomainError)
     auto exec = [&]() { return ~frac; };
     // then
     EXPECT_THROW(exec(), std::domain_error);
+}
+
+TEST(FractionTest, operatorUnaryPlus_ThenCopied)
+{
+    // given
+    alma::fraction frac(7, 19);
+    // when
+    alma::fraction result = +frac;
+    // then
+    EXPECT_EQ(frac, result);
 }
 
 TEST(FractionTest, operatorUnaryMinus_WhenPositive_ThenNegative)

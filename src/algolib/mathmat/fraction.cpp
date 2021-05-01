@@ -102,6 +102,11 @@ alma::fraction alma::operator/(alma::fraction f1, const alma::fraction & f2)
     return f1;
 }
 
+alma::fraction alma::operator+(alma::fraction f)
+{
+    return f;
+}
+
 alma::fraction alma::operator-(alma::fraction f)
 {
     f.numerator = -f.numerator;

@@ -80,6 +80,7 @@ namespace algolib::mathmat
         friend fraction operator-(fraction f1, const fraction & f2);
         friend fraction operator*(fraction f1, const fraction & f2);
         friend fraction operator/(fraction f1, const fraction & f2);
+        friend fraction operator+(fraction f);
         friend fraction operator-(fraction f);
         friend fraction operator~(fraction f);
 
@@ -105,6 +106,7 @@ namespace algolib::mathmat
     fraction operator-(fraction f1, const fraction & f2);
     fraction operator*(fraction f1, const fraction & f2);
     fraction operator/(fraction f1, const fraction & f2);
+    fraction operator+(fraction f);
     fraction operator-(fraction f);
     fraction operator~(fraction f);
     bool operator==(const fraction & f1, const fraction & f2);
