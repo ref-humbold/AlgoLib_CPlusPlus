@@ -6,6 +6,7 @@
 #define FRACTION_HPP_
 
 #include <cmath>
+#include <cstdint>
 #include <cstdlib>
 #include <exception>
 #include <iostream>
@@ -29,7 +30,7 @@ namespace algolib::mathmat
     class fraction
     {
     public:
-        fraction(long long numerator = 0LL, long long denominator = 1LL);
+        fraction(intmax_t numerator = 0, intmax_t denominator = 1);
         ~fraction() = default;
         fraction(const fraction &) = default;
         fraction(fraction &&) = default;
@@ -63,7 +64,7 @@ namespace algolib::mathmat
 
         operator long long() const
         {
-            return numerator / denominator;
+            return static_cast<long long>(numerator / denominator);
         }
 
         operator bool() const
@@ -97,9 +98,9 @@ namespace algolib::mathmat
 
     private:
         void normalize();
-        std::pair<long long, long long> common(const fraction & f) const;
+        std::pair<intmax_t, intmax_t> common(const fraction & f) const;
 
-        long long numerator, denominator;
+        intmax_t numerator, denominator;
     };
 
     fraction operator+(fraction f1, const fraction & f2);
@@ -128,8 +129,8 @@ namespace std
 
         result_type operator()(const argument_type & f)
         {
-            size_t n_hash = hash<double>()(f.numerator);
-            size_t y_hash = hash<double>()(f.denominator);
+            size_t n_hash = hash<intmax_t>()(f.numerator);
+            size_t y_hash = hash<intmax_t>()(f.denominator);
 
             return n_hash ^ (y_hash + 0x9e3779b9 + (n_hash << 6) + (n_hash >> 2));
         }

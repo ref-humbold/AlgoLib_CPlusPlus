@@ -74,10 +74,13 @@ long long alma::lcm(long long number1, long long number2)
 #pragma endregion
 #pragma region mult_mod
 
-int alma::mult_mod(int factor1, int factor2, unsigned int modulo)
+int alma::mult_mod(int factor1, int factor2, int modulo)
 {
     int result = 0;
 
+    if(modulo < 0)
+        throw std::domain_error("Negative modulo");
+
     if(factor1 < 0 && factor2 < 0)
         return mult_mod(-factor1, -factor2, modulo);
 
@@ -99,10 +102,13 @@ int alma::mult_mod(int factor1, int factor2, unsigned int modulo)
     return result;
 }
 
-long alma::mult_mod(long factor1, long factor2, unsigned long modulo)
+long alma::mult_mod(long factor1, long factor2, long modulo)
 {
     long result = 0;
 
+    if(modulo < 0)
+        throw std::domain_error("Negative modulo");
+
     if(factor1 < 0 && factor2 < 0)
         return mult_mod(-factor1, -factor2, modulo);
 
@@ -124,9 +130,12 @@ long alma::mult_mod(long factor1, long factor2, unsigned long modulo)
     return result;
 }
 
-long long alma::mult_mod(long long factor1, long long factor2, unsigned long long modulo)
+long long alma::mult_mod(long long factor1, long long factor2, long long modulo)
 {
     long long result = 0;
+
+    if(modulo < 0)
+        throw std::domain_error("Negative modulo");
 
     if(factor1 < 0 && factor2 < 0)
         return mult_mod(-factor1, -factor2, modulo);
@@ -152,15 +161,18 @@ long long alma::mult_mod(long long factor1, long long factor2, unsigned long lon
 #pragma endregion
 #pragma region power_mod
 
-int alma::power_mod(int base, int exponent, unsigned int modulo)
+int alma::power_mod(int base, int exponent, int modulo)
 {
     int result = 1;
 
+    if(modulo < 0)
+        throw std::domain_error("Negative modulo");
+
     if(exponent < 0)
-        throw std::domain_error("Negative exponent.");
+        throw std::domain_error("Negative exponent");
 
     if(base == 0 && exponent == 0)
-        throw std::domain_error("Not a number.");
+        throw std::domain_error("Not a number");
 
     while(exponent > 0)
     {
@@ -174,15 +186,18 @@ int alma::power_mod(int base, int exponent, unsigned int modulo)
     return result;
 }
 
-long alma::power_mod(long base, long exponent, unsigned long modulo)
+long alma::power_mod(long base, long exponent, long modulo)
 {
     long result = 1;
 
+    if(modulo < 0)
+        throw std::domain_error("Negative modulo");
+
     if(exponent < 0)
-        throw std::domain_error("Negative exponent.");
+        throw std::domain_error("Negative exponent");
 
     if(base == 0 && exponent == 0)
-        throw std::domain_error("Not a number.");
+        throw std::domain_error("Not a number");
 
     while(exponent > 0)
     {
@@ -196,15 +211,18 @@ long alma::power_mod(long base, long exponent, unsigned long modulo)
     return result;
 }
 
-long long alma::power_mod(long long base, long long exponent, unsigned long long modulo)
+long long alma::power_mod(long long base, long long exponent, long long modulo)
 {
     long long result = 1;
 
+    if(modulo < 0)
+        throw std::domain_error("Negative modulo");
+
     if(exponent < 0)
-        throw std::domain_error("Negative exponent.");
+        throw std::domain_error("Negative exponent");
 
     if(base == 0 && exponent == 0)
-        throw std::domain_error("Not a number.");
+        throw std::domain_error("Not a number");
 
     while(exponent > 0)
     {

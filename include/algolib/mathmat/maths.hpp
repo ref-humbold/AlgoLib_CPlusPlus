@@ -76,7 +76,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return multiplication result with modulo taken
      */
-    int mult_mod(int factor1, int factor2, unsigned int modulo);
+    int mult_mod(int factor1, int factor2, int modulo);
 
     /*!
      * \brief Performs a fast multiplication of two numbers with modulo taken.
@@ -85,7 +85,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return multiplication result with modulo taken
      */
-    long mult_mod(long factor1, long factor2, unsigned long modulo);
+    long mult_mod(long factor1, long factor2, long modulo);
 
     /*!
      * \brief Performs a fast multiplication of two numbers with modulo taken.
@@ -94,7 +94,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return multiplication result with modulo taken
      */
-    long long mult_mod(long long factor1, long long factor2, unsigned long long modulo);
+    long long mult_mod(long long factor1, long long factor2, long long modulo);
 
 #pragma endregion
 #pragma region power_mod
@@ -106,7 +106,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return exponentiation result with modulo taken
      */
-    int power_mod(int base, int exponent, unsigned int modulo);
+    int power_mod(int base, int exponent, int modulo);
 
     /*!
      * \brief Performs a fast exponentiation of two numbers with modulo taken.
@@ -115,7 +115,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return exponentiation result with modulo taken
      */
-    long power_mod(long base, long exponent, unsigned long modulo);
+    long power_mod(long base, long exponent, long modulo);
 
     /*!
      * \brief Performs a fast exponentiation of two numbers with modulo taken.
@@ -124,7 +124,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return exponentiation result with modulo taken
      */
-    long long power_mod(long long base, long long exponent, unsigned long long modulo);
+    long long power_mod(long long base, long long exponent, long long modulo);
 
 #pragma endregion
 }

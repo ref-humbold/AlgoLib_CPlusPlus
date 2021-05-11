@@ -99,81 +99,6 @@ TEST(MathsTest, lcm_WhenOneNumberIsZero_ThenZero)
 }
 
 #pragma endregion
-#pragma region powerMod
-
-TEST(MathsTest, powerMod_WhenBaseIsZero_ThenZero)
-{
-    // when
-    int result = alma::power_mod(0, 14, 0);
-    // then
-    EXPECT_EQ(0, result);
-}
-
-TEST(MathsTest, powerMod_WhenExponentIsZero_ThenOne)
-{
-    // when
-    int result = alma::power_mod(14, 0, 0);
-    // then
-    EXPECT_EQ(1, result);
-}
-
-TEST(MathsTest, powerMod_WhenBaseAndExponentAreZero_ThenThrowsDomainError)
-{
-    // when
-    auto exec = [&]() { return alma::power_mod(0, 0, 0); };
-    // then
-    EXPECT_THROW(exec(), std::domain_error);
-}
-
-TEST(MathsTest, powerMod_WhenBaseAndExponentArePositive)
-{
-    // when
-    int result = alma::power_mod(3, 10, 0);
-    // then
-    EXPECT_EQ(59049, result);
-}
-
-TEST(MathsTest, powerMod_WhenBaseIsNegativeAndExponentIsEven)
-{
-    // when
-    int result = alma::power_mod(-3, 10, 0);
-    // then
-    EXPECT_EQ(59049, result);
-}
-
-TEST(MathsTest, powerMod_WhenBaseIsNegativeAndExponentIsOdd)
-{
-    // when
-    int result = alma::power_mod(-3, 9, 0);
-    // then
-    EXPECT_EQ(-19683, result);
-}
-
-TEST(MathsTest, powerMod_WhenExponentIsNegative_ThenThrowsDomainError)
-{
-    // when
-    auto exec = [&]() { return alma::power_mod(-3, -10, 0); };
-    // then
-    EXPECT_THROW(exec(), std::domain_error);
-}
-
-TEST(MathsTest, powerMod_WhenModuloAndBaseArePositive)
-{
-    // when
-    int result = alma::power_mod(5, 11, 10000);
-    // then
-    EXPECT_EQ(8125, result);
-}
-
-TEST(MathsTest, powerMod_WhenModuloIsPositiveAndBaseIsNegative)
-{
-    // when
-    int result = alma::power_mod(-5, 11, 10000);
-    // then
-    EXPECT_EQ(1875, result);
-}
-
-#pragma endregion
 #pragma region multMod
 
 TEST(MathsTest, multMod_WhenFirstFactorIsZero_ThenZero)
@@ -254,6 +179,97 @@ TEST(MathsTest, multMod_WhenModuloIsPositiveAndFactorsAreNegative)
     int result = alma::mult_mod(-547, -312, 10000);
     // then
     EXPECT_EQ(664, result);
+}
+
+TEST(MathsTest, multMod_WhenModuloIsNegative_ThenDomainError)
+{
+    // when
+    auto exec = [&]() { alma::mult_mod(-547, -312, -10000); };
+    // then
+    EXPECT_THROW(exec(), std::domain_error);
+}
+
+#pragma endregion
+#pragma region powerMod
+
+TEST(MathsTest, powerMod_WhenBaseIsZero_ThenZero)
+{
+    // when
+    int result = alma::power_mod(0, 14, 0);
+    // then
+    EXPECT_EQ(0, result);
+}
+
+TEST(MathsTest, powerMod_WhenExponentIsZero_ThenOne)
+{
+    // when
+    int result = alma::power_mod(14, 0, 0);
+    // then
+    EXPECT_EQ(1, result);
+}
+
+TEST(MathsTest, powerMod_WhenBaseAndExponentAreZero_ThenDomainError)
+{
+    // when
+    auto exec = [&]() { return alma::power_mod(0, 0, 0); };
+    // then
+    EXPECT_THROW(exec(), std::domain_error);
+}
+
+TEST(MathsTest, powerMod_WhenBaseAndExponentArePositive)
+{
+    // when
+    int result = alma::power_mod(3, 10, 0);
+    // then
+    EXPECT_EQ(59049, result);
+}
+
+TEST(MathsTest, powerMod_WhenBaseIsNegativeAndExponentIsEven)
+{
+    // when
+    int result = alma::power_mod(-3, 10, 0);
+    // then
+    EXPECT_EQ(59049, result);
+}
+
+TEST(MathsTest, powerMod_WhenBaseIsNegativeAndExponentIsOdd)
+{
+    // when
+    int result = alma::power_mod(-3, 9, 0);
+    // then
+    EXPECT_EQ(-19683, result);
+}
+
+TEST(MathsTest, powerMod_WhenExponentIsNegative_ThenDomainError)
+{
+    // when
+    auto exec = [&]() { return alma::power_mod(-3, -10, 0); };
+    // then
+    EXPECT_THROW(exec(), std::domain_error);
+}
+
+TEST(MathsTest, powerMod_WhenModuloAndBaseArePositive)
+{
+    // when
+    int result = alma::power_mod(5, 11, 10000);
+    // then
+    EXPECT_EQ(8125, result);
+}
+
+TEST(MathsTest, powerMod_WhenModuloIsPositiveAndBaseIsNegative)
+{
+    // when
+    int result = alma::power_mod(-5, 11, 10000);
+    // then
+    EXPECT_EQ(1875, result);
+}
+
+TEST(MathsTest, powerMod_WhenModuloIsNegative_ThenDomainError)
+{
+    // then
+    auto exec = [&]() { return alma::power_mod(-5, 11, -10000); };
+    // then
+    EXPECT_THROW(exec(), std::domain_error);
 }
 
 #pragma endregion
