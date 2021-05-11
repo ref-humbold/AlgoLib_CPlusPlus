@@ -67,7 +67,31 @@ namespace algolib::mathmat
     long long lcm(long long number1, long long number2);
 
 #pragma endregion
-#pragma region mult_mod
+#pragma region mult
+
+    /*!
+     * \brief Performs a fast multiplication of two numbers.
+     * \param factor1 a first factor
+     * \param factor2 a second factor
+     * \return multiplication result
+     */
+    int mult(int factor1, int factor2);
+
+    /*!
+     * \brief Performs a fast multiplication of two numbers.
+     * \param factor1 a first factor
+     * \param factor2 a second factor
+     * \return multiplication result
+     */
+    long mult(long factor1, long factor2);
+
+    /*!
+     * \brief Performs a fast multiplication of two numbers.
+     * \param factor1 a first factor
+     * \param factor2 a second factor
+     * \return multiplication result
+     */
+    long long mult(long long factor1, long long factor2);
 
     /*!
      * \brief Performs a fast multiplication of two numbers with modulo taken.
@@ -97,7 +121,31 @@ namespace algolib::mathmat
     long long mult_mod(long long factor1, long long factor2, long long modulo);
 
 #pragma endregion
-#pragma region power_mod
+#pragma region power
+
+    /*!
+     * \brief Performs a fast exponentiation of two numbers.
+     * \param base a base value
+     * \param exponent an exponent value
+     * \return exponentiation result
+     */
+    int power(int base, int exponent);
+
+    /*!
+     * \brief Performs a fast exponentiation of two numbers.
+     * \param base a base value
+     * \param exponent an exponent value
+     * \return exponentiation result
+     */
+    long power(long base, long exponent);
+
+    /*!
+     * \brief Performs a fast exponentiation of two numbers.
+     * \param base a base value
+     * \param exponent an exponent value
+     * \return exponentiation result with modulo taken
+     */
+    long long power(long long base, long long exponent);
 
     /*!
      * \brief Performs a fast exponentiation of two numbers with modulo taken.

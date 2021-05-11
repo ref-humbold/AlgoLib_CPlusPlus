@@ -99,52 +99,52 @@ TEST(MathsTest, lcm_WhenOneNumberIsZero_ThenZero)
 }
 
 #pragma endregion
-#pragma region multMod
+#pragma region mult
 
-TEST(MathsTest, multMod_WhenFirstFactorIsZero_ThenZero)
+TEST(MathsTest, mult_WhenFirstFactorIsZero_ThenZero)
 {
     // when
-    int result = alma::mult_mod(0, 14, 0);
+    int result = alma::mult(0, 14);
     // then
     EXPECT_EQ(0, result);
 }
 
-TEST(MathsTest, multMod_WhenSecondFactorIsZero_ThenZero)
+TEST(MathsTest, mult_WhenSecondFactorIsZero_ThenZero)
 {
     // when
-    int result = alma::mult_mod(14, 0, 0);
+    int result = alma::mult(14, 0);
     // then
     EXPECT_EQ(0, result);
 }
 
-TEST(MathsTest, multMod_WhenFactorsAreZero_ThenZero)
+TEST(MathsTest, mult_WhenFactorsAreZero_ThenZero)
 {
     // when
-    int result = alma::mult_mod(0, 0, 0);
+    int result = alma::mult(0, 0);
     // then
     EXPECT_EQ(0, result);
 }
 
-TEST(MathsTest, multMod_WhenOneFactorIsNegativeAndAnotherIsPositive_ThenNegative)
+TEST(MathsTest, mult_WhenOneFactorIsNegativeAndAnotherIsPositive_ThenNegative)
 {
     // when
-    int result = alma::mult_mod(-3, 10, 0);
+    int result = alma::mult(-3, 10);
     // then
     EXPECT_EQ(-30, result);
 }
 
-TEST(MathsTest, multMod_WhenOneFactorIsPositiveAndAnotherIsNegative_ThenNegative)
+TEST(MathsTest, mult_WhenOneFactorIsPositiveAndAnotherIsNegative_ThenNegative)
 {
     // when
-    int result = alma::mult_mod(3, -10, 0);
+    int result = alma::mult(3, -10);
     // then
     EXPECT_EQ(-30, result);
 }
 
-TEST(MathsTest, multMod_WhenFactorsAreNegative_ThenPositive)
+TEST(MathsTest, mult_WhenFactorsAreNegative_ThenPositive)
 {
     // when
-    int result = alma::mult_mod(-3, -10, 0);
+    int result = alma::mult(-3, -10);
     // then
     EXPECT_EQ(30, result);
 }
@@ -190,60 +190,60 @@ TEST(MathsTest, multMod_WhenModuloIsNegative_ThenDomainError)
 }
 
 #pragma endregion
-#pragma region powerMod
+#pragma region power
 
-TEST(MathsTest, powerMod_WhenBaseIsZero_ThenZero)
+TEST(MathsTest, power_WhenBaseIsZero_ThenZero)
 {
     // when
-    int result = alma::power_mod(0, 14, 0);
+    int result = alma::power(0, 14);
     // then
     EXPECT_EQ(0, result);
 }
 
-TEST(MathsTest, powerMod_WhenExponentIsZero_ThenOne)
+TEST(MathsTest, power_WhenExponentIsZero_ThenOne)
 {
     // when
-    int result = alma::power_mod(14, 0, 0);
+    int result = alma::power(14, 0);
     // then
     EXPECT_EQ(1, result);
 }
 
-TEST(MathsTest, powerMod_WhenBaseAndExponentAreZero_ThenDomainError)
+TEST(MathsTest, power_WhenBaseAndExponentAreZero_ThenDomainError)
 {
     // when
-    auto exec = [&]() { return alma::power_mod(0, 0, 0); };
+    auto exec = [&]() { return alma::power(0, 0); };
     // then
     EXPECT_THROW(exec(), std::domain_error);
 }
 
-TEST(MathsTest, powerMod_WhenBaseAndExponentArePositive)
+TEST(MathsTest, power_WhenBaseAndExponentArePositive)
 {
     // when
-    int result = alma::power_mod(3, 10, 0);
+    int result = alma::power(3, 10);
     // then
     EXPECT_EQ(59049, result);
 }
 
-TEST(MathsTest, powerMod_WhenBaseIsNegativeAndExponentIsEven)
+TEST(MathsTest, power_WhenBaseIsNegativeAndExponentIsEven)
 {
     // when
-    int result = alma::power_mod(-3, 10, 0);
+    int result = alma::power(-3, 10);
     // then
     EXPECT_EQ(59049, result);
 }
 
-TEST(MathsTest, powerMod_WhenBaseIsNegativeAndExponentIsOdd)
+TEST(MathsTest, power_WhenBaseIsNegativeAndExponentIsOdd)
 {
     // when
-    int result = alma::power_mod(-3, 9, 0);
+    int result = alma::power(-3, 9);
     // then
     EXPECT_EQ(-19683, result);
 }
 
-TEST(MathsTest, powerMod_WhenExponentIsNegative_ThenDomainError)
+TEST(MathsTest, power_WhenExponentIsNegative_ThenDomainError)
 {
     // when
-    auto exec = [&]() { return alma::power_mod(-3, -10, 0); };
+    auto exec = [&]() { return alma::power(-3, -10); };
     // then
     EXPECT_THROW(exec(), std::domain_error);
 }
