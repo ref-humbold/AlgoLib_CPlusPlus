@@ -75,7 +75,7 @@ namespace algolib::mathmat
      * \param factor2 a second factor
      * \return multiplication result
      */
-    int mult(int factor1, int factor2);
+    int multiply(int factor1, int factor2);
 
     /*!
      * \brief Performs a fast multiplication of two numbers.
@@ -83,7 +83,7 @@ namespace algolib::mathmat
      * \param factor2 a second factor
      * \return multiplication result
      */
-    long mult(long factor1, long factor2);
+    long multiply(long factor1, long factor2);
 
     /*!
      * \brief Performs a fast multiplication of two numbers.
@@ -91,7 +91,7 @@ namespace algolib::mathmat
      * \param factor2 a second factor
      * \return multiplication result
      */
-    long long mult(long long factor1, long long factor2);
+    long long multiply(long long factor1, long long factor2);
 
     /*!
      * \brief Performs a fast multiplication of two numbers with modulo taken.
@@ -100,7 +100,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return multiplication result with modulo taken
      */
-    int mult_mod(int factor1, int factor2, int modulo);
+    int multiply(int factor1, int factor2, int modulo);
 
     /*!
      * \brief Performs a fast multiplication of two numbers with modulo taken.
@@ -109,7 +109,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return multiplication result with modulo taken
      */
-    long mult_mod(long factor1, long factor2, long modulo);
+    long multiply(long factor1, long factor2, long modulo);
 
     /*!
      * \brief Performs a fast multiplication of two numbers with modulo taken.
@@ -118,7 +118,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return multiplication result with modulo taken
      */
-    long long mult_mod(long long factor1, long long factor2, long long modulo);
+    long long multiply(long long factor1, long long factor2, long long modulo);
 
 #pragma endregion
 #pragma region power
@@ -154,7 +154,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return exponentiation result with modulo taken
      */
-    int power_mod(int base, int exponent, int modulo);
+    int power(int base, int exponent, int modulo);
 
     /*!
      * \brief Performs a fast exponentiation of two numbers with modulo taken.
@@ -163,7 +163,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return exponentiation result with modulo taken
      */
-    long power_mod(long base, long exponent, long modulo);
+    long power(long base, long exponent, long modulo);
 
     /*!
      * \brief Performs a fast exponentiation of two numbers with modulo taken.
@@ -172,7 +172,7 @@ namespace algolib::mathmat
      * \param modulo a modulo value
      * \return exponentiation result with modulo taken
      */
-    long long power_mod(long long base, long long exponent, long long modulo);
+    long long power(long long base, long long exponent, long long modulo);
 
 #pragma endregion
 }

@@ -74,18 +74,18 @@ long long alma::lcm(long long number1, long long number2)
 #pragma endregion
 #pragma region mult
 
-int alma::mult(int factor1, int factor2)
+int alma::multiply(int factor1, int factor2)
 {
     int result = 0;
 
     if(factor1 < 0 && factor2 < 0)
-        return mult(-factor1, -factor2);
+        return multiply(-factor1, -factor2);
 
     if(factor1 < 0)
-        return -mult(-factor1, factor2);
+        return -multiply(-factor1, factor2);
 
     if(factor2 < 0)
-        return -mult(factor1, -factor2);
+        return -multiply(factor1, -factor2);
 
     while(factor2 > 0)
     {
@@ -99,18 +99,18 @@ int alma::mult(int factor1, int factor2)
     return result;
 }
 
-long alma::mult(long factor1, long factor2)
+long alma::multiply(long factor1, long factor2)
 {
     long result = 0;
 
     if(factor1 < 0 && factor2 < 0)
-        return mult(-factor1, -factor2);
+        return multiply(-factor1, -factor2);
 
     if(factor1 < 0)
-        return -mult(-factor1, factor2);
+        return -multiply(-factor1, factor2);
 
     if(factor2 < 0)
-        return -mult(factor1, -factor2);
+        return -multiply(factor1, -factor2);
 
     while(factor2 > 0)
     {
@@ -124,18 +124,18 @@ long alma::mult(long factor1, long factor2)
     return result;
 }
 
-long long alma::mult(long long factor1, long long factor2)
+long long alma::multiply(long long factor1, long long factor2)
 {
     long long result = 0;
 
     if(factor1 < 0 && factor2 < 0)
-        return mult(-factor1, -factor2);
+        return multiply(-factor1, -factor2);
 
     if(factor1 < 0)
-        return -mult(-factor1, factor2);
+        return -multiply(-factor1, factor2);
 
     if(factor2 < 0)
-        return -mult(factor1, -factor2);
+        return -multiply(factor1, -factor2);
 
     while(factor2 > 0)
     {
@@ -149,7 +149,7 @@ long long alma::mult(long long factor1, long long factor2)
     return result;
 }
 
-int alma::mult_mod(int factor1, int factor2, int modulo)
+int alma::multiply(int factor1, int factor2, int modulo)
 {
     int result = 0;
 
@@ -157,13 +157,13 @@ int alma::mult_mod(int factor1, int factor2, int modulo)
         throw std::domain_error("Non-positive modulo");
 
     if(factor1 < 0 && factor2 < 0)
-        return mult_mod(-factor1, -factor2, modulo);
+        return multiply(-factor1, -factor2, modulo);
 
     if(factor1 < 0)
-        return modulo - mult_mod(-factor1, factor2, modulo);
+        return modulo - multiply(-factor1, factor2, modulo);
 
     if(factor2 < 0)
-        return modulo - mult_mod(factor1, -factor2, modulo);
+        return modulo - multiply(factor1, -factor2, modulo);
 
     while(factor2 > 0)
     {
@@ -177,7 +177,7 @@ int alma::mult_mod(int factor1, int factor2, int modulo)
     return result;
 }
 
-long alma::mult_mod(long factor1, long factor2, long modulo)
+long alma::multiply(long factor1, long factor2, long modulo)
 {
     long result = 0;
 
@@ -185,13 +185,13 @@ long alma::mult_mod(long factor1, long factor2, long modulo)
         throw std::domain_error("Non-positive modulo");
 
     if(factor1 < 0 && factor2 < 0)
-        return mult_mod(-factor1, -factor2, modulo);
+        return multiply(-factor1, -factor2, modulo);
 
     if(factor1 < 0)
-        return modulo - mult_mod(-factor1, factor2, modulo);
+        return modulo - multiply(-factor1, factor2, modulo);
 
     if(factor2 < 0)
-        return modulo - mult_mod(factor1, -factor2, modulo);
+        return modulo - multiply(factor1, -factor2, modulo);
 
     while(factor2 > 0)
     {
@@ -205,7 +205,7 @@ long alma::mult_mod(long factor1, long factor2, long modulo)
     return result;
 }
 
-long long alma::mult_mod(long long factor1, long long factor2, long long modulo)
+long long alma::multiply(long long factor1, long long factor2, long long modulo)
 {
     long long result = 0;
 
@@ -213,13 +213,13 @@ long long alma::mult_mod(long long factor1, long long factor2, long long modulo)
         throw std::domain_error("Non-positive modulo");
 
     if(factor1 < 0 && factor2 < 0)
-        return mult_mod(-factor1, -factor2, modulo);
+        return multiply(-factor1, -factor2, modulo);
 
     if(factor1 < 0)
-        return modulo - mult_mod(-factor1, factor2, modulo);
+        return modulo - multiply(-factor1, factor2, modulo);
 
     if(factor2 < 0)
-        return modulo - mult_mod(factor1, -factor2, modulo);
+        return modulo - multiply(factor1, -factor2, modulo);
 
     while(factor2 > 0)
     {
@@ -249,9 +249,9 @@ int alma::power(int base, int exponent)
     while(exponent > 0)
     {
         if(exponent % 2 == 1)
-            result = mult(result, base);
+            result = multiply(result, base);
 
-        base = mult(base, base);
+        base = multiply(base, base);
         exponent /= 2;
     }
 
@@ -271,9 +271,9 @@ long alma::power(long base, long exponent)
     while(exponent > 0)
     {
         if(exponent % 2 == 1)
-            result = mult(result, base);
+            result = multiply(result, base);
 
-        base = mult(base, base);
+        base = multiply(base, base);
         exponent /= 2;
     }
 
@@ -293,16 +293,16 @@ long long alma::power(long long base, long long exponent)
     while(exponent > 0)
     {
         if(exponent % 2 == 1)
-            result = mult(result, base);
+            result = multiply(result, base);
 
-        base = mult(base, base);
+        base = multiply(base, base);
         exponent /= 2;
     }
 
     return result;
 }
 
-int alma::power_mod(int base, int exponent, int modulo)
+int alma::power(int base, int exponent, int modulo)
 {
     int result = 1;
 
@@ -318,16 +318,16 @@ int alma::power_mod(int base, int exponent, int modulo)
     while(exponent > 0)
     {
         if(exponent % 2 == 1)
-            result = mult_mod(result, base, modulo);
+            result = multiply(result, base, modulo);
 
-        base = mult_mod(base, base, modulo);
+        base = multiply(base, base, modulo);
         exponent /= 2;
     }
 
     return result;
 }
 
-long alma::power_mod(long base, long exponent, long modulo)
+long alma::power(long base, long exponent, long modulo)
 {
     long result = 1;
 
@@ -343,16 +343,16 @@ long alma::power_mod(long base, long exponent, long modulo)
     while(exponent > 0)
     {
         if(exponent % 2 == 1)
-            result = mult_mod(result, base, modulo);
+            result = multiply(result, base, modulo);
 
-        base = mult_mod(base, base, modulo);
+        base = multiply(base, base, modulo);
         exponent /= 2;
     }
 
     return result;
 }
 
-long long alma::power_mod(long long base, long long exponent, long long modulo)
+long long alma::power(long long base, long long exponent, long long modulo)
 {
     long long result = 1;
 
@@ -368,9 +368,9 @@ long long alma::power_mod(long long base, long long exponent, long long modulo)
     while(exponent > 0)
     {
         if(exponent % 2 == 1)
-            result = mult_mod(result, base, modulo);
+            result = multiply(result, base, modulo);
 
-        base = mult_mod(base, base, modulo);
+        base = multiply(base, base, modulo);
         exponent /= 2;
     }
 

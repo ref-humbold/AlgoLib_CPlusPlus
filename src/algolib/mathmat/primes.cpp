@@ -55,7 +55,7 @@ bool alma::test_fermat(int number)
     {
         int witness = distribution(rand_eng);
 
-        if(gcd(witness, number) > 1 || power_mod(witness, number - 1, number) != 1)
+        if(gcd(witness, number) > 1 || power(witness, number - 1, number) != 1)
             return false;
     }
 
@@ -77,7 +77,7 @@ bool alma::test_fermat(long number)
     {
         long witness = distribution(rand_eng);
 
-        if(gcd(witness, number) > 1 || power_mod(witness, number - 1, number) != 1)
+        if(gcd(witness, number) > 1 || power(witness, number - 1, number) != 1)
             return false;
     }
 
@@ -99,7 +99,7 @@ bool alma::test_fermat(long long number)
     {
         long long witness = distribution(rand_eng);
 
-        if(gcd(witness, number) > 1 || power_mod(witness, number - 1, number) != 1)
+        if(gcd(witness, number) > 1 || power(witness, number - 1, number) != 1)
             return false;
     }
 
@@ -128,7 +128,7 @@ bool alma::test_miller(int number)
     {
         int witness = distribution(rand_eng);
 
-        if(power_mod(witness, multiplicand, number) != 1)
+        if(power(witness, multiplicand, number) != 1)
         {
             std::vector<int> exponents;
 
@@ -136,7 +136,7 @@ bool alma::test_miller(int number)
                 exponents.push_back(d);
 
             if(std::all_of(exponents.begin(), exponents.end(),
-                           [&](int d) { return power_mod(witness, d, number) != number - 1; }))
+                           [&](int d) { return power(witness, d, number) != number - 1; }))
                 return false;
         }
     }
@@ -163,7 +163,7 @@ bool alma::test_miller(long number)
     {
         long witness = distribution(rand_eng);
 
-        if(power_mod(witness, multiplicand, number) != 1)
+        if(power(witness, multiplicand, number) != 1)
         {
             std::vector<long> exponents;
 
@@ -171,7 +171,7 @@ bool alma::test_miller(long number)
                 exponents.push_back(d);
 
             if(std::all_of(exponents.begin(), exponents.end(),
-                           [&](long d) { return power_mod(witness, d, number) != number - 1; }))
+                           [&](long d) { return power(witness, d, number) != number - 1; }))
                 return false;
         }
     }
@@ -198,16 +198,15 @@ bool alma::test_miller(long long number)
     {
         long long witness = distribution(rand_eng);
 
-        if(power_mod(witness, multiplicand, number) != 1)
+        if(power(witness, multiplicand, number) != 1)
         {
             std::vector<long long> exponents;
 
             for(long long d = multiplicand; d <= number / 2; d *= 2)
                 exponents.push_back(d);
 
-            if(std::all_of(exponents.begin(), exponents.end(), [&](long long d) {
-                   return power_mod(witness, d, number) != number - 1;
-               }))
+            if(std::all_of(exponents.begin(), exponents.end(),
+                           [&](long long d) { return power(witness, d, number) != number - 1; }))
                 return false;
         }
     }

@@ -12,17 +12,17 @@ namespace alma = algolib::mathmat;
 TEST(MathsTest, gcd_WhenNumbersAreComposite_ThenGCD)
 {
     // when
-    int result = alma::gcd(161, 46);
+    long result = alma::gcd(161L, 46L);
     // then
-    EXPECT_EQ(23, result);
+    EXPECT_EQ(23L, result);
 }
 
 TEST(MathsTest, gcd_WhenNumbersArePrime_ThenOne)
 {
     // when
-    int result = alma::gcd(127, 41);
+    long long result = alma::gcd(127LL, 41LL);
     // then
-    EXPECT_EQ(1, result);
+    EXPECT_EQ(1LL, result);
 }
 
 TEST(MathsTest, gcd_WhenNumbersAreMutuayPrime_ThenOne)
@@ -33,24 +33,24 @@ TEST(MathsTest, gcd_WhenNumbersAreMutuayPrime_ThenOne)
     EXPECT_EQ(1, result);
 }
 
-TEST(MathsTest, gcd_WhenOneNumberIsMultipleOfAnother_ThenLessNumber)
+TEST(MathsTest, gcd_WhenOneOfNumbersIsMultipleOfAnother_ThenLessNumber)
 {
     // given
     int number = 34;
     // when
-    int result = alma::gcd(272, number);
+    int result = alma::gcd(number, number * 6);
     // then
     EXPECT_EQ(number, result);
 }
 
-TEST(MathsTest, gcd_WhenOneNumberIsZero_ThenAnotherNumber)
+TEST(MathsTest, gcd_WhenOneOfNumbersIsZero_ThenAnotherNumber)
 {
     // given
-    int number1 = 96;
+    int number = 96;
     // when
-    int result = alma::gcd(number1, 0);
+    int result = alma::gcd(number, 0);
     // then
-    EXPECT_EQ(number1, result);
+    EXPECT_EQ(number, result);
 }
 
 #pragma endregion
@@ -59,17 +59,17 @@ TEST(MathsTest, gcd_WhenOneNumberIsZero_ThenAnotherNumber)
 TEST(MathsTest, lcm_WhenNumbersAreComposite_ThenLCM)
 {
     // when
-    int result = alma::lcm(161, 46);
+    long result = alma::lcm(161L, 46L);
     // then
-    EXPECT_EQ(322, result);
+    EXPECT_EQ(322L, result);
 }
 
 TEST(MathsTest, lcm_WhenNumbersArePrime_ThenProduct)
 {
     // when
-    int result = alma::lcm(127, 41);
+    long long result = alma::lcm(127L, 41L);
     // then
-    EXPECT_EQ(5207, result);
+    EXPECT_EQ(5207L, result);
 }
 
 TEST(MathsTest, lcm_WhenNumbersAreMutuayPrime_ThenProduct)
@@ -80,17 +80,17 @@ TEST(MathsTest, lcm_WhenNumbersAreMutuayPrime_ThenProduct)
     EXPECT_EQ(6783, result);
 }
 
-TEST(MathsTest, lcm_WhenNumberIsMultipleOfNumber_ThenGreaterNumber)
+TEST(MathsTest, lcm_WhenOneOfNumbersIsMultipleOfAnother_ThenGreaterNumber)
 {
     // given
-    int number = 272;
+    int number = 34;
     // when
-    int result = alma::lcm(number, 34);
+    int result = alma::lcm(number, number * 6);
     // then
-    EXPECT_EQ(number, result);
+    EXPECT_EQ(number * 6, result);
 }
 
-TEST(MathsTest, lcm_WhenOneNumberIsZero_ThenZero)
+TEST(MathsTest, lcm_WhenOneOfNumbersIsZero_ThenZero)
 {
     // when
     int result = alma::lcm(96, 0);
@@ -101,90 +101,98 @@ TEST(MathsTest, lcm_WhenOneNumberIsZero_ThenZero)
 #pragma endregion
 #pragma region mult
 
-TEST(MathsTest, mult_WhenFirstFactorIsZero_ThenZero)
+TEST(MathsTest, multiply_WhenFirstFactorIsZero_ThenZero)
 {
     // when
-    int result = alma::mult(0, 14);
+    int result = alma::multiply(0, 14);
     // then
     EXPECT_EQ(0, result);
 }
 
-TEST(MathsTest, mult_WhenSecondFactorIsZero_ThenZero)
+TEST(MathsTest, multiply_WhenSecondFactorIsZero_ThenZero)
 {
     // when
-    int result = alma::mult(14, 0);
+    int result = alma::multiply(14, 0);
     // then
     EXPECT_EQ(0, result);
 }
 
-TEST(MathsTest, mult_WhenFactorsAreZero_ThenZero)
+TEST(MathsTest, multiply_WhenFactorsAreZero_ThenZero)
 {
     // when
-    int result = alma::mult(0, 0);
+    int result = alma::multiply(0, 0);
     // then
     EXPECT_EQ(0, result);
 }
 
-TEST(MathsTest, mult_WhenOneFactorIsNegativeAndAnotherIsPositive_ThenNegative)
+TEST(MathsTest, multiply_WhenFactorsArePositive_ThenResultIsPositive)
 {
     // when
-    int result = alma::mult(-3, 10);
-    // then
-    EXPECT_EQ(-30, result);
-}
-
-TEST(MathsTest, mult_WhenOneFactorIsPositiveAndAnotherIsNegative_ThenNegative)
-{
-    // when
-    int result = alma::mult(3, -10);
-    // then
-    EXPECT_EQ(-30, result);
-}
-
-TEST(MathsTest, mult_WhenFactorsAreNegative_ThenPositive)
-{
-    // when
-    int result = alma::mult(-3, -10);
+    int result = alma::multiply(3, 10);
     // then
     EXPECT_EQ(30, result);
 }
 
-TEST(MathsTest, multMod_WhenModuloAndFactorsArePositive)
+TEST(MathsTest, multiply_WhenFirstFactorIsNegativeAndSecondFactorIsPositive_ThenResultIsNegative)
 {
     // when
-    int result = alma::mult_mod(547, 312, 10000);
+    int result = alma::multiply(-3, 10);
+    // then
+    EXPECT_EQ(-30, result);
+}
+
+TEST(MathsTest, multiply_WhenFirstFactorIsPositiveAndSecondFactorIsNegative_ThenResultIsNegative)
+{
+    // when
+    long result = alma::multiply(3L, -10L);
+    // then
+    EXPECT_EQ(-30L, result);
+}
+
+TEST(MathsTest, multiply_WhenFactorsAreNegative_ThenResultIsPositive)
+{
+    // when
+    long long result = alma::multiply(-3LL, -10LL);
+    // then
+    EXPECT_EQ(30LL, result);
+}
+
+TEST(MathsTest, multiply_WhenModuloAndFactorsArePositive)
+{
+    // when
+    int result = alma::multiply(547, 312, 10000);
     // then
     EXPECT_EQ(664, result);
 }
 
-TEST(MathsTest, multMod_WhenModuloIsPositiveAndFirstFactorIsNegative)
+TEST(MathsTest, multiply_WhenModuloIsPositiveAndFirstFactorIsNegative)
 {
     // when
-    int result = alma::mult_mod(-547, 312, 10000);
+    int result = alma::multiply(-547, 312, 10000);
     // then
-    EXPECT_EQ(9336, result);
+    EXPECT_EQ(9336L, result);
 }
 
-TEST(MathsTest, multMod_WhenModuloIsPositiveAndSecondFactorIsNegative)
+TEST(MathsTest, multiply_WhenModuloIsPositiveAndSecondFactorIsNegative)
 {
     // when
-    int result = alma::mult_mod(547, -312, 10000);
+    long result = alma::multiply(547L, -312L, 10000L);
     // then
-    EXPECT_EQ(9336, result);
+    EXPECT_EQ(9336LL, result);
 }
 
-TEST(MathsTest, multMod_WhenModuloIsPositiveAndFactorsAreNegative)
+TEST(MathsTest, multiply_WhenModuloIsPositiveAndFactorsAreNegative)
 {
     // when
-    int result = alma::mult_mod(-547, -312, 10000);
+    long long result = alma::multiply(-547LL, -312LL, 10000LL);
     // then
-    EXPECT_EQ(664, result);
+    EXPECT_EQ(664LL, result);
 }
 
-TEST(MathsTest, multMod_WhenModuloIsNegative_ThenDomainError)
+TEST(MathsTest, multiply_WhenModuloIsNegative_ThenDomainError)
 {
     // when
-    auto exec = [&]() { alma::mult_mod(-547, -312, -10000); };
+    auto exec = [&]() { alma::multiply(-547, -312, -10000); };
     // then
     EXPECT_THROW(exec(), std::domain_error);
 }
@@ -216,7 +224,7 @@ TEST(MathsTest, power_WhenBaseAndExponentAreZero_ThenDomainError)
     EXPECT_THROW(exec(), std::domain_error);
 }
 
-TEST(MathsTest, power_WhenBaseAndExponentArePositive)
+TEST(MathsTest, power_WhenBaseAndExponentArePositive_ThenResultIsPositive)
 {
     // when
     int result = alma::power(3, 10);
@@ -224,20 +232,20 @@ TEST(MathsTest, power_WhenBaseAndExponentArePositive)
     EXPECT_EQ(59049, result);
 }
 
-TEST(MathsTest, power_WhenBaseIsNegativeAndExponentIsEven)
+TEST(MathsTest, power_WhenBaseIsNegativeAndExponentIsEven_ThenResultIsPositive)
 {
     // when
-    int result = alma::power(-3, 10);
+    long result = alma::power(-3L, 10L);
     // then
-    EXPECT_EQ(59049, result);
+    EXPECT_EQ(59049L, result);
 }
 
-TEST(MathsTest, power_WhenBaseIsNegativeAndExponentIsOdd)
+TEST(MathsTest, power_WhenBaseIsNegativeAndExponentIsOdd_ThenResultIsNegative)
 {
     // when
-    int result = alma::power(-3, 9);
+    long long result = alma::power(-3LL, 9LL);
     // then
-    EXPECT_EQ(-19683, result);
+    EXPECT_EQ(-19683LL, result);
 }
 
 TEST(MathsTest, power_WhenExponentIsNegative_ThenDomainError)
@@ -248,26 +256,34 @@ TEST(MathsTest, power_WhenExponentIsNegative_ThenDomainError)
     EXPECT_THROW(exec(), std::domain_error);
 }
 
-TEST(MathsTest, powerMod_WhenModuloAndBaseArePositive)
+TEST(MathsTest, power_WhenModuloAndBaseArePositive)
 {
     // when
-    int result = alma::power_mod(5, 11, 10000);
+    int result = alma::power(5, 11, 10000);
     // then
     EXPECT_EQ(8125, result);
 }
 
-TEST(MathsTest, powerMod_WhenModuloIsPositiveAndBaseIsNegative)
+TEST(MathsTest, power_WhenModuloIsPositiveAndBaseIsNegativeAndExponentIsOdd)
 {
     // when
-    int result = alma::power_mod(-5, 11, 10000);
+    long result = alma::power(-5L, 11L, 10000L);
     // then
-    EXPECT_EQ(1875, result);
+    EXPECT_EQ(1875L, result);
 }
 
-TEST(MathsTest, powerMod_WhenModuloIsNegative_ThenDomainError)
+TEST(MathsTest, power_WhenModuloIsPositiveAndBaseIsNegativeAndExponentIsEven)
+{
+    // when
+    long long result = alma::power(-5LL, 12LL, 10000LL);
+    // then
+    EXPECT_EQ(625LL, result);
+}
+
+TEST(MathsTest, power_WhenModuloIsNegative_ThenDomainError)
 {
     // then
-    auto exec = [&]() { return alma::power_mod(-5, 11, -10000); };
+    auto exec = [&]() { return alma::power(-5, 11, -10000); };
     // then
     EXPECT_THROW(exec(), std::domain_error);
 }
