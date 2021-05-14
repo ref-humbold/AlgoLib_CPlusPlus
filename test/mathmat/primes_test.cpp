@@ -141,7 +141,7 @@ TEST(PrimesTest, testFermat_WhenPrime_ThenTrue)
 TEST(PrimesTest, testFermat_WhenComposite_ThenFalse)
 {
     // when
-    bool result = alma::test_fermat(1001);
+    bool result = alma::test_fermat(1001L);
     // then
     EXPECT_FALSE(result);
 }
@@ -149,7 +149,7 @@ TEST(PrimesTest, testFermat_WhenComposite_ThenFalse)
 TEST(PrimesTest, testFermat_WhenCarmichaelNumber_ThenFalse)
 {
     // when
-    bool result = alma::test_fermat(1105);  // 1105 = 5 * 13 * 17 is a Carmichael number
+    bool result = alma::test_fermat(1105LL);  // 1105 = 5 * 13 * 17 is a Carmichael number
     // then
     EXPECT_FALSE(result);
 }
@@ -192,7 +192,7 @@ TEST(PrimesTest, testMiller_WhenPrime_ThenTrue)
 TEST(PrimesTest, testMiller_WhenComposite1_ThenFalse)
 {
     // when
-    bool result = alma::test_miller(1001);
+    bool result = alma::test_miller(1001L);
     // then
     EXPECT_FALSE(result);
 }
@@ -200,7 +200,7 @@ TEST(PrimesTest, testMiller_WhenComposite1_ThenFalse)
 TEST(PrimesTest, testMiller_WhenComposite2_ThenFalse)
 {
     // when
-    bool result = alma::test_miller(1105);
+    bool result = alma::test_miller(1105LL);
     // then
     EXPECT_FALSE(result);
 }

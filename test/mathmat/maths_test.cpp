@@ -12,17 +12,17 @@ namespace alma = algolib::mathmat;
 TEST(MathsTest, gcd_WhenNumbersAreComposite_ThenGCD)
 {
     // when
-    long result = alma::gcd(161L, 46L);
+    long long result = alma::gcd(161LL, 46LL);
     // then
-    EXPECT_EQ(23L, result);
+    EXPECT_EQ(23LL, result);
 }
 
 TEST(MathsTest, gcd_WhenNumbersArePrime_ThenOne)
 {
     // when
-    long long result = alma::gcd(127LL, 41LL);
+    long result = alma::gcd(127L, 41L);
     // then
-    EXPECT_EQ(1LL, result);
+    EXPECT_EQ(1L, result);
 }
 
 TEST(MathsTest, gcd_WhenNumbersAreMutuayPrime_ThenOne)
@@ -59,15 +59,15 @@ TEST(MathsTest, gcd_WhenOneOfNumbersIsZero_ThenAnotherNumber)
 TEST(MathsTest, lcm_WhenNumbersAreComposite_ThenLCM)
 {
     // when
-    long result = alma::lcm(161L, 46L);
+    long long result = alma::lcm(161LL, 46LL);
     // then
-    EXPECT_EQ(322L, result);
+    EXPECT_EQ(322LL, result);
 }
 
 TEST(MathsTest, lcm_WhenNumbersArePrime_ThenProduct)
 {
     // when
-    long long result = alma::lcm(127L, 41L);
+    long result = alma::lcm(127L, 41L);
     // then
     EXPECT_EQ(5207L, result);
 }
