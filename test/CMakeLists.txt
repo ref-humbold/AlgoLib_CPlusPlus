@@ -11,7 +11,6 @@ find_package(Threads REQUIRED)
 # SOURCES
 set(GEOMETRY_PLANE_TEST "geometry/plane")
 set(GEOMETRY_SPACE_TEST "geometry/space")
-set(GEOMETRY_TEST "geometry")
 set(GRAPHS_TEST "graphs")
 set(GRAPHS_ALGORITHMS_TEST "${GRAPHS_TEST}/algorithms")
 set(MATHMAT_TEST "mathmat")
@@ -24,7 +23,7 @@ set(GEOMETRY_PLANE_TEST_SOURCES
     "${GEOMETRY_PLANE_TEST}/closest_points_test.cpp"
     "${GEOMETRY_PLANE_TEST}/convex_hull_test.cpp")
 set(GEOMETRY_SPACE_TEST_SOURCES
-)
+    "${GEOMETRY_SPACE_TEST}/geometry3d_test.cpp")
 set(GRAPHS_TEST_SOURCES
     "${GRAPHS_TEST}/directed_graph_test.cpp"
     "${GRAPHS_TEST}/multipartite_graph_test.cpp"
@@ -61,7 +60,6 @@ set(TEXT_TEST_SOURCES
 set(TEST_SOURCES
     "${GEOMETRY_PLANE_TEST_SOURCES}"
     "${GEOMETRY_SPACE_TEST_SOURCES}"
-    "${GEOMETRY_TEST_SOURCES}"
     "${GRAPHS_TEST_SOURCES}"
     "${GRAPHS_ALGORITHMS_TEST_SOURCES}"
     "${MATHMAT_TEST_SOURCES}"

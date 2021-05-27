@@ -7,7 +7,7 @@
 
 namespace algep = algolib::geometry::plane;
 
-TEST(PointsSortingTest, sortByX_ThenSortedStablyAscendingByFirstCoordinate)
+TEST(Geometry2DTest, sortByX_ThenSortedStablyAscendingByFirstCoordinate)
 {
     // given
     std::vector<algep::point2d> sequence = {
@@ -25,7 +25,7 @@ TEST(PointsSortingTest, sortByX_ThenSortedStablyAscendingByFirstCoordinate)
               sequence);
 }
 
-TEST(PointsSortingTest, sortByY_ThenSortedStablyAscendingByFirstCoordinate)
+TEST(Geometry2DTest, sortByY_ThenSortedStablyAscendingByFirstCoordinate)
 {
     // given
     std::vector<algep::point2d> sequence = {
@@ -43,7 +43,7 @@ TEST(PointsSortingTest, sortByY_ThenSortedStablyAscendingByFirstCoordinate)
               sequence);
 }
 
-TEST(PointsSortingTest, sortByAngle)
+TEST(Geometry2DTest, sortByAngle)
 {
     // given
     std::vector<algep::point2d> sequence = {

@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 3.10)
 set(ALGOLIB "algolib")
 set(GEOMETRY_PLANE "${ALGOLIB}/geometry/plane")
 set(GEOMETRY_SPACE "${ALGOLIB}/geometry/space")
-set(GEOMETRY "${ALGOLIB}/geometry")
 set(GRAPHS "${ALGOLIB}/graphs")
 set(GRAPHS_ALGORITHMS "${GRAPHS}/algorithms")
 set(MATHMAT "${ALGOLIB}/mathmat")
@@ -19,14 +18,9 @@ set(GEOMETRY_PLANE_SOURCES
     "${GEOMETRY_PLANE}/point2d.cpp"
     "${GEOMETRY_PLANE}/vector2d.cpp")
 set(GEOMETRY_SPACE_SOURCES
-    )
-set(GEOMETRY_SOURCES
-    "${GEOMETRY}/closest_points.cpp"
-    "${GEOMETRY}/convex_hull.cpp"
-    "${GEOMETRY}/geometry.cpp"
-    "${GEOMETRY}/point.cpp"
-    "${GEOMETRY}/points_sorting.cpp"
-    "${GEOMETRY}/vector.cpp")
+    "${GEOMETRY_SPACE}/geometry3d.cpp"
+    "${GEOMETRY_SPACE}/point3d.cpp"
+    "${GEOMETRY_SPACE}/vector3d.cpp")
 set(GRAPHS_SOURCES
     "${GRAPHS}/directed_graph.cpp"
     "${GRAPHS}/edge.cpp"
@@ -67,7 +61,6 @@ set(TEXT_SOURCES
 set(SOURCES
     "${GEOMETRY_PLANE_SOURCES}"
     "${GEOMETRY_SPACE_SOURCES}"
-    "${GEOMETRY_SOURCES}"
     "${GRAPHS_SOURCES}"
     "${GRAPHS_ALGORITHMS_SOURCES}"
     "${MATHMAT_SOURCES}"
