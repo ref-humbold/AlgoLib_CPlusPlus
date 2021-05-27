@@ -13,6 +13,8 @@ set(STRUCTURES "${ALGOLIB}/structures")
 set(TEXT "${ALGOLIB}/text")
 
 set(GEOMETRY_PLANE_SOURCES
+    "${GEOMETRY_PLANE}/closest_points.cpp"
+    "${GEOMETRY_PLANE}/convex_hull.cpp"
     "${GEOMETRY_PLANE}/geometry2d.cpp"
     "${GEOMETRY_PLANE}/point2d.cpp"
     "${GEOMETRY_PLANE}/vector2d.cpp")

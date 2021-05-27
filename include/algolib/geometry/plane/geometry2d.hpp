@@ -1,5 +1,5 @@
 /*!
- * \file geometry.hpp
+ * \file geometry2d.hpp
  * \brief Basic geometric operations in 2 dimensions
  */
 #ifndef GEOMETRY_2D_HPP_

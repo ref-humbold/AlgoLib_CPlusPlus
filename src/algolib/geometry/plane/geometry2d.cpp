@@ -1,5 +1,5 @@
 /*!
- * \file geometry.cpp
+ * \file geometry2d.cpp
  * \brief Basic geometric operations in 2 dimensions
  */
 #include "algolib/geometry/plane/geometry2d.hpp"

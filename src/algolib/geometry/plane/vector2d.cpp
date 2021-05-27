@@ -1,5 +1,5 @@
 /*!
- * \file vector.cpp
+ * \file vector2d.cpp
  * \brief Structure of vector in 2 dimensions
  */
 #include "algolib/geometry/plane/vector2d.hpp"

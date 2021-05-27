@@ -1,5 +1,5 @@
 /*!
- * \file point.hpp
+ * \file point2d.hpp
  * \brief Structure of point in 2 dimensions
  */
 #ifndef POINT_2D_HPP_

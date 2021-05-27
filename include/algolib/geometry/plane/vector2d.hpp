@@ -1,5 +1,5 @@
 /*!
- * \file vector.hpp
+ * \file vector2d.hpp
  * \brief Structure of vector in 2 dimensions
  */
 #ifndef VECTOR_2D_HPP_

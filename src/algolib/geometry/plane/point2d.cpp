@@ -1,5 +1,5 @@
 /*!
- * \file point.cpp
+ * \file point2d.cpp
  * \brief Structure of point in 2 dimensions
  */
 #include "algolib/geometry/plane/point2d.hpp"
