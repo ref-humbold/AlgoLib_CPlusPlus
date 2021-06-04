@@ -90,7 +90,8 @@ namespace algolib::text
         std::vector<size_t> merge(const std::vector<size_t> & t0, const std::vector<size_t> & sa0,
                                   const std::vector<size_t> & tn12,
                                   const std::vector<size_t> & sa12);
-        void sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys, size_t shift);
+        void sort_indices(std::vector<size_t> & indices, const std::vector<size_t> & values,
+                          size_t shift);
         size_t get_elem(const std::vector<size_t> & v, size_t i);
 
         size_t size_;

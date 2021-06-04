@@ -51,7 +51,7 @@ void alte::trie::insert(const std::string & text)
 
     if(!node->terminus)
     {
-        size_++;
+        ++size_;
         node->terminus = true;
     }
 }
@@ -72,7 +72,7 @@ bool alte::trie::remove_node(const std::string & text, alte::trie::node_ptr node
 {
     if(i == text.length() && node->terminus)
     {
-        size_--;
+        --size_;
         node->terminus = false;
     }
     else if(i < text.length())
