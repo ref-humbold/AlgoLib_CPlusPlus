@@ -13,17 +13,18 @@
 #include <iostream>
 #include <numeric>
 #include <stdexcept>
+#include "../geometry_object.hpp"
 
 namespace algolib::geometry::space
 {
-    class point3d
+    class point3d : public algolib::geometry::geometry_object
     {
     public:
         point3d(double x, double y, double z) : x_{x}, y_{y}, z_{z}
         {
         }
 
-        ~point3d() = default;
+        ~point3d() override = default;
         point3d(const point3d &) = default;
         point3d(point3d &&) = default;
         point3d & operator=(const point3d &) = default;

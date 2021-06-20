@@ -50,7 +50,8 @@ alges::vector3d & alges::vector3d::operator/=(double c)
 
 bool alges::operator==(const alges::vector3d & v1, const alges::vector3d & v2)
 {
-    return v1.x_ == v2.x_ && v1.y_ == v2.y_ && v1.z_ == v2.z_;
+    return alges::vector3d::equal(v1.x_, v2.x_) && alges::vector3d::equal(v1.y_, v2.y_)
+           && alges::vector3d::equal(v1.z_, v2.z_);
 }
 
 bool alges::operator!=(const alges::vector3d & v1, const alges::vector3d & v2)

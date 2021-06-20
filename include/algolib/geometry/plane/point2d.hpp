@@ -13,17 +13,18 @@
 #include <iostream>
 #include <numeric>
 #include <stdexcept>
+#include "../geometry_object.hpp"
 
 namespace algolib::geometry::plane
 {
-    class point2d
+    class point2d : public algolib::geometry::geometry_object
     {
     public:
         point2d(double x, double y) : x_{x}, y_{y}
         {
         }
 
-        ~point2d() = default;
+        ~point2d() override = default;
         point2d(const point2d &) = default;
         point2d(point2d &&) = default;
         point2d & operator=(const point2d &) = default;

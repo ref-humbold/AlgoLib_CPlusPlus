@@ -11,18 +11,19 @@
 #include <array>
 #include <iostream>
 #include <numeric>
+#include "../geometry_object.hpp"
 #include "point3d.hpp"
 
 namespace algolib::geometry::space
 {
-    class vector3d
+    class vector3d : public algolib::geometry::geometry_object
     {
     public:
         vector3d(double x, double y, double z) : x_{x}, y_{y}, z_{z}
         {
         }
 
-        ~vector3d() = default;
+        ~vector3d() override = default;
         vector3d(const vector3d &) = default;
         vector3d(vector3d &&) = default;
         vector3d & operator=(const vector3d &) = default;

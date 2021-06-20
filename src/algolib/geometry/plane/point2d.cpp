@@ -8,7 +8,7 @@ namespace algep = algolib::geometry::plane;
 
 bool algep::operator==(const algep::point2d & p1, const algep::point2d & p2)
 {
-    return p1.x_ == p2.x_ && p1.y_ == p2.y_;
+    return algep::point2d::equal(p1.x_, p2.x_) && algep::point2d::equal(p1.y_, p2.y_);
 }
 
 bool algep::operator!=(const algep::point2d & p1, const algep::point2d & p2)

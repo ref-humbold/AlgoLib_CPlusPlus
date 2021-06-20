@@ -44,7 +44,7 @@ algep::vector2d & algep::vector2d::operator/=(double c)
 
 bool algep::operator==(const algep::vector2d & v1, const algep::vector2d & v2)
 {
-    return v1.x_ == v2.x_ && v1.y_ == v2.y_;
+    return algep::vector2d::equal(v1.x_, v2.x_) && algep::vector2d::equal(v1.y_, v2.y_);
 }
 
 bool algep::operator!=(const algep::vector2d & v1, const algep::vector2d & v2)

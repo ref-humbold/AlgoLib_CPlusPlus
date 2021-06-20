@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 
 #SOURCES
 set(ALGOLIB "algolib")
-set(GEOMETRY_PLANE "${ALGOLIB}/geometry/plane")
-set(GEOMETRY_SPACE "${ALGOLIB}/geometry/space")
+set(GEOMETRY "${ALGOLIB}/geometry")
+set(GEOMETRY_PLANE "${GEOMETRY}/plane")
+set(GEOMETRY_SPACE "${GEOMETRY}/space")
 set(GRAPHS "${ALGOLIB}/graphs")
 set(GRAPHS_ALGORITHMS "${GRAPHS}/algorithms")
 set(MATHMAT "${ALGOLIB}/mathmat")
@@ -11,6 +12,8 @@ set(SEQUENCES "${ALGOLIB}/sequences")
 set(STRUCTURES "${ALGOLIB}/structures")
 set(TEXT "${ALGOLIB}/text")
 
+set(GEOMETRY_SOURCES
+    "${GEOMETRY}/geometry_object.cpp")
 set(GEOMETRY_PLANE_SOURCES
     "${GEOMETRY_PLANE}/closest_points.cpp"
     "${GEOMETRY_PLANE}/convex_hull.cpp"
@@ -59,6 +62,7 @@ set(TEXT_SOURCES
     "${TEXT}/trie.cpp")
 
 set(SOURCES
+    "${GEOMETRY_SOURCES}"
     "${GEOMETRY_PLANE_SOURCES}"
     "${GEOMETRY_SPACE_SOURCES}"
     "${GRAPHS_SOURCES}"

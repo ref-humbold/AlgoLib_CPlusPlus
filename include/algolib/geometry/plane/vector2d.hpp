@@ -11,18 +11,19 @@
 #include <array>
 #include <iostream>
 #include <numeric>
+#include "../geometry_object.hpp"
 #include "point2d.hpp"
 
 namespace algolib::geometry::plane
 {
-    class vector2d
+    class vector2d : public algolib::geometry::geometry_object
     {
     public:
         vector2d(double x, double y) : x_{x}, y_{y}
         {
         }
 
-        ~vector2d() = default;
+        ~vector2d() override = default;
         vector2d(const vector2d &) = default;
         vector2d(vector2d &&) = default;
         vector2d & operator=(const vector2d &) = default;
