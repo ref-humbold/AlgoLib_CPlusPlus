@@ -2,7 +2,7 @@
  * \file vector_3d.cpp
  * \brief Structure of vector in 3D
  */
-#include "algolib/geometry/space/vector_3d.hpp"
+#include "algolib/geometry/3d/vector_3d.hpp"
 
 namespace alges = algolib::geometry::space;
 

@@ -9,8 +9,9 @@ set(THREADS_PREFER_PTHREAD_FLAG true)
 find_package(Threads REQUIRED)
 
 # SOURCES
-set(GEOMETRY_PLANE_TEST "geometry/plane")
-set(GEOMETRY_SPACE_TEST "geometry/space")
+set(GEOMETRY_TEST "geometry")
+set(GEOMETRY_PLANE_TEST "${GEOMETRY_TEST}/2d")
+set(GEOMETRY_SPACE_TEST "${GEOMETRY_TEST}/3d")
 set(GRAPHS_TEST "graphs")
 set(GRAPHS_ALGORITHMS_TEST "${GRAPHS_TEST}/algorithms")
 set(MATHMAT_TEST "mathmat")

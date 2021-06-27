@@ -2,7 +2,7 @@
  * \file geometry_2d.cpp
  * \brief Basic geometric operations in 2D
  */
-#include "algolib/geometry/plane/geometry_2d.hpp"
+#include "algolib/geometry/2d/geometry_2d.hpp"
 
 namespace algep = algolib::geometry::plane;
 

@@ -3,7 +3,7 @@
  * \brief Tests: Algorithms for basic geometrical computations in 2D
  */
 #include <gtest/gtest.h>
-#include "algolib/geometry/plane/geometry_2d.hpp"
+#include "algolib/geometry/2d/geometry_2d.hpp"
 
 namespace algep = algolib::geometry::plane;
 

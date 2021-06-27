@@ -3,7 +3,7 @@
  * \brief Tests: Algorithm for convex hull (monotone chain) in 2D
  */
 #include <gtest/gtest.h>
-#include "algolib/geometry/plane/convex_hull.hpp"
+#include "algolib/geometry/2d/convex_hull.hpp"
 
 namespace algep = algolib::geometry::plane;
 

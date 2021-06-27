@@ -2,10 +2,10 @@
  * \file convex_hull.cpp
  * \brief Algorithm for convex hull (monotone chain) in 2D
  */
-#include "algolib/geometry/plane/convex_hull.hpp"
+#include "algolib/geometry/2d/convex_hull.hpp"
 #include <algorithm>
-#include "algolib/geometry/plane/geometry_2d.hpp"
-#include "algolib/geometry/plane/vector_2d.hpp"
+#include "algolib/geometry/2d/geometry_2d.hpp"
+#include "algolib/geometry/2d/vector_2d.hpp"
 
 namespace algep = algolib::geometry::plane;
 
