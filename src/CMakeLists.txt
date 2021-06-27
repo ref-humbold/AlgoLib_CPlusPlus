@@ -17,13 +17,13 @@ set(GEOMETRY_SOURCES
 set(GEOMETRY_PLANE_SOURCES
     "${GEOMETRY_PLANE}/closest_points.cpp"
     "${GEOMETRY_PLANE}/convex_hull.cpp"
-    "${GEOMETRY_PLANE}/geometry2d.cpp"
-    "${GEOMETRY_PLANE}/point2d.cpp"
-    "${GEOMETRY_PLANE}/vector2d.cpp")
+    "${GEOMETRY_PLANE}/geometry_2d.cpp"
+    "${GEOMETRY_PLANE}/point_2d.cpp"
+    "${GEOMETRY_PLANE}/vector_2d.cpp")
 set(GEOMETRY_SPACE_SOURCES
-    "${GEOMETRY_SPACE}/geometry3d.cpp"
-    "${GEOMETRY_SPACE}/point3d.cpp"
-    "${GEOMETRY_SPACE}/vector3d.cpp")
+    "${GEOMETRY_SPACE}/geometry_3d.cpp"
+    "${GEOMETRY_SPACE}/point_3d.cpp"
+    "${GEOMETRY_SPACE}/vector_3d.cpp")
 set(GRAPHS_SOURCES
     "${GRAPHS}/directed_graph.cpp"
     "${GRAPHS}/edge.cpp"

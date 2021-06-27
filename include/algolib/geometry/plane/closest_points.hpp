@@ -1,13 +1,13 @@
 /*!
  * \file closest_points.hpp
- * \brief Algorithm for pair of closest points
+ * \brief Algorithm for pair of closest points in 2D
  */
 #ifndef CLOSEST_POINTS_HPP_
 #define CLOSEST_POINTS_HPP_
 
 #include <cstdlib>
 #include <vector>
-#include "point2d.hpp"
+#include "point_2d.hpp"
 
 namespace algolib::geometry::plane
 {
@@ -16,7 +16,7 @@ namespace algolib::geometry::plane
      * \param points a vector of points
      * \return pair of closest points
      */
-    std::pair<point2d, point2d> find_closest_points(const std::vector<point2d> & points);
+    std::pair<point_2d, point_2d> find_closest_points(const std::vector<point_2d> & points);
 }
 
 #endif

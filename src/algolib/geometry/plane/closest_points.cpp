@@ -1,20 +1,20 @@
 /*!
  * \file closest_points.cpp
- * \brief Algorithm for pair of closest points
+ * \brief Algorithm for pair of closest points in 2D
  */
 #include "algolib/geometry/plane/closest_points.hpp"
 #include <cmath>
 #include <algorithm>
 #include <memory>
-#include "algolib/geometry/plane/geometry2d.hpp"
+#include "algolib/geometry/plane/geometry_2d.hpp"
 
 namespace algep = algolib::geometry::plane;
 
 namespace internal
 {
     // Finds closest pair of points among three of them.
-    std::pair<algep::point2d, algep::point2d>
-            search_three(const std::vector<algep::point2d> & pointsX, int index_begin,
+    std::pair<algep::point_2d, algep::point_2d>
+            search_three(const std::vector<algep::point_2d> & pointsX, int index_begin,
                          int index_end)
     {
         int index_middle = index_begin + 1;
@@ -33,11 +33,11 @@ namespace internal
 
     // Finds closest pair inside a belt of specified width.
     // The resulting distance should not be less than belt width.
-    std::unique_ptr<std::pair<algep::point2d, algep::point2d>>
-            check_belt(const std::vector<algep::point2d> & pointsY, double middleX,
+    std::unique_ptr<std::pair<algep::point_2d, algep::point_2d>>
+            check_belt(const std::vector<algep::point_2d> & pointsY, double middleX,
                        double belt_width)
     {
-        std::unique_ptr<std::pair<algep::point2d, algep::point2d>> closest_pair;
+        std::unique_ptr<std::pair<algep::point_2d, algep::point_2d>> closest_pair;
         std::vector<int> belt_points;
         double min_distance = belt_width;
 
@@ -48,8 +48,8 @@ namespace internal
         for(size_t i = 1; i < belt_points.size(); ++i)
             for(size_t j = i + 1; j < belt_points.size(); ++j)
             {
-                algep::point2d pt1 = pointsY[belt_points[i]];
-                algep::point2d pt2 = pointsY[belt_points[j]];
+                algep::point_2d pt1 = pointsY[belt_points[i]];
+                algep::point_2d pt2 = pointsY[belt_points[j]];
 
                 if(pt2.y() > pt1.y() + belt_width)
                     break;
@@ -61,11 +61,11 @@ namespace internal
 
                     if(actual_distance < min_distance)
                     {
-                        std::vector<algep::point2d> closest = {pt1, pt2};
+                        std::vector<algep::point_2d> closest = {pt1, pt2};
 
                         algep::sort_by_x(closest);
                         min_distance = actual_distance;
-                        closest_pair.reset(new std::pair<algep::point2d, algep::point2d>(
+                        closest_pair.reset(new std::pair<algep::point_2d, algep::point_2d>(
                                 closest[0], closest[1]));
                     }
                 }
@@ -77,9 +77,9 @@ namespace internal
     // Searches for a pair of closest points in specified sublist of points.
     // Points are specified sorted by X coordinate and by Y coordinate.
     // (index_begin & index_end inclusive)
-    std::pair<algep::point2d, algep::point2d>
-            search_closest(const std::vector<algep::point2d> & pointsX,
-                           const std::vector<algep::point2d> & pointsY, int index_begin = 0,
+    std::pair<algep::point_2d, algep::point_2d>
+            search_closest(const std::vector<algep::point_2d> & pointsX,
+                           const std::vector<algep::point_2d> & pointsY, int index_begin = 0,
                            int index_end = -1)
     {
         index_begin = (index_begin + pointsX.size()) % pointsX.size();
@@ -93,7 +93,7 @@ namespace internal
 
         int index_middle = (index_begin + index_end) / 2;
         double middleX = (pointsX[index_middle].x() + pointsX[index_middle + 1].x()) / 2;
-        std::vector<algep::point2d> pointsYL, pointsYR;
+        std::vector<algep::point_2d> pointsYL, pointsYR;
 
         for(auto & pt : pointsY)
             if(pt.x() <= index_middle)
@@ -101,27 +101,27 @@ namespace internal
             else
                 pointsYR.push_back(pt);
 
-        std::pair<algep::point2d, algep::point2d> closestL =
+        std::pair<algep::point_2d, algep::point_2d> closestL =
                 search_closest(pointsX, pointsYL, index_begin, index_middle);
-        std::pair<algep::point2d, algep::point2d> closestR =
+        std::pair<algep::point_2d, algep::point_2d> closestR =
                 search_closest(pointsX, pointsYR, index_middle + 1, index_end);
-        std::pair<algep::point2d, algep::point2d> closest_pair =
+        std::pair<algep::point_2d, algep::point_2d> closest_pair =
                 distance(closestL.first, closestL.second)
                                 <= distance(closestR.first, closestR.second)
                         ? closestL
                         : closestR;
-        std::unique_ptr<std::pair<algep::point2d, algep::point2d>> belt_pair =
+        std::unique_ptr<std::pair<algep::point_2d, algep::point_2d>> belt_pair =
                 check_belt(pointsY, middleX, distance(closest_pair.first, closest_pair.second));
 
         return belt_pair ? *belt_pair : closest_pair;
     }
 }
 
-std::pair<algep::point2d, algep::point2d>
-        algep::find_closest_points(const std::vector<algep::point2d> & points)
+std::pair<algep::point_2d, algep::point_2d>
+        algep::find_closest_points(const std::vector<algep::point_2d> & points)
 {
-    std::vector<point2d> pointsX = points;
-    std::vector<point2d> pointsY = points;
+    std::vector<point_2d> pointsX = points;
+    std::vector<point_2d> pointsY = points;
 
     sort_by_x(pointsX);
     sort_by_y(pointsY);

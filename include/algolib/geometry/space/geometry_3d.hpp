@@ -1,14 +1,14 @@
 /*!
- * \file geometry3d.hpp
- * \brief Basic geometric operations in 3 dimensions
+ * \file geometry_3d.hpp
+ * \brief Algorithms for basic geometrical computations in 2D
  */
 #ifndef GEOMETRY_3D_HPP_
 #define GEOMETRY_3D_HPP_
 
 #include <cmath>
 #include <cstdlib>
-#include "point3d.hpp"
-#include "vector3d.hpp"
+#include "point_3d.hpp"
+#include "vector_3d.hpp"
 
 namespace algolib::geometry::space
 {
@@ -16,23 +16,23 @@ namespace algolib::geometry::space
      * \brief Mutably sorts points by their X coordinate. Sorting is guaranteed to be stable.
      * \param points vector of points
      */
-    void sort_by_x(std::vector<point3d> & points);
+    void sort_by_x(std::vector<point_3d> & points);
 
     /*!
      * \brief Mutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
      * \param points vector of points
      */
-    void sort_by_y(std::vector<point3d> & points);
+    void sort_by_y(std::vector<point_3d> & points);
 
     /*!
      * \brief Mutably sorts points by their Z coordinate. Sorting is guaranteed to be stable.
      * \param points vector of points
      */
-    void sort_by_z(std::vector<point3d> & points);
+    void sort_by_z(std::vector<point_3d> & points);
 
-    double distance(const point3d & p1, const point3d & p2);
+    double distance(const point_3d & p1, const point_3d & p2);
 
-    point3d translate(const point3d & p, const vector3d & v);
+    point_3d translate(const point_3d & p, const vector_3d & v);
 }
 
 #endif

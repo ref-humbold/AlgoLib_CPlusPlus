@@ -1,6 +1,6 @@
 /*!
- * \file point2d.hpp
- * \brief Structure of point in 2 dimensions
+ * \file point_2d.hpp
+ * \brief Structure of point in 2D
  */
 #ifndef POINT_2D_HPP_
 #define POINT_2D_HPP_
@@ -17,18 +17,18 @@
 
 namespace algolib::geometry::plane
 {
-    class point2d : public algolib::geometry::geometry_object
+    class point_2d : public algolib::geometry::geometry_object
     {
     public:
-        point2d(double x, double y) : x_{x}, y_{y}
+        point_2d(double x, double y) : x_{x}, y_{y}
         {
         }
 
-        ~point2d() override = default;
-        point2d(const point2d &) = default;
-        point2d(point2d &&) = default;
-        point2d & operator=(const point2d &) = default;
-        point2d & operator=(point2d &&) = default;
+        ~point_2d() override = default;
+        point_2d(const point_2d &) = default;
+        point_2d(point_2d &&) = default;
+        point_2d & operator=(const point_2d &) = default;
+        point_2d & operator=(point_2d &&) = default;
 
         double x() const
         {
@@ -57,19 +57,19 @@ namespace algolib::geometry::plane
             return y_ >= 0.0 ? ang : ang + 360.0;
         }
 
-        friend bool operator==(const point2d & p1, const point2d & p2);
-        friend bool operator!=(const point2d & p1, const point2d & p2);
-        friend std::ostream & operator<<(std::ostream & os, const point2d & p);
+        friend bool operator==(const point_2d & p1, const point_2d & p2);
+        friend bool operator!=(const point_2d & p1, const point_2d & p2);
+        friend std::ostream & operator<<(std::ostream & os, const point_2d & p);
 
-        friend struct std::hash<point2d>;
+        friend struct std::hash<point_2d>;
 
     private:
         double x_, y_;
     };
 
-    bool operator==(const point2d & p1, const point2d & p2);
-    bool operator!=(const point2d & p1, const point2d & p2);
-    std::ostream & operator<<(std::ostream & os, const point2d & p);
+    bool operator==(const point_2d & p1, const point_2d & p2);
+    bool operator!=(const point_2d & p1, const point_2d & p2);
+    std::ostream & operator<<(std::ostream & os, const point_2d & p);
 
 #pragma endregion
 }
@@ -77,9 +77,9 @@ namespace algolib::geometry::plane
 namespace std
 {
     template <>
-    struct hash<algolib::geometry::plane::point2d>
+    struct hash<algolib::geometry::plane::point_2d>
     {
-        using argument_type = algolib::geometry::plane::point2d;
+        using argument_type = algolib::geometry::plane::point_2d;
         using result_type = size_t;
 
         result_type operator()(const argument_type & p)

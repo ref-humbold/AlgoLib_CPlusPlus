@@ -1,6 +1,6 @@
 /*!
- * \file point3d.hpp
- * \brief Structure of point in 3 dimensions
+ * \file point_3d.hpp
+ * \brief Structure of point in 3D
  */
 #ifndef POINT_3D_HPP_
 #define POINT_3D_HPP_
@@ -17,18 +17,18 @@
 
 namespace algolib::geometry::space
 {
-    class point3d : public algolib::geometry::geometry_object
+    class point_3d : public algolib::geometry::geometry_object
     {
     public:
-        point3d(double x, double y, double z) : x_{x}, y_{y}, z_{z}
+        point_3d(double x, double y, double z) : x_{x}, y_{y}, z_{z}
         {
         }
 
-        ~point3d() override = default;
-        point3d(const point3d &) = default;
-        point3d(point3d &&) = default;
-        point3d & operator=(const point3d &) = default;
-        point3d & operator=(point3d &&) = default;
+        ~point_3d() override = default;
+        point_3d(const point_3d &) = default;
+        point_3d(point_3d &&) = default;
+        point_3d & operator=(const point_3d &) = default;
+        point_3d & operator=(point_3d &&) = default;
 
         double x() const
         {
@@ -50,19 +50,19 @@ namespace algolib::geometry::space
             return sqrt(x_ * x_ + y_ * y_ + z_ * z_);
         }
 
-        friend bool operator==(const point3d & p1, const point3d & p2);
-        friend bool operator!=(const point3d & p1, const point3d & p2);
-        friend std::ostream & operator<<(std::ostream & os, const point3d & p);
+        friend bool operator==(const point_3d & p1, const point_3d & p2);
+        friend bool operator!=(const point_3d & p1, const point_3d & p2);
+        friend std::ostream & operator<<(std::ostream & os, const point_3d & p);
 
-        friend struct std::hash<point3d>;
+        friend struct std::hash<point_3d>;
 
     private:
         double x_, y_, z_;
     };
 
-    bool operator==(const point3d & p1, const point3d & p2);
-    bool operator!=(const point3d & p1, const point3d & p2);
-    std::ostream & operator<<(std::ostream & os, const point3d & p);
+    bool operator==(const point_3d & p1, const point_3d & p2);
+    bool operator!=(const point_3d & p1, const point_3d & p2);
+    std::ostream & operator<<(std::ostream & os, const point_3d & p);
 
 #pragma endregion
 }
@@ -70,9 +70,9 @@ namespace algolib::geometry::space
 namespace std
 {
     template <>
-    struct hash<algolib::geometry::space::point3d>
+    struct hash<algolib::geometry::space::point_3d>
     {
-        using argument_type = algolib::geometry::space::point3d;
+        using argument_type = algolib::geometry::space::point_3d;
         using result_type = size_t;
 
         result_type operator()(const argument_type & p)

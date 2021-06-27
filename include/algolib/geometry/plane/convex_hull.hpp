@@ -1,13 +1,13 @@
 /*!
  * \file convex_hull.hpp
- * \brief Algorithm for convex hull (monotone chain)
+ * \brief Algorithm for convex hull (monotone chain) in 2D
  */
 #ifndef CONVEX_HULL_HPP_
 #define CONVEX_HULL_HPP_
 
 #include <cstdlib>
 #include <vector>
-#include "point2d.hpp"
+#include "point_2d.hpp"
 
 namespace algolib::geometry::plane
 {
@@ -16,7 +16,7 @@ namespace algolib::geometry::plane
      * \param points a vector of points
      * \return vector of hull points
      */
-    std::vector<point2d> find_convex_hull(std::vector<point2d> points);
+    std::vector<point_2d> find_convex_hull(std::vector<point_2d> points);
 }
 
 #endif
