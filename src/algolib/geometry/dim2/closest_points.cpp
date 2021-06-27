@@ -2,11 +2,11 @@
  * \file closest_points.cpp
  * \brief Algorithm for pair of closest points in 2D
  */
-#include "algolib/geometry/2d/closest_points.hpp"
+#include "algolib/geometry/dim2/closest_points.hpp"
 #include <cmath>
 #include <algorithm>
 #include <memory>
-#include "algolib/geometry/2d/geometry_2d.hpp"
+#include "algolib/geometry/dim2/geometry_2d.hpp"
 
 namespace algep = algolib::geometry::plane;
 

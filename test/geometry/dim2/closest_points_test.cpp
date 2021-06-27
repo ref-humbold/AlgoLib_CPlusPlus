@@ -3,7 +3,7 @@
  * \brief Tests: Algorithm for pair of closest points in 2D
  */
 #include <gtest/gtest.h>
-#include "algolib/geometry/2d/closest_points.hpp"
+#include "algolib/geometry/dim2/closest_points.hpp"
 
 namespace algep = algolib::geometry::plane;
 

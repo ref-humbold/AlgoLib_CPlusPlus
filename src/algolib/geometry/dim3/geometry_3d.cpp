@@ -2,7 +2,7 @@
  * \file geometry.cpp
  * \brief Basic geometric operations in 3D
  */
-#include "algolib/geometry/3d/geometry_3d.hpp"
+#include "algolib/geometry/dim3/geometry_3d.hpp"
 
 namespace alges = algolib::geometry::space;
 

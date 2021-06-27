@@ -2,7 +2,7 @@
  * \file vector_2d.cpp
  * \brief Structure of vector in 2D
  */
-#include "algolib/geometry/2d/vector_2d.hpp"
+#include "algolib/geometry/dim2/vector_2d.hpp"
 
 namespace algep = algolib::geometry::plane;
 

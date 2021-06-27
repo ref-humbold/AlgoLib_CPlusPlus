@@ -2,7 +2,7 @@
  * \file point.cpp
  * \brief Structure of point in 3D
  */
-#include "algolib/geometry/3d/point_3d.hpp"
+#include "algolib/geometry/dim3/point_3d.hpp"
 
 namespace alges = algolib::geometry::space;
 
