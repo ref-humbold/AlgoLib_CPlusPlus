@@ -15,7 +15,7 @@
 #include <stdexcept>
 #include "../geometry_object.hpp"
 
-namespace algolib::geometry::plane
+namespace algolib::geometry::dim2
 {
     class point_2d : public algolib::geometry::geometry_object
     {
@@ -77,9 +77,9 @@ namespace algolib::geometry::plane
 namespace std
 {
     template <>
-    struct hash<algolib::geometry::plane::point_2d>
+    struct hash<algolib::geometry::dim2::point_2d>
     {
-        using argument_type = algolib::geometry::plane::point_2d;
+        using argument_type = algolib::geometry::dim2::point_2d;
         using result_type = size_t;
 
         result_type operator()(const argument_type & p)

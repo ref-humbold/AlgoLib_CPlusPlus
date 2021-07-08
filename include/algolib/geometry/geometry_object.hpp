@@ -8,7 +8,7 @@ namespace algolib::geometry
     class geometry_object
     {
     public:
-        virtual ~geometry_object() = default;
+        virtual ~geometry_object() = 0;
 
     protected:
         static constexpr double EPSILON = 1e-15;

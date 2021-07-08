@@ -9,7 +9,7 @@
 #include <vector>
 #include "point_2d.hpp"
 
-namespace algolib::geometry::plane
+namespace algolib::geometry::dim2
 {
     /*!
      * \brief Constructs a convex hull of given points.

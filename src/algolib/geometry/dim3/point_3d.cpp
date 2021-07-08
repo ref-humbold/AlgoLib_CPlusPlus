@@ -4,20 +4,20 @@
  */
 #include "algolib/geometry/dim3/point_3d.hpp"
 
-namespace alges = algolib::geometry::space;
+namespace alge3 = algolib::geometry::dim3;
 
-bool alges::operator==(const alges::point_3d & p1, const alges::point_3d & p2)
+bool alge3::operator==(const alge3::point_3d & p1, const alge3::point_3d & p2)
 {
-    return alges::point_3d::equal(p1.x_, p2.x_) && alges::point_3d::equal(p1.y_, p2.y_)
-           && alges::point_3d::equal(p1.z_, p2.z_);
+    return alge3::point_3d::equal(p1.x_, p2.x_) && alge3::point_3d::equal(p1.y_, p2.y_)
+           && alge3::point_3d::equal(p1.z_, p2.z_);
 }
 
-bool alges::operator!=(const alges::point_3d & p1, const alges::point_3d & p2)
+bool alge3::operator!=(const alge3::point_3d & p1, const alge3::point_3d & p2)
 {
     return !(p1 == p2);
 }
 
-std::ostream & alges::operator<<(std::ostream & os, const alges::point_3d & p)
+std::ostream & alge3::operator<<(std::ostream & os, const alge3::point_3d & p)
 {
     os << "(" << p.x_ << ", " << p.y_ << ", " << p.z_ << ")";
     return os;

@@ -10,7 +10,7 @@
 #include "point_3d.hpp"
 #include "vector_3d.hpp"
 
-namespace algolib::geometry::space
+namespace algolib::geometry::dim3
 {
     /*!
      * \brief Mutably sorts points by their X coordinate. Sorting is guaranteed to be stable.

@@ -4,29 +4,29 @@
  */
 #include "algolib/geometry/dim2/geometry_2d.hpp"
 
-namespace algep = algolib::geometry::plane;
+namespace alge2 = algolib::geometry::dim2;
 
-void algep::sort_by_x(std::vector<algep::point_2d> & points)
+void alge2::sort_by_x(std::vector<alge2::point_2d> & points)
 {
-    auto comparator = [&](const algep::point_2d & pt1, const algep::point_2d & pt2) {
+    auto comparator = [&](const alge2::point_2d & pt1, const alge2::point_2d & pt2) {
         return pt1.x() < pt2.x();
     };
 
     std::stable_sort(points.begin(), points.end(), comparator);
 }
 
-void algep::sort_by_y(std::vector<algep::point_2d> & points)
+void alge2::sort_by_y(std::vector<alge2::point_2d> & points)
 {
-    auto comparator = [&](const algep::point_2d & pt1, const algep::point_2d & pt2) {
+    auto comparator = [&](const alge2::point_2d & pt1, const alge2::point_2d & pt2) {
         return pt1.y() < pt2.y();
     };
 
     std::stable_sort(points.begin(), points.end(), comparator);
 }
 
-void algep::sort_by_angle(std::vector<algep::point_2d> & points)
+void alge2::sort_by_angle(std::vector<alge2::point_2d> & points)
 {
-    auto comparator = [&](const algep::point_2d & pt1, const algep::point_2d & pt2) {
+    auto comparator = [&](const alge2::point_2d & pt1, const alge2::point_2d & pt2) {
         double angle1 = pt1.angle_deg(), angle2 = pt2.angle_deg();
 
         return angle1 != angle2 ? angle1 < angle2 : pt1.radius() < pt2.radius();
@@ -35,12 +35,12 @@ void algep::sort_by_angle(std::vector<algep::point_2d> & points)
     std::sort(points.begin(), points.end(), comparator);
 }
 
-double algep::distance(const algep::point_2d & p1, const algep::point_2d & p2)
+double alge2::distance(const alge2::point_2d & p1, const alge2::point_2d & p2)
 {
     return sqrt((p2.x() - p1.x()) * (p2.x() - p1.x()) + (p2.y() - p1.y()) * (p2.y() - p1.y()));
 }
 
-algep::point_2d algep::translate(const algep::point_2d & p, const algep::vector_2d & v)
+alge2::point_2d alge2::translate(const alge2::point_2d & p, const alge2::vector_2d & v)
 {
     return point_2d(p.x() + v.x(), p.y() + v.y());
 }

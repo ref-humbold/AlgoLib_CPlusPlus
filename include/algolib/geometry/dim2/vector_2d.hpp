@@ -14,7 +14,7 @@
 #include "../geometry_object.hpp"
 #include "point_2d.hpp"
 
-namespace algolib::geometry::plane
+namespace algolib::geometry::dim2
 {
     class vector_2d : public algolib::geometry::geometry_object
     {
@@ -86,9 +86,9 @@ namespace algolib::geometry::plane
 namespace std
 {
     template <>
-    struct hash<algolib::geometry::plane::vector_2d>
+    struct hash<algolib::geometry::dim2::vector_2d>
     {
-        using argument_type = algolib::geometry::plane::vector_2d;
+        using argument_type = algolib::geometry::dim2::vector_2d;
         using result_type = size_t;
 
         result_type operator()(const argument_type & v)

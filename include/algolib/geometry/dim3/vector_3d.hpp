@@ -14,7 +14,7 @@
 #include "../geometry_object.hpp"
 #include "point_3d.hpp"
 
-namespace algolib::geometry::space
+namespace algolib::geometry::dim3
 {
     class vector_3d : public algolib::geometry::geometry_object
     {
@@ -94,9 +94,9 @@ namespace algolib::geometry::space
 namespace std
 {
     template <>
-    struct hash<algolib::geometry::space::vector_3d>
+    struct hash<algolib::geometry::dim3::vector_3d>
     {
-        using argument_type = algolib::geometry::space::vector_3d;
+        using argument_type = algolib::geometry::dim3::vector_3d;
         using result_type = size_t;
 
         result_type operator()(const argument_type & v)
