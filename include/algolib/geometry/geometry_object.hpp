@@ -2,13 +2,17 @@
 #define GEOMETRY_OBJECT_HPP_
 
 #include <cmath>
+#include <array>
 
 namespace algolib::geometry
 {
+    template <size_t N>
     class geometry_object
     {
     public:
-        virtual ~geometry_object() = 0;
+        virtual ~geometry_object() = default;
+
+        virtual std::array<double, N> coordinates() const = 0;
 
     protected:
         static constexpr double EPSILON = 1e-15;

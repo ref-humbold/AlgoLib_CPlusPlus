@@ -16,7 +16,7 @@
 
 namespace algolib::geometry::dim2
 {
-    class vector_2d : public algolib::geometry::geometry_object
+    class vector_2d : public algolib::geometry::geometry_object<2>
     {
     public:
         vector_2d(double x, double y) : x_{x}, y_{y}
@@ -44,6 +44,11 @@ namespace algolib::geometry::dim2
         double y() const
         {
             return y_;
+        }
+
+        std::array<double, 2> coordinates() const override
+        {
+            return {x_, y_};
         }
 
         double length() const

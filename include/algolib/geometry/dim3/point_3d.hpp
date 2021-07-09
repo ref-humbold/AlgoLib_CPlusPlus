@@ -17,7 +17,7 @@
 
 namespace algolib::geometry::dim3
 {
-    class point_3d : public algolib::geometry::geometry_object
+    class point_3d : public algolib::geometry::geometry_object<3>
     {
     public:
         point_3d(double x, double y, double z) : x_{x}, y_{y}, z_{z}
@@ -43,6 +43,11 @@ namespace algolib::geometry::dim3
         double z() const
         {
             return z_;
+        }
+
+        std::array<double, 3> coordinates() const override
+        {
+            return {x_, y_, z_};
         }
 
         double radius() const

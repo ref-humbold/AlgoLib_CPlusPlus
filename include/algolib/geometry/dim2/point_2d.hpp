@@ -17,7 +17,7 @@
 
 namespace algolib::geometry::dim2
 {
-    class point_2d : public algolib::geometry::geometry_object
+    class point_2d : public algolib::geometry::geometry_object<2>
     {
     public:
         point_2d(double x, double y) : x_{x}, y_{y}
@@ -38,6 +38,11 @@ namespace algolib::geometry::dim2
         double y() const
         {
             return y_;
+        }
+
+        std::array<double, 2> coordinates() const override
+        {
+            return {x_, y_};
         }
 
         double radius() const
