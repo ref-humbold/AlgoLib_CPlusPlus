@@ -20,9 +20,10 @@ set(STRUCTURES_TEST "structures")
 set(TEXT_TEST "text")
 
 set(GEOMETRY_PLANE_TEST_SOURCES
-    "${GEOMETRY_PLANE_TEST}/geometry_2d_test.cpp"
     "${GEOMETRY_PLANE_TEST}/closest_points_test.cpp"
-    "${GEOMETRY_PLANE_TEST}/convex_hull_test.cpp")
+    "${GEOMETRY_PLANE_TEST}/convex_hull_test.cpp"
+    "${GEOMETRY_PLANE_TEST}/geometry_2d_test.cpp"
+    "${GEOMETRY_PLANE_TEST}/vector_2d_test.cpp")
 set(GEOMETRY_SPACE_TEST_SOURCES
     "${GEOMETRY_SPACE_TEST}/geometry_3d_test.cpp")
 set(GRAPHS_TEST_SOURCES

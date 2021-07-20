@@ -6,6 +6,11 @@
 
 namespace alge2 = algolib::geometry::dim2;
 
+double alge2::vector_2d::dot(const alge2::vector_2d & v1, const alge2::vector_2d & v2)
+{
+    return v1.x_ * v2.x_ + v1.y_ * v2.y_;
+}
+
 double alge2::vector_2d::area(const alge2::vector_2d & v1, const alge2::vector_2d & v2)
 {
     return v1.x() * v2.y() - v1.y() * v2.x();
@@ -86,9 +91,4 @@ std::ostream & alge2::operator<<(std::ostream & os, const alge2::vector_2d & v)
 {
     os << "[" << v.x_ << ", " << v.y_ << "]";
     return os;
-}
-
-double alge2::dot(const alge2::vector_2d & v1, const alge2::vector_2d & v2)
-{
-    return v1.x_ * v2.x_ + v1.y_ * v2.y_;
 }

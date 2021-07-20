@@ -6,12 +6,12 @@
 #define MATCHING_HPP_
 
 #include <cstdlib>
+#include <limits>
+#include <numeric>
 #include <queue>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
-#include <limits>
-#include <numeric>
 #include "algolib/graphs/multipartite_graph.hpp"
 
 namespace internal
@@ -39,13 +39,13 @@ namespace internal
                  std::unordered_set<typename graph_t::vertex_type> & visited,
                  const std::unordered_map<typename graph_t::vertex_type, double> & distances);
 
-        static constexpr double INFINITY = std::numeric_limits<double>::infinity();
+        static constexpr double infinity = std::numeric_limits<double>::infinity();
 
         graph_t graph;
     };
 
     template <typename V, typename VP, typename EP>
-    constexpr double match_augmenter<V, VP, EP>::INFINITY;
+    constexpr double match_augmenter<V, VP, EP>::infinity;
 
     template <typename V, typename VP, typename EP>
     bool match_augmenter<V, VP, EP>::augment_match()
@@ -54,7 +54,7 @@ namespace internal
         std::unordered_map<typename graph_t::vertex_type, double> distances;
 
         for(auto && vertex : this->graph.vertices())
-            distances.emplace(vertex, this->INFINITY);
+            distances.emplace(vertex, this->infinity);
 
         this->bfs(distances);
 
@@ -104,7 +104,7 @@ namespace internal
             {
                 auto it = this->matching.find(neighbour);
 
-                if(it != this->matching.end() && distances[it->second] == this->INFINITY)
+                if(it != this->matching.end() && distances[it->second] == this->infinity)
                 {
                     ++distances[vertex];
                     vertex_queue.push(it->second);

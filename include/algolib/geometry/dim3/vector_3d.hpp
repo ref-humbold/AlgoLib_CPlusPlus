@@ -34,6 +34,8 @@ namespace algolib::geometry::dim3
             return vector_3d(end.x() - begin.x(), end.y() - begin.y(), end.z() - begin.z());
         }
 
+        static double dot(const vector_3d & v1, const vector_3d & v2);
+        static vector_3d cross(const vector_3d & v1, const vector_3d & v2);
         static double area(const vector_3d & v1, const vector_3d & v2);
         static double volume(const vector_3d & v1, const vector_3d & v2, const vector_3d & v3);
 
@@ -75,8 +77,6 @@ namespace algolib::geometry::dim3
         friend vector_3d operator*(double c, vector_3d v);
         friend vector_3d operator/(vector_3d v, double c);
         friend std::ostream & operator<<(std::ostream & os, const vector_3d & v);
-        friend double dot(const vector_3d & v1, const vector_3d & v2);
-        friend vector_3d cross(const vector_3d & v1, const vector_3d & v2);
 
         friend struct std::hash<vector_3d>;
 
@@ -92,8 +92,6 @@ namespace algolib::geometry::dim3
     vector_3d operator*(double c, vector_3d v);
     vector_3d operator/(vector_3d v, double c);
     std::ostream & operator<<(std::ostream & os, const vector_3d & v);
-    double dot(const vector_3d & v1, const vector_3d & v2);
-    vector_3d cross(const vector_3d & v1, const vector_3d & v2);
 }
 
 namespace std

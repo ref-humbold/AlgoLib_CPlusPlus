@@ -34,6 +34,8 @@ namespace algolib::geometry::dim2
             return vector_2d(end.x() - begin.x(), end.y() - begin.y());
         }
 
+        static double dot(const vector_2d & v1, const vector_2d & v2);
+
         static double area(const vector_2d & v1, const vector_2d & v2);
 
         double x() const
@@ -69,7 +71,6 @@ namespace algolib::geometry::dim2
         friend vector_2d operator*(double c, vector_2d v);
         friend vector_2d operator/(vector_2d v, double c);
         friend std::ostream & operator<<(std::ostream & os, const vector_2d & v);
-        friend double dot(const vector_2d & v1, const vector_2d & v2);
 
         friend struct std::hash<vector_2d>;
 
@@ -85,7 +86,6 @@ namespace algolib::geometry::dim2
     vector_2d operator*(double c, vector_2d v);
     vector_2d operator/(vector_2d v, double c);
     std::ostream & operator<<(std::ostream & os, const vector_2d & v);
-    double dot(const vector_2d & v1, const vector_2d & v2);
 }
 
 namespace std

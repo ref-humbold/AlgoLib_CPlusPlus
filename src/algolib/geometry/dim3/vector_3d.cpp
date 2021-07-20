@@ -6,6 +6,17 @@
 
 namespace alge3 = algolib::geometry::dim3;
 
+double alge3::vector_3d::dot(const alge3::vector_3d & v1, const alge3::vector_3d & v2)
+{
+    return v1.x_ * v2.x_ + v1.y_ * v2.y_ + v1.z_ * v2.z_;
+}
+
+alge3::vector_3d alge3::vector_3d::cross(const alge3::vector_3d & v1, const alge3::vector_3d & v2)
+{
+    return vector_3d(v1.y_ * v2.z_ - v1.z_ * v2.y_, v1.z_ * v2.x_ - v1.x_ * v2.z_,
+                     v1.x_ * v2.y_ - v1.y_ * v2.x_);
+}
+
 double alge3::vector_3d::area(const alge3::vector_3d & v1, const alge3::vector_3d & v2)
 {
     return cross(v1, v2).length();
@@ -93,15 +104,4 @@ std::ostream & alge3::operator<<(std::ostream & os, const alge3::vector_3d & v)
 {
     os << "[" << v.x_ << ", " << v.y_ << ", " << v.z_ << "]";
     return os;
-}
-
-double alge3::dot(const alge3::vector_3d & v1, const alge3::vector_3d & v2)
-{
-    return v1.x_ * v2.x_ + v1.y_ * v2.y_ + v1.z_ * v2.z_;
-}
-
-alge3::vector_3d alge3::cross(const alge3::vector_3d & v1, const alge3::vector_3d & v2)
-{
-    return vector_3d(v1.y_ * v2.z_ - v1.z_ * v2.y_, v1.z_ * v2.x_ - v1.x_ * v2.z_,
-                     v1.x_ * v2.y_ - v1.y_ * v2.x_);
 }

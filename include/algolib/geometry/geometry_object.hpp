@@ -14,12 +14,12 @@ namespace algolib::geometry
 
         virtual std::array<double, N> coordinates() const = 0;
 
-    protected:
-        static constexpr double EPSILON = 1e-15;
+        static constexpr double epsilon = 1e-12;
 
+    protected:
         static bool equal(double d1, double d2)
         {
-            return std::abs(d1 - d2) < EPSILON;
+            return std::abs(d1 - d2) < epsilon;
         }
     };
 }
