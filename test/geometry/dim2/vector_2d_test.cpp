@@ -9,11 +9,11 @@ namespace alge2 = algolib::geometry::dim2;
 
 const double offset = alge2::vector_2d::epsilon;
 
-TEST(Vector2DTest, between_ThenVectorFromBeginToEnd)
+TEST(Vector2DTest, constructor_WhenArgumentsArePoints_ThenVectorBetweenPoints)
 {
     // when
     alge2::vector_2d result =
-            alge2::vector_2d::between(alge2::point_2d(2.4, 7.8), alge2::point_2d(-1.5, 13.2));
+            alge2::vector_2d(alge2::point_2d(2.4, 7.8), alge2::point_2d(-1.5, 13.2));
     // then
     EXPECT_EQ(alge2::vector_2d(-3.9, 5.4), result);
 }

@@ -23,16 +23,16 @@ namespace algolib::geometry::dim3
         {
         }
 
+        vector_3d(const point_3d & begin, const point_3d & end)
+            : x_{end.x() - begin.x()}, y_{end.y() - begin.y()}, z_{end.z() - begin.z()}
+        {
+        }
+
         ~vector_3d() override = default;
         vector_3d(const vector_3d &) = default;
         vector_3d(vector_3d &&) = default;
         vector_3d & operator=(const vector_3d &) = default;
         vector_3d & operator=(vector_3d &&) = default;
-
-        static vector_3d between(const point_3d & begin, const point_3d & end)
-        {
-            return vector_3d(end.x() - begin.x(), end.y() - begin.y(), end.z() - begin.z());
-        }
 
         static double dot(const vector_3d & v1, const vector_3d & v2);
         static vector_3d cross(const vector_3d & v1, const vector_3d & v2);

@@ -23,19 +23,18 @@ namespace algolib::geometry::dim2
         {
         }
 
+        vector_2d(const point_2d & begin, const point_2d & end)
+            : x_{end.x() - begin.x()}, y_{end.y() - begin.y()}
+        {
+        }
+
         ~vector_2d() override = default;
         vector_2d(const vector_2d &) = default;
         vector_2d(vector_2d &&) = default;
         vector_2d & operator=(const vector_2d &) = default;
         vector_2d & operator=(vector_2d &&) = default;
 
-        static vector_2d between(const point_2d & begin, const point_2d & end)
-        {
-            return vector_2d(end.x() - begin.x(), end.y() - begin.y());
-        }
-
         static double dot(const vector_2d & v1, const vector_2d & v2);
-
         static double area(const vector_2d & v1, const vector_2d & v2);
 
         double x() const

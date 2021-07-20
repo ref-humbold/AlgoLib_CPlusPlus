@@ -14,8 +14,7 @@ namespace internal
     double cross_product(const alge2::point_2d & pt1, const alge2::point_2d & pt2,
                          const alge2::point_2d & pt3)
     {
-        return alge2::vector_2d::area(alge2::vector_2d::between(pt2, pt1),
-                                      alge2::vector_2d::between(pt2, pt3));
+        return alge2::vector_2d::area(alge2::vector_2d(pt2, pt1), alge2::vector_2d(pt2, pt3));
     }
 
     std::vector<alge2::point_2d> create_half_hull(const std::vector<alge2::point_2d> & points)
