@@ -99,7 +99,7 @@ TEST(Vector2DTest, multiply_WhenMultiplicationByZero_ThenZeroVector)
     // when
     alge2::vector_2d result = alge2::vector_2d(5.4, 9.0) * 0;
     // then
-    EXPECT_EQ(alge2::vector_2d(0, 0), result);
+    EXPECT_EQ(alge2::vector_2d(0.0, 0.0), result);
 }
 
 TEST(Vector2DTest, divide_ThenDivideEachCoordinate)

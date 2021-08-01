@@ -30,15 +30,17 @@ double alge3::vector_3d::volume(const alge3::vector_3d & v1, const alge3::vector
 
 alge3::vector_3d & alge3::vector_3d::operator+=(const alge3::vector_3d & v)
 {
-    x_ += v.x();
-    y_ += v.y();
+    x_ += v.x_;
+    y_ += v.y_;
+    z_ += v.z_;
     return *this;
 }
 
 alge3::vector_3d & alge3::vector_3d::operator-=(const alge3::vector_3d & v)
 {
-    x_ -= v.x();
-    y_ -= v.y();
+    x_ -= v.x_;
+    y_ -= v.y_;
+    z_ -= v.z_;
     return *this;
 }
 
@@ -46,6 +48,7 @@ alge3::vector_3d & alge3::vector_3d::operator*=(double c)
 {
     x_ *= c;
     y_ *= c;
+    z_ *= c;
     return *this;
 }
 
@@ -56,6 +59,7 @@ alge3::vector_3d & alge3::vector_3d::operator/=(double c)
 
     x_ /= c;
     y_ /= c;
+    z_ /= c;
     return *this;
 }
 
