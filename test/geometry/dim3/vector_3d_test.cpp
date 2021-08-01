@@ -9,7 +9,7 @@ namespace alge3 = algolib::geometry::dim3;
 
 const double offset = alge3::vector_3d::epsilon;
 
-TEST(Vector3DTest, constructor_WhenArgumentsArePoints_ThenVectorBetweenPoints)
+TEST(Vector3DTest, constructor_WhenArgumentsArePoints_ThenVectorFromBeginToEnd)
 {
     // when
     alge3::vector_3d result =
@@ -18,7 +18,7 @@ TEST(Vector3DTest, constructor_WhenArgumentsArePoints_ThenVectorBetweenPoints)
     EXPECT_EQ(alge3::vector_3d(-3.9, 5.4, 26.1), result);
 }
 
-TEST(Vector3DTest, getCoordinates_ThenArray)
+TEST(Vector3DTest, coordinates_ThenArray)
 {
     // when
     std::array<double, 3> result = alge3::vector_3d(5.0, -19.0, 14.2).coordinates();
@@ -80,7 +80,7 @@ TEST(Vector3DTest, area_WhenParallel_ThenZero)
     EXPECT_NEAR(0.0, result, offset);
 }
 
-TEST(Vector3DTest, area_ThenScalarTripleProduct)
+TEST(Vector3DTest, volume_ThenScalarTripleProduct)
 {
     // when
     double result = alge3::vector_3d::volume(alge3::vector_3d(1.5, -4.0, -3.5),

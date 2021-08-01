@@ -9,7 +9,7 @@ namespace alge2 = algolib::geometry::dim2;
 
 const double offset = alge2::vector_2d::epsilon;
 
-TEST(Vector2DTest, constructor_WhenArgumentsArePoints_ThenVectorBetweenPoints)
+TEST(Vector2DTest, constructor_WhenArgumentsArePoints_ThenVectorFromBeginToEnd)
 {
     // when
     alge2::vector_2d result =
@@ -18,7 +18,7 @@ TEST(Vector2DTest, constructor_WhenArgumentsArePoints_ThenVectorBetweenPoints)
     EXPECT_EQ(alge2::vector_2d(-3.9, 5.4), result);
 }
 
-TEST(Vector2DTest, getCoordinates_ThenArray)
+TEST(Vector2DTest, coordinates_ThenArray)
 {
     // when
     std::array<double, 2> result = alge2::vector_2d(5.0, -19.0).coordinates();
@@ -29,8 +29,7 @@ TEST(Vector2DTest, getCoordinates_ThenArray)
 TEST(Vector2DTest, dot_ThenScalarProduct)
 {
     // when
-    double result =
-            alge2::vector_2d::dot(alge2::vector_2d(1.5, -4.0), (alge2::vector_2d(9.0, -2.5)));
+    double result = alge2::vector_2d::dot(alge2::vector_2d(1.5, -4.0), alge2::vector_2d(9.0, -2.5));
     // then
     EXPECT_NEAR(23.5, result, offset);
 }
@@ -38,8 +37,7 @@ TEST(Vector2DTest, dot_ThenScalarProduct)
 TEST(Vector2DTest, dot_WhenOrthogonal_ThenZero)
 {
     // when
-    double result =
-            alge2::vector_2d::dot(alge2::vector_2d(1.0, 0.0), (alge2::vector_2d(0.0, -2.0)));
+    double result = alge2::vector_2d::dot(alge2::vector_2d(1.0, 0.0), alge2::vector_2d(0.0, -2.0));
     // then
     EXPECT_NEAR(0.0, result, offset);
 }
@@ -48,7 +46,7 @@ TEST(Vector2DTest, area_ThenLengthOfCrossProduct)
 {
     // when
     double result =
-            alge2::vector_2d::area(alge2::vector_2d(1.5, -4.0), (alge2::vector_2d(9.0, -2.5)));
+            alge2::vector_2d::area(alge2::vector_2d(1.5, -4.0), alge2::vector_2d(9.0, -2.5));
     // then
     EXPECT_NEAR(32.25, result, offset);
 }
@@ -57,7 +55,7 @@ TEST(Vector2DTest, area_WhenParallel_ThenZero)
 {
     // when
     double result =
-            alge2::vector_2d::area(alge2::vector_2d(3.0, 3.0), (alge2::vector_2d(-8.0, -8.0)));
+            alge2::vector_2d::area(alge2::vector_2d(3.0, 3.0), alge2::vector_2d(-8.0, -8.0));
     // then
     EXPECT_NEAR(0.0, result, offset);
 }
