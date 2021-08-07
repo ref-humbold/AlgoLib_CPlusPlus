@@ -142,11 +142,13 @@ namespace algolib::structures
             return this->crend();
         }
 
+        //! \return number of elements in the tree
         size_type size() const
         {
             return this->size_;
         }
 
+        //! \return \c true if the tree is empty, otherwise \c false
         bool empty() const
         {
             return this->get_root() == nullptr;
