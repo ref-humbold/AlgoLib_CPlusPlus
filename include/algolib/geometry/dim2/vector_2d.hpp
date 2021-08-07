@@ -64,11 +64,15 @@ namespace algolib::geometry::dim2
 
         friend bool operator==(const vector_2d & v1, const vector_2d & v2);
         friend bool operator!=(const vector_2d & v1, const vector_2d & v2);
+
+        friend vector_2d operator+(vector_2d v);
+        friend vector_2d operator-(vector_2d v);
         friend vector_2d operator+(vector_2d v1, const vector_2d & v2);
         friend vector_2d operator-(vector_2d v1, const vector_2d & v2);
         friend vector_2d operator*(vector_2d v, double c);
         friend vector_2d operator*(double c, vector_2d v);
         friend vector_2d operator/(vector_2d v, double c);
+
         friend std::ostream & operator<<(std::ostream & os, const vector_2d & v);
 
         friend struct std::hash<vector_2d>;

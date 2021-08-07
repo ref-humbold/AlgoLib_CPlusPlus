@@ -71,11 +71,15 @@ namespace algolib::geometry::dim3
 
         friend bool operator==(const vector_3d & v1, const vector_3d & v2);
         friend bool operator!=(const vector_3d & v1, const vector_3d & v2);
+
+        friend vector_3d operator+(vector_3d v);
+        friend vector_3d operator-(vector_3d v);
         friend vector_3d operator+(vector_3d v1, const vector_3d & v2);
         friend vector_3d operator-(vector_3d v1, const vector_3d & v2);
         friend vector_3d operator*(vector_3d v, double c);
         friend vector_3d operator*(double c, vector_3d v);
         friend vector_3d operator/(vector_3d v, double c);
+
         friend std::ostream & operator<<(std::ostream & os, const vector_3d & v);
 
         friend struct std::hash<vector_3d>;

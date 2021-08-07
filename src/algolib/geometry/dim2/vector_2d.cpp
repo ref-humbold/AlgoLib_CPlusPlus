@@ -57,6 +57,20 @@ bool alge2::operator!=(const alge2::vector_2d & v1, const alge2::vector_2d & v2)
     return !(v1 == v2);
 }
 
+alge2::vector_2d alge2::operator+(alge2::vector_2d v)
+{
+    v.x_ = +v.x_;
+    v.y_ = +v.y_;
+    return v;
+}
+
+alge2::vector_2d alge2::operator-(alge2::vector_2d v)
+{
+    v.x_ = -v.x_;
+    v.y_ = -v.y_;
+    return v;
+}
+
 alge2::vector_2d alge2::operator+(alge2::vector_2d v1, const alge2::vector_2d & v2)
 {
     v1 += v2;

@@ -74,6 +74,22 @@ bool alge3::operator!=(const alge3::vector_3d & v1, const alge3::vector_3d & v2)
     return !(v1 == v2);
 }
 
+alge3::vector_3d alge3::operator+(alge3::vector_3d v)
+{
+    v.x_ = +v.x_;
+    v.y_ = +v.y_;
+    v.z_ = +v.z_;
+    return v;
+}
+
+alge3::vector_3d alge3::operator-(alge3::vector_3d v)
+{
+    v.x_ = -v.x_;
+    v.y_ = -v.y_;
+    v.z_ = -v.z_;
+    return v;
+}
+
 alge3::vector_3d alge3::operator+(alge3::vector_3d v1, const alge3::vector_3d & v2)
 {
     v1 += v2;
