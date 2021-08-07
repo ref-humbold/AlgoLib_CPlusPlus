@@ -36,20 +36,20 @@ namespace algolib::structures
         disjoint_sets & operator=(const disjoint_sets & ds) = default;
         disjoint_sets & operator=(disjoint_sets && ds) noexcept = default;
 
+        //! \return number of sets in the structure
+        size_t size() const
+        {
+            return this->size_;
+        }
+
         //! \return \c true if the structure is empty, otherwise \c false
         bool empty() const
         {
             return this->size_ == 0;
         }
 
-        //! \return number of sets
-        size_t size() const
-        {
-            return this->size_;
-        }
-
         /*!
-         * \brief Checks whether given element in one of the sets in the structure.
+         * \brief Checks whether given element is in one of the sets in the structure.
          * \param element an element
          * \return \c true if element belongs to the structure, otherwise \c false
          */

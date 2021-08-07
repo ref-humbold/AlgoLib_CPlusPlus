@@ -1,5 +1,5 @@
 /*!
- * \file avl_tree.hpp
+ * \file double_heap.hpp
  * \brief Structure of double heap
  */
 #ifndef DOUBLE_HEAP_HPP_
@@ -48,11 +48,13 @@ namespace algolib::structures
         double_heap & operator=(const double_heap &) = default;
         double_heap & operator=(double_heap &&) = default;
 
+        //! \return number of elements in the double heap
         size_type size() const
         {
             return this->heap.size();
         }
 
+        //! \return \c true if the double heap is empty, otherwise \c false
         bool empty() const
         {
             return this->heap.empty();
@@ -91,7 +93,7 @@ namespace algolib::structures
         //! \brief Removes maximal element from the double heap.
         void pop_max();
 
-        //! \brief Removes all elements in the double heap.
+        //! \brief Removes all elements from the double heap.
         void clear()
         {
             this->heap = Container();
