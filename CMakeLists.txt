@@ -22,16 +22,22 @@ find_package(Doxygen)
 # SOURCES
 include_directories(${INCLUDE_DIR})
 
-# DOCS
-if(DOXYGEN_FOUND)
-    set(DOXYGEN_OUTPUT_DIRECTORY ${DOCS_OUTPUT_DIR})
-    doxygen_add_docs(docs ${INCLUDE_DIR})
-endif()
-
 # OUTPUT
 add_subdirectory(${SRC_DIR})
 
 if(GTEST_FOUND)
+    message(STATUS "GTest found")
     include(CTest)
     add_subdirectory(${TEST_DIR})
+else()
+    message(WARNING "GTest not found - skipping tests")
+endif()
+
+# DOCS
+if(DOXYGEN_FOUND)
+    message(STATUS "Doxygen found (version ${DOXYGEN_VERSION})")
+    set(DOXYGEN_OUTPUT_DIRECTORY ${DOCS_OUTPUT_DIR})
+    doxygen_add_docs(docs ${INCLUDE_DIR})
+else()
+    message(WARNING "Doxygen not found - skipping docs")
 endif()

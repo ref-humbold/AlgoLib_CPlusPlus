@@ -84,66 +84,70 @@ void alte::suffix_array::init_lcp()
         }
 }
 
-std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> & t)
+std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> & txt)
 {
-    if(t.size() < 2)
-        return std::vector<size_t>({0});
+    if(txt.size() < 2)
+        return {0};
 
-    size_t n2 = (t.size() + 2) / 3, n1 = (t.size() + 1) / 3, n0 = t.size() / 3, n02 = n0 + n2;
-    std::vector<size_t> t12;
+    size_t length2 = (txt.size() + 2) / 3, length1 = (txt.size() + 1) / 3, length0 = txt.size() / 3;
+    size_t length02 = length0 + length2;
+    std::vector<size_t> indices12;
 
-    for(size_t i = 0; i < t.size() + n2 - n1; ++i)
+    for(size_t i = 0; i < txt.size() + length2 - length1; ++i)
         if(i % 3 != 0)
-            t12.push_back(i);
+            indices12.push_back(i);
 
-    sort_by_keys(t12, t, 2);
-    sort_by_keys(t12, t, 1);
-    sort_by_keys(t12, t, 0);
+    sort_indices(indices12, txt, 2);
+    sort_indices(indices12, txt, 1);
+    sort_indices(indices12, txt, 0);
 
-    size_t ix = 0, last0 = std::numeric_limits<size_t>::max(),
-           last1 = std::numeric_limits<size_t>::max(), last2 = std::numeric_limits<size_t>::max();
-    std::vector<size_t> tn12(n02, 0);
+    size_t code = 0;
+    std::tuple<size_t, size_t, size_t> last = {std::numeric_limits<size_t>::max(),
+                                               std::numeric_limits<size_t>::max(),
+                                               std::numeric_limits<size_t>::max()};
+    std::vector<size_t> text12(length02, 0);
 
-    for(size_t i : t12)
+    for(size_t i : indices12)
     {
-        if(get_elem(t, i) != last0 || get_elem(t, i + 1) != last1 || get_elem(t, i + 2) != last2)
+        std::tuple<size_t, size_t, size_t> elems = {get_elem(txt, i), get_elem(txt, i + 1),
+                                                    get_elem(txt, i + 2)};
+
+        if(last != elems)
         {
-            ++ix;
-            last0 = get_elem(t, i);
-            last1 = get_elem(t, i + 1);
-            last2 = get_elem(t, i + 2);
+            ++code;
+            last = elems;
         }
 
         if(i % 3 == 1)
-            tn12[i / 3] = ix;
+            text12[i / 3] = code;
         else
-            tn12[i / 3 + n2] = ix;
+            text12[i / 3 + length2] = code;
     }
 
     std::vector<size_t> sa0, sa12;
 
-    if(ix < n02)
+    if(code < length02)
     {
-        sa12 = create_array(tn12);
+        sa12 = create_array(text12);
 
         for(size_t i = 0; i < sa12.size(); ++i)
-            tn12[sa12[i]] = i + 1;
+            text12[sa12[i]] = i + 1;
     }
     else
     {
-        sa12.resize(n02, 0);
+        sa12.resize(length02, 0);
 
-        for(size_t i = 0; i < tn12.size(); ++i)
-            sa12[tn12[i] - 1] = i;
+        for(size_t i = 0; i < text12.size(); ++i)
+            sa12[text12[i] - 1] = i;
     }
 
     for(size_t i : sa12)
-        if(i < n2)
+        if(i < length2)
             sa0.push_back(3 * i);
 
-    sort_by_keys(sa0, t, 0);
+    sort_indices(sa0, txt, 0);
 
-    return merge(t, sa0, tn12, sa12);
+    return merge(txt, sa0, text12, sa12);
 }
 
 std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
@@ -151,59 +155,66 @@ std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
                                               const std::vector<size_t> & t12,
                                               const std::vector<size_t> & sa12)
 {
-    std::vector<size_t> sa;
-    size_t n2 = (t0.size() + 2) / 3, n1 = (t0.size() + 1) / 3;
-    size_t i0 = 0, i12 = n2 - n1;
+    std::vector<size_t> sa_merged;
+    size_t length2 = (t0.size() + 2) / 3, length1 = (t0.size() + 1) / 3;
+    size_t index0 = 0, index12 = length2 - length1;
 
-    while(i0 < sa0.size() && i12 < sa12.size())
+    while(index0 < sa0.size() && index12 < sa12.size())
     {
-        size_t pos12 = sa12[i12] < n2 ? sa12[i12] * 3 + 1 : (sa12[i12] - n2) * 3 + 2;
-        size_t pos0 = sa0[i0];
+        size_t pos12 =
+                sa12[index12] < length2 ? sa12[index12] * 3 + 1 : (sa12[index12] - length2) * 3 + 2;
+        size_t pos0 = sa0[index0];
 
-        if(sa12[i12] < n2 ? std::make_tuple(get_elem(t0, pos12), get_elem(t12, sa12[i12] + n2))
-                                    <= std::make_tuple(get_elem(t0, pos0), get_elem(t12, pos0 / 3))
-                          : std::make_tuple(get_elem(t0, pos12), get_elem(t0, pos12 + 1),
-                                            get_elem(t12, sa12[i12] - n2 + 1))
-                                    <= std::make_tuple(get_elem(t0, pos0), get_elem(t0, pos0 + 1),
-                                                       get_elem(t12, pos0 / 3 + n2)))
+        bool cond =
+                sa12[index12] < length2
+                        ? std::make_tuple(get_elem(t0, pos12),
+                                          get_elem(t12, sa12[index12] + length2))
+                                  <= std::make_tuple(get_elem(t0, pos0), get_elem(t12, pos0 / 3))
+                        : std::make_tuple(get_elem(t0, pos12), get_elem(t0, pos12 + 1),
+                                          get_elem(t12, sa12[index12] - length2 + 1))
+                                  <= std::make_tuple(get_elem(t0, pos0), get_elem(t0, pos0 + 1),
+                                                     get_elem(t12, pos0 / 3 + length2));
+
+        if(cond)
         {
-            sa.push_back(pos12);
-            ++i12;
+            sa_merged.push_back(pos12);
+            ++index12;
         }
         else
         {
-            sa.push_back(pos0);
-            ++i0;
+            sa_merged.push_back(pos0);
+            ++index0;
         }
     }
 
-    while(i12 < sa12.size())
+    while(index12 < sa12.size())
     {
-        sa.push_back(sa12[i12] < n2 ? sa12[i12] * 3 + 1 : (sa12[i12] - n2) * 3 + 2);
-        ++i12;
+        sa_merged.push_back(sa12[index12] < length2 ? sa12[index12] * 3 + 1
+                                                    : (sa12[index12] - length2) * 3 + 2);
+        ++index12;
     }
 
-    while(i0 < sa0.size())
+    while(index0 < sa0.size())
     {
-        sa.push_back(sa0[i0]);
-        ++i0;
+        sa_merged.push_back(sa0[index0]);
+        ++index0;
     }
 
-    return sa;
+    return sa_merged;
 }
 
-void alte::suffix_array::sort_by_keys(std::vector<size_t> & v, const std::vector<size_t> & keys,
-                                      size_t shift)
+void alte::suffix_array::sort_indices(std::vector<size_t> & indices,
+                                      const std::vector<size_t> & values, size_t shift)
 {
     std::map<size_t, std::queue<size_t>> buckets;
     size_t j = 0;
 
-    for(int i : v)
+    for(int i : indices)
     {
-        size_t k = get_elem(keys, i + shift);
+        size_t v = get_elem(values, i + shift);
 
-        buckets.emplace(k, std::queue<size_t>());
-        buckets[k].push(i);
+        buckets.emplace(v, std::queue<size_t>());
+        buckets[v].push(i);
     }
 
     std::vector<std::queue<size_t>> queues;
@@ -214,7 +225,7 @@ void alte::suffix_array::sort_by_keys(std::vector<size_t> & v, const std::vector
     for(std::queue<size_t> & e : queues)
         while(!e.empty())
         {
-            v[j] = e.front();
+            indices[j] = e.front();
             e.pop();
             ++j;
         }
