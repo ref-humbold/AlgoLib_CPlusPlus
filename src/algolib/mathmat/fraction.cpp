@@ -8,10 +8,10 @@ namespace alma = algolib::mathmat;
 
 #pragma region fraction
 
-alma::fraction::fraction(long long numerator, long long denominator)
+alma::fraction::fraction(intmax_t numerator, intmax_t denominator)
     : numerator{numerator}, denominator{denominator}
 {
-    if(denominator == 0LL)
+    if(denominator == 0)
         throw std::domain_error("Denominator is zero");
 
     normalize();
@@ -61,17 +61,17 @@ void alma::fraction::normalize()
         denominator = -denominator;
     }
 
-    long long gcd_val = gcd(numerator, denominator);
+    intmax_t gcd_val = gcd(numerator, denominator);
 
     numerator /= gcd_val;
     denominator /= gcd_val;
 }
 
-std::pair<long long, long long> alma::fraction::common(const alma::fraction & f) const
+std::pair<intmax_t, intmax_t> alma::fraction::common(const alma::fraction & f) const
 {
-    long common_denominator = lcm(denominator, f.denominator);
-    long this_numerator = common_denominator / denominator * numerator;
-    long other_numerator = common_denominator / f.denominator * f.numerator;
+    intmax_t common_denominator = lcm(denominator, f.denominator);
+    intmax_t this_numerator = common_denominator / denominator * numerator,
+             other_numerator = common_denominator / f.denominator * f.numerator;
 
     return {this_numerator, other_numerator};
 }
@@ -102,6 +102,11 @@ alma::fraction alma::operator/(alma::fraction f1, const alma::fraction & f2)
     return f1;
 }
 
+alma::fraction alma::operator+(alma::fraction f)
+{
+    return f;
+}
+
 alma::fraction alma::operator-(alma::fraction f)
 {
     f.numerator = -f.numerator;
@@ -130,28 +135,28 @@ bool alma::operator!=(const alma::fraction & f1, const alma::fraction & f2)
 
 bool alma::operator<(const alma::fraction & f1, const alma::fraction & f2)
 {
-    std::pair<long long, long long> numerators = f1.common(f2);
+    std::pair<intmax_t, intmax_t> numerators = f1.common(f2);
 
     return numerators.first < numerators.second;
 }
 
 bool alma::operator<=(const alma::fraction & f1, const alma::fraction & f2)
 {
-    std::pair<long long, long long> numerators = f1.common(f2);
+    std::pair<intmax_t, intmax_t> numerators = f1.common(f2);
 
     return numerators.first <= numerators.second;
 }
 
 bool alma::operator>(const alma::fraction & f1, const alma::fraction & f2)
 {
-    std::pair<long long, long long> numerators = f1.common(f2);
+    std::pair<intmax_t, intmax_t> numerators = f1.common(f2);
 
     return numerators.first > numerators.second;
 }
 
 bool alma::operator>=(const alma::fraction & f1, const alma::fraction & f2)
 {
-    std::pair<long long, long long> numerators = f1.common(f2);
+    std::pair<intmax_t, intmax_t> numerators = f1.common(f2);
 
     return numerators.first >= numerators.second;
 }
