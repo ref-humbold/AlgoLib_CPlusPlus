@@ -103,19 +103,21 @@ namespace algolib::mathmat
         intmax_t numerator, denominator;
     };
 
-    fraction operator+(fraction f1, const fraction & f2);
-    fraction operator-(fraction f1, const fraction & f2);
-    fraction operator*(fraction f1, const fraction & f2);
-    fraction operator/(fraction f1, const fraction & f2);
-    fraction operator+(fraction f);
-    fraction operator-(fraction f);
-    fraction operator~(fraction f);
     bool operator==(const fraction & f1, const fraction & f2);
     bool operator!=(const fraction & f1, const fraction & f2);
     bool operator<(const fraction & f1, const fraction & f2);
     bool operator<=(const fraction & f1, const fraction & f2);
     bool operator>(const fraction & f1, const fraction & f2);
     bool operator>=(const fraction & f1, const fraction & f2);
+
+    fraction operator+(fraction f);
+    fraction operator-(fraction f);
+    fraction operator~(fraction f);
+    fraction operator+(fraction f1, const fraction & f2);
+    fraction operator-(fraction f1, const fraction & f2);
+    fraction operator*(fraction f1, const fraction & f2);
+    fraction operator/(fraction f1, const fraction & f2);
+
     std::ostream & operator<<(std::ostream & os, const fraction & f);
 }
 

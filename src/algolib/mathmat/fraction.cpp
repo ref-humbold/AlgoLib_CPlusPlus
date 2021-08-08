@@ -78,51 +78,6 @@ std::pair<intmax_t, intmax_t> alma::fraction::common(const alma::fraction & f) c
 
 #pragma endregion
 
-alma::fraction alma::operator+(alma::fraction f1, const alma::fraction & f2)
-{
-    f1 += f2;
-    return f1;
-}
-
-alma::fraction alma::operator-(alma::fraction f1, const alma::fraction & f2)
-{
-    f1 -= f2;
-    return f1;
-}
-
-alma::fraction alma::operator*(alma::fraction f1, const alma::fraction & f2)
-{
-    f1 *= f2;
-    return f1;
-}
-
-alma::fraction alma::operator/(alma::fraction f1, const alma::fraction & f2)
-{
-    f1 /= f2;
-    return f1;
-}
-
-alma::fraction alma::operator+(alma::fraction f)
-{
-    return f;
-}
-
-alma::fraction alma::operator-(alma::fraction f)
-{
-    f.numerator = -f.numerator;
-    return f;
-}
-
-alma::fraction alma::operator~(alma::fraction f)
-{
-    if(f.numerator == 0)
-        throw std::domain_error("Inverting zero");
-
-    std::swap(f.numerator, f.denominator);
-    f.normalize();
-    return f;
-}
-
 bool alma::operator==(const alma::fraction & f1, const alma::fraction & f2)
 {
     return f1.numerator == f2.numerator && f1.denominator == f2.denominator;
@@ -159,6 +114,53 @@ bool alma::operator>=(const alma::fraction & f1, const alma::fraction & f2)
     std::pair<intmax_t, intmax_t> numerators = f1.common(f2);
 
     return numerators.first >= numerators.second;
+}
+
+alma::fraction alma::operator+(alma::fraction f)
+{
+    f.numerator = +f.numerator;
+    f.denominator = +f.denominator;
+    return f;
+}
+
+alma::fraction alma::operator-(alma::fraction f)
+{
+    f.numerator = -f.numerator;
+    return f;
+}
+
+alma::fraction alma::operator~(alma::fraction f)
+{
+    if(f.numerator == 0)
+        throw std::domain_error("Inverting zero");
+
+    std::swap(f.numerator, f.denominator);
+    f.normalize();
+    return f;
+}
+
+alma::fraction alma::operator+(alma::fraction f1, const alma::fraction & f2)
+{
+    f1 += f2;
+    return f1;
+}
+
+alma::fraction alma::operator-(alma::fraction f1, const alma::fraction & f2)
+{
+    f1 -= f2;
+    return f1;
+}
+
+alma::fraction alma::operator*(alma::fraction f1, const alma::fraction & f2)
+{
+    f1 *= f2;
+    return f1;
+}
+
+alma::fraction alma::operator/(alma::fraction f1, const alma::fraction & f2)
+{
+    f1 /= f2;
+    return f1;
 }
 
 std::ostream & alma::operator<<(std::ostream & os, const alma::fraction & f)

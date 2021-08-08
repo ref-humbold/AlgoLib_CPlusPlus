@@ -10,6 +10,8 @@ find_package(Threads REQUIRED)
 
 # SOURCES
 set(GEOMETRY_TEST "geometry")
+set(GEOMETRY_PLANE_TEST "${GEOMETRY_TEST}/dim2")
+set(GEOMETRY_SPACE_TEST "${GEOMETRY_TEST}/dim3")
 set(GRAPHS_TEST "graphs")
 set(GRAPHS_ALGORITHMS_TEST "${GRAPHS_TEST}/algorithms")
 set(MATHMAT_TEST "mathmat")
@@ -17,10 +19,14 @@ set(SEQUENCES_TEST "sequences")
 set(STRUCTURES_TEST "structures")
 set(TEXT_TEST "text")
 
-set(GEOMETRY_TEST_SOURCES
-    "${GEOMETRY_TEST}/closest_points_test.cpp"
-    "${GEOMETRY_TEST}/convex_hull_test.cpp"
-    "${GEOMETRY_TEST}/points_sorting_test.cpp")
+set(GEOMETRY_PLANE_TEST_SOURCES
+    "${GEOMETRY_PLANE_TEST}/closest_points_test.cpp"
+    "${GEOMETRY_PLANE_TEST}/convex_hull_test.cpp"
+    "${GEOMETRY_PLANE_TEST}/geometry_2d_test.cpp"
+    "${GEOMETRY_PLANE_TEST}/vector_2d_test.cpp")
+set(GEOMETRY_SPACE_TEST_SOURCES
+    "${GEOMETRY_SPACE_TEST}/geometry_3d_test.cpp"
+    "${GEOMETRY_SPACE_TEST}/vector_3d_test.cpp")
 set(GRAPHS_TEST_SOURCES
     "${GRAPHS_TEST}/directed_graph_test.cpp"
     "${GRAPHS_TEST}/multipartite_graph_test.cpp"
@@ -55,7 +61,8 @@ set(TEXT_TEST_SOURCES
     "${TEXT_TEST}/trie_test.cpp")
 
 set(TEST_SOURCES
-    "${GEOMETRY_TEST_SOURCES}"
+    "${GEOMETRY_PLANE_TEST_SOURCES}"
+    "${GEOMETRY_SPACE_TEST_SOURCES}"
     "${GRAPHS_TEST_SOURCES}"
     "${GRAPHS_ALGORITHMS_TEST_SOURCES}"
     "${MATHMAT_TEST_SOURCES}"

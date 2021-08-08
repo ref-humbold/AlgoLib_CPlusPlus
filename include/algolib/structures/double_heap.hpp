@@ -69,7 +69,7 @@ namespace algolib::structures
             if(this->heap.empty())
                 throw std::out_of_range("Double heap is empty");
 
-            return *(this->heap.begin() + INDEX_MIN);
+            return *(this->heap.begin() + index_max);
         }
 
         /*!
@@ -78,7 +78,7 @@ namespace algolib::structures
          */
         const_reference max() const
         {
-            return this->heap.size() <= 1 ? min() : *(this->heap.begin() + INDEX_MAX);
+            return this->heap.size() <= 1 ? min() : *(this->heap.begin() + index_min);
         }
 
         /*!
@@ -105,8 +105,8 @@ namespace algolib::structures
         void step_to_min(size_type index, size_type next_index);
         void step_to_max(size_type index, size_type next_index);
 
-        static constexpr size_type INDEX_MIN = 0;
-        static constexpr size_type INDEX_MAX = 1;
+        static constexpr size_type index_max = 0;
+        static constexpr size_type index_min = 1;
 
         container_type heap;
         Compare compare;
@@ -152,9 +152,9 @@ namespace algolib::structures
         if(this->heap.empty())
             throw std::out_of_range("Double heap is empty");
 
-        *(this->heap.begin() + INDEX_MIN) = this->heap.back();
+        *(this->heap.begin() + index_max) = this->heap.back();
         this->heap.pop_back();
-        this->move_to_max(INDEX_MIN);
+        this->move_to_max(index_max);
     }
 
     template <typename E, typename Container, typename Compare>
@@ -163,15 +163,15 @@ namespace algolib::structures
         if(this->heap.size() <= 1)
             return this->pop_min();
 
-        *(this->heap.begin() + INDEX_MAX) = this->heap.back();
+        *(this->heap.begin() + index_min) = this->heap.back();
         this->heap.pop_back();
-        this->move_to_min(INDEX_MAX);
+        this->move_to_min(index_min);
     }
 
     template <typename E, typename Container, typename Compare>
     void double_heap<E, Container, Compare>::move_to_min(size_type index)
     {
-        if(index == INDEX_MIN)
+        if(index == index_max)
             return;
 
         if(index % 2 == 0)
@@ -200,7 +200,7 @@ namespace algolib::structures
     template <typename E, typename Container, typename Compare>
     void double_heap<E, Container, Compare>::move_to_max(size_type index)
     {
-        if(index == INDEX_MAX)
+        if(index == index_min)
             return;
 
         if(index % 2 == 1)

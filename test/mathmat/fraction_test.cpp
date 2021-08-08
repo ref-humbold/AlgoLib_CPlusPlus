@@ -58,36 +58,6 @@ TEST(FractionTest, operatorBool_WhenNegative_ThenTrue)
     EXPECT_TRUE(result);
 }
 
-TEST(FractionTest, operatorTilde_WhenPositive_ThenInversed)
-{
-    // given
-    alma::fraction frac(7, 19);
-    // when
-    alma::fraction result = ~frac;
-    // then
-    EXPECT_EQ(alma::fraction(19, 7), result);
-}
-
-TEST(FractionTest, operatorTilde_WhenNegative_ThenInversed)
-{
-    // given
-    alma::fraction frac(-7, 19);
-    // when
-    alma::fraction result = ~frac;
-    // then
-    EXPECT_EQ(alma::fraction(-19, 7), result);
-}
-
-TEST(FractionTest, operatorTilde_WhenZero_ThenDomainError)
-{
-    // given
-    alma::fraction frac(0);
-    // when
-    auto exec = [&]() { return ~frac; };
-    // then
-    EXPECT_THROW(exec(), std::domain_error);
-}
-
 TEST(FractionTest, operatorUnaryPlus_ThenCopied)
 {
     // given
@@ -126,6 +96,36 @@ TEST(FractionTest, operatorUnaryMinus_WhenZero_ThenZero)
     alma::fraction result = -frac;
     // then
     EXPECT_EQ(alma::fraction(0), result);
+}
+
+TEST(FractionTest, operatorTilde_WhenPositive_ThenInversed)
+{
+    // given
+    alma::fraction frac(7, 19);
+    // when
+    alma::fraction result = ~frac;
+    // then
+    EXPECT_EQ(alma::fraction(19, 7), result);
+}
+
+TEST(FractionTest, operatorTilde_WhenNegative_ThenInversed)
+{
+    // given
+    alma::fraction frac(-7, 19);
+    // when
+    alma::fraction result = ~frac;
+    // then
+    EXPECT_EQ(alma::fraction(-19, 7), result);
+}
+
+TEST(FractionTest, operatorTilde_WhenZero_ThenDomainError)
+{
+    // given
+    alma::fraction frac(0);
+    // when
+    auto exec = [&]() { return ~frac; };
+    // then
+    EXPECT_THROW(exec(), std::domain_error);
 }
 
 TEST(FractionTest, operatorShiftLeft_ThenStringRepresentation)

@@ -6,7 +6,7 @@
 
 namespace alte = algolib::text;
 
-namespace
+namespace internal
 {
     // Counts values of Knuth's PI prefix function for specified pattern.
     std::vector<size_t> prefixes(const std::string & pattern)
@@ -32,7 +32,7 @@ namespace
 std::vector<size_t> alte::kmp(const std::string & text, const std::string & pattern)
 {
     std::vector<size_t> places;
-    std::vector<size_t> pi = prefixes(pattern);
+    std::vector<size_t> pi = internal::prefixes(pattern);
     size_t pos = 0;
 
     if(pattern == "")
