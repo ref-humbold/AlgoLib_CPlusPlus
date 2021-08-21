@@ -7,7 +7,7 @@
 
 namespace alge3 = algolib::geometry::dim3;
 
-TEST(Geometry3DTest, sortByX_ThenSortedStablyAscendingByFirstCoordinate)
+TEST(Geometry3DTest, sortByX_ThenSortedStablyAscending)
 {
     // given
     std::vector<alge3::point_3d> sequence = {
@@ -26,7 +26,7 @@ TEST(Geometry3DTest, sortByX_ThenSortedStablyAscendingByFirstCoordinate)
               sequence);
 }
 
-TEST(Geometry3DTest, sortByY_ThenSortedStablyAscendingByFirstCoordinate)
+TEST(Geometry3DTest, sortByY_ThenSortedStablyAscending)
 {
     // given
     std::vector<alge3::point_3d> sequence = {
@@ -45,7 +45,7 @@ TEST(Geometry3DTest, sortByY_ThenSortedStablyAscendingByFirstCoordinate)
               sequence);
 }
 
-TEST(Geometry3DTest, sortByZ_ThenSortedStablyAscendingByFirstCoordinate)
+TEST(Geometry3DTest, sortByZ_ThenSortedStablyAscending)
 {
     // given
     std::vector<alge3::point_3d> sequence = {

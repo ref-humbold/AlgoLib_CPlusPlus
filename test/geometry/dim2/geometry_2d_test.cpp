@@ -7,7 +7,7 @@
 
 namespace alge2 = algolib::geometry::dim2;
 
-TEST(Geometry2DTest, sortByX_ThenSortedStablyAscendingByFirstCoordinate)
+TEST(Geometry2DTest, sortByX_ThenSortedStablyAscending)
 {
     // given
     std::vector<alge2::point_2d> sequence = {
@@ -25,7 +25,7 @@ TEST(Geometry2DTest, sortByX_ThenSortedStablyAscendingByFirstCoordinate)
               sequence);
 }
 
-TEST(Geometry2DTest, sortByY_ThenSortedStablyAscendingByFirstCoordinate)
+TEST(Geometry2DTest, sortByY_ThenSortedStablyAscending)
 {
     // given
     std::vector<alge2::point_2d> sequence = {
@@ -43,7 +43,7 @@ TEST(Geometry2DTest, sortByY_ThenSortedStablyAscendingByFirstCoordinate)
               sequence);
 }
 
-TEST(Geometry2DTest, sortByAngle_ThenSortedAscendingByAngleInDegrees)
+TEST(Geometry2DTest, sortByAngle_ThenSortedAscending)
 {
     // given
     std::vector<alge2::point_2d> sequence = {
@@ -58,6 +58,21 @@ TEST(Geometry2DTest, sortByAngle_ThenSortedAscendingByAngleInDegrees)
                                             alge2::point_2d(-3.0, 2.0), alge2::point_2d(-3.0, -2.0),
                                             alge2::point_2d(-2.0, -3.0), alge2::point_2d(2.0, -3.0),
                                             alge2::point_2d(3.0, -2.0)}),
+              sequence);
+}
+
+TEST(Geometry2DTest, sortByAngle_WhenEqualAngles_ThenCompareRadius)
+{
+    // given
+    std::vector<alge2::point_2d> sequence = {
+            alge2::point_2d(0.0, 0.0), alge2::point_2d(1.0, 1.0), alge2::point_2d(-2.0, -2.0),
+            alge2::point_2d(-3.0, -3.0), alge2::point_2d(4.0, 4.0)};
+    // when
+    alge2::sort_by_angle(sequence);
+    // then
+    EXPECT_EQ(std::vector<alge2::point_2d>({alge2::point_2d(0.0, 0.0), alge2::point_2d(1.0, 1.0),
+                                            alge2::point_2d(4.0, 4.0), alge2::point_2d(-2.0, -2.0),
+                                            alge2::point_2d(-3.0, -3.0)}),
               sequence);
 }
 
