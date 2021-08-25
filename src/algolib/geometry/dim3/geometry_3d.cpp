@@ -27,13 +27,20 @@ void alge3::sort_by_z(std::vector<alge3::point_3d> & points)
     std::stable_sort(points.begin(), points.end(), comparator);
 }
 
-double alge3::distance(const alge3::point_3d & p1, const alge3::point_3d & p2)
+double alge3::distance(const alge3::point_3d & point1, const alge3::point_3d & point2)
 {
-    return sqrt((p2.x() - p1.x()) * (p2.x() - p1.x()) + (p2.y() - p1.y()) * (p2.y() - p1.y())
-                + (p2.z() - p1.z()) * (p2.z() - p1.z()));
+    return sqrt((point2.x() - point1.x()) * (point2.x() - point1.x())
+                + (point2.y() - point1.y()) * (point2.y() - point1.y())
+                + (point2.z() - point1.z()) * (point2.z() - point1.z()));
 }
 
-alge3::point_3d alge3::translate(const alge3::point_3d & p, const alge3::vector_3d & v)
+alge3::point_3d alge3::translate(const alge3::point_3d & point, const alge3::vector_3d & vector)
 {
-    return point_3d(p.x() + v.x(), p.y() + v.y(), p.z() + v.z());
+    return point_3d(point.x() + vector.x(), point.y() + vector.y(), point.z() + vector.z());
+}
+
+alge3::point_3d alge3::reflect(const alge3::point_3d & point, const alge3::point_3d & centre)
+{
+    return point_3d(-point.x() + 2 * centre.x(), -point.y() + 2 * centre.y(),
+                    -point.z() + 2 * centre.z());
 }

@@ -35,12 +35,18 @@ void alge2::sort_by_angle(std::vector<alge2::point_2d> & points)
     std::sort(points.begin(), points.end(), comparator);
 }
 
-double alge2::distance(const alge2::point_2d & p1, const alge2::point_2d & p2)
+double alge2::distance(const alge2::point_2d & point1, const alge2::point_2d & point2)
 {
-    return sqrt((p2.x() - p1.x()) * (p2.x() - p1.x()) + (p2.y() - p1.y()) * (p2.y() - p1.y()));
+    return sqrt((point2.x() - point1.x()) * (point2.x() - point1.x())
+                + (point2.y() - point1.y()) * (point2.y() - point1.y()));
 }
 
-alge2::point_2d alge2::translate(const alge2::point_2d & p, const alge2::vector_2d & v)
+alge2::point_2d alge2::translate(const alge2::point_2d & point, const alge2::vector_2d & vector)
 {
-    return point_2d(p.x() + v.x(), p.y() + v.y());
+    return point_2d(point.x() + vector.x(), point.y() + vector.y());
+}
+
+alge2::point_2d alge2::reflect(const alge2::point_2d & point, const alge2::point_2d & centre)
+{
+    return point_2d(-point.x() + 2 * centre.x(), -point.y() + 2 * centre.y());
 }

@@ -30,9 +30,29 @@ namespace algolib::geometry::dim3
      */
     void sort_by_z(std::vector<point_3d> & points);
 
-    double distance(const point_3d & p1, const point_3d & p2);
+    /*!
+     * \brief Counts the distance between given points.
+    * \param point1 first point
+    * \param point2 second point
+    * \return distance between the points
+    */
+    double distance(const point_3d & point1, const point_3d & point2);
 
-    point_3d translate(const point_3d & p, const vector_3d & v);
+    /*!
+     * \brief Translates given point by given vector.
+     * \param point a point
+     * \param vector a translation vector
+     * \return the translated point
+     */
+    point_3d translate(const point_3d & point, const vector_3d & vector);
+
+    /*!
+     * \brief Reflects given point in another point.
+     * \param point a point to be reflected
+     * \param centre a reflection point
+     * \return the reflected point
+     */
+    point_3d reflect(const point_3d & point, const point_3d & centre);
 }
 
 #endif
