@@ -67,7 +67,7 @@ namespace algolib::mathmat
     long long lcm(long long number1, long long number2);
 
 #pragma endregion
-#pragma region mult
+#pragma region multiply
 
     /*!
      * \brief Performs a fast multiplication of two numbers.

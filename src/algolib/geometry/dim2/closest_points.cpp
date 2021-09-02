@@ -31,7 +31,7 @@ namespace internal
         return std::make_pair(pointsX[index_begin], pointsX[index_end]);
     }
 
-    // Finds closest pair inside a belt of specified width.
+    // Finds closest pair inside a belt of given width.
     // The resulting distance should not be less than belt width.
     std::unique_ptr<std::pair<alge2::point_2d, alge2::point_2d>>
             check_belt(const std::vector<alge2::point_2d> & pointsY, double middleX,
@@ -74,8 +74,8 @@ namespace internal
         return closest_pair;
     }
 
-    // Searches for a pair of closest points in specified sublist of points.
-    // Points are specified sorted by X coordinate and by Y coordinate.
+    // Searches for a pair of closest points in given sublist of points.
+    // Points are given sorted by X coordinate and by Y coordinate.
     // (index_begin & index_end inclusive)
     std::pair<alge2::point_2d, alge2::point_2d>
             search_closest(const std::vector<alge2::point_2d> & pointsX,

@@ -8,14 +8,11 @@ namespace alse = algolib::sequences;
 
 std::vector<double> alse::maximum_subarray(const std::vector<double> & sequence)
 {
-    std::pair<double, std::vector<double>> actual, maximal;
-
-    actual.first = 0.0;
-    maximal.first = 0.0;
+    std::pair<double, std::vector<double>> actual = {0.0, {}}, maximal = {0.0, {}};
 
     for(const auto & elem : sequence)
     {
-        if(actual.first < 0.0)
+        if(actual.first < 0)
         {
             actual.first = 0.0;
             actual.second.clear();
@@ -25,10 +22,7 @@ std::vector<double> alse::maximum_subarray(const std::vector<double> & sequence)
         actual.second.push_back(elem);
 
         if(actual.first > maximal.first)
-        {
-            maximal.first = actual.first;
-            maximal.second = actual.second;
-        }
+            maximal = actual;
     }
 
     return maximal.second;

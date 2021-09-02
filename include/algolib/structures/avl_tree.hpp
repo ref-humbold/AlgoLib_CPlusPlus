@@ -155,21 +155,21 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Checks whether specified value is present in the tree.
+         * \brief Checks whether given value is present in the tree.
          * \param element value to be checked
          * \return iterator on the element if found, otherwise iterator at the end
          */
         iterator find(const_reference element);
 
         /*!
-         * \brief Checks whether specified value is present in the tree.
+         * \brief Checks whether given value is present in the tree.
          * \param element value to be checked
          * \return iterator on the element if found, otherwise iterator at the end
          */
         const_iterator find(const_reference element) const;
 
         /*!
-         * \brief Checks whether specified value is present in the tree.
+         * \brief Checks whether given value is present in the tree.
          * \param element value to be checked
          * \return \c true whether text was found in trie, otherwise \c false
          */
@@ -179,7 +179,7 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Checks whether specified value is present in the tree.
+         * \brief Checks whether given value is present in the tree.
          * \param element value to be checked
          * \return \c true whether text was found in trie, otherwise \c false
          */
@@ -197,7 +197,7 @@ namespace algolib::structures
         std::pair<iterator, bool> insert(const_reference element);
 
         /*!
-         * \brief Removes specified element from the tree if present.
+         * \brief Removes given element from the tree if present.
          * \param element value to be removed
          * \return number of element removed
          */
@@ -233,7 +233,7 @@ namespace algolib::structures
         // - right child if element is greater than node's element
         inner_ptr search(inner_ptr node, const_reference element) const;
 
-        // Searches for node that satisfies specified predicate with specified value.
+        // Searches for node that satisfies given predicate with given value.
         inner_ptr find_node(const_reference element,
                             std::function<bool(inner_ptr, const_reference)> predicate) const;
 
@@ -246,7 +246,7 @@ namespace algolib::structures
         // Rotates the node along the edge to its parent.
         void rotate(inner_ptr node);
 
-        // Restores balancing on a path from specified node to the root.
+        // Restores balancing on a path from given node to the root.
         void balance(node_ptr node);
 
         // size_s current node balance.

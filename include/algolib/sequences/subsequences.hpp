@@ -40,8 +40,8 @@ namespace algolib::sequences
     template <typename T, typename C = std::less<T>>
     std::vector<T> longest_increasing(const std::vector<T> & sequence, const C & compare = C())
     {
-        std::vector<T> longest_subseq;
-        std::vector<int> subseq_last(1, 0);
+        std::vector<T> longest_subseq = {};
+        std::vector<int> subseq_last = {0};
         std::vector<int> previous_elems(sequence.size(), -1);
 
         for(size_t i = 1; i < sequence.size(); ++i)
