@@ -132,9 +132,9 @@ namespace algolib::mathmat
         void combine(const equation<N> & equation, double constant);
 
         /*!
-         * \brief Checks whether given values solve the equation
+         * \brief Checks whether given values solve the equation.
          * \param solution values to be checked
-         * \return `true` if solution is correct, otherwise `false`
+         * \return \c true if solution is correct, otherwise \c false
          */
         bool is_solution(const std::array<double, N> & solution) const;
 

@@ -59,29 +59,27 @@ namespace algolib::mathmat
         const equation<N> & operator[](size_t i) const;
 
         /*!
-         * \brief Computes the solution of the equation system
+         * \brief Computes the solution of the equation system.
          * \return solution vector
-         * \throw infinite_solutions_error
-         * \throw no_solution_error
+         * \throw infinite_solutions_error if the equation system has an infinite number of solutions
+         * \throw no_solution_error if the equation system has no solutions
          */
         std::array<double, N> solve();
 
-        /*!
-         * \brief Gauss elimination algorithm
-         */
+        //! \brief Performs Gauss elimination algorithm.
         void gaussian_reduce();
 
         /*!
-         * \brief Swaps two equations
+         * \brief Swaps two equations.
          * \param i index of first equation
          * \param j index of second equation
          */
         void swap(size_t i, size_t j);
 
         /*!
-         * \brief Checks whether given values solve the equation system
+         * \brief Checks whether given values solve the equation system.
          * \param solution values to be checked
-         * \return `true` if solution is correct, otherwise `false`
+         * \return \c true if solution is correct, otherwise \c false
          */
         bool is_solution(const std::array<double, N> & solution) const;
 
