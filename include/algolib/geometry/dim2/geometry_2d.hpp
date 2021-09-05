@@ -42,15 +42,15 @@ namespace algolib::geometry::dim2
     /*!
      * \brief Translates given point by given vector.
      * \param point a point
-     * \param vector a translation vector
+     * \param vector translation vector
      * \return the translated point
      */
     point_2d translate(const point_2d & point, const vector_2d & vector);
 
     /*!
      * \brief Reflects given point in another point.
-     * \param point a point to be reflected
-     * \param centre a reflection point
+     * \param point point to be reflected
+     * \param centre reflection point
      * \return the reflected point
      */
     point_2d reflect(const point_2d & point, const point_2d & centre);

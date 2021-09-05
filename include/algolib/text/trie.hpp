@@ -54,17 +54,19 @@ namespace algolib::text
             return *this;
         }
 
+        //! \return number of texts in the trie
         size_t size() const
         {
             return size_;
         }
 
+        //! \return \c true if the trie is empty, otherwise \c false
         bool empty() const;
 
         /*!
          * \brief Checks whether given text is present in the trie.
          * \param text text to be checked
-         * \return \c true whether text was found in trie, otherwise \c false
+         * \return \c true if the text was found in trie, otherwise \c false
          */
         bool contains(const std::string & text) const;
 

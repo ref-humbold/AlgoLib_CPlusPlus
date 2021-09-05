@@ -28,6 +28,9 @@ namespace algolib::mathmat
     equation<N> operator*(equation<N> eq, double constant);
 
     template <size_t N>
+    equation<N> operator*(double constant, equation<N> eq);
+
+    template <size_t N>
     equation<N> operator/(equation<N> eq, double constant);
 
     template <size_t N>
@@ -141,8 +144,9 @@ namespace algolib::mathmat
         // clang-format off
         friend equation<N> operator+ <N>(equation<N> eq1, const equation<N> & eq2);
         friend equation<N> operator- <N>(equation<N> eq1, const equation<N> & eq2);
-        friend equation<N> operator* <N>(equation<N> eq1, double constant);
-        friend equation<N> operator/ <N>(equation<N> eq1, double constant);
+        friend equation<N> operator* <N>(equation<N> eq, double constant);
+        friend equation<N> operator* <N>(double constant, equation<N> eq);
+        friend equation<N> operator/ <N>(equation<N> eq, double constant);
         friend std::ostream & operator<< <N>(std::ostream & os, const equation<N> & eq);
         // clang-format on
 
@@ -240,6 +244,12 @@ namespace algolib::mathmat
     {
         eq *= constant;
         return eq;
+    }
+
+    template <size_t N>
+    equation<N> operator*(double constant, equation<N> eq)
+    {
+        return eq * constant;
     }
 
     template <size_t N>

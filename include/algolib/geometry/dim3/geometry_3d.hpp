@@ -32,24 +32,24 @@ namespace algolib::geometry::dim3
 
     /*!
      * \brief Counts the distance between given points.
-    * \param point1 first point
-    * \param point2 second point
-    * \return distance between the points
-    */
+     * \param point1 first point
+     * \param point2 second point
+     * \return distance between the points
+     */
     double distance(const point_3d & point1, const point_3d & point2);
 
     /*!
      * \brief Translates given point by given vector.
      * \param point a point
-     * \param vector a translation vector
+     * \param vector translation vector
      * \return the translated point
      */
     point_3d translate(const point_3d & point, const vector_3d & vector);
 
     /*!
      * \brief Reflects given point in another point.
-     * \param point a point to be reflected
-     * \param centre a reflection point
+     * \param point point to be reflected
+     * \param centre reflection point
      * \return the reflected point
      */
     point_3d reflect(const point_3d & point, const point_3d & centre);

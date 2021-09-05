@@ -7,62 +7,50 @@
 
 namespace alte = algolib::text;
 
-TEST(KMPTest, kmp_WhenPatternFoundOnce)
+TEST(KMPTest, kmp_WhenPatternFoundOnce_ThenSingleOccurrence)
 {
-    std::string text = "abcde";
-    std::string pattern = "a";
-
-    std::vector<size_t> result = alte::kmp(text, pattern);
-
+    // when
+    std::vector<size_t> result = alte::kmp("abcde", "a");
+    // then
     EXPECT_EQ(std::vector<size_t>({0}), result);
 }
 
-TEST(KMPTest, kmp_WhenPatternFoundTwice)
+TEST(KMPTest, kmp_WhenPatternFoundTwice_ThenTwoOccurrences)
 {
-    std::string text = "abcdae";
-    std::string pattern = "a";
-
-    std::vector<size_t> result = alte::kmp(text, pattern);
-
+    // when
+    std::vector<size_t> result = alte::kmp("abcdae", "a");
+    // then
     EXPECT_EQ(std::vector<size_t>({0, 4}), result);
 }
 
-TEST(KMPTest, kmp_WhenPatternFoundTwiceAndIntersects)
+TEST(KMPTest, kmp_WhenPatternFoundTwiceAndIntersects_ThenTwoOccurrences)
 {
-    std::string text = "aaabcde";
-    std::string pattern = "aa";
-
-    std::vector<size_t> result = alte::kmp(text, pattern);
-
+    // when
+    std::vector<size_t> result = alte::kmp("aaabcde", "aa");
+    // then
     EXPECT_EQ(std::vector<size_t>({0, 1}), result);
 }
 
-TEST(KMPTest, kmp_WhenPatternNotFound)
+TEST(KMPTest, kmp_WhenPatternNotFound_ThenEmpty)
 {
-    std::string text = "abcde";
-    std::string pattern = "x";
-
-    std::vector<size_t> result = alte::kmp(text, pattern);
-
+    // when
+    std::vector<size_t> result = alte::kmp("abcde", "x");
+    // then
     EXPECT_EQ(std::vector<size_t>(), result);
 }
 
-TEST(KMPTest, kmp_WhenPatternIsEmptyString)
+TEST(KMPTest, kmp_WhenPatternIsEmptyString_ThenEmpty)
 {
-    std::string text = "abcde";
-    std::string pattern = "";
-
-    std::vector<size_t> result = alte::kmp(text, pattern);
-
+    // when
+    std::vector<size_t> result = alte::kmp("abcde", "");
+    // then
     EXPECT_EQ(std::vector<size_t>(), result);
 }
 
-TEST(KMPTest, kmp_WhenTextIsEmptyString)
+TEST(KMPTest, kmp_WhenTextIsEmptyString_ThenEmpty)
 {
-    std::string text = "";
-    std::string pattern = "a";
-
-    std::vector<size_t> result = alte::kmp(text, pattern);
-
+    // when
+    std::vector<size_t> result = alte::kmp("", "a");
+    // then
     EXPECT_EQ(std::vector<size_t>(), result);
 }
