@@ -21,7 +21,7 @@ std::vector<size_t> alma::find_primes(size_t min_number, size_t max_number)
 
     for(size_t i = 0; i < base_primes.size(); ++i)
     {
-        size_t p = 2 * i + 3;
+        size_t p = i + i + 3;
         size_t begin = min_number < p * p ? p * p - min_number : (p - min_number % p) % p;
 
         for(size_t j = (p * p - 3) / 2; j < base_primes.size(); j += p)

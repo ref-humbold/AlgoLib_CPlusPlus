@@ -48,5 +48,5 @@ alge2::point_2d alge2::translate(const alge2::point_2d & point, const alge2::vec
 
 alge2::point_2d alge2::reflect(const alge2::point_2d & point, const alge2::point_2d & centre)
 {
-    return point_2d(-point.x() + 2 * centre.x(), -point.y() + 2 * centre.y());
+    return point_2d(-point.x() + centre.x() + centre.x(), -point.y() + centre.y() + centre.y());
 }

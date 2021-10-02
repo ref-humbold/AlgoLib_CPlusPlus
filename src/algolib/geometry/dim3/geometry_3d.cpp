@@ -41,6 +41,6 @@ alge3::point_3d alge3::translate(const alge3::point_3d & point, const alge3::vec
 
 alge3::point_3d alge3::reflect(const alge3::point_3d & point, const alge3::point_3d & centre)
 {
-    return point_3d(-point.x() + 2 * centre.x(), -point.y() + 2 * centre.y(),
-                    -point.z() + 2 * centre.z());
+    return point_3d(-point.x() + centre.x() + centre.x(), -point.y() + centre.y() + centre.y(),
+                    -point.z() + centre.z() + centre.z());
 }
