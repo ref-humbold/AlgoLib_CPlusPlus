@@ -50,7 +50,9 @@ namespace algolib::graphs
     class edge
     {
     public:
-        edge(vertex<VertexId> source, vertex<VertexId> destination)
+        using vertex_type = vertex<VertexId>;
+
+        edge(vertex_type source, vertex_type destination)
             : source_{source}, destination_{destination}
         {
         }
@@ -61,17 +63,17 @@ namespace algolib::graphs
         edge<VertexId> & operator=(const edge<VertexId> &) = default;
         edge<VertexId> & operator=(edge<VertexId> &&) = default;
 
-        const vertex<VertexId> & source() const
+        const vertex_type & source() const
         {
             return source_;
         }
 
-        const vertex<VertexId> & destination() const
+        const vertex_type & destination() const
         {
             return destination_;
         }
 
-        vertex<VertexId> get_neighbour(const vertex<VertexId> & vertex) const
+        const vertex_type & get_neighbour(const vertex<VertexId> & vertex) const
         {
             if(source_ == vertex)
                 return destination_;
@@ -100,7 +102,7 @@ namespace algolib::graphs
         friend struct std::hash<edge<VertexId>>;
 
     private:
-        vertex<VertexId> source_, destination_;
+        vertex_type source_, destination_;
     };
 
     template <typename VertexId>
@@ -158,8 +160,10 @@ namespace std
 
         result_type operator()(const argument_type & edge) const
         {
-            result_type source_hash = std::hash<VertexId>()(edge.source_);
-            result_type destination_hash = std::hash<VertexId>()(edge.destination_);
+            result_type source_hash =
+                    std::hash<typename argument_type::vertex_type>()(edge.source_);
+            result_type destination_hash =
+                    std::hash<typename argument_type::vertex_type>()(edge.destination_);
 
             return source_hash
                    ^ (destination_hash + 0x9e3779b9 + (source_hash << 6) + (source_hash >> 2));

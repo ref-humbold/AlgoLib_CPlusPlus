@@ -22,9 +22,24 @@ namespace algolib::graphs
         using vertex_property_type = VertexProperty;
         using edge_property_type = EdgeProperty;
 
-        struct properties;
+        struct graph_properties;
 
         virtual ~graph() = default;
+
+        virtual const vertex_type & operator[](const vertex_id_type & vertex_id) const = 0;
+
+        virtual const edge_type &
+                operator[](const std::pair<vertex_id_type, vertex_id_type> & vertices) const = 0;
+
+        virtual const edge_type &
+                operator[](const std::pair<vertex_type, vertex_type> & vertices) const
+        {
+            return this->operator[](std::make_pair(vertices.first.id(), vertices.second.id()));
+        }
+
+        virtual graph_properties & properties() = 0;
+
+        virtual const graph_properties & properties() const = 0;
 
         //! \return number of vertices
         virtual size_t vertices_count() const = 0;
@@ -37,17 +52,6 @@ namespace algolib::graphs
 
         //! \return vector of edges
         virtual std::vector<edge_type> edges() const = 0;
-
-        virtual const vertex_type & operator[](const vertex_id_type & vertex_id) const = 0;
-
-        virtual const edge_type &
-                operator[](const std::pair<vertex_id_type, vertex_id_type> & vertices) const = 0;
-
-        virtual const edge_type &
-                operator[](const std::pair<vertex_type, vertex_type> & vertices) const
-        {
-            return this->operator[](std::make_pair(vertices.first.id(), vertices.second.id()));
-        }
 
         /*!
          * \param vertex vertex from the graph
@@ -75,7 +79,7 @@ namespace algolib::graphs
     };
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
-    struct graph<VertexId, VertexProperty, EdgeProperty>::properties
+    struct graph<VertexId, VertexProperty, EdgeProperty>::graph_properties
     {
         graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & operator[](
                 const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex);
