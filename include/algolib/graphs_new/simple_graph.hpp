@@ -30,7 +30,7 @@ namespace internal
 
         explicit graph_representation(const std::vector<vertex_id_type> & vertex_ids = {})
         {
-            for(const VertexId & vertex_id : vertex_ids)
+            for(const vertex_id_type & vertex_id : vertex_ids)
                 this->graph_map.emplace(vertex_type(vertex_id), {});
         }
 
@@ -98,8 +98,9 @@ namespace internal
         if(entry_it != this->graph_map.end())
         {
             auto && edge_it = std::find_if(
-                    std::begin(entry_it->second), std::end(entry_it->second),
-                    [&](auto && edge) { edge.get_neighbour(edge_it->first).id == destination_id; });
+                    std::begin(entry_it->second), std::end(entry_it->second), [&](auto && edge) {
+                        edge.get_neighbour(entry_it->first).id == destination_id;
+                    });
 
             if(edge_it != std::end(entry_it->second))
                 return *edge_it;
@@ -125,7 +126,7 @@ namespace internal
     {
         std::vector<edge_type> result;
 
-        std::for_each(this->graph_map.begin(), this->graph_map.end(), [](auto && entry) {
+        std::for_each(this->graph_map.begin(), this->graph_map.end(), [&](auto && entry) {
             std::copy(entry->second.begin(), entry->second.end(), std::back_inserter(result));
         });
         return result;
@@ -201,7 +202,7 @@ namespace internal
     bool graph_representation<Graph>::add_vertex(
             const typename graph_representation<Graph>::vertex_type & vertex)
     {
-        return graph_map.emplace(vertex, std::unordered_set<E>()).second;
+        return graph_map.emplace(vertex, std::unordered_set<edge_type>()).second;
     }
 
     template <typename Graph>
@@ -250,9 +251,19 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     class simple_graph : public virtual graph<VertexId, VertexProperty, EdgeProperty>
     {
+    public:
+        using vertex_id_type =
+                typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type;
+        using vertex_type = typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type;
+        using edge_type = typename graph<VertexId, VertexProperty, EdgeProperty>::edge_type;
+        using vertex_property_type =
+                typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type;
+        using edge_property_type =
+                typename graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type;
+
     protected:
         using repr = internal::graph_representation<
-                typename simple_graph<VertexId, VertexProperty, EdgeProperty>>;
+                simple_graph<VertexId, VertexProperty, EdgeProperty>>;
 
     private:
         class graph_properties_impl;
@@ -271,30 +282,25 @@ namespace algolib::graphs
         simple_graph & operator=(const simple_graph &) = default;
         simple_graph & operator=(simple_graph &&) = default;
 
-        virtual graph_properties & properties() override
+        virtual typename graph<VertexId, VertexProperty, EdgeProperty>::graph_properties &
+                properties() override
         {
             return this->graph_properties_;
         }
 
-        virtual const graph_properties & properties() const override
+        virtual const typename graph<VertexId, VertexProperty, EdgeProperty>::graph_properties &
+                properties() const override
         {
             return this->graph_properties_;
         }
 
-        const typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
-                operator[](const typename simple_graph<VertexId, VertexProperty,
-                                                       EdgeProperty>::vertex_id_type & vertex_id)
-                        const override
+        const vertex_type & operator[](const vertex_id_type & vertex_id) const override
         {
             return this->representation[vertex_id];
         }
 
-        const typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type & operator[](
-                const std::pair<typename simple_graph<VertexId, VertexProperty,
-                                                      EdgeProperty>::vertex_id_type,
-                                typename simple_graph<VertexId, VertexProperty,
-                                                      EdgeProperty>::vertex_id_type> & vertices)
-                const override
+        const edge_type & operator[](
+                const std::pair<vertex_id_type, vertex_id_type> & vertices) const override
         {
             return this->representation[vertices];
         }
@@ -304,61 +310,43 @@ namespace algolib::graphs
             return this->representation.size();
         }
 
-        std::vector<typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
-                vertices() const override
+        std::vector<vertex_type> vertices() const override
         {
             return this->representation.vertices();
         }
 
-        std::vector<typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type>
-                adjacent_edges(const typename simple_graph<VertexId, VertexProperty,
-                                                           EdgeProperty>::vertex_type & vertex)
-                        const override
+        std::vector<edge_type> adjacent_edges(const vertex_type & vertex) const override
         {
             return this->representation.adjacent_edges(vertex);
         }
 
-        std::vector<typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
-                neighbours(const typename simple_graph<VertexId, VertexProperty,
-                                                       EdgeProperty>::vertex_type & vertex)
-                        const override;
+        std::vector<vertex_type> neighbours(const vertex_type & vertex) const override;
 
-        typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type
+        vertex_type
                 add_vertex(const typename simple_graph<VertexId, VertexProperty,
                                                        EdgeProperty>::vertex_id_type & vertex_id);
-        typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type add_vertex(
+        vertex_type add_vertex(
                 const typename simple_graph<VertexId, VertexProperty,
                                             EdgeProperty>::vertex_id_type & vertex_id,
                 const typename simple_graph<VertexId, VertexProperty,
                                             EdgeProperty>::vertex_property_type & property);
-        typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type
-                add_vertex(const typename simple_graph<VertexId, VertexProperty,
-                                                       EdgeProperty>::vertex_type & vertex);
-        typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type add_vertex(
-                const typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
-                        vertex,
+        vertex_type add_vertex(const typename simple_graph<VertexId, VertexProperty,
+                                                           EdgeProperty>::vertex_type & vertex);
+        vertex_type add_vertex(
+                const vertex_type & vertex,
                 const typename simple_graph<VertexId, VertexProperty,
                                             EdgeProperty>::vertex_property_type & property);
 
-        typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type add_edge_between(
-                const typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
-                        source,
-                const typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
-                        destination);
-        typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type add_edge_between(
-                const typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
-                        source,
-                const typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
-                        destination,
+        edge_type add_edge_between(const vertex_type & source, const vertex_type & destination);
+        edge_type add_edge_between(
+                const vertex_type & source, const vertex_type & destination,
                 const typename simple_graph<VertexId, VertexProperty,
                                             EdgeProperty>::edge_property_type & property);
 
-        virtual typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
-                add_edge(const typename simple_graph<VertexId, VertexProperty,
-                                                     EdgeProperty>::edge_type & edge) = 0;
-        virtual typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type add_edge(
-                const typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type &
-                        edge,
+        virtual edge_type add_edge(const typename simple_graph<VertexId, VertexProperty,
+                                                               EdgeProperty>::edge_type & edge) = 0;
+        virtual edge_type add_edge(
+                const edge_type & edge,
                 const typename simple_graph<VertexId, VertexProperty,
                                             EdgeProperty>::edge_property_type & property) = 0;
 
@@ -375,8 +363,7 @@ namespace algolib::graphs
                     const typename simple_graph<VertexId, VertexProperty,
                                                 EdgeProperty>::vertex_type & vertex) const
     {
-        std::vector<typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
-                result;
+        std::vector<vertex_type> result;
         auto adjacent = this->representation.adjacent_edges(vertex);
 
         std::transform(adjacent.begin(), adjacent.end(), std::back_inserter(result),
@@ -390,9 +377,7 @@ namespace algolib::graphs
                     const typename simple_graph<VertexId, VertexProperty,
                                                 EdgeProperty>::vertex_id_type & vertex_id)
     {
-        return this->add_vertex(
-                typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type(
-                        vertex_id));
+        return this->add_vertex(vertex_type(vertex_id));
     }
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
@@ -403,10 +388,7 @@ namespace algolib::graphs
                     const typename simple_graph<VertexId, VertexProperty,
                                                 EdgeProperty>::vertex_property_type & property)
     {
-        return this->add_vertex(
-                typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type(
-                        vertex_id),
-                property);
+        return this->add_vertex(vertex_type(vertex_id), property);
     }
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
@@ -450,9 +432,7 @@ namespace algolib::graphs
                     const typename simple_graph<VertexId, VertexProperty,
                                                 EdgeProperty>::vertex_type & destination)
     {
-        return this->add_edge(
-                typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type(
-                        source, destination));
+        return this->add_edge(edge_type(source, destination));
     }
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
@@ -465,15 +445,12 @@ namespace algolib::graphs
                     const typename simple_graph<VertexId, VertexProperty,
                                                 EdgeProperty>::edge_property_type & property)
     {
-        return this->add_edge(
-                typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type(
-                        source, destination),
-                property);
+        return this->add_edge(edge_type(source, destination), property);
     }
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     class simple_graph<VertexId, VertexProperty, EdgeProperty>::graph_properties_impl
-        : public virtual simple_graph<VertexId, VertexProperty, EdgeProperty>::graph_properties
+        : public virtual graph<VertexId, VertexProperty, EdgeProperty>::graph_properties
     {
     public:
         explicit graph_properties_impl(simple_graph<VertexId, VertexProperty, EdgeProperty> & graph)

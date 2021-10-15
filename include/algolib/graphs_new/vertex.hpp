@@ -144,14 +144,14 @@ namespace std
     template <typename VertexId>
     struct hash<std::pair<algolib::graphs::vertex<VertexId>, algolib::graphs::vertex<VertexId>>>
     {
-        using argument_type =
-                std::pair<algolib::graphs::vertex<VertexId>, algolib::graphs::vertex<VertexId>>;
+        using element_type = algolib::graphs::vertex<VertexId>;
+        using argument_type = std::pair<element_type, element_type>;
         using result_type = size_t;
 
         result_type operator()(const argument_type & pair) const
         {
-            result_type first_hash = std::hash<V>()(pair.first);
-            result_type second_hash = std::hash<V>()(pair.second);
+            result_type first_hash = std::hash<element_type>()(pair.first);
+            result_type second_hash = std::hash<element_type>()(pair.second);
 
             return first_hash ^ (second_hash + 0x9e3779b9 + (first_hash << 6) + (first_hash >> 2));
         }
