@@ -269,9 +269,7 @@ namespace algolib::graphs
         class graph_properties_impl;
 
     public:
-        explicit simple_graph(
-                const std::vector<typename simple_graph<
-                        VertexId, VertexProperty, EdgeProperty>::vertex_id_type> & vertex_ids = {})
+        explicit simple_graph(const std::vector<vertex_id_type> & vertex_ids = {})
             : representation{repr(vertex_ids)}, graph_properties_{graph_properties_impl(*this)}
         {
         }
@@ -282,13 +280,13 @@ namespace algolib::graphs
         simple_graph & operator=(const simple_graph &) = default;
         simple_graph & operator=(simple_graph &&) = default;
 
-        virtual typename graph<VertexId, VertexProperty, EdgeProperty>::graph_properties &
+        typename graph<VertexId, VertexProperty, EdgeProperty>::graph_properties &
                 properties() override
         {
             return this->graph_properties_;
         }
 
-        virtual const typename graph<VertexId, VertexProperty, EdgeProperty>::graph_properties &
+        const typename graph<VertexId, VertexProperty, EdgeProperty>::graph_properties &
                 properties() const override
         {
             return this->graph_properties_;
@@ -322,33 +320,18 @@ namespace algolib::graphs
 
         std::vector<vertex_type> neighbours(const vertex_type & vertex) const override;
 
-        vertex_type
-                add_vertex(const typename simple_graph<VertexId, VertexProperty,
-                                                       EdgeProperty>::vertex_id_type & vertex_id);
-        vertex_type add_vertex(
-                const typename simple_graph<VertexId, VertexProperty,
-                                            EdgeProperty>::vertex_id_type & vertex_id,
-                const typename simple_graph<VertexId, VertexProperty,
-                                            EdgeProperty>::vertex_property_type & property);
-        vertex_type add_vertex(const typename simple_graph<VertexId, VertexProperty,
-                                                           EdgeProperty>::vertex_type & vertex);
-        vertex_type add_vertex(
-                const vertex_type & vertex,
-                const typename simple_graph<VertexId, VertexProperty,
-                                            EdgeProperty>::vertex_property_type & property);
+        vertex_type add_vertex(const vertex_id_type & vertex_id);
+        vertex_type add_vertex(const vertex_id_type & vertex_id,
+                               const vertex_property_type & property);
+        vertex_type add_vertex(const vertex_type & vertex);
+        vertex_type add_vertex(const vertex_type & vertex, const vertex_property_type & property);
 
         edge_type add_edge_between(const vertex_type & source, const vertex_type & destination);
-        edge_type add_edge_between(
-                const vertex_type & source, const vertex_type & destination,
-                const typename simple_graph<VertexId, VertexProperty,
-                                            EdgeProperty>::edge_property_type & property);
+        edge_type add_edge_between(const vertex_type & source, const vertex_type & destination,
+                                   const edge_property_type & property);
 
-        virtual edge_type add_edge(const typename simple_graph<VertexId, VertexProperty,
-                                                               EdgeProperty>::edge_type & edge) = 0;
-        virtual edge_type add_edge(
-                const edge_type & edge,
-                const typename simple_graph<VertexId, VertexProperty,
-                                            EdgeProperty>::edge_property_type & property) = 0;
+        virtual edge_type add_edge(const edge_type & edge) = 0;
+        virtual edge_type add_edge(const edge_type & edge, const edge_property_type & property) = 0;
 
     protected:
         repr representation;

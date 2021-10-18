@@ -50,6 +50,7 @@ set(GRAPHS_NEW_SOURCES
     "${GRAPHS_NEW}/graph.cpp"
     "${GRAPHS_NEW}/simple_graph.cpp"
     "${GRAPHS_NEW}/properties.cpp"
+    "${GRAPHS_NEW}/tree_graph.cpp"
     "${GRAPHS_NEW}/undirected_graph.cpp"
     "${GRAPHS_NEW}/vertex.cpp")
 set(MATHMAT_SOURCES
