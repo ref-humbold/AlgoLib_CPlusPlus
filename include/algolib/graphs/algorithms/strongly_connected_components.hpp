@@ -105,8 +105,8 @@ namespace algolib::graphs
         std::vector<std::pair<typename directed_graph<V, VP, EP>::vertex_type, int>> entries;
         std::vector<typename directed_graph<V, VP, EP>::vertex_type> vertices;
 
-        std::copy(std::begin(post_order_strategy.post_times),
-                  std::end(post_order_strategy.post_times), std::back_inserter(entries));
+        std::copy(post_order_strategy.post_times.begin(), post_order_strategy.post_times.end(),
+                  std::back_inserter(entries));
         std::sort(entries.begin(), entries.end(),
                   [](const std::pair<typename directed_graph<V, VP, EP>::vertex_type, int> & e1,
                      const std::pair<typename directed_graph<V, VP, EP>::vertex_type, int> & e2) {

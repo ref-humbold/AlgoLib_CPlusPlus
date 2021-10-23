@@ -15,6 +15,7 @@ set(GEOMETRY_SPACE_TEST "${GEOMETRY_TEST}/dim3")
 set(GRAPHS_TEST "graphs")
 set(GRAPHS_ALGORITHMS_TEST "${GRAPHS_TEST}/algorithms")
 set(GRAPHS_NEW_TEST "graphs_new")
+set(GRAPHS_NEW_ALGORITHMS_TEST "${GRAPHS_NEW_TEST}/algorithms")
 set(MATHMAT_TEST "mathmat")
 set(SEQUENCES_TEST "sequences")
 set(STRUCTURES_TEST "structures")
@@ -47,6 +48,10 @@ set(GRAPHS_NEW_TEST_SOURCES
     "${GRAPHS_NEW_TEST}/multipartite_graph_test.cpp"
     "${GRAPHS_NEW_TEST}/tree_graph_test.cpp"
     "${GRAPHS_NEW_TEST}/undirected_graph_test.cpp")
+set(GRAPHS_NEW_ALGORITHMS_TEST_SOURCES
+    "${GRAPHS_NEW_ALGORITHMS_TEST}/cutting_test.cpp"
+    "${GRAPHS_NEW_ALGORITHMS_TEST}/minimal_spanning_tree_test.cpp"
+    "${GRAPHS_NEW_ALGORITHMS_TEST}/searching_test.cpp")
 set(MATHMAT_TEST_SOURCES
     "${MATHMAT_TEST}/equation_test.cpp"
     "${MATHMAT_TEST}/equation_system_test.cpp"
@@ -72,6 +77,7 @@ set(TEST_SOURCES
     # "${GRAPHS_TEST_SOURCES}"
     # "${GRAPHS_ALGORITHMS_TEST_SOURCES}"
     "${GRAPHS_NEW_TEST_SOURCES}"
+    "${GRAPHS_NEW_ALGORITHMS_TEST_SOURCES}"
     "${MATHMAT_TEST_SOURCES}"
     "${SEQUENCES_TEST_SOURCES}"
     "${STRUCTURES_TEST_SOURCES}"

@@ -179,7 +179,7 @@ namespace algolib::graphs
 
         this->validate_group(group_number);
 
-        std::copy(std::begin(this->vertex_group_map), std::end(this->vertex_group_map),
+        std::copy(this->vertex_group_map.begin(), this->vertex_group_map.end(),
                   std::back_inserter(group_vertices));
         group_vertices.erase(std::remove_if(group_vertices.begin(), group_vertices.end(),
                                             [&](auto && p) { return p.second != group_number; }),

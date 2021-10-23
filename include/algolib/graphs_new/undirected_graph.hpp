@@ -87,9 +87,8 @@ namespace algolib::graphs
         auto edges_set = this->representation.edges_set();
         std::unordered_set<edge_type> all_edges;
 
-        std::for_each(std::begin(edges_set), std::end(edges_set), [&](auto && edge_set) {
-            std::copy(std::begin(edge_set), std::end(edge_set),
-                      std::inserter(all_edges, all_edges.end()));
+        std::for_each(edges_set.begin(), edges_set.end(), [&](auto && edge_set) {
+            std::copy(edge_set.begin(), edge_set.end(), std::inserter(all_edges, all_edges.end()));
         });
 
         return all_edges.size();
@@ -102,9 +101,8 @@ namespace algolib::graphs
         auto && edges_set = this->representation.edges_set();
         std::unordered_set<edge_type> all_edges;
 
-        std::for_each(std::begin(edges_set), std::end(edges_set), [&](auto && edge_set) {
-            std::copy(std::begin(edge_set), std::end(edge_set),
-                      std::inserter(all_edges, all_edges.end()));
+        std::for_each(edges_set.begin(), edges_set.end(), [&](auto && edge_set) {
+            std::copy(edge_set.begin(), edge_set.end(), std::inserter(all_edges, all_edges.end()));
         });
 
         return std::vector<edge_type>(all_edges.begin(), all_edges.end());
@@ -159,8 +157,7 @@ namespace algolib::graphs
         std::vector<vertex_type> all_vertices = this->vertices();
         std::vector<vertex_id_type> vertex_ids;
 
-        std::transform(std::begin(all_vertices), std::end(all_vertices),
-                       std::back_inserter(vertex_ids),
+        std::transform(all_vertices.begin(), all_vertices.end(), std::back_inserter(vertex_ids),
                        [](const vertex_type & vertex) { return vertex.id(); });
 
         directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type> graph(

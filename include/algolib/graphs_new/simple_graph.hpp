@@ -177,14 +177,10 @@ namespace internal
                                    VertexId, Vertex, Edge, VertexProperty,
                                    EdgeProperty>::vertex_type & vertex) const
     {
-        std::vector<typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
-                                                  EdgeProperty>::edge_type>
-                result;
-
         this->validate(vertex);
-        std::copy(this->graph_map.at(vertex).begin(), this->graph_map.at(vertex).end(),
-                  std::back_inserter(result));
-        return result;
+        return std::vector<typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
+                                                         EdgeProperty>::edge_type>(
+                this->graph_map.at(vertex).begin(), this->graph_map.at(vertex).end());
     }
 
     template <typename VertexId, typename Vertex, typename Edge, typename VertexProperty,
