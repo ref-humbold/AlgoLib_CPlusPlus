@@ -16,21 +16,23 @@ namespace algolib::graphs
               typename EdgeProperty = no_prop>
     class tree_graph : public virtual undirected_graph<VertexId, VertexProperty, EdgeProperty>
     {
+    public:
+        using vertex_id_type =
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type;
+        using vertex_type =
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type;
+        using edge_type =
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::edge_type;
+        using vertex_property_type = typename undirected_graph<VertexId, VertexProperty,
+                                                               EdgeProperty>::vertex_property_type;
+        using edge_property_type = typename undirected_graph<VertexId, VertexProperty,
+                                                             EdgeProperty>::edge_property_type;
+
     protected:
-        using graph_t = undirected_simple_graph<
-                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
-                typename undirected_graph<VertexId, VertexProperty,
-                                          EdgeProperty>::vertex_property_type,
-                typename undirected_graph<VertexId, VertexProperty,
-                                          EdgeProperty>::edge_property_type>;
+        using graph_t =
+                undirected_simple_graph<vertex_id_type, vertex_property_type, edge_property_type>;
 
     public:
-        using vertex_id_type = typename graph_t::vertex_id_type;
-        using vertex_type = typename graph_t::vertex_type;
-        using edge_type = typename graph_t::edge_type;
-        using vertex_property_type = typename graph_t::vertex_property_type;
-        using edge_property_type = typename graph_t::edge_property_type;
-
         explicit tree_graph(const vertex_id_type & vertex_id) : graph{graph_t({vertex_id})}
         {
         }
@@ -47,7 +49,13 @@ namespace algolib::graphs
         }
 
         const edge_type & operator[](
-                const std::pair<vertex_id_type, vertex_id_type> & vertices) const override
+                const std::pair<vertex_id_type, vertex_id_type> & vertex_ids) const override
+        {
+            return this->graph[vertex_ids];
+        }
+
+        const edge_type &
+                operator[](const std::pair<vertex_type, vertex_type> & vertices) const override
         {
             return this->graph[vertices];
         }
@@ -124,25 +132,27 @@ namespace algolib::graphs
     };
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
-    typename tree_graph<VertexId, VertexProperty, EdgeProperty>::edge_type add_vertex(
-            const typename tree_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type &
-                    vertex_id,
-            const typename tree_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
-                    neighbour)
+    typename tree_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
+            tree_graph<VertexId, VertexProperty, EdgeProperty>::add_vertex(
+                    const typename tree_graph<VertexId, VertexProperty,
+                                              EdgeProperty>::vertex_id_type & vertex_id,
+                    const typename tree_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
+                            neighbour)
     {
         return this->add_vertex(vertex_type(vertex_id), neighbour);
     }
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
-    typename tree_graph<VertexId, VertexProperty, EdgeProperty>::edge_type add_vertex(
-            const typename tree_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type &
-                    vertex_id,
-            const typename tree_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
-                    neighbour,
-            const typename tree_graph<VertexId, VertexProperty,
-                                      EdgeProperty>::vertex_property_type & vertex_property,
-            const typename tree_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
-                    edge_property)
+    typename tree_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
+            tree_graph<VertexId, VertexProperty, EdgeProperty>::add_vertex(
+                    const typename tree_graph<VertexId, VertexProperty,
+                                              EdgeProperty>::vertex_id_type & vertex_id,
+                    const typename tree_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
+                            neighbour,
+                    const typename tree_graph<VertexId, VertexProperty,
+                                              EdgeProperty>::vertex_property_type & vertex_property,
+                    const typename tree_graph<VertexId, VertexProperty,
+                                              EdgeProperty>::edge_property_type & edge_property)
     {
         return this->add_vertex(vertex_type(vertex_id), neighbour, vertex_property, edge_property);
     }

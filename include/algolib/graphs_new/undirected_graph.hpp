@@ -52,8 +52,8 @@ namespace algolib::graphs
         using repr = typename simple_graph<VertexId, VertexProperty, EdgeProperty>::repr;
 
     public:
-        explicit undirected_simple_graph(const std::vector<vertex_type> & vertices = {})
-            : simple_graph<VertexId, VertexProperty, EdgeProperty>(vertices)
+        explicit undirected_simple_graph(const std::vector<vertex_id_type> & vertex_ids = {})
+            : simple_graph<VertexId, VertexProperty, EdgeProperty>(vertex_ids)
         {
         }
 
@@ -77,7 +77,7 @@ namespace algolib::graphs
         std::vector<edge_type> edges() const override;
         edge_type add_edge(const edge_type & edge) override;
         edge_type add_edge(const edge_type & edge, const edge_property_type & property) override;
-        directed_simple_graph<vertex_type, vertex_property_type, edge_property_type>
+        directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type>
                 as_directed() const;
     };
 
@@ -88,7 +88,8 @@ namespace algolib::graphs
         std::unordered_set<edge_type> all_edges;
 
         std::for_each(std::begin(edges_set), std::end(edges_set), [&](auto && edge_set) {
-            std::copy(std::begin(edge_set), std::end(edge_set), std::inserter(all_edges));
+            std::copy(std::begin(edge_set), std::end(edge_set),
+                      std::inserter(all_edges, all_edges.end()));
         });
 
         return all_edges.size();
@@ -102,7 +103,8 @@ namespace algolib::graphs
         std::unordered_set<edge_type> all_edges;
 
         std::for_each(std::begin(edges_set), std::end(edges_set), [&](auto && edge_set) {
-            std::copy(std::begin(edge_set), std::end(edge_set), std::inserter(all_edges));
+            std::copy(std::begin(edge_set), std::end(edge_set),
+                      std::inserter(all_edges, all_edges.end()));
         });
 
         return std::vector<edge_type>(all_edges.begin(), all_edges.end());
@@ -115,7 +117,7 @@ namespace algolib::graphs
                                                            EdgeProperty>::edge_type & edge)
     try
     {
-        this->get_edge(edge.source(), edge.destination());
+        this->operator[](std::make_pair(edge.source(), edge.destination()));
         throw std::invalid_argument("Edge already exists");
     }
     catch(const std::out_of_range &)
@@ -134,7 +136,7 @@ namespace algolib::graphs
                             VertexId, VertexProperty, EdgeProperty>::edge_property_type & property)
     try
     {
-        this->operator[](edge.source(), edge.destination());
+        this->operator[](std::make_pair(edge.source(), edge.destination()));
         throw std::invalid_argument("Edge already exists");
     }
     catch(const std::out_of_range &)
@@ -146,12 +148,12 @@ namespace algolib::graphs
     }
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
-    directed_simple_graph<
-            typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
-            typename undirected_simple_graph<VertexId, VertexProperty,
-                                             EdgeProperty>::vertex_property_type,
-            typename undirected_simple_graph<VertexId, VertexProperty,
-                                             EdgeProperty>::edge_property_type>
+    directed_simple_graph<typename undirected_simple_graph<VertexId, VertexProperty,
+                                                           EdgeProperty>::vertex_id_type,
+                          typename undirected_simple_graph<VertexId, VertexProperty,
+                                                           EdgeProperty>::vertex_property_type,
+                          typename undirected_simple_graph<VertexId, VertexProperty,
+                                                           EdgeProperty>::edge_property_type>
             undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::as_directed() const
     {
         std::vector<vertex_type> all_vertices = this->vertices();
@@ -159,18 +161,20 @@ namespace algolib::graphs
 
         std::transform(std::begin(all_vertices), std::end(all_vertices),
                        std::back_inserter(vertex_ids),
-                       [](const vertex_type & vertex) { return vertex.id; });
+                       [](const vertex_type & vertex) { return vertex.id(); });
 
-        directed_simple_graph<vertex_type, vertex_property_type, edge_property_type> graph(
+        directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type> graph(
                 vertex_ids);
 
         for(auto && vertex : all_vertices)
-            graph.properties[vertex] = this->properties[vertex];
+            graph.properties()[vertex] = this->properties()[vertex];
 
         for(auto && edge : this->edges())
         {
-            graph.add_edge(edge, this->properties[edge]);
-            graph.add_edge(edge.reversed(), this->properties[edge]);
+            graph.add_edge(edge, this->properties()[edge]);
+
+            if(edge.source() != edge.destination())
+                graph.add_edge(edge.reversed(), this->properties()[edge]);
         }
 
         return graph;

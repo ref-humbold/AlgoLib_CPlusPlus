@@ -118,7 +118,7 @@ namespace algolib::graphs
                                                          EdgeProperty>::edge_type & edge)
     try
     {
-        this->operator[]({edge.source(), edge.destination()});
+        this->operator[](std::make_pair(edge.source(), edge.destination()));
         throw std::invalid_argument("Edge already exists");
     }
     catch(const std::out_of_range &)
@@ -136,7 +136,7 @@ namespace algolib::graphs
                             VertexId, VertexProperty, EdgeProperty>::edge_property_type & property)
     try
     {
-        this->operator[]({edge.source(), edge.destination()});
+        this->operator[](std::make_pair(edge.source(), edge.destination()));
         throw std::invalid_argument("Edge already exists");
     }
     catch(const std::out_of_range &)
@@ -154,16 +154,17 @@ namespace algolib::graphs
 
         std::transform(std::begin(all_vertices), std::end(all_vertices),
                        std::back_inserter(vertex_ids),
-                       [](const vertex_type & vertex) { return vertex.id; });
+                       [](const vertex_type & vertex) { return vertex.id(); });
 
-        repr new_representation = repr(vertex_ids);
+        repr new_representation(vertex_ids);
 
         for(auto && vertex : all_vertices)
             new_representation.property(vertex) = this->representation.property(vertex);
 
         for(auto && edge : edges())
         {
-            auto new_edge = edge.reversed();
+            edge_type new_edge = edge.reversed();
+
             new_representation.add_edge_to_source(new_edge);
             new_representation.property(new_edge) = this->representation.property(edge);
         }

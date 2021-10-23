@@ -29,13 +29,10 @@ namespace algolib::graphs
         virtual const vertex_type & operator[](const vertex_id_type & vertex_id) const = 0;
 
         virtual const edge_type &
-                operator[](const std::pair<vertex_id_type, vertex_id_type> & vertices) const = 0;
+                operator[](const std::pair<vertex_id_type, vertex_id_type> & vertex_ids) const = 0;
 
         virtual const edge_type &
-                operator[](const std::pair<vertex_type, vertex_type> & vertices) const
-        {
-            return this->operator[](std::make_pair(vertices.first.id(), vertices.second.id()));
-        }
+                operator[](const std::pair<vertex_type, vertex_type> & vertices) const = 0;
 
         virtual graph_properties & properties() = 0;
 
@@ -81,17 +78,19 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     struct graph<VertexId, VertexProperty, EdgeProperty>::graph_properties
     {
-        graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & operator[](
-                const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex);
+        virtual graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & operator[](
+                const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex) = 0;
 
-        const graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & operator[](
-                const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex) const;
+        virtual const graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
+                operator[](const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
+                                   vertex) const = 0;
 
-        graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
-                operator[](const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge);
+        virtual graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & operator[](
+                const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge) = 0;
 
-        const graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & operator[](
-                const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge) const;
+        virtual const graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
+                operator[](const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge)
+                        const = 0;
     };
 }
 
