@@ -29,6 +29,57 @@ public:
     ~DirectedSimpleGraphTest() override = default;
 };
 
+TEST_F(DirectedSimpleGraphTest, operatorBrackets_WhenVertexExists_ThenVertex)
+{
+    // given
+    graph_vi vertex_id = 4;
+    // when
+    graph_v result = test_object[vertex_id];
+    // then
+    EXPECT_EQ(vertex_id, result.id());
+}
+
+TEST_F(DirectedSimpleGraphTest, operatorBrackets_WhenVertexNotExists_ThenOutOfRange)
+{
+    // when
+    auto exec = [&]() { return test_object[16]; };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
+}
+
+TEST_F(DirectedSimpleGraphTest, operatorBrackets_WhenEdgeInDirection_ThenEdge)
+{
+    // given
+    graph_v source(9), destination(5);
+
+    test_object.add_edge_between(source, destination);
+    // when
+    graph_e result = test_object[std::make_pair(source, destination)];
+    // then
+    EXPECT_EQ(source, result.source());
+    EXPECT_EQ(destination, result.destination());
+}
+
+TEST_F(DirectedSimpleGraphTest, operatorBrackets_WhenEdgeInReversedDirection_ThenOutOfRange)
+{
+    // given
+    graph_v source(9), destination(5);
+
+    test_object.add_edge_between(source, destination);
+    // when
+    auto exec = [&]() { return test_object[std::make_pair(destination, source)]; };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
+}
+
+TEST_F(DirectedSimpleGraphTest, operatorBrackets_WhenEdgeNotExists_ThenOutOfRange)
+{
+    // when
+    auto exec = [&]() { return test_object[std::make_pair(1, 2)]; };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
+}
+
 TEST_F(DirectedSimpleGraphTest, propertiesOperatorBrackets_WhenSettingProperty_ThenProperty)
 {
     // given
@@ -70,57 +121,6 @@ TEST_F(DirectedSimpleGraphTest, propertiesOperatorBrackets_WhenNotExisting_ThenI
     EXPECT_THROW(exec_vertex(), std::invalid_argument);
     EXPECT_THROW(exec_edge1(), std::invalid_argument);
     EXPECT_THROW(exec_edge2(), std::invalid_argument);
-}
-
-TEST_F(DirectedSimpleGraphTest, operatorBracketsVertex_WhenExists_ThenVertex)
-{
-    // given
-    graph_vi vertex_id = 4;
-    // when
-    graph_v result = test_object[vertex_id];
-    // then
-    EXPECT_EQ(vertex_id, result.id());
-}
-
-TEST_F(DirectedSimpleGraphTest, operatorBracketsVertex_WhenNotExists_ThenOutOfRange)
-{
-    // when
-    auto exec = [&]() { return test_object[16]; };
-    // then
-    EXPECT_THROW(exec(), std::out_of_range);
-}
-
-TEST_F(DirectedSimpleGraphTest, operatorBracketsEdge_WhenInDirection_ThenEdge)
-{
-    // given
-    graph_v source(9), destination(5);
-
-    test_object.add_edge_between(source, destination);
-    // when
-    graph_e result = test_object[std::make_pair(source, destination)];
-    // then
-    EXPECT_EQ(source, result.source());
-    EXPECT_EQ(destination, result.destination());
-}
-
-TEST_F(DirectedSimpleGraphTest, operatorBracketsEdge_WhenReversedDirection_ThenOutOfRange)
-{
-    // given
-    graph_v source(9), destination(5);
-
-    test_object.add_edge_between(source, destination);
-    // when
-    auto exec = [&]() { return test_object[std::make_pair(destination, source)]; };
-    // then
-    EXPECT_THROW(exec(), std::out_of_range);
-}
-
-TEST_F(DirectedSimpleGraphTest, operatorBracketsEdge_WhenNotExists_ThenOutOfRange)
-{
-    // when
-    auto exec = [&]() { return test_object[std::make_pair(1, 2)]; };
-    // then
-    EXPECT_THROW(exec(), std::out_of_range);
 }
 
 TEST_F(DirectedSimpleGraphTest, verticesCount_ThenNumberOfVertices)

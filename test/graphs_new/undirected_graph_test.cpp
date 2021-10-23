@@ -28,6 +28,58 @@ public:
     ~UndirectedSimpleGraphTest() override = default;
 };
 
+TEST_F(UndirectedSimpleGraphTest, operatorBrackets_WhenVertexExists_ThenVertex)
+{
+    // given
+    graph_vi vertex_id = 4;
+    // when
+    graph_v result = test_object[vertex_id];
+    // then
+    EXPECT_EQ(vertex_id, result.id());
+}
+
+TEST_F(UndirectedSimpleGraphTest, operatorBrackets_WhenVertexNotExists_ThenOutOfRange)
+{
+    // when
+    auto exec = [&]() { return test_object[16]; };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
+}
+
+TEST_F(UndirectedSimpleGraphTest, operatorBrackets_WhenEdgeInDirection_ThenEdge)
+{
+    // given
+    graph_v source(9), destination(5);
+
+    test_object.add_edge_between(source, destination);
+    // when
+    graph_e result = test_object[std::make_pair(source, destination)];
+    // then
+    EXPECT_EQ(source, result.source());
+    EXPECT_EQ(destination, result.destination());
+}
+
+TEST_F(UndirectedSimpleGraphTest, operatorBrackets_WhenEdgeInReversedDirection_ThenEdge)
+{
+    // given
+    graph_v source(9), destination(5);
+
+    test_object.add_edge_between(source, destination);
+    // when
+    graph_e result = test_object[std::make_pair(destination, source)];
+    // then
+    EXPECT_EQ(source, result.source());
+    EXPECT_EQ(destination, result.destination());
+}
+
+TEST_F(UndirectedSimpleGraphTest, operatorBrackets_WhenEdgeNotExists_ThenOutOfRange)
+{
+    // when
+    auto exec = [&]() { return test_object[std::make_pair(1, 2)]; };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
+}
+
 TEST_F(UndirectedSimpleGraphTest, propertiesOperatorBrackets_WhenSettingProperty_ThenProperty)
 {
     // given
@@ -69,58 +121,6 @@ TEST_F(UndirectedSimpleGraphTest, propertiesOperatorBrackets_WhenNotExisting_The
     EXPECT_THROW(exec_vertex(), std::invalid_argument);
     EXPECT_THROW(exec_edge1(), std::invalid_argument);
     EXPECT_THROW(exec_edge2(), std::invalid_argument);
-}
-
-TEST_F(UndirectedSimpleGraphTest, operatorBracketsVertex_WhenExists_ThenVertex)
-{
-    // given
-    graph_vi vertex_id = 4;
-    // when
-    graph_v result = test_object[vertex_id];
-    // then
-    EXPECT_EQ(vertex_id, result.id());
-}
-
-TEST_F(UndirectedSimpleGraphTest, operatorBracketsVertex_WhenNotExists_ThenOutOfRange)
-{
-    // when
-    auto exec = [&]() { return test_object[16]; };
-    // then
-    EXPECT_THROW(exec(), std::out_of_range);
-}
-
-TEST_F(UndirectedSimpleGraphTest, operatorBracketsEdge_WhenInDirection_ThenEdge)
-{
-    // given
-    graph_v source(9), destination(5);
-
-    test_object.add_edge_between(source, destination);
-    // when
-    graph_e result = test_object[std::make_pair(source, destination)];
-    // then
-    EXPECT_EQ(source, result.source());
-    EXPECT_EQ(destination, result.destination());
-}
-
-TEST_F(UndirectedSimpleGraphTest, operatorBracketsEdge_WhenReversedDirection_ThenEdge)
-{
-    // given
-    graph_v source(9), destination(5);
-
-    test_object.add_edge_between(source, destination);
-    // when
-    graph_e result = test_object[std::make_pair(destination, source)];
-    // then
-    EXPECT_EQ(source, result.source());
-    EXPECT_EQ(destination, result.destination());
-}
-
-TEST_F(UndirectedSimpleGraphTest, operatorBracketsEdge_WhenNotExists_ThenOutOfRange)
-{
-    // when
-    auto exec = [&]() { return test_object[std::make_pair(1, 2)]; };
-    // then
-    EXPECT_THROW(exec(), std::out_of_range);
 }
 
 TEST_F(UndirectedSimpleGraphTest, verticesCount_ThenNumberOfVertices)

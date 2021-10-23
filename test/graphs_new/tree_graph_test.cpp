@@ -35,6 +35,27 @@ public:
     virtual ~TreeGraphTest() = default;
 };
 
+TEST_F(TreeGraphTest, operatorBrackets_WhenVertexExists_ThenVertex)
+{
+    // given
+    graph_vi vertex_id = 7;
+    // when
+    graph_v result = test_object[vertex_id];
+    // then
+    EXPECT_EQ(vertex_id, result.id());
+}
+
+TEST_F(TreeGraphTest, operatorBrackets_WhenEdgeExists_ThenEdge)
+{
+    // given
+    graph_v source(7), destination(2);
+    // when
+    graph_e result = test_object[std::make_pair(source, destination)];
+    // then
+    EXPECT_EQ(source, result.source());
+    EXPECT_EQ(destination, result.destination());
+}
+
 TEST_F(TreeGraphTest, propertiesOperatorBrackets_WhenSettingProperty_ThenProperty)
 {
     // given
@@ -51,27 +72,6 @@ TEST_F(TreeGraphTest, propertiesOperatorBrackets_WhenSettingProperty_ThenPropert
     // then
     EXPECT_EQ(vertex_property, result_vertex);
     EXPECT_EQ(edge_property, result_edge);
-}
-
-TEST_F(TreeGraphTest, operatorBracketsVertex_WhenExists_ThenVertex)
-{
-    // given
-    graph_vi vertex_id = 7;
-    // when
-    graph_v result = test_object[vertex_id];
-    // then
-    EXPECT_EQ(vertex_id, result.id());
-}
-
-TEST_F(TreeGraphTest, operatorBracketsEdge_WhenExists_ThenEdge)
-{
-    // given
-    graph_v source(7), destination(2);
-    // when
-    graph_e result = test_object[std::make_pair(source, destination)];
-    // then
-    EXPECT_EQ(source, result.source());
-    EXPECT_EQ(destination, result.destination());
 }
 
 TEST_F(TreeGraphTest, verticesCount_ThenNumberOfVertices)

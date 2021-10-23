@@ -44,6 +44,7 @@ set(GEOMETRY_SPACE_TEST_SOURCES
 #     "${GRAPHS_ALGORITHMS_TEST}/topological_sorting_test.cpp")
 set(GRAPHS_NEW_TEST_SOURCES
     "${GRAPHS_NEW_TEST}/directed_graph_test.cpp"
+    "${GRAPHS_NEW_TEST}/multipartite_graph_test.cpp"
     "${GRAPHS_NEW_TEST}/tree_graph_test.cpp"
     "${GRAPHS_NEW_TEST}/undirected_graph_test.cpp")
 set(MATHMAT_TEST_SOURCES
