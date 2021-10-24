@@ -57,6 +57,7 @@ set(GRAPHS_NEW_SOURCES
 set(GRAPHS_NEW_ALGORITHMS_SOURCES
     "${GRAPHS_NEW_ALGORITHMS}/cutting.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/lowest_common_ancestor.cpp"
+    "${GRAPHS_NEW_ALGORITHMS}/matching.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/minimal_spanning_tree.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/paths.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/searching.cpp"
