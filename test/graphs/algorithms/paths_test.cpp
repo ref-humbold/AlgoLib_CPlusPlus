@@ -38,82 +38,101 @@ public:
     using weight_t = weighted_impl::weight_type;
 
     PathsTest()
-        : dgraph{dgraph_t({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})},
-          ugraph{ugraph_t({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})}
+        : directed_graph{dgraph_t({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})},
+          undirected_graph{ugraph_t({0, 1, 2, 3, 4, 5, 6, 7, 8, 9})}
     {
-        dgraph.add_edge_between(0, 1, weighted_impl(4.0));
-        dgraph.add_edge_between(1, 4, weighted_impl(7.0));
-        dgraph.add_edge_between(1, 7, weighted_impl(12.0));
-        dgraph.add_edge_between(2, 4, weighted_impl(6.0));
-        dgraph.add_edge_between(2, 6, weighted_impl(8.0));
-        dgraph.add_edge_between(3, 0, weighted_impl(3.0));
-        dgraph.add_edge_between(3, 7, weighted_impl(5.0));
-        dgraph.add_edge_between(4, 5, weighted_impl(1.0));
-        dgraph.add_edge_between(4, 3, weighted_impl(10.0));
-        dgraph.add_edge_between(5, 6, weighted_impl(4.0));
-        dgraph.add_edge_between(5, 8, weighted_impl(2.0));
-        dgraph.add_edge_between(6, 5, weighted_impl(7.0));
-        dgraph.add_edge_between(7, 5, weighted_impl(2.0));
-        dgraph.add_edge_between(7, 8, weighted_impl(6.0));
-        dgraph.add_edge_between(8, 9, weighted_impl(10.0));
-        dgraph.add_edge_between(9, 6, weighted_impl(3.0));
+        directed_graph.add_edge_between(directed_graph[0], directed_graph[1], weighted_impl(4.0));
+        directed_graph.add_edge_between(directed_graph[1], directed_graph[4], weighted_impl(7.0));
+        directed_graph.add_edge_between(directed_graph[1], directed_graph[7], weighted_impl(12.0));
+        directed_graph.add_edge_between(directed_graph[2], directed_graph[4], weighted_impl(6.0));
+        directed_graph.add_edge_between(directed_graph[2], directed_graph[6], weighted_impl(8.0));
+        directed_graph.add_edge_between(directed_graph[3], directed_graph[0], weighted_impl(3.0));
+        directed_graph.add_edge_between(directed_graph[3], directed_graph[7], weighted_impl(5.0));
+        directed_graph.add_edge_between(directed_graph[4], directed_graph[5], weighted_impl(1.0));
+        directed_graph.add_edge_between(directed_graph[4], directed_graph[3], weighted_impl(10.0));
+        directed_graph.add_edge_between(directed_graph[5], directed_graph[6], weighted_impl(4.0));
+        directed_graph.add_edge_between(directed_graph[5], directed_graph[8], weighted_impl(2.0));
+        directed_graph.add_edge_between(directed_graph[6], directed_graph[5], weighted_impl(7.0));
+        directed_graph.add_edge_between(directed_graph[7], directed_graph[5], weighted_impl(2.0));
+        directed_graph.add_edge_between(directed_graph[7], directed_graph[8], weighted_impl(6.0));
+        directed_graph.add_edge_between(directed_graph[8], directed_graph[9], weighted_impl(10.0));
+        directed_graph.add_edge_between(directed_graph[9], directed_graph[6], weighted_impl(3.0));
 
-        ugraph.add_edge_between(0, 1, weighted_impl(4.0));
-        ugraph.add_edge_between(1, 4, weighted_impl(7.0));
-        ugraph.add_edge_between(1, 7, weighted_impl(12.0));
-        ugraph.add_edge_between(2, 6, weighted_impl(8.0));
-        ugraph.add_edge_between(3, 0, weighted_impl(3.0));
-        ugraph.add_edge_between(3, 7, weighted_impl(5.0));
-        ugraph.add_edge_between(4, 5, weighted_impl(1.0));
-        ugraph.add_edge_between(4, 3, weighted_impl(10.0));
-        ugraph.add_edge_between(5, 8, weighted_impl(2.0));
-        ugraph.add_edge_between(7, 5, weighted_impl(2.0));
-        ugraph.add_edge_between(7, 8, weighted_impl(6.0));
-        ugraph.add_edge_between(9, 6, weighted_impl(3.0));
+        undirected_graph.add_edge_between(undirected_graph[0], undirected_graph[1],
+                                          weighted_impl(4.0));
+        undirected_graph.add_edge_between(undirected_graph[1], undirected_graph[4],
+                                          weighted_impl(7.0));
+        undirected_graph.add_edge_between(undirected_graph[1], undirected_graph[7],
+                                          weighted_impl(12.0));
+        undirected_graph.add_edge_between(undirected_graph[2], undirected_graph[6],
+                                          weighted_impl(8.0));
+        undirected_graph.add_edge_between(undirected_graph[3], undirected_graph[0],
+                                          weighted_impl(3.0));
+        undirected_graph.add_edge_between(undirected_graph[3], undirected_graph[7],
+                                          weighted_impl(5.0));
+        undirected_graph.add_edge_between(undirected_graph[4], undirected_graph[5],
+                                          weighted_impl(1.0));
+        undirected_graph.add_edge_between(undirected_graph[4], undirected_graph[3],
+                                          weighted_impl(10.0));
+        undirected_graph.add_edge_between(undirected_graph[5], undirected_graph[8],
+                                          weighted_impl(2.0));
+        undirected_graph.add_edge_between(undirected_graph[7], undirected_graph[5],
+                                          weighted_impl(2.0));
+        undirected_graph.add_edge_between(undirected_graph[7], undirected_graph[8],
+                                          weighted_impl(6.0));
+        undirected_graph.add_edge_between(undirected_graph[9], undirected_graph[6],
+                                          weighted_impl(3.0));
     }
 
     ~PathsTest() override = default;
 
 protected:
-    std::unordered_map<dgraph_v, weight_t> from_list(const std::vector<weight_t> & distances)
+    template <typename Graph>
+    std::unordered_map<typename Graph::vertex_type, weight_t>
+            from_list(const std::vector<weight_t> & distances, const Graph & graph)
     {
-        std::unordered_map<dgraph_v, weight_t> map;
+        std::unordered_map<typename Graph::vertex_type, weight_t> map;
 
-        for(size_t i = 0; i < distances.size(); ++i)
-            map.emplace(i, distances[i]);
+        for(auto && vertex : graph.vertices())
+            map.emplace(vertex, distances[vertex.id()]);
 
         return map;
     }
 
-    std::unordered_map<std::pair<dgraph_v, dgraph_v>, weight_t, typename dgraph_t::vertex_pair_hash>
-            from_matrix(const std::vector<std::vector<weight_t>> & distances)
+    template <typename Graph>
+    std::unordered_map<std::pair<typename Graph::vertex_type, typename Graph::vertex_type>,
+                       weight_t>
+            from_matrix(const std::vector<std::vector<weight_t>> & distances, const Graph & graph)
     {
-        std::unordered_map<std::pair<dgraph_v, dgraph_v>, weight_t,
-                           typename dgraph_t::vertex_pair_hash>
+        std::unordered_map<std::pair<typename Graph::vertex_type, typename Graph::vertex_type>,
+                           weight_t>
                 map;
 
-        for(size_t i = 0; i < distances.size(); ++i)
-            for(size_t j = 0; j < distances[i].size(); ++j)
-                map.emplace(std::make_pair(i, j), distances[i][j]);
+        for(auto && source : graph.vertices())
+            for(auto && destination : graph.vertices())
+                map.emplace(std::make_pair(source, destination),
+                            distances[source.id()][destination.id()]);
 
         return map;
     }
 
-    dgraph_t dgraph;
-    ugraph_t ugraph;
+    dgraph_t directed_graph;
+    ugraph_t undirected_graph;
 
     weight_t inf = weighted_impl::infinity;
 };
+
+#pragma region bellman_ford
 
 TEST_F(PathsTest, bellmanFord__WhenDirectedGraph)
 {
     // given
     std::vector<weight_t> distances = {20, 0, inf, 17, 7, 8, 12, 12, 10, 20};
-    auto expected = from_list(distances);
+    auto expected = from_list(distances, directed_graph);
 
-    dgraph.add_edge_between(2, 1, weighted_impl(-2));
+    directed_graph.add_edge_between(directed_graph[2], directed_graph[1], weighted_impl(-2));
     // when
-    auto result = bellman_ford(dgraph, 1);
+    auto result = algr::bellman_ford(directed_graph, directed_graph[1]);
     // then
     EXPECT_EQ(expected, result);
 }
@@ -122,9 +141,9 @@ TEST_F(PathsTest, bellmanFord__WhenUndirectedGraph)
 {
     // given
     std::vector<weight_t> distances = {4, 0, inf, 7, 7, 8, inf, 10, 10, inf};
-    auto expected = from_list(distances);
+    auto expected = from_list(distances, undirected_graph);
     // when
-    auto result = bellman_ford(ugraph.as_directed(), 1);
+    auto result = algr::bellman_ford(undirected_graph.as_directed(), undirected_graph[1]);
     // then
     EXPECT_EQ(expected, result);
 }
@@ -132,46 +151,52 @@ TEST_F(PathsTest, bellmanFord__WhenUndirectedGraph)
 TEST_F(PathsTest, bellmanFord__WhenNegativeCycle_ThenLogicError)
 {
     // given
-    dgraph.add_edge_between(8, 3, weighted_impl(-20.0));
+    directed_graph.add_edge_between(directed_graph[8], directed_graph[3], weighted_impl(-20.0));
     // when
-    auto exec = [&]() { return bellman_ford(dgraph, 1); };
+    auto exec = [&]() { return algr::bellman_ford(directed_graph, directed_graph[1]); };
     // then
     EXPECT_THROW(exec(), std::logic_error);
 }
 
-TEST_F(PathsTest, dijkstra__When_directed_graph)
+#pragma endregion
+#pragma region dijkstra
+
+TEST_F(PathsTest, dijkstra__WhenDirectedGraph)
 {
     // given
     std::vector<weight_t> distances = {20, 0, inf, 17, 7, 8, 12, 12, 10, 20};
-    auto expected = from_list(distances);
+    auto expected = from_list(distances, directed_graph);
     // when
-    auto result = dijkstra(dgraph, 1);
+    auto result = algr::dijkstra(directed_graph, directed_graph[1]);
     // then
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(PathsTest, dijkstra__When_undirected_graph)
+TEST_F(PathsTest, dijkstra__WhenUndirectedGraph)
 {
     // given
     std::vector<weight_t> distances = {4, 0, inf, 7, 7, 8, inf, 10, 10, inf};
-    auto expected = from_list(distances);
+    auto expected = from_list(distances, undirected_graph);
     // when
-    auto result = dijkstra(ugraph, 1);
+    auto result = algr::dijkstra(undirected_graph, undirected_graph[1]);
     // then
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(PathsTest, dijkstra__When_negative_edge__Then_value_error)
+TEST_F(PathsTest, dijkstra__WhenNegativeEdge__ThenLogicError)
 {
     // given
-    dgraph.add_edge_between(2, 1, weighted_impl(-2));
+    directed_graph.add_edge_between(directed_graph[2], directed_graph[1], weighted_impl(-2));
     // when
-    auto exec = [&]() { return dijkstra(dgraph, 1); };
+    auto exec = [&]() { return algr::dijkstra(directed_graph, directed_graph[1]); };
     // then
     EXPECT_THROW(exec(), std::logic_error);
 }
 
-TEST_F(PathsTest, floyd_warshall__When_directed_graph)
+#pragma endregion
+#pragma region floyd_warshall
+
+TEST_F(PathsTest, floydWarshall__WhenDirectedGraph)
 {
     // given
     std::vector<std::vector<weight_t>> distances = {
@@ -186,15 +211,16 @@ TEST_F(PathsTest, floyd_warshall__When_directed_graph)
             {inf, inf, inf, inf, inf, 20, 13, inf, 0, 10},
             {inf, inf, inf, inf, inf, 10, 3, inf, 12, 0},
     };
-    auto expected = from_matrix(distances);
-    dgraph.add_edge_between(2, 1, weighted_impl(-2));
+    auto expected = from_matrix(distances, directed_graph);
+
+    directed_graph.add_edge_between(directed_graph[2], directed_graph[1], weighted_impl(-2));
     // when
-    auto result = floyd_warshall(dgraph);
+    auto result = algr::floyd_warshall(directed_graph);
     // then
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(PathsTest, floyd_warshall__When_undirected_graph)
+TEST_F(PathsTest, floyd_warshall__WhenUndirectedGraph)
 {
     // given
     std::vector<std::vector<weight_t>> distances = {{0, 4, inf, 3, 11, 10, inf, 8, 12, inf},
@@ -207,9 +233,11 @@ TEST_F(PathsTest, floyd_warshall__When_undirected_graph)
                                                     {8, 10, inf, 5, 3, 2, inf, 0, 4, inf},
                                                     {12, 10, inf, 9, 3, 2, inf, 4, 0, inf},
                                                     {inf, inf, 11, inf, inf, inf, 3, inf, inf, 0}};
-    auto expected = from_matrix(distances);
+    auto expected = from_matrix(distances, undirected_graph);
     // when
-    auto result = floyd_warshall(ugraph.as_directed());
+    auto result = algr::floyd_warshall(undirected_graph.as_directed());
     // then
     EXPECT_EQ(expected, result);
 }
+
+#pragma endregion

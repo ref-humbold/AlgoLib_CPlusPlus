@@ -14,8 +14,6 @@ set(GEOMETRY_PLANE_TEST "${GEOMETRY_TEST}/dim2")
 set(GEOMETRY_SPACE_TEST "${GEOMETRY_TEST}/dim3")
 set(GRAPHS_TEST "graphs")
 set(GRAPHS_ALGORITHMS_TEST "${GRAPHS_TEST}/algorithms")
-set(GRAPHS_NEW_TEST "graphs_new")
-set(GRAPHS_NEW_ALGORITHMS_TEST "${GRAPHS_NEW_TEST}/algorithms")
 set(MATHMAT_TEST "mathmat")
 set(SEQUENCES_TEST "sequences")
 set(STRUCTURES_TEST "structures")
@@ -29,33 +27,20 @@ set(GEOMETRY_PLANE_TEST_SOURCES
 set(GEOMETRY_SPACE_TEST_SOURCES
     "${GEOMETRY_SPACE_TEST}/geometry_3d_test.cpp"
     "${GEOMETRY_SPACE_TEST}/vector_3d_test.cpp")
-# set(GRAPHS_TEST_SOURCES
-#     "${GRAPHS_TEST}/directed_graph_test.cpp"
-#     "${GRAPHS_TEST}/multipartite_graph_test.cpp"
-#     "${GRAPHS_TEST}/tree_graph_test.cpp"
-#     "${GRAPHS_TEST}/undirected_graph_test.cpp")
-# set(GRAPHS_ALGORITHMS_TEST_SOURCES
-#     "${GRAPHS_ALGORITHMS_TEST}/cutting_test.cpp"
-#     "${GRAPHS_ALGORITHMS_TEST}/lowest_common_ancestor_test.cpp"
-#     "${GRAPHS_ALGORITHMS_TEST}/matching_test.cpp"
-#     "${GRAPHS_ALGORITHMS_TEST}/minimal_spanning_tree_test.cpp"
-#     "${GRAPHS_ALGORITHMS_TEST}/paths_test.cpp"
-#     "${GRAPHS_ALGORITHMS_TEST}/searching_test.cpp"
-#     "${GRAPHS_ALGORITHMS_TEST}/strongly_connected_components_test.cpp"
-#     "${GRAPHS_ALGORITHMS_TEST}/topological_sorting_test.cpp")
-set(GRAPHS_NEW_TEST_SOURCES
-    "${GRAPHS_NEW_TEST}/directed_graph_test.cpp"
-    "${GRAPHS_NEW_TEST}/multipartite_graph_test.cpp"
-    "${GRAPHS_NEW_TEST}/tree_graph_test.cpp"
-    "${GRAPHS_NEW_TEST}/undirected_graph_test.cpp")
-set(GRAPHS_NEW_ALGORITHMS_TEST_SOURCES
-    "${GRAPHS_NEW_ALGORITHMS_TEST}/cutting_test.cpp"
-    "${GRAPHS_NEW_ALGORITHMS_TEST}/lowest_common_ancestor_test.cpp"
-    "${GRAPHS_NEW_ALGORITHMS_TEST}/matching_test.cpp"
-    "${GRAPHS_NEW_ALGORITHMS_TEST}/minimal_spanning_tree_test.cpp"
-    "${GRAPHS_NEW_ALGORITHMS_TEST}/searching_test.cpp"
-    "${GRAPHS_NEW_ALGORITHMS_TEST}/strongly_connected_components_test.cpp"
-    "${GRAPHS_NEW_ALGORITHMS_TEST}/topological_sorting_test.cpp")
+set(GRAPHS_TEST_SOURCES
+    "${GRAPHS_TEST}/directed_graph_test.cpp"
+    "${GRAPHS_TEST}/multipartite_graph_test.cpp"
+    "${GRAPHS_TEST}/tree_graph_test.cpp"
+    "${GRAPHS_TEST}/undirected_graph_test.cpp")
+set(GRAPHS_ALGORITHMS_TEST_SOURCES
+    "${GRAPHS_ALGORITHMS_TEST}/cutting_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/lowest_common_ancestor_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/matching_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/minimal_spanning_tree_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/paths_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/searching_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/strongly_connected_components_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/topological_sorting_test.cpp")
 set(MATHMAT_TEST_SOURCES
     "${MATHMAT_TEST}/equation_test.cpp"
     "${MATHMAT_TEST}/equation_system_test.cpp"
@@ -78,10 +63,8 @@ set(TEXT_TEST_SOURCES
 set(TEST_SOURCES
     "${GEOMETRY_PLANE_TEST_SOURCES}"
     "${GEOMETRY_SPACE_TEST_SOURCES}"
-    # "${GRAPHS_TEST_SOURCES}"
-    # "${GRAPHS_ALGORITHMS_TEST_SOURCES}"
-    "${GRAPHS_NEW_TEST_SOURCES}"
-    "${GRAPHS_NEW_ALGORITHMS_TEST_SOURCES}"
+    "${GRAPHS_TEST_SOURCES}"
+    "${GRAPHS_ALGORITHMS_TEST_SOURCES}"
     "${MATHMAT_TEST_SOURCES}"
     "${SEQUENCES_TEST_SOURCES}"
     "${STRUCTURES_TEST_SOURCES}"

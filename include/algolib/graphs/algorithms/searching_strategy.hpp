@@ -7,48 +7,48 @@
 
 namespace algolib::graphs
 {
-    template <typename V>
+    template <typename Vertex>
     struct bfs_strategy
     {
         virtual ~bfs_strategy() = default;
 
-        virtual void for_root(const V & root) = 0;
+        virtual void for_root(const Vertex & root) = 0;
 
-        virtual void on_entry(const V & vertex) = 0;
+        virtual void on_entry(const Vertex & vertex) = 0;
 
-        virtual void on_next_vertex(const V & vertex, const V & neighbour) = 0;
+        virtual void on_next_vertex(const Vertex & vertex, const Vertex & neighbour) = 0;
 
-        virtual void on_exit(const V & vertex) = 0;
+        virtual void on_exit(const Vertex & vertex) = 0;
     };
 
-    template <typename V>
-    struct dfs_strategy : public virtual bfs_strategy<V>
+    template <typename Vertex>
+    struct dfs_strategy : public virtual bfs_strategy<Vertex>
     {
         ~dfs_strategy() override = default;
 
-        virtual void on_edge_to_visited(const V & vertex, const V & neighbour) = 0;
+        virtual void on_edge_to_visited(const Vertex & vertex, const Vertex & neighbour) = 0;
     };
 
-    template <typename V>
-    struct empty_strategy : public dfs_strategy<V>
+    template <typename Vertex>
+    struct empty_strategy : public virtual dfs_strategy<Vertex>
     {
-        void for_root(const V &) override
+        void for_root(const Vertex &) override
         {
         }
 
-        void on_entry(const V &) override
+        void on_entry(const Vertex &) override
         {
         }
 
-        void on_next_vertex(const V &, const V &) override
+        void on_next_vertex(const Vertex &, const Vertex &) override
         {
         }
 
-        void on_exit(const V &) override
+        void on_exit(const Vertex &) override
         {
         }
 
-        void on_edge_to_visited(const V &, const V &) override
+        void on_edge_to_visited(const Vertex &, const Vertex &) override
         {
         }
     };

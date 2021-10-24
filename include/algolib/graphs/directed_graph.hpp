@@ -12,31 +12,51 @@
 #include <stdexcept>
 #include <unordered_set>
 #include <vector>
-#include "simple_graph.hpp"
+#include "algolib/graphs/simple_graph.hpp"
 
 namespace algolib::graphs
 {
-    template <typename V, typename VP, typename EP>
-    struct directed_graph : public virtual graph<V, VP, EP>
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    struct directed_graph : public virtual graph<VertexId, VertexProperty, EdgeProperty>
     {
+        using vertex_id_type =
+                typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type;
+        using vertex_type = typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type;
+        using edge_type = typename graph<VertexId, VertexProperty, EdgeProperty>::edge_type;
+        using vertex_property_type =
+                typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type;
+        using edge_property_type =
+                typename graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type;
+
         ~directed_graph() override = default;
 
         //! Reverses directions of edges in the graph.
         virtual void reverse() = 0;
     };
 
-    template <typename V = size_t, typename VP = no_prop, typename EP = no_prop>
-    class directed_simple_graph : public simple_graph<V, VP, EP>,
-                                  public virtual directed_graph<V, VP, EP>
+    template <typename VertexId = size_t, typename VertexProperty = no_prop,
+              typename EdgeProperty = no_prop>
+    class directed_simple_graph
+        : public simple_graph<VertexId, VertexProperty, EdgeProperty>,
+          public virtual directed_graph<VertexId, VertexProperty, EdgeProperty>
     {
+    public:
+        using vertex_id_type =
+                typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type;
+        using vertex_type =
+                typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type;
+        using edge_type = typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type;
+        using vertex_property_type =
+                typename simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type;
+        using edge_property_type =
+                typename simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type;
+
     protected:
-        using repr = typename simple_graph<V, VP, EP>::repr;
+        using repr = typename simple_graph<VertexId, VertexProperty, EdgeProperty>::repr;
 
     public:
-        explicit directed_simple_graph(
-                const std::vector<typename directed_simple_graph<V, VP, EP>::vertex_type> &
-                        vertices = {})
-            : simple_graph<V, VP, EP>(vertices)
+        explicit directed_simple_graph(const std::vector<vertex_id_type> & vertex_ids = {})
+            : simple_graph<VertexId, VertexProperty, EdgeProperty>(vertex_ids)
         {
         }
 
@@ -50,63 +70,56 @@ namespace algolib::graphs
         {
             auto edges_set = this->representation.edges_set();
 
-            return std::accumulate(
-                    edges_set.begin(), edges_set.end(), 0,
-                    [](size_t acc,
-                       std::unordered_set<typename directed_simple_graph<V, VP, EP>::edge_type>
-                               edges) { return acc + edges.size(); });
+            return std::accumulate(edges_set.begin(), edges_set.end(), 0,
+                                   [](size_t acc, const std::unordered_set<edge_type> & edges) {
+                                       return acc + edges.size();
+                                   });
         }
 
-        std::vector<typename directed_simple_graph<V, VP, EP>::edge_type> edges() const override
+        std::vector<edge_type> edges() const override
         {
             return this->representation.edges();
         }
 
-        size_t output_degree(const typename directed_simple_graph<V, VP, EP>::vertex_type & vertex)
-                const override
+        size_t output_degree(const vertex_type & vertex) const override
         {
             return this->representation.adjacent_edges(vertex).size();
         }
 
-        size_t input_degree(const typename directed_simple_graph<V, VP, EP>::vertex_type & vertex)
-                const override;
-        typename directed_simple_graph<V, VP, EP>::edge_type add_edge(
-                const typename directed_simple_graph<V, VP, EP>::edge_type & edge) override;
-        typename directed_simple_graph<V, VP, EP>::edge_type
-                add_edge(const typename directed_simple_graph<V, VP, EP>::edge_type & edge,
-                         const typename directed_simple_graph<V, VP, EP>::edge_property_type &
-                                 property) override;
+        size_t input_degree(const vertex_type & vertex) const override;
+        edge_type add_edge(const edge_type & edge) override;
+        edge_type add_edge(const edge_type & edge, const edge_property_type & property) override;
         void reverse() override;
 
         //! \return the copy of the graph with reversed directions of edges
-        directed_simple_graph<typename directed_simple_graph<V, VP, EP>::vertex_type,
-                              typename directed_simple_graph<V, VP, EP>::vertex_property_type,
-                              typename directed_simple_graph<V, VP, EP>::edge_property_type>
+        directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type>
                 reversed_copy() const;
     };
 
-    template <typename V, typename VP, typename EP>
-    size_t directed_simple_graph<V, VP, EP>::input_degree(
-            const typename directed_simple_graph<V, VP, EP>::vertex_type & vertex) const
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    size_t directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::input_degree(
+            const typename directed_simple_graph<VertexId, VertexProperty,
+                                                 EdgeProperty>::vertex_type & vertex) const
     {
         size_t degree = 0;
 
         for(auto && edges : this->representation.edges_set())
-            degree += std::count_if(
-                    edges.begin(), edges.end(),
-                    [&](const typename directed_simple_graph<V, VP, EP>::edge_type & edge) {
-                        return edge.destination() == vertex;
-                    });
+            degree += std::count_if(edges.begin(), edges.end(), [&](const edge_type & edge) {
+                return edge.destination() == vertex;
+            });
 
         return degree;
     }
 
-    template <typename V, typename VP, typename EP>
-    typename directed_simple_graph<V, VP, EP>::edge_type directed_simple_graph<V, VP, EP>::add_edge(
-            const typename directed_simple_graph<V, VP, EP>::edge_type & edge)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
+            directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::add_edge(
+                    const typename directed_simple_graph<VertexId, VertexProperty,
+                                                         EdgeProperty>::edge_type & edge)
     try
     {
-        return this->get_edge(edge.source(), edge.destination());
+        this->operator[](std::make_pair(edge.source(), edge.destination()));
+        throw std::invalid_argument("Edge already exists");
     }
     catch(const std::out_of_range &)
     {
@@ -114,48 +127,61 @@ namespace algolib::graphs
         return edge;
     }
 
-    template <typename V, typename VP, typename EP>
-    typename directed_simple_graph<V, VP, EP>::edge_type directed_simple_graph<V, VP, EP>::add_edge(
-            const typename directed_simple_graph<V, VP, EP>::edge_type & edge,
-            const typename directed_simple_graph<V, VP, EP>::edge_property_type & property)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
+            directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::add_edge(
+                    const typename directed_simple_graph<VertexId, VertexProperty,
+                                                         EdgeProperty>::edge_type & edge,
+                    const typename directed_simple_graph<
+                            VertexId, VertexProperty, EdgeProperty>::edge_property_type & property)
     try
     {
-        return this->get_edge(edge.source(), edge.destination());
+        this->operator[](std::make_pair(edge.source(), edge.destination()));
+        throw std::invalid_argument("Edge already exists");
     }
     catch(const std::out_of_range &)
     {
         this->representation.add_edge_to_source(edge);
-        this->representation[edge] = property;
+        this->representation.property(edge) = property;
         return edge;
     }
 
-    template <typename V, typename VP, typename EP>
-    void directed_simple_graph<V, VP, EP>::reverse()
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    void directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::reverse()
     {
-        repr new_representation = repr(this->vertices());
+        std::vector<vertex_type> all_vertices = this->vertices();
+        std::vector<vertex_id_type> vertex_ids;
 
-        for(auto && vertex : this->vertices())
-            new_representation[vertex] = this->representation[vertex];
+        std::transform(std::begin(all_vertices), std::end(all_vertices),
+                       std::back_inserter(vertex_ids),
+                       [](const vertex_type & vertex) { return vertex.id(); });
 
-        for(auto && e : edges())
+        repr new_representation(vertex_ids);
+
+        for(auto && vertex : all_vertices)
+            new_representation.property(vertex) = this->representation.property(vertex);
+
+        for(auto && edge : edges())
         {
-            auto new_edge = e.reversed();
+            edge_type new_edge = edge.reversed();
+
             new_representation.add_edge_to_source(new_edge);
-            new_representation[new_edge] = this->representation[e];
+            new_representation.property(new_edge) = this->representation.property(edge);
         }
 
         this->representation = new_representation;
     }
 
-    template <typename V, typename VP, typename EP>
-    directed_simple_graph<typename directed_simple_graph<V, VP, EP>::vertex_type,
-                          typename directed_simple_graph<V, VP, EP>::vertex_property_type,
-                          typename directed_simple_graph<V, VP, EP>::edge_property_type>
-            directed_simple_graph<V, VP, EP>::reversed_copy() const
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    directed_simple_graph<
+            typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type,
+            typename directed_simple_graph<VertexId, VertexProperty,
+                                           EdgeProperty>::vertex_property_type,
+            typename directed_simple_graph<VertexId, VertexProperty,
+                                           EdgeProperty>::edge_property_type>
+            directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::reversed_copy() const
     {
-        directed_simple_graph<typename directed_simple_graph<V, VP, EP>::vertex_type,
-                              typename directed_simple_graph<V, VP, EP>::vertex_property_type,
-                              typename directed_simple_graph<V, VP, EP>::edge_property_type>
+        directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type>
                 reversed_graph = *this;
 
         reversed_graph.reverse();

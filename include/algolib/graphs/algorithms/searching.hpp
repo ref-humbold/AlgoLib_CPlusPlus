@@ -7,42 +7,48 @@
 
 #include <cstdlib>
 #include <algorithm>
+#include <optional>
 #include <queue>
 #include <stack>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include "algolib/graphs/algorithms/searching_strategy.hpp"
 #include "algolib/graphs/graph.hpp"
-#include "searching_strategy.hpp"
 
 namespace internal
 {
     namespace algr = algolib::graphs;
 
-    template <typename V>
+    template <typename Vertex>
     struct dfs_recursive_state
     {
-        void on_entry(V vertex_)
+        void on_entry(Vertex vertex_)
         {
             reached[vertex_] = iteration;
         }
 
-        void on_exit(V vertex_)
+        void on_exit(Vertex vertex_)
         {
             reached[vertex_] = -iteration;
         }
 
-        V vertex;
+        std::optional<Vertex> vertex = std::nullopt;
         int iteration = 1;
-        std::unordered_map<V, int> reached = {};
+        std::unordered_map<Vertex, int> reached = {};
     };
 
     // Single step of recursive DFS.
-    template <typename V, typename VP, typename EP>
-    void dfs_recursive_step(const algr::graph<V, VP, EP> & graph_, algr::dfs_strategy<V> & strategy,
-                            dfs_recursive_state<V> & state)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    void dfs_recursive_step(
+            const algr::graph<VertexId, VertexProperty, EdgeProperty> & graph_,
+            algr::dfs_strategy<typename algr::graph<VertexId, VertexProperty,
+                                                    EdgeProperty>::vertex_type> & strategy,
+            dfs_recursive_state<typename algr::graph<VertexId, VertexProperty,
+                                                     EdgeProperty>::vertex_type> & state)
     {
-        V vertex = state.vertex;
+        typename algr::graph<VertexId, VertexProperty, EdgeProperty>::vertex_type vertex =
+                state.vertex.value();
 
         state.on_entry(vertex);
         strategy.on_entry(vertex);
@@ -54,7 +60,7 @@ namespace internal
             if(it == state.reached.end())
             {
                 strategy.on_next_vertex(vertex, neighbour);
-                state.vertex = neighbour;
+                state.vertex = std::make_optional(neighbour);
                 dfs_recursive_step(graph_, strategy, state);
             }
             else if(it->second == state.iteration)
@@ -75,13 +81,17 @@ namespace algolib::graphs
      * \param roots starting vertices
      * \return vector of visited vertices
      */
-    template <typename V, typename VP, typename EP>
-    std::vector<V> bfs(const graph<V, VP, EP> & graph_,
-                       bfs_strategy<typename graph<V, VP, EP>::vertex_type> & strategy,
-                       std::vector<typename graph<V, VP, EP>::vertex_type> roots)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> bfs(
+            const graph<VertexId, VertexProperty, EdgeProperty> & graph_,
+            bfs_strategy<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> &
+                    strategy,
+            std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> roots)
     {
-        std::unordered_set<V> reached;
-        std::queue<V> vertex_queue;
+        std::unordered_set<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                reached;
+        std::queue<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                vertex_queue;
 
         for(auto && root : roots)
             if(reached.find(root) == reached.end())
@@ -92,7 +102,8 @@ namespace algolib::graphs
 
                 while(!vertex_queue.empty())
                 {
-                    V vertex = vertex_queue.front();
+                    typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type vertex =
+                            vertex_queue.front();
 
                     vertex_queue.pop();
                     strategy.on_entry(vertex);
@@ -109,7 +120,8 @@ namespace algolib::graphs
                 }
             }
 
-        return std::vector<V>(reached.begin(), reached.end());
+        return std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>(
+                reached.begin(), reached.end());
     }
 
     /*!
@@ -119,13 +131,18 @@ namespace algolib::graphs
      * \param roots starting vertices
      * \return vector of visited vertices
      */
-    template <typename V, typename VP, typename EP>
-    std::vector<V> dfs_iterative(const graph<V, VP, EP> & graph_, dfs_strategy<V> & strategy,
-                                 std::vector<V> roots)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> dfs_iterative(
+            const graph<VertexId, VertexProperty, EdgeProperty> & graph_,
+            dfs_strategy<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> &
+                    strategy,
+            std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> roots)
     {
-        std::vector<V> visited;
-        std::unordered_map<V, int> reached;
-        std::stack<V> vertex_stack;
+        std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> visited;
+        std::unordered_map<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type, int>
+                reached;
+        std::stack<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                vertex_stack;
         int iteration = 1;
 
         for(auto && root : roots)
@@ -136,7 +153,8 @@ namespace algolib::graphs
 
                 while(!vertex_stack.empty())
                 {
-                    V vertex = vertex_stack.top();
+                    typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type vertex =
+                            vertex_stack.top();
 
                     vertex_stack.pop();
 
@@ -168,7 +186,7 @@ namespace algolib::graphs
             }
 
         std::transform(reached.begin(), reached.end(), std::back_inserter(visited),
-                       [](std::pair<V, int> p) { return p.first; });
+                       [](auto && p) { return p.first; });
 
         return visited;
     }
@@ -180,24 +198,29 @@ namespace algolib::graphs
      * \param roots starting vertices
      * \return vector of visited vertices
      */
-    template <typename V, typename VP, typename EP>
-    std::vector<V> dfs_recursive(const graph<V, VP, EP> & graph_, dfs_strategy<V> & strategy,
-                                 std::vector<V> roots)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> dfs_recursive(
+            const graph<VertexId, VertexProperty, EdgeProperty> & graph_,
+            dfs_strategy<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> &
+                    strategy,
+            std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> roots)
     {
-        std::vector<V> visited;
-        internal::dfs_recursive_state<V> state;
+        std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> visited;
+        internal::dfs_recursive_state<
+                typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                state;
 
         for(auto && root : roots)
             if(state.reached.find(root) == state.reached.end())
             {
                 strategy.for_root(root);
-                state.vertex = root;
+                state.vertex = std::make_optional(root);
                 internal::dfs_recursive_step(graph_, strategy, state);
                 ++state.iteration;
             }
 
         std::transform(state.reached.begin(), state.reached.end(), std::back_inserter(visited),
-                       [](std::pair<V, int> p) { return p.first; });
+                       [](auto && p) { return p.first; });
 
         return visited;
     }

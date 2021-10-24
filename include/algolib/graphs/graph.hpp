@@ -7,22 +7,36 @@
 
 #include <cstdlib>
 #include <vector>
-#include "edge.hpp"
-#include "properties.hpp"
+#include "algolib/graphs/edge.hpp"
+#include "algolib/graphs/properties.hpp"
+#include "algolib/graphs/vertex.hpp"
 
 namespace algolib::graphs
 {
-    template <typename V, typename VP, typename EP>
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     struct graph
     {
-        using vertex_type = V;
-        using edge_type = edge<vertex_type>;
-        using vertex_property_type = VP;
-        using edge_property_type = EP;
+        using vertex_id_type = VertexId;
+        using vertex_type = vertex<vertex_id_type>;
+        using edge_type = edge<vertex_id_type>;
+        using vertex_property_type = VertexProperty;
+        using edge_property_type = EdgeProperty;
 
-        struct vertex_pair_hash;
+        struct graph_properties;
 
         virtual ~graph() = default;
+
+        virtual const vertex_type & operator[](const vertex_id_type & vertex_id) const = 0;
+
+        virtual const edge_type &
+                operator[](const std::pair<vertex_id_type, vertex_id_type> & vertex_ids) const = 0;
+
+        virtual const edge_type &
+                operator[](const std::pair<vertex_type, vertex_type> & vertices) const = 0;
+
+        virtual graph_properties & properties() = 0;
+
+        virtual const graph_properties & properties() const = 0;
 
         //! \return number of vertices
         virtual size_t vertices_count() const = 0;
@@ -36,23 +50,6 @@ namespace algolib::graphs
         //! \return vector of edges
         virtual std::vector<edge_type> edges() const = 0;
 
-        virtual vertex_property_type & operator[](const vertex_type & vertex) = 0;
-
-        virtual const vertex_property_type & operator[](const vertex_type & vertex) const = 0;
-
-        virtual edge_property_type & operator[](const edge_type & edge) = 0;
-
-        virtual const edge_property_type & operator[](const edge_type & edge) const = 0;
-
-        /*!
-         * \param source source vertex
-         * \param destination destination vertex
-         * \return the edge between the vertices
-         * \throw out_of_range if no edge
-         */
-        virtual edge_type get_edge(const vertex_type & source,
-                                   const vertex_type & destination) const = 0;
-
         /*!
          * \param vertex vertex from the graph
          * \return vector of neighbouring vertices
@@ -63,7 +60,7 @@ namespace algolib::graphs
          * \param vertex vertex from the graph
          * \return vector of edges adjacent to given vertex
          */
-        virtual std::vector<edge<V>> adjacent_edges(const vertex_type & vertex) const = 0;
+        virtual std::vector<edge<VertexId>> adjacent_edges(const vertex_type & vertex) const = 0;
 
         /*!
          * \param vertex vertex from the graph
@@ -78,19 +75,22 @@ namespace algolib::graphs
         virtual size_t input_degree(const vertex_type & vertex) const = 0;
     };
 
-    template <typename V, typename VP, typename EP>
-    struct graph<V, VP, EP>::vertex_pair_hash
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    struct graph<VertexId, VertexProperty, EdgeProperty>::graph_properties
     {
-        using argument_type = std::pair<vertex_type, vertex_type>;
-        using result_type = size_t;
+        virtual graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & operator[](
+                const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex) = 0;
 
-        result_type operator()(const argument_type & pair) const
-        {
-            result_type first_hash = std::hash<V>()(pair.first);
-            result_type second_hash = std::hash<V>()(pair.second);
+        virtual const graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
+                operator[](const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
+                                   vertex) const = 0;
 
-            return first_hash ^ (second_hash + 0x9e3779b9 + (first_hash << 6) + (first_hash >> 2));
-        }
+        virtual graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & operator[](
+                const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge) = 0;
+
+        virtual const graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
+                operator[](const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge)
+                        const = 0;
     };
 }
 

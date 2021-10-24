@@ -7,8 +7,6 @@ set(GEOMETRY_PLANE "${GEOMETRY}/dim2")
 set(GEOMETRY_SPACE "${GEOMETRY}/dim3")
 set(GRAPHS "${ALGOLIB}/graphs")
 set(GRAPHS_ALGORITHMS "${GRAPHS}/algorithms")
-set(GRAPHS_NEW "${ALGOLIB}/graphs_new")
-set(GRAPHS_NEW_ALGORITHMS "${GRAPHS_NEW}/algorithms")
 set(MATHMAT "${ALGOLIB}/mathmat")
 set(SEQUENCES "${ALGOLIB}/sequences")
 set(STRUCTURES "${ALGOLIB}/structures")
@@ -45,25 +43,6 @@ set(GRAPHS_ALGORITHMS_SOURCES
     "${GRAPHS_ALGORITHMS}/searching_strategy.cpp"
     "${GRAPHS_ALGORITHMS}/strongly_connected_components.cpp"
     "${GRAPHS_ALGORITHMS}/topological_sorting.cpp")
-set(GRAPHS_NEW_SOURCES
-    "${GRAPHS_NEW}/directed_graph.cpp"
-    "${GRAPHS_NEW}/edge.cpp"
-    "${GRAPHS_NEW}/graph.cpp"
-    "${GRAPHS_NEW}/simple_graph.cpp"
-    "${GRAPHS_NEW}/properties.cpp"
-    "${GRAPHS_NEW}/tree_graph.cpp"
-    "${GRAPHS_NEW}/undirected_graph.cpp"
-    "${GRAPHS_NEW}/vertex.cpp")
-set(GRAPHS_NEW_ALGORITHMS_SOURCES
-    "${GRAPHS_NEW_ALGORITHMS}/cutting.cpp"
-    "${GRAPHS_NEW_ALGORITHMS}/lowest_common_ancestor.cpp"
-    "${GRAPHS_NEW_ALGORITHMS}/matching.cpp"
-    "${GRAPHS_NEW_ALGORITHMS}/minimal_spanning_tree.cpp"
-    "${GRAPHS_NEW_ALGORITHMS}/paths.cpp"
-    "${GRAPHS_NEW_ALGORITHMS}/searching.cpp"
-    "${GRAPHS_NEW_ALGORITHMS}/searching_strategy.cpp"
-    "${GRAPHS_NEW_ALGORITHMS}/strongly_connected_components.cpp"
-    "${GRAPHS_NEW_ALGORITHMS}/topological_sorting.cpp")
 set(MATHMAT_SOURCES
     "${MATHMAT}/equation.cpp"
     "${MATHMAT}/equation_system.cpp"
@@ -89,8 +68,6 @@ set(SOURCES
     "${GEOMETRY_SPACE_SOURCES}"
     "${GRAPHS_SOURCES}"
     "${GRAPHS_ALGORITHMS_SOURCES}"
-    "${GRAPHS_NEW_SOURCES}"
-    "${GRAPHS_NEW_ALGORITHMS_SOURCES}"
     "${MATHMAT_SOURCES}"
     "${SEQUENCES_SOURCES}"
     "${STRUCTURES_SOURCES}"

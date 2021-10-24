@@ -34,35 +34,35 @@ namespace internal
 {
     namespace algr = algolib::graphs;
 
-    template <typename V>
-    class topological_strategy : public algr::dfs_strategy<V>
+    template <typename Vertex>
+    class topological_strategy : public algr::dfs_strategy<Vertex>
     {
     public:
         ~topological_strategy() override = default;
 
-        void for_root(const V &) override
+        void for_root(const Vertex &) override
         {
         }
 
-        void on_entry(const V &) override
+        void on_entry(const Vertex &) override
         {
         }
 
-        void on_next_vertex(const V &, const V &) override
+        void on_next_vertex(const Vertex &, const Vertex &) override
         {
         }
 
-        void on_exit(const V & vertex) override
+        void on_exit(const Vertex & vertex) override
         {
             order.push_back(vertex);
         }
 
-        void on_edge_to_visited(const V &, const V &) override
+        void on_edge_to_visited(const Vertex &, const Vertex &) override
         {
             throw algr::directed_cyclic_graph_error("Given graph contains a cycle"s);
         }
 
-        std::vector<V> order;
+        std::vector<Vertex> order;
     };
 }
 
@@ -74,19 +74,26 @@ namespace algolib::graphs
      * \return topological order of vertices
      * \throw directed_cyclic_graph_error if given graph contains a cycle
      */
-    template <typename V, typename VP, typename EP>
-    std::vector<typename directed_graph<V, VP, EP>::vertex_type>
-            sort_topological_by_inputs(const directed_graph<V, VP, EP> & graph)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+            sort_topological_by_inputs(
+                    const directed_graph<VertexId, VertexProperty, EdgeProperty> & graph)
     {
-        std::vector<typename directed_graph<V, VP, EP>::vertex_type> order;
+        std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                order;
 
         if(graph.edges_count() == 0)
             return graph.vertices();
 
-        std::unordered_map<typename directed_graph<V, VP, EP>::vertex_type, int> input_degrees;
-        std::priority_queue<typename directed_graph<V, VP, EP>::vertex_type,
-                            std::vector<typename directed_graph<V, VP, EP>::vertex_type>,
-                            std::greater<typename directed_graph<V, VP, EP>::vertex_type>>
+        std::unordered_map<
+                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type, int>
+                input_degrees;
+        std::priority_queue<
+                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
+                std::vector<typename directed_graph<VertexId, VertexProperty,
+                                                    EdgeProperty>::vertex_type>,
+                std::greater<typename directed_graph<VertexId, VertexProperty,
+                                                     EdgeProperty>::vertex_type>>
                 vertex_queue;
 
         for(auto && vertex : graph.vertices())
@@ -128,14 +135,17 @@ namespace algolib::graphs
      * \return topological order of vertices
      * \throw directed_cyclic_graph_error if given graph contains a cycle
      */
-    template <typename V, typename VP, typename EP>
-    std::vector<typename directed_graph<V, VP, EP>::vertex_type>
-            sort_topological_by_dfs(const directed_graph<V, VP, EP> & graph)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+            sort_topological_by_dfs(
+                    const directed_graph<VertexId, VertexProperty, EdgeProperty> & graph)
     {
         if(graph.edges_count() == 0)
             return graph.vertices();
 
-        internal::topological_strategy<typename directed_graph<V, VP, EP>::vertex_type> strategy;
+        internal::topological_strategy<
+                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                strategy;
         dfs_recursive(graph, strategy, graph.vertices());
 
         std::reverse(strategy.order.begin(), strategy.order.end());
