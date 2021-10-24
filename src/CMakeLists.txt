@@ -40,6 +40,7 @@ set(GRAPHS_ALGORITHMS_SOURCES
     "${GRAPHS_ALGORITHMS}/lowest_common_ancestor.cpp"
     "${GRAPHS_ALGORITHMS}/matching.cpp"
     "${GRAPHS_ALGORITHMS}/minimal_spanning_tree.cpp"
+    "${GRAPHS_ALGORITHMS}/paths.cpp"
     "${GRAPHS_ALGORITHMS}/searching.cpp"
     "${GRAPHS_ALGORITHMS}/searching_strategy.cpp"
     "${GRAPHS_ALGORITHMS}/strongly_connected_components.cpp"
@@ -55,7 +56,9 @@ set(GRAPHS_NEW_SOURCES
     "${GRAPHS_NEW}/vertex.cpp")
 set(GRAPHS_NEW_ALGORITHMS_SOURCES
     "${GRAPHS_NEW_ALGORITHMS}/cutting.cpp"
+    "${GRAPHS_NEW_ALGORITHMS}/lowest_common_ancestor.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/minimal_spanning_tree.cpp"
+    "${GRAPHS_NEW_ALGORITHMS}/paths.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/searching.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/searching_strategy.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/strongly_connected_components.cpp"

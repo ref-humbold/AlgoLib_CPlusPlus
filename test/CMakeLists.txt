@@ -50,6 +50,7 @@ set(GRAPHS_NEW_TEST_SOURCES
     "${GRAPHS_NEW_TEST}/undirected_graph_test.cpp")
 set(GRAPHS_NEW_ALGORITHMS_TEST_SOURCES
     "${GRAPHS_NEW_ALGORITHMS_TEST}/cutting_test.cpp"
+    "${GRAPHS_NEW_ALGORITHMS_TEST}/lowest_common_ancestor_test.cpp"
     "${GRAPHS_NEW_ALGORITHMS_TEST}/minimal_spanning_tree_test.cpp"
     "${GRAPHS_NEW_ALGORITHMS_TEST}/searching_test.cpp"
     "${GRAPHS_NEW_ALGORITHMS_TEST}/strongly_connected_components_test.cpp"
