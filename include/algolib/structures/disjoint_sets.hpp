@@ -224,7 +224,7 @@ namespace algolib::structures
     const E & disjoint_sets<E>::operator[](const E & element)
     {
         if(this->represents.at(element) != element)
-            this->represents[element] = this->operator[](this->represents[element]);
+            this->represents.at(element) = this->operator[](this->represents.at(element));
 
         return this->represents.at(element);
     }
@@ -243,7 +243,7 @@ namespace algolib::structures
         if(this->is_same_set(element1, element2))
             return;
 
-        this->represents[this->operator[](element1)] = this->operator[](element2);
+        this->represents.at(this->operator[](element1)) = this->operator[](element2);
         --this->size_;
     }
 

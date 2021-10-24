@@ -34,13 +34,13 @@ public:
 
     MinimalSpanningTreeTest() : graph{graph_t({0, 1, 2, 3, 4})}
     {
-        graph.add_edge_between(0, 1, weighted_impl(-1));
-        graph.add_edge_between(0, 2, weighted_impl(4));
-        graph.add_edge_between(1, 2, weighted_impl(9));
-        graph.add_edge_between(1, 3, weighted_impl(7));
-        graph.add_edge_between(1, 4, weighted_impl(12));
-        graph.add_edge_between(2, 4, weighted_impl(6));
-        graph.add_edge_between(3, 4, weighted_impl(3));
+        graph.add_edge_between(graph[0], graph[1], weighted_impl(-1));
+        graph.add_edge_between(graph[0], graph[2], weighted_impl(4));
+        graph.add_edge_between(graph[1], graph[2], weighted_impl(9));
+        graph.add_edge_between(graph[1], graph[3], weighted_impl(7));
+        graph.add_edge_between(graph[1], graph[4], weighted_impl(12));
+        graph.add_edge_between(graph[2], graph[4], weighted_impl(6));
+        graph.add_edge_between(graph[3], graph[4], weighted_impl(3));
     }
 
     ~MinimalSpanningTreeTest() override = default;
@@ -64,8 +64,8 @@ TEST_F(MinimalSpanningTreeTest, kruskal_ThenMST)
     std::sort(result_edges.begin(), result_edges.end());
 
     EXPECT_EQ(vertices, result_vertices);
-    EXPECT_EQ(std::vector<graph_e>({graph.get_edge(0, 1), graph.get_edge(0, 2),
-                                    graph.get_edge(2, 4), graph.get_edge(3, 4)}),
+    EXPECT_EQ(std::vector<graph_e>({graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
+                                    graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
               result_edges);
 }
 
@@ -74,7 +74,7 @@ TEST_F(MinimalSpanningTreeTest, prim_ThenMST)
     // given
     std::vector<graph_v> vertices = graph.vertices();
     // when
-    graph_t result = algr::prim(graph, 0);
+    graph_t result = algr::prim(graph, graph[0]);
     // then
     std::vector<graph_v> result_vertices = result.vertices();
     std::vector<graph_e> result_edges = result.edges();
@@ -84,16 +84,16 @@ TEST_F(MinimalSpanningTreeTest, prim_ThenMST)
     std::sort(result_edges.begin(), result_edges.end());
 
     EXPECT_EQ(vertices, result_vertices);
-    EXPECT_EQ(std::vector<graph_e>({graph.get_edge(0, 1), graph.get_edge(0, 2),
-                                    graph.get_edge(2, 4), graph.get_edge(3, 4)}),
+    EXPECT_EQ(std::vector<graph_e>({graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
+                                    graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
               result_edges);
 }
 
 TEST_F(MinimalSpanningTreeTest, prim_WhenDiffrentSources_ThenSameMST)
 {
     // when
-    graph_t result1 = algr::prim(graph, 1);
-    graph_t result4 = algr::prim(graph, 4);
+    graph_t result1 = algr::prim(graph, graph[1]);
+    graph_t result4 = algr::prim(graph, graph[4]);
     // then
     std::vector<graph_e> result1_edges = result1.edges();
     std::vector<graph_e> result4_edges = result4.edges();

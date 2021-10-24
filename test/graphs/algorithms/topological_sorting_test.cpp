@@ -14,37 +14,38 @@ TEST(TopologicalSortingTest, sortTopologicalByInputs_WhenAcyclicGraph_ThenTopolo
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
-    graph.add_edge_between(0, 2);
-    graph.add_edge_between(0, 4);
-    graph.add_edge_between(1, 0);
-    graph.add_edge_between(1, 4);
-    graph.add_edge_between(3, 0);
-    graph.add_edge_between(3, 1);
-    graph.add_edge_between(3, 2);
-    graph.add_edge_between(5, 1);
-    graph.add_edge_between(5, 2);
-    graph.add_edge_between(5, 4);
+    graph.add_edge_between(graph[0], graph[2]);
+    graph.add_edge_between(graph[0], graph[4]);
+    graph.add_edge_between(graph[1], graph[0]);
+    graph.add_edge_between(graph[1], graph[4]);
+    graph.add_edge_between(graph[3], graph[0]);
+    graph.add_edge_between(graph[3], graph[1]);
+    graph.add_edge_between(graph[3], graph[2]);
+    graph.add_edge_between(graph[5], graph[1]);
+    graph.add_edge_between(graph[5], graph[2]);
+    graph.add_edge_between(graph[5], graph[4]);
     // when
     std::vector<graph_v> result = algr::sort_topological_by_inputs(graph);
     // then
-    EXPECT_EQ(std::vector<graph_v>({3, 5, 1, 0, 2, 4}), result);
+    EXPECT_EQ(std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
+              result);
 }
 
 TEST(TopologicalSortingTest, sortTopologicalByInputs_WhenCyclicGraph_ThenDirectedCyclicGraphError)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
-    graph.add_edge_between(0, 2);
-    graph.add_edge_between(0, 4);
-    graph.add_edge_between(1, 0);
-    graph.add_edge_between(1, 4);
-    graph.add_edge_between(2, 1);
-    graph.add_edge_between(3, 0);
-    graph.add_edge_between(3, 1);
-    graph.add_edge_between(3, 2);
-    graph.add_edge_between(5, 1);
-    graph.add_edge_between(5, 2);
-    graph.add_edge_between(5, 4);
+    graph.add_edge_between(graph[0], graph[2]);
+    graph.add_edge_between(graph[0], graph[4]);
+    graph.add_edge_between(graph[1], graph[0]);
+    graph.add_edge_between(graph[1], graph[4]);
+    graph.add_edge_between(graph[2], graph[1]);
+    graph.add_edge_between(graph[3], graph[0]);
+    graph.add_edge_between(graph[3], graph[1]);
+    graph.add_edge_between(graph[3], graph[2]);
+    graph.add_edge_between(graph[5], graph[1]);
+    graph.add_edge_between(graph[5], graph[2]);
+    graph.add_edge_between(graph[5], graph[4]);
     // when
     auto exec = [&]() { return algr::sort_topological_by_inputs(graph); };
     // then
@@ -65,20 +66,22 @@ TEST(TopologicalSortingTest, sortTopologicalByDFS_WhenAcyclicGraph_ThenTopologic
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
-    graph.add_edge_between(0, 2);
-    graph.add_edge_between(0, 4);
-    graph.add_edge_between(1, 0);
-    graph.add_edge_between(1, 4);
-    graph.add_edge_between(3, 1);
-    graph.add_edge_between(3, 0);
-    graph.add_edge_between(3, 2);
-    graph.add_edge_between(5, 1);
-    graph.add_edge_between(5, 2);
-    graph.add_edge_between(5, 4);
+    graph.add_edge_between(graph[0], graph[2]);
+    graph.add_edge_between(graph[0], graph[4]);
+    graph.add_edge_between(graph[1], graph[0]);
+    graph.add_edge_between(graph[1], graph[4]);
+    graph.add_edge_between(graph[3], graph[1]);
+    graph.add_edge_between(graph[3], graph[0]);
+    graph.add_edge_between(graph[3], graph[2]);
+    graph.add_edge_between(graph[5], graph[1]);
+    graph.add_edge_between(graph[5], graph[2]);
+    graph.add_edge_between(graph[5], graph[4]);
 
     std::vector<std::vector<graph_v>> expecteds = {
-            std::vector<graph_v>({3, 5, 1, 0, 2, 4}), std::vector<graph_v>({5, 3, 1, 0, 2, 4}),
-            std::vector<graph_v>({3, 5, 1, 0, 4, 2}), std::vector<graph_v>({5, 3, 1, 0, 4, 2})};
+            std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
+            std::vector<graph_v>({graph[5], graph[3], graph[1], graph[0], graph[2], graph[4]}),
+            std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[4], graph[2]}),
+            std::vector<graph_v>({graph[5], graph[3], graph[1], graph[0], graph[4], graph[2]})};
     // when
     std::vector<graph_v> result = algr::sort_topological_by_dfs(graph);
     // then
@@ -91,17 +94,17 @@ TEST(TopologicalSortingTest, sortTopologicalByDFS_WhenCyclicGraph_ThenDirectedCy
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5});
-    graph.add_edge_between(0, 2);
-    graph.add_edge_between(0, 4);
-    graph.add_edge_between(1, 0);
-    graph.add_edge_between(1, 4);
-    graph.add_edge_between(2, 1);
-    graph.add_edge_between(3, 1);
-    graph.add_edge_between(3, 0);
-    graph.add_edge_between(3, 2);
-    graph.add_edge_between(5, 1);
-    graph.add_edge_between(5, 2);
-    graph.add_edge_between(5, 4);
+    graph.add_edge_between(graph[0], graph[2]);
+    graph.add_edge_between(graph[0], graph[4]);
+    graph.add_edge_between(graph[1], graph[0]);
+    graph.add_edge_between(graph[1], graph[4]);
+    graph.add_edge_between(graph[2], graph[1]);
+    graph.add_edge_between(graph[3], graph[1]);
+    graph.add_edge_between(graph[3], graph[0]);
+    graph.add_edge_between(graph[3], graph[2]);
+    graph.add_edge_between(graph[5], graph[1]);
+    graph.add_edge_between(graph[5], graph[2]);
+    graph.add_edge_between(graph[5], graph[4]);
     // when
     auto exec = [&]() { return algr::sort_topological_by_dfs(graph); };
     // then

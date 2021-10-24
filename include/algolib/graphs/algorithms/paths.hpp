@@ -5,12 +5,12 @@
 #ifndef PATHS_HPP_
 #define PATHS_HPP_
 
-#include <cstdlib>
 #include <cmath>
-#include <exception>
-#include <stdexcept>
+#include <cstdlib>
 #include <algorithm>
+#include <exception>
 #include <queue>
+#include <stdexcept>
 #include <unordered_map>
 #include <unordered_set>
 #include "algolib/graphs/directed_graph.hpp"
@@ -19,10 +19,10 @@ namespace internal
 {
     namespace algr = algolib::graphs;
 
-    template <typename P>
+    template <typename Argument>
     struct dijkstra_cmp
     {
-        bool operator()(const P & pair1, const P & pair2) const
+        bool operator()(const Argument & pair1, const Argument & pair2) const
         {
             return pair2.first < pair1.first;
         }
@@ -32,23 +32,28 @@ namespace internal
 namespace algolib::graphs
 {
     /*!
-     * \briefBellman-Ford algorithm.
+     * \brief Bellman-Ford algorithm.
      * \param graph a directed graph with weighted edges
      * \param source source vertex
      * \return map of vertices' distances
      */
-    template <typename V, typename VP, typename EP>
-    std::unordered_map<typename directed_graph<V, VP, EP>::vertex_type,
-                       typename directed_graph<V, VP, EP>::edge_property_type::weight_type>
-            bellman_ford(const directed_graph<V, VP, EP> & graph,
-                         typename directed_graph<V, VP, EP>::vertex_type source)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    std::unordered_map<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
+                       typename directed_graph<VertexId, VertexProperty,
+                                               EdgeProperty>::edge_property_type::weight_type>
+            bellman_ford(const directed_graph<VertexId, VertexProperty, EdgeProperty> & graph,
+                         typename directed_graph<VertexId, VertexProperty,
+                                                 EdgeProperty>::vertex_type source)
     {
-        std::unordered_map<typename directed_graph<V, VP, EP>::vertex_type,
-                           typename directed_graph<V, VP, EP>::edge_property_type::weight_type>
+        std::unordered_map<
+                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
+                typename directed_graph<VertexId, VertexProperty,
+                                        EdgeProperty>::edge_property_type::weight_type>
                 distances;
 
         for(auto && v : graph.vertices())
-            distances.emplace(v, directed_graph<V, VP, EP>::edge_property_type::infinity);
+            distances.emplace(v, directed_graph<VertexId, VertexProperty,
+                                                EdgeProperty>::edge_property_type::infinity);
 
         distances[source] = 0.0;
 
@@ -57,12 +62,14 @@ namespace algolib::graphs
                 for(auto && edge : graph.adjacent_edges(vertex))
                     distances[edge.destination()] =
                             std::min(distances[edge.destination()],
-                                     distances[vertex] + graph[edge].weight());
+                                     distances[vertex] + graph.properties()[edge].weight());
 
         for(auto && vertex : graph.vertices())
             for(auto && edge : graph.adjacent_edges(vertex))
-                if(distances[vertex] < directed_graph<V, VP, EP>::edge_property_type::infinity
-                   && distances[vertex] + graph[edge].weight() < distances[edge.destination()])
+                if(distances[vertex] < directed_graph<VertexId, VertexProperty,
+                                                      EdgeProperty>::edge_property_type::infinity
+                   && distances[vertex] + graph.properties()[edge].weight()
+                              < distances[edge.destination()])
                     throw std::logic_error("Graph contains a negative cycle");
 
         return distances;
@@ -74,26 +81,39 @@ namespace algolib::graphs
      * \param source source vertex
      * \return map of vertices' distances
      */
-    template <typename V, typename VP, typename EP>
-    std::unordered_map<typename directed_graph<V, VP, EP>::vertex_type,
-                       typename directed_graph<V, VP, EP>::edge_property_type::weight_type>
-            dijkstra(const graph<V, VP, EP> & graph_, typename graph<V, VP, EP>::vertex_type source)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    std::unordered_map<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
+                       typename directed_graph<VertexId, VertexProperty,
+                                               EdgeProperty>::edge_property_type::weight_type>
+            dijkstra(const graph<VertexId, VertexProperty, EdgeProperty> & graph_,
+                     typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type source)
     {
-        using weight_t = typename directed_graph<V, VP, EP>::edge_property_type::weight_type;
-        using pair_wv = std::pair<weight_t, typename graph<V, VP, EP>::vertex_type>;
+        using weight_t = typename directed_graph<VertexId, VertexProperty,
+                                                 EdgeProperty>::edge_property_type::weight_type;
+        using pair_wv =
+                std::pair<weight_t,
+                          typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>;
 
-        std::unordered_map<typename directed_graph<V, VP, EP>::vertex_type, weight_t> distances;
+        std::unordered_map<
+                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
+                weight_t>
+                distances;
+        std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::edge_type>
+                edges = graph_.edges();
 
-        for(auto && edge : graph_.edges())
-            if(graph_[edge].weight() < 0.0)
-                throw std::logic_error("Graph contains an edge with negative weight");
+        if(std::any_of(edges.begin(), edges.end(),
+                       [&](auto && edge) { return graph_.properties()[edge].weight() < 0.0; }))
+            throw std::logic_error("Graph contains an edge with negative weight");
 
-        std::unordered_set<typename directed_graph<V, VP, EP>::vertex_type> visited;
+        std::unordered_set<
+                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                visited;
         std::priority_queue<pair_wv, std::vector<pair_wv>, internal::dijkstra_cmp<pair_wv>>
                 vertex_queue;
 
         for(auto && v : graph_.vertices())
-            distances.emplace(v, directed_graph<V, VP, EP>::edge_property_type::infinity);
+            distances.emplace(v, directed_graph<VertexId, VertexProperty,
+                                                EdgeProperty>::edge_property_type::infinity);
 
         distances[source] = 0.0;
         vertex_queue.push(std::make_pair(0.0, source));
@@ -110,7 +130,7 @@ namespace algolib::graphs
                 for(auto && edge : graph_.adjacent_edges(vertex))
                 {
                     auto neighbour = edge.get_neighbour(vertex);
-                    weight_t weight = graph_[edge].weight();
+                    weight_t weight = graph_.properties()[edge].weight();
 
                     if(distances[vertex] + weight < distances[neighbour])
                     {
@@ -128,25 +148,31 @@ namespace algolib::graphs
      * \param graph a directed graph with weighted edges
      * \return map of distances between all pairs of vertices
      */
-    template <typename V, typename VP, typename EP>
-    std::unordered_map<std::pair<typename directed_graph<V, VP, EP>::vertex_type,
-                                 typename directed_graph<V, VP, EP>::vertex_type>,
-                       double, typename directed_graph<V, VP, EP>::vertex_pair_hash>
-            floyd_warshall(const directed_graph<V, VP, EP> & graph)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    std::unordered_map<
+            std::pair<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
+                      typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>,
+            double>
+            floyd_warshall(const directed_graph<VertexId, VertexProperty, EdgeProperty> & graph)
     {
-        std::unordered_map<std::pair<typename directed_graph<V, VP, EP>::vertex_type,
-                                     typename directed_graph<V, VP, EP>::vertex_type>,
-                           double, typename directed_graph<V, VP, EP>::vertex_pair_hash>
+        std::unordered_map<std::pair<typename directed_graph<VertexId, VertexProperty,
+                                                             EdgeProperty>::vertex_type,
+                                     typename directed_graph<VertexId, VertexProperty,
+                                                             EdgeProperty>::vertex_type>,
+                           double>
                 distances;
 
         for(auto && v : graph.vertices())
             for(auto && u : graph.vertices())
-                distances.emplace(std::make_pair(v, u),
-                                  v == u ? 0.0
-                                         : directed_graph<V, VP, EP>::edge_property_type::infinity);
+                distances.emplace(
+                        std::make_pair(v, u),
+                        v == u ? 0.0
+                               : directed_graph<VertexId, VertexProperty,
+                                                EdgeProperty>::edge_property_type::infinity);
 
-        for(auto && e : graph.edges())
-            distances[std::make_pair(e.source(), e.destination())] = graph[e].weight();
+        for(auto && edge : graph.edges())
+            distances[std::make_pair(edge.source(), edge.destination())] =
+                    graph.properties()[edge].weight();
 
         for(auto && w : graph.vertices())
             for(auto && v : graph.vertices())

@@ -17,34 +17,42 @@ namespace internal
 {
     namespace algr = algolib::graphs;
 
-    template <typename V, typename E, typename VP, typename EP>
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     struct kruskal_cmp
     {
-        explicit kruskal_cmp(const algr::undirected_simple_graph<V, VP, EP> & graph) : graph{graph}
+        using graph_type = algr::undirected_graph<VertexId, VertexProperty, EdgeProperty>;
+
+        explicit kruskal_cmp(const graph_type & graph) : graph{graph}
         {
         }
 
-        bool operator()(const E & edge1, const E & edge2) const
+        bool operator()(const typename graph_type::edge_type & edge1,
+                        const typename graph_type::edge_type & edge2) const
         {
-            return graph[edge2].weight() < graph[edge1].weight();
+            return graph.properties()[edge2].weight() < graph.properties()[edge1].weight();
         }
 
-        const algr::undirected_simple_graph<V, VP, EP> & graph;
+        const graph_type & graph;
     };
 
-    template <typename V, typename E, typename VP, typename EP>
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     struct prim_cmp
     {
-        explicit prim_cmp(const algr::undirected_simple_graph<V, VP, EP> & graph) : graph{graph}
+        using graph_type = algr::undirected_graph<VertexId, VertexProperty, EdgeProperty>;
+        using argument_type =
+                std::pair<typename graph_type::edge_type, typename graph_type::vertex_type>;
+
+        explicit prim_cmp(const graph_type & graph) : graph{graph}
         {
         }
 
-        bool operator()(const std::pair<E, V> & pair1, const std::pair<E, V> & pair2) const
+        bool operator()(const argument_type & pair1, const argument_type & pair2) const
         {
-            return graph[pair2.first].weight() < graph[pair1.first].weight();
+            return graph.properties()[pair2.first].weight()
+                   < graph.properties()[pair1.first].weight();
         }
 
-        const algr::undirected_simple_graph<V, VP, EP> & graph;
+        const graph_type & graph;
     };
 }
 
@@ -57,24 +65,35 @@ namespace algolib::graphs
      * \param graph an undirected weighted graph
      * \return the minimal spanning tree
      */
-    template <typename V, typename VP, typename EP>
-    undirected_simple_graph<V, VP, EP> kruskal(const undirected_simple_graph<V, VP, EP> & graph)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>
+            kruskal(const undirected_graph<VertexId, VertexProperty, EdgeProperty> & graph)
     {
         using cmp = internal::kruskal_cmp<
-                typename undirected_simple_graph<V, VP, EP>::vertex_type,
-                typename undirected_simple_graph<V, VP, EP>::edge_type,
-                typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
-                typename undirected_simple_graph<V, VP, EP>::edge_property_type>;
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type,
+                typename undirected_graph<VertexId, VertexProperty,
+                                          EdgeProperty>::vertex_property_type,
+                typename undirected_graph<VertexId, VertexProperty,
+                                          EdgeProperty>::edge_property_type>;
 
-        undirected_simple_graph<V, VP, EP> mst(graph.vertices());
-        std::vector<typename undirected_simple_graph<V, VP, EP>::vertex_type> vertices =
-                graph.vertices();
-        alst::disjoint_sets<typename undirected_simple_graph<V, VP, EP>::vertex_type> vertex_sets(
-                vertices.begin(), vertices.end());
+        std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                vertices = graph.vertices();
+        alst::disjoint_sets<
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                vertex_sets(vertices.begin(), vertices.end());
+        std::vector<
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type>
+                vertex_ids;
+
+        std::transform(vertices.begin(), vertices.end(), std::back_inserter(vertex_ids),
+                       [](auto && vertex) { return vertex.id(); });
+
+        undirected_simple_graph<VertexId, VertexProperty, EdgeProperty> mst(vertex_ids);
         auto edge_queue = std::priority_queue<
-                typename undirected_simple_graph<V, VP, EP>::edge_type,
-                std::vector<typename undirected_simple_graph<V, VP, EP>::edge_type>, cmp>(
-                cmp(graph));
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::edge_type,
+                std::vector<typename undirected_graph<VertexId, VertexProperty,
+                                                      EdgeProperty>::edge_type>,
+                cmp>(cmp(graph));
 
         for(auto && edge : graph.edges())
             edge_queue.push(edge);
@@ -86,7 +105,7 @@ namespace algolib::graphs
             edge_queue.pop();
 
             if(!vertex_sets.is_same_set(edge.source(), edge.destination()))
-                mst.add_edge(edge, graph[edge]);
+                mst.add_edge(edge, graph.properties()[edge]);
 
             vertex_sets.union_set(edge.source(), edge.destination());
         }
@@ -100,21 +119,34 @@ namespace algolib::graphs
      * \param source starting vertex
      * \return the minimal spanning tree
      */
-    template <typename V, typename VP, typename EP>
-    undirected_simple_graph<V, VP, EP>
-            prim(const undirected_simple_graph<V, VP, EP> & graph,
-                 typename undirected_simple_graph<V, VP, EP>::vertex_type source)
+    template <typename VertexId, typename VertexProperty, typename EdgeProperty>
+    undirected_simple_graph<VertexId, VertexProperty, EdgeProperty> prim(
+            const undirected_graph<VertexId, VertexProperty, EdgeProperty> & graph,
+            typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type source)
     {
-        using ev_pair = std::pair<typename undirected_simple_graph<V, VP, EP>::edge_type,
-                                  typename undirected_simple_graph<V, VP, EP>::vertex_type>;
+        using ev_pair = std::pair<
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::edge_type,
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>;
         using cmp = internal::prim_cmp<
-                typename undirected_simple_graph<V, VP, EP>::vertex_type,
-                typename undirected_simple_graph<V, VP, EP>::edge_type,
-                typename undirected_simple_graph<V, VP, EP>::vertex_property_type,
-                typename undirected_simple_graph<V, VP, EP>::edge_property_type>;
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type,
+                typename undirected_graph<VertexId, VertexProperty,
+                                          EdgeProperty>::vertex_property_type,
+                typename undirected_graph<VertexId, VertexProperty,
+                                          EdgeProperty>::edge_property_type>;
 
-        undirected_simple_graph<V, VP, EP> mst(graph.vertices());
-        std::unordered_set<typename undirected_simple_graph<V, VP, EP>::vertex_type> visited;
+        std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                vertices = graph.vertices();
+        std::vector<
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type>
+                vertex_ids;
+
+        std::transform(vertices.begin(), vertices.end(), std::back_inserter(vertex_ids),
+                       [](auto && vertex) { return vertex.id(); });
+
+        undirected_simple_graph<VertexId, VertexProperty, EdgeProperty> mst(vertex_ids);
+        std::unordered_set<
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+                visited;
         auto queue = std::priority_queue<ev_pair, std::vector<ev_pair>, cmp>(cmp(graph));
 
         visited.insert(source);
@@ -138,7 +170,7 @@ namespace algolib::graphs
 
             if(insert_result.second)
             {
-                mst.add_edge(edge, graph[edge]);
+                mst.add_edge(edge, graph.properties()[edge]);
 
                 for(auto && adjacent_edge : graph.adjacent_edges(vertex))
                 {

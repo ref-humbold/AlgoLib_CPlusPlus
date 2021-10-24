@@ -9,67 +9,71 @@
 #include <exception>
 #include <iostream>
 #include <stdexcept>
+#include "algolib/graphs/vertex.hpp"
 
 namespace algolib::graphs
 {
-    template <typename V>
+    template <typename VertexId>
     class edge;
 
-    template <typename V>
-    bool operator==(const edge<V> & e1, const edge<V> & e2);
+    template <typename VertexId>
+    bool operator==(const edge<VertexId> & e1, const edge<VertexId> & e2);
 
-    template <typename V>
-    bool operator!=(const edge<V> & e1, const edge<V> & e2);
+    template <typename VertexId>
+    bool operator!=(const edge<VertexId> & e1, const edge<VertexId> & e2);
 
-    template <typename V>
-    bool operator<(const edge<V> & e1, const edge<V> & e2);
+    template <typename VertexId>
+    bool operator<(const edge<VertexId> & e1, const edge<VertexId> & e2);
 
-    template <typename V>
-    bool operator<=(const edge<V> & e1, const edge<V> & e2);
+    template <typename VertexId>
+    bool operator<=(const edge<VertexId> & e1, const edge<VertexId> & e2);
 
-    template <typename V>
-    bool operator>(const edge<V> & e1, const edge<V> & e2);
+    template <typename VertexId>
+    bool operator>(const edge<VertexId> & e1, const edge<VertexId> & e2);
 
-    template <typename V>
-    bool operator>=(const edge<V> & e1, const edge<V> & e2);
+    template <typename VertexId>
+    bool operator>=(const edge<VertexId> & e1, const edge<VertexId> & e2);
 
-    template <typename V>
-    std::ostream & operator<<(std::ostream & os, const edge<V> & edge);
+    template <typename VertexId>
+    std::ostream & operator<<(std::ostream & os, const edge<VertexId> & edge);
 }
 
 namespace std
 {
-    template <typename V>
-    struct hash<algolib::graphs::edge<V>>;
+    template <typename VertexId>
+    struct hash<algolib::graphs::edge<VertexId>>;
 }
 
 namespace algolib::graphs
 {
-    template <typename V>
+    template <typename VertexId>
     class edge
     {
     public:
-        edge(V source, V destination) : source_{source}, destination_{destination}
+        using vertex_type = vertex<VertexId>;
+
+        edge(vertex_type source, vertex_type destination)
+            : source_{source}, destination_{destination}
         {
         }
 
         ~edge() = default;
-        edge(const edge<V> &) = default;
-        edge(edge<V> &&) = default;
-        edge<V> & operator=(const edge<V> &) = default;
-        edge<V> & operator=(edge<V> &&) = default;
+        edge(const edge<VertexId> &) = default;
+        edge(edge<VertexId> &&) = default;
+        edge<VertexId> & operator=(const edge<VertexId> &) = default;
+        edge<VertexId> & operator=(edge<VertexId> &&) = default;
 
-        const V & source() const
+        const vertex_type & source() const
         {
             return source_;
         }
 
-        const V & destination() const
+        const vertex_type & destination() const
         {
             return destination_;
         }
 
-        V get_neighbour(V vertex) const
+        const vertex_type & get_neighbour(const vertex<VertexId> & vertex) const
         {
             if(source_ == vertex)
                 return destination_;
@@ -80,67 +84,66 @@ namespace algolib::graphs
             throw std::invalid_argument("Edge is not adjacent to the vertex");
         }
 
-        edge<V> reversed() const
+        edge<VertexId> reversed() const
         {
-            return edge<V>(destination_, source_);
+            return edge<VertexId>(destination_, source_);
         }
 
         // clang-format off
-            friend bool operator== <V>(const edge<V> & e1, const edge<V> & e2);
-            friend bool operator!= <V>(const edge<V> & e1, const edge<V> & e2);
-            friend bool operator< <V>(const edge<V> & e1, const edge<V> & e2);
-            friend bool operator<= <V>(const edge<V> & e1, const edge<V> & e2);
-            friend bool operator> <V>(const edge<V> & e1, const edge<V> & e2);
-            friend bool operator>= <V>(const edge<V> & e1, const edge<V> & e2);
-            friend std::ostream & operator<< <V>(std::ostream & os, const edge<V> & edge);
+            friend bool operator== <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+            friend bool operator!= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+            friend bool operator< <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+            friend bool operator<= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+            friend bool operator> <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+            friend bool operator>= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+            friend std::ostream & operator<< <VertexId>(std::ostream & os, const edge<VertexId> & edge);
         // clang-format on
 
-        friend struct std::hash<edge<V>>;
+        friend struct std::hash<edge<VertexId>>;
 
     private:
-        V source_;
-        V destination_;
+        vertex_type source_, destination_;
     };
 
-    template <typename V>
-    bool operator==(const edge<V> & e1, const edge<V> & e2)
+    template <typename VertexId>
+    bool operator==(const edge<VertexId> & e1, const edge<VertexId> & e2)
     {
         return e1.source_ == e2.source_ && e1.destination_ == e2.destination_;
     }
 
-    template <typename V>
-    bool operator!=(const edge<V> & e1, const edge<V> & e2)
+    template <typename VertexId>
+    bool operator!=(const edge<VertexId> & e1, const edge<VertexId> & e2)
     {
         return !(e1 == e2);
     }
 
-    template <typename V>
-    bool operator<(const edge<V> & e1, const edge<V> & e2)
+    template <typename VertexId>
+    bool operator<(const edge<VertexId> & e1, const edge<VertexId> & e2)
     {
         return e1.source_ < e2.source_
                || (!(e2.source_ < e1.source_) && e1.destination_ < e2.destination_);
     }
 
-    template <typename V>
-    bool operator<=(const edge<V> & e1, const edge<V> & e2)
+    template <typename VertexId>
+    bool operator<=(const edge<VertexId> & e1, const edge<VertexId> & e2)
     {
         return !(e2 < e1);
     }
 
-    template <typename V>
-    bool operator>(const edge<V> & e1, const edge<V> & e2)
+    template <typename VertexId>
+    bool operator>(const edge<VertexId> & e1, const edge<VertexId> & e2)
     {
         return e2 < e1;
     }
 
-    template <typename V>
-    bool operator>=(const edge<V> & e1, const edge<V> & e2)
+    template <typename VertexId>
+    bool operator>=(const edge<VertexId> & e1, const edge<VertexId> & e2)
     {
         return !(e1 < e2);
     }
 
-    template <typename V>
-    std::ostream & operator<<(std::ostream & os, const edge<V> & edge)
+    template <typename VertexId>
+    std::ostream & operator<<(std::ostream & os, const edge<VertexId> & edge)
     {
         os << "Edge{" << edge.source_ << " -- " << edge.destination_ << "}";
         return os;
@@ -149,16 +152,18 @@ namespace algolib::graphs
 
 namespace std
 {
-    template <typename V>
-    struct hash<algolib::graphs::edge<V>>
+    template <typename VertexId>
+    struct hash<algolib::graphs::edge<VertexId>>
     {
-        using argument_type = algolib::graphs::edge<V>;
+        using argument_type = algolib::graphs::edge<VertexId>;
         using result_type = size_t;
 
         result_type operator()(const argument_type & edge) const
         {
-            result_type source_hash = std::hash<V>()(edge.source_);
-            result_type destination_hash = std::hash<V>()(edge.destination_);
+            result_type source_hash =
+                    std::hash<typename argument_type::vertex_type>()(edge.source_);
+            result_type destination_hash =
+                    std::hash<typename argument_type::vertex_type>()(edge.destination_);
 
             return source_hash
                    ^ (destination_hash + 0x9e3779b9 + (source_hash << 6) + (source_hash >> 2));

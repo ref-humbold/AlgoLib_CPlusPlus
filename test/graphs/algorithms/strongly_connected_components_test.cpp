@@ -15,22 +15,25 @@ TEST(StronglyConnectedComponentsTest, findSCC_WhenManyComponents_ThenAllListed)
 {
     // given
     graph_t graph({0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
-    graph.add_edge_between(0, 4);
-    graph.add_edge_between(0, 5);
-    graph.add_edge_between(1, 0);
-    graph.add_edge_between(2, 3);
-    graph.add_edge_between(3, 1);
-    graph.add_edge_between(4, 1);
-    graph.add_edge_between(4, 3);
-    graph.add_edge_between(6, 5);
-    graph.add_edge_between(6, 9);
-    graph.add_edge_between(7, 4);
-    graph.add_edge_between(7, 6);
-    graph.add_edge_between(8, 3);
-    graph.add_edge_between(8, 7);
-    graph.add_edge_between(9, 8);
+    graph.add_edge_between(graph[0], graph[4]);
+    graph.add_edge_between(graph[0], graph[5]);
+    graph.add_edge_between(graph[1], graph[0]);
+    graph.add_edge_between(graph[2], graph[3]);
+    graph.add_edge_between(graph[3], graph[1]);
+    graph.add_edge_between(graph[4], graph[1]);
+    graph.add_edge_between(graph[4], graph[3]);
+    graph.add_edge_between(graph[6], graph[5]);
+    graph.add_edge_between(graph[6], graph[9]);
+    graph.add_edge_between(graph[7], graph[4]);
+    graph.add_edge_between(graph[7], graph[6]);
+    graph.add_edge_between(graph[8], graph[3]);
+    graph.add_edge_between(graph[8], graph[7]);
+    graph.add_edge_between(graph[9], graph[8]);
 
-    std::vector<std::unordered_set<graph_v>> expected = {{0, 1, 3, 4}, {2}, {5}, {6, 7, 8, 9}};
+    std::vector<std::unordered_set<graph_v>> expected = {{graph[0], graph[1], graph[3], graph[4]},
+                                                         {graph[2]},
+                                                         {graph[5]},
+                                                         {graph[6], graph[7], graph[8], graph[9]}};
     // when
     std::vector<std::unordered_set<graph_v>> result = algr::find_scc(graph);
     // then
@@ -45,15 +48,16 @@ TEST(StronglyConnectedComponentsTest, findSCC_WhenSingeleComponent_ThenAllVertic
     // given
     graph_t graph({0, 1, 2, 3, 4, 5, 6});
 
-    graph.add_edge_between(0, 1);
-    graph.add_edge_between(1, 2);
-    graph.add_edge_between(2, 3);
-    graph.add_edge_between(3, 4);
-    graph.add_edge_between(4, 5);
-    graph.add_edge_between(5, 6);
-    graph.add_edge_between(6, 0);
+    graph.add_edge_between(graph[0], graph[1]);
+    graph.add_edge_between(graph[1], graph[2]);
+    graph.add_edge_between(graph[2], graph[3]);
+    graph.add_edge_between(graph[3], graph[4]);
+    graph.add_edge_between(graph[4], graph[5]);
+    graph.add_edge_between(graph[5], graph[6]);
+    graph.add_edge_between(graph[6], graph[0]);
 
-    std::vector<std::unordered_set<graph_v>> expected = {{0, 1, 2, 3, 4, 5, 6}};
+    std::vector<std::unordered_set<graph_v>> expected = {
+            {graph[0], graph[1], graph[2], graph[3], graph[4], graph[5], graph[6]}};
     // when
     std::vector<std::unordered_set<graph_v>> result = algr::find_scc(graph);
     // then
@@ -65,7 +69,8 @@ TEST(StronglyConnectedComponentsTest, findSCC_WhenEmptyGraph_ThenEachVertexIsCom
 {
     // given
     graph_t graph({0, 1, 2, 3});
-    std::vector<std::unordered_set<graph_v>> expected = {{0}, {1}, {2}, {3}};
+    std::vector<std::unordered_set<graph_v>> expected = {
+            {graph[0]}, {graph[1]}, {graph[2]}, {graph[3]}};
     // when
     std::vector<std::unordered_set<graph_v>> result = algr::find_scc(graph);
     // then
