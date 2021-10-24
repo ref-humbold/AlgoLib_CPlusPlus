@@ -7,8 +7,8 @@
 
 #include <cmath>
 #include <cstdlib>
-#include "point_3d.hpp"
-#include "vector_3d.hpp"
+#include "algolib/geometry/dim3/point_3d.hpp"
+#include "algolib/geometry/dim3/vector_3d.hpp"
 
 namespace algolib::geometry::dim3
 {

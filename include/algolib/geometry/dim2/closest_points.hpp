@@ -7,7 +7,7 @@
 
 #include <cstdlib>
 #include <vector>
-#include "point_2d.hpp"
+#include "algolib/geometry/dim2/point_2d.hpp"
 
 namespace algolib::geometry::dim2
 {

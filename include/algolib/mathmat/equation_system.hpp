@@ -11,7 +11,7 @@
 #include <array>
 #include <exception>
 #include <stdexcept>
-#include "equation.hpp"
+#include "algolib/mathmat/equation.hpp"
 
 namespace algolib::mathmat
 {

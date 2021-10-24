@@ -9,7 +9,7 @@
 #include <ctime>
 #include <algorithm>
 #include <vector>
-#include "maths.hpp"
+#include "algolib/mathmat/maths.hpp"
 
 namespace algolib::mathmat
 {

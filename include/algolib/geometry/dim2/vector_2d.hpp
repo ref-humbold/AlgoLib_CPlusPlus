@@ -11,8 +11,8 @@
 #include <array>
 #include <iostream>
 #include <numeric>
-#include "../geometry_object.hpp"
-#include "point_2d.hpp"
+#include "algolib/geometry/dim2/point_2d.hpp"
+#include "algolib/geometry/geometry_object.hpp"
 
 namespace algolib::geometry::dim2
 {

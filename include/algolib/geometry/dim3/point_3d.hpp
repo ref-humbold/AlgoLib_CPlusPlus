@@ -13,7 +13,7 @@
 #include <iostream>
 #include <numeric>
 #include <stdexcept>
-#include "../geometry_object.hpp"
+#include "algolib/geometry/geometry_object.hpp"
 
 namespace algolib::geometry::dim3
 {
