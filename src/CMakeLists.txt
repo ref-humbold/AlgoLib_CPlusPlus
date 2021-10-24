@@ -57,7 +57,9 @@ set(GRAPHS_NEW_ALGORITHMS_SOURCES
     "${GRAPHS_NEW_ALGORITHMS}/cutting.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/minimal_spanning_tree.cpp"
     "${GRAPHS_NEW_ALGORITHMS}/searching.cpp"
-    "${GRAPHS_NEW_ALGORITHMS}/searching_strategy.cpp")
+    "${GRAPHS_NEW_ALGORITHMS}/searching_strategy.cpp"
+    "${GRAPHS_NEW_ALGORITHMS}/strongly_connected_components.cpp"
+    "${GRAPHS_NEW_ALGORITHMS}/topological_sorting.cpp")
 set(MATHMAT_SOURCES
     "${MATHMAT}/equation.cpp"
     "${MATHMAT}/equation_system.cpp"

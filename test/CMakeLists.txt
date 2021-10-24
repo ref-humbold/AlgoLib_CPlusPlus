@@ -51,7 +51,9 @@ set(GRAPHS_NEW_TEST_SOURCES
 set(GRAPHS_NEW_ALGORITHMS_TEST_SOURCES
     "${GRAPHS_NEW_ALGORITHMS_TEST}/cutting_test.cpp"
     "${GRAPHS_NEW_ALGORITHMS_TEST}/minimal_spanning_tree_test.cpp"
-    "${GRAPHS_NEW_ALGORITHMS_TEST}/searching_test.cpp")
+    "${GRAPHS_NEW_ALGORITHMS_TEST}/searching_test.cpp"
+    "${GRAPHS_NEW_ALGORITHMS_TEST}/strongly_connected_components_test.cpp"
+    "${GRAPHS_NEW_ALGORITHMS_TEST}/topological_sorting_test.cpp")
 set(MATHMAT_TEST_SOURCES
     "${MATHMAT_TEST}/equation_test.cpp"
     "${MATHMAT_TEST}/equation_system_test.cpp"
