@@ -62,7 +62,7 @@ TEST(SubsequencesTest, longestIncreasing_WhenDecreasingAndReversedComparator_The
 #pragma endregion
 #pragma region maximum_subarray
 
-TEST(SubsequencesTest, maximumSubarray_WhenNegativeIsLessThanSubsum_ThenIncludesNegative)
+TEST(SubsequencesTest, maximumSubarray_WhenNegativeIsLessThanSubsum_ThenIncludeNegative)
 {
     // given
     std::vector<double> sequence = {3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8};
@@ -72,7 +72,7 @@ TEST(SubsequencesTest, maximumSubarray_WhenNegativeIsLessThanSubsum_ThenIncludes
     EXPECT_EQ(std::vector<double>({3.5, 4.8, -1.6, 7.7, 2.1}), result);
 }
 
-TEST(SubsequencesTest, maximumSubarray_WhenNegativeIsGreaterThanSubsum_ThenExcludesNegative)
+TEST(SubsequencesTest, maximumSubarray_WhenNegativeIsGreaterThanSubsum_ThenExcludeNegative)
 {
     // given
     std::vector<double> sequence = {-9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0};
@@ -95,7 +95,7 @@ TEST(SubsequencesTest, maximumSubarray_WhenAllElementsAreNegative_ThenEmpty)
 #pragma endregion
 #pragma region maximal_subsum
 
-TEST(SubsequencesTest, maximalSubsum_WhenNegativeIsLessThanSubsum_ThenIncludesNegative)
+TEST(SubsequencesTest, maximalSubsum_WhenNegativeIsLessThanSubsum_ThenIncludeNegative)
 {
     // given
     std::vector<double> sequence = {3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8};
@@ -105,7 +105,7 @@ TEST(SubsequencesTest, maximalSubsum_WhenNegativeIsLessThanSubsum_ThenIncludesNe
     EXPECT_DOUBLE_EQ(16.5, result);
 }
 
-TEST(SubsequencesTest, maximalSubsum_WhenNegativeIsGreaterThanSubsum_ThenExcludesNegative)
+TEST(SubsequencesTest, maximalSubsum_WhenNegativeIsGreaterThanSubsum_ThenExcludeNegative)
 {
     // given
     std::vector<double> sequence = {-9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0};

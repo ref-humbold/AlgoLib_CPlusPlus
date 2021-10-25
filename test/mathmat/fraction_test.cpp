@@ -8,6 +8,8 @@
 
 namespace alma = algolib::mathmat;
 
+#pragma region cast operators
+
 TEST(FractionTest, operatorDouble_ThenDoubleValue)
 {
     // given
@@ -57,6 +59,9 @@ TEST(FractionTest, operatorBool_WhenNegative_ThenTrue)
     // then
     EXPECT_TRUE(result);
 }
+
+#pragma endregion
+#pragma region unary operators
 
 TEST(FractionTest, operatorUnaryPlus_ThenCopied)
 {
@@ -128,7 +133,151 @@ TEST(FractionTest, operatorTilde_WhenZero_ThenDomainError)
     EXPECT_THROW(exec(), std::domain_error);
 }
 
-TEST(FractionTest, operatorShiftLeft_ThenStringRepresentation)
+#pragma endregion
+#pragma region binary operators
+
+TEST(FractionTest, operatorPlus_ThenDenominatorEqualsLcm)
+{
+    // when
+    alma::fraction result = alma::fraction(1, 2) + alma::fraction(5, 7);
+    // then
+    EXPECT_EQ(alma::fraction(17, 14), result);
+}
+
+TEST(FractionTest, operatorPlus_WhenInt_ThenAdded)
+{
+    // when
+    alma::fraction result = alma::fraction(7, 3) + 4;
+    // then
+    EXPECT_EQ(alma::fraction(19, 3), result);
+}
+
+TEST(FractionTest, operatorMinus_ThenNormalized)
+{
+    // when
+    alma::fraction result = alma::fraction(1, 2) - alma::fraction(3, 10);
+    // then
+    EXPECT_EQ(alma::fraction(1, 5), result);
+}
+
+TEST(FractionTest, operatorMinus_WhenInt_ThenSubtracted)
+{
+    // when
+    alma::fraction result = alma::fraction(7, 3) - 4;
+    // then
+    EXPECT_EQ(alma::fraction(-5, 3), result);
+}
+
+TEST(FractionTest, operatorAsterisk_ThenNormalized)
+{
+    // when
+    alma::fraction result = alma::fraction(3, 7) * alma::fraction(5, 12);
+    // then
+    EXPECT_EQ(alma::fraction(5, 28), result);
+}
+
+TEST(FractionTest, operatorAsterisk_WhenInt_ThenMultiplied)
+{
+    // when
+    alma::fraction result = alma::fraction(7, 3) * 4;
+    // then
+    EXPECT_EQ(alma::fraction(28, 3), result);
+}
+
+TEST(FractionTest, operatorSlash_ThenNormalized)
+{
+    // when
+    alma::fraction result = alma::fraction(9, 14) / alma::fraction(2, 5);
+    // then
+    EXPECT_EQ(alma::fraction(45, 28), result);
+}
+
+TEST(FractionTest, operatorSlash_WhenZero_ThenDomainError)
+{
+    // when
+    auto exec = []() { return alma::fraction(9, 14) / alma::fraction(0); };
+    // then
+    EXPECT_THROW(exec(), std::domain_error);
+}
+
+TEST(FractionTest, operatorAsterisk_WhenInt_ThenDivided)
+{
+    // when
+    alma::fraction result = alma::fraction(7, 3) / 4;
+    // then
+    EXPECT_EQ(alma::fraction(7, 12), result);
+}
+
+#pragma endregion
+#pragma region comparison operators
+
+TEST(FractionTest, operatorEqual_WhenSameNormalizedFraction_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(9, 15) == alma::fraction(3, 5);
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorEqual_WhenEqualToDouble_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(-13, 8) == -1.625;
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorEqual_WhenEqualToInt_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(125, 5) == 25;
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorNotEqual_WhenDifferentFraction_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(9, 14) != alma::fraction(3, 5);
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorLess_WhenSameDenominatorAndGreaterNumerator_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(9, 14) < alma::fraction(17, 14);
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorLess_WhenLessThanInt_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(-31, 6) < -4;
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorGreater_WhenSameNumeratorAndGreaterDenominator_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(9, 14) > alma::fraction(9, 26);
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorGreater_WhenGreaterThanDouble_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(11, 3) > 2.67;
+    // then
+    EXPECT_TRUE(result);
+}
+
+#pragma endregion
+
+TEST(FractionTest, ostream_operatorShiftLeft_ThenStringRepresentation)
 {
     // given
     alma::fraction frac(129, -20);
