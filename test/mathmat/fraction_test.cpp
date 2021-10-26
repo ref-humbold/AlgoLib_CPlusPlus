@@ -147,9 +147,11 @@ TEST(FractionTest, operatorPlus_ThenDenominatorEqualsLcm)
 TEST(FractionTest, operatorPlus_WhenInt_ThenAdded)
 {
     // when
-    alma::fraction result = alma::fraction(7, 3) + 4;
+    alma::fraction result1 = alma::fraction(7, 3) + 4;
+    alma::fraction result2 = 4 + alma::fraction(7, 3);
     // then
-    EXPECT_EQ(alma::fraction(19, 3), result);
+    ASSERT_EQ(alma::fraction(19, 3), result1);
+    EXPECT_EQ(result1, result2);
 }
 
 TEST(FractionTest, operatorMinus_ThenNormalized)
@@ -163,9 +165,11 @@ TEST(FractionTest, operatorMinus_ThenNormalized)
 TEST(FractionTest, operatorMinus_WhenInt_ThenSubtracted)
 {
     // when
-    alma::fraction result = alma::fraction(7, 3) - 4;
+    alma::fraction result1 = alma::fraction(7, 3) - 4;
+    alma::fraction result2 = 4 - alma::fraction(7, 3);
     // then
-    EXPECT_EQ(alma::fraction(-5, 3), result);
+    EXPECT_EQ(alma::fraction(-5, 3), result1);
+    EXPECT_EQ(alma::fraction(5, 3), result2);
 }
 
 TEST(FractionTest, operatorAsterisk_ThenNormalized)
@@ -179,9 +183,11 @@ TEST(FractionTest, operatorAsterisk_ThenNormalized)
 TEST(FractionTest, operatorAsterisk_WhenInt_ThenMultiplied)
 {
     // when
-    alma::fraction result = alma::fraction(7, 3) * 4;
+    alma::fraction result1 = alma::fraction(7, 3) * 4;
+    alma::fraction result2 = 4 * alma::fraction(7, 3);
     // then
-    EXPECT_EQ(alma::fraction(28, 3), result);
+    ASSERT_EQ(alma::fraction(28, 3), result1);
+    EXPECT_EQ(result1, result2);
 }
 
 TEST(FractionTest, operatorSlash_ThenNormalized)
@@ -200,12 +206,14 @@ TEST(FractionTest, operatorSlash_WhenZero_ThenDomainError)
     EXPECT_THROW(exec(), std::domain_error);
 }
 
-TEST(FractionTest, operatorAsterisk_WhenInt_ThenDivided)
+TEST(FractionTest, operatorSlash_WhenInt_ThenDivided)
 {
     // when
-    alma::fraction result = alma::fraction(7, 3) / 4;
+    alma::fraction result1 = alma::fraction(7, 3) / 4;
+    alma::fraction result2 = 4 / alma::fraction(7, 3);
     // then
-    EXPECT_EQ(alma::fraction(7, 12), result);
+    EXPECT_EQ(alma::fraction(7, 12), result1);
+    EXPECT_EQ(alma::fraction(12, 7), result2);
 }
 
 #pragma endregion
@@ -222,17 +230,21 @@ TEST(FractionTest, operatorEqual_WhenSameNormalizedFraction_ThenTrue)
 TEST(FractionTest, operatorEqual_WhenEqualToDouble_ThenTrue)
 {
     // when
-    bool result = alma::fraction(-13, 8) == -1.625;
+    bool result1 = alma::fraction(-13, 8) == -1.625;
+    bool result2 = -1.625 == alma::fraction(-13, 8);
     // then
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result1);
+    EXPECT_TRUE(result2);
 }
 
 TEST(FractionTest, operatorEqual_WhenEqualToInt_ThenTrue)
 {
     // when
-    bool result = alma::fraction(125, 5) == 25;
+    bool result1 = alma::fraction(125, 5) == 25;
+    bool result2 = 25 == alma::fraction(125, 5);
     // then
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result1);
+    EXPECT_TRUE(result2);
 }
 
 TEST(FractionTest, operatorNotEqual_WhenDifferentFraction_ThenTrue)

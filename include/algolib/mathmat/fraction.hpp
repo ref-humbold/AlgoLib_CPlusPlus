@@ -126,47 +126,82 @@ namespace algolib::mathmat
     bool operator>=(const fraction & f1, const fraction & f2);
 
     bool operator==(const fraction & f, float d);
-    bool operator==(const fraction & f, float d);
+    bool operator==(float d, const fraction & f);
     bool operator!=(const fraction & f, float d);
+    bool operator!=(float d, const fraction & f);
     bool operator<(const fraction & f, float d);
+    bool operator<(float d, const fraction & f);
     bool operator<=(const fraction & f, float d);
+    bool operator<=(float d, const fraction & f);
     bool operator>(const fraction & f, float d);
+    bool operator>(float d, const fraction & f);
     bool operator>=(const fraction & f, float d);
+    bool operator>=(float d, const fraction & f);
 
     bool operator==(const fraction & f, double d);
+    bool operator==(double d, const fraction & f);
     bool operator!=(const fraction & f, double d);
+    bool operator!=(double d, const fraction & f);
     bool operator<(const fraction & f, double d);
+    bool operator<(double d, const fraction & f);
     bool operator<=(const fraction & f, double d);
+    bool operator<=(double d, const fraction & f);
     bool operator>(const fraction & f, double d);
+    bool operator>(double d, const fraction & f);
     bool operator>=(const fraction & f, double d);
+    bool operator>=(double d, const fraction & f);
 
+    bool operator==(long double d, const fraction & f);
     bool operator==(const fraction & f, long double d);
+    bool operator!=(long double d, const fraction & f);
     bool operator!=(const fraction & f, long double d);
+    bool operator<(long double d, const fraction & f);
     bool operator<(const fraction & f, long double d);
+    bool operator<=(long double d, const fraction & f);
     bool operator<=(const fraction & f, long double d);
+    bool operator>(long double d, const fraction & f);
     bool operator>(const fraction & f, long double d);
+    bool operator>=(long double d, const fraction & f);
     bool operator>=(const fraction & f, long double d);
 
     bool operator==(const fraction & f, int i);
+    bool operator==(int i, const fraction & f);
     bool operator!=(const fraction & f, int i);
+    bool operator!=(int i, const fraction & f);
     bool operator<(const fraction & f, int i);
+    bool operator<(int i, const fraction & f);
     bool operator<=(const fraction & f, int i);
+    bool operator<=(int i, const fraction & f);
     bool operator>(const fraction & f, int i);
+    bool operator>(int i, const fraction & f);
     bool operator>=(const fraction & f, int i);
+    bool operator>=(int i, const fraction & f);
 
     bool operator==(const fraction & f, long i);
+    bool operator==(long i, const fraction & f);
     bool operator!=(const fraction & f, long i);
+    bool operator!=(long i, const fraction & f);
     bool operator<(const fraction & f, long i);
+    bool operator<(long i, const fraction & f);
     bool operator<=(const fraction & f, long i);
+    bool operator<=(long i, const fraction & f);
     bool operator>(const fraction & f, long i);
+    bool operator>(long i, const fraction & f);
     bool operator>=(const fraction & f, long i);
+    bool operator>=(long i, const fraction & f);
 
     bool operator==(const fraction & f, long long i);
+    bool operator==(long long i, const fraction & f);
     bool operator!=(const fraction & f, long long i);
+    bool operator!=(long long i, const fraction & f);
     bool operator<(const fraction & f, long long i);
+    bool operator<(long long i, const fraction & f);
     bool operator<=(const fraction & f, long long i);
+    bool operator<=(long long i, const fraction & f);
     bool operator>(const fraction & f, long long i);
+    bool operator>(long long i, const fraction & f);
     bool operator>=(const fraction & f, long long i);
+    bool operator>=(long long i, const fraction & f);
 
     fraction operator+(fraction f);
     fraction operator-(fraction f);
@@ -178,19 +213,31 @@ namespace algolib::mathmat
     fraction operator/(fraction f1, const fraction & f2);
 
     fraction operator+(fraction f, int i);
+    fraction operator+(int i, fraction f);
     fraction operator-(fraction f, int i);
+    fraction operator-(int i, fraction f);
     fraction operator*(fraction f, int i);
+    fraction operator*(int i, fraction f);
     fraction operator/(fraction f, int i);
+    fraction operator/(int i, fraction f);
 
     fraction operator+(fraction f, long i);
+    fraction operator+(long i, fraction f);
     fraction operator-(fraction f, long i);
+    fraction operator-(long i, fraction f);
     fraction operator*(fraction f, long i);
+    fraction operator*(long i, fraction f);
     fraction operator/(fraction f, long i);
+    fraction operator/(long i, fraction f);
 
     fraction operator+(fraction f, long long i);
+    fraction operator+(long long i, fraction f);
     fraction operator-(fraction f, long long i);
+    fraction operator-(long long i, fraction f);
     fraction operator*(fraction f, long long i);
+    fraction operator*(long long i, fraction f);
     fraction operator/(fraction f, long long i);
+    fraction operator/(long long i, fraction f);
 
     std::ostream & operator<<(std::ostream & os, const fraction & f);
 }
