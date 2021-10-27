@@ -209,186 +209,6 @@ bool alma::operator>=(const alma::fraction & f1, const alma::fraction & f2)
     return numerators.first >= numerators.second;
 }
 
-bool alma::operator==(const alma::fraction & f, float d)
-{
-    return static_cast<float>(f) == d;
-}
-
-bool alma::operator==(float d, const alma::fraction & f)
-{
-    return d == static_cast<float>(f);
-}
-
-bool alma::operator!=(const alma::fraction & f, float d)
-{
-    return static_cast<float>(f) != d;
-}
-
-bool alma::operator!=(float d, const alma::fraction & f)
-{
-    return d != static_cast<float>(f);
-}
-
-bool alma::operator<(const alma::fraction & f, float d)
-{
-    return static_cast<float>(f) < d;
-}
-
-bool alma::operator<(float d, const alma::fraction & f)
-{
-    return d < static_cast<float>(f);
-}
-
-bool alma::operator<=(const alma::fraction & f, float d)
-{
-    return static_cast<float>(f) <= d;
-}
-
-bool alma::operator<=(float d, const alma::fraction & f)
-{
-    return d <= static_cast<float>(f);
-}
-
-bool alma::operator>(const alma::fraction & f, float d)
-{
-    return static_cast<float>(f) > d;
-}
-
-bool alma::operator>(float d, const alma::fraction & f)
-{
-    return d > static_cast<float>(f);
-}
-
-bool alma::operator>=(const alma::fraction & f, float d)
-{
-    return static_cast<float>(f) >= d;
-}
-
-bool alma::operator>=(float d, const alma::fraction & f)
-{
-    return d >= static_cast<float>(f);
-}
-
-bool alma::operator==(const alma::fraction & f, double d)
-{
-    return static_cast<double>(f) == d;
-}
-
-bool alma::operator==(double d, const alma::fraction & f)
-{
-    return d == static_cast<double>(f);
-}
-
-bool alma::operator!=(const alma::fraction & f, double d)
-{
-    return static_cast<double>(f) != d;
-}
-
-bool alma::operator!=(double d, const alma::fraction & f)
-{
-    return d != static_cast<double>(f);
-}
-
-bool alma::operator<(const alma::fraction & f, double d)
-{
-    return static_cast<double>(f) < d;
-}
-
-bool alma::operator<(double d, const alma::fraction & f)
-{
-    return d < static_cast<double>(f);
-}
-
-bool alma::operator<=(const alma::fraction & f, double d)
-{
-    return static_cast<double>(f) <= d;
-}
-
-bool alma::operator<=(double d, const alma::fraction & f)
-{
-    return d <= static_cast<double>(f);
-}
-
-bool alma::operator>(const alma::fraction & f, double d)
-{
-    return static_cast<double>(f) > d;
-}
-
-bool alma::operator>(double d, const alma::fraction & f)
-{
-    return d > static_cast<double>(f);
-}
-
-bool alma::operator>=(const alma::fraction & f, double d)
-{
-    return static_cast<double>(f) >= d;
-}
-
-bool alma::operator>=(double d, const alma::fraction & f)
-{
-    return d >= static_cast<double>(f);
-}
-
-bool alma::operator==(const alma::fraction & f, long double d)
-{
-    return static_cast<long double>(f) == d;
-}
-
-bool alma::operator==(long double d, const alma::fraction & f)
-{
-    return d == static_cast<long double>(f);
-}
-
-bool alma::operator!=(const alma::fraction & f, long double d)
-{
-    return static_cast<long double>(f) != d;
-}
-
-bool alma::operator!=(long double d, const alma::fraction & f)
-{
-    return d != static_cast<long double>(f);
-}
-
-bool alma::operator<(const alma::fraction & f, long double d)
-{
-    return static_cast<long double>(f) < d;
-}
-
-bool alma::operator<(long double d, const alma::fraction & f)
-{
-    return d < static_cast<long double>(f);
-}
-
-bool alma::operator<=(const alma::fraction & f, long double d)
-{
-    return static_cast<long double>(f) <= d;
-}
-
-bool alma::operator<=(long double d, const alma::fraction & f)
-{
-    return d <= static_cast<long double>(f);
-}
-
-bool alma::operator>(const alma::fraction & f, long double d)
-{
-    return static_cast<long double>(f) > d;
-}
-
-bool alma::operator>(long double d, const alma::fraction & f)
-{
-    return d > static_cast<long double>(f);
-}
-
-bool alma::operator>=(const alma::fraction & f, long double d)
-{
-    return static_cast<long double>(f) >= d;
-}
-
-bool alma::operator>=(long double d, const alma::fraction & f)
-{
-    return d >= static_cast<long double>(f);
-}
-
 bool alma::operator==(const alma::fraction & f, int i)
 {
     return f == alma::fraction(i);
@@ -570,7 +390,7 @@ bool alma::operator>=(long long i, const alma::fraction & f)
 }
 
 #pragma endregion
-#pragma region mathematical operators
+#pragma region unary operators
 
 alma::fraction alma::operator+(alma::fraction f)
 {
@@ -594,6 +414,9 @@ alma::fraction alma::operator~(alma::fraction f)
     f.normalize();
     return f;
 }
+
+#pragma endregion
+#pragma region binary operators
 
 alma::fraction alma::operator+(alma::fraction f1, const alma::fraction & f2)
 {

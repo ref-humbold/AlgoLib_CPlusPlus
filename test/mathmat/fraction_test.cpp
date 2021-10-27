@@ -61,6 +61,67 @@ TEST(FractionTest, operatorBool_WhenNegative_ThenTrue)
 }
 
 #pragma endregion
+#pragma region comparison operators
+
+TEST(FractionTest, operatorEqual_WhenSameNormalizedFraction_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(9, 15) == alma::fraction(3, 5);
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorEqual_WhenEqualToInt_ThenTrue)
+{
+    // when
+    bool result1 = alma::fraction(125, 5) == 25;
+    bool result2 = 25 == alma::fraction(125, 5);
+    // then
+    EXPECT_TRUE(result1);
+    EXPECT_TRUE(result2);
+}
+
+TEST(FractionTest, operatorNotEqual_WhenDifferentFraction_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(9, 14) != alma::fraction(3, 5);
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorLess_WhenSameDenominatorAndGreaterNumerator_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(9, 14) < alma::fraction(17, 14);
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorLess_WhenLessThanInt_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(-31, 6) < -4;
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorGreater_WhenSameNumeratorAndGreaterDenominator_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(9, 14) > alma::fraction(9, 26);
+    // then
+    EXPECT_TRUE(result);
+}
+
+TEST(FractionTest, operatorGreater_WhenGreaterThanLongLong_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(11, 3) > 2LL;
+    // then
+    EXPECT_TRUE(result);
+}
+
+#pragma endregion
 #pragma region unary operators
 
 TEST(FractionTest, operatorUnaryPlus_ThenCopied)
@@ -214,77 +275,6 @@ TEST(FractionTest, operatorSlash_WhenInt_ThenDivided)
     // then
     EXPECT_EQ(alma::fraction(7, 12), result1);
     EXPECT_EQ(alma::fraction(12, 7), result2);
-}
-
-#pragma endregion
-#pragma region comparison operators
-
-TEST(FractionTest, operatorEqual_WhenSameNormalizedFraction_ThenTrue)
-{
-    // when
-    bool result = alma::fraction(9, 15) == alma::fraction(3, 5);
-    // then
-    EXPECT_TRUE(result);
-}
-
-TEST(FractionTest, operatorEqual_WhenEqualToDouble_ThenTrue)
-{
-    // when
-    bool result1 = alma::fraction(-13, 8) == -1.625;
-    bool result2 = -1.625 == alma::fraction(-13, 8);
-    // then
-    EXPECT_TRUE(result1);
-    EXPECT_TRUE(result2);
-}
-
-TEST(FractionTest, operatorEqual_WhenEqualToInt_ThenTrue)
-{
-    // when
-    bool result1 = alma::fraction(125, 5) == 25;
-    bool result2 = 25 == alma::fraction(125, 5);
-    // then
-    EXPECT_TRUE(result1);
-    EXPECT_TRUE(result2);
-}
-
-TEST(FractionTest, operatorNotEqual_WhenDifferentFraction_ThenTrue)
-{
-    // when
-    bool result = alma::fraction(9, 14) != alma::fraction(3, 5);
-    // then
-    EXPECT_TRUE(result);
-}
-
-TEST(FractionTest, operatorLess_WhenSameDenominatorAndGreaterNumerator_ThenTrue)
-{
-    // when
-    bool result = alma::fraction(9, 14) < alma::fraction(17, 14);
-    // then
-    EXPECT_TRUE(result);
-}
-
-TEST(FractionTest, operatorLess_WhenLessThanInt_ThenTrue)
-{
-    // when
-    bool result = alma::fraction(-31, 6) < -4;
-    // then
-    EXPECT_TRUE(result);
-}
-
-TEST(FractionTest, operatorGreater_WhenSameNumeratorAndGreaterDenominator_ThenTrue)
-{
-    // when
-    bool result = alma::fraction(9, 14) > alma::fraction(9, 26);
-    // then
-    EXPECT_TRUE(result);
-}
-
-TEST(FractionTest, operatorGreater_WhenGreaterThanDouble_ThenTrue)
-{
-    // when
-    bool result = alma::fraction(11, 3) > 2.67;
-    // then
-    EXPECT_TRUE(result);
 }
 
 #pragma endregion
