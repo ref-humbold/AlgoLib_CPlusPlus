@@ -52,99 +52,6 @@ alma::fraction & alma::fraction::operator/=(const alma::fraction & f)
     return *this;
 }
 
-alma::fraction & alma::fraction::operator+=(int i)
-{
-    this->numerator += i * this->denominator;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator-=(int i)
-{
-    this->numerator -= i * this->denominator;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator*=(int i)
-{
-    this->numerator *= i;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator/=(int i)
-{
-    if(i == 0)
-        throw std::domain_error("Division by zero");
-
-    this->denominator *= i;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator+=(long i)
-{
-    this->numerator += i * this->denominator;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator-=(long i)
-{
-    this->numerator -= i * this->denominator;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator*=(long i)
-{
-    this->numerator *= i;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator/=(long i)
-{
-    if(i == 0)
-        throw std::domain_error("Division by zero");
-
-    this->denominator *= i;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator+=(long long i)
-{
-    this->numerator += i * this->denominator;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator-=(long long i)
-{
-    this->numerator -= i * this->denominator;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator*=(long long i)
-{
-    this->numerator *= i;
-    normalize();
-    return *this;
-}
-
-alma::fraction & alma::fraction::operator/=(long long i)
-{
-    if(i == 0)
-        throw std::domain_error("Division by zero");
-
-    this->denominator *= i;
-    normalize();
-    return *this;
-}
-
 void alma::fraction::normalize()
 {
     if(denominator < 0)
@@ -211,182 +118,182 @@ bool alma::operator>=(const alma::fraction & f1, const alma::fraction & f2)
 
 bool alma::operator==(const alma::fraction & f, int i)
 {
-    return f == alma::fraction(i);
+    return f == static_cast<alma::fraction>(i);
 }
 
 bool alma::operator==(int i, const alma::fraction & f)
 {
-    return alma::fraction(i) == f;
+    return static_cast<alma::fraction>(i) == f;
 }
 
 bool alma::operator!=(const alma::fraction & f, int i)
 {
-    return f != alma::fraction(i);
+    return f != static_cast<alma::fraction>(i);
 }
 
 bool alma::operator!=(int i, const alma::fraction & f)
 {
-    return alma::fraction(i) != f;
+    return static_cast<alma::fraction>(i) != f;
 }
 
 bool alma::operator<(const alma::fraction & f, int i)
 {
-    return f < alma::fraction(i);
+    return f < static_cast<alma::fraction>(i);
 }
 
 bool alma::operator<(int i, const alma::fraction & f)
 {
-    return alma::fraction(i) < f;
+    return static_cast<alma::fraction>(i) < f;
 }
 
 bool alma::operator<=(const alma::fraction & f, int i)
 {
-    return f <= alma::fraction(i);
+    return f <= static_cast<alma::fraction>(i);
 }
 
 bool alma::operator<=(int i, const alma::fraction & f)
 {
-    return alma::fraction(i) <= f;
+    return static_cast<alma::fraction>(i) <= f;
 }
 
 bool alma::operator>(const alma::fraction & f, int i)
 {
-    return f > alma::fraction(i);
+    return f > static_cast<alma::fraction>(i);
 }
 
 bool alma::operator>(int i, const alma::fraction & f)
 {
-    return alma::fraction(i) > f;
+    return static_cast<alma::fraction>(i) > f;
 }
 
 bool alma::operator>=(const alma::fraction & f, int i)
 {
-    return f >= alma::fraction(i);
+    return f >= static_cast<alma::fraction>(i);
 }
 
 bool alma::operator>=(int i, const alma::fraction & f)
 {
-    return alma::fraction(i) >= f;
+    return static_cast<alma::fraction>(i) >= f;
 }
 
 bool alma::operator==(const alma::fraction & f, long i)
 {
-    return f == alma::fraction(i);
+    return f == static_cast<alma::fraction>(i);
 }
 
 bool alma::operator==(long i, const alma::fraction & f)
 {
-    return alma::fraction(i) == f;
+    return static_cast<alma::fraction>(i) == f;
 }
 
 bool alma::operator!=(const alma::fraction & f, long i)
 {
-    return f != alma::fraction(i);
+    return f != static_cast<alma::fraction>(i);
 }
 
 bool alma::operator!=(long i, const alma::fraction & f)
 {
-    return alma::fraction(i) != f;
+    return static_cast<alma::fraction>(i) != f;
 }
 
 bool alma::operator<(const alma::fraction & f, long i)
 {
-    return f < alma::fraction(i);
+    return f < static_cast<alma::fraction>(i);
 }
 
 bool alma::operator<(long i, const alma::fraction & f)
 {
-    return alma::fraction(i) < f;
+    return static_cast<alma::fraction>(i) < f;
 }
 
 bool alma::operator<=(const alma::fraction & f, long i)
 {
-    return f <= alma::fraction(i);
+    return f <= static_cast<alma::fraction>(i);
 }
 
 bool alma::operator<=(long i, const alma::fraction & f)
 {
-    return alma::fraction(i) <= f;
+    return static_cast<alma::fraction>(i) <= f;
 }
 
 bool alma::operator>(const alma::fraction & f, long i)
 {
-    return f > alma::fraction(i);
+    return f > static_cast<alma::fraction>(i);
 }
 
 bool alma::operator>(long i, const alma::fraction & f)
 {
-    return alma::fraction(i) > f;
+    return static_cast<alma::fraction>(i) > f;
 }
 
 bool alma::operator>=(const alma::fraction & f, long i)
 {
-    return f >= alma::fraction(i);
+    return f >= static_cast<alma::fraction>(i);
 }
 
 bool alma::operator>=(long i, const alma::fraction & f)
 {
-    return alma::fraction(i) >= f;
+    return static_cast<alma::fraction>(i) >= f;
 }
 
 bool alma::operator==(const alma::fraction & f, long long i)
 {
-    return f == alma::fraction(i);
+    return f == static_cast<alma::fraction>(i);
 }
 
 bool alma::operator==(long long i, const alma::fraction & f)
 {
-    return alma::fraction(i) == f;
+    return static_cast<alma::fraction>(i) == f;
 }
 
 bool alma::operator!=(const alma::fraction & f, long long i)
 {
-    return f != alma::fraction(i);
+    return f != static_cast<alma::fraction>(i);
 }
 
 bool alma::operator!=(long long i, const alma::fraction & f)
 {
-    return alma::fraction(i) != f;
+    return static_cast<alma::fraction>(i) != f;
 }
 
 bool alma::operator<(const alma::fraction & f, long long i)
 {
-    return f < alma::fraction(i);
+    return f < static_cast<alma::fraction>(i);
 }
 
 bool alma::operator<(long long i, const alma::fraction & f)
 {
-    return alma::fraction(i) < f;
+    return static_cast<alma::fraction>(i) < f;
 }
 
 bool alma::operator<=(const alma::fraction & f, long long i)
 {
-    return f <= alma::fraction(i);
+    return f <= static_cast<alma::fraction>(i);
 }
 
 bool alma::operator<=(long long i, const alma::fraction & f)
 {
-    return alma::fraction(i) <= f;
+    return static_cast<alma::fraction>(i) <= f;
 }
 
 bool alma::operator>(const alma::fraction & f, long long i)
 {
-    return f > alma::fraction(i);
+    return f > static_cast<alma::fraction>(i);
 }
 
 bool alma::operator>(long long i, const alma::fraction & f)
 {
-    return alma::fraction(i) > f;
+    return static_cast<alma::fraction>(i) > f;
 }
 
 bool alma::operator>=(const alma::fraction & f, long long i)
 {
-    return f >= alma::fraction(i);
+    return f >= static_cast<alma::fraction>(i);
 }
 
 bool alma::operator>=(long long i, const alma::fraction & f)
 {
-    return alma::fraction(i) >= f;
+    return static_cast<alma::fraction>(i) >= f;
 }
 
 #pragma endregion
@@ -448,10 +355,9 @@ alma::fraction alma::operator+(alma::fraction f, int i)
     return f;
 }
 
-alma::fraction alma::operator+(int i, alma::fraction f)
+alma::fraction alma::operator+(int i, const alma::fraction & f)
 {
-    f += i;
-    return f;
+    return static_cast<alma::fraction>(i) + f;
 }
 
 alma::fraction alma::operator-(alma::fraction f, int i)
@@ -460,9 +366,9 @@ alma::fraction alma::operator-(alma::fraction f, int i)
     return f;
 }
 
-alma::fraction alma::operator-(int i, alma::fraction f)
+alma::fraction alma::operator-(int i, const alma::fraction & f)
 {
-    return -f + i;
+    return static_cast<alma::fraction>(i) - f;
 }
 
 alma::fraction alma::operator*(alma::fraction f, int i)
@@ -471,10 +377,9 @@ alma::fraction alma::operator*(alma::fraction f, int i)
     return f;
 }
 
-alma::fraction alma::operator*(int i, alma::fraction f)
+alma::fraction alma::operator*(int i, const alma::fraction & f)
 {
-    f *= i;
-    return f;
+    return static_cast<alma::fraction>(i) * f;
 }
 
 alma::fraction alma::operator/(alma::fraction f, int i)
@@ -483,9 +388,9 @@ alma::fraction alma::operator/(alma::fraction f, int i)
     return f;
 }
 
-alma::fraction alma::operator/(int i, alma::fraction f)
+alma::fraction alma::operator/(int i, const alma::fraction & f)
 {
-    return ~f * i;
+    return static_cast<alma::fraction>(i) / f;
 }
 
 alma::fraction alma::operator+(alma::fraction f, long i)
@@ -494,10 +399,9 @@ alma::fraction alma::operator+(alma::fraction f, long i)
     return f;
 }
 
-alma::fraction alma::operator+(long i, alma::fraction f)
+alma::fraction alma::operator+(long i, const alma::fraction & f)
 {
-    f += i;
-    return f;
+    return static_cast<alma::fraction>(i) + f;
 }
 
 alma::fraction alma::operator-(alma::fraction f, long i)
@@ -506,9 +410,9 @@ alma::fraction alma::operator-(alma::fraction f, long i)
     return f;
 }
 
-alma::fraction alma::operator-(long i, alma::fraction f)
+alma::fraction alma::operator-(long i, const alma::fraction & f)
 {
-    return -f + i;
+    return static_cast<alma::fraction>(i) - f;
 }
 
 alma::fraction alma::operator*(alma::fraction f, long i)
@@ -517,10 +421,9 @@ alma::fraction alma::operator*(alma::fraction f, long i)
     return f;
 }
 
-alma::fraction alma::operator*(long i, alma::fraction f)
+alma::fraction alma::operator*(long i, const alma::fraction & f)
 {
-    f *= i;
-    return f;
+    return static_cast<alma::fraction>(i) * f;
 }
 
 alma::fraction alma::operator/(alma::fraction f, long i)
@@ -529,9 +432,9 @@ alma::fraction alma::operator/(alma::fraction f, long i)
     return f;
 }
 
-alma::fraction alma::operator/(long i, alma::fraction f)
+alma::fraction alma::operator/(long i, const alma::fraction & f)
 {
-    return ~f * i;
+    return static_cast<alma::fraction>(i) / f;
 }
 
 alma::fraction alma::operator+(alma::fraction f, long long i)
@@ -540,10 +443,9 @@ alma::fraction alma::operator+(alma::fraction f, long long i)
     return f;
 }
 
-alma::fraction alma::operator+(long long i, alma::fraction f)
+alma::fraction alma::operator+(long long i, const alma::fraction & f)
 {
-    f += i;
-    return f;
+    return static_cast<alma::fraction>(i) + f;
 }
 
 alma::fraction alma::operator-(alma::fraction f, long long i)
@@ -552,9 +454,9 @@ alma::fraction alma::operator-(alma::fraction f, long long i)
     return f;
 }
 
-alma::fraction alma::operator-(long long i, alma::fraction f)
+alma::fraction alma::operator-(long long i, const alma::fraction & f)
 {
-    return -f + i;
+    return static_cast<alma::fraction>(i) - f;
 }
 
 alma::fraction alma::operator*(alma::fraction f, long long i)
@@ -563,10 +465,9 @@ alma::fraction alma::operator*(alma::fraction f, long long i)
     return f;
 }
 
-alma::fraction alma::operator*(long long i, alma::fraction f)
+alma::fraction alma::operator*(long long i, const alma::fraction & f)
 {
-    f *= i;
-    return f;
+    return static_cast<alma::fraction>(i) * f;
 }
 
 alma::fraction alma::operator/(alma::fraction f, long long i)
@@ -575,9 +476,9 @@ alma::fraction alma::operator/(alma::fraction f, long long i)
     return f;
 }
 
-alma::fraction alma::operator/(long long i, alma::fraction f)
+alma::fraction alma::operator/(long long i, const alma::fraction & f)
 {
-    return ~f * i;
+    return static_cast<alma::fraction>(i) / f;
 }
 
 #pragma endregion
