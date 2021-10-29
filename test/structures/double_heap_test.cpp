@@ -65,8 +65,10 @@ TEST_F(DoubleHeapTest, min_WhenEmpty_ThenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
-    // when - then
-    EXPECT_THROW(test_object.min(), std::out_of_range);
+    // when
+    auto exec = [&]() { test_object.min(); };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
 }
 
 TEST_F(DoubleHeapTest, min_WhenNotEmpty_ThenMinimalElement)
@@ -81,8 +83,10 @@ TEST_F(DoubleHeapTest, max_WhenEmpty_ThenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
+    // when
+    auto exec = [&]() { test_object.max(); };
     // then
-    EXPECT_THROW(test_object.max(), std::out_of_range);
+    EXPECT_THROW(exec(), std::out_of_range);
 }
 
 TEST_F(DoubleHeapTest, max_WhenSingleElement_ThenThisElement)
@@ -177,8 +181,10 @@ TEST_F(DoubleHeapTest, popMin_WhenEmpty_ThenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
-    // when - then
-    EXPECT_THROW(test_object.pop_min(), std::out_of_range);
+    // when
+    auto exec = [&]() { test_object.pop_min(); };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
 }
 
 TEST_F(DoubleHeapTest, popMin_WhenNotEmpty_ThenMinimalElementRemoved)
@@ -221,8 +227,10 @@ TEST_F(DoubleHeapTest, popMax_WhenEmpty_ThenOutOfRange)
 {
     // given
     test_object = alst::double_heap<int>();
-    // when - then
-    EXPECT_THROW(test_object.pop_max(), std::out_of_range);
+    // when
+    auto exec = [&]() { test_object.pop_max(); };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
 }
 
 TEST_F(DoubleHeapTest, popMax_WhenSingleElement_ThenThisElementRemoved)

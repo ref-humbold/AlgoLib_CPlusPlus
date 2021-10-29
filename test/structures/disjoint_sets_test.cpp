@@ -80,7 +80,7 @@ TEST_F(DisjointSetsTest, insert_WhenNewElementToPresentSet)
 
 TEST_F(DisjointSetsTest, insert_WhenPresentElement)
 {
-    // given
+    // when
     auto exec = [&]() { test_object.insert(7); };
     // then
     EXPECT_THROW(exec(), std::invalid_argument);
@@ -101,7 +101,7 @@ TEST_F(DisjointSetsTest, insert_WhenManyElementsAsSingletons)
     // when
     EXPECT_NO_THROW(test_object.insert(elems.begin(), elems.end()));
     // then
-    for(int e : elems)
+    for(auto && e : elems)
     {
         ASSERT_TRUE(test_object.contains(e));
         EXPECT_EQ(e, test_object[e]);
@@ -116,7 +116,7 @@ TEST_F(DisjointSetsTest, insert_WhenManyElementsToPresentSet)
     // when
     EXPECT_NO_THROW(test_object.insert(elems.begin(), elems.end(), repr));
     // then
-    for(int e : elems)
+    for(auto && e : elems)
     {
         ASSERT_TRUE(test_object.contains(e));
         EXPECT_EQ(repr, test_object[e]);
