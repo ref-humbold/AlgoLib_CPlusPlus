@@ -26,7 +26,7 @@ namespace algolib::structures
         template <typename InputIterator>
         disjoint_sets(InputIterator first, InputIterator last);
 
-        disjoint_sets(std::initializer_list<E> il) : disjoint_sets(il.begin(), il.end())
+        disjoint_sets(std::initializer_list<E> init) : disjoint_sets(init.begin(), init.end())
         {
         }
 

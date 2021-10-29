@@ -90,7 +90,7 @@ TEST_F(DoubleHeapTest, max_WhenSingleElement_ThenThisElement)
     // given
     int element = 19;
 
-    test_object = alst::double_heap<int>({element});
+    test_object = alst::double_heap<int>(std::less<int>(), {element});
     // when
     int result = test_object.max();
     // then
@@ -119,7 +119,7 @@ TEST_F(DoubleHeapTest, push_WhenEmpty_ThenAdded)
     EXPECT_EQ(element, test_object.max());
 }
 
-TEST_F(DoubleHeapTest, push_WhenNewElementIsLess_ThenAddedTomin)
+TEST_F(DoubleHeapTest, push_WhenNewElementIsLess_ThenAddedToMin)
 {
     // given
     int element = minimum - 1;
@@ -130,12 +130,34 @@ TEST_F(DoubleHeapTest, push_WhenNewElementIsLess_ThenAddedTomin)
     EXPECT_EQ(element, test_object.min());
 }
 
-TEST_F(DoubleHeapTest, push_WhenNewElementIsGreater_ThenAddedTomax)
+TEST_F(DoubleHeapTest, push_WhenNewElementIsGreater_ThenAddedToMax)
 {
     // given
     int element = maximum + 1;
     // when
     test_object.push(element);
+    // then
+    ASSERT_EQ(numbers.size() + 1, test_object.size());
+    EXPECT_EQ(element, test_object.max());
+}
+
+TEST_F(DoubleHeapTest, emplace_WhenNewElementIsLess_ThenAddedToMin)
+{
+    // given
+    int element = minimum - 1;
+    // when
+    test_object.emplace(element);
+    // then
+    ASSERT_EQ(numbers.size() + 1, test_object.size());
+    EXPECT_EQ(element, test_object.min());
+}
+
+TEST_F(DoubleHeapTest, emplace_WhenNewElementIsGreater_ThenAddedToMax)
+{
+    // given
+    int element = maximum + 1;
+    // when
+    test_object.emplace(element);
     // then
     ASSERT_EQ(numbers.size() + 1, test_object.size());
     EXPECT_EQ(element, test_object.max());
@@ -170,7 +192,7 @@ TEST_F(DoubleHeapTest, popMin_WhenNotEmpty_ThenMinimalElementRemoved)
 TEST_F(DoubleHeapTest, popMin_WhenSingleElement_ThenThisElementRemoved)
 {
     // given
-    test_object = alst::double_heap<int>({19});
+    test_object = alst::double_heap<int>(std::less<int>(), {19});
     // when
     test_object.pop_min();
     // then
@@ -206,7 +228,7 @@ TEST_F(DoubleHeapTest, popMax_WhenEmpty_ThenOutOfRange)
 TEST_F(DoubleHeapTest, popMax_WhenSingleElement_ThenThisElementRemoved)
 {
     // given
-    test_object = alst::double_heap<int>({19});
+    test_object = alst::double_heap<int>(std::less<int>(), {19});
     // when
     test_object.pop_max();
     // then

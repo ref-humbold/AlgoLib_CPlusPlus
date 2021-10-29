@@ -110,7 +110,7 @@ namespace internal
                 if(it != this->matching.end() && distances[it->second.value()] == this->infinity)
                 {
                     ++distances[vertex];
-                    vertex_queue.push(it->second.value());
+                    vertex_queue.push(*it->second);
                 }
             }
         }

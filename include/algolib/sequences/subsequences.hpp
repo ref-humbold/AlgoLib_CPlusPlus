@@ -8,25 +8,28 @@
 #include <cstdlib>
 #include <algorithm>
 #include <functional>
+#include <optional>
 #include <vector>
 
 namespace internal
 {
+    // Searches for index of element in list of subsequences.
+    // (index_begin inclusive, index_end exclusive)
     template <typename T, typename C = std::less<T>>
-    int search_index(const std::vector<T> & sequence, const C & compare,
-                     const std::vector<int> & subseq_last, int index_begin, int index_end,
-                     int index_elem)
+    size_t search_index(const std::vector<T> & sequence, const C & compare,
+                        const std::vector<size_t> & subsequence, size_t index_elem,
+                        size_t index_begin, size_t index_end)
     {
-        if(index_begin == index_end)
+        if(index_end - index_begin <= 1)
             return index_begin;
 
-        int index_middle = (index_begin + index_end) / 2;
+        size_t index_middle = (index_begin + index_end - 1) / 2;
 
-        if(compare(sequence[subseq_last[index_middle]], sequence[index_elem]))
-            return search_index(sequence, compare, subseq_last, index_middle + 1, index_end,
-                                index_elem);
-
-        return search_index(sequence, compare, subseq_last, index_begin, index_middle, index_elem);
+        return compare(sequence[subsequence[index_middle]], sequence[index_elem])
+                       ? search_index(sequence, compare, subsequence, index_elem, index_middle + 1,
+                                      index_end)
+                       : search_index(sequence, compare, subsequence, index_elem, index_begin,
+                                      index_middle);
     }
 }
 
@@ -37,33 +40,36 @@ namespace algolib::sequences
      * \param sequence a sequence of elements
      * \return the longest increasing subsequence (least lexicographically)
      */
-    template <typename T, typename C = std::less<T>>
-    std::vector<T> longest_increasing(const std::vector<T> & sequence, const C & compare = C())
+    template <typename T, typename Compare = std::less<T>>
+    std::vector<T> longest_increasing(const std::vector<T> & sequence,
+                                      const Compare & compare = Compare())
     {
-        std::vector<T> longest_subseq = {};
-        std::vector<int> subseq_last = {0};
-        std::vector<int> previous_elems(sequence.size(), -1);
+        std::vector<T> longest_subsequence = {};
+        std::vector<size_t> subsequence = {0};
+        std::vector<std::optional<size_t>> previous_elems = {std::nullopt};
 
         for(size_t i = 1; i < sequence.size(); ++i)
-            if(compare(sequence[subseq_last.back()], sequence[i]))
+            if(compare(sequence[subsequence.back()], sequence[i]))
             {
-                previous_elems[i] = subseq_last.back();
-                subseq_last.push_back(i);
+                previous_elems.push_back(std::make_optional(subsequence.back()));
+                subsequence.push_back(i);
             }
             else
             {
-                int index = internal::search_index<T>(sequence, compare, subseq_last, 0,
-                                                      subseq_last.size() - 1, i);
+                size_t index = internal::search_index<T>(sequence, compare, subsequence, i, 0,
+                                                         subsequence.size());
 
-                subseq_last[index] = i;
-                previous_elems[i] = index > 0 ? subseq_last[index - 1] : -1;
+                subsequence[index] = i;
+                previous_elems.push_back(index > 0 ? std::make_optional(subsequence[index - 1])
+                                                   : std::nullopt);
             }
 
-        for(int j = subseq_last.back(); j >= 0; j = previous_elems[j])
-            longest_subseq.push_back(sequence[j]);
+        for(std::optional<size_t> j = std::make_optional(subsequence.back()); j.has_value();
+            j = previous_elems[*j])
+            longest_subsequence.push_back(sequence[j.value()]);
 
-        std::reverse(longest_subseq.begin(), longest_subseq.end());
-        return longest_subseq;
+        std::reverse(longest_subsequence.begin(), longest_subsequence.end());
+        return longest_subsequence;
     }
 
     /*!

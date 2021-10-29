@@ -39,6 +39,7 @@ namespace algolib::structures
         using const_reference = const value_type &;
         using pointer = value_type *;
         using const_pointer = const value_type *;
+        using value_compare = Compare;
         using iterator = avl_iterator;
         using const_iterator = avl_const_iterator;
         using reverse_iterator = std::reverse_iterator<avl_iterator>;
@@ -46,20 +47,22 @@ namespace algolib::structures
         using difference_type = typename std::iterator_traits<iterator>::difference_type;
         using size_type = size_t;
 
-        explicit avl_tree(const Compare & compare = Compare()) : compare{compare}
+        explicit avl_tree(const value_compare & compare = value_compare()) : compare{compare}
         {
         }
 
         template <typename InputIterator>
-        avl_tree(InputIterator first, InputIterator last, const Compare & compare = Compare())
+        avl_tree(InputIterator first, InputIterator last,
+                 const value_compare & compare = value_compare())
             : compare{compare}
         {
             for(InputIterator it = first; it != last; ++it)
                 this->insert(*it);
         }
 
-        avl_tree(std::initializer_list<value_type> il, const Compare & compare = Compare())
-            : avl_tree(il.begin(), il.end(), compare)
+        avl_tree(std::initializer_list<value_type> init,
+                 const value_compare & compare = value_compare())
+            : avl_tree(init.begin(), init.end(), compare)
         {
         }
 
@@ -169,32 +172,21 @@ namespace algolib::structures
         const_iterator find(const_reference element) const;
 
         /*!
-         * \brief Checks whether given value is present in the tree.
-         * \param element value to be checked
-         * \return \c true whether text was found in trie, otherwise \c false
-         */
-        bool contains(const_reference element)
-        {
-            return this->find(element) != this->end();
-        }
-
-        /*!
-         * \brief Checks whether given value is present in the tree.
-         * \param element value to be checked
-         * \return \c true whether text was found in trie, otherwise \c false
-         */
-        bool contains(const_reference element) const
-        {
-            return this->find(element) != this->cend();
-        }
-
-        /*!
          * \brief Adds a new value to the tree.
          * \param element value to be added
          * \return iterator at the new element and \c true whether insert was successful,
          * otherwise \c false
          */
         std::pair<iterator, bool> insert(const_reference element);
+
+        /*!
+         * \brief Adds a new value to the tree constructed in-place with the given arguments.
+         * \param args arguments to forward to the constructor of the new value
+         * \return iterator at the new element and \c true whether emplace was successful,
+         * otherwise \c false
+         */
+        template <typename... Args>
+        std::pair<iterator, bool> emplace(Args &&... args);
 
         /*!
          * \brief Removes given element from the tree if present.
@@ -209,22 +201,22 @@ namespace algolib::structures
     private:
         inner_ptr get_root() const
         {
-            return this->tree->get_parent();
+            return this->tree->parent();
         }
 
         void set_root(inner_ptr node)
         {
-            this->tree->set_parent(node);
+            this->tree->parent(node);
         }
 
         bool is_left_child(inner_ptr node)
         {
-            return node->get_parent()->get_height() > 0 && node->get_parent()->get_left() == node;
+            return node->parent()->height() > 0 && node->parent()->left() == node;
         }
 
         bool is_right_child(inner_ptr node)
         {
-            return node->get_parent()->get_height() > 0 && node->get_parent()->get_right() == node;
+            return node->parent()->height() > 0 && node->parent()->right() == node;
         }
 
         // Determines the subtree where given value might be present:
@@ -236,6 +228,9 @@ namespace algolib::structures
         // Searches for node that satisfies given predicate with given value.
         inner_ptr find_node(const_reference element,
                             std::function<bool(inner_ptr, const_reference)> predicate) const;
+
+        // Inserts inner node to the tree
+        std::pair<iterator, bool> insert_node(inner_ptr node);
 
         // Removes inner node from the tree.
         void delete_node(inner_ptr node);
@@ -254,7 +249,7 @@ namespace algolib::structures
 
         header_ptr tree = new avl_header_node();  // The tree denoted by its header
         size_type size_ = 0;  // Number of elements
-        Compare compare;  // Comparator
+        value_compare compare;  // Comparator
     };
 
     template <typename E, typename Compare>
@@ -315,41 +310,15 @@ namespace algolib::structures
     std::pair<typename avl_tree<E, Compare>::iterator, bool>
             avl_tree<E, Compare>::insert(const_reference element)
     {
-        std::function<bool(inner_ptr, const_reference)> child_equal = [this](inner_ptr n,
-                                                                             const_reference e) {
-            inner_ptr child = this->search(n, e);
+        return this->insert_node(new avl_inner_node(element));
+    }
 
-            return child == nullptr
-                   || (!this->compare(child->element, e) && !this->compare(e, child->element));
-        };
-        inner_ptr node_parent = this->find_node(element, child_equal);
-
-        if(node_parent == nullptr)
-        {
-            auto new_node = new avl_inner_node(element);
-
-            this->set_root(new_node);
-            ++this->size_;
-
-            return std::make_pair(iterator(new_node), true);
-        }
-
-        inner_ptr the_node = this->search(node_parent, element);
-
-        if(the_node != nullptr)
-            return std::make_pair(iterator(the_node), false);
-
-        auto new_node = new avl_inner_node(element);
-
-        if(this->compare(element, node_parent->element))
-            node_parent->set_left(new_node);
-        else
-            node_parent->set_right(new_node);
-
-        this->balance(node_parent);
-        ++this->size_;
-
-        return std::make_pair(iterator(new_node), true);
+    template <typename E, typename Compare>
+    template <typename... Args>
+    std::pair<typename avl_tree<E, Compare>::iterator, bool>
+            avl_tree<E, Compare>::emplace(Args &&... args)
+    {
+        return this->insert_node(new avl_inner_node(value_type(std::forward<Args>(args)...)));
     }
 
     template <typename E, typename Compare>
@@ -382,10 +351,10 @@ namespace algolib::structures
             avl_tree<E, Compare>::search(inner_ptr node, const_reference element) const
     {
         if(this->compare(element, node->element))
-            return node->get_left();
+            return node->left();
 
         if(this->compare(node->element, element))
-            return node->get_right();
+            return node->right();
 
         return node;
     }
@@ -404,22 +373,62 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
+    std::pair<typename avl_tree<E, Compare>::iterator, bool>
+            avl_tree<E, Compare>::insert_node(typename avl_tree<E, Compare>::inner_ptr node)
+    {
+        std::function<bool(inner_ptr, const_reference)> child_equal = [this](inner_ptr n,
+                                                                             const_reference e) {
+            inner_ptr child = this->search(n, e);
+
+            return child == nullptr
+                   || (!this->compare(child->element, e) && !this->compare(e, child->element));
+        };
+        inner_ptr node_parent = this->find_node(node->element, child_equal);
+
+        if(node_parent == nullptr)
+        {
+            this->set_root(node);
+            ++this->size_;
+
+            return std::make_pair(iterator(node), true);
+        }
+
+        inner_ptr the_node = this->search(node_parent, node->element);
+
+        if(the_node != nullptr)
+        {
+            delete node;
+            return std::make_pair(iterator(the_node), false);
+        }
+
+        if(this->compare(node->element, node_parent->element))
+            node_parent->left(node);
+        else
+            node_parent->right(node);
+
+        this->balance(node_parent);
+        ++this->size_;
+
+        return std::make_pair(iterator(node), true);
+    }
+
+    template <typename E, typename Compare>
     void avl_tree<E, Compare>::delete_node(inner_ptr node)
     {
-        if(node->get_left() != nullptr && node->get_right() != nullptr)
+        if(node->left() != nullptr && node->right() != nullptr)
         {
-            inner_ptr succ = node->get_right()->minimum();
+            inner_ptr succ = node->right()->minimum();
 
             std::swap(succ->element, node->element);
             this->delete_node(succ);
         }
         else
         {
-            inner_ptr child = node->get_left() != nullptr ? node->get_left() : node->get_right();
+            inner_ptr child = node->left() != nullptr ? node->left() : node->right();
 
-            if(node->get_parent()->get_height() > 0)
+            if(node->parent()->height() > 0)
             {
-                node_ptr node_parent = node->get_parent();
+                node_ptr node_parent = node->parent();
 
                 this->replace_node(node, child);
                 this->balance(node_parent);
@@ -427,8 +436,8 @@ namespace algolib::structures
             else
                 this->set_root(child);
 
-            node->set_left(nullptr);
-            node->set_right(nullptr);
+            node->left(nullptr);
+            node->right(nullptr);
             --this->size_;
             delete node;
         }
@@ -438,13 +447,13 @@ namespace algolib::structures
     void avl_tree<E, Compare>::replace_node(inner_ptr node1, inner_ptr node2)
     {
         if(this->is_left_child(node1))
-            node1->get_parent()->set_left(node2);
+            node1->parent()->left(node2);
         else if(this->is_right_child(node1))
-            node1->get_parent()->set_right(node2);
+            node1->parent()->right(node2);
         else
             this->set_root(node2);
 
-        node1->set_parent(nullptr);
+        node1->parent(nullptr);
     }
 
     template <typename E, typename Compare>
@@ -452,60 +461,60 @@ namespace algolib::structures
     {
         if(this->is_right_child(node))
         {
-            auto upper_node = static_cast<inner_ptr>(node->get_parent());
+            auto upper_node = static_cast<inner_ptr>(node->parent());
 
-            upper_node->set_right(node->get_left());
+            upper_node->right(node->left());
             this->replace_node(upper_node, node);
-            node->set_left(upper_node);
+            node->left(upper_node);
         }
         else if(this->is_left_child(node))
         {
-            auto upper_node = static_cast<inner_ptr>(node->get_parent());
+            auto upper_node = static_cast<inner_ptr>(node->parent());
 
-            upper_node->set_left(node->get_right());
+            upper_node->left(node->right());
             this->replace_node(upper_node, node);
-            node->set_right(upper_node);
+            node->right(upper_node);
         }
     }
 
     template <typename E, typename Compare>
     void avl_tree<E, Compare>::balance(node_ptr node)
     {
-        while(node->get_height() > 0)
+        while(node->height() > 0)
         {
             inner_ptr the_node = static_cast<inner_ptr>(node);
             int new_balance = this->size__balance(the_node);
 
             if(new_balance >= 2)
             {
-                if(this->size__balance(the_node->get_left()) > 0)
-                    this->rotate(the_node->get_left());
-                else if(this->size__balance(the_node->get_left()) < 0)
+                if(this->size__balance(the_node->left()) > 0)
+                    this->rotate(the_node->left());
+                else if(this->size__balance(the_node->left()) < 0)
                 {
-                    this->rotate(the_node->get_left()->get_right());
-                    this->rotate(the_node->get_left());
+                    this->rotate(the_node->left()->right());
+                    this->rotate(the_node->left());
                 }
             }
             else if(new_balance <= -2)
             {
-                if(this->size__balance(the_node->get_right()) < 0)
-                    this->rotate(the_node->get_right());
-                else if(this->size__balance(the_node->get_right()) > 0)
+                if(this->size__balance(the_node->right()) < 0)
+                    this->rotate(the_node->right());
+                else if(this->size__balance(the_node->right()) > 0)
                 {
-                    this->rotate(the_node->get_right()->get_left());
-                    this->rotate(the_node->get_right());
+                    this->rotate(the_node->right()->left());
+                    this->rotate(the_node->right());
                 }
             }
 
-            node = the_node->get_parent();
+            node = the_node->parent();
         }
     }
 
     template <typename E, typename Compare>
     int avl_tree<E, Compare>::size__balance(avl_tree<E, Compare>::inner_ptr node)
     {
-        int left_height = node->get_left() == nullptr ? 0 : node->get_left()->get_height();
-        int right_height = node->get_right() == nullptr ? 0 : node->get_right()->get_height();
+        int left_height = node->left() == nullptr ? 0 : node->left()->height();
+        int right_height = node->right() == nullptr ? 0 : node->right()->height();
 
         return left_height - right_height;
     }
@@ -518,19 +527,19 @@ namespace algolib::structures
     {
         virtual ~avl_node() = default;
 
-        virtual size_t get_height() = 0;
+        virtual size_t height() = 0;
 
-        virtual node_ptr get_left() = 0;
+        virtual node_ptr left() = 0;
 
-        virtual void set_left(node_ptr node) = 0;
+        virtual void left(node_ptr node) = 0;
 
-        virtual node_ptr get_right() = 0;
+        virtual node_ptr right() = 0;
 
-        virtual void set_right(node_ptr node) = 0;
+        virtual void right(node_ptr node) = 0;
 
-        virtual node_ptr get_parent() = 0;
+        virtual node_ptr parent() = 0;
 
-        virtual void set_parent(node_ptr node) = 0;
+        virtual void parent(node_ptr node) = 0;
 
         // Searches in its subtree for the node with minimal value.
         virtual node_ptr minimum() = 0;
@@ -546,13 +555,13 @@ namespace algolib::structures
     class avl_tree<E, Compare>::avl_inner_node : public avl_tree<E, Compare>::avl_node
     {
     public:
-        explicit avl_inner_node(const_reference elem)
+        explicit avl_inner_node(const_reference element)
             : avl_tree<E, Compare>::avl_node(),
-              element{elem},
-              height{1},
-              left{nullptr},
-              right{nullptr},
-              parent{nullptr}
+              element{element},
+              height_{1},
+              left_{nullptr},
+              right_{nullptr},
+              parent_{nullptr}
         {
         }
 
@@ -562,69 +571,69 @@ namespace algolib::structures
         avl_inner_node & operator=(const avl_inner_node & node);
         avl_inner_node & operator=(avl_inner_node &&) = delete;
 
-        size_t get_height() override
+        size_t height() override
         {
-            return this->height;
+            return this->height_;
         }
 
-        inner_ptr get_left() override
+        inner_ptr left() override
         {
-            return this->left;
+            return this->left_;
         }
 
-        void set_left(node_ptr node) override
+        void left(node_ptr node) override
         {
-            this->do_set_left(static_cast<inner_ptr>(node));
+            this->set_left(static_cast<inner_ptr>(node));
         }
 
-        inner_ptr get_right() override
+        inner_ptr right() override
         {
-            return this->right;
+            return this->right_;
         }
 
-        void set_right(node_ptr node) override
+        void right(node_ptr node) override
         {
-            this->do_set_right(static_cast<inner_ptr>(node));
+            this->set_right(static_cast<inner_ptr>(node));
         }
 
-        node_ptr get_parent() override
+        node_ptr parent() override
         {
-            return this->parent;
+            return this->parent_;
         }
 
-        void set_parent(node_ptr node) override
+        void parent(node_ptr node) override
         {
-            this->parent = node;
+            this->parent_ = node;
         }
 
         inner_ptr minimum() override
         {
-            return this->left == nullptr ? this : this->left->minimum();
+            return this->left_ == nullptr ? this : this->left_->minimum();
         }
 
         inner_ptr maximum() override
         {
-            return this->right == nullptr ? this : this->right->maximum();
+            return this->right_ == nullptr ? this : this->right_->maximum();
         }
 
         value_type element;  //!< Value in the node.
 
     private:
-        void size__height();
-        void do_set_left(inner_ptr node);
-        void do_set_right(inner_ptr node);
+        void count_height();
+        void set_left(inner_ptr node);
+        void set_right(inner_ptr node);
 
-        int height;
-        inner_ptr left;
-        inner_ptr right;
-        node_ptr parent;
+        int height_;
+        inner_ptr left_;
+        inner_ptr right_;
+        node_ptr parent_;
     };
 
     template <typename E, typename Compare>
     avl_tree<E, Compare>::avl_inner_node::~avl_inner_node()
     {
-        delete this->left;
-        delete this->right;
+        delete this->left_;
+        delete this->right_;
     }
 
     template <typename E, typename Compare>
@@ -632,64 +641,63 @@ namespace algolib::structures
             const avl_tree<E, Compare>::avl_inner_node & node)
         : avl_tree<E, Compare>::avl_node(),
           element{node.element},
-          height{node.height},
-          left{nullptr},
-          right{nullptr},
-          parent{nullptr}
+          height_{node.height_},
+          left_{nullptr},
+          right_{nullptr},
+          parent_{nullptr}
     {
-        if(node.left != nullptr)
-            this->do_set_left(new avl_inner_node(*node.left));
+        if(node.left_ != nullptr)
+            this->set_left(new avl_inner_node(*node.left_));
 
-        if(node.right != nullptr)
-            this->do_set_right(new avl_inner_node(*node.right));
+        if(node.right_ != nullptr)
+            this->set_right(new avl_inner_node(*node.right_));
     }
 
     template <typename E, typename Compare>
     typename avl_tree<E, Compare>::avl_inner_node & avl_tree<E, Compare>::avl_inner_node::operator=(
             const avl_tree<E, Compare>::avl_inner_node & node)
     {
-        node_ptr left_orig = this->left;
-        node_ptr right_orig = this->right;
+        node_ptr left_orig = this->left_;
+        node_ptr right_orig = this->right_;
 
         this->element = node.element;
-        this->height = node.height;
-        this->set_left(node.left == nullptr ? nullptr : new avl_inner_node(*node.left));
-        this->set_right(node.right == nullptr ? nullptr : new avl_inner_node(*node.right));
+        this->height_ = node.height_;
+        this->left(node.left_ == nullptr ? nullptr : new avl_inner_node(*node.left_));
+        this->right(node.right_ == nullptr ? nullptr : new avl_inner_node(*node.right_));
         delete left_orig;
         delete right_orig;
-
         return *this;
     }
 
     template <typename E, typename Compare>
-    void avl_tree<E, Compare>::avl_inner_node::size__height()
+    void avl_tree<E, Compare>::avl_inner_node::count_height()
     {
-        int left_height = this->left == nullptr ? 0 : this->left->get_height();
-        int right_height = this->right == nullptr ? 0 : this->right->get_height();
+        int left_height = this->left_ == nullptr ? 0 : this->left_->height();
+        int right_height = this->right_ == nullptr ? 0 : this->right_->height();
 
-        this->height = std::max(left_height, right_height) + 1;
+        this->height_ = std::max(left_height, right_height) + 1;
     }
 
     template <typename E, typename Compare>
-    void avl_tree<E, Compare>::avl_inner_node::do_set_left(inner_ptr node)
+    void avl_tree<E, Compare>::avl_inner_node::set_left(inner_ptr node)
     {
-        this->left = node;
+        this->left_ = node;
 
-        if(this->left != nullptr)
-            this->left->set_parent(this);
+        if(this->left_ != nullptr)
+            this->left_->parent(this);
 
-        this->size__height();
+        this->count_height();
     }
 
     template <typename E, typename Compare>
-    void avl_tree<E, Compare>::avl_inner_node::do_set_right(inner_ptr node)
+    void avl_tree<E, Compare>::avl_inner_node::set_right(inner_ptr node)
     {
-        this->right = node;
+        this->right_ = node;
 
-        if(this->right != nullptr)
-            this->right->set_parent(this);
+        if(this->right_ != nullptr)
+            this->right_->parent(this);
 
-        this->size__height();
+        this->count_height();
     }
 
 #pragma endregion
@@ -712,67 +720,65 @@ namespace algolib::structures
             : avl_tree<E, Compare>::avl_node(), inner{nullptr}
         {
             if(node.inner != nullptr)
-                this->do_set_parent(new avl_inner_node(*node.inner));
+                this->set_parent(new avl_inner_node(*node.inner));
         }
 
         avl_header_node(avl_header_node && node) = delete;
         avl_header_node & operator=(const avl_header_node & node);
         avl_header_node & operator=(avl_header_node && node) = delete;
 
-        size_t get_height() override
+        size_t height() override
         {
             return 0;
         }
 
-        inner_ptr get_left() override
+        inner_ptr left() override
         {
             return nullptr;
         }
 
-        void set_left(node_ptr) override
+        void left(node_ptr) override
         {
         }
 
-        inner_ptr get_right() override
+        inner_ptr right() override
         {
             return nullptr;
         }
 
-        void set_right(node_ptr) override
+        void right(node_ptr) override
         {
         }
 
-        inner_ptr get_parent() override
+        inner_ptr parent() override
         {
             return this->inner;
         }
 
-        void set_parent(node_ptr node) override
+        void parent(node_ptr node) override
         {
-            this->do_set_parent(static_cast<inner_ptr>(node));
+            this->set_parent(static_cast<inner_ptr>(node));
         }
 
         node_ptr minimum() override
         {
-            return this->get_parent() == nullptr
-                           ? static_cast<node_ptr>(this)
-                           : static_cast<node_ptr>(this->get_parent()->minimum());
+            return this->parent() == nullptr ? static_cast<node_ptr>(this)
+                                             : static_cast<node_ptr>(this->parent()->minimum());
         }
 
         node_ptr maximum() override
         {
-            return this->get_parent() == nullptr
-                           ? static_cast<node_ptr>(this)
-                           : static_cast<node_ptr>(this->get_parent()->maximum());
+            return this->parent() == nullptr ? static_cast<node_ptr>(this)
+                                             : static_cast<node_ptr>(this->parent()->maximum());
         }
 
     private:
-        void do_set_parent(inner_ptr node)
+        void set_parent(inner_ptr node)
         {
             this->inner = node;
 
             if(this->inner != nullptr)
-                this->inner->set_parent(this);
+                this->inner->parent(this);
         }
 
         inner_ptr inner;
@@ -785,7 +791,7 @@ namespace algolib::structures
     {
         node_ptr inner_orig = this->inner;
 
-        this->set_parent(node.inner == nullptr ? nullptr : new avl_inner_node(*node.inner));
+        this->parent(node.inner == nullptr ? nullptr : new avl_inner_node(*node.inner));
         delete inner_orig;
 
         return *this;
@@ -861,17 +867,17 @@ namespace algolib::structures
     template <typename E, typename Compare>
     typename avl_tree<E, Compare>::avl_iterator & avl_tree<E, Compare>::avl_iterator::operator++()
     {
-        if(this->current_node->get_height() > 0)
+        if(this->current_node->height() > 0)
         {
-            if(this->current_node->get_right() != nullptr)
-                this->current_node = this->current_node->get_right()->minimum();
+            if(this->current_node->right() != nullptr)
+                this->current_node = this->current_node->right()->minimum();
             else
             {
-                while(this->current_node->get_parent()->get_height() > 0
-                      && this->current_node->get_parent()->get_left() != this->current_node)
-                    this->current_node = this->current_node->get_parent();
+                while(this->current_node->parent()->height() > 0
+                      && this->current_node->parent()->left() != this->current_node)
+                    this->current_node = this->current_node->parent();
 
-                this->current_node = this->current_node->get_parent();
+                this->current_node = this->current_node->parent();
             }
         }
 
@@ -891,17 +897,17 @@ namespace algolib::structures
     template <typename E, typename Compare>
     typename avl_tree<E, Compare>::avl_iterator & avl_tree<E, Compare>::avl_iterator::operator--()
     {
-        if(this->current_node->get_height() > 0)
+        if(this->current_node->height() > 0)
         {
-            if(this->current_node->get_left() != nullptr)
-                this->current_node = this->current_node->get_left()->maximum();
+            if(this->current_node->left() != nullptr)
+                this->current_node = this->current_node->left()->maximum();
             else
             {
-                while(this->current_node->get_parent()->get_height() > 0
-                      && this->current_node->get_parent()->get_right() != this->current_node)
-                    this->current_node = this->current_node->get_parent();
+                while(this->current_node->parent()->height() > 0
+                      && this->current_node->parent()->right() != this->current_node)
+                    this->current_node = this->current_node->parent();
 
-                this->current_node = this->current_node->get_parent();
+                this->current_node = this->current_node->parent();
             }
         }
         else
@@ -1007,17 +1013,17 @@ namespace algolib::structures
     typename avl_tree<E, Compare>::avl_const_iterator &
             avl_tree<E, Compare>::avl_const_iterator::operator++()
     {
-        if(this->current_node->get_height() > 0)
+        if(this->current_node->height() > 0)
         {
-            if(this->current_node->get_right() != nullptr)
-                this->current_node = this->current_node->get_right()->minimum();
+            if(this->current_node->right() != nullptr)
+                this->current_node = this->current_node->right()->minimum();
             else
             {
-                while(this->current_node->get_parent()->get_height() > 0
-                      && this->current_node->get_parent()->get_left() != this->current_node)
-                    this->current_node = this->current_node->get_parent();
+                while(this->current_node->parent()->height() > 0
+                      && this->current_node->parent()->left() != this->current_node)
+                    this->current_node = this->current_node->parent();
 
-                this->current_node = this->current_node->get_parent();
+                this->current_node = this->current_node->parent();
             }
         }
 
@@ -1038,17 +1044,17 @@ namespace algolib::structures
     typename avl_tree<E, Compare>::avl_const_iterator &
             avl_tree<E, Compare>::avl_const_iterator::operator--()
     {
-        if(this->current_node->get_height() > 0)
+        if(this->current_node->height() > 0)
         {
-            if(this->current_node->get_left() != nullptr)
-                this->current_node = this->current_node->get_left()->maximum();
+            if(this->current_node->left() != nullptr)
+                this->current_node = this->current_node->left()->maximum();
             else
             {
-                while(this->current_node->get_parent()->get_height() > 0
-                      && this->current_node->get_parent()->get_right() != this->current_node)
-                    this->current_node = this->current_node->get_parent();
+                while(this->current_node->parent()->height() > 0
+                      && this->current_node->parent()->right() != this->current_node)
+                    this->current_node = this->current_node->parent();
 
-                this->current_node = this->current_node->get_parent();
+                this->current_node = this->current_node->parent();
             }
         }
         else

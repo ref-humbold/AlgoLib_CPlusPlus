@@ -19,27 +19,27 @@ namespace algolib::structures
     {
     public:
         using container_type = Container;
-        using value_type = E;
+        using value_compare = Compare;
+        using value_type = typename container_type::value_type;
         using reference = typename container_type::reference;
         using const_reference = typename container_type::const_reference;
-        using size_type = size_t;
+        using size_type = typename container_type::size_type;
 
-        explicit double_heap(const Compare & compare = Compare())
-            : heap{Container()}, compare{compare}
+        explicit double_heap(const value_compare & compare = value_compare(),
+                             const container_type & container = container_type())
+            : heap{container_type()}, compare{compare}
         {
+            for(auto && element : container)
+                this->push(element);
         }
 
         template <typename InputIterator>
-        double_heap(InputIterator first, InputIterator last, const Compare & compare = Compare())
-            : heap{Container()}, compare{compare}
+        double_heap(InputIterator first, InputIterator last,
+                    const value_compare & compare = value_compare())
+            : heap{container_type()}, compare{compare}
         {
             for(InputIterator it = first; it != last; ++it)
                 this->push(*it);
-        }
-
-        double_heap(std::initializer_list<value_type> il, const Compare & compare = Compare())
-            : double_heap(il.begin(), il.end(), compare)
-        {
         }
 
         ~double_heap() = default;
@@ -87,6 +87,13 @@ namespace algolib::structures
          */
         void push(const_reference element);
 
+        /*!
+         * \brief Adds a new value to the double heap constructed in-place with the given arguments.
+         * \param args arguments to forward to the constructor of the new value
+         */
+        template <typename... Args>
+        void emplace(Args &&... args);
+
         //! \brief Removes minimal element from the double heap.
         void pop_min();
 
@@ -96,10 +103,11 @@ namespace algolib::structures
         //! \brief Removes all elements from the double heap.
         void clear()
         {
-            this->heap = Container();
+            this->heap = container_type();
         }
 
     private:
+        void push_heap();
         void move_to_min(size_type index);
         void move_to_max(size_type index);
         void step_to_min(size_type index, size_type next_index);
@@ -109,14 +117,49 @@ namespace algolib::structures
         static constexpr size_type index_min = 1;
 
         container_type heap;
-        Compare compare;
+        value_compare compare;
     };
 
     template <typename E, typename Container, typename Compare>
     void double_heap<E, Container, Compare>::push(const_reference element)
     {
         this->heap.push_back(element);
+        this->push_heap();
+    }
 
+    template <typename E, typename Container, typename Compare>
+    template <typename... Args>
+    void double_heap<E, Container, Compare>::emplace(Args &&... args)
+    {
+        this->heap.emplace_back(std::forward<Args>(args)...);
+        this->push_heap();
+    }
+
+    template <typename E, typename Container, typename Compare>
+    void double_heap<E, Container, Compare>::pop_min()
+    {
+        if(this->heap.empty())
+            throw std::out_of_range("Double heap is empty");
+
+        *(this->heap.begin() + index_max) = this->heap.back();
+        this->heap.pop_back();
+        this->move_to_max(index_max);
+    }
+
+    template <typename E, typename Container, typename Compare>
+    void double_heap<E, Container, Compare>::pop_max()
+    {
+        if(this->heap.size() <= 1)
+            return this->pop_min();
+
+        *(this->heap.begin() + index_min) = this->heap.back();
+        this->heap.pop_back();
+        this->move_to_min(index_min);
+    }
+
+    template <typename E, typename Container, typename Compare>
+    void double_heap<E, Container, Compare>::push_heap()
+    {
         if(this->heap.size() > 1)
         {
             size_type index = this->heap.size() - 1;
@@ -144,28 +187,6 @@ namespace algolib::structures
                     this->move_to_min(index);
             }
         }
-    }
-
-    template <typename E, typename Container, typename Compare>
-    void double_heap<E, Container, Compare>::pop_min()
-    {
-        if(this->heap.empty())
-            throw std::out_of_range("Double heap is empty");
-
-        *(this->heap.begin() + index_max) = this->heap.back();
-        this->heap.pop_back();
-        this->move_to_max(index_max);
-    }
-
-    template <typename E, typename Container, typename Compare>
-    void double_heap<E, Container, Compare>::pop_max()
-    {
-        if(this->heap.size() <= 1)
-            return this->pop_min();
-
-        *(this->heap.begin() + index_min) = this->heap.back();
-        this->heap.pop_back();
-        this->move_to_min(index_min);
     }
 
     template <typename E, typename Container, typename Compare>
