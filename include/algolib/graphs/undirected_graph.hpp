@@ -158,7 +158,7 @@ namespace algolib::graphs
         std::vector<vertex_id_type> vertex_ids;
 
         std::transform(all_vertices.begin(), all_vertices.end(), std::back_inserter(vertex_ids),
-                       [](const vertex_type & vertex) { return vertex.id(); });
+                       [](auto && vertex) { return vertex.id(); });
 
         directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type> graph(
                 vertex_ids);

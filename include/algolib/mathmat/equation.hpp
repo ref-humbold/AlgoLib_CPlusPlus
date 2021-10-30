@@ -286,7 +286,10 @@ namespace std
 
         result_type operator()(const argument_type & eq)
         {
-            return hash<std::array<double, N>>()(eq.coefficients) ^ hash<double>()(eq.free);
+            result_type c_hash = std::hash<std::array<double, N>>()(eq.coefficients);
+            result_type f_hash = std::hash<double>()(eq.free);
+
+            return c_hash ^ (f_hash + 0x9e3779b9 + (c_hash << 6) + (c_hash >> 2));
         }
     };
 }

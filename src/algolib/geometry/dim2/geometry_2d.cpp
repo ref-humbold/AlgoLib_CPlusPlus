@@ -8,25 +8,21 @@ namespace alge2 = algolib::geometry::dim2;
 
 void alge2::sort_by_x(std::vector<alge2::point_2d> & points)
 {
-    auto comparator = [&](const alge2::point_2d & pt1, const alge2::point_2d & pt2) {
-        return pt1.x() < pt2.x();
-    };
+    auto comparator = [&](auto && pt1, const alge2::point_2d & pt2) { return pt1.x() < pt2.x(); };
 
     std::stable_sort(points.begin(), points.end(), comparator);
 }
 
 void alge2::sort_by_y(std::vector<alge2::point_2d> & points)
 {
-    auto comparator = [&](const alge2::point_2d & pt1, const alge2::point_2d & pt2) {
-        return pt1.y() < pt2.y();
-    };
+    auto comparator = [&](auto && pt1, const alge2::point_2d & pt2) { return pt1.y() < pt2.y(); };
 
     std::stable_sort(points.begin(), points.end(), comparator);
 }
 
 void alge2::sort_by_angle(std::vector<alge2::point_2d> & points)
 {
-    auto comparator = [&](const alge2::point_2d & pt1, const alge2::point_2d & pt2) {
+    auto comparator = [&](auto && pt1, const alge2::point_2d & pt2) {
         double angle1 = pt1.angle_deg(), angle2 = pt2.angle_deg();
 
         return angle1 != angle2 ? angle1 < angle2 : pt1.radius() < pt2.radius();

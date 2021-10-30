@@ -101,8 +101,8 @@ namespace std
 
         result_type operator()(const argument_type & v)
         {
-            size_t x_hash = hash<double>()(v.x_);
-            size_t y_hash = hash<double>()(v.y_);
+            result_type x_hash = std::hash<double>()(v.x_);
+            result_type y_hash = std::hash<double>()(v.y_);
 
             return x_hash ^ (y_hash + 0x9e3779b9 + (x_hash << 6) + (x_hash >> 2));
         }

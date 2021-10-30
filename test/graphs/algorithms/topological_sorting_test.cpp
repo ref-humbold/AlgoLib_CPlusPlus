@@ -85,9 +85,8 @@ TEST(TopologicalSortingTest, sortTopologicalByDFS_WhenAcyclicGraph_ThenTopologic
     // when
     std::vector<graph_v> result = algr::sort_topological_by_dfs(graph);
     // then
-    EXPECT_TRUE(
-            std::any_of(expecteds.begin(), expecteds.end(),
-                        [&](const std::vector<graph_v> & expected) { return expected == result; }));
+    EXPECT_TRUE(std::any_of(expecteds.begin(), expecteds.end(),
+                            [&](auto && expected) { return expected == result; }));
 }
 
 TEST(TopologicalSortingTest, sortTopologicalByDFS_WhenCyclicGraph_ThenDirectedCyclicGraphError)

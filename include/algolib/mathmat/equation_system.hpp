@@ -168,7 +168,7 @@ namespace algolib::mathmat
     bool equation_system<N>::is_solution(const std::array<double, N> & solution) const
     {
         return std::all_of(this->equations.begin(), this->equations.end(),
-                           [&](const equation<N> & eq) { return eq.is_solution(solution); });
+                           [&](auto && eq) { return eq.is_solution(solution); });
     }
 }
 

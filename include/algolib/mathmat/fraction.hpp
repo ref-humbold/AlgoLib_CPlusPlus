@@ -199,10 +199,10 @@ namespace std
 
         result_type operator()(const argument_type & f)
         {
-            size_t n_hash = hash<intmax_t>()(f.numerator);
-            size_t y_hash = hash<intmax_t>()(f.denominator);
+            result_type n_hash = std::hash<intmax_t>()(f.numerator);
+            result_type d_hash = std::hash<intmax_t>()(f.denominator);
 
-            return n_hash ^ (y_hash + 0x9e3779b9 + (n_hash << 6) + (n_hash >> 2));
+            return n_hash ^ (d_hash + 0x9e3779b9 + (n_hash << 6) + (n_hash >> 2));
         }
     };
 }

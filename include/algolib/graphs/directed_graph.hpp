@@ -104,9 +104,8 @@ namespace algolib::graphs
         size_t degree = 0;
 
         for(auto && edges : this->representation.edges_set())
-            degree += std::count_if(edges.begin(), edges.end(), [&](const edge_type & edge) {
-                return edge.destination() == vertex;
-            });
+            degree += std::count_if(edges.begin(), edges.end(),
+                                    [&](auto && edge) { return edge.destination() == vertex; });
 
         return degree;
     }
@@ -153,8 +152,7 @@ namespace algolib::graphs
         std::vector<vertex_id_type> vertex_ids;
 
         std::transform(std::begin(all_vertices), std::end(all_vertices),
-                       std::back_inserter(vertex_ids),
-                       [](const vertex_type & vertex) { return vertex.id(); });
+                       std::back_inserter(vertex_ids), [](auto && vertex) { return vertex.id(); });
 
         repr new_representation(vertex_ids);
 

@@ -37,7 +37,7 @@ namespace algolib::text
                 insert(*it);
         }
 
-        trie(std::initializer_list<std::string> il) : trie(il.begin(), il.end())
+        trie(std::initializer_list<std::string> init) : trie(init.begin(), init.end())
         {
         }
 
@@ -109,7 +109,7 @@ namespace algolib::text
         bool empty() const
         {
             return std::all_of(children.begin(), children.end(),
-                               [](const node_uniq_ptr & child) { return !child; });
+                               [](auto && child) { return !child; });
         }
 
         node_ptr at(char character) const
