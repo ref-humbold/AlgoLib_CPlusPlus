@@ -29,7 +29,7 @@ namespace internal
         bool operator()(const typename graph_type::edge_type & edge1,
                         const typename graph_type::edge_type & edge2) const
         {
-            return graph.properties()[edge2].weight() < graph.properties()[edge1].weight();
+            return graph.properties().at(edge2).weight() < graph.properties().at(edge1).weight();
         }
 
         const graph_type & graph;
@@ -48,8 +48,8 @@ namespace internal
 
         bool operator()(const argument_type & pair1, const argument_type & pair2) const
         {
-            return graph.properties()[pair2.first].weight()
-                   < graph.properties()[pair1.first].weight();
+            return graph.properties().at(pair2.first).weight()
+                   < graph.properties().at(pair1.first).weight();
         }
 
         const graph_type & graph;
@@ -105,7 +105,7 @@ namespace algolib::graphs
             edge_queue.pop();
 
             if(!vertex_sets.is_same_set(edge.source(), edge.destination()))
-                mst.add_edge(edge, graph.properties()[edge]);
+                mst.add_edge(edge, graph.properties().at(edge));
 
             vertex_sets.union_set(edge.source(), edge.destination());
         }
@@ -170,7 +170,7 @@ namespace algolib::graphs
 
             if(insert_result.second)
             {
-                mst.add_edge(edge, graph.properties()[edge]);
+                mst.add_edge(edge, graph.properties().at(edge));
 
                 for(auto && adjacent_edge : graph.adjacent_edges(vertex))
                 {

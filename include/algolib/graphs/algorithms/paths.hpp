@@ -62,13 +62,13 @@ namespace algolib::graphs
                 for(auto && edge : graph.adjacent_edges(vertex))
                     distances[edge.destination()] =
                             std::min(distances[edge.destination()],
-                                     distances[vertex] + graph.properties()[edge].weight());
+                                     distances[vertex] + graph.properties().at(edge).weight());
 
         for(auto && vertex : graph.vertices())
             for(auto && edge : graph.adjacent_edges(vertex))
                 if(distances[vertex] < directed_graph<VertexId, VertexProperty,
                                                       EdgeProperty>::edge_property_type::infinity
-                   && distances[vertex] + graph.properties()[edge].weight()
+                   && distances[vertex] + graph.properties().at(edge).weight()
                               < distances[edge.destination()])
                     throw std::logic_error("Graph contains a negative cycle");
 
@@ -102,7 +102,7 @@ namespace algolib::graphs
                 edges = graph_.edges();
 
         if(std::any_of(edges.begin(), edges.end(),
-                       [&](auto && edge) { return graph_.properties()[edge].weight() < 0.0; }))
+                       [&](auto && edge) { return graph_.properties().at(edge).weight() < 0.0; }))
             throw std::logic_error("Graph contains an edge with negative weight");
 
         std::unordered_set<
@@ -130,7 +130,7 @@ namespace algolib::graphs
                 for(auto && edge : graph_.adjacent_edges(vertex))
                 {
                     auto neighbour = edge.get_neighbour(vertex);
-                    weight_t weight = graph_.properties()[edge].weight();
+                    weight_t weight = graph_.properties().at(edge).weight();
 
                     if(distances[vertex] + weight < distances[neighbour])
                     {
@@ -172,7 +172,7 @@ namespace algolib::graphs
 
         for(auto && edge : graph.edges())
             distances[std::make_pair(edge.source(), edge.destination())] =
-                    graph.properties()[edge].weight();
+                    graph.properties().at(edge).weight();
 
         for(auto && w : graph.vertices())
             for(auto && v : graph.vertices())

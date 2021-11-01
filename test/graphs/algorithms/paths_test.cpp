@@ -17,6 +17,8 @@ public:
     {
     }
 
+    ~weighted_impl() override = default;
+
     const weight_type & weight() const override
     {
         return weight_;

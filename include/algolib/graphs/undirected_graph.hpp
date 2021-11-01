@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <exception>
+#include <optional>
 #include <stdexcept>
 #include <unordered_set>
 #include <vector>
@@ -164,14 +165,39 @@ namespace algolib::graphs
                 vertex_ids);
 
         for(auto && vertex : all_vertices)
-            graph.properties()[vertex] = this->properties()[vertex];
+            try
+            {
+                graph.properties()[vertex] = this->properties().at(vertex);
+            }
+            catch(const std::out_of_range &)
+            {
+            }
 
         for(auto && edge : this->edges())
         {
-            graph.add_edge(edge, this->properties()[edge]);
+            std::optional<edge_property_type> edge_property_opt;
+
+            try
+            {
+                edge_property_opt = this->properties().at(edge);
+            }
+            catch(const std::out_of_range &)
+            {
+                edge_property_opt = std::nullopt;
+            }
+
+            if(edge_property_opt)
+                graph.add_edge(edge, *edge_property_opt);
+            else
+                graph.add_edge(edge);
 
             if(edge.source() != edge.destination())
-                graph.add_edge(edge.reversed(), this->properties()[edge]);
+            {
+                if(edge_property_opt)
+                    graph.add_edge(edge.reversed(), *edge_property_opt);
+                else
+                    graph.add_edge(edge.reversed());
+            }
         }
 
         return graph;

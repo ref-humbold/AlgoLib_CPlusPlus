@@ -123,6 +123,19 @@ TEST_F(UndirectedSimpleGraphTest, propertiesOperatorBrackets_WhenNotExisting_The
     EXPECT_THROW(exec_edge2(), std::invalid_argument);
 }
 
+TEST_F(UndirectedSimpleGraphTest, propertiesAt_WhenNoProperty_ThenOutOfRange)
+{
+    // given
+    graph_v vertex(4);
+    graph_e edge = test_object.add_edge_between(graph_v(6), graph_v(7));
+    // when
+    auto exec_vertex = [&]() { return test_object.properties().at(vertex); };
+    auto exec_edge = [&]() { return test_object.properties().at(edge); };
+    // then
+    EXPECT_THROW(exec_vertex(), std::out_of_range);
+    EXPECT_THROW(exec_edge(), std::out_of_range);
+}
+
 TEST_F(UndirectedSimpleGraphTest, verticesCount_ThenNumberOfVertices)
 {
     // when

@@ -55,9 +55,11 @@ namespace internal
         std::vector<std::unordered_set<edge_type>> edges_set() const;
         std::vector<edge_type> adjacent_edges(const vertex_type & vertex) const;
         vertex_property_type & property(const vertex_type & vertex);
-        const vertex_property_type & property(const vertex_type & vertex) const;
+        vertex_property_type & property_at(const vertex_type & vertex);
+        const vertex_property_type & property_at(const vertex_type & vertex) const;
         edge_property_type & property(const edge_type & edge);
-        const edge_property_type & property(const edge_type & edge) const;
+        edge_property_type & property_at(const edge_type & edge);
+        const edge_property_type & property_at(const edge_type & edge) const;
         bool add_vertex(const vertex_type & vertex);
         void add_edge_to_source(const edge_type & edge);
         void add_edge_to_destination(const edge_type & edge);
@@ -66,8 +68,6 @@ namespace internal
         void validate(const vertex_type & vertex) const;
         void validate(const edge_type & edge, bool existing) const;
 
-        vertex_property_type default_vertex_property;
-        edge_property_type default_edge_property;
         std::unordered_map<vertex_type, std::unordered_set<edge_type>> graph_map;
         std::unordered_map<vertex_type, vertex_property_type> vertex_properties;
         std::unordered_map<edge_type, edge_property_type> edge_properties;
@@ -197,17 +197,42 @@ namespace internal
 
     template <typename VertexId, typename Vertex, typename Edge, typename VertexProperty,
               typename EdgeProperty>
+    typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
+                                  EdgeProperty>::vertex_property_type &
+            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property_at(
+                    const typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
+                                                        EdgeProperty>::vertex_type & vertex)
+    {
+        this->validate(vertex);
+
+        try
+        {
+            return this->vertex_properties.at(vertex);
+        }
+        catch(const std::out_of_range &)
+        {
+            throw std::out_of_range("Property not found for vertex");
+        }
+    }
+
+    template <typename VertexId, typename Vertex, typename Edge, typename VertexProperty,
+              typename EdgeProperty>
     const typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
                                         EdgeProperty>::vertex_property_type &
-            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property(
+            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property_at(
                     const typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
                                                         EdgeProperty>::vertex_type & vertex) const
     {
         this->validate(vertex);
 
-        auto && it = this->vertex_properties.find(vertex);
-
-        return it == this->vertex_properties.end() ? this->default_vertex_property : it->second;
+        try
+        {
+            return this->vertex_properties.at(vertex);
+        }
+        catch(const std::out_of_range &)
+        {
+            throw std::out_of_range("Property not found for vertex");
+        }
     }
 
     template <typename VertexId, typename Vertex, typename Edge, typename VertexProperty,
@@ -224,17 +249,42 @@ namespace internal
 
     template <typename VertexId, typename Vertex, typename Edge, typename VertexProperty,
               typename EdgeProperty>
+    typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
+                                  EdgeProperty>::edge_property_type &
+            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property_at(
+                    const typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
+                                                        EdgeProperty>::edge_type & edge)
+    {
+        this->validate(edge, true);
+
+        try
+        {
+            return this->edge_properties.at(edge);
+        }
+        catch(const std::out_of_range &)
+        {
+            throw std::out_of_range("Property not found for edge");
+        }
+    }
+
+    template <typename VertexId, typename Vertex, typename Edge, typename VertexProperty,
+              typename EdgeProperty>
     const typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
                                         EdgeProperty>::edge_property_type &
-            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property(
+            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property_at(
                     const typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
                                                         EdgeProperty>::edge_type & edge) const
     {
         this->validate(edge, true);
 
-        auto && it = this->edge_properties.find(edge);
-
-        return it == this->edge_properties.end() ? this->default_edge_property : it->second;
+        try
+        {
+            return this->edge_properties.at(edge);
+        }
+        catch(const std::out_of_range &)
+        {
+            throw std::out_of_range("Property not found for edge");
+        }
     }
 
     template <typename VertexId, typename Vertex, typename Edge, typename VertexProperty,
@@ -526,11 +576,18 @@ namespace algolib::graphs
             return graph.representation.property(vertex);
         }
 
-        const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
-                operator[](const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type &
-                                   vertex) const override
+        simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
+                at(const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex)
+                        override
         {
-            return graph.representation.property(vertex);
+            return graph.representation.property_at(vertex);
+        }
+
+        const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
+                at(const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex)
+                        const override
+        {
+            return graph.representation.property_at(vertex);
         }
 
         simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & operator[](
@@ -540,11 +597,18 @@ namespace algolib::graphs
             return graph.representation.property(edge);
         }
 
-        const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & operator[](
-                const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge)
-                const override
+        simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
+                at(const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge)
+                        override
         {
-            return graph.representation.property(edge);
+            return graph.representation.property_at(edge);
+        }
+
+        const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
+                at(const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge)
+                        const override
+        {
+            return graph.representation.property_at(edge);
         }
 
     private:

@@ -17,6 +17,8 @@ namespace algolib::graphs
     {
         using weight_type = double;
 
+        virtual ~weighted() = default;
+
         virtual const weight_type & weight() const = 0;
 
         static constexpr weight_type infinity = std::numeric_limits<double>::infinity();
