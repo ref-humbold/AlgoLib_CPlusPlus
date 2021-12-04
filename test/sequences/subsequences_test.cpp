@@ -39,6 +39,16 @@ TEST(SubsequencesTest, longestIncreasing_WhenMultipleSubsequences_ThenLeastLexic
     EXPECT_EQ(std::vector<int>({1, 3, 5, 7, 10}), result);
 }
 
+TEST(SubsequencesTest, longestIncreasing_WhenSearchInMiddle_ThenLeastLexicographically)
+{
+    // given
+    std::vector<int> sequence = {0, 2, 4, 6, 8, 3, 5, 7, 8};
+    // when
+    std::vector<int> result = alse::longest_increasing(sequence);
+    // then
+    EXPECT_EQ(std::vector<int>({0, 2, 3, 5, 7, 8}), result);
+}
+
 TEST(SubsequencesTest, longestIncreasing_WhenIncreasingAndReversedComparator_ThenLastElementOnly)
 {
     // given

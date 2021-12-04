@@ -29,7 +29,7 @@ namespace internal
                        ? search_index(sequence, compare, subsequence, index_elem, index_middle + 1,
                                       index_end)
                        : search_index(sequence, compare, subsequence, index_elem, index_begin,
-                                      index_middle);
+                                      index_middle + 1);
     }
 }
 
