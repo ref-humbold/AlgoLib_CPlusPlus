@@ -5,7 +5,7 @@
 #include "algolib/geometry/dim2/closest_points.hpp"
 #include <cmath>
 #include <algorithm>
-#include <memory>
+#include <optional>
 #include "algolib/geometry/dim2/geometry_2d.hpp"
 
 namespace alge2 = algolib::geometry::dim2;
@@ -33,16 +33,15 @@ namespace internal
 
     // Finds closest pair inside a belt of given width.
     // The resulting distance should not be less than belt width.
-    std::unique_ptr<std::pair<alge2::point_2d, alge2::point_2d>>
-            check_belt(const std::vector<alge2::point_2d> & pointsY, double middleX,
-                       double belt_width)
+    std::optional<std::pair<alge2::point_2d, alge2::point_2d>>
+            check_belt(const std::vector<alge2::point_2d> & pointsY, double middleX, double width)
     {
-        std::unique_ptr<std::pair<alge2::point_2d, alge2::point_2d>> closest_pair;
+        std::optional<std::pair<alge2::point_2d, alge2::point_2d>> closest_pair = std::nullopt;
         std::vector<int> belt_points;
-        double min_distance = belt_width;
+        double min_distance = width;
 
         for(size_t i = 0; i < pointsY.size(); ++i)
-            if(pointsY[i].x() >= middleX - belt_width && pointsY[i].x() <= middleX + belt_width)
+            if(pointsY[i].x() >= middleX - width && pointsY[i].x() <= middleX + width)
                 belt_points.emplace_back(i);
 
         for(size_t i = 1; i < belt_points.size(); ++i)
@@ -51,7 +50,7 @@ namespace internal
                 alge2::point_2d pt1 = pointsY[belt_points[i]];
                 alge2::point_2d pt2 = pointsY[belt_points[j]];
 
-                if(pt2.y() > pt1.y() + belt_width)
+                if(pt2.y() > pt1.y() + width)
                     break;
 
                 if((pt1.x() <= middleX && pt2.x() > middleX)
@@ -65,8 +64,7 @@ namespace internal
 
                         alge2::sort_by_x(closest);
                         min_distance = actual_distance;
-                        closest_pair.reset(new std::pair<alge2::point_2d, alge2::point_2d>(
-                                closest[0], closest[1]));
+                        closest_pair = std::make_optional(std::make_pair(closest[0], closest[1]));
                     }
                 }
             }
@@ -110,10 +108,10 @@ namespace internal
                                 <= distance(closestR.first, closestR.second)
                         ? closestL
                         : closestR;
-        std::unique_ptr<std::pair<alge2::point_2d, alge2::point_2d>> belt_pair =
+        std::optional<std::pair<alge2::point_2d, alge2::point_2d>> belt_pair =
                 check_belt(pointsY, middleX, distance(closest_pair.first, closest_pair.second));
 
-        return belt_pair ? *belt_pair : closest_pair;
+        return belt_pair.value_or(closest_pair);
     }
 }
 
