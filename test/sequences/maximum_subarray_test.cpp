@@ -9,6 +9,16 @@ namespace alse = algolib::sequences;
 
 #pragma region find_maximum_subarray
 
+TEST(MaximumSubarrayTest, findMaximumSubarray_WhenAllElementsArePositive_ThenWholeSequence)
+{
+    // given
+    std::vector<double> sequence = {9.0, 2.4, 3.07, 1.93, 12.67};
+    // when
+    std::vector<double> result = alse::find_maximum_subarray(sequence);
+    // then
+    EXPECT_EQ(sequence, result);
+}
+
 TEST(MaximumSubarrayTest, findMaximumSubarray_WhenNegativeIsLessThanSubsum_ThenIncludeNegative)
 {
     // when
@@ -38,6 +48,14 @@ TEST(MaximumSubarrayTest, findMaximumSubarray_WhenAllElementsAreNegative_ThenEmp
 
 #pragma endregion
 #pragma region count_maximal_subsum
+
+TEST(MaximumSubarrayTest, countMaximalSubsum_WhenAllElementsArePositive_ThenSumOfAll)
+{
+    // when
+    double result = alse::count_maximal_subsum(std::vector<double>({9.0, 2.4, 3.07, 1.93, 12.67}));
+    // then
+    EXPECT_DOUBLE_EQ(29.07, result);
+}
 
 TEST(MaximumSubarrayTest, countMaximalSubsum_WhenNegativeIsLessThanSubsum_ThenIncludeNegative)
 {
