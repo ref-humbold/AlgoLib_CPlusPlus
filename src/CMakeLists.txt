@@ -50,8 +50,9 @@ set(MATHMAT_SOURCES
     "${MATHMAT}/maths.cpp"
     "${MATHMAT}/primes.cpp")
 set(SEQUENCES_SOURCES
-    "${SEQUENCES}/sorting.cpp"
-    "${SEQUENCES}/subsequences.cpp")
+    "${SEQUENCES}/longest_increasing_subsequence.cpp"
+    "${SEQUENCES}/maximum_subarray.cpp"
+    "${SEQUENCES}/sorting.cpp")
 set(STRUCTURES_SOURCES
     "${STRUCTURES}/avl_tree.cpp"
     "${STRUCTURES}/disjoint_sets.cpp"

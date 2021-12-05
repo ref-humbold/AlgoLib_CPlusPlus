@@ -48,8 +48,9 @@ set(MATHMAT_TEST_SOURCES
     "${MATHMAT_TEST}/maths_test.cpp"
     "${MATHMAT_TEST}/primes_test.cpp")
 set(SEQUENCES_TEST_SOURCES
-    "${SEQUENCES_TEST}/sorting_test.cpp"
-    "${SEQUENCES_TEST}/subsequences_test.cpp")
+    "${SEQUENCES_TEST}/longest_increasing_subsequence_test.cpp"
+    "${SEQUENCES_TEST}/maximum_subarray_test.cpp"
+    "${SEQUENCES_TEST}/sorting_test.cpp")
 set(STRUCTURES_TEST_SOURCES
     "${STRUCTURES_TEST}/avl_tree_test.cpp"
     "${STRUCTURES_TEST}/disjoint_sets_test.cpp"

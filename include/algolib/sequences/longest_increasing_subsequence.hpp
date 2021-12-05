@@ -1,9 +1,9 @@
 /**!
- * \file subsequences.hpp
- * \brief Algorithms for subsequences
+ * \file longest_increasing_subsequence.hpp
+ * \brief Algorithm for longest increasing subsequence
  */
-#ifndef SUBSEQS_HPP_
-#define SUBSEQS_HPP_
+#ifndef LONGEST_INCREASING_SUBSEQUENCE_HPP_
+#define LONGEST_INCREASING_SUBSEQUENCE_HPP_
 
 #include <cstdlib>
 #include <algorithm>
@@ -41,8 +41,7 @@ namespace algolib::sequences
      * \return the longest increasing subsequence (least lexicographically)
      */
     template <typename T, typename Compare = std::less<T>>
-    std::vector<T> longest_increasing(const std::vector<T> & sequence,
-                                      const Compare & compare = Compare())
+    std::vector<T> find_lis(const std::vector<T> & sequence, const Compare & compare = Compare())
     {
         std::vector<T> longest_subsequence = {};
         std::vector<size_t> subsequence = {0};
@@ -71,20 +70,6 @@ namespace algolib::sequences
         std::reverse(longest_subsequence.begin(), longest_subsequence.end());
         return longest_subsequence;
     }
-
-    /*!
-     * \brief Dynamically constructs coherent subarray with maximal sum.
-     * \param sequence a sequence of numbers
-     * \return the maximum subarray
-     */
-    std::vector<double> maximum_subarray(const std::vector<double> & sequence);
-
-    /*!
-     * \brief Calculates maximal sum from all coherent subarrays using interval tree.
-     * \param sequence a sequence of numbers
-     * \return the sum of maximum subarray
-     */
-    double maximal_subsum(const std::vector<double> & sequence);
 }
 
 #endif

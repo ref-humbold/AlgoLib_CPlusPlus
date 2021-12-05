@@ -1,12 +1,12 @@
 /**!
- * \file subsequences.cpp
- * \brief Algorithms for subsequences
+ * \file maximum_subarray.cpp
+ * \brief Algorithms for maximum subarray
  */
-#include "algolib/sequences/subsequences.hpp"
+#include "algolib/sequences/maximum_subarray.hpp"
 
 namespace alse = algolib::sequences;
 
-std::vector<double> alse::maximum_subarray(const std::vector<double> & sequence)
+std::vector<double> alse::find_maximum_subarray(const std::vector<double> & sequence)
 {
     std::pair<double, std::vector<double>> actual = {0.0, {}}, maximal = {0.0, {}};
 
@@ -28,7 +28,7 @@ std::vector<double> alse::maximum_subarray(const std::vector<double> & sequence)
     return maximal.second;
 }
 
-double alse::maximal_subsum(const std::vector<double> & sequence)
+double alse::count_maximal_subsum(const std::vector<double> & sequence)
 {
     size_t size = 1;
 
