@@ -15,10 +15,15 @@
 
 namespace algolib::structures
 {
-    template <typename E>
+    template <typename E, typename Hash = std::hash<E>, typename Equal = std::equal_to<E>>
     class disjoint_sets
     {
     public:
+        using value_type = E;
+        using reference = value_type &;
+        using const_reference = const value_type &;
+        using size_type = size_t;
+
         disjoint_sets() : size_{0}
         {
         }
@@ -37,7 +42,7 @@ namespace algolib::structures
         disjoint_sets & operator=(disjoint_sets && ds) noexcept = default;
 
         //! \return number of sets in the structure
-        size_t size() const
+        size_type size() const
         {
             return this->size_;
         }
@@ -53,37 +58,37 @@ namespace algolib::structures
          * \param element an element
          * \return \c true if element belongs to the structure, otherwise \c false
          */
-        bool contains(const E & element) const
+        bool contains(const_reference element) const
         {
             return this->represents.find(element) != this->represents.end();
         }
 
         /*!
-         * \brief Adds new element to the set represented by another element.
-         * \param element a new element
+         * \brief Adds new value to the set represented by another element.
+         * \param element new value
          * \param represent represent of the set
          */
-        void insert(const E & element, const E & represent);
+        void insert(const_reference element, const_reference represent);
 
         /*!
-         * \brief Adds new element as a singleton set.
-         * \param element a new element
+         * \brief Adds new value as singleton set.
+         * \param element new value
          */
-        void insert(const E & element);
+        void insert(const_reference element);
 
         /*!
-         * \brief Adds new elements to the set represented by another element.
-         * \param first beginning of elements range
-         * \param last end of elements range
+         * \brief Adds new values to the set represented by another element.
+         * \param first beginning of values range
+         * \param last end of values range
          * \param represent represent of the set
          */
         template <typename InputIterator>
-        void insert(InputIterator first, InputIterator last, const E & represent);
+        void insert(InputIterator first, InputIterator last, const_reference represent);
 
         /*!
-         * \brief Adds new elements as singleton sets.
-         * \param first beginning of elements range
-         * \param last end of elements range
+         * \brief Adds new values as singleton sets.
+         * \param first beginning of values range
+         * \param last end of values range
          */
         template <typename InputIterator>
         void insert(InputIterator first, InputIterator last);
@@ -92,25 +97,27 @@ namespace algolib::structures
          * \brief Finds represent of the set with given element.
          * \param element an element
          * \return represent of the element
+         * \throw std::out_of_range if element not present
          */
-        const E & operator[](const E & element);
+        const_reference operator[](const_reference element);
 
         /*!
          * \brief Finds represent of the set with given element.
          * \param element an element
          * \return represent of the element
+         * \throw std::out_of_range if element not present
          */
-        const E & operator[](const E & element) const;
+        const_reference operator[](const_reference element) const;
 
         /*!
          * \brief Finds a represent of the element.
          * \param element an element
          * \return optional of represent of the element
          */
-        std::optional<E> find_set(const E & element)
+        std::optional<value_type> find_set(const_reference element)
         try
         {
-            return std::optional<E>(this->operator[](element));
+            return std::make_optional(this->operator[](element));
         }
         catch(const std::out_of_range & e)
         {
@@ -122,10 +129,10 @@ namespace algolib::structures
          * \param element an element
          * \return optional of represent of the element
          */
-        std::optional<E> find_set(const E & element) const
+        std::optional<value_type> find_set(const_reference element) const
         try
         {
-            return std::optional<E>(this->operator[](element));
+            return std::make_optional(this->operator[](element));
         }
         catch(const std::out_of_range & e)
         {
@@ -136,33 +143,37 @@ namespace algolib::structures
          * \brief Performs union of two sets in the structure.
          * \param element1 element from the first set
          * \param element2 element from the second set
+         * \throw std::out_of_range if element not present
          */
-        void union_set(const E & element1, const E & element2);
+        void union_set(const_reference element1, const_reference element2);
 
         /*!
          * \brief Tests whether two elements belong to the same set.
          * \param element1 element from the first set
          * \param element2 element from the second set
          * \return \c true if both element are in the same set, otherwise \c false
+         * \throw std::out_of_range if element not present
          */
-        bool is_same_set(const E & element1, const E & element2);
+        bool is_same_set(const_reference element1, const_reference element2);
 
         /*!
          * \brief Tests whether two elements belong to the same set.
          * \param element1 element from the first set
          * \param element2 element from the second set
          * \return \c true if both element are in the same set, otherwise \c false
+         * \throw std::out_of_range if element not present
          */
-        bool is_same_set(const E & element1, const E & element2) const;
+        bool is_same_set(const_reference element1, const_reference element2) const;
 
     private:
-        std::unordered_map<E, E> represents;
-        size_t size_;
+        std::unordered_map<value_type, value_type, Hash, Equal> represents;
+        size_type size_;
     };
 
-    template <typename E>
+    template <typename E, typename Hash, typename Equal>
     template <typename InputIterator>
-    disjoint_sets<E>::disjoint_sets(InputIterator first, InputIterator last) : disjoint_sets()
+    disjoint_sets<E, Hash, Equal>::disjoint_sets(InputIterator first, InputIterator last)
+        : disjoint_sets()
     {
         for(InputIterator it = first; it != last; ++it)
         {
@@ -171,8 +182,10 @@ namespace algolib::structures
         }
     }
 
-    template <typename E>
-    void disjoint_sets<E>::insert(const E & element, const E & represent)
+    template <typename E, typename Hash, typename Equal>
+    void disjoint_sets<E, Hash, Equal>::insert(
+            typename disjoint_sets<E, Hash, Equal>::const_reference element,
+            typename disjoint_sets<E, Hash, Equal>::const_reference represent)
     {
         if(this->contains(element))
             throw std::invalid_argument("New value already present");
@@ -183,19 +196,20 @@ namespace algolib::structures
         this->represents.emplace(element, this->operator[](represent));
     }
 
-    template <typename E>
-    void disjoint_sets<E>::insert(const E & element)
+    template <typename E, typename Hash, typename Equal>
+    void disjoint_sets<E, Hash, Equal>::insert(
+            typename disjoint_sets<E, Hash, Equal>::const_reference element)
     {
         if(this->contains(element))
             throw std::invalid_argument("New value already present");
 
         this->represents.emplace(element, element);
-        this->size_++;
+        ++this->size_;
     }
 
-    template <typename E>
+    template <typename E, typename Hash, typename Equal>
     template <typename InputIterator>
-    void disjoint_sets<E>::insert(InputIterator first, InputIterator last)
+    void disjoint_sets<E, Hash, Equal>::insert(InputIterator first, InputIterator last)
     {
         for(InputIterator it = first; it != last; ++it)
             if(this->contains(*it))
@@ -204,13 +218,15 @@ namespace algolib::structures
         for(InputIterator it = first; it != last; ++it)
         {
             this->represents.emplace(*it, *it);
-            this->size_++;
+            ++this->size_;
         }
     }
 
-    template <typename E>
+    template <typename E, typename Hash, typename Equal>
     template <typename InputIterator>
-    void disjoint_sets<E>::insert(InputIterator first, InputIterator last, const E & represent)
+    void disjoint_sets<E, Hash, Equal>::insert(
+            InputIterator first, InputIterator last,
+            typename disjoint_sets<E, Hash, Equal>::const_reference represent)
     {
         for(InputIterator it = first; it != last; ++it)
             if(this->contains(*it))
@@ -220,8 +236,10 @@ namespace algolib::structures
             this->represents.emplace(*it, this->operator[](represent));
     }
 
-    template <typename E>
-    const E & disjoint_sets<E>::operator[](const E & element)
+    template <typename E, typename Hash, typename Equal>
+    typename disjoint_sets<E, Hash, Equal>::const_reference
+            disjoint_sets<E, Hash, Equal>::operator[](
+                    typename disjoint_sets<E, Hash, Equal>::const_reference element)
     {
         if(this->represents.at(element) != element)
             this->represents.at(element) = this->operator[](this->represents.at(element));
@@ -229,16 +247,20 @@ namespace algolib::structures
         return this->represents.at(element);
     }
 
-    template <typename E>
-    const E & disjoint_sets<E>::operator[](const E & element) const
+    template <typename E, typename Hash, typename Equal>
+    typename disjoint_sets<E, Hash, Equal>::const_reference
+            disjoint_sets<E, Hash, Equal>::operator[](
+                    typename disjoint_sets<E, Hash, Equal>::const_reference element) const
     {
         return this->represents.at(element) == element
                        ? element
                        : this->operator[](this->represents.at(element));
     }
 
-    template <typename E>
-    void disjoint_sets<E>::union_set(const E & element1, const E & element2)
+    template <typename E, typename Hash, typename Equal>
+    void disjoint_sets<E, Hash, Equal>::union_set(
+            typename disjoint_sets<E, Hash, Equal>::const_reference element1,
+            typename disjoint_sets<E, Hash, Equal>::const_reference element2)
     {
         if(this->is_same_set(element1, element2))
             return;
@@ -247,14 +269,18 @@ namespace algolib::structures
         --this->size_;
     }
 
-    template <typename E>
-    bool disjoint_sets<E>::is_same_set(const E & element1, const E & element2)
+    template <typename E, typename Hash, typename Equal>
+    bool disjoint_sets<E, Hash, Equal>::is_same_set(
+            typename disjoint_sets<E, Hash, Equal>::const_reference element1,
+            typename disjoint_sets<E, Hash, Equal>::const_reference element2)
     {
         return this->operator[](element1) == this->operator[](element2);
     }
 
-    template <typename E>
-    bool disjoint_sets<E>::is_same_set(const E & element1, const E & element2) const
+    template <typename E, typename Hash, typename Equal>
+    bool disjoint_sets<E, Hash, Equal>::is_same_set(
+            typename disjoint_sets<E, Hash, Equal>::const_reference element1,
+            typename disjoint_sets<E, Hash, Equal>::const_reference element2) const
     {
         return this->operator[](element1) == this->operator[](element2);
     }

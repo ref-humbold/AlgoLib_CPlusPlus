@@ -82,13 +82,13 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Adds a new value to the double heap.
-         * \param element value to be added
+         * \brief Adds new value to the double heap.
+         * \param element new value
          */
         void push(const_reference element);
 
         /*!
-         * \brief Adds a new value to the double heap constructed in-place with the given arguments.
+         * \brief Adds new value to the double heap constructed in-place with the given arguments.
          * \param args arguments to forward to the constructor of the new value
          */
         template <typename... Args>
