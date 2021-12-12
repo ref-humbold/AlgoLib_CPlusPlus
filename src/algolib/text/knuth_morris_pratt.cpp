@@ -1,14 +1,14 @@
 /*!
- * \file kmp.cpp
- * \brief Knuth-Morris-Pratt algorithm
+ * \file knuth_morris_pratt.cpp
+ * \brief Knuth-Morris-Pratt algorithm for pattern searching
  */
-#include "algolib/text/kmp.hpp"
+#include "algolib/text/knuth_morris_pratt.hpp"
 
 namespace alte = algolib::text;
 
 namespace internal
 {
-    // Counts values of Knuth's PI prefix function for given pattern.
+    // Computes Knuth's PI prefix function values for given pattern.
     std::vector<size_t> prefixes(const std::string & pattern)
     {
         std::vector<size_t> pi = {0};

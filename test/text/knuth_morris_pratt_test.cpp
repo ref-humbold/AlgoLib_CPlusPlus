@@ -1,9 +1,9 @@
 /*!
- * \file kmp_test.cpp
- * \brief Tests: Knuth-Morris-Pratt algorithm
+ * \file knuth_morris_pratt_test.cpp
+ * \brief Tests: Knuth-Morris-Pratt algorithm for pattern searching
  */
 #include <gtest/gtest.h>
-#include "algolib/text/kmp.hpp"
+#include "algolib/text/knuth_morris_pratt.hpp"
 
 namespace alte = algolib::text;
 

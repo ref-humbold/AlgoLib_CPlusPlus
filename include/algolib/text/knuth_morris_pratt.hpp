@@ -1,9 +1,9 @@
 /*!
- * \file kmp.hpp
- * \brief Knuth-Morris-Pratt algorithm
+ * \file knuth_morris_pratt.hpp
+ * \brief Knuth-Morris-Pratt algorithm for pattern searching
  */
-#ifndef KMP_HPP_
-#define KMP_HPP_
+#ifndef KNUTH_MORRIS_PRATT_HPP_
+#define KNUTH_MORRIS_PRATT_HPP_
 
 #include <cstdlib>
 #include <algorithm>
@@ -14,9 +14,9 @@ namespace algolib::text
 {
     /*!
      * \brief Searches for pattern occurrences in given text using Knuth-Morris-Pratt algorithm.
-     * \param text text to be searched in
-     * \param pattern pattern to be searched for
-     * \return vector of pattern occurrence indices
+     * \param text a text
+     * \param pattern a pattern
+     * \return vector of indices with pattern occurrence
      */
     std::vector<size_t> kmp(const std::string & text, const std::string & pattern);
 }
