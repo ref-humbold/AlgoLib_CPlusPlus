@@ -40,24 +40,24 @@ namespace algolib::graphs
         }
 
         /*!
-         * \brief Finds a lowest common ancestor of two vertices in a rooted tree.
+         * \brief Searches for lowest common ancestor of two vertices in a rooted tree.
          * \param vertex1 first vertex
          * \param vertex2 second vertex
          * \return lowest common ancestor of given vertices
          */
-        vertex_type find(const vertex_type & vertex1, const vertex_type & vertex2)
+        vertex_type find_lca(const vertex_type & vertex1, const vertex_type & vertex2)
         {
             if(this->empty)
                 this->initialize();
 
-            return this->do_find(vertex1, vertex2);
+            return this->find(vertex1, vertex2);
         }
 
         const tree_type & graph;
 
     private:
         void initialize();
-        vertex_type do_find(const vertex_type & vertex1, const vertex_type & vertex2);
+        vertex_type find(const vertex_type & vertex1, const vertex_type & vertex2);
         bool is_offspring(const vertex_type & vertex1, const vertex_type & vertex2);
 
         bool empty;
@@ -68,7 +68,7 @@ namespace algolib::graphs
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::vertex_type
-            lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::do_find(
+            lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::find(
                     const lowest_common_ancestor<VertexId, VertexProperty,
                                                  EdgeProperty>::vertex_type & vertex1,
                     const lowest_common_ancestor<VertexId, VertexProperty,
@@ -86,8 +86,7 @@ namespace algolib::graphs
             return !this->is_offspring(vertex2, candidate);
         });
 
-        return it != candidates.rend() ? do_find(*it, vertex2)
-                                       : do_find(paths[vertex1][0], vertex2);
+        return it != candidates.rend() ? find(*it, vertex2) : find(paths[vertex1][0], vertex2);
     }
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>

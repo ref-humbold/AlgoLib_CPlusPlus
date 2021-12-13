@@ -76,7 +76,7 @@ namespace algolib::graphs
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
-            sort_topological_by_inputs(
+            inputs_topological_sort(
                     const directed_graph<VertexId, VertexProperty, EdgeProperty> & graph)
     {
         std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
@@ -137,7 +137,7 @@ namespace algolib::graphs
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
-            sort_topological_by_dfs(
+            dfs_topological_sort(
                     const directed_graph<VertexId, VertexProperty, EdgeProperty> & graph)
     {
         if(graph.edges_count() == 0)

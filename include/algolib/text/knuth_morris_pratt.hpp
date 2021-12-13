@@ -18,7 +18,7 @@ namespace algolib::text
      * \param pattern a pattern
      * \return vector of indices with pattern occurrence
      */
-    std::vector<size_t> kmp(const std::string & text, const std::string & pattern);
+    std::vector<size_t> kmp_search(const std::string & text, const std::string & pattern);
 }
 
 #endif

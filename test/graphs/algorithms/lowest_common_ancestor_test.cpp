@@ -34,56 +34,56 @@ public:
     ~LowestCommonAncestorTest() override = default;
 };
 
-TEST_F(LowestCommonAncestorTest, find_WhenSameVertex_ThenVertexIsLCA)
+TEST_F(LowestCommonAncestorTest, findLCA_WhenSameVertex_ThenVertexIsLCA)
 {
     // given
     vertex_t vertex = tree[6];
     // when
-    vertex_t result = test_object.find(vertex, vertex);
+    vertex_t result = test_object.find_lca(vertex, vertex);
     // then
     EXPECT_EQ(vertex, result);
 }
 
-TEST_F(LowestCommonAncestorTest, find_WhenVerticesInDifferentSubtrees_ThenLCA)
+TEST_F(LowestCommonAncestorTest, findLCA_WhenVerticesInDifferentSubtrees_ThenLCA)
 {
     // when
-    vertex_t result = test_object.find(tree[5], tree[7]);
+    vertex_t result = test_object.find_lca(tree[5], tree[7]);
     // then
     EXPECT_EQ(tree[1], result);
 }
 
-TEST_F(LowestCommonAncestorTest, find_WhenVerticesSwapped_ThenSameLCA)
+TEST_F(LowestCommonAncestorTest, findLCA_WhenVerticesSwapped_ThenSameLCA)
 {
     // when
-    vertex_t result1 = test_object.find(tree[5], tree[7]);
-    vertex_t result2 = test_object.find(tree[7], tree[5]);
+    vertex_t result1 = test_object.find_lca(tree[5], tree[7]);
+    vertex_t result2 = test_object.find_lca(tree[7], tree[5]);
     // then
     EXPECT_EQ(tree[1], result1);
     EXPECT_EQ(result1, result2);
 }
 
-TEST_F(LowestCommonAncestorTest, find_WhenRootIsCommonAncestor_ThenRoot)
+TEST_F(LowestCommonAncestorTest, findLCA_WhenRootIsCommonAncestor_ThenRoot)
 {
     // when
-    vertex_t result = test_object.find(tree[3], tree[9]);
+    vertex_t result = test_object.find_lca(tree[3], tree[9]);
     // then
     EXPECT_EQ(test_object.root(), result);
 }
 
-TEST_F(LowestCommonAncestorTest, find_WhenVerticesAreOnSamePathFromRoot_ThenLCAIsCloserToRoot)
+TEST_F(LowestCommonAncestorTest, findLCA_WhenVerticesAreOnSamePathFromRoot_ThenLCAIsCloserToRoot)
 {
     // given
     vertex_t vertex1 = tree[8], vertex2 = tree[2];
     // when
-    vertex_t result = test_object.find(vertex1, vertex2);
+    vertex_t result = test_object.find_lca(vertex1, vertex2);
     // then
     EXPECT_EQ(vertex2, result);
 }
 
-TEST_F(LowestCommonAncestorTest, find_WhenRootIsOneOfVertices_ThenRoot)
+TEST_F(LowestCommonAncestorTest, findLCA_WhenRootIsOneOfVertices_ThenRoot)
 {
     // when
-    vertex_t result = test_object.find(tree[4], test_object.root());
+    vertex_t result = test_object.find_lca(tree[4], test_object.root());
     // then
     EXPECT_EQ(test_object.root(), result);
 }

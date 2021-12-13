@@ -29,7 +29,7 @@ namespace internal
     }
 }
 
-std::vector<size_t> alte::kmp(const std::string & text, const std::string & pattern)
+std::vector<size_t> alte::kmp_search(const std::string & text, const std::string & pattern)
 {
     std::vector<size_t> places = {};
 
