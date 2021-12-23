@@ -50,6 +50,7 @@ set(MATHMAT_SOURCES
     "${MATHMAT}/maths.cpp"
     "${MATHMAT}/primes.cpp")
 set(SEQUENCES_SOURCES
+    "${SEQUENCES}/longest_common_subsequence.cpp"
     "${SEQUENCES}/longest_increasing_subsequence.cpp"
     "${SEQUENCES}/maximum_subarray.cpp"
     "${SEQUENCES}/sorting.cpp")
