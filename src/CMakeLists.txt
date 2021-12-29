@@ -60,6 +60,7 @@ set(STRUCTURES_SOURCES
     "${STRUCTURES}/double_heap.cpp")
 set(TEXT_SOURCES
     "${TEXT}/base_words_map.cpp"
+    "${TEXT}/edit_distance.cpp"
     "${TEXT}/knuth_morris_pratt.cpp"
     "${TEXT}/suffix_array.cpp"
     "${TEXT}/trie.cpp")

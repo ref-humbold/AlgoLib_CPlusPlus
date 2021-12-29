@@ -11,19 +11,21 @@ size_t alse::count_lcs_length(const std::string & text1, const std::string & tex
     const std::string & short_text = text1.size() <= text2.size() ? text1 : text2;
     const std::string & long_text = text1.size() > text2.size() ? text1 : text2;
 
-    std::vector<size_t> previous_lcs(short_text.size() + 1, 0);
+    std::vector<size_t> lcs(short_text.size() + 1, 0);
 
     for(auto && element : long_text)
     {
-        std::vector<size_t> next_lcs = {0};
+        size_t previous_above = lcs[0];
 
         for(size_t i = 0; i < short_text.size(); ++i)
-            next_lcs.push_back(element == short_text[i]
-                                       ? previous_lcs[i] + 1
-                                       : std::max(previous_lcs[i + 1], next_lcs.back()));
+        {
+            size_t previous_diagonal = previous_above;
 
-        previous_lcs = next_lcs;
+            previous_above = lcs[i + 1];
+            lcs[i + 1] = element == short_text[i] ? previous_diagonal + 1
+                                                  : std::max(previous_above, lcs[i]);
+        }
     }
 
-    return previous_lcs.back();
+    return lcs.back();
 }

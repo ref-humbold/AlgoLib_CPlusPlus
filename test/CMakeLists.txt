@@ -58,6 +58,7 @@ set(STRUCTURES_TEST_SOURCES
     "${STRUCTURES_TEST}/double_heap_test.cpp")
 set(TEXT_TEST_SOURCES
     "${TEXT_TEST}/base_words_map_test.cpp"
+    "${TEXT_TEST}/edit_distance_test.cpp"
     "${TEXT_TEST}/knuth_morris_pratt_test.cpp"
     "${TEXT_TEST}/suffix_array_test.cpp"
     "${TEXT_TEST}/trie_test.cpp")
