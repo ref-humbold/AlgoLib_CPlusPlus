@@ -18,7 +18,7 @@ TEST(EditDistanceTest, countLevenshtein_WhenSameText_ThenZero)
     // when
     double result = alte::count_levenshtein(text, text);
     // then
-    EXPECT_NEAR(0.0, result, offset);
+    EXPECT_EQ(0.0, result);
 }
 
 TEST(EditDistanceTest, countLevenshtein_WhenEmptySource_ThenSumOfInsertions)
@@ -43,8 +43,15 @@ TEST(EditDistanceTest, countLevenshtein_WhenEmptyDestination_ThenSumOfDeletions)
     EXPECT_NEAR(text.length() * deletionCost, result, offset);
 }
 
-#pragma endregion
+TEST(EditDistanceTest, countLevenshtein_WhenNegativeCost_ThenInvalidArgument)
+{
+    // when
+    auto exec = [&]() { return alte::count_levenshtein("a", "b", 1.0, 1.0, -1.0); };
+    // then
+    EXPECT_THROW(exec(), std::invalid_argument);
+}
 
+#pragma endregion
 #pragma region count_lcs
 
 TEST(EditDistanceTest, countLCS_WhenSameText_ThenZero)
@@ -54,7 +61,7 @@ TEST(EditDistanceTest, countLCS_WhenSameText_ThenZero)
     // when
     double result = alte::count_lcs(text, text);
     // then
-    EXPECT_NEAR(0.0, result, offset);
+    EXPECT_EQ(0.0, result);
 }
 
 TEST(EditDistanceTest, countLCS_WhenEmptySource_ThenSumOfInsertions)
@@ -79,4 +86,47 @@ TEST(EditDistanceTest, countLCS_WhenEmptyDestination_ThenSumOfDeletions)
     EXPECT_NEAR(text.length() * deletionCost, result, offset);
 }
 
+TEST(EditDistanceTest, countLCS_WhenNegativeCost_ThenInvalidArgument)
+{
+    // when
+    auto exec = [&]() { return alte::count_lcs("a", "b", 1.0, -1.0); };
+    // then
+    EXPECT_THROW(exec(), std::invalid_argument);
+}
+
 #pragma endregion
+#pragma region count_hamming
+
+TEST(EditDistanceTest, countHamming_WhenSameText_ThenZero)
+{
+    // given
+    std::string text = "qwertyuiop";
+    // when
+    double result = alte::count_hamming(text, text);
+    // then
+    EXPECT_EQ(0.0, result);
+}
+
+TEST(EditDistanceTest, countHamming_WhenEmpty_ThenZero)
+{
+    // when
+    double result = alte::count_hamming("", "");
+    // then
+    EXPECT_EQ(0.0, result);
+}
+
+TEST(EditDistanceTest, countHamming_WhenDifferentLength_ThenInvalidArgument)
+{
+    // when
+    auto exec = [&]() { return alte::count_hamming("qwerty", "asdf"); };
+    // then
+    EXPECT_THROW(exec(), std::invalid_argument);
+}
+
+TEST(EditDistanceTest, countHamming_WhenNegativeCost_ThenInvalidArgument)
+{
+    // when
+    auto exec = [&]() { return alte::count_hamming("a", "b", -1.0); };
+    // then
+    EXPECT_THROW(exec(), std::invalid_argument);
+}

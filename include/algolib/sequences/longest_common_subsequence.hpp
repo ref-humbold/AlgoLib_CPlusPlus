@@ -47,8 +47,8 @@ namespace algolib::sequences
 
     /*!
      * \brief Computes length of the longest common subsequence of given texts.
-     * \param sequence1 first text
-     * \param sequence2 second text
+     * \param text1 first text
+     * \param text2 second text
      * \return length of the longest common subsequence
      */
     size_t count_lcs_length(const std::string & text1, const std::string & text2);

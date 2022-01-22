@@ -11,9 +11,9 @@ double alte::count_levenshtein(const std::string & source, const std::string & d
                                double substitution_cost)
 {
     if(insertion_cost < 0 || deletion_cost < 0 || substitution_cost < 0)
-        throw std::domain_error("Cost cannot be negative");
+        throw std::invalid_argument("Cost cannot be negative");
 
-    std::vector<size_t> distance;
+    std::vector<double> distance;
 
     for(size_t i = 0; i <= destination.size(); ++i)
         distance.push_back(i * insertion_cost);
@@ -44,9 +44,9 @@ double alte::count_lcs(const std::string & source, const std::string & destinati
                        double insertion_cost, double deletion_cost)
 {
     if(insertion_cost < 0 || deletion_cost < 0)
-        throw std::domain_error("Cost cannot be negative");
+        throw std::invalid_argument("Cost cannot be negative");
 
-    std::vector<size_t> distance;
+    std::vector<double> distance;
 
     for(size_t i = 0; i <= destination.size(); ++i)
         distance.push_back(i * insertion_cost);
@@ -69,4 +69,21 @@ double alte::count_lcs(const std::string & source, const std::string & destinati
     }
 
     return distance.back();
+}
+double alte::count_hamming(const std::string & source, const std::string & destination,
+                           double substitution_cost)
+{
+    if(substitution_cost < 0)
+        throw std::invalid_argument("Cost cannot be negative");
+
+    if(source.size() != destination.size())
+        throw std::invalid_argument("Texts must have equal length");
+
+    double distance = 0.0;
+
+    for(size_t i = 0; i < source.size(); ++i)
+        if(source[i] != destination[i])
+            distance += substitution_cost;
+
+    return distance;
 }

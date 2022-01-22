@@ -74,7 +74,7 @@ TEST_F(TrieTest, moveAssignment)
         EXPECT_TRUE(copy_object.contains(text));
 }
 
-TEST_F(TrieTest, copyAssignment_WhenSelfAssignment_ThenObjectUn)
+TEST_F(TrieTest, copyAssignment_WhenSelfAssignment_ThenObjectUnchanged)
 {
     // when
     test_object = test_object;
