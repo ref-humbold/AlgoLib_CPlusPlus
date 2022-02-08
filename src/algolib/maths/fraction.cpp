@@ -2,9 +2,9 @@
  * \file fraction.cpp
  * \brief Structure of fraction
  */
-#include "algolib/mathmat/fraction.hpp"
+#include "algolib/maths/fraction.hpp"
 
-namespace alma = algolib::mathmat;
+namespace alma = algolib::maths;
 
 #pragma region fraction
 

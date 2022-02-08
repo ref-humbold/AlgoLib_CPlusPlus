@@ -2,9 +2,9 @@
  * \file maths.cpp
  * \brief Algorithms for basic mathematical computations
  */
-#include "algolib/mathmat/maths.hpp"
+#include "algolib/maths/maths.hpp"
 
-namespace alma = algolib::mathmat;
+namespace alma = algolib::maths;
 
 #pragma region gcd
 

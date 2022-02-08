@@ -11,7 +11,7 @@
 #include <exception>
 #include <stdexcept>
 
-namespace algolib::mathmat
+namespace algolib::maths
 {
 #pragma region gcd
 

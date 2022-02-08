@@ -3,9 +3,9 @@
  * \brief Tests: Algorithms for basic mathematical computations
  */
 #include <gtest/gtest.h>
-#include "algolib/mathmat/maths.hpp"
+#include "algolib/maths/maths.hpp"
 
-namespace alma = algolib::mathmat;
+namespace alma = algolib::maths;
 
 #pragma region gcd
 

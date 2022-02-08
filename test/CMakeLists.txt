@@ -14,7 +14,7 @@ set(GEOMETRY_DIM2_TEST "${GEOMETRY_TEST}/dim2")
 set(GEOMETRY_DIM3_TEST "${GEOMETRY_TEST}/dim3")
 set(GRAPHS_TEST "graphs")
 set(GRAPHS_ALGORITHMS_TEST "${GRAPHS_TEST}/algorithms")
-set(MATHMAT_TEST "mathmat")
+set(MATHS_TEST "maths")
 set(SEQUENCES_TEST "sequences")
 set(STRUCTURES_TEST "structures")
 set(TEXT_TEST "text")
@@ -41,12 +41,12 @@ set(GRAPHS_ALGORITHMS_TEST_SOURCES
     "${GRAPHS_ALGORITHMS_TEST}/searching_test.cpp"
     "${GRAPHS_ALGORITHMS_TEST}/strongly_connected_components_test.cpp"
     "${GRAPHS_ALGORITHMS_TEST}/topological_sorting_test.cpp")
-set(MATHMAT_TEST_SOURCES
-    "${MATHMAT_TEST}/equation_test.cpp"
-    "${MATHMAT_TEST}/equation_system_test.cpp"
-    "${MATHMAT_TEST}/fraction_test.cpp"
-    "${MATHMAT_TEST}/maths_test.cpp"
-    "${MATHMAT_TEST}/primes_test.cpp")
+set(MATHS_TEST_SOURCES
+    "${MATHS_TEST}/equation_test.cpp"
+    "${MATHS_TEST}/equation_system_test.cpp"
+    "${MATHS_TEST}/fraction_test.cpp"
+    "${MATHS_TEST}/maths_test.cpp"
+    "${MATHS_TEST}/primes_test.cpp")
 set(SEQUENCES_TEST_SOURCES
     "${SEQUENCES_TEST}/longest_common_subsequence_test.cpp"
     "${SEQUENCES_TEST}/longest_increasing_subsequence_test.cpp"
@@ -68,7 +68,7 @@ set(TEST_SOURCES
     "${GEOMETRY_DIM3_TEST_SOURCES}"
     "${GRAPHS_TEST_SOURCES}"
     "${GRAPHS_ALGORITHMS_TEST_SOURCES}"
-    "${MATHMAT_TEST_SOURCES}"
+    "${MATHS_TEST_SOURCES}"
     "${SEQUENCES_TEST_SOURCES}"
     "${STRUCTURES_TEST_SOURCES}"
     "${TEXT_TEST_SOURCES}")

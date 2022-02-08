@@ -4,9 +4,9 @@
  */
 #include <sstream>
 #include <gtest/gtest.h>
-#include "algolib/mathmat/equation.hpp"
+#include "algolib/maths/equation.hpp"
 
-namespace alma = algolib::mathmat;
+namespace alma = algolib::maths;
 
 class EquationTest : public ::testing::Test
 {

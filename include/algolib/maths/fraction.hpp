@@ -12,9 +12,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include "algolib/mathmat/maths.hpp"
+#include "algolib/maths/maths.hpp"
 
-namespace algolib::mathmat
+namespace algolib::maths
 {
     class fraction;
 }
@@ -22,10 +22,10 @@ namespace algolib::mathmat
 namespace std
 {
     template <>
-    struct hash<algolib::mathmat::fraction>;
+    struct hash<algolib::maths::fraction>;
 }
 
-namespace algolib::mathmat
+namespace algolib::maths
 {
     class fraction
     {
@@ -192,9 +192,9 @@ namespace algolib::mathmat
 namespace std
 {
     template <>
-    struct hash<algolib::mathmat::fraction>
+    struct hash<algolib::maths::fraction>
     {
-        using argument_type = algolib::mathmat::fraction;
+        using argument_type = algolib::maths::fraction;
         using result_type = size_t;
 
         result_type operator()(const argument_type & f)

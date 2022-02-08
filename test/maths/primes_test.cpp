@@ -3,9 +3,9 @@
  * \brief TEST: Algorithms for prime numbers
  */
 #include <gtest/gtest.h>
-#include "algolib/mathmat/primes.hpp"
+#include "algolib/maths/primes.hpp"
 
-namespace alma = algolib::mathmat;
+namespace alma = algolib::maths;
 
 #pragma region findPrimes
 

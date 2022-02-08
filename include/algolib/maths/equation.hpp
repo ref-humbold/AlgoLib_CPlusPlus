@@ -13,7 +13,7 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace algolib::mathmat
+namespace algolib::maths
 {
     template <size_t N>
     class equation;
@@ -40,10 +40,10 @@ namespace algolib::mathmat
 namespace std
 {
     template <size_t N>
-    struct hash<algolib::mathmat::equation<N>>;
+    struct hash<algolib::maths::equation<N>>;
 }
 
-namespace algolib::mathmat
+namespace algolib::maths
 {
 #pragma region equation
 
@@ -279,9 +279,9 @@ namespace algolib::mathmat
 namespace std
 {
     template <size_t N>
-    struct hash<algolib::mathmat::equation<N>>
+    struct hash<algolib::maths::equation<N>>
     {
-        using argument_type = algolib::mathmat::equation<N>;
+        using argument_type = algolib::maths::equation<N>;
         using result_type = size_t;
 
         result_type operator()(const argument_type & eq)

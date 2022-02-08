@@ -7,7 +7,7 @@ set(GEOMETRY_DIM2 "${GEOMETRY}/dim2")
 set(GEOMETRY_DIM3 "${GEOMETRY}/dim3")
 set(GRAPHS "${ALGOLIB}/graphs")
 set(GRAPHS_ALGORITHMS "${GRAPHS}/algorithms")
-set(MATHMAT "${ALGOLIB}/mathmat")
+set(MATHS "${ALGOLIB}/maths")
 set(SEQUENCES "${ALGOLIB}/sequences")
 set(STRUCTURES "${ALGOLIB}/structures")
 set(TEXT "${ALGOLIB}/text")
@@ -43,12 +43,12 @@ set(GRAPHS_ALGORITHMS_SOURCES
     "${GRAPHS_ALGORITHMS}/searching_strategy.cpp"
     "${GRAPHS_ALGORITHMS}/strongly_connected_components.cpp"
     "${GRAPHS_ALGORITHMS}/topological_sorting.cpp")
-set(MATHMAT_SOURCES
-    "${MATHMAT}/equation.cpp"
-    "${MATHMAT}/equation_system.cpp"
-    "${MATHMAT}/fraction.cpp"
-    "${MATHMAT}/maths.cpp"
-    "${MATHMAT}/primes.cpp")
+set(MATHS_SOURCES
+    "${MATHS}/equation.cpp"
+    "${MATHS}/equation_system.cpp"
+    "${MATHS}/fraction.cpp"
+    "${MATHS}/maths.cpp"
+    "${MATHS}/primes.cpp")
 set(SEQUENCES_SOURCES
     "${SEQUENCES}/longest_common_subsequence.cpp"
     "${SEQUENCES}/longest_increasing_subsequence.cpp"
@@ -71,7 +71,7 @@ set(SOURCES
     "${GEOMETRY_DIM3_SOURCES}"
     "${GRAPHS_SOURCES}"
     "${GRAPHS_ALGORITHMS_SOURCES}"
-    "${MATHMAT_SOURCES}"
+    "${MATHS_SOURCES}"
     "${SEQUENCES_SOURCES}"
     "${STRUCTURES_SOURCES}"
     "${TEXT_SOURCES}")

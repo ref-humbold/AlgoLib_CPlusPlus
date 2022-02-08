@@ -9,9 +9,9 @@
 #include <ctime>
 #include <algorithm>
 #include <vector>
-#include "algolib/mathmat/maths.hpp"
+#include "algolib/maths/maths.hpp"
 
-namespace algolib::mathmat
+namespace algolib::maths
 {
 #pragma region find_primes
 

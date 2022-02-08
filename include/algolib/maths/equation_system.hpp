@@ -11,9 +11,9 @@
 #include <array>
 #include <exception>
 #include <stdexcept>
-#include "algolib/mathmat/equation.hpp"
+#include "algolib/maths/equation.hpp"
 
-namespace algolib::mathmat
+namespace algolib::maths
 {
     class infinite_solutions_error : public std::runtime_error
     {

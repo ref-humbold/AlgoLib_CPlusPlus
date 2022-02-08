@@ -4,9 +4,9 @@
  */
 #include <sstream>
 #include <gtest/gtest.h>
-#include "algolib/mathmat/fraction.hpp"
+#include "algolib/maths/fraction.hpp"
 
-namespace alma = algolib::mathmat;
+namespace alma = algolib::maths;
 
 #pragma region cast operators
 
