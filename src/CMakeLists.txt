@@ -38,11 +38,12 @@ set(GRAPHS_ALGORITHMS_SOURCES
     "${GRAPHS_ALGORITHMS}/lowest_common_ancestor.cpp"
     "${GRAPHS_ALGORITHMS}/matching.cpp"
     "${GRAPHS_ALGORITHMS}/minimal_spanning_tree.cpp"
-    "${GRAPHS_ALGORITHMS}/paths.cpp"
     "${GRAPHS_ALGORITHMS}/searching.cpp"
+    "${GRAPHS_ALGORITHMS}/shortest_paths.cpp"
     "${GRAPHS_ALGORITHMS}/searching_strategy.cpp"
     "${GRAPHS_ALGORITHMS}/strongly_connected_components.cpp"
-    "${GRAPHS_ALGORITHMS}/topological_sorting.cpp")
+    "${GRAPHS_ALGORITHMS}/topological_sorting.cpp"
+    "${GRAPHS_ALGORITHMS}/tree_diameter.cpp")
 set(MATHS_SOURCES
     "${MATHS}/equation.cpp"
     "${MATHS}/equation_system.cpp"

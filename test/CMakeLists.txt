@@ -37,8 +37,8 @@ set(GRAPHS_ALGORITHMS_TEST_SOURCES
     "${GRAPHS_ALGORITHMS_TEST}/lowest_common_ancestor_test.cpp"
     "${GRAPHS_ALGORITHMS_TEST}/matching_test.cpp"
     "${GRAPHS_ALGORITHMS_TEST}/minimal_spanning_tree_test.cpp"
-    "${GRAPHS_ALGORITHMS_TEST}/paths_test.cpp"
     "${GRAPHS_ALGORITHMS_TEST}/searching_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/shortest_paths_test.cpp"
     "${GRAPHS_ALGORITHMS_TEST}/strongly_connected_components_test.cpp"
     "${GRAPHS_ALGORITHMS_TEST}/topological_sorting_test.cpp")
 set(MATHS_TEST_SOURCES

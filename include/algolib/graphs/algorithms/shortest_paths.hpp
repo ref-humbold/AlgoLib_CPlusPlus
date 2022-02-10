@@ -1,9 +1,9 @@
 /**!
- * \file paths.hpp
+ * \file shortest_paths.hpp
  * \brief Algorithms for shortest paths in graph
  */
-#ifndef PATHS_HPP_
-#define PATHS_HPP_
+#ifndef SHORTEST_PATHS_HPP_
+#define SHORTEST_PATHS_HPP_
 
 #include <cmath>
 #include <cstdlib>

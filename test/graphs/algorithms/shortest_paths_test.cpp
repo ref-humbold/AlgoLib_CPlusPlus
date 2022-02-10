@@ -1,10 +1,10 @@
 /**!
- * \file paths_test.cpp
+ * \file shortest_paths_test.cpp
  * \brief Tests: Algorithms for shortest paths in graph
  */
 #include <vector>
 #include <gtest/gtest.h>
-#include "algolib/graphs/algorithms/paths.hpp"
+#include "algolib/graphs/algorithms/shortest_paths.hpp"
 #include "algolib/graphs/directed_graph.hpp"
 #include "algolib/graphs/undirected_graph.hpp"
 
