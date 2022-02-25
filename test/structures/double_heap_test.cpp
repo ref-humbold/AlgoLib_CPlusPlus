@@ -61,6 +61,16 @@ TEST_F(DoubleHeapTest, size_WhenEmpty_ThenZero)
     EXPECT_EQ(0, result);
 }
 
+TEST_F(DoubleHeapTest, clear_WhenNotEmpty_ThenEmpty)
+{
+    // when
+    test_object.clear();
+    // then
+    EXPECT_TRUE(test_object.empty());
+}
+
+#pragma region min & max
+
 TEST_F(DoubleHeapTest, min_WhenEmpty_ThenOutOfRange)
 {
     // given
@@ -71,7 +81,19 @@ TEST_F(DoubleHeapTest, min_WhenEmpty_ThenOutOfRange)
     EXPECT_THROW(exec(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, min_WhenNotEmpty_ThenMinimalElement)
+TEST_F(DoubleHeapTest, min_WhenSingleElement_ThenThisElement)
+{
+    // given
+    int element = 19;
+
+    test_object = alst::double_heap<int>(std::less<int>(), {element});
+    // when
+    int result = test_object.min();
+    // then
+    EXPECT_EQ(element, result);
+}
+
+TEST_F(DoubleHeapTest, min_WhenMultipleElements_ThenMinimalElement)
 {
     // when
     int result = test_object.min();
@@ -109,6 +131,19 @@ TEST_F(DoubleHeapTest, max_WhenMultipleElements_ThenMaximalElement)
     EXPECT_EQ(maximum, result);
 }
 
+#pragma endregion
+#pragma region push & emplace
+
+TEST_F(DoubleHeapTest, push_WhenNewElement_ThenAdded)
+{
+    // when
+    test_object.push(46);
+    // then
+    ASSERT_EQ(numbers.size() + 1, test_object.size());
+    EXPECT_EQ(minimum, test_object.min());
+    EXPECT_EQ(maximum, test_object.max());
+}
+
 TEST_F(DoubleHeapTest, push_WhenEmpty_ThenAdded)
 {
     // given
@@ -123,10 +158,10 @@ TEST_F(DoubleHeapTest, push_WhenEmpty_ThenAdded)
     EXPECT_EQ(element, test_object.max());
 }
 
-TEST_F(DoubleHeapTest, push_WhenNewElementIsLess_ThenAddedToMin)
+TEST_F(DoubleHeapTest, push_WhenNewElementIsLessThanMinimum_ThenNewMinimum)
 {
     // given
-    int element = minimum - 1;
+    int element = minimum - 3;
     // when
     test_object.push(element);
     // then
@@ -134,10 +169,10 @@ TEST_F(DoubleHeapTest, push_WhenNewElementIsLess_ThenAddedToMin)
     EXPECT_EQ(element, test_object.min());
 }
 
-TEST_F(DoubleHeapTest, push_WhenNewElementIsGreater_ThenAddedToMax)
+TEST_F(DoubleHeapTest, push_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum)
 {
     // given
-    int element = maximum + 1;
+    int element = maximum + 3;
     // when
     test_object.push(element);
     // then
@@ -145,37 +180,40 @@ TEST_F(DoubleHeapTest, push_WhenNewElementIsGreater_ThenAddedToMax)
     EXPECT_EQ(element, test_object.max());
 }
 
-TEST_F(DoubleHeapTest, emplace_WhenNewElementIsLess_ThenAddedToMin)
-{
-    // given
-    int element = minimum - 1;
-    // when
-    test_object.emplace(element);
-    // then
-    ASSERT_EQ(numbers.size() + 1, test_object.size());
-    EXPECT_EQ(element, test_object.min());
-}
-
-TEST_F(DoubleHeapTest, emplace_WhenNewElementIsGreater_ThenAddedToMax)
-{
-    // given
-    int element = maximum + 1;
-    // when
-    test_object.emplace(element);
-    // then
-    ASSERT_EQ(numbers.size() + 1, test_object.size());
-    EXPECT_EQ(element, test_object.max());
-}
-
-TEST_F(DoubleHeapTest, push_WhenNewElement_ThenAdded)
+TEST_F(DoubleHeapTest, emplace_WhenNewElement_ThenAdded)
 {
     // when
-    test_object.push(46);
+    test_object.emplace(46);
     // then
     ASSERT_EQ(numbers.size() + 1, test_object.size());
     EXPECT_EQ(minimum, test_object.min());
     EXPECT_EQ(maximum, test_object.max());
 }
+
+TEST_F(DoubleHeapTest, emplace_WhenNewElementIsLessThanMinimum_ThenNewMinimum)
+{
+    // given
+    int element = minimum - 3;
+    // when
+    test_object.emplace(element);
+    // then
+    ASSERT_EQ(numbers.size() + 1, test_object.size());
+    EXPECT_EQ(element, test_object.min());
+}
+
+TEST_F(DoubleHeapTest, emplace_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum)
+{
+    // given
+    int element = maximum + 3;
+    // when
+    test_object.emplace(element);
+    // then
+    ASSERT_EQ(numbers.size() + 1, test_object.size());
+    EXPECT_EQ(element, test_object.max());
+}
+
+#pragma endregion
+#pragma region popMin & popMax
 
 TEST_F(DoubleHeapTest, popMin_WhenEmpty_ThenOutOfRange)
 {
@@ -187,14 +225,6 @@ TEST_F(DoubleHeapTest, popMin_WhenEmpty_ThenOutOfRange)
     EXPECT_THROW(exec(), std::out_of_range);
 }
 
-TEST_F(DoubleHeapTest, popMin_WhenNotEmpty_ThenMinimalElementRemoved)
-{
-    // when
-    test_object.pop_min();
-    // then
-    EXPECT_EQ(numbers.size() - 1, test_object.size());
-}
-
 TEST_F(DoubleHeapTest, popMin_WhenSingleElement_ThenThisElementRemoved)
 {
     // given
@@ -203,6 +233,14 @@ TEST_F(DoubleHeapTest, popMin_WhenSingleElement_ThenThisElementRemoved)
     test_object.pop_min();
     // then
     EXPECT_EQ(0, test_object.size());
+}
+
+TEST_F(DoubleHeapTest, popMin_WhenMultipleElements_ThenMinimalElementRemoved)
+{
+    // when
+    test_object.pop_min();
+    // then
+    EXPECT_EQ(numbers.size() - 1, test_object.size());
 }
 
 TEST_F(DoubleHeapTest, popMin_WhenMultipleCalls_ThenSortedAscending)
@@ -269,10 +307,4 @@ TEST_F(DoubleHeapTest, popMax_WhenMultipleCalls_ThenSortedDescending)
     EXPECT_EQ(expected, result);
 }
 
-TEST_F(DoubleHeapTest, clear_WhenNotEmpty_ThenEmpty)
-{
-    // when
-    test_object.clear();
-    // then
-    EXPECT_TRUE(test_object.empty());
-}
+#pragma endregion

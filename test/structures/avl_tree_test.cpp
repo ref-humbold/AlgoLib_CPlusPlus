@@ -24,6 +24,8 @@ public:
     ~AVLTreeTest() override = default;
 };
 
+#pragma region constructors & assignments
+
 TEST_F(AVLTreeTest, copyConstructor)
 {
     // when
@@ -105,6 +107,8 @@ TEST_F(AVLTreeTest, copyAssignment_WhenSelfAssignment_ThenObjectUnchanged)
         EXPECT_TRUE(test_object.find(e) != test_object.end());
 }
 
+#pragma endregion
+
 TEST_F(AVLTreeTest, empty_WhenNotEmpty_ThenFalse)
 {
     // when
@@ -141,29 +145,44 @@ TEST_F(AVLTreeTest, size_WhenEmpty_ThenZero)
     EXPECT_EQ(0, result);
 }
 
+TEST_F(AVLTreeTest, clear_WhenNotEmpty_ThenEmpty)
+{
+    // when
+    test_object.clear();
+    // then
+    EXPECT_TRUE(test_object.empty());
+    EXPECT_EQ(0, test_object.size());
+}
+
+#pragma region iterators
+
 TEST_F(AVLTreeTest, iterator_WhenIterativeForLoop_ThenSortedElements)
 {
-    std::vector<int> result;
+    // given
     std::vector<int> sorted_numbers = numbers;
+
+    std::sort(sorted_numbers.begin(), sorted_numbers.end());
+    // when
+    std::vector<int> result;
 
     for(auto && it = test_object.begin(); it != test_object.end(); ++it)
         result.push_back(*it);
-
-    std::sort(sorted_numbers.begin(), sorted_numbers.end());
-
+    // then
     EXPECT_EQ(sorted_numbers, result);
 }
 
-TEST_F(AVLTreeTest, iterator_WhenRangeBasedForLoop_ThenSortedElements)
+TEST_F(AVLTreeTest, iterator_WhenIterativeForLoopForConstObject_ThenSortedElements)
 {
-    std::vector<int> result;
+    // given
     std::vector<int> sorted_numbers = numbers;
 
-    for(auto && e : test_object)
-        result.push_back(e);
-
     std::sort(sorted_numbers.begin(), sorted_numbers.end());
+    // when
+    std::vector<int> result;
 
+    for(auto && it = const_test_object.begin(); it != const_test_object.end(); ++it)
+        result.push_back(*it);
+    // then
     EXPECT_EQ(sorted_numbers, result);
 }
 
@@ -186,7 +205,7 @@ TEST_F(AVLTreeTest, constIterator_WhenAccessElement_ThenSortedElements)
     std::vector<int> sorted_numbers = numbers;
 
     std::sort(sorted_numbers.begin(), sorted_numbers.end());
-    //when
+    // when
     auto test_it = test_object.cbegin();
 
     for(size_t i = 0; i < test_object.size(); ++i)
@@ -233,8 +252,9 @@ TEST_F(AVLTreeTest, reverseIterator_WhenEmpty_ThenNoElements)
 {
     // given
     test_object = alst::avl_tree<int>();
-    std::vector<int> result;
     // when
+    std::vector<int> result;
+
     for(auto && it = test_object.rbegin(); it != test_object.rend(); ++it)
         result.push_back(*it);
     // then
@@ -259,6 +279,9 @@ TEST_F(AVLTreeTest, constReverseIterator_WhenAccessElement_ThenReverseSortedElem
         EXPECT_EQ(sorted_numbers[i], result);
     }
 }
+
+#pragma endregion
+#pragma region find
 
 TEST_F(AVLTreeTest, find_WhenPresentElement_ThenIteratorNotEnd)
 {
@@ -309,6 +332,9 @@ TEST_F(AVLTreeTest, find_WhenConstObjectAndAbsentElement_ThenIteratorEnd)
         EXPECT_FALSE(result != const_test_object.end());
     }
 }
+
+#pragma endregion
+#pragma region insert & emplace
 
 TEST_F(AVLTreeTest, insert_WhenNewElement_ThenIteratorNotEndAndTrue)
 {
@@ -385,6 +411,9 @@ TEST_F(AVLTreeTest, emplace_WhenPresentElement_ThenIteratorEndAndFalse)
 
     EXPECT_EQ(numbers.size(), test_object.size());
 }
+
+#pragma endregion
+#pragma region erase
 
 TEST_F(AVLTreeTest, erase_WhenPresentElement_ThenNotFound)
 {
@@ -477,11 +506,4 @@ TEST_F(AVLTreeTest, erase_WhenAbsentElement_ThenZeroElementsRemoved)
     EXPECT_EQ(numbers.size(), test_object.size());
 }
 
-TEST_F(AVLTreeTest, clear_WhenNotEmpty_ThenEmpty)
-{
-    // when
-    test_object.clear();
-    // then
-    EXPECT_TRUE(test_object.empty());
-    EXPECT_EQ(0, test_object.size());
-}
+#pragma endregion

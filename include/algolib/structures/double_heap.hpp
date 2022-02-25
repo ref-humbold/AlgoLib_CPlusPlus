@@ -36,7 +36,7 @@ namespace algolib::structures
         template <typename InputIterator>
         double_heap(InputIterator first, InputIterator last,
                     const value_compare & compare = value_compare())
-            : heap{container_type()}, compare{compare}
+            : double_heap(compare)
         {
             for(InputIterator it = first; it != last; ++it)
                 this->push(*it);
@@ -48,21 +48,28 @@ namespace algolib::structures
         double_heap & operator=(const double_heap &) = default;
         double_heap & operator=(double_heap &&) = default;
 
-        //! \return number of elements in the double heap
-        size_type size() const
-        {
-            return this->heap.size();
-        }
-
-        //! \return \c true if the double heap is empty, otherwise \c false
+        //! \return \c true if this double heap is empty, otherwise \c false
         bool empty() const
         {
             return this->heap.empty();
         }
 
+        //! \return number of elements in this double heap
+        size_type size() const
+        {
+            return this->heap.size();
+        }
+
+        //! \brief Removes all elements from this double heap.
+        void clear()
+        {
+            this->heap = container_type();
+        }
+
         /*!
-         * \brief Retrieves minimal element from the double heap.
+         * \brief Retrieves minimal element from this double heap.
          * \return minimal element
+         * \throw std::out_of_range if this double heap is empty
          */
         const_reference min() const
         {
@@ -73,8 +80,9 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Retrieves maximal element from the double heap.
+         * \brief Retrieves maximal element from this double heap.
          * \return maximal element
+         * \throw std::out_of_range if this double heap is empty
          */
         const_reference max() const
         {
@@ -82,29 +90,23 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Adds new value to the double heap.
-         * \param element new value
+         * \brief Adds new value to this double heap.
+         * \param element the value
          */
         void push(const_reference element);
 
         /*!
-         * \brief Adds new value to the double heap constructed in-place with the given arguments.
+         * \brief Adds new value to this double heap constructed in-place with the given arguments.
          * \param args arguments to forward to the constructor of the new value
          */
         template <typename... Args>
         void emplace(Args &&... args);
 
-        //! \brief Removes minimal element from the double heap.
+        //! \brief Removes minimal element from this double heap.
         void pop_min();
 
-        //! \brief Removes maximal element from the double heap.
+        //! \brief Removes maximal element from this double heap.
         void pop_max();
-
-        //! \brief Removes all elements from the double heap.
-        void clear()
-        {
-            this->heap = container_type();
-        }
 
     private:
         void push_heap();

@@ -145,17 +145,20 @@ namespace algolib::structures
             return this->crend();
         }
 
+        //! \return \c true if the tree is empty, otherwise \c false
+        bool empty() const
+        {
+            return this->get_root() == nullptr;
+        }
+
         //! \return number of elements in the tree
         size_type size() const
         {
             return this->size_;
         }
 
-        //! \return \c true if the tree is empty, otherwise \c false
-        bool empty() const
-        {
-            return this->get_root() == nullptr;
-        }
+        //! \brief Removes all elements in the tree.
+        void clear();
 
         /*!
          * \brief Checks whether given value is present in the tree.
@@ -194,9 +197,6 @@ namespace algolib::structures
          * \return number of element removed
          */
         size_type erase(const_reference element);
-
-        //! \brief Removes all elements in the tree.
-        void clear();
 
     private:
         inner_ptr get_root() const
@@ -276,15 +276,22 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
+    void avl_tree<E, Compare>::clear()
+    {
+        delete this->get_root();
+        this->set_root(nullptr);
+        this->size_ = 0;
+    }
+
+    template <typename E, typename Compare>
     typename avl_tree<E, Compare>::iterator avl_tree<E, Compare>::find(const_reference element)
     {
         if(this->empty())
             return this->end();
 
-        std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
-                                                                       const_reference e) {
-            return !compare(n->element, e) && !compare(e, n->element);
-        };
+        std::function<bool(inner_ptr, const_reference)> equal =
+                [this](inner_ptr n, const_reference e)
+        { return !compare(n->element, e) && !compare(e, n->element); };
         node_ptr the_node = this->find_node(element, equal);
 
         return the_node == nullptr ? this->end() : iterator(the_node);
@@ -297,10 +304,9 @@ namespace algolib::structures
         if(this->empty())
             return this->cend();
 
-        std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
-                                                                       const_reference e) {
-            return !compare(n->element, e) && !compare(e, n->element);
-        };
+        std::function<bool(inner_ptr, const_reference)> equal =
+                [this](inner_ptr n, const_reference e)
+        { return !compare(n->element, e) && !compare(e, n->element); };
         node_ptr the_node = this->find_node(element, equal);
 
         return the_node == nullptr ? this->cend() : const_iterator(the_node);
@@ -324,10 +330,9 @@ namespace algolib::structures
     template <typename E, typename Compare>
     typename avl_tree<E, Compare>::size_type avl_tree<E, Compare>::erase(const_reference element)
     {
-        std::function<bool(inner_ptr, const_reference)> equal = [this](inner_ptr n,
-                                                                       const_reference e) {
-            return !this->compare(n->element, e) && !this->compare(e, n->element);
-        };
+        std::function<bool(inner_ptr, const_reference)> equal =
+                [this](inner_ptr n, const_reference e)
+        { return !this->compare(n->element, e) && !this->compare(e, n->element); };
         inner_ptr the_node = this->find_node(element, equal);
 
         if(the_node == nullptr)
@@ -336,14 +341,6 @@ namespace algolib::structures
         this->delete_node(the_node);
 
         return 1;
-    }
-
-    template <typename E, typename Compare>
-    void avl_tree<E, Compare>::clear()
-    {
-        delete this->get_root();
-        this->set_root(nullptr);
-        this->size_ = 0;
     }
 
     template <typename E, typename Compare>
@@ -376,8 +373,9 @@ namespace algolib::structures
     std::pair<typename avl_tree<E, Compare>::iterator, bool>
             avl_tree<E, Compare>::insert_node(typename avl_tree<E, Compare>::inner_ptr node)
     {
-        std::function<bool(inner_ptr, const_reference)> child_equal = [this](inner_ptr n,
-                                                                             const_reference e) {
+        std::function<bool(inner_ptr, const_reference)> child_equal =
+                [this](inner_ptr n, const_reference e)
+        {
             inner_ptr child = this->search(n, e);
 
             return child == nullptr

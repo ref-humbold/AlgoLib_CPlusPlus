@@ -77,14 +77,14 @@ namespace algolib::maths
         /*!
          * Multiplies equation by a constant.
          * \param constant constant
-         * \throw domain_error if constant is zero
+         * \throw std::domain_error if constant is zero
          */
         equation & operator*=(double constant);
 
         /*!
          * Divides equation by a constant.
          * \param constant constant
-         * \throw domain_error if constant is zero
+         * \throw std::domain_error if constant is zero
          */
         equation & operator/=(double constant);
 
@@ -109,7 +109,7 @@ namespace algolib::maths
         /*!
          * \param i index of a variable
          * \return coefficient by i-th variable
-         * \throw out_of_range if index is out of range
+         * \throw std::out_of_range if index is out of range
          */
         double & at(size_t i)
         {
@@ -119,7 +119,7 @@ namespace algolib::maths
         /*!
          * \param i index of a variable
          * \return coefficient by i-th variable
-         * \throw out_of_range if index is out of range
+         * \throw std::out_of_range if index is out of range
          */
         const double & at(size_t i) const
         {
@@ -130,7 +130,7 @@ namespace algolib::maths
          * Transforms equation through a linear combination with another equation.
          * \param equation equation
          * \param constant linear combination constant
-         * \throw domain_error if constant is zero
+         * \throw std::domain_error if constant is zero
          */
         void combine(const equation<N> & equation, double constant);
 
