@@ -55,7 +55,8 @@ set(SEQUENCES_TEST_SOURCES
 set(STRUCTURES_TEST_SOURCES
     "${STRUCTURES_TEST}/avl_tree_test.cpp"
     "${STRUCTURES_TEST}/disjoint_sets_test.cpp"
-    "${STRUCTURES_TEST}/double_heap_test.cpp")
+    "${STRUCTURES_TEST}/double_heap_test.cpp"
+    "${STRUCTURES_TEST}/pairing_heap_test.cpp")
 set(TEXT_TEST_SOURCES
     "${TEXT_TEST}/base_words_map_test.cpp"
     "${TEXT_TEST}/edit_distance_test.cpp"

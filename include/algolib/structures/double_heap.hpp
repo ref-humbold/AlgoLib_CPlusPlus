@@ -73,7 +73,7 @@ namespace algolib::structures
          */
         const_reference min() const
         {
-            if(this->heap.empty())
+            if(empty())
                 throw std::out_of_range("Double heap is empty");
 
             return *(this->heap.begin() + index_max);
@@ -140,7 +140,7 @@ namespace algolib::structures
     template <typename E, typename Container, typename Compare>
     void double_heap<E, Container, Compare>::pop_min()
     {
-        if(this->heap.empty())
+        if(empty())
             throw std::out_of_range("Double heap is empty");
 
         *(this->heap.begin() + index_max) = this->heap.back();
