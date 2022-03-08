@@ -9,7 +9,6 @@
 #include <exception>
 #include <initializer_list>
 #include <memory>
-#include <optional>
 #include <stdexcept>
 #include <vector>
 
@@ -54,7 +53,7 @@ namespace algolib::structures
         //! \return \c true if this pairing heap is empty, otherwise \c false
         bool empty() const
         {
-            return this->size_ == 0;
+            return !this->heap;
         }
 
         //! \return number of elements in this pairing heap
@@ -66,7 +65,16 @@ namespace algolib::structures
         //! \brief Removes all elements from this pairing heap.
         void clear()
         {
+            this->heap.reset();
             this->size_ = 0;
+        }
+
+        const_reference top() const
+        {
+            if(this->empty())
+                throw std::out_of_range("Pairing heap is empty");
+
+            return this->heap->element;
         }
 
         void push(const_reference element);
@@ -74,6 +82,7 @@ namespace algolib::structures
         void pop();
 
     private:
+        std::shared_ptr<const heap_node> heap;
         size_type size_;
         value_compare compare;
     };
@@ -81,14 +90,31 @@ namespace algolib::structures
     template <typename E, typename Compare>
     void pairing_heap<E, Compare>::push(typename pairing_heap<E, Compare>::const_reference element)
     {
+        if(this->empty())
+            this->heap = std::make_shared<const heap_node>(element, compare);
+        else
+            this->heap =
+                    compare(heap->element, element)
+                            ? std::make_shared<const heap_node>(
+                                    element, std::make_shared<const heap_node_list>(heap), compare)
+                            : std::make_shared<const heap_node>(
+                                    heap->element,
+                                    std::make_shared<const heap_node_list>(
+                                            std::make_shared<const heap_node>(element, compare),
+                                            heap->children),
+                                    compare);
+
         ++this->size_;
     }
 
     template <typename E, typename Compare>
     void pairing_heap<E, Compare>::pop()
     {
-        if(!empty())
-            --this->size_;
+        if(this->empty())
+            throw std::out_of_range("Pairing heap is empty");
+
+        this->heap = this->heap->pop();
+        --this->size_;
     }
 
 #pragma endregion
@@ -97,6 +123,26 @@ namespace algolib::structures
     template <typename E, typename Compare>
     class pairing_heap<E, Compare>::heap_node_list
     {
+    public:
+        heap_node_list(const std::shared_ptr<const heap_node> & node,
+                       const std::shared_ptr<const heap_node_list> & next)
+            : node{node}, next{next}
+        {
+        }
+
+        explicit heap_node_list(const std::shared_ptr<const heap_node> & node)
+            : heap_node_list(node, nullptr)
+        {
+        }
+
+        ~heap_node_list() = default;
+        heap_node_list(const heap_node_list &) = default;
+        heap_node_list(heap_node_list &&) = default;
+        heap_node_list & operator=(const heap_node_list &) = default;
+        heap_node_list & operator=(heap_node_list &&) = default;
+
+        std::shared_ptr<const heap_node> node;
+        std::shared_ptr<const heap_node_list> next;
     };
 
 #pragma endregion
@@ -104,7 +150,81 @@ namespace algolib::structures
 
     template <typename E, typename Compare>
     class pairing_heap<E, Compare>::heap_node
+        : std::enable_shared_from_this<pairing_heap<E, Compare>::heap_node>
     {
+    public:
+        heap_node(const value_type & element,
+                  const std::shared_ptr<const heap_node_list> & children,
+                  const value_compare & compare)
+            : element{element}, children{children}, compare{compare}
+        {
+        }
+
+        heap_node(const value_type & element, const value_compare & compare)
+            : element{element}, children{nullptr}, compare{compare}
+        {
+        }
+
+        ~heap_node() = default;
+        heap_node(const heap_node &) = default;
+        heap_node(heap_node &&) = default;
+        heap_node & operator=(const heap_node &) = default;
+        heap_node & operator=(heap_node &&) = default;
+
+        std::shared_ptr<const heap_node> append(const value_type & item) const
+        {
+            if(compare(item, this->element))
+                return std::make_shared<const heap_node>(
+                        this->element,
+                        std::make_shared<const heap_node_list>(
+                                std::make_shared<const heap_node>(item, this->compare),
+                                this->children),
+                        this->compare);
+
+            return std::make_shared<const heap_node>(
+                    item, std::make_shared<const heap_node_list>(this->shared_from_this()),
+                    this->compare);
+        }
+
+        std::shared_ptr<const heap_node> pop() const
+        {
+            return this->merge_pairs(this->children);
+        }
+
+        std::shared_ptr<const heap_node> merge(const std::shared_ptr<const heap_node> & node) const
+        {
+            if(!node)
+                return this->shared_from_this();
+
+            if(compare(node->element, this->element))
+                return std::make_shared<const heap_node>(
+                        this->element, std::make_shared<const heap_node_list>(node, this->children),
+                        this->compare);
+
+            return std::make_shared<const heap_node>(
+                    node->element,
+                    std::make_shared<const heap_node_list>(this->shared_from_this(),
+                                                           node->children),
+                    node->compare);
+        }
+
+    private:
+        std::shared_ptr<const heap_node>
+                merge_pairs(const std::shared_ptr<const heap_node_list> & list) const
+        {
+            if(!list)
+                return nullptr;
+
+            if(!list->next)
+                return list->node;
+
+            return list->node->merge(list->next->node)->merge(merge_pairs(list->next->next));
+        }
+
+    public:
+        value_type element;
+        std::shared_ptr<const heap_node_list> children;
+        value_compare compare;
     };
 
 #pragma endregion
