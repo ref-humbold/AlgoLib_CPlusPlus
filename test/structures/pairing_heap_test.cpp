@@ -70,6 +70,39 @@ TEST_F(PairingHeapTest, clear_WhenNotEmpty_ThenEmpty)
     EXPECT_EQ(0, test_object.size());
 }
 
+#pragma region top
+
+TEST_F(PairingHeapTest, top_WhenEmpty_ThenOutOfRange)
+{
+    // given
+    test_object = alst::pairing_heap<int>();
+    // when
+    auto exec = [&]() { test_object.top(); };
+    // then
+    EXPECT_THROW(exec(), std::out_of_range);
+}
+
+TEST_F(PairingHeapTest, top_WhenSingleElement_ThenThisElement)
+{
+    // given
+    std::array<int, 1> elements = {19};
+
+    test_object = alst::pairing_heap<int>(elements.begin(), elements.end());
+    // when
+    int result = test_object.top();
+    // then
+    EXPECT_EQ(elements[0], result);
+}
+
+TEST_F(PairingHeapTest, top_WhenMultipleElements_ThenMinimalElement)
+{
+    // when
+    int result = test_object.top();
+    // then
+    EXPECT_EQ(maximum, result);
+}
+
+#pragma endregion
 #pragma region push & emplace
 
 TEST_F(PairingHeapTest, push_WhenEmpty_ThenAdded)
