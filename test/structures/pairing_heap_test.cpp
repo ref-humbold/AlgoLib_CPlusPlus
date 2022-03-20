@@ -138,6 +138,26 @@ TEST_F(PairingHeapTest, push_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum)
     EXPECT_EQ(element, test_object.top());
 }
 
+TEST_F(PairingHeapTest, emplace_WhenNewElement_ThenAdded)
+{
+    // when
+    test_object.emplace(46);
+    // then
+    ASSERT_EQ(numbers.size() + 1, test_object.size());
+    EXPECT_EQ(maximum, test_object.top());
+}
+
+TEST_F(PairingHeapTest, emplace_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum)
+{
+    // given
+    int element = maximum + 3;
+    // when
+    test_object.emplace(element);
+    // then
+    ASSERT_EQ(numbers.size() + 1, test_object.size());
+    EXPECT_EQ(element, test_object.top());
+}
+
 #pragma endregion
 #pragma region pop
 

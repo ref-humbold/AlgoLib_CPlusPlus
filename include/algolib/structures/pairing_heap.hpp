@@ -80,6 +80,13 @@ namespace algolib::structures
 
         void push(const_reference element);
 
+        /*!
+         * \brief Adds new value to this double heap constructed in-place with the given arguments.
+         * \param args arguments to forward to the constructor of the new value
+         */
+        template <typename... Args>
+        void emplace(Args &&... args);
+
         void pop();
 
     private:
@@ -107,6 +114,15 @@ namespace algolib::structures
                                     this->compare);
 
         ++this->size_;
+    }
+
+    template <typename E, typename Compare>
+    template <typename... Args>
+    void pairing_heap<E, Compare>::emplace(Args &&... args)
+    {
+        value_type element(std::forward<Args>(args)...);
+
+        this->push(element);
     }
 
     template <typename E, typename Compare>
