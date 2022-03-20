@@ -58,7 +58,8 @@ set(SEQUENCES_SOURCES
 set(STRUCTURES_SOURCES
     "${STRUCTURES}/avl_tree.cpp"
     "${STRUCTURES}/disjoint_sets.cpp"
-    "${STRUCTURES}/double_heap.cpp")
+    "${STRUCTURES}/double_heap.cpp"
+    "${STRUCTURES}/pairing_heap.cpp")
 set(TEXT_SOURCES
     "${TEXT}/base_words_map.cpp"
     "${TEXT}/edit_distance.cpp"

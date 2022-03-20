@@ -134,16 +134,6 @@ TEST_F(DoubleHeapTest, max_WhenMultipleElements_ThenMaximalElement)
 #pragma endregion
 #pragma region push & emplace
 
-TEST_F(DoubleHeapTest, push_WhenNewElement_ThenAdded)
-{
-    // when
-    test_object.push(46);
-    // then
-    ASSERT_EQ(numbers.size() + 1, test_object.size());
-    EXPECT_EQ(minimum, test_object.min());
-    EXPECT_EQ(maximum, test_object.max());
-}
-
 TEST_F(DoubleHeapTest, push_WhenEmpty_ThenAdded)
 {
     // given
@@ -156,6 +146,16 @@ TEST_F(DoubleHeapTest, push_WhenEmpty_ThenAdded)
     ASSERT_EQ(1, test_object.size());
     EXPECT_EQ(element, test_object.min());
     EXPECT_EQ(element, test_object.max());
+}
+
+TEST_F(DoubleHeapTest, push_WhenNewElement_ThenAdded)
+{
+    // when
+    test_object.push(46);
+    // then
+    ASSERT_EQ(numbers.size() + 1, test_object.size());
+    EXPECT_EQ(minimum, test_object.min());
+    EXPECT_EQ(maximum, test_object.max());
 }
 
 TEST_F(DoubleHeapTest, push_WhenNewElementIsLessThanMinimum_ThenNewMinimum)
