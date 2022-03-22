@@ -55,7 +55,7 @@ namespace algolib::structures
 
         /*!
          * \brief Checks whether given element is in one of the sets in the structure.
-         * \param element an element
+         * \param element the element
          * \return \c true if element belongs to the structure, otherwise \c false
          */
         bool contains(const_reference element) const
@@ -65,14 +65,14 @@ namespace algolib::structures
 
         /*!
          * \brief Adds new value to the set represented by another element.
-         * \param element new value
+         * \param element the value
          * \param represent represent of the set
          */
         void insert(const_reference element, const_reference represent);
 
         /*!
          * \brief Adds new value as singleton set.
-         * \param element new value
+         * \param element the value
          */
         void insert(const_reference element);
 
@@ -95,7 +95,7 @@ namespace algolib::structures
 
         /*!
          * \brief Finds represent of the set with given element.
-         * \param element an element
+         * \param element the element
          * \return represent of the element
          * \throw std::out_of_range if element not present
          */
@@ -103,7 +103,7 @@ namespace algolib::structures
 
         /*!
          * \brief Finds represent of the set with given element.
-         * \param element an element
+         * \param element the element
          * \return represent of the element
          * \throw std::out_of_range if element not present
          */
@@ -111,7 +111,7 @@ namespace algolib::structures
 
         /*!
          * \brief Finds a represent of the element.
-         * \param element an element
+         * \param element the element
          * \return optional of represent of the element
          */
         std::optional<value_type> find_set(const_reference element)
@@ -126,7 +126,7 @@ namespace algolib::structures
 
         /*!
          * \brief Finds a represent of the element.
-         * \param element an element
+         * \param element the element
          * \return optional of represent of the element
          */
         std::optional<value_type> find_set(const_reference element) const

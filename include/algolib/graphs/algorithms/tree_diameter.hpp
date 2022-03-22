@@ -35,15 +35,9 @@ namespace internal
                 double weight = tree.properties().at(edge).weight();
                 std::pair<double, double> result = dfs(tree, neighbour, vertex);
 
-                if(result.first + weight > path_from)
-                {
-                    path_through = path_from + result.first + weight;
-                    path_from = result.first + weight;
-                }
-                else
-                    path_through = std::max(path_through, path_from + result.first + weight);
-
+                path_through = std::max(path_through, path_from + result.first + weight);
                 path_subtree = std::max(path_subtree, result.second);
+                path_from = std::max(path_from, result.first + weight);
             }
         }
 
@@ -59,7 +53,7 @@ namespace algolib::graphs
      * \return diameter length
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
-    double find_diameter(const tree_graph<VertexId, VertexProperty, EdgeProperty> & tree)
+    double count_diameter(const tree_graph<VertexId, VertexProperty, EdgeProperty> & tree)
     {
         std::vector<typename tree_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 vertices = tree.vertices();

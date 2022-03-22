@@ -70,6 +70,11 @@ namespace algolib::structures
             this->size_ = 0;
         }
 
+        /*!
+         * \brief Retrieves maximal element from this pairing heap.
+         * \return maximal element
+         * \throw std::out_of_range if this pairing heap is empty
+         */
         const_reference top() const
         {
             if(this->empty())
@@ -78,15 +83,20 @@ namespace algolib::structures
             return this->heap->element;
         }
 
+        /*!
+         * \brief Adds new value to this pairing heap.
+         * \param element the value
+         */
         void push(const_reference element);
 
         /*!
-         * \brief Adds new value to this double heap constructed in-place with the given arguments.
+         * \brief Adds new value to this pairing heap constructed in-place with the given arguments.
          * \param args arguments to forward to the constructor of the new value
          */
         template <typename... Args>
         void emplace(Args &&... args);
 
+        //! \brief Removes maximal element from this pairing heap.
         void pop();
 
     private:
