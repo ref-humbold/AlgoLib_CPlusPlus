@@ -63,9 +63,8 @@ namespace internal
         this->bfs(distances);
         std::vector<typename graph_t::vertex_type> unmatched = this->unmatched_vertices();
         return std::accumulate(unmatched.begin(), unmatched.end(), false,
-                               [&](bool acc, typename graph_t::vertex_type vertex) {
-                                   return this->dfs(vertex, visited, distances) || acc;
-                               });
+                               [&](bool acc, typename graph_t::vertex_type vertex)
+                               { return this->dfs(vertex, visited, distances) || acc; });
     }
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
@@ -77,9 +76,8 @@ namespace internal
         std::vector<typename graph_t::vertex_type> group = this->graph.vertices_from_group(1);
 
         std::copy_if(group.begin(), group.end(), std::back_inserter(unmatched),
-                     [&](typename graph_t::vertex_type vertex) {
-                         return this->matching.find(vertex) == this->matching.end();
-                     });
+                     [&](typename graph_t::vertex_type vertex)
+                     { return this->matching.find(vertex) == this->matching.end(); });
         return unmatched;
     }
 
@@ -162,8 +160,8 @@ namespace algolib::graphs
      * \param graph a bipartite graph
      * \return map of matched vertices
      */
-    template <typename VertexId = size_t, typename VertexProperty = no_prop,
-              typename EdgeProperty = no_prop>
+    template <typename VertexId = size_t, typename VertexProperty = std::nullptr_t,
+              typename EdgeProperty = std::nullptr_t>
     std::unordered_map<
             typename multipartite_graph<2, VertexId, VertexProperty, EdgeProperty>::vertex_type,
             typename multipartite_graph<2, VertexId, VertexProperty, EdgeProperty>::vertex_type>
@@ -186,9 +184,9 @@ namespace algolib::graphs
             was_augmented = augmenter.augment_match();
 
         std::transform(augmenter.matching.begin(), augmenter.matching.end(),
-                       std::inserter(matching, matching.end()), [&](auto && entry) {
-                           return std::make_pair(entry.first, entry.second.value());
-                       });
+                       std::inserter(matching, matching.end()),
+                       [&](auto && entry)
+                       { return std::make_pair(entry.first, entry.second.value()); });
         return matching;
     }
 }

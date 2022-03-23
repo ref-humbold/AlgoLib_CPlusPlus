@@ -40,7 +40,8 @@ set(GRAPHS_ALGORITHMS_TEST_SOURCES
     "${GRAPHS_ALGORITHMS_TEST}/searching_test.cpp"
     "${GRAPHS_ALGORITHMS_TEST}/shortest_paths_test.cpp"
     "${GRAPHS_ALGORITHMS_TEST}/strongly_connected_components_test.cpp"
-    "${GRAPHS_ALGORITHMS_TEST}/topological_sorting_test.cpp")
+    "${GRAPHS_ALGORITHMS_TEST}/topological_sorting_test.cpp"
+    "${GRAPHS_ALGORITHMS_TEST}/tree_diameter_test.cpp")
 set(MATHS_TEST_SOURCES
     "${MATHS_TEST}/equation_test.cpp"
     "${MATHS_TEST}/equation_system_test.cpp"

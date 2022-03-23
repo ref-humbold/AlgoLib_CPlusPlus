@@ -34,8 +34,8 @@ namespace algolib::graphs
         virtual void reverse() = 0;
     };
 
-    template <typename VertexId = size_t, typename VertexProperty = no_prop,
-              typename EdgeProperty = no_prop>
+    template <typename VertexId = size_t, typename VertexProperty = std::nullptr_t,
+              typename EdgeProperty = std::nullptr_t>
     class directed_simple_graph
         : public simple_graph<VertexId, VertexProperty, EdgeProperty>,
           public virtual directed_graph<VertexId, VertexProperty, EdgeProperty>
@@ -71,9 +71,8 @@ namespace algolib::graphs
             auto edges_set = this->representation.edges_set();
 
             return std::accumulate(edges_set.begin(), edges_set.end(), 0,
-                                   [](size_t acc, const std::unordered_set<edge_type> & edges) {
-                                       return acc + edges.size();
-                                   });
+                                   [](size_t acc, const std::unordered_set<edge_type> & edges)
+                                   { return acc + edges.size(); });
         }
 
         std::vector<edge_type> edges() const override

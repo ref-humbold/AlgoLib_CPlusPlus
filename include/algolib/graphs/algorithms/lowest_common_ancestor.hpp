@@ -17,8 +17,8 @@ namespace algolib::graphs
 {
 #pragma region lowest_common_ancestor
 
-    template <typename VertexId = size_t, typename VertexProperty = no_prop,
-              typename EdgeProperty = no_prop>
+    template <typename VertexId = size_t, typename VertexProperty = std::nullptr_t,
+              typename EdgeProperty = std::nullptr_t>
     class lowest_common_ancestor
     {
     public:
@@ -82,9 +82,9 @@ namespace algolib::graphs
 
         std::vector<vertex_type> candidates = paths[vertex1];
 
-        auto it = std::find_if(candidates.rbegin(), candidates.rend(), [&](auto && candidate) {
-            return !this->is_offspring(vertex2, candidate);
-        });
+        auto it = std::find_if(candidates.rbegin(), candidates.rend(),
+                               [&](auto && candidate)
+                               { return !this->is_offspring(vertex2, candidate); });
 
         return it != candidates.rend() ? find(*it, vertex2) : find(paths[vertex1][0], vertex2);
     }

@@ -28,7 +28,7 @@ private:
 class MinimalSpanningTreeTest : public ::testing::Test
 {
 public:
-    using graph_t = algr::undirected_simple_graph<size_t, algr::no_prop, weighted_impl>;
+    using graph_t = algr::undirected_simple_graph<size_t, std::nullptr_t, weighted_impl>;
     using graph_v = graph_t::vertex_type;
     using graph_e = graph_t::edge_type;
 

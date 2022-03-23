@@ -31,10 +31,10 @@ private:
 class PathsTest : public ::testing::Test
 {
 public:
-    using dgraph_t = algr::directed_simple_graph<size_t, algr::no_prop, weighted_impl>;
+    using dgraph_t = algr::directed_simple_graph<size_t, std::nullptr_t, weighted_impl>;
     using dgraph_v = dgraph_t::vertex_type;
 
-    using ugraph_t = algr::undirected_simple_graph<size_t, algr::no_prop, weighted_impl>;
+    using ugraph_t = algr::undirected_simple_graph<size_t, std::nullptr_t, weighted_impl>;
     using ugraph_v = ugraph_t::vertex_type;
 
     using weight_t = weighted_impl::weight_type;

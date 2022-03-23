@@ -25,8 +25,8 @@ namespace algolib::graphs
         }
     };
 
-    template <size_t N, typename VertexId = size_t, typename VertexProperty = no_prop,
-              typename EdgeProperty = no_prop>
+    template <size_t N, typename VertexId = size_t, typename VertexProperty = std::nullptr_t,
+              typename EdgeProperty = std::nullptr_t>
     class multipartite_graph
         : public virtual undirected_graph<VertexId, VertexProperty, EdgeProperty>
     {

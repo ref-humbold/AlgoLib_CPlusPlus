@@ -25,7 +25,7 @@ namespace internal
     {
         double path_from = 0.0, path_subtree = 0.0, path_through = 0.0;
 
-        for(auto && edge : tree.get_adjacent_edges(vertex))
+        for(auto && edge : tree.adjacent_edges(vertex))
         {
             typename algr::tree_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type
                     neighbour = edge.get_neighbour(vertex);
@@ -62,7 +62,7 @@ namespace algolib::graphs
                                             return tree.output_degree(v1) < tree.output_degree(v2);
                                         });
 
-        return root_it == vertices.end() ? 0.0 : dfs(tree, *root_it, *root_it).second;
+        return root_it == vertices.end() ? 0.0 : internal::dfs(tree, *root_it, *root_it).second;
     }
 }
 

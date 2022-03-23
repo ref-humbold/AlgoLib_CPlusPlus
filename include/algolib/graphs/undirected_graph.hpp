@@ -32,8 +32,8 @@ namespace algolib::graphs
         ~undirected_graph() override = default;
     };
 
-    template <typename VertexId = size_t, typename VertexProperty = no_prop,
-              typename EdgeProperty = no_prop>
+    template <typename VertexId = size_t, typename VertexProperty = std::nullptr_t,
+              typename EdgeProperty = std::nullptr_t>
     class undirected_simple_graph
         : public simple_graph<VertexId, VertexProperty, EdgeProperty>,
           public virtual undirected_graph<VertexId, VertexProperty, EdgeProperty>
@@ -88,9 +88,11 @@ namespace algolib::graphs
         auto edges_set = this->representation.edges_set();
         std::unordered_set<edge_type> all_edges;
 
-        std::for_each(edges_set.begin(), edges_set.end(), [&](auto && edge_set) {
-            std::copy(edge_set.begin(), edge_set.end(), std::inserter(all_edges, all_edges.end()));
-        });
+        std::for_each(edges_set.begin(), edges_set.end(),
+                      [&](auto && edge_set) {
+                          std::copy(edge_set.begin(), edge_set.end(),
+                                    std::inserter(all_edges, all_edges.end()));
+                      });
 
         return all_edges.size();
     }
@@ -102,9 +104,11 @@ namespace algolib::graphs
         auto && edges_set = this->representation.edges_set();
         std::unordered_set<edge_type> all_edges;
 
-        std::for_each(edges_set.begin(), edges_set.end(), [&](auto && edge_set) {
-            std::copy(edge_set.begin(), edge_set.end(), std::inserter(all_edges, all_edges.end()));
-        });
+        std::for_each(edges_set.begin(), edges_set.end(),
+                      [&](auto && edge_set) {
+                          std::copy(edge_set.begin(), edge_set.end(),
+                                    std::inserter(all_edges, all_edges.end()));
+                      });
 
         return std::vector<edge_type>(all_edges.begin(), all_edges.end());
     }

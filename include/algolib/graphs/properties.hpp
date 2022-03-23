@@ -9,10 +9,6 @@
 
 namespace algolib::graphs
 {
-    struct no_prop
-    {
-    };
-
     struct weighted
     {
         using weight_type = double;
