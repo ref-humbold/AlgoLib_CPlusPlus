@@ -86,7 +86,7 @@ TEST_F(DoubleHeapTest, min_WhenSingleElement_ThenThisElement)
     // given
     int element = 19;
 
-    test_object = alst::double_heap<int>(std::less<int>(), {element});
+    test_object = {element};
     // when
     int result = test_object.min();
     // then
@@ -116,7 +116,7 @@ TEST_F(DoubleHeapTest, max_WhenSingleElement_ThenThisElement)
     // given
     int element = 19;
 
-    test_object = alst::double_heap<int>(std::less<int>(), {element});
+    test_object = {element};
     // when
     int result = test_object.max();
     // then
@@ -228,7 +228,7 @@ TEST_F(DoubleHeapTest, popMin_WhenEmpty_ThenOutOfRange)
 TEST_F(DoubleHeapTest, popMin_WhenSingleElement_ThenThisElementRemoved)
 {
     // given
-    test_object = alst::double_heap<int>(std::less<int>(), {19});
+    test_object = {19};
     // when
     test_object.pop_min();
     // then
@@ -274,7 +274,7 @@ TEST_F(DoubleHeapTest, popMax_WhenEmpty_ThenOutOfRange)
 TEST_F(DoubleHeapTest, popMax_WhenSingleElement_ThenThisElementRemoved)
 {
     // given
-    test_object = alst::double_heap<int>(std::less<int>(), {19});
+    test_object = {19};
     // when
     test_object.pop_max();
     // then

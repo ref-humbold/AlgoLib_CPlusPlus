@@ -42,6 +42,12 @@ namespace algolib::structures
                 this->push(*it);
         }
 
+        double_heap(std::initializer_list<value_type> init,
+                    const value_compare & compare = value_compare())
+            : double_heap(init.begin(), init.end(), compare)
+        {
+        }
+
         ~double_heap() = default;
         double_heap(const double_heap &) = default;
         double_heap(double_heap &&) = default;

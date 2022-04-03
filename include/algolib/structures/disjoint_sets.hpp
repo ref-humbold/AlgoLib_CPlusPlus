@@ -19,6 +19,8 @@ namespace algolib::structures
     class disjoint_sets
     {
     public:
+        using hasher = Hash;
+        using value_equal = Equal;
         using value_type = E;
         using reference = value_type &;
         using const_reference = const value_type &;
@@ -29,9 +31,17 @@ namespace algolib::structures
         }
 
         template <typename InputIterator>
-        disjoint_sets(InputIterator first, InputIterator last);
+        disjoint_sets(InputIterator first, InputIterator last) : disjoint_sets()
+        {
+            for(InputIterator it = first; it != last; ++it)
+            {
+                this->represents.emplace(*it, *it);
+                ++this->size_;
+            }
+        }
 
-        disjoint_sets(std::initializer_list<E> init) : disjoint_sets(init.begin(), init.end())
+        disjoint_sets(std::initializer_list<value_type> init)
+            : disjoint_sets(init.begin(), init.end())
         {
         }
 
@@ -166,21 +176,9 @@ namespace algolib::structures
         bool is_same_set(const_reference element1, const_reference element2) const;
 
     private:
-        std::unordered_map<value_type, value_type, Hash, Equal> represents;
+        std::unordered_map<value_type, value_type, hasher, value_equal> represents;
         size_type size_;
     };
-
-    template <typename E, typename Hash, typename Equal>
-    template <typename InputIterator>
-    disjoint_sets<E, Hash, Equal>::disjoint_sets(InputIterator first, InputIterator last)
-        : disjoint_sets()
-    {
-        for(InputIterator it = first; it != last; ++it)
-        {
-            this->represents.emplace(*it, *it);
-            ++this->size_;
-        }
-    }
 
     template <typename E, typename Hash, typename Equal>
     void disjoint_sets<E, Hash, Equal>::insert(

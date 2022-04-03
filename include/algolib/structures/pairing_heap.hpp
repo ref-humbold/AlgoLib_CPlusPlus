@@ -44,12 +44,6 @@ namespace algolib::structures
         {
         }
 
-        pairing_heap(std::initializer_list<value_type> il,
-                     const value_compare & compare = value_compare())
-            : pairing_heap(il.begin(), il.end(), compare)
-        {
-        }
-
         template <typename InputIterator>
         pairing_heap(InputIterator first, InputIterator last,
                      const value_compare & compare = value_compare())
@@ -57,6 +51,12 @@ namespace algolib::structures
         {
             for(InputIterator it = first; it != last; ++it)
                 this->push(*it);
+        }
+
+        pairing_heap(std::initializer_list<value_type> init,
+                     const value_compare & compare = value_compare())
+            : pairing_heap(init.begin(), init.end(), compare)
+        {
         }
 
         ~pairing_heap() = default;

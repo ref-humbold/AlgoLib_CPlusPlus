@@ -34,12 +34,12 @@ namespace algolib::structures
         using header_ptr = avl_header_node *;
 
     public:
+        using value_compare = Compare;
         using value_type = E;
         using reference = value_type &;
         using const_reference = const value_type &;
         using pointer = value_type *;
         using const_pointer = const value_type *;
-        using value_compare = Compare;
         using iterator = avl_iterator;
         using const_iterator = avl_const_iterator;
         using reverse_iterator = std::reverse_iterator<avl_iterator>;
@@ -54,7 +54,7 @@ namespace algolib::structures
         template <typename InputIterator>
         avl_tree(InputIterator first, InputIterator last,
                  const value_compare & compare = value_compare())
-            : compare{compare}
+            : avl_tree(compare)
         {
             for(InputIterator it = first; it != last; ++it)
                 this->insert(*it);
