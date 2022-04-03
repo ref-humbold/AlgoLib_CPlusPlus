@@ -15,9 +15,17 @@
 
 namespace algolib::structures
 {
-#pragma region pairing_heap
 
     template <typename E, typename Compare = std::less<E>>
+    class pairing_heap;
+
+    template <typename E, typename Compare>
+    pairing_heap<E, Compare> operator|(pairing_heap<E, Compare> heap1,
+                                       const pairing_heap<E, Compare> & heap2);
+
+#pragma region pairing_heap
+
+    template <typename E, typename Compare>
     class pairing_heap
     {
     private:
@@ -33,6 +41,12 @@ namespace algolib::structures
 
         explicit pairing_heap(const value_compare & compare = value_compare())
             : heap{std::nullopt}, size_{0}, compare{compare}
+        {
+        }
+
+        pairing_heap(std::initializer_list<value_type> il,
+                     const value_compare & compare = value_compare())
+            : pairing_heap(il.begin(), il.end(), compare)
         {
         }
 
@@ -99,6 +113,12 @@ namespace algolib::structures
         //! \brief Removes maximal element from this pairing heap.
         void pop();
 
+        pairing_heap & operator|=(const pairing_heap & other);
+
+        friend pairing_heap<E, Compare>
+                operator|<E, Compare>(pairing_heap<E, Compare> heap1,
+                                      const pairing_heap<E, Compare> & heap2);
+
     private:
         std::optional<heap_node> heap;
         size_type size_;
@@ -145,7 +165,25 @@ namespace algolib::structures
         --this->size_;
     }
 
+    template <typename E, typename Compare>
+    pairing_heap<E, Compare> &
+            pairing_heap<E, Compare>::operator|=(const pairing_heap<E, Compare> & other)
+    {
+        this->heap = this->empty() ? other.heap : std::make_optional(this->heap->merge(other.heap));
+        this->size_ += other.size_;
+        return *this;
+    }
+
 #pragma endregion
+
+    template <typename E, typename Compare>
+    pairing_heap<E, Compare> operator|(pairing_heap<E, Compare> heap1,
+                                       const pairing_heap<E, Compare> & heap2)
+    {
+        heap1 |= heap2;
+        return heap1;
+    }
+
 #pragma region heap_node
 
     template <typename E, typename Compare>

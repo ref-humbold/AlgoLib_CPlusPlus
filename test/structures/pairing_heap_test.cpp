@@ -210,3 +210,133 @@ TEST_F(PairingHeapTest, pop_WhenMultipleCalls_ThenSortedDescending)
 }
 
 #pragma endregion
+#pragma region operatorPipeEqual
+
+TEST_F(PairingHeapTest, operatorPipeEqual_WhenEmptyAndNotEmpty_ThenSameAsOther)
+{
+    // given
+    test_object = alst::pairing_heap<int>();
+
+    alst::pairing_heap<int> other = alst::pairing_heap<int>(numbers.begin(), numbers.end());
+    // when
+    test_object |= other;
+    // then
+    EXPECT_EQ(other.size(), test_object.size());
+    EXPECT_EQ(other.top(), test_object.top());
+}
+
+TEST_F(PairingHeapTest, operatorPipeEqual_WhenNotEmptyAndEmpty_ThenNoChanges)
+{
+    // when
+    test_object |= alst::pairing_heap<int>();
+    // then
+    EXPECT_EQ(numbers.size(), test_object.size());
+    EXPECT_EQ(maximum, test_object.top());
+}
+
+TEST_F(PairingHeapTest, operatorPipeEqual_WhenOtherHasGreaterMaximum_ThenNewMaximum)
+{
+    // given
+    int new_maximum = maximum + 4;
+    alst::pairing_heap<int> other = {new_maximum, maximum - 5, maximum - 13, maximum - 20};
+    // when
+    test_object |= other;
+    // then
+    EXPECT_EQ(numbers.size() + other.size(), test_object.size());
+    EXPECT_EQ(new_maximum, test_object.top());
+}
+
+TEST_F(PairingHeapTest, operatorPipeEqual_WhenOtherHasLessMaximum_ThenMaximumRemains)
+{
+    // given
+    alst::pairing_heap<int> other = {maximum - 5, maximum - 13, maximum - 20};
+    // when
+    test_object |= other;
+    // then
+    EXPECT_EQ(numbers.size() + other.size(), test_object.size());
+    EXPECT_EQ(maximum, test_object.top());
+}
+
+TEST_F(PairingHeapTest, operatorPipeEqual_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap)
+{
+    // given
+    test_object = alst::pairing_heap<int>();
+
+    alst::pairing_heap<int> first = {4, 8};
+    alst::pairing_heap<int> second = {10, 20};
+    // when
+    test_object |= first;
+    test_object |= second;
+    // then
+    EXPECT_EQ(20, test_object.top());
+    EXPECT_EQ(8, first.top());
+    EXPECT_EQ(20, second.top());
+}
+
+#pragma endregion
+#pragma region operatorPipe
+
+TEST_F(PairingHeapTest, operatorPipe_WhenEmptyAndNotEmpty_ThenSameAsOther)
+{
+    // given
+    test_object = alst::pairing_heap<int>();
+
+    alst::pairing_heap<int> other = alst::pairing_heap<int>(numbers.begin(), numbers.end());
+    // when
+    alst::pairing_heap<int> result = test_object | other;
+    // then
+    EXPECT_EQ(other.size(), result.size());
+    EXPECT_EQ(other.top(), result.top());
+}
+
+TEST_F(PairingHeapTest, operatorPipe_WhenNotEmptyAndEmpty_ThenNoChanges)
+{
+    // when
+    alst::pairing_heap<int> result = test_object | alst::pairing_heap<int>();
+    // then
+    EXPECT_EQ(numbers.size(), result.size());
+    EXPECT_EQ(maximum, result.top());
+}
+
+TEST_F(PairingHeapTest, operatorPipe_WhenOtherHasGreaterMaximum_ThenNewMaximum)
+{
+    // given
+    int new_maximum = maximum + 4;
+    alst::pairing_heap<int> other = {new_maximum, maximum - 5, maximum - 13, maximum - 20};
+    // when
+    alst::pairing_heap<int> result = test_object | other;
+    // then
+    EXPECT_EQ(numbers.size() + other.size(), result.size());
+    EXPECT_EQ(new_maximum, result.top());
+}
+
+TEST_F(PairingHeapTest, operatorPipe_WhenOtherHasLessMaximum_ThenMaximumRemains)
+{
+    // given
+    alst::pairing_heap<int> other = {maximum - 5, maximum - 13, maximum - 20};
+    // when
+    alst::pairing_heap<int> result = test_object | other;
+    // then
+    EXPECT_EQ(numbers.size() + other.size(), result.size());
+    EXPECT_EQ(maximum, result.top());
+}
+
+TEST_F(PairingHeapTest, operatorPipe_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap)
+{
+    // given
+    test_object = alst::pairing_heap<int>();
+
+    alst::pairing_heap<int> first = {4, 8};
+    alst::pairing_heap<int> second = {10, 20};
+    // when
+    alst::pairing_heap<int> result1 = test_object | first;
+    alst::pairing_heap<int> result2 = result1 | second;
+    // then
+    EXPECT_EQ(8, result1.top());
+    EXPECT_EQ(20, result2.top());
+    EXPECT_THROW(test_object.top(), std::out_of_range);
+    EXPECT_EQ(8, first.top());
+    EXPECT_EQ(20, second.top());
+}
+
+#pragma endregion
