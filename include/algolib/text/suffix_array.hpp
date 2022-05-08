@@ -28,7 +28,7 @@ namespace algolib::text
             init_lcp();
         }
 
-        explicit suffix_array(const char * s) : suffix_array(std::string(s))
+        explicit suffix_array(const char * text) : suffix_array(std::string(text))
         {
         }
 

@@ -19,6 +19,13 @@ alte::trie & alte::trie::operator=(const alte::trie & t)
     return *this;
 }
 
+alte::trie & alte::trie::operator=(alte::trie && t) noexcept
+{
+    std::swap(tree, t.tree);
+    std::swap(size_, t.size_);
+    return *this;
+}
+
 bool alte::trie::empty() const
 {
     return tree->empty();

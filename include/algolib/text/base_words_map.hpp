@@ -16,6 +16,10 @@ namespace algolib::text
 {
     class base_words_map
     {
+    private:
+        using extend_function_t =
+                std::function<std::tuple<size_t, size_t, size_t, size_t>(size_t, size_t)>;
+
     public:
         using code_t = std::pair<size_t, size_t>;
 
@@ -45,9 +49,7 @@ namespace algolib::text
 
     private:
         void create();
-        size_t extend(
-                size_t length, size_t code_value,
-                std::function<std::tuple<size_t, size_t, size_t, size_t>(size_t, size_t)> func);
+        size_t extend(size_t length, size_t code_value, extend_function_t func);
         size_t get_max_length(size_t n) const;
 
         std::string text_;

@@ -44,15 +44,8 @@ namespace algolib::text
         ~trie() = default;
         trie(const trie & t);
         trie(trie && t) noexcept = default;
-
         trie & operator=(const trie & t);
-
-        trie & operator=(trie && t) noexcept
-        {
-            std::swap(tree, t.tree);
-            std::swap(size_, t.size_);
-            return *this;
-        }
+        trie & operator=(trie && t) noexcept;
 
         //! \return number of texts in the trie
         size_t size() const
