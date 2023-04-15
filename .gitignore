@@ -1,7 +1,5 @@
-bin/
 build/
-dist/
-docs/
+buildOut/
 
 .vscode
 *.code-workspace
