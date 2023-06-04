@@ -76,7 +76,7 @@ set(TEST_SOURCES
     "${TEXT_TEST_SOURCES}")
 
 # OUTPUT
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${EXE_OUTPUT_DIR}/test")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${TEST_EXE_OUTPUT_DIR}")
 foreach(testsource ${TEST_SOURCES})
     get_filename_component(testexec ${testsource} NAME_WE)
     add_executable(${testexec} ${testsource})

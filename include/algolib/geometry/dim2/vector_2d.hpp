@@ -83,6 +83,8 @@ namespace algolib::geometry::dim2
 
     bool operator==(const vector_2d & v1, const vector_2d & v2);
     bool operator!=(const vector_2d & v1, const vector_2d & v2);
+    vector_2d operator+(vector_2d v);
+    vector_2d operator-(vector_2d v);
     vector_2d operator+(vector_2d v1, const vector_2d & v2);
     vector_2d operator-(vector_2d v1, const vector_2d & v2);
     vector_2d operator*(vector_2d v, double c);

@@ -68,6 +68,24 @@ TEST(Vector2DTest, length_ThenLengthOfVector)
     EXPECT_NEAR(10.0, result, offset);
 }
 
+TEST(Vector2DTest, plus_ThenCopy)
+{
+    // given
+    alge2::vector_2d vec(5.4, -9.0);
+    // when
+    alge2::vector_2d result = +vec;
+    // then
+    EXPECT_EQ(vec, result);
+}
+
+TEST(Vector2DTest, minus_ThenNegateEachCoordinate)
+{
+    // when
+    alge2::vector_2d result = -alge2::vector_2d(5.4, -9.0);
+    // then
+    EXPECT_EQ(alge2::vector_2d(-5.4, 9.0), result);
+}
+
 TEST(Vector2DTest, add_ThenAddEachCoordinate)
 {
     // when
