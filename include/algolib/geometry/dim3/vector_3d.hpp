@@ -90,6 +90,8 @@ namespace algolib::geometry::dim3
 
     bool operator==(const vector_3d & v1, const vector_3d & v2);
     bool operator!=(const vector_3d & v1, const vector_3d & v2);
+    vector_3d operator+(vector_3d v);
+    vector_3d operator-(vector_3d v);
     vector_3d operator+(vector_3d v1, const vector_3d & v2);
     vector_3d operator-(vector_3d v1, const vector_3d & v2);
     vector_3d operator*(vector_3d v, double c);

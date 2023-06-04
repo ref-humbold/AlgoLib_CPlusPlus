@@ -118,6 +118,24 @@ TEST(Vector3DTest, length_ThenLengthOfVector)
     EXPECT_NEAR(23.0, result, offset);
 }
 
+TEST(Vector3DTest, plus_ThenCopy)
+{
+    // given
+    alge3::vector_3d vec(5.4, 9.0, -12.3);
+    // when
+    alge3::vector_3d result = +vec;
+    // then
+    EXPECT_EQ(vec, result);
+}
+
+TEST(Vector3DTest, minus_ThenNegateEachCoordinate)
+{
+    // when
+    alge3::vector_3d result = -alge3::vector_3d(5.4, 9.0, -12.3);
+    // then
+    EXPECT_EQ(alge3::vector_3d(-5.4, -9.0, 12.3), result);
+}
+
 TEST(Vector3DTest, add_ThenAddEachCoordinate)
 {
     // when
