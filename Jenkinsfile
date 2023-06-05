@@ -4,16 +4,17 @@ pipeline {
   }
 
   options {
-    skipDefaultCheckout true
+    skipDefaultCheckout(true)
     timeout(time: 20, unit: 'MINUTES')
-    buildDiscarder logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')
+    buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    timestamps()
   }
 
   stages {
     stage("Preparation") {
       steps {
         script {
-          def scmEnv = checkout scm
+          def scmEnv = checkout(scm)
           currentBuild.displayName = "${env.BUILD_NUMBER} ${scmEnv.GIT_COMMIT.take(8)}"
         }
       }
