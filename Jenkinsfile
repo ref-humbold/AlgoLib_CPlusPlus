@@ -3,6 +3,10 @@ pipeline {
     label "local"
   }
 
+  parameters {
+    booleanParam(name: 'archive', description: "Should artifacts be archived?", defaultValue: false)
+  }
+
   options {
     skipDefaultCheckout(true)
     timeout(time: 20, unit: 'MINUTES')
@@ -48,6 +52,19 @@ pipeline {
             thresholds: [failed(unstableThreshold: '0', failureThreshold: '0')]
           )
         }
+      }
+    }
+
+    stage("Archive artifacts") {
+      when {
+        beforeAgent true
+        expression {
+          params.archive
+        }
+      }
+
+      steps {
+        archiveArtifacts(artifacts: "buildOut/dist/*.so", onlyIfSuccessful: true)
       }
     }
   }
