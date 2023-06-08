@@ -9,6 +9,7 @@ pipeline {
 
   environment {
     BUILD_DIR = "build"
+    BUILD_OUTPUT_DIR = "buildOut"
   }
 
   options {
@@ -31,7 +32,7 @@ pipeline {
     stage("Build") {
       steps {
         echo "#INFO: Building project"
-        dir("${BUILD_DIR}") {
+        dir("${env.BUILD_DIR}") {
           sh "cmake .. && make -s"
         }
       }
@@ -40,7 +41,7 @@ pipeline {
     stage("Unit tests") {
       steps {
         echo "#INFO: Running unit tests"
-        dir("${BUILD_DIR}") {
+        dir("${env.BUILD_DIR}") {
           sh "ctest -V --no-compress-output -T test"
         }
       }
@@ -49,7 +50,7 @@ pipeline {
         always {
           xunit(
             tools: [CTest(
-              pattern: "${BUILD_DIR}/Testing/*/Test.xml",
+              pattern: "${env.BUILD_DIR}/Testing/*/Test.xml",
               failIfNotNew: true,
               stopProcessingIfError: true
             )],
@@ -68,7 +69,7 @@ pipeline {
       }
 
       steps {
-        archiveArtifacts(artifacts: "buildOut/dist/*.so", onlyIfSuccessful: true)
+        archiveArtifacts(artifacts: "${env.BUILD_OUTPUT_DIR}/dist/*.so", onlyIfSuccessful: true)
       }
     }
   }
