@@ -4,13 +4,17 @@ pipeline {
   }
 
   parameters {
-    booleanParam(name: 'archive', description: "Should artifacts be archived?", defaultValue: false)
+    booleanParam(name: "archive", description: "Should artifacts be archived?", defaultValue: false)
+  }
+
+  environment {
+    BUILD_DIR = "build"
   }
 
   options {
     skipDefaultCheckout(true)
-    timeout(time: 20, unit: 'MINUTES')
-    buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    timeout(time: 20, unit: "MINUTES")
+    buildDiscarder(logRotator(numToKeepStr: "10", artifactNumToKeepStr: "10"))
     timestamps()
   }
 
@@ -27,7 +31,7 @@ pipeline {
     stage("Build") {
       steps {
         echo "#INFO: Building project"
-        dir("build") {
+        dir("${BUILD_DIR}") {
           sh "cmake .. && make -s"
         }
       }
@@ -36,7 +40,7 @@ pipeline {
     stage("Unit tests") {
       steps {
         echo "#INFO: Running unit tests"
-        dir("build") {
+        dir("${BUILD_DIR}") {
           sh "ctest -V --no-compress-output -T test"
         }
       }
@@ -45,11 +49,11 @@ pipeline {
         always {
           xunit(
             tools: [CTest(
-              pattern: "build/Testing/*/Test.xml",
+              pattern: "${BUILD_DIR}/Testing/*/Test.xml",
               failIfNotNew: true,
               stopProcessingIfError: true
             )],
-            thresholds: [failed(unstableThreshold: '0', failureThreshold: '0')]
+            thresholds: [failed(unstableThreshold: "0", failureThreshold: "0")]
           )
         }
       }
