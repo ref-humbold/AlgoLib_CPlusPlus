@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label "debian"
+    label "local"
   }
 
   options {
@@ -40,12 +40,12 @@ pipeline {
       post {
         always {
           xunit(
-            tools: [ CTest(
+            tools: [CTest(
               pattern: "build/Testing/*/Test.xml",
               failIfNotNew: true,
               stopProcessingIfError: true
-            ) ],
-            thresholds: [ failed(unstableThreshold: '0', failureThreshold: '0') ]
+            )],
+            thresholds: [failed(unstableThreshold: '0', failureThreshold: '0')]
           )
         }
       }
