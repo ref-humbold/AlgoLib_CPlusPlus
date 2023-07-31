@@ -6,8 +6,6 @@
 #define PRIMES_HPP_
 
 #include <cstdlib>
-#include <ctime>
-#include <algorithm>
 #include <vector>
 #include "algolib/maths/maths.hpp"
 
@@ -17,20 +15,20 @@ namespace algolib::maths
 
     /*!
      * \brief Finds prime numbers inside a range of integers.
-     * \param min_number minimal number in range, inclusive
-     * \param max_number maximal number in range, exclusive
+     * \param minimum minimal number in range, inclusive
+     * \param maximum maximal number in range, exclusive
      * \return vector of prime numbers
      */
-    std::vector<size_t> find_primes(size_t min_number, size_t max_number);
+    std::vector<size_t> find_primes(size_t minimum, size_t maximum);
 
     /*!
      * \brief Finds prime numbers inside a range of integers starting from 0.
-     * \param max_number maximal number in range, exclusive
+     * \param maximum maximal number in range, exclusive
      * \return vector of prime numbers
      */
-    inline std::vector<size_t> find_primes(size_t max_number)
+    inline std::vector<size_t> find_primes(size_t maximum)
     {
-        return find_primes(0, max_number);
+        return find_primes(0, maximum);
     }
 
 #pragma endregion
