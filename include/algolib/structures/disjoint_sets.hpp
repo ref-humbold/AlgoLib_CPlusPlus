@@ -120,7 +120,7 @@ namespace algolib::structures
         const_reference operator[](const_reference element) const;
 
         /*!
-         * \brief Finds a represent of the element.
+         * \brief Finds represent of the element.
          * \param element the element
          * \return optional of represent of the element
          */
@@ -135,7 +135,7 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Finds a represent of the element.
+         * \brief Finds represent of the element.
          * \param element the element
          * \return optional of represent of the element
          */
@@ -223,7 +223,8 @@ namespace algolib::structures
     template <typename E, typename Hash, typename Equal>
     template <typename InputIterator>
     void disjoint_sets<E, Hash, Equal>::insert(
-            InputIterator first, InputIterator last,
+            InputIterator first,
+            InputIterator last,
             typename disjoint_sets<E, Hash, Equal>::const_reference represent)
     {
         for(InputIterator it = first; it != last; ++it)

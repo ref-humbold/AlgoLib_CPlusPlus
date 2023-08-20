@@ -36,18 +36,18 @@ namespace internal
             check_belt(const std::vector<alge2::point_2d> & pointsY, double middleX, double width)
     {
         std::optional<std::pair<alge2::point_2d, alge2::point_2d>> closest_pair = std::nullopt;
-        std::vector<int> belt_points;
+        std::vector<alge2::point_2d> belt_points;
         double min_distance = width;
 
-        for(size_t i = 0; i < pointsY.size(); ++i)
-            if(pointsY[i].x() >= middleX - width && pointsY[i].x() <= middleX + width)
-                belt_points.emplace_back(i);
+        std::copy_if(pointsY.begin(), pointsY.end(), std::back_inserter(belt_points),
+                     [&](const alge2::point_2d & pt)
+                     { return pt.x() >= middleX - width && pt.x() <= middleX + width; });
 
         for(size_t i = 1; i < belt_points.size(); ++i)
             for(size_t j = i + 1; j < belt_points.size(); ++j)
             {
-                alge2::point_2d pt1 = pointsY[belt_points[i]];
-                alge2::point_2d pt2 = pointsY[belt_points[j]];
+                alge2::point_2d pt1 = belt_points[i];
+                alge2::point_2d pt2 = belt_points[j];
 
                 if(pt2.y() > pt1.y() + width)
                     break;
@@ -55,15 +55,14 @@ namespace internal
                 if((pt1.x() <= middleX && pt2.x() >= middleX)
                    || (pt1.x() > middleX && pt2.x() <= middleX))
                 {
-                    double actual_distance = distance(pt1, pt2);
+                    double points_distance = distance(pt1, pt2);
 
-                    if(actual_distance < min_distance)
+                    if(points_distance < min_distance)
                     {
-                        std::vector<alge2::point_2d> closest = {pt1, pt2};
-
-                        alge2::sort_by_x(closest);
-                        min_distance = actual_distance;
-                        closest_pair = std::make_optional(std::make_pair(closest[0], closest[1]));
+                        min_distance = points_distance;
+                        closest_pair =
+                                std::make_optional(pt1.x() <= pt2.x() ? std::make_pair(pt1, pt2)
+                                                                      : std::make_pair(pt2, pt1));
                     }
                 }
             }

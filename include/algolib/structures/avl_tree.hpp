@@ -52,7 +52,8 @@ namespace algolib::structures
         }
 
         template <typename InputIterator>
-        avl_tree(InputIterator first, InputIterator last,
+        avl_tree(InputIterator first,
+                 InputIterator last,
                  const value_compare & compare = value_compare())
             : avl_tree(compare)
         {
@@ -175,7 +176,7 @@ namespace algolib::structures
         const_iterator find(const_reference element) const;
 
         /*!
-         * \brief Adds a new value to the tree.
+         * \brief Adds new value to the tree.
          * \param element value to be added
          * \return iterator at the new element and \c true whether insert was successful,
          * otherwise \c false
@@ -183,7 +184,7 @@ namespace algolib::structures
         std::pair<iterator, bool> insert(const_reference element);
 
         /*!
-         * \brief Adds a new value to the tree constructed in-place with the given arguments.
+         * \brief Adds new value to the tree constructed in-place with the given arguments.
          * \param args arguments to forward to the constructor of the new value
          * \return iterator at the new element and \c true whether emplace was successful,
          * otherwise \c false

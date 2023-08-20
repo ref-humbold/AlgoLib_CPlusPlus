@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <limits>
+#include <numeric>
 #include <unordered_map>
 #include <vector>
 #include "algolib/graphs/algorithms/searching.hpp"
@@ -47,10 +48,11 @@ namespace internal
 
         void on_exit(const Vertex & vertex) override
         {
-            int minimal_low_value = std::numeric_limits<int>::max();
-
-            for(auto && child : this->dfs_children[vertex])
-                minimal_low_value = std::min(this->low_values[child], minimal_low_value);
+            int minimal_low_value = std::accumulate(
+                    this->dfs_children[vertex].begin(), this->dfs_children[vertex].end(),
+                    std::numeric_limits<int>::max(),
+                    [&](int acc, const Vertex & child)
+                    { return std::min(this->low_values[child], acc); });
 
             this->low_values[vertex] = std::min(this->low_values[vertex], minimal_low_value);
             --depth;
@@ -75,9 +77,8 @@ namespace internal
                 return dfs_children[vertex].size() > 1;
 
             return std::any_of(this->dfs_children[vertex].begin(), this->dfs_children[vertex].end(),
-                               [&](auto && child) {
-                                   return this->low_values[child] >= this->dfs_depths[vertex];
-                               });
+                               [&](auto && child)
+                               { return this->low_values[child] >= this->dfs_depths[vertex]; });
         }
 
         bool is_dfs_root(const Vertex & vertex)
@@ -96,7 +97,7 @@ namespace internal
 namespace algolib::graphs
 {
     /*!
-     * \brief Finds an edge cut of given graph.
+     * \brief Finds edge cut of given graph.
      * \param graph an undirected graph
      * \return vector of edges in the edge cut
      */
@@ -117,14 +118,13 @@ namespace algolib::graphs
                                       [&](auto && vertex) { return !strategy.has_bridge(vertex); }),
                        vertices.end());
         std::transform(vertices.begin(), vertices.end(), std::back_inserter(bridges),
-                       [&](auto && vertex) {
-                           return graph[std::make_pair(vertex, strategy.dfs_parents.at(vertex))];
-                       });
+                       [&](auto && vertex)
+                       { return graph[std::make_pair(vertex, strategy.dfs_parents.at(vertex))]; });
         return bridges;
     }
 
     /*!
-     * \brief Finds a vertex cut of given graph.
+     * \brief Finds vertex cut of given graph.
      * \param graph an undirected graph
      * \return vector of vertices in the vertex cut
      */

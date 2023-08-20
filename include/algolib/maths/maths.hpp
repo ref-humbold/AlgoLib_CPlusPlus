@@ -16,7 +16,7 @@ namespace algolib::maths
 #pragma region gcd
 
     /*!
-     * \brief Counts a greatest common divisor of two numbers.
+     * \brief Counts greatest common divisor of two numbers.
      * \param number1 first number
      * \param number2 second number
      * \return greatest common divisor
@@ -24,7 +24,7 @@ namespace algolib::maths
     int gcd(int number1, int number2);
 
     /*!
-     * \brief Counts a greatest common divisor of two numbers.
+     * \brief Counts greatest common divisor of two numbers.
      * \param number1 first number
      * \param number2 second number
      * \return greatest common divisor
@@ -32,7 +32,7 @@ namespace algolib::maths
     long gcd(long number1, long number2);
 
     /*!
-     * \brief Counts a greatest common divisor of two numbers.
+     * \brief Counts greatest common divisor of two numbers.
      * \param number1 first number
      * \param number2 second number
      * \return greatest common divisor
@@ -43,7 +43,7 @@ namespace algolib::maths
 #pragma region lcm
 
     /*!
-     * \brief Counts a lowest common multiple of two numbers.
+     * \brief Counts lowest common multiple of two numbers.
      * \param number1 first number
      * \param number2 second number
      * \return lowest common multiple
@@ -51,7 +51,7 @@ namespace algolib::maths
     int lcm(int number1, int number2);
 
     /*!
-     * \brief Counts a lowest common multiple of two numbers.
+     * \brief Counts lowest common multiple of two numbers.
      * \param number1 first number
      * \param number2 second number
      * \return lowest common multiple
@@ -59,7 +59,7 @@ namespace algolib::maths
     long lcm(long number1, long number2);
 
     /*!
-     * \brief Counts a lowest common multiple of two numbers.
+     * \brief Counts lowest common multiple of two numbers.
      * \param number1 first number
      * \param number2 second number
      * \return lowest common multiple
@@ -70,7 +70,7 @@ namespace algolib::maths
 #pragma region multiply
 
     /*!
-     * \brief Performs a fast multiplication of two numbers.
+     * \brief Performs fast multiplication of two numbers.
      * \param factor1 first factor
      * \param factor2 second factor
      * \return multiplication result
@@ -78,7 +78,7 @@ namespace algolib::maths
     int multiply(int factor1, int factor2);
 
     /*!
-     * \brief Performs a fast multiplication of two numbers.
+     * \brief Performs fast multiplication of two numbers.
      * \param factor1 first factor
      * \param factor2 second factor
      * \return multiplication result
@@ -86,7 +86,7 @@ namespace algolib::maths
     long multiply(long factor1, long factor2);
 
     /*!
-     * \brief Performs a fast multiplication of two numbers.
+     * \brief Performs fast multiplication of two numbers.
      * \param factor1 first factor
      * \param factor2 second factor
      * \return multiplication result
@@ -94,7 +94,7 @@ namespace algolib::maths
     long long multiply(long long factor1, long long factor2);
 
     /*!
-     * \brief Performs a fast multiplication of two numbers with modulo taken.
+     * \brief Performs fast multiplication of two numbers with modulo taken.
      * \param factor1 first factor
      * \param factor2 second factor
      * \param modulo modulo value
@@ -103,7 +103,7 @@ namespace algolib::maths
     int multiply(int factor1, int factor2, int modulo);
 
     /*!
-     * \brief Performs a fast multiplication of two numbers with modulo taken.
+     * \brief Performs fast multiplication of two numbers with modulo taken.
      * \param factor1 first factor
      * \param factor2 second factor
      * \param modulo modulo value
@@ -112,7 +112,7 @@ namespace algolib::maths
     long multiply(long factor1, long factor2, long modulo);
 
     /*!
-     * \brief Performs a fast multiplication of two numbers with modulo taken.
+     * \brief Performs fast multiplication of two numbers with modulo taken.
      * \param factor1 first factor
      * \param factor2 second factor
      * \param modulo modulo value
@@ -124,7 +124,7 @@ namespace algolib::maths
 #pragma region power
 
     /*!
-     * \brief Performs a fast exponentiation of two numbers.
+     * \brief Performs fast exponentiation of two numbers.
      * \param base base value
      * \param exponent exponent value
      * \return exponentiation result
@@ -132,7 +132,7 @@ namespace algolib::maths
     int power(int base, int exponent);
 
     /*!
-     * \brief Performs a fast exponentiation of two numbers.
+     * \brief Performs fast exponentiation of two numbers.
      * \param base base value
      * \param exponent exponent value
      * \return exponentiation result
@@ -140,7 +140,7 @@ namespace algolib::maths
     long power(long base, long exponent);
 
     /*!
-     * \brief Performs a fast exponentiation of two numbers.
+     * \brief Performs fast exponentiation of two numbers.
      * \param base base value
      * \param exponent exponent value
      * \return exponentiation result with modulo taken
@@ -148,7 +148,7 @@ namespace algolib::maths
     long long power(long long base, long long exponent);
 
     /*!
-     * \brief Performs a fast exponentiation of two numbers with modulo taken.
+     * \brief Performs fast exponentiation of two numbers with modulo taken.
      * \param base base value
      * \param exponent exponent value
      * \param modulo modulo value
@@ -157,7 +157,7 @@ namespace algolib::maths
     int power(int base, int exponent, int modulo);
 
     /*!
-     * \brief Performs a fast exponentiation of two numbers with modulo taken.
+     * \brief Performs fast exponentiation of two numbers with modulo taken.
      * \param base base value
      * \param exponent exponent value
      * \param modulo modulo value
@@ -166,7 +166,7 @@ namespace algolib::maths
     long power(long base, long exponent, long modulo);
 
     /*!
-     * \brief Performs a fast exponentiation of two numbers with modulo taken.
+     * \brief Performs fast exponentiation of two numbers with modulo taken.
      * \param base base value
      * \param exponent exponent value
      * \param modulo modulo value

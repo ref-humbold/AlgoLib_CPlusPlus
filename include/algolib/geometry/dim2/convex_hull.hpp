@@ -12,7 +12,7 @@
 namespace algolib::geometry::dim2
 {
     /*!
-     * \brief Constructs a convex hull of given points.
+     * \brief Constructs convex hull of given points.
      * \param points vector of points
      * \return vector of hull points
      */

@@ -64,7 +64,7 @@ namespace algolib::text
         bool contains(const std::string & text) const;
 
         /*!
-         * \brief Adds a new text to the trie.
+         * \brief Adds new text to the trie.
          * \param text text to be added
          */
         void insert(const std::string & text);
