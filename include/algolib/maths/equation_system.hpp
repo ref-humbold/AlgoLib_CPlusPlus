@@ -81,7 +81,7 @@ namespace algolib::maths
          * \param solution values to be checked
          * \return \c true if solution is correct, otherwise \c false
          */
-        bool is_solution(const std::array<double, N> & solution) const;
+        bool has_solution(const std::array<double, N> & solution) const;
 
     private:
         std::array<equation<N>, N> equations;
@@ -165,10 +165,10 @@ namespace algolib::maths
     }
 
     template <size_t N>
-    bool equation_system<N>::is_solution(const std::array<double, N> & solution) const
+    bool equation_system<N>::has_solution(const std::array<double, N> & solution) const
     {
         return std::all_of(this->equations.begin(), this->equations.end(),
-                           [&](auto && eq) { return eq.is_solution(solution); });
+                           [&](auto && eq) { return eq.has_solution(solution); });
     }
 }
 

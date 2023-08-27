@@ -137,7 +137,7 @@ namespace algolib::maths
          * \param solution values to be checked
          * \return \c true if solution is correct, otherwise \c false
          */
-        bool is_solution(const std::array<double, N> & solution) const;
+        bool has_solution(const std::array<double, N> & solution) const;
 
         // clang-format off
         friend equation<N> operator+ <N>(equation<N> eq);
@@ -201,7 +201,7 @@ namespace algolib::maths
     }
 
     template <size_t N>
-    bool equation<N>::is_solution(const std::array<double, N> & solution) const
+    bool equation<N>::has_solution(const std::array<double, N> & solution) const
     {
         double result = 0;
 

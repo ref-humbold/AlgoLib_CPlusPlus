@@ -14,7 +14,7 @@ protected:
     alma::equation<4> test_object;
 
 public:
-    EquationTest() : test_object{alma::equation<4>({2.0, 3.0, 0.0, -2.5}, 15)}
+    EquationTest() : test_object{alma::equation<4>({2, 3, 0, -2.5}, 15)}
     {
     }
 
@@ -26,7 +26,7 @@ TEST_F(EquationTest, operatorUnaryPlus_ThenCopied)
     // when
     alma::equation<4> result = +test_object;
     // then
-    EXPECT_EQ((std::array<double, 4>{2.0, 3.0, 0.0, -2.5}), result.coefficients);
+    EXPECT_EQ((std::array<double, 4>{2, 3, 0, -2.5}), result.coefficients);
     EXPECT_EQ(15, result.free);
 }
 
@@ -35,7 +35,7 @@ TEST_F(EquationTest, operatorUnaryMinus_ThenNegated)
     // when
     alma::equation<4> result = -test_object;
     // then
-    EXPECT_EQ((std::array<double, 4>{-2.0, -3.0, 0.0, 2.5}), result.coefficients);
+    EXPECT_EQ((std::array<double, 4>{-2, -3, 0, 2.5}), result.coefficients);
     EXPECT_EQ(-15, result.free);
 }
 
@@ -101,22 +101,22 @@ TEST_F(EquationTest, operatorLeftShift_ThenStringRepresentation)
     EXPECT_EQ("2 x_0 + 3 x_1 + -2.5 x_3 = 15", stream.str());
 }
 
-TEST_F(EquationTest, isSolution_WhenSolution_ThenTrue)
+TEST_F(EquationTest, hasSolution_WhenSolution_ThenTrue)
 {
     // given
     std::array<double, 4> solution = {10, 10, -29, 14};
     // when
-    bool result = test_object.is_solution(solution);
+    bool result = test_object.has_solution(solution);
     // then
     EXPECT_TRUE(result);
 }
 
-TEST_F(EquationTest, isSolution_WhenNotSolution_ThenFalse)
+TEST_F(EquationTest, hasSolution_WhenNotSolution_ThenFalse)
 {
     // given
     std::array<double, 4> solution = {10, 6, -17, 14};
     // when
-    bool result = test_object.is_solution(solution);
+    bool result = test_object.has_solution(solution);
     // then
     EXPECT_FALSE(result);
 }
