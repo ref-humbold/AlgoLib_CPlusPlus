@@ -19,6 +19,12 @@ namespace algolib::maths
     class equation;
 
     template <size_t N>
+    equation<N> operator+(equation<N> eq);
+
+    template <size_t N>
+    equation<N> operator-(equation<N> eq);
+
+    template <size_t N>
     equation<N> operator+(equation<N> eq1, const equation<N> & eq2);
 
     template <size_t N>
@@ -127,14 +133,6 @@ namespace algolib::maths
         }
 
         /*!
-         * Transforms equation through a linear combination with another equation.
-         * \param equation equation
-         * \param constant linear combination constant
-         * \throw std::domain_error if constant is zero
-         */
-        void combine(const equation<N> & equation, double constant);
-
-        /*!
          * \brief Checks whether given values solve the equation.
          * \param solution values to be checked
          * \return \c true if solution is correct, otherwise \c false
@@ -142,6 +140,8 @@ namespace algolib::maths
         bool is_solution(const std::array<double, N> & solution) const;
 
         // clang-format off
+        friend equation<N> operator+ <N>(equation<N> eq);
+        friend equation<N> operator- <N>(equation<N> eq);
         friend equation<N> operator+ <N>(equation<N> eq1, const equation<N> & eq2);
         friend equation<N> operator- <N>(equation<N> eq1, const equation<N> & eq2);
         friend equation<N> operator* <N>(equation<N> eq, double constant);
@@ -201,18 +201,6 @@ namespace algolib::maths
     }
 
     template <size_t N>
-    void equation<N>::combine(const equation<N> & equation, double constant)
-    {
-        if(constant == 0)
-            throw std::domain_error("Constant cannot be equal to zero");
-
-        for(size_t i = 0; i < N; ++i)
-            this->coefficients[i] += constant * equation[i];
-
-        this->free += constant * equation.free;
-    }
-
-    template <size_t N>
     bool equation<N>::is_solution(const std::array<double, N> & solution) const
     {
         double result = 0;
@@ -224,6 +212,22 @@ namespace algolib::maths
     }
 
 #pragma endregion
+
+    template <size_t N>
+    equation<N> operator+(equation<N> eq)
+    {
+        return eq;
+    }
+
+    template <size_t N>
+    equation<N> operator-(equation<N> eq)
+    {
+        for(size_t i = 0; i < N; ++i)
+            eq.coefficients[i] = -eq.coefficients[i];
+
+        eq.free = -eq.free;
+        return eq;
+    }
 
     template <size_t N>
     equation<N> operator+(equation<N> eq1, const equation<N> & eq2)

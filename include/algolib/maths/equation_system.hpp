@@ -152,7 +152,7 @@ namespace algolib::maths
                     double param = -this->equations[j][i] / this->equations[i][i];
 
                     if(param != 0)
-                        this->equations[j].combine(this->equations[i], param);
+                        this->equations[j] += param * this->equations[i];
                 }
             }
         }
