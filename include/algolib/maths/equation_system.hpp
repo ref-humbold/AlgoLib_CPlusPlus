@@ -50,28 +50,9 @@ namespace algolib::maths
          * \param i index of equation
          * \return equation object
          */
-        equation<N> & operator[](size_t i)
-        {
-            return this->equations[i];
-        }
-
-        /*!
-         * \param i index of equation
-         * \return equation object
-         */
         const equation<N> & operator[](size_t i) const
         {
             return this->equations[i];
-        }
-
-        /*!
-         * \param i index of equation
-         * \return equation object
-         * \throw std::out_of_range if index is out of range
-         */
-        equation<N> & at(size_t i)
-        {
-            return this->equations.at(i);
         }
 
         /*!

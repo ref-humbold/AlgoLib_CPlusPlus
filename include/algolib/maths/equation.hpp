@@ -98,28 +98,9 @@ namespace algolib::maths
          * \param i index of a variable
          * \return coefficient by i-th variable
          */
-        double & operator[](size_t i)
-        {
-            return this->coefficients[i];
-        }
-
-        /*!
-         * \param i index of a variable
-         * \return coefficient by i-th variable
-         */
         const double & operator[](size_t i) const
         {
             return this->coefficients[i];
-        }
-
-        /*!
-         * \param i index of a variable
-         * \return coefficient by i-th variable
-         * \throw std::out_of_range if index is out of range
-         */
-        double & at(size_t i)
-        {
-            return this->coefficients.at(i);
         }
 
         /*!
@@ -135,7 +116,7 @@ namespace algolib::maths
         /*!
          * \return free term of this equation
          */
-        double free_term()
+        double free_term() const
         {
             return this->free_term_;
         }
