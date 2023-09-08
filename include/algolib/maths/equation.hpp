@@ -57,8 +57,8 @@ namespace algolib::maths
     class equation
     {
     public:
-        equation(const std::array<double, N> & coefficients, double free)
-            : coefficients{coefficients}, free{free}
+        equation(const std::array<double, N> & coefficients, double free_term)
+            : coefficients{coefficients}, free_term_{free_term}
         {
         }
 
@@ -133,6 +133,14 @@ namespace algolib::maths
         }
 
         /*!
+         * \return free term of this equation
+         */
+        double free_term()
+        {
+            return this->free_term_;
+        }
+
+        /*!
          * \brief Checks whether given values solve the equation.
          * \param solution values to be checked
          * \return \c true if solution is correct, otherwise \c false
@@ -150,8 +158,9 @@ namespace algolib::maths
         friend std::ostream & operator<< <N>(std::ostream & os, const equation<N> & eq);
         // clang-format on
 
+    private:
         std::array<double, N> coefficients;
-        double free;
+        double free_term_;
     };
 
     template <size_t N>
@@ -160,7 +169,7 @@ namespace algolib::maths
         for(size_t i = 0; i < N; ++i)
             this->coefficients[i] += equation[i];
 
-        this->free += equation.free;
+        this->free_term_ += equation.free_term_;
         return *this;
     }
 
@@ -170,7 +179,7 @@ namespace algolib::maths
         for(size_t i = 0; i < N; ++i)
             this->coefficients[i] -= equation[i];
 
-        this->free -= equation.free;
+        this->free_term_ -= equation.free_term_;
         return *this;
     }
 
@@ -183,7 +192,7 @@ namespace algolib::maths
         for(size_t i = 0; i < N; ++i)
             this->coefficients[i] *= constant;
 
-        this->free *= constant;
+        this->free_term_ *= constant;
         return *this;
     }
 
@@ -196,7 +205,7 @@ namespace algolib::maths
         for(size_t i = 0; i < N; ++i)
             this->coefficients[i] /= constant;
 
-        this->free /= constant;
+        this->free_term_ /= constant;
         return *this;
     }
 
@@ -208,7 +217,7 @@ namespace algolib::maths
         for(size_t i = 0; i < N; ++i)
             result += solution[i] * this->coefficients[i];
 
-        return result == this->free;
+        return result == this->free_term_;
     }
 
 #pragma endregion
@@ -225,7 +234,7 @@ namespace algolib::maths
         for(size_t i = 0; i < N; ++i)
             eq.coefficients[i] = -eq.coefficients[i];
 
-        eq.free = -eq.free;
+        eq.free_term_ = -eq.free_term_;
         return eq;
     }
 
@@ -275,7 +284,7 @@ namespace algolib::maths
                 os << eq.coefficients[i] << " x_" << i;
             }
 
-        os << " = " << eq.free;
+        os << " = " << eq.free_term_;
         return os;
     }
 }
@@ -291,7 +300,7 @@ namespace std
         result_type operator()(const argument_type & eq)
         {
             result_type c_hash = std::hash<std::array<double, N>>()(eq.coefficients);
-            result_type f_hash = std::hash<double>()(eq.free);
+            result_type f_hash = std::hash<double>()(eq.free_term_);
 
             return c_hash ^ (f_hash + 0x9e3779b9 + (c_hash << 6) + (c_hash >> 2));
         }

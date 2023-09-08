@@ -50,13 +50,39 @@ namespace algolib::maths
          * \param i index of equation
          * \return equation object
          */
-        equation<N> & operator[](size_t i);
+        equation<N> & operator[](size_t i)
+        {
+            return this->equations[i];
+        }
 
         /*!
          * \param i index of equation
          * \return equation object
          */
-        const equation<N> & operator[](size_t i) const;
+        const equation<N> & operator[](size_t i) const
+        {
+            return this->equations[i];
+        }
+
+        /*!
+         * \param i index of equation
+         * \return equation object
+         * \throw std::out_of_range if index is out of range
+         */
+        equation<N> & at(size_t i)
+        {
+            return this->equations.at(i);
+        }
+
+        /*!
+         * \param i index of equation
+         * \return equation object
+         * \throw std::out_of_range if index is out of range
+         */
+        const equation<N> & at(size_t i) const
+        {
+            return this->equations.at(i);
+        }
 
         /*!
          * \brief Computes the solution of the equation system.
@@ -88,35 +114,23 @@ namespace algolib::maths
     };
 
     template <size_t N>
-    equation<N> & equation_system<N>::operator[](size_t i)
-    {
-        return this->equations.at(i);
-    }
-
-    template <size_t N>
-    const equation<N> & equation_system<N>::operator[](size_t i) const
-    {
-        return this->equations.at(i);
-    }
-
-    template <size_t N>
     std::array<double, N> equation_system<N>::solve()
     {
         gaussian_reduce();
 
-        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free == 0)
+        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free_term() == 0)
             throw infinite_solutions_error("Equation system has an infinite number of solutions");
 
-        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free != 0)
+        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free_term() != 0)
             throw no_solution_error("Equation system has no solution");
 
         std::array<double, N> solution;
 
-        solution.back() = this->equations[N - 1].free / this->equations[N - 1][N - 1];
+        solution.back() = this->equations[N - 1].free_term() / this->equations[N - 1][N - 1];
 
         for(int i = N - 2; i >= 0; --i)
         {
-            double value = this->equations[i].free;
+            double value = this->equations[i].free_term();
 
             for(int j = N - 1; j > i; --j)
                 value -= this->equations[i][j] * solution[j];
