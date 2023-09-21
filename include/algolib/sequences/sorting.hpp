@@ -82,8 +82,10 @@ namespace internal
     }
 
     template <typename T>
-    void do_quick_sort(std::default_random_engine & rand_eng, std::vector<T> & sequence,
-                       size_t index_begin, size_t index_end)
+    void do_quick_sort(std::default_random_engine & rand_eng,
+                       std::vector<T> & sequence,
+                       size_t index_begin,
+                       size_t index_end)
     {
         if(index_end - index_begin <= 1)
             return;
@@ -121,7 +123,8 @@ namespace algolib::sequences
      * \param index_end index of sequence end
      */
     template <typename T>
-    void heap_sort(std::vector<T> & sequence, size_t index_begin = 0,
+    void heap_sort(std::vector<T> & sequence,
+                   size_t index_begin = 0,
                    size_t index_end = std::numeric_limits<size_t>::max())
     {
         if(index_end == std::numeric_limits<size_t>::max())
@@ -154,7 +157,8 @@ namespace algolib::sequences
      * \param index_end index of sequence end
      */
     template <typename T>
-    void top_down_merge_sort(std::vector<T> & sequence, size_t index_begin = 0,
+    void top_down_merge_sort(std::vector<T> & sequence,
+                             size_t index_begin = 0,
                              size_t index_end = std::numeric_limits<size_t>::max())
     {
         if(index_end == std::numeric_limits<size_t>::max())
@@ -171,7 +175,8 @@ namespace algolib::sequences
      * \param index_end index of sequence end
      */
     template <typename T>
-    void bottom_up_merge_sort(std::vector<T> & sequence, size_t index_begin = 0,
+    void bottom_up_merge_sort(std::vector<T> & sequence,
+                              size_t index_begin = 0,
                               size_t index_end = std::numeric_limits<size_t>::max())
     {
         if(index_end == std::numeric_limits<size_t>::max())
@@ -195,7 +200,8 @@ namespace algolib::sequences
      * \param index_end index of sequence end
      */
     template <typename T>
-    void quick_sort(std::vector<T> & sequence, size_t index_begin = 0,
+    void quick_sort(std::vector<T> & sequence,
+                    size_t index_begin = 0,
                     size_t index_end = std::numeric_limits<size_t>::max())
     {
         std::default_random_engine rand_eng;

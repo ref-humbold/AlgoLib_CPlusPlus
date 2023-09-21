@@ -34,7 +34,8 @@ namespace algolib::graphs
         virtual void reverse() = 0;
     };
 
-    template <typename VertexId = size_t, typename VertexProperty = std::nullptr_t,
+    template <typename VertexId = size_t,
+              typename VertexProperty = std::nullptr_t,
               typename EdgeProperty = std::nullptr_t>
     class directed_simple_graph
         : public simple_graph<VertexId, VertexProperty, EdgeProperty>,
@@ -97,8 +98,8 @@ namespace algolib::graphs
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     size_t directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::input_degree(
-            const typename directed_simple_graph<VertexId, VertexProperty,
-                                                 EdgeProperty>::vertex_type & vertex) const
+            const typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                    vertex_type & vertex) const
     {
         size_t degree = 0;
 
@@ -112,8 +113,8 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
             directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::add_edge(
-                    const typename directed_simple_graph<VertexId, VertexProperty,
-                                                         EdgeProperty>::edge_type & edge)
+                    const typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                            edge_type & edge)
     try
     {
         this->operator[](std::make_pair(edge.source(), edge.destination()));
@@ -128,10 +129,10 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
             directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::add_edge(
-                    const typename directed_simple_graph<VertexId, VertexProperty,
-                                                         EdgeProperty>::edge_type & edge,
-                    const typename directed_simple_graph<
-                            VertexId, VertexProperty, EdgeProperty>::edge_property_type & property)
+                    const typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                            edge_type & edge,
+                    const typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                            edge_property_type & property)
     try
     {
         this->operator[](std::make_pair(edge.source(), edge.destination()));
@@ -172,10 +173,10 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     directed_simple_graph<
             typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type,
-            typename directed_simple_graph<VertexId, VertexProperty,
-                                           EdgeProperty>::vertex_property_type,
-            typename directed_simple_graph<VertexId, VertexProperty,
-                                           EdgeProperty>::edge_property_type>
+            typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                    vertex_property_type,
+            typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                    edge_property_type>
             directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::reversed_copy() const
     {
         directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type>

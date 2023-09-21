@@ -116,6 +116,7 @@ TEST_F(TreeGraphTest, edges_ThenAllEdges)
                                   graph_e(graph_v(7), graph_v(2))}),
             result);
 }
+
 TEST_F(TreeGraphTest, neighbours_ThenDestinationVerticesOfOutgoingEdges)
 {
     // when

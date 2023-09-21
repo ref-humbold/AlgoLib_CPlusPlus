@@ -22,7 +22,8 @@ double alge3::vector_3d::area(const alge3::vector_3d & v1, const alge3::vector_3
     return cross(v1, v2).length();
 }
 
-double alge3::vector_3d::volume(const alge3::vector_3d & v1, const alge3::vector_3d & v2,
+double alge3::vector_3d::volume(const alge3::vector_3d & v1,
+                                const alge3::vector_3d & v2,
                                 const alge3::vector_3d & v3)
 {
     return dot(v1, cross(v2, v3));

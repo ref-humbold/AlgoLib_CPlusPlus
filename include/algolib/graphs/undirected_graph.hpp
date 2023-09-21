@@ -32,7 +32,8 @@ namespace algolib::graphs
         ~undirected_graph() override = default;
     };
 
-    template <typename VertexId = size_t, typename VertexProperty = std::nullptr_t,
+    template <typename VertexId = size_t,
+              typename VertexProperty = std::nullptr_t,
               typename EdgeProperty = std::nullptr_t>
     class undirected_simple_graph
         : public simple_graph<VertexId, VertexProperty, EdgeProperty>,
@@ -116,8 +117,8 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
             undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::add_edge(
-                    const typename undirected_simple_graph<VertexId, VertexProperty,
-                                                           EdgeProperty>::edge_type & edge)
+                    const typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                            edge_type & edge)
     try
     {
         this->operator[](std::make_pair(edge.source(), edge.destination()));
@@ -133,10 +134,10 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
             undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::add_edge(
-                    const typename undirected_simple_graph<VertexId, VertexProperty,
-                                                           EdgeProperty>::edge_type & edge,
-                    const typename undirected_simple_graph<
-                            VertexId, VertexProperty, EdgeProperty>::edge_property_type & property)
+                    const typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                            edge_type & edge,
+                    const typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                            edge_property_type & property)
     try
     {
         this->operator[](std::make_pair(edge.source(), edge.destination()));
@@ -151,12 +152,12 @@ namespace algolib::graphs
     }
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
-    directed_simple_graph<typename undirected_simple_graph<VertexId, VertexProperty,
-                                                           EdgeProperty>::vertex_id_type,
-                          typename undirected_simple_graph<VertexId, VertexProperty,
-                                                           EdgeProperty>::vertex_property_type,
-                          typename undirected_simple_graph<VertexId, VertexProperty,
-                                                           EdgeProperty>::edge_property_type>
+    directed_simple_graph<typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                                  vertex_id_type,
+                          typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                                  vertex_property_type,
+                          typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                                  edge_property_type>
             undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::as_directed() const
     {
         std::vector<vertex_type> all_vertices = this->vertices();

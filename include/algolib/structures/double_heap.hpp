@@ -13,7 +13,8 @@
 
 namespace algolib::structures
 {
-    template <typename E, typename Container = std::vector<E>,
+    template <typename E,
+              typename Container = std::vector<E>,
               typename Compare = std::less<typename Container::value_type>>
     class double_heap
     {
@@ -34,7 +35,8 @@ namespace algolib::structures
         }
 
         template <typename InputIterator>
-        double_heap(InputIterator first, InputIterator last,
+        double_heap(InputIterator first,
+                    InputIterator last,
                     const value_compare & compare = value_compare())
             : double_heap(compare)
         {

@@ -11,7 +11,8 @@ namespace alge2 = algolib::geometry::dim2;
 
 namespace internal
 {
-    double cross_product(const alge2::point_2d & pt1, const alge2::point_2d & pt2,
+    double cross_product(const alge2::point_2d & pt1,
+                         const alge2::point_2d & pt2,
                          const alge2::point_2d & pt3)
     {
         return alge2::vector_2d::area(alge2::vector_2d(pt2, pt1), alge2::vector_2d(pt2, pt3));

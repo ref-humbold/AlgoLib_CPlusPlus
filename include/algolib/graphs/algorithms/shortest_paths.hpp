@@ -39,11 +39,12 @@ namespace algolib::graphs
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::unordered_map<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
-                       typename directed_graph<VertexId, VertexProperty,
-                                               EdgeProperty>::edge_property_type::weight_type>
-            bellman_ford(const directed_graph<VertexId, VertexProperty, EdgeProperty> & graph,
-                         typename directed_graph<VertexId, VertexProperty,
-                                                 EdgeProperty>::vertex_type source)
+                       typename directed_graph<VertexId, VertexProperty, EdgeProperty>::
+                               edge_property_type::weight_type>
+            bellman_ford(
+                    const directed_graph<VertexId, VertexProperty, EdgeProperty> & graph,
+                    typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type
+                            source)
     {
         std::unordered_map<
                 typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
@@ -83,8 +84,8 @@ namespace algolib::graphs
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::unordered_map<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
-                       typename directed_graph<VertexId, VertexProperty,
-                                               EdgeProperty>::edge_property_type::weight_type>
+                       typename directed_graph<VertexId, VertexProperty, EdgeProperty>::
+                               edge_property_type::weight_type>
             dijkstra(const graph<VertexId, VertexProperty, EdgeProperty> & graph_,
                      typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type source)
     {

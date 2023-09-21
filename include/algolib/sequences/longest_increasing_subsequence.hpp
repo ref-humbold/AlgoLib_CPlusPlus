@@ -16,9 +16,12 @@ namespace internal
     // Searches for index of element in list of subsequences.
     // (index_begin inclusive, index_end exclusive)
     template <typename T, typename C = std::less<T>>
-    size_t search_index(const std::vector<T> & sequence, const C & compare,
-                        const std::vector<size_t> & subsequence, size_t index_elem,
-                        size_t index_begin, size_t index_end)
+    size_t search_index(const std::vector<T> & sequence,
+                        const C & compare,
+                        const std::vector<size_t> & subsequence,
+                        size_t index_elem,
+                        size_t index_begin,
+                        size_t index_end)
     {
         if(index_end - index_begin <= 1)
             return index_begin;

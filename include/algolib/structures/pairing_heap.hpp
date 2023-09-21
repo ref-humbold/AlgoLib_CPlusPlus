@@ -45,7 +45,8 @@ namespace algolib::structures
         }
 
         template <typename InputIterator>
-        pairing_heap(InputIterator first, InputIterator last,
+        pairing_heap(InputIterator first,
+                     InputIterator last,
                      const value_compare & compare = value_compare())
             : pairing_heap(compare)
         {

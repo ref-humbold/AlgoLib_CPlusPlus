@@ -45,7 +45,8 @@ void alte::base_words_map::create()
                 });
 }
 
-size_t alte::base_words_map::extend(size_t length, size_t code_value,
+size_t alte::base_words_map::extend(size_t length,
+                                    size_t code_value,
                                     alte::base_words_map::extend_function_t func)
 {
     code_t previous_code = {0, 0};

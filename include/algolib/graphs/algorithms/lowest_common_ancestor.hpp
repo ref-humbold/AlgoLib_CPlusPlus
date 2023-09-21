@@ -17,7 +17,8 @@ namespace algolib::graphs
 {
 #pragma region lowest_common_ancestor
 
-    template <typename VertexId = size_t, typename VertexProperty = std::nullptr_t,
+    template <typename VertexId = size_t,
+              typename VertexProperty = std::nullptr_t,
               typename EdgeProperty = std::nullptr_t>
     class lowest_common_ancestor
     {
@@ -69,10 +70,10 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::vertex_type
             lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::find(
-                    const lowest_common_ancestor<VertexId, VertexProperty,
-                                                 EdgeProperty>::vertex_type & vertex1,
-                    const lowest_common_ancestor<VertexId, VertexProperty,
-                                                 EdgeProperty>::vertex_type & vertex2)
+                    const lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::
+                            vertex_type & vertex1,
+                    const lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::
+                            vertex_type & vertex2)
     {
         if(this->is_offspring(vertex1, vertex2))
             return vertex2;
@@ -107,10 +108,10 @@ namespace algolib::graphs
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     bool lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::is_offspring(
-            const typename lowest_common_ancestor<VertexId, VertexProperty,
-                                                  EdgeProperty>::vertex_type & vertex1,
-            const typename lowest_common_ancestor<VertexId, VertexProperty,
-                                                  EdgeProperty>::vertex_type & vertex2)
+            const typename lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::
+                    vertex_type & vertex1,
+            const typename lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::
+                    vertex_type & vertex2)
     {
         return this->strategy.pre_times[vertex1] >= this->strategy.pre_times[vertex2]
                && this->strategy.post_times[vertex1] <= this->strategy.post_times[vertex2];
@@ -121,10 +122,12 @@ namespace algolib::graphs
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     struct lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::lca_strategy
-        : public dfs_strategy<typename lowest_common_ancestor<VertexId, VertexProperty,
+        : public dfs_strategy<typename lowest_common_ancestor<VertexId,
+                                                              VertexProperty,
                                                               EdgeProperty>::vertex_type>
     {
-        using vertex_type = typename lowest_common_ancestor<VertexId, VertexProperty,
+        using vertex_type = typename lowest_common_ancestor<VertexId,
+                                                            VertexProperty,
                                                             EdgeProperty>::vertex_type;
 
         lca_strategy() : timer{0}

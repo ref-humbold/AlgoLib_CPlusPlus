@@ -42,10 +42,12 @@ namespace internal
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     void dfs_recursive_step(
             const algr::graph<VertexId, VertexProperty, EdgeProperty> & graph_,
-            algr::dfs_strategy<typename algr::graph<VertexId, VertexProperty,
-                                                    EdgeProperty>::vertex_type> & strategy,
-            dfs_recursive_state<typename algr::graph<VertexId, VertexProperty,
-                                                     EdgeProperty>::vertex_type> & state)
+            algr::dfs_strategy<
+                    typename algr::graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> &
+                    strategy,
+            dfs_recursive_state<
+                    typename algr::graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> &
+                    state)
     {
         typename algr::graph<VertexId, VertexProperty, EdgeProperty>::vertex_type vertex =
                 state.vertex.value();

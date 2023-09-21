@@ -69,8 +69,10 @@ TEST(StronglyConnectedComponentsTest, findSCC_WhenEmptyGraph_ThenEachVertexIsCom
 {
     // given
     graph_t graph({0, 1, 2, 3});
-    std::vector<std::unordered_set<graph_v>> expected = {
-            {graph[0]}, {graph[1]}, {graph[2]}, {graph[3]}};
+    std::vector<std::unordered_set<graph_v>> expected = {{graph[0]},
+                                                         {graph[1]},
+                                                         {graph[2]},
+                                                         {graph[3]}};
     // when
     std::vector<std::unordered_set<graph_v>> result = algr::find_scc(graph);
     // then

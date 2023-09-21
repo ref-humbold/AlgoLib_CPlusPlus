@@ -204,7 +204,8 @@ std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
 }
 
 void alte::suffix_array::sort_indices(std::vector<size_t> & indices,
-                                      const std::vector<size_t> & values, size_t shift)
+                                      const std::vector<size_t> & values,
+                                      size_t shift)
 {
     std::map<size_t, std::queue<size_t>> buckets;
     size_t j = 0;

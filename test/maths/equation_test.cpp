@@ -37,8 +37,8 @@ TEST_F(EquationTest, operatorUnaryPlus_ThenCopied)
     // when
     alma::equation<4> result = +test_object;
     // then
-    EXPECT_EQ((std::array<double, 4>{2, 3, 0, -2.5}), coefficients(result));
-    EXPECT_EQ(15, result.free_term());
+    EXPECT_EQ(coefficients(test_object), coefficients(result));
+    EXPECT_EQ(test_object.free_term(), result.free_term());
 }
 
 TEST_F(EquationTest, operatorUnaryMinus_ThenNegated)
@@ -68,7 +68,7 @@ TEST_F(EquationTest, operatorMinus_ThenSubtractingEquations)
     EXPECT_EQ(10, result.free_term());
 }
 
-TEST_F(EquationTest, operatorAsterisk_WhenConstantIsNonZero_ThenMultiplyingEquations)
+TEST_F(EquationTest, operatorAsterisk_WhenConstantIsNonZero_ThenMultiplyingEachCoefficient)
 {
     // when
     alma::equation<4> result = test_object * 2;
@@ -85,7 +85,7 @@ TEST_F(EquationTest, operatorAsterisk_WhenConstantIsZero_ThenDomainError)
     EXPECT_THROW(exec(), std::domain_error);
 }
 
-TEST_F(EquationTest, operatorSlash_WhenConstantIsNonZero_ThenDividingEquations)
+TEST_F(EquationTest, operatorSlash_WhenConstantIsNonZero_ThenDividingEachCoefficient)
 {
     // when
     alma::equation<4> result = test_object / -2;
@@ -114,20 +114,16 @@ TEST_F(EquationTest, operatorLeftShift_ThenStringRepresentation)
 
 TEST_F(EquationTest, hasSolution_WhenSolution_ThenTrue)
 {
-    // given
-    std::array<double, 4> solution = {10, 10, -29, 14};
     // when
-    bool result = test_object.has_solution(solution);
+    bool result = test_object.has_solution({10, 10, -29, 14});
     // then
     EXPECT_TRUE(result);
 }
 
 TEST_F(EquationTest, hasSolution_WhenNotSolution_ThenFalse)
 {
-    // given
-    std::array<double, 4> solution = {10, 6, -17, 14};
     // when
-    bool result = test_object.has_solution(solution);
+    bool result = test_object.has_solution({10, 6, -17, 14});
     // then
     EXPECT_FALSE(result);
 }
