@@ -40,9 +40,9 @@ namespace algolib::text
         }
 
         /*!
-         * \brief Retrieves code of a substring denoted by starting index and length.
-         * \param start starting index
-         * \param length length of a substring
+         * \brief Retrieves code of substring denoted by given starting index and length
+         * \param start the starting index, inclusive
+         * \param length the length of the substring
          * \return the code of the substring
          */
         code_t code(size_t start, size_t length = std::string::npos) const;

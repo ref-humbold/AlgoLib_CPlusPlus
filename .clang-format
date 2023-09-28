@@ -1,7 +1,7 @@
 # VERSION 16
 
 AccessModifierOffset: -4
-AlignAfterOpenBracket: Align
+AlignAfterOpenBracket: AlwaysBreak
 AlignArrayOfStructures: None
 AlignConsecutiveAssignments: None
 AlignConsecutiveBitFields: None
@@ -13,7 +13,7 @@ AlignTrailingComments:
   Kind: Never
   OverEmptyLines: 0
 AllowAllArgumentsOnNextLine: false
-AllowAllParametersOfDeclarationOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: true
 #18 AllowBreakBeforeNoexceptSpecifier: OnlyWithParen
 AllowShortBlocksOnASingleLine: Never
 AllowShortCaseLabelsOnASingleLine: false

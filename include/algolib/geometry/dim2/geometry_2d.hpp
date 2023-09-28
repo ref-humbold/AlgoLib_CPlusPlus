@@ -14,44 +14,44 @@
 namespace algolib::geometry::dim2
 {
     /*!
-     * \brief Mutably sorts points by their X coordinate. Sorting is guaranteed to be stable.
-     * \param points vector of points
+     * \brief Mutably sorts given points by their X coordinate. Sorting is guaranteed to be stable.
+     * \param points the points
      */
     void sort_by_x(std::vector<point_2d> & points);
 
     /*!
-     * \brief Mutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
-     * \param points vector of points
+     * \brief Mutably sorts given points by their Y coordinate. Sorting is guaranteed to be stable.
+     * \param points the points
      */
     void sort_by_y(std::vector<point_2d> & points);
 
     /*!
-     * \brief Mutably sorts points by their polar coordinates. First sorts by angle, then by radius.
-     * Sorting is guaranteed to be stable.
-     * \param points vector of points
+     * \brief Mutably sorts given points by their polar coordinates.
+     * First sorts by angle, then by radius. Sorting is guaranteed to be stable.
+     * \param points the points
      */
     void sort_by_angle(std::vector<point_2d> & points);
 
     /*!
-     * \brief Counts the distance between given points.
-    * \param point1 first point
-    * \param point2 second point
-    * \return distance between the points
+     * \brief Calculates the distance between given points.
+    * \param point1 the first point
+    * \param point2 the second point
+    * \return the distance between the points
     */
     double distance(const point_2d & point1, const point_2d & point2);
 
     /*!
      * \brief Translates given point by given vector.
-     * \param point a point
-     * \param vector translation vector
+     * \param point the point
+     * \param vector the vector of translation
      * \return the translated point
      */
     point_2d translate(const point_2d & point, const vector_2d & vector);
 
     /*!
      * \brief Reflects given point in another point.
-     * \param point point to be reflected
-     * \param centre reflection point
+     * \param point the point
+     * \param centre the point of reflection
      * \return the reflected point
      */
     point_2d reflect(const point_2d & point, const point_2d & centre);

@@ -14,43 +14,43 @@
 namespace algolib::geometry::dim3
 {
     /*!
-     * \brief Mutably sorts points by their X coordinate. Sorting is guaranteed to be stable.
+     * \brief Mutably sorts given points by their X coordinate. Sorting is guaranteed to be stable.
      * \param points vector of points
      */
     void sort_by_x(std::vector<point_3d> & points);
 
     /*!
-     * \brief Mutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
+     * \brief Mutably sorts given points by their Y coordinate. Sorting is guaranteed to be stable.
      * \param points vector of points
      */
     void sort_by_y(std::vector<point_3d> & points);
 
     /*!
-     * \brief Mutably sorts points by their Z coordinate. Sorting is guaranteed to be stable.
+     * \brief Mutably sorts given points by their Z coordinate. Sorting is guaranteed to be stable.
      * \param points vector of points
      */
     void sort_by_z(std::vector<point_3d> & points);
 
     /*!
-     * \brief Counts the distance between given points.
-     * \param point1 first point
-     * \param point2 second point
-     * \return distance between the points
+     * \brief Calculates distance between given points.
+     * \param point1 the first point
+     * \param point2 the second point
+     * \return the distance between the points
      */
     double distance(const point_3d & point1, const point_3d & point2);
 
     /*!
      * \brief Translates given point by given vector.
-     * \param point a point
-     * \param vector translation vector
+     * \param point the point
+     * \param vector the vector of translation
      * \return the translated point
      */
     point_3d translate(const point_3d & point, const vector_3d & vector);
 
     /*!
      * \brief Reflects given point in another point.
-     * \param point point to be reflected
-     * \param centre reflection point
+     * \param point the point
+     * \param centre the point of reflection
      * \return the reflected point
      */
     point_3d reflect(const point_3d & point, const point_3d & centre);

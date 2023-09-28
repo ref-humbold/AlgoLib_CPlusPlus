@@ -14,9 +14,10 @@ namespace algolib::sequences
 {
     /*!
      * \brief Computes length of the longest common subsequence of given sequences.
-     * \param sequence1 first sequence
-     * \param sequence2 second sequence
-     * \return length of the longest common subsequence
+     * \tparam T the type of sequence elements
+     * \param sequence1 the first sequence of elements
+     * \param sequence2 the second sequence of elements
+     * \return the length of the longest common subsequence
      */
     template <typename T>
     size_t count_lcs_length(const std::vector<T> & sequence1, const std::vector<T> & sequence2)
@@ -47,9 +48,9 @@ namespace algolib::sequences
 
     /*!
      * \brief Computes length of the longest common subsequence of given texts.
-     * \param text1 first text
-     * \param text2 second text
-     * \return length of the longest common subsequence
+     * \param text1 the first text
+     * \param text2 the second text
+     * \return the length of the longest common subsequence
      */
     size_t count_lcs_length(const std::string & text1, const std::string & text2);
 }

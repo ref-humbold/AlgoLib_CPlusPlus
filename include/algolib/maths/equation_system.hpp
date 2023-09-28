@@ -1,6 +1,6 @@
 /*!
  * \file equation_system.hpp
- * \brief Structure of linear equation system with Gauss elimination algorithm
+ * \brief Structure of linear equations system
  */
 #ifndef EQUATION_SYSTEM_HPP_
 #define EQUATION_SYSTEM_HPP_
@@ -47,8 +47,8 @@ namespace algolib::maths
         equation_system & operator=(equation_system && es) = default;
 
         /*!
-         * \param i index of equation
-         * \return equation object
+         * \param i the index of equation
+         * \return the equation of this system specified by the index
          */
         const equation<N> & operator[](size_t i) const
         {
@@ -56,8 +56,8 @@ namespace algolib::maths
         }
 
         /*!
-         * \param i index of equation
-         * \return equation object
+         * \param i the index of equation
+         * \return the equation of this system specified by the index
          * \throw std::out_of_range if index is out of range
          */
         const equation<N> & at(size_t i) const
@@ -66,26 +66,26 @@ namespace algolib::maths
         }
 
         /*!
-         * \brief Computes the solution of the equation system.
-         * \return solution vector
-         * \throw infinite_solutions_error if the equation system has an infinite number of solutions
-         * \throw no_solution_error if the equation system has no solutions
+         * \brief Computes solution of this equation system.
+         * \return the solution
+         * \throw infinite_solutions_error if there are infinitely many solutions
+         * \throw no_solution_error if there is no solution
          */
         std::array<double, N> solve();
 
-        //! \brief Performs Gauss elimination algorithm.
+        //! \brief Runs the Gaussian elimination algorithm on this equation system.
         void gaussian_reduce();
 
         /*!
-         * \brief Swaps two equations.
-         * \param i index of first equation
-         * \param j index of second equation
+         * \brief Swaps two equations in this system.
+         * \param i the index of first equation
+         * \param j the index of second equation
          */
         void swap(size_t i, size_t j);
 
         /*!
-         * \brief Checks whether given values solve the equation system.
-         * \param solution values to be checked
+         * \brief Checks whether given values solve this equation system.
+         * \param solution the values
          * \return \c true if solution is correct, otherwise \c false
          */
         bool has_solution(const std::array<double, N> & solution) const;
@@ -162,8 +162,9 @@ namespace algolib::maths
     template <size_t N>
     bool equation_system<N>::has_solution(const std::array<double, N> & solution) const
     {
-        return std::all_of(this->equations.begin(), this->equations.end(),
-                           [&](auto && eq) { return eq.has_solution(solution); });
+        return std::all_of(
+                this->equations.begin(), this->equations.end(),
+                [&](auto && eq) { return eq.has_solution(solution); });
     }
 }
 

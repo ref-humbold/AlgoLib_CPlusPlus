@@ -13,15 +13,15 @@
 
 namespace internal
 {
-    // Searches for index of element in list of subsequences.
-    // (index_begin inclusive, index_end exclusive)
+    // Searches for place of element in list of subsequences.
     template <typename T, typename C = std::less<T>>
-    size_t search_index(const std::vector<T> & sequence,
-                        const C & compare,
-                        const std::vector<size_t> & subsequence,
-                        size_t index_elem,
-                        size_t index_begin,
-                        size_t index_end)
+    size_t search_index(
+            const std::vector<T> & sequence,
+            const C & compare,
+            const std::vector<size_t> & subsequence,
+            size_t index_elem,
+            size_t index_begin,
+            size_t index_end)
     {
         if(index_end - index_begin <= 1)
             return index_begin;
@@ -29,19 +29,23 @@ namespace internal
         size_t index_middle = (index_begin + index_end - 1) / 2;
 
         return compare(sequence[subsequence[index_middle]], sequence[index_elem])
-                       ? search_index(sequence, compare, subsequence, index_elem, index_middle + 1,
-                                      index_end)
-                       : search_index(sequence, compare, subsequence, index_elem, index_begin,
-                                      index_middle + 1);
+                       ? search_index(
+                               sequence, compare, subsequence, index_elem, index_middle + 1,
+                               index_end)
+                       : search_index(
+                               sequence, compare, subsequence, index_elem, index_begin,
+                               index_middle + 1);
     }
 }
 
 namespace algolib::sequences
 {
     /*!
-     * \brief Constructs the longest increasing subsequence according to given order function.
-     * \param sequence a sequence of elements
-     * \return the longest increasing subsequence (least lexicographically)
+     * \brief Constructs longest increasing subsequence according to given comparison function.
+     * \tparam T the type of sequence elements
+     * \tparam Compare the type of comparison function
+     * \param sequence the sequence of elements
+     * \return the least lexicographically longest increasing subsequence
      */
     template <typename T, typename Compare = std::less<T>>
     std::vector<T> find_lis(const std::vector<T> & sequence, const Compare & compare = Compare())
@@ -58,12 +62,12 @@ namespace algolib::sequences
             }
             else
             {
-                size_t index = internal::search_index<T>(sequence, compare, subsequence, i, 0,
-                                                         subsequence.size());
+                size_t index = internal::search_index<T>(
+                        sequence, compare, subsequence, i, 0, subsequence.size());
 
                 subsequence[index] = i;
-                previous_elems.push_back(index > 0 ? std::make_optional(subsequence[index - 1])
-                                                   : std::nullopt);
+                previous_elems.push_back(
+                        index > 0 ? std::make_optional(subsequence[index - 1]) : std::nullopt);
             }
 
         for(std::optional<size_t> j = std::make_optional(subsequence.back()); j.has_value();

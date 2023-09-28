@@ -18,24 +18,67 @@ namespace algolib::maths
     template <size_t N>
     class equation;
 
+    /*!
+     * \brief Copies equation.
+     * \param eq the equation
+     * \return the copy of the equation
+     */
     template <size_t N>
     equation<N> operator+(equation<N> eq);
 
+    /*!
+     * \brief Negates equation
+     * \param eq the equation
+     * \return the equation with all coefficients negated
+     */
     template <size_t N>
     equation<N> operator-(equation<N> eq);
 
+    /*!
+     * \brief Adds two equations
+     * \param eq1 the first euqation
+     * \param eq2 the second equation
+     * \return the equation with coefficients added
+     */
     template <size_t N>
     equation<N> operator+(equation<N> eq1, const equation<N> & eq2);
 
+    /*!
+     * \brief Subtracts two equations
+     * \param eq1 the first euqation
+     * \param eq2 the second equation
+     * \return the equation with coefficients subtracted
+     */
     template <size_t N>
     equation<N> operator-(equation<N> eq1, const equation<N> & eq2);
 
+    /*!
+     * \brief Multiplies equation by given constant
+     * \param eq the equation
+     * \param constant the contant
+     * \return the equation with all coefficients multiplied
+     * \throw std::domain_error if constant is equal to zero
+     */
     template <size_t N>
     equation<N> operator*(equation<N> eq, double constant);
 
+    /*!
+     * \brief Multiplies equation by given constant
+     * \param constant the contant
+     * \param eq the equation
+     * \return the equation with all coefficients multiplied
+     * \throw std::domain_error if constant is equal to zero
+     */
     template <size_t N>
     equation<N> operator*(double constant, equation<N> eq);
 
+    /*!
+     * \brief Divides equation by given constant
+     * \param eq the equation
+     * \param constant the contant
+     * \return the equation with all coefficients divided
+     * \throw std::domain_error if constant is equal to zero
+     */
     template <size_t N>
     equation<N> operator/(equation<N> eq, double constant);
 
@@ -69,34 +112,34 @@ namespace algolib::maths
         equation & operator=(equation && eq) noexcept = default;
 
         /*!
-         * Adds another equation to the equation.
-         * \param equation equation to be added
+         * Adds another equation to this equation.
+         * \param equation the equation
          */
         equation & operator+=(const equation<N> & equation);
 
         /*!
-         * Subtracts another equation from the equation.
-         * \param equation equation to be subtracted
+         * Subtracts another equation from this equation.
+         * \param equation the equation
          */
         equation & operator-=(const equation<N> & equation);
 
         /*!
          * Multiplies equation by a constant.
-         * \param constant constant
-         * \throw std::domain_error if constant is zero
+         * \param constant the constant
+         * \throw std::domain_error if constant is equal to zero
          */
         equation & operator*=(double constant);
 
         /*!
          * Divides equation by a constant.
-         * \param constant constant
-         * \throw std::domain_error if constant is zero
+         * \param constant the constant
+         * \throw std::domain_error if constant is equal to zero
          */
         equation & operator/=(double constant);
 
         /*!
-         * \param i index of a variable
-         * \return coefficient by i-th variable
+         * \param i the index of variable
+         * \return the coefficient specified by the index
          */
         const double & operator[](size_t i) const
         {
@@ -104,8 +147,8 @@ namespace algolib::maths
         }
 
         /*!
-         * \param i index of a variable
-         * \return coefficient by i-th variable
+         * \param i the index of variable
+         * \return the coefficient specified by the index
          * \throw std::out_of_range if index is out of range
          */
         const double & at(size_t i) const
@@ -122,13 +165,12 @@ namespace algolib::maths
         }
 
         /*!
-         * \brief Checks whether given values solve the equation.
-         * \param solution values to be checked
+         * \brief Checks whether given values solve this equation.
+         * \param solution the values
          * \return \c true if solution is correct, otherwise \c false
          */
         bool has_solution(const std::array<double, N> & solution) const;
 
-        // clang-format off
         friend equation<N> operator+ <N>(equation<N> eq);
         friend equation<N> operator- <N>(equation<N> eq);
         friend equation<N> operator+ <N>(equation<N> eq1, const equation<N> & eq2);
@@ -137,7 +179,6 @@ namespace algolib::maths
         friend equation<N> operator* <N>(double constant, equation<N> eq);
         friend equation<N> operator/ <N>(equation<N> eq, double constant);
         friend std::ostream & operator<< <N>(std::ostream & os, const equation<N> & eq);
-        // clang-format on
 
     private:
         std::array<double, N> coefficients;

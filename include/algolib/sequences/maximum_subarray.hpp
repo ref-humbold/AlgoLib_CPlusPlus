@@ -15,14 +15,14 @@ namespace algolib::sequences
 {
     /*!
      * \brief Dynamically constructs coherent subarray with maximal sum.
-     * \param sequence a sequence of numbers
+     * \param sequence the sequence of numbers
      * \return the maximum subarray
      */
     std::vector<double> find_maximum_subarray(const std::vector<double> & sequence);
 
     /*!
-     * \brief Calculates maximal sum from all coherent subarrays using interval tree.
-     * \param sequence a sequence of numbers
+     * \brief Computes maximal sum from all coherent subarrays using interval tree.
+     * \param sequence the sequence of numbers
      * \return the sum of maximum subarray
      */
     double count_maximal_subsum(const std::vector<double> & sequence);

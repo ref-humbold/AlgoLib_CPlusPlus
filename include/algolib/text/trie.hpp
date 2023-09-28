@@ -47,35 +47,35 @@ namespace algolib::text
         trie & operator=(const trie & t);
         trie & operator=(trie && t) noexcept;
 
-        //! \return number of texts in the trie
+        //! \return the number of texts in this trie
         size_t size() const
         {
             return size_;
         }
 
-        //! \return \c true if the trie is empty, otherwise \c false
+        //! \return \c true if this trie is empty, otherwise \c false
         bool empty() const;
 
         /*!
-         * \brief Checks whether given text is present in the trie.
-         * \param text text to be checked
+         * \brief Checks whether given text is present in this trie.
+         * \param text the text
          * \return \c true if the text was found in trie, otherwise \c false
          */
         bool contains(const std::string & text) const;
 
         /*!
-         * \brief Adds new text to the trie.
-         * \param text text to be added
+         * \brief Adds new text to this trie.
+         * \param text the new text
          */
         void insert(const std::string & text);
 
         /*!
-         * \brief Removes given text from the trie if present.
-         * \param text text to be removed
+         * \brief Removes given text from this trie if present.
+         * \param text the text
          */
         void erase(const std::string & text);
 
-        //! \brief Removes all texts in the trie.
+        //! \brief Removes all texts in this trie.
         void clear();
 
     private:
@@ -101,8 +101,8 @@ namespace algolib::text
 
         bool empty() const
         {
-            return std::all_of(children.begin(), children.end(),
-                               [](auto && child) { return !child; });
+            return std::all_of(
+                    children.begin(), children.end(), [](auto && child) { return !child; });
         }
 
         node_ptr at(char character) const

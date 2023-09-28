@@ -13,8 +13,8 @@ namespace algolib::geometry::dim2
 {
     /*!
      * \brief Constructs convex hull of given points.
-     * \param points vector of points
-     * \return vector of hull points
+     * \param points the points
+     * \return the points in the convex hull
      */
     std::vector<point_2d> find_convex_hull(std::vector<point_2d> points);
 }

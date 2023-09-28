@@ -13,11 +13,14 @@
 
 namespace internal
 {
-    size_t choose_pivot(std::uniform_int_distribution<size_t> & distribution,
-                        std::default_random_engine & rand_eng);
+    // Randomly chooses pivot for quick-sort algorithm.
+    size_t choose_pivot(
+            std::uniform_int_distribution<size_t> & distribution,
+            std::default_random_engine & rand_eng);
 
     void validate_indices(size_t size, size_t index_begin, size_t index_end);
 
+    // Move element down inside given heap.
     template <typename T>
     void move_down(std::vector<T> & heap, size_t vertex, size_t index_begin, size_t index_end)
     {
@@ -40,6 +43,7 @@ namespace internal
         move_down(heap, next_vertex, index_begin, index_end);
     }
 
+    // Merges two sorted fragments of given sequence. Guaranteed to be stable.
     template <typename T>
     void merge(std::vector<T> & sequence, size_t index_begin, size_t index_middle, size_t index_end)
     {
@@ -68,6 +72,7 @@ namespace internal
             sequence[index_begin + i] = ordered[i];
     }
 
+    // Mutably sorts given sequence using recursive merge-sort algorithm.
     template <typename T>
     void do_merge_sort(std::vector<T> & sequence, size_t index_begin, size_t index_end)
     {
@@ -81,11 +86,13 @@ namespace internal
         internal::merge(sequence, index_begin, index_middle, index_end);
     }
 
+    // Mutably sorts given sequence using quick-sort algorithm.
     template <typename T>
-    void do_quick_sort(std::default_random_engine & rand_eng,
-                       std::vector<T> & sequence,
-                       size_t index_begin,
-                       size_t index_end)
+    void do_quick_sort(
+            std::default_random_engine & rand_eng,
+            std::vector<T> & sequence,
+            size_t index_begin,
+            size_t index_end)
     {
         if(index_end - index_begin <= 1)
             return;
@@ -117,15 +124,17 @@ namespace internal
 namespace algolib::sequences
 {
     /*!
-     * \brief Mutably sorts given sequence using a heap.
-     * \param sequence a sequence of elements
-     * \param index_begin index of sequence beginning
-     * \param index_end index of sequence end
+     * \brief Mutably sorts given sequence using heap.
+     * \tparam T the type of sequence elements
+     * \param sequence the sequence of elements
+     * \param index_begin the index of sequence beginning
+     * \param index_end the index of sequence end
      */
     template <typename T>
-    void heap_sort(std::vector<T> & sequence,
-                   size_t index_begin = 0,
-                   size_t index_end = std::numeric_limits<size_t>::max())
+    void heap_sort(
+            std::vector<T> & sequence,
+            size_t index_begin = 0,
+            size_t index_end = std::numeric_limits<size_t>::max())
     {
         if(index_end == std::numeric_limits<size_t>::max())
             index_end = sequence.size();
@@ -151,15 +160,17 @@ namespace algolib::sequences
     }
 
     /*!
-     * \brief Mutably sorts given sequence using a top-down merge-sort algorithm.
-     * \param sequence a sequence of elements
-     * \param index_begin index of sequence beginning
-     * \param index_end index of sequence end
+     * \brief Mutably sorts given sequence using top-down merge-sort algorithm.
+     * \tparam T the type of sequence elements
+     * \param sequence the sequence of elements
+     * \param index_begin the index of sequence beginning
+     * \param index_end the index of sequence end
      */
     template <typename T>
-    void top_down_merge_sort(std::vector<T> & sequence,
-                             size_t index_begin = 0,
-                             size_t index_end = std::numeric_limits<size_t>::max())
+    void top_down_merge_sort(
+            std::vector<T> & sequence,
+            size_t index_begin = 0,
+            size_t index_end = std::numeric_limits<size_t>::max())
     {
         if(index_end == std::numeric_limits<size_t>::max())
             index_end = sequence.size();
@@ -169,15 +180,17 @@ namespace algolib::sequences
     }
 
     /*!
-     * \brief Mutably sorts given sequence using a bottom-up merge-sort algorithm.
-     * \param sequence a sequence of elements
-     * \param index_begin index of sequence beginning
-     * \param index_end index of sequence end
+     * \brief Mutably sorts given sequence using bottom-up merge-sort algorithm.
+     * \tparam T the type of sequence elements
+     * \param sequence the sequence of elements
+     * \param index_begin the index of sequence beginning
+     * \param index_end the index of sequence end
      */
     template <typename T>
-    void bottom_up_merge_sort(std::vector<T> & sequence,
-                              size_t index_begin = 0,
-                              size_t index_end = std::numeric_limits<size_t>::max())
+    void bottom_up_merge_sort(
+            std::vector<T> & sequence,
+            size_t index_begin = 0,
+            size_t index_end = std::numeric_limits<size_t>::max())
     {
         if(index_end == std::numeric_limits<size_t>::max())
             index_end = sequence.size();
@@ -189,20 +202,23 @@ namespace algolib::sequences
 
         for(size_t half_step = 2; half_step < 2 * (index_end - index_begin); half_step *= 2)
             for(size_t i = index_begin; i < index_end; i += half_step)
-                internal::merge(sequence, i, std::min(i + half_step / 2, index_end),
-                                std::min(i + half_step, index_end));
+                internal::merge(
+                        sequence, i, std::min(i + half_step / 2, index_end),
+                        std::min(i + half_step, index_end));
     }
 
     /*!
-     * \brief Mutably sorts given sequence using a quick-sort algorithm.
-     * \param sequence a sequence of elements
-     * \param index_begin index of sequence beginning
-     * \param index_end index of sequence end
+     * \brief Mutably sorts given sequence using quick-sort algorithm.
+     * \tparam T the type of sequence elements
+     * \param sequence the sequence of elements
+     * \param index_begin the index of sequence beginning
+     * \param index_end the index of sequence end
      */
     template <typename T>
-    void quick_sort(std::vector<T> & sequence,
-                    size_t index_begin = 0,
-                    size_t index_end = std::numeric_limits<size_t>::max())
+    void quick_sort(
+            std::vector<T> & sequence,
+            size_t index_begin = 0,
+            size_t index_end = std::numeric_limits<size_t>::max())
     {
         std::default_random_engine rand_eng;
 
