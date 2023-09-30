@@ -73,6 +73,12 @@ namespace algolib::graphs
             return destination_;
         }
 
+        /*!
+         * \brief Gets the neighbour of given adjacent vertex.
+         * \param vertex the vertex adjacent to this edge
+         * \return the neighbour of the vertex along this edge
+         * \throw std::invalid_argument if the vertex is not adjacent to this edge
+         */
         const vertex_type & get_neighbour(const vertex<VertexId> & vertex) const
         {
             if(source_ == vertex)
@@ -84,20 +90,19 @@ namespace algolib::graphs
             throw std::invalid_argument("Edge is not adjacent to the vertex");
         }
 
+        //!  \return the edge with reversed direction
         edge<VertexId> reversed() const
         {
             return edge<VertexId>(destination_, source_);
         }
 
-        // clang-format off
-            friend bool operator== <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
-            friend bool operator!= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
-            friend bool operator< <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
-            friend bool operator<= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
-            friend bool operator> <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
-            friend bool operator>= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
-            friend std::ostream & operator<< <VertexId>(std::ostream & os, const edge<VertexId> & edge);
-        // clang-format on
+        friend bool operator== <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+        friend bool operator!= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+        friend bool operator< <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+        friend bool operator<= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+        friend bool operator> <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+        friend bool operator>= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+        friend std::ostream & operator<< <VertexId>(std::ostream & os, const edge<VertexId> & edge);
 
         friend struct std::hash<edge<VertexId>>;
 

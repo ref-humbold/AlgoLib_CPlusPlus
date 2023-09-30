@@ -19,6 +19,7 @@ namespace algolib::structures
     template <typename E, typename Compare = std::less<E>>
     class pairing_heap;
 
+    //! \brief Merges two pairing heaps.
     template <typename E, typename Compare>
     pairing_heap<E, Compare> operator|(pairing_heap<E, Compare> heap1,
                                        const pairing_heap<E, Compare> & heap2);
@@ -72,7 +73,7 @@ namespace algolib::structures
             return !this->heap;
         }
 
-        //! \return number of elements in this pairing heap
+        //! \return the number of elements in this pairing heap
         size_type size() const
         {
             return this->size_;
@@ -87,7 +88,7 @@ namespace algolib::structures
 
         /*!
          * \brief Retrieves maximal element from this pairing heap.
-         * \return maximal element
+         * \return the maximal element
          * \throw std::out_of_range if this pairing heap is empty
          */
         const_reference top() const
@@ -99,14 +100,14 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Adds new value to this pairing heap.
-         * \param element the value
+         * \brief Adds new element to this pairing heap.
+         * \param element the new element
          */
         void push(const_reference element);
 
         /*!
-         * \brief Adds new value to this pairing heap constructed in-place with the given arguments.
-         * \param args arguments to forward to the constructor of the new value
+         * \brief Adds new element to this pairing heap constructed in-place with given arguments.
+         * \param args arguments to forward to the new element's constructor
          */
         template <typename... Args>
         void emplace(Args &&... args);
@@ -114,6 +115,7 @@ namespace algolib::structures
         //! \brief Removes maximal element from this pairing heap.
         void pop();
 
+        //! \brief Merges given pairing heap to this heap.
         pairing_heap & operator|=(const pairing_heap & other);
 
         friend pairing_heap<E, Compare>

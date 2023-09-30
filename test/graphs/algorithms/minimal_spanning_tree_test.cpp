@@ -49,7 +49,7 @@ protected:
     graph_t graph;
 };
 
-TEST_F(MinimalSpanningTreeTest, kruskal_ThenMST)
+TEST_F(MinimalSpanningTreeTest, kruskal_ThenMinimalSpanningTree)
 {
     // given
     std::vector<graph_v> vertices = graph.vertices();
@@ -69,7 +69,7 @@ TEST_F(MinimalSpanningTreeTest, kruskal_ThenMST)
               result_edges);
 }
 
-TEST_F(MinimalSpanningTreeTest, prim_ThenMST)
+TEST_F(MinimalSpanningTreeTest, prim_ThenMinimalSpanningTree)
 {
     // given
     std::vector<graph_v> vertices = graph.vertices();
@@ -89,7 +89,7 @@ TEST_F(MinimalSpanningTreeTest, prim_ThenMST)
               result_edges);
 }
 
-TEST_F(MinimalSpanningTreeTest, prim_WhenDiffrentSources_ThenSameMST)
+TEST_F(MinimalSpanningTreeTest, prim_WhenDiffrentSources_ThenSameMinimalSpanningTree)
 {
     // when
     graph_t result1 = algr::prim(graph, graph[1]);

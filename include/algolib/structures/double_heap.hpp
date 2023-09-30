@@ -62,7 +62,7 @@ namespace algolib::structures
             return this->heap.empty();
         }
 
-        //! \return number of elements in this double heap
+        //! \return the number of elements in this double heap
         size_type size() const
         {
             return this->heap.size();
@@ -76,7 +76,7 @@ namespace algolib::structures
 
         /*!
          * \brief Retrieves minimal element from this double heap.
-         * \return minimal element
+         * \return the minimal element
          * \throw std::out_of_range if this double heap is empty
          */
         const_reference min() const
@@ -89,7 +89,7 @@ namespace algolib::structures
 
         /*!
          * \brief Retrieves maximal element from this double heap.
-         * \return maximal element
+         * \return the maximal element
          * \throw std::out_of_range if this double heap is empty
          */
         const_reference max() const
@@ -98,14 +98,14 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Adds new value to this double heap.
-         * \param element the value
+         * \brief Adds new element to this double heap.
+         * \param element the new element
          */
         void push(const_reference element);
 
         /*!
-         * \brief Adds new value to this double heap constructed in-place with the given arguments.
-         * \param args arguments to forward to the constructor of the new value
+         * \brief Adds new value to this double heap constructed in-place with given arguments.
+         * \param args the arguments to forward to the new element's constructor
          */
         template <typename... Args>
         void emplace(Args &&... args);

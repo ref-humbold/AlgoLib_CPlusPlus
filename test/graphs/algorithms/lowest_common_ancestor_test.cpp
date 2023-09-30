@@ -34,7 +34,7 @@ public:
     ~LowestCommonAncestorTest() override = default;
 };
 
-TEST_F(LowestCommonAncestorTest, findLCA_WhenSameVertex_ThenVertexIsLCA)
+TEST_F(LowestCommonAncestorTest, findLca_WhenSameVertex_ThenVertexIsLowestCommonAncestor)
 {
     // given
     vertex_t vertex = tree[6];
@@ -44,7 +44,7 @@ TEST_F(LowestCommonAncestorTest, findLCA_WhenSameVertex_ThenVertexIsLCA)
     EXPECT_EQ(vertex, result);
 }
 
-TEST_F(LowestCommonAncestorTest, findLCA_WhenVerticesInDifferentSubtrees_ThenLCA)
+TEST_F(LowestCommonAncestorTest, findLca_WhenVerticesInDifferentSubtrees_ThenLowestCommonAncestor)
 {
     // when
     vertex_t result = test_object.find_lca(tree[5], tree[7]);
@@ -52,7 +52,7 @@ TEST_F(LowestCommonAncestorTest, findLCA_WhenVerticesInDifferentSubtrees_ThenLCA
     EXPECT_EQ(tree[1], result);
 }
 
-TEST_F(LowestCommonAncestorTest, findLCA_WhenVerticesSwapped_ThenSameLCA)
+TEST_F(LowestCommonAncestorTest, findLca_WhenVerticesSwapped_ThenSameLowestCommonAncestor)
 {
     // when
     vertex_t result1 = test_object.find_lca(tree[5], tree[7]);
@@ -62,7 +62,7 @@ TEST_F(LowestCommonAncestorTest, findLCA_WhenVerticesSwapped_ThenSameLCA)
     EXPECT_EQ(result1, result2);
 }
 
-TEST_F(LowestCommonAncestorTest, findLCA_WhenRootIsCommonAncestor_ThenRoot)
+TEST_F(LowestCommonAncestorTest, findLca_WhenRootIsCommonAncestor_ThenRoot)
 {
     // when
     vertex_t result = test_object.find_lca(tree[3], tree[9]);
@@ -70,7 +70,7 @@ TEST_F(LowestCommonAncestorTest, findLCA_WhenRootIsCommonAncestor_ThenRoot)
     EXPECT_EQ(test_object.root(), result);
 }
 
-TEST_F(LowestCommonAncestorTest, findLCA_WhenVerticesAreOnSamePathFromRoot_ThenLCAIsCloserToRoot)
+TEST_F(LowestCommonAncestorTest, findLca_WhenVerticesAreOnSamePathFromRoot_ThenCloserToRoot)
 {
     // given
     vertex_t vertex1 = tree[8], vertex2 = tree[2];
@@ -80,7 +80,7 @@ TEST_F(LowestCommonAncestorTest, findLCA_WhenVerticesAreOnSamePathFromRoot_ThenL
     EXPECT_EQ(vertex2, result);
 }
 
-TEST_F(LowestCommonAncestorTest, findLCA_WhenRootIsOneOfVertices_ThenRoot)
+TEST_F(LowestCommonAncestorTest, findLca_WhenRootIsOneOfVertices_ThenRoot)
 {
     // when
     vertex_t result = test_object.find_lca(tree[4], test_object.root());

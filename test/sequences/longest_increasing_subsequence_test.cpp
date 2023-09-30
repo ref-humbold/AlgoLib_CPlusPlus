@@ -7,7 +7,7 @@
 
 namespace alse = algolib::sequences;
 
-TEST(LongestIncreasingSubsequenceTest, findLIS_WhenIncreasing_ThenAllElements)
+TEST(LongestIncreasingSubsequenceTest, findLis_WhenIncreasing_ThenAllElements)
 {
     // given
     std::vector<int> sequence = {1, 3, 5, 7, 9, 11, 13, 15};
@@ -17,7 +17,7 @@ TEST(LongestIncreasingSubsequenceTest, findLIS_WhenIncreasing_ThenAllElements)
     EXPECT_EQ(sequence, result);
 }
 
-TEST(LongestIncreasingSubsequenceTest, findLIS_WhenDecreasing_ThenLastElementOnly)
+TEST(LongestIncreasingSubsequenceTest, findLis_WhenDecreasing_ThenLastElementOnly)
 {
     // when
     std::vector<int> result = alse::find_lis(std::vector<int>({12, 10, 8, 6, 4, 2}));
@@ -25,7 +25,7 @@ TEST(LongestIncreasingSubsequenceTest, findLIS_WhenDecreasing_ThenLastElementOnl
     EXPECT_EQ(std::vector<int>({2}), result);
 }
 
-TEST(LongestIncreasingSubsequenceTest, findLIS_WhenMultipleSubsequences_ThenLeastLexicographically)
+TEST(LongestIncreasingSubsequenceTest, findLis_WhenMultipleSubsequences_ThenLeastLexicographically)
 {
     // when
     std::vector<int> result = alse::find_lis(std::vector<int>({2, 1, 4, 3, 6, 5, 8, 7, 10}));
@@ -33,7 +33,7 @@ TEST(LongestIncreasingSubsequenceTest, findLIS_WhenMultipleSubsequences_ThenLeas
     EXPECT_EQ(std::vector<int>({1, 3, 5, 7, 10}), result);
 }
 
-TEST(LongestIncreasingSubsequenceTest, findLIS_WhenSearchInMiddle_ThenLeastLexicographically)
+TEST(LongestIncreasingSubsequenceTest, findLis_WhenSearchInMiddle_ThenLeastLexicographically)
 {
     // when
     std::vector<int> result = alse::find_lis(std::vector<int>({0, 2, 4, 6, 8, 3, 5, 7, 8}));
@@ -42,7 +42,7 @@ TEST(LongestIncreasingSubsequenceTest, findLIS_WhenSearchInMiddle_ThenLeastLexic
 }
 
 TEST(LongestIncreasingSubsequenceTest,
-     findLIS_WhenIncreasingAndReversedComparator_ThenLastElementOnly)
+     findLis_WhenIncreasingAndReversedComparator_ThenLastElementOnly)
 {
     // when
     std::vector<int> result =
@@ -51,7 +51,7 @@ TEST(LongestIncreasingSubsequenceTest,
     EXPECT_EQ(std::vector<int>({15}), result);
 }
 
-TEST(LongestIncreasingSubsequenceTest, findLIS_WhenDecreasingAndReversedComparator_ThenAllElements)
+TEST(LongestIncreasingSubsequenceTest, findLis_WhenDecreasingAndReversedComparator_ThenAllElements)
 {
     // given
     std::vector<int> sequence = {12, 10, 8, 6, 4, 2};

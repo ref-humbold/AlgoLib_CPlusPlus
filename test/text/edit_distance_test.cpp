@@ -54,7 +54,7 @@ TEST(EditDistanceTest, countLevenshtein_WhenNegativeCost_ThenInvalidArgument)
 #pragma endregion
 #pragma region count_lcs
 
-TEST(EditDistanceTest, countLCS_WhenSameText_ThenZero)
+TEST(EditDistanceTest, countLcs_WhenSameText_ThenZero)
 {
     // given
     std::string text = "qwertyuiop";
@@ -64,7 +64,7 @@ TEST(EditDistanceTest, countLCS_WhenSameText_ThenZero)
     EXPECT_EQ(0.0, result);
 }
 
-TEST(EditDistanceTest, countLCS_WhenEmptySource_ThenSumOfInsertions)
+TEST(EditDistanceTest, countLcs_WhenEmptySource_ThenSumOfInsertions)
 {
     // given
     std::string text = "qwertyuiop";
@@ -75,7 +75,7 @@ TEST(EditDistanceTest, countLCS_WhenEmptySource_ThenSumOfInsertions)
     EXPECT_NEAR(text.size() * insertionCost, result, offset);
 }
 
-TEST(EditDistanceTest, countLCS_WhenEmptyDestination_ThenSumOfDeletions)
+TEST(EditDistanceTest, countLcs_WhenEmptyDestination_ThenSumOfDeletions)
 {
     // given
     std::string text = "qwertyuiop";
@@ -86,7 +86,7 @@ TEST(EditDistanceTest, countLCS_WhenEmptyDestination_ThenSumOfDeletions)
     EXPECT_NEAR(text.length() * deletionCost, result, offset);
 }
 
-TEST(EditDistanceTest, countLCS_WhenNegativeCost_ThenInvalidArgument)
+TEST(EditDistanceTest, countLcs_WhenNegativeCost_ThenInvalidArgument)
 {
     // when
     auto exec = [&]() { return alte::count_lcs("a", "b", 1.0, -1.0); };

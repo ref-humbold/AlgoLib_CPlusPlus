@@ -13,7 +13,7 @@
 
 namespace algolib::maths
 {
-#pragma region gcd
+#pragma region greatest common divisor
 
     /*!
      * \brief Calculates greatest common divisor of given numbers.
@@ -40,7 +40,7 @@ namespace algolib::maths
     long long gcd(long long number1, long long number2);
 
 #pragma endregion
-#pragma region lcm
+#pragma region lowest common multiple
 
     /*!
      * \brief Calculates lowest common multiple of given numbers.

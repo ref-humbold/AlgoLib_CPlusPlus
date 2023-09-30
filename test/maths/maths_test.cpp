@@ -9,7 +9,7 @@ namespace alma = algolib::maths;
 
 #pragma region gcd
 
-TEST(MathsTest, gcd_WhenNumbersAreComposite_ThenGCD)
+TEST(MathsTest, gcd_WhenNumbersAreComposite_ThenGreatestCommonDivisor)
 {
     // when
     long long result = alma::gcd(161LL, 46LL);
@@ -56,7 +56,7 @@ TEST(MathsTest, gcd_WhenOneOfNumbersIsZero_ThenAnotherNumber)
 #pragma endregion
 #pragma region lcm
 
-TEST(MathsTest, lcm_WhenNumbersAreComposite_ThenLCM)
+TEST(MathsTest, lcm_WhenNumbersAreComposite_ThenLowestCommonMultiple)
 {
     // when
     long long result = alma::lcm(161LL, 46LL);

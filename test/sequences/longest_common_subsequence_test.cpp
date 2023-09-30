@@ -18,7 +18,7 @@ std::vector<int> codes(const std::string & text)
     return sequence;
 }
 
-TEST(LongestCommonSubsequenceTest, countLCSLength_WhenEmpty_ThenZero)
+TEST(LongestCommonSubsequenceTest, countLcsLength_WhenEmpty_ThenZero)
 {
     // when
     size_t result = alse::count_lcs_length("qwertyuiop", "");

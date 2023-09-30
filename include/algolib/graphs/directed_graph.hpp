@@ -30,7 +30,7 @@ namespace algolib::graphs
 
         ~directed_graph() override = default;
 
-        //! Reverses directions of edges in the graph.
+        //! \brief Reverses directions of all edges in this graph.
         virtual void reverse() = 0;
     };
 
@@ -91,7 +91,7 @@ namespace algolib::graphs
         edge_type add_edge(const edge_type & edge, const edge_property_type & property) override;
         void reverse() override;
 
-        //! \return the copy of the graph with reversed directions of edges
+        //! \return the copy of this graph with reversed directions of all edges
         directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type>
                 reversed_copy() const;
     };

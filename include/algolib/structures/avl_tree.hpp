@@ -152,50 +152,50 @@ namespace algolib::structures
             return this->get_root() == nullptr;
         }
 
-        //! \return number of elements in the tree
+        //! \return the number of elements in this tree
         size_type size() const
         {
             return this->size_;
         }
 
-        //! \brief Removes all elements in the tree.
+        //! \brief Removes all elements in this tree.
         void clear();
 
         /*!
-         * \brief Checks whether given value is present in the tree.
-         * \param element value to be checked
-         * \return iterator on the element if found, otherwise iterator at the end
+         * \brief Checks whether given element is present in this tree.
+         * \param element the element
+         * \return the iterator at the element if found, otherwise iterator at the end
          */
         iterator find(const_reference element);
 
         /*!
-         * \brief Checks whether given value is present in the tree.
-         * \param element value to be checked
-         * \return iterator on the element if found, otherwise iterator at the end
+         * \brief Checks whether given element is present in this tree.
+         * \param element the element
+         * \return the iterator at the element if found, otherwise iterator at the end
          */
         const_iterator find(const_reference element) const;
 
         /*!
-         * \brief Adds new value to the tree.
-         * \param element value to be added
-         * \return iterator at the new element and \c true whether insert was successful,
+         * \brief Adds new element to this tree.
+         * \param element the new element
+         * \return the iterator at the new element and \c true whether insert was successful,
          * otherwise \c false
          */
         std::pair<iterator, bool> insert(const_reference element);
 
         /*!
-         * \brief Adds new value to the tree constructed in-place with the given arguments.
-         * \param args arguments to forward to the constructor of the new value
-         * \return iterator at the new element and \c true whether emplace was successful,
+         * \brief Adds new element to this tree constructed in-place with the given arguments.
+         * \param args the arguments to forward to the new element's constructor
+         * \return the iterator at the new element and \c true whether emplace was successful,
          * otherwise \c false
          */
         template <typename... Args>
         std::pair<iterator, bool> emplace(Args &&... args);
 
         /*!
-         * \brief Removes given element from the tree if present.
-         * \param element value to be removed
-         * \return number of element removed
+         * \brief Removes given element from this tree if present.
+         * \param element the element
+         * \return the number of element removed
          */
         size_type erase(const_reference element);
 
@@ -230,10 +230,10 @@ namespace algolib::structures
         inner_ptr find_node(const_reference element,
                             std::function<bool(inner_ptr, const_reference)> predicate) const;
 
-        // Inserts inner node to the tree
+        // Inserts inner node to this tree
         std::pair<iterator, bool> insert_node(inner_ptr node);
 
-        // Removes inner node from the tree.
+        // Removes inner node from this tree.
         void delete_node(inner_ptr node);
 
         // Replaces the subtree rooted in one node with subtree of another node.
@@ -242,15 +242,15 @@ namespace algolib::structures
         // Rotates the node along the edge to its parent.
         void rotate(inner_ptr node);
 
-        // Restores balancing on a path from given node to the root.
+        // Restores balancing on the path from given node to the root.
         void balance(node_ptr node);
 
-        // size_s current node balance.
-        int size__balance(inner_ptr node);
+        // Counts current node balance.
+        int count_balance(inner_ptr node);
 
-        header_ptr tree = new avl_header_node();  // The tree denoted by its header
-        size_type size_ = 0;  // Number of elements
-        value_compare compare;  // Comparator
+        header_ptr tree = new avl_header_node();
+        size_type size_ = 0;
+        value_compare compare;
     };
 
     template <typename E, typename Compare>
@@ -482,13 +482,13 @@ namespace algolib::structures
         while(node->height() > 0)
         {
             inner_ptr the_node = static_cast<inner_ptr>(node);
-            int new_balance = this->size__balance(the_node);
+            int new_balance = this->count_balance(the_node);
 
             if(new_balance >= 2)
             {
-                if(this->size__balance(the_node->left()) > 0)
+                if(this->count_balance(the_node->left()) > 0)
                     this->rotate(the_node->left());
-                else if(this->size__balance(the_node->left()) < 0)
+                else if(this->count_balance(the_node->left()) < 0)
                 {
                     this->rotate(the_node->left()->right());
                     this->rotate(the_node->left());
@@ -496,9 +496,9 @@ namespace algolib::structures
             }
             else if(new_balance <= -2)
             {
-                if(this->size__balance(the_node->right()) < 0)
+                if(this->count_balance(the_node->right()) < 0)
                     this->rotate(the_node->right());
-                else if(this->size__balance(the_node->right()) > 0)
+                else if(this->count_balance(the_node->right()) > 0)
                 {
                     this->rotate(the_node->right()->left());
                     this->rotate(the_node->right());
@@ -510,7 +510,7 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    int avl_tree<E, Compare>::size__balance(avl_tree<E, Compare>::inner_ptr node)
+    int avl_tree<E, Compare>::count_balance(avl_tree<E, Compare>::inner_ptr node)
     {
         int left_height = node->left() == nullptr ? 0 : node->left()->height();
         int right_height = node->right() == nullptr ? 0 : node->right()->height();
