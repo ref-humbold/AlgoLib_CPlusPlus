@@ -90,8 +90,8 @@ namespace algolib::graphs
 {
     /*!
      * \brief Finds strongly connected components in given directed graph.
-     * \param graph a directed graph
-     * \return vector of vertices in strongly connected components
+     * \param graph the directed graph
+     * \return the vertices in strongly connected components
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<std::unordered_set<

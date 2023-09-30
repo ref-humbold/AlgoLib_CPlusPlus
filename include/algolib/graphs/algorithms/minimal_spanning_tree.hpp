@@ -61,8 +61,8 @@ namespace algolib::graphs
     namespace alst = algolib::structures;
 
     /*!
-     * \brief Kruskal algorithm.
-     * \param graph an undirected weighted graph
+     * \brief Computes minimal spanning tree of given undirected graph using Kruskal algorithm.
+     * \param graph the undirected weighted graph
      * \return the minimal spanning tree
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
@@ -114,9 +114,9 @@ namespace algolib::graphs
     }
 
     /*!
-     * \brief Prim algorithm.
-     * \param graph an undirected weighted graph
-     * \param source starting vertex
+     * \brief Computes minimal spanning tree of given undirected graph using Prim algorithm.
+     * \param graph the undirected weighted graph
+     * \param source the starting vertex
      * \return the minimal spanning tree
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>

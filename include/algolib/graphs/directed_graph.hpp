@@ -91,7 +91,10 @@ namespace algolib::graphs
         edge_type add_edge(const edge_type & edge, const edge_property_type & property) override;
         void reverse() override;
 
-        //! \return the copy of this graph with reversed directions of all edges
+        /*!
+         * \brief Returns reversed copy of this graph.
+         * \return the copy of this graph with reversed directions of all edges
+         */
         directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type>
                 reversed_copy() const;
     };

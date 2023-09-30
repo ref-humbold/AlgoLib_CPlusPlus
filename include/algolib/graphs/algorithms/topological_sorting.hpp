@@ -70,8 +70,8 @@ namespace algolib::graphs
 {
     /*!
      * \brief Topological sorting algorithm using predecessors counting.
-     * \param graph a directed graph
-     * \return topological order of vertices
+     * \param graph the directed graph
+     * \return the topological order of vertices
      * \throw directed_cyclic_graph_error if given graph contains a cycle
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
@@ -130,9 +130,9 @@ namespace algolib::graphs
     }
 
     /*!
-     * \brief Topological sorting algorithm using DFS.
-     * \param graph a directed graph
-     * \return topological order of vertices
+     * \brief Topological sorting algorithm using depth-first search.
+     * \param graph the directed graph
+     * \return the topological order of vertices
      * \throw directed_cyclic_graph_error if given graph contains a cycle
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>

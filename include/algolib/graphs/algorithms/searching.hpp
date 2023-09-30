@@ -78,10 +78,10 @@ namespace algolib::graphs
 {
     /*!
      * \brief Breadth-first search algorithm.
-     * \param graph_ a graph
-     * \param strategy a searching strategy
-     * \param roots starting vertices
-     * \return vector of visited vertices
+     * \param graph_ the graph
+     * \param strategy the searching strategy
+     * \param roots the starting vertices
+     * \return the visited vertices
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> bfs(
@@ -128,10 +128,10 @@ namespace algolib::graphs
 
     /*!
      * \brief Iterative depth-first search algorithm.
-     * \param graph_ a graph
-     * \param strategy a searching strategy
-     * \param roots starting vertices
-     * \return vector of visited vertices
+     * \param graph_ the graph
+     * \param strategy the searching strategy
+     * \param roots the starting vertices
+     * \return the visited vertices
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> dfs_iterative(
@@ -195,10 +195,10 @@ namespace algolib::graphs
 
     /*!
      * \brief Recursive depth-first search algorithm.
-     * \param graph_ a graph
-     * \param strategy a searching strategy
-     * \param roots starting vertices
-     * \return vector of visited vertices
+     * \param graph_ the graph
+     * \param strategy the searching strategy
+     * \param roots the starting vertices
+     * \return the visited vertices
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> dfs_recursive(

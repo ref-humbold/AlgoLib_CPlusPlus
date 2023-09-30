@@ -41,10 +41,10 @@ namespace algolib::graphs
         }
 
         /*!
-         * \brief Searches for lowest common ancestor of two vertices in a rooted tree.
-         * \param vertex1 first vertex
-         * \param vertex2 second vertex
-         * \return lowest common ancestor of given vertices
+         * \brief Finds lowest common ancestor of given vertices in the rooted tree.
+         * \param vertex1 the first vertex
+         * \param vertex2 the second vertex
+         * \return the lowest common ancestor of the vertices
          */
         vertex_type find_lca(const vertex_type & vertex1, const vertex_type & vertex2)
         {

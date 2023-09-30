@@ -158,8 +158,8 @@ namespace algolib::graphs
 {
     /*!
      * \brief Finds maximal matching in given bipartite graph.
-     * \param graph a bipartite graph
-     * \return map of matched vertices
+     * \param graph the bipartite graph
+     * \return the map of matched vertices
      */
     template <typename VertexId = size_t,
               typename VertexProperty = std::nullptr_t,

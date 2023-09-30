@@ -97,9 +97,9 @@ namespace internal
 namespace algolib::graphs
 {
     /*!
-     * \brief Finds edge cut of given graph.
-     * \param graph an undirected graph
-     * \return vector of edges in the edge cut
+     * \brief Finds edge cut of given undirected graph.
+     * \param graph the undirected graph
+     * \return the edges in the edge cut
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::edge_type>
@@ -124,9 +124,9 @@ namespace algolib::graphs
     }
 
     /*!
-     * \brief Finds vertex cut of given graph.
-     * \param graph an undirected graph
-     * \return vector of vertices in the vertex cut
+     * \brief Finds vertex cut of given undirected graph.
+     * \param graph the undirected graph
+     * \return the vertices in the vertex cut
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>

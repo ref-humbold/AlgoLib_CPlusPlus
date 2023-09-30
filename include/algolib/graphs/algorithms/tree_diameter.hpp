@@ -48,9 +48,9 @@ namespace internal
 namespace algolib::graphs
 {
     /*!
-     * \brief Computes length of diameter of given tree.
-     * \param tree a tree graph
-     * \return diameter length
+     * \brief Computes length of diameter of given tree graph.
+     * \param tree the tree graph
+     * \return the length of the tree diameter
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     double count_diameter(const tree_graph<VertexId, VertexProperty, EdgeProperty> & tree)

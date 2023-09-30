@@ -32,10 +32,10 @@ namespace internal
 namespace algolib::graphs
 {
     /*!
-     * \brief Bellman-Ford algorithm.
-     * \param graph a directed graph with weighted edges
-     * \param source source vertex
-     * \return map of vertices' distances
+     * \brief Computes shortest paths in given directed graph from given vertex using Bellman-Ford algorithm.
+     * \param graph the directed weighted graph
+     * \param source the source vertex
+     * \return the map of distances to each vertex
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::unordered_map<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
@@ -77,10 +77,10 @@ namespace algolib::graphs
     }
 
     /*!
-     * \brief Dijkstra algorithm.
-     * \param graph_ a graph with weighted edges (weights are not negative)
-     * \param source source vertex
-     * \return map of vertices' distances
+     * \brief Computes shortest paths in given graph from given vertex using Dijkstra algorithm.
+     * \param graph_ the weighted graph with non-negative weights
+     * \param source the source vertex
+     * \return the map of distances to each vertex
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::unordered_map<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
@@ -145,9 +145,9 @@ namespace algolib::graphs
     }
 
     /*!
-     * \brief Floyd-Warshall algorithm.
-     * \param graph a directed graph with weighted edges
-     * \return map of distances between all pairs of vertices
+     * \brief Computes shortest paths in given directed graph between all vertices using Floyd-Warshall algorithm.
+     * \param graph the directed weighted graph
+     * \return the map of distances between each pair of vertices
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::unordered_map<

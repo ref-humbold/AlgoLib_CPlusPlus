@@ -27,24 +27,27 @@ namespace algolib::graphs
         virtual ~graph() = default;
 
         /*!
-         * \param vertex_id vertex identifier
-         * \return vertex with the identifier
-         * \throw std::out_of_range if no such vertex
+         * \brief Gets the vertex from this graph with given identifier.
+         * \param vertex_id the vertex identifier
+         * \return the vertex with the identifier
+         * \throw std::out_of_range if no such vertex exists
          */
         virtual const vertex_type & operator[](const vertex_id_type & vertex_id) const = 0;
 
         /*!
-         * \param vertex_ids identifiers of source and destination vertices
-         * \return edge between the vertices
-         * \throw std::out_of_range if no such edge
+         * \brief Gets the edge between vertices of given identifiers.
+         * \param vertex_ids the identifiers of source and destination vertices
+         * \return the edge between the vertices
+         * \throw std::out_of_range if no such edge exists
          */
         virtual const edge_type &
                 operator[](const std::pair<vertex_id_type, vertex_id_type> & vertex_ids) const = 0;
 
         /*!
-         * \param vertices source and destination vertices
-         * \return edge between the vertices
-         * \throw std::out_of_range if no such edge
+         * Gets the edge between given vertices.
+         * \param vertices the source and destination vertices
+         * \return the edge between the vertices
+         * \throw std::out_of_range if no such edge exists
          */
         virtual const edge_type &
                 operator[](const std::pair<vertex_type, vertex_type> & vertices) const = 0;
@@ -53,39 +56,43 @@ namespace algolib::graphs
 
         virtual const graph_properties & properties() const = 0;
 
-        //! \return number of vertices
+        //! \return the number of vertices
         virtual size_t vertices_count() const = 0;
 
-        //! \return number of edges
+        //! \return the number of edges
         virtual size_t edges_count() const = 0;
 
-        //! \return vector of vertices
+        //! \return all vertices
         virtual std::vector<vertex_type> vertices() const = 0;
 
-        //! \return vector of edges
+        //! \return all edges
         virtual std::vector<edge_type> edges() const = 0;
 
         /*!
-         * \param vertex vertex from the graph
-         * \return vector of neighbouring vertices
+         * \brief Gets the neighbours of given vertex.
+         * \param vertex the vertex from this graph
+         * \return the neighbouring vertices
          */
         virtual std::vector<vertex_type> neighbours(const vertex_type & vertex) const = 0;
 
         /*!
-         * \param vertex vertex from the graph
-         * \return vector of edges adjacent to given vertex
+         * \brief Gets the adjacent edges of given vertex.
+         * \param vertex vertex from this graph
+         * \return the edges adjacent to the vertex
          */
         virtual std::vector<edge<VertexId>> adjacent_edges(const vertex_type & vertex) const = 0;
 
         /*!
+         * \brief Gets the output degree of given vertex.
          * \param vertex vertex from the graph
-         * \return output degree of given vertex
+         * \return the output degree of the vertex
          */
         virtual size_t output_degree(const vertex_type & vertex) const = 0;
 
         /*!
+         * \brief Gets the input degree of given vertex.
          * \param vertex vertex from the graph
-         * \return input degree of given vertex
+         * \return the input degree of the vertex
          */
         virtual size_t input_degree(const vertex_type & vertex) const = 0;
     };
@@ -94,23 +101,26 @@ namespace algolib::graphs
     struct graph<VertexId, VertexProperty, EdgeProperty>::graph_properties
     {
         /*!
-         * \param vertex vertex from this graph
-         * \return property of the vertex
+         * \brief Gets or sets the property of given vertex.
+         * \param vertex the vertex from this graph
+         * \return the property of the vertex
          */
         virtual graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & operator[](
                 const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex) = 0;
 
         /*!
-         * \param vertex vertex from this graph
-         * \return property of the vertex
+         * \brief Gets or sets the property of given vertex.
+         * \param vertex the vertex from this graph
+         * \return the property of the vertex
          * \throw std::out_of_range if no such property
          */
         virtual graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
                 at(const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex) = 0;
 
         /*!
-         * \param vertex vertex from this graph
-         * \return property of the vertex
+         * \brief Gets the property of given vertex.
+         * \param vertex the vertex from this graph
+         * \return the property of the vertex
          * \throw std::out_of_range if no such property
          */
         virtual const graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
@@ -118,23 +128,26 @@ namespace algolib::graphs
                         const = 0;
 
         /*!
-         * \param edge edge from this graph
-         * \return property of the edge
+         * \brief Gets or sets the property of given edge.
+         * \param edge the edge from this graph
+         * \return the property of the edge
          */
         virtual graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & operator[](
                 const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge) = 0;
 
         /*!
-         * \param edge edge from this graph
-         * \return property of the edge
+         * \brief Gets or sets the property of given edge.
+         * \param edge the edge from this graph
+         * \return the property of the edge
          * \throw std::out_of_range if no such property
          */
         virtual graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
                 at(const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge) = 0;
 
         /*!
-         * \param edge edge from this graph
-         * \return property of the edge
+         * \brief Gets the property of given edge.
+         * \param edge the edge from this graph
+         * \return the property of the edge
          * \throw std::out_of_range if no such property
          */
         virtual const graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
