@@ -1,6 +1,6 @@
 /*!
  * \file properties.cpp
- * \brief Structure of graph properties
+ * \brief Structure of graph properties.
  */
 
 #include "algolib/graphs/properties.hpp"

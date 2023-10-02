@@ -1,6 +1,6 @@
 /*!
  * \file pairing_heap_test.cpp
- * \brief Tests: Structure of pairing heap
+ * \brief Tests: Structure of pairing heap.
  */
 #include <array>
 #include <gtest/gtest.h>

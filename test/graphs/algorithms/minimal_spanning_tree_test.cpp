@@ -1,6 +1,6 @@
 /*!
  * \file minimal_spanning_tree_test.cpp
- * \brief Tests: Algorithms for minimal spanning tree
+ * \brief Tests: Algorithms for minimal spanning tree.
  */
 #include <algorithm>
 #include <vector>
@@ -64,9 +64,11 @@ TEST_F(MinimalSpanningTreeTest, kruskal_ThenMinimalSpanningTree)
     std::sort(result_edges.begin(), result_edges.end());
 
     EXPECT_EQ(vertices, result_vertices);
-    EXPECT_EQ(std::vector<graph_e>({graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
-                                    graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
-              result_edges);
+    EXPECT_EQ(
+            std::vector<graph_e>(
+                    {graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
+                     graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
+            result_edges);
 }
 
 TEST_F(MinimalSpanningTreeTest, prim_ThenMinimalSpanningTree)
@@ -84,9 +86,11 @@ TEST_F(MinimalSpanningTreeTest, prim_ThenMinimalSpanningTree)
     std::sort(result_edges.begin(), result_edges.end());
 
     EXPECT_EQ(vertices, result_vertices);
-    EXPECT_EQ(std::vector<graph_e>({graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
-                                    graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
-              result_edges);
+    EXPECT_EQ(
+            std::vector<graph_e>(
+                    {graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
+                     graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
+            result_edges);
 }
 
 TEST_F(MinimalSpanningTreeTest, prim_WhenDiffrentSources_ThenSameMinimalSpanningTree)

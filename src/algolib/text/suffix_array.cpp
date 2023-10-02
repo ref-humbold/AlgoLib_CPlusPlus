@@ -1,6 +1,6 @@
 /*!
  * \file suffix_array.cpp
- * \brief Structure of suffix array
+ * \brief Structure of suffix array.
  */
 #include "algolib/text/suffix_array.hpp"
 

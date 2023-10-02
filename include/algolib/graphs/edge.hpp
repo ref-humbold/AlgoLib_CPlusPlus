@@ -1,6 +1,6 @@
 /*!
  * \file edge.hpp
- * \brief Structure of graph edge
+ * \brief Structure of graph edge.
  */
 #ifndef EDGE_HPP_
 #define EDGE_HPP_
@@ -90,7 +90,7 @@ namespace algolib::graphs
             throw std::invalid_argument("Edge is not adjacent to the vertex");
         }
 
-        //!  \return the edge with reversed direction
+        //! \return the edge with reversed direction
         edge<VertexId> reversed() const
         {
             return edge<VertexId>(destination_, source_);
@@ -100,7 +100,7 @@ namespace algolib::graphs
         friend bool operator!= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
         friend bool operator< <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
         friend bool operator<= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
-        friend bool operator> <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+        friend bool operator><VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
         friend bool operator>= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
         friend std::ostream & operator<< <VertexId>(std::ostream & os, const edge<VertexId> & edge);
 

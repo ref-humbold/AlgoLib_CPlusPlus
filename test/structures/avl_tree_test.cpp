@@ -1,6 +1,6 @@
 /*!
  * \file avl_tree_test.cpp
- * \brief Tests: Structure of AVL tree
+ * \brief Tests: Structure of AVL tree.
  */
 #include <gtest/gtest.h>
 #include "algolib/structures/avl_tree.hpp"

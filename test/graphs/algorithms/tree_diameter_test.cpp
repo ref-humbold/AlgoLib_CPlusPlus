@@ -1,6 +1,6 @@
 /*!
  * \file tree_diameter_test.cpp
- * \brief Tests: Algorithm for counting diameter of a tree
+ * \brief Tests: Algorithm for computing diameter of a tree.
  */
 #include <gtest/gtest.h>
 #include "algolib/graphs/algorithms/tree_diameter.hpp"

@@ -1,6 +1,6 @@
 /*!
  * \file topological_sorting_test.cpp
- * \brief Tests: Algorithms for topological sorting of a directed graph
+ * \brief Tests: Algorithms for topological sorting of a graph.
  */
 #include <gtest/gtest.h>
 #include "algolib/graphs/algorithms/topological_sorting.hpp"
@@ -29,8 +29,9 @@ TEST(TopologicalSortingTest, inputsTopologicalSort_WhenAcyclicGraph_ThenTopologi
     // when
     std::vector<graph_v> result = algr::inputs_topological_sort(graph);
     // then
-    EXPECT_EQ(std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
-              result);
+    EXPECT_EQ(
+            std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
+            result);
 }
 
 TEST(TopologicalSortingTest, inputsTopologicalSort_WhenCyclicGraph_ThenDirectedCyclicGraphError)
@@ -90,8 +91,9 @@ TEST(TopologicalSortingTest, dfsTopologicalSort_WhenAcyclicGraph_ThenTopological
     // when
     std::vector<graph_v> result = algr::dfs_topological_sort(graph);
     // then
-    EXPECT_TRUE(std::any_of(expecteds.begin(), expecteds.end(),
-                            [&](auto && expected) { return expected == result; }));
+    EXPECT_TRUE(std::any_of(
+            expecteds.begin(), expecteds.end(),
+            [&](auto && expected) { return expected == result; }));
 }
 
 TEST(TopologicalSortingTest, dfsTopologicalSort_WhenCyclicGraph_ThenDirectedCyclicGraphError)

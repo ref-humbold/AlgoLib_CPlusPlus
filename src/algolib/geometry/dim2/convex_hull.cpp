@@ -1,6 +1,6 @@
 /*!
  * \file convex_hull.cpp
- * \brief Algorithm for convex hull (monotone chain) in 2D
+ * \brief Algorithm for convex hull in 2D (monotone chain).
  */
 #include "algolib/geometry/dim2/convex_hull.hpp"
 #include <algorithm>
@@ -11,9 +11,8 @@ namespace alge2 = algolib::geometry::dim2;
 
 namespace internal
 {
-    double cross_product(const alge2::point_2d & pt1,
-                         const alge2::point_2d & pt2,
-                         const alge2::point_2d & pt3)
+    double cross_product(
+            const alge2::point_2d & pt1, const alge2::point_2d & pt2, const alge2::point_2d & pt3)
     {
         return alge2::vector_2d::area(alge2::vector_2d(pt2, pt1), alge2::vector_2d(pt2, pt3));
     }

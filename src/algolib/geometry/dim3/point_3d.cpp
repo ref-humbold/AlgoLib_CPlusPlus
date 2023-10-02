@@ -1,6 +1,6 @@
 /*!
  * \file point.cpp
- * \brief Structure of point in 3D
+ * \brief Structure of point in 3D.
  */
 #include "algolib/geometry/dim3/point_3d.hpp"
 

@@ -1,6 +1,6 @@
 /*!
  * \file suffix_array_test.cpp
- * \brief Tests: Structure of suffix array
+ * \brief Tests: Structure of suffix array.
  */
 #include <gtest/gtest.h>
 #include "algolib/text/suffix_array.hpp"

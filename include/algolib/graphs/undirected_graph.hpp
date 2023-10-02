@@ -1,6 +1,6 @@
 /*!
  * \file undirected_graph.hpp
- * \brief Structure of undirected graph
+ * \brief Structure of undirected graph.
  */
 #ifndef UNDIRECTED_GRAPH_HPP_
 #define UNDIRECTED_GRAPH_HPP_

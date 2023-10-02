@@ -1,6 +1,6 @@
 /*!
  * \file multipartite_graph_test.cpp
- * \brief Tests: Structure of multipartite graph
+ * \brief Tests: Structure of multipartite graph.
  */
 #include <gtest/gtest.h>
 #include "algolib/graphs/multipartite_graph.hpp"

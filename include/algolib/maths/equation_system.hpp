@@ -1,6 +1,6 @@
 /*!
  * \file equation_system.hpp
- * \brief Structure of linear equations system
+ * \brief Structure of linear equations system.
  */
 #ifndef EQUATION_SYSTEM_HPP_
 #define EQUATION_SYSTEM_HPP_

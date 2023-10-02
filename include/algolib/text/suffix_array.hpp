@@ -1,6 +1,6 @@
 /*!
  * \file suffix_array.hpp
- * \brief Structure of suffix array
+ * \brief Structure of suffix array.
  */
 #ifndef SUFFIX_ARRAY_HPP_
 #define SUFFIX_ARRAY_HPP_

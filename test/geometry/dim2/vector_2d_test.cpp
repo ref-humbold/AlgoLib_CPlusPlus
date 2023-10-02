@@ -1,6 +1,6 @@
 /*!
  * \file vector_2d_test.cpp
- * \brief Tests: Structure of vector in 2D
+ * \brief Tests: Structure of vector in 2D.
  */
 #include <gtest/gtest.h>
 #include "algolib/geometry/dim2/vector_2d.hpp"

@@ -1,5 +1,5 @@
 /**!
  * \file searching.cpp
- * \brief Graph searching algorithms
+ * \brief Algorithms for graph searching.
  */
 #include "algolib/graphs/algorithms/searching.hpp"

@@ -1,6 +1,6 @@
 /**!
  * \file equation_test.cpp
- * \brief Tests: Structure of linear equation
+ * \brief Tests: Structure of linear equation.
  */
 #include <sstream>
 #include <gtest/gtest.h>

@@ -1,6 +1,6 @@
 /**!
  * \file equation.hpp
- * \brief Structure of linear equation
+ * \brief Structure of linear equation.
  */
 #ifndef EQUATION_HPP_
 #define EQUATION_HPP_
@@ -27,7 +27,7 @@ namespace algolib::maths
     equation<N> operator+(equation<N> eq);
 
     /*!
-     * \brief Negates equation
+     * \brief Negates equation.
      * \param eq the equation
      * \return the equation with all coefficients negated
      */
@@ -35,7 +35,7 @@ namespace algolib::maths
     equation<N> operator-(equation<N> eq);
 
     /*!
-     * \brief Adds two equations
+     * \brief Adds two equations.
      * \param eq1 the first euqation
      * \param eq2 the second equation
      * \return the equation with coefficients added
@@ -44,7 +44,7 @@ namespace algolib::maths
     equation<N> operator+(equation<N> eq1, const equation<N> & eq2);
 
     /*!
-     * \brief Subtracts two equations
+     * \brief Subtracts two equations.
      * \param eq1 the first euqation
      * \param eq2 the second equation
      * \return the equation with coefficients subtracted
@@ -53,7 +53,7 @@ namespace algolib::maths
     equation<N> operator-(equation<N> eq1, const equation<N> & eq2);
 
     /*!
-     * \brief Multiplies equation by given constant
+     * \brief Multiplies equation by given constant.
      * \param eq the equation
      * \param constant the contant
      * \return the equation with all coefficients multiplied
@@ -63,7 +63,7 @@ namespace algolib::maths
     equation<N> operator*(equation<N> eq, double constant);
 
     /*!
-     * \brief Multiplies equation by given constant
+     * \brief Multiplies equation by given constant.
      * \param constant the contant
      * \param eq the equation
      * \return the equation with all coefficients multiplied
@@ -73,7 +73,7 @@ namespace algolib::maths
     equation<N> operator*(double constant, equation<N> eq);
 
     /*!
-     * \brief Divides equation by given constant
+     * \brief Divides equation by given constant.
      * \param eq the equation
      * \param constant the contant
      * \return the equation with all coefficients divided

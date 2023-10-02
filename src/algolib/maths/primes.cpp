@@ -1,6 +1,6 @@
 /*!
  * \file primes.cpp
- * \brief Algorithms for prime numbers
+ * \brief Algorithms for prime numbers.
  */
 #include "algolib/maths/primes.hpp"
 #include <cmath>
@@ -35,9 +35,8 @@ std::vector<size_t> get_base_primes(size_t base_maximum)
 }
 
 // Extracts prime numbers from given range using given basic prime numbers
-std::vector<size_t> get_segment_primes(size_t segment_start,
-                                       size_t segment_end,
-                                       const std::vector<size_t> & base_primes)
+std::vector<size_t> get_segment_primes(
+        size_t segment_start, size_t segment_end, const std::vector<size_t> & base_primes)
 {
     std::vector<size_t> primes;
     std::vector<bool> is_prime;
@@ -190,8 +189,9 @@ bool alma::test_miller(int number)
             for(int d = multiplicand; d <= number / 2; d *= 2)
                 exponents.push_back(d);
 
-            if(std::all_of(exponents.begin(), exponents.end(),
-                           [&](int d) { return power(witness, d, number) != number - 1; }))
+            if(std::all_of(
+                       exponents.begin(), exponents.end(),
+                       [&](int d) { return power(witness, d, number) != number - 1; }))
                 return false;
         }
     }
@@ -225,8 +225,9 @@ bool alma::test_miller(long number)
             for(long d = multiplicand; d <= number / 2; d *= 2)
                 exponents.push_back(d);
 
-            if(std::all_of(exponents.begin(), exponents.end(),
-                           [&](long d) { return power(witness, d, number) != number - 1; }))
+            if(std::all_of(
+                       exponents.begin(), exponents.end(),
+                       [&](long d) { return power(witness, d, number) != number - 1; }))
                 return false;
         }
     }
@@ -260,8 +261,9 @@ bool alma::test_miller(long long number)
             for(long long d = multiplicand; d <= number / 2; d *= 2)
                 exponents.push_back(d);
 
-            if(std::all_of(exponents.begin(), exponents.end(),
-                           [&](long long d) { return power(witness, d, number) != number - 1; }))
+            if(std::all_of(
+                       exponents.begin(), exponents.end(),
+                       [&](long long d) { return power(witness, d, number) != number - 1; }))
                 return false;
         }
     }

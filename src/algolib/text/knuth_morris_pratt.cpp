@@ -1,6 +1,6 @@
 /*!
  * \file knuth_morris_pratt.cpp
- * \brief Knuth-Morris-Pratt algorithm for pattern searching
+ * \brief Knuth-Morris-Pratt algorithm for pattern searching.
  */
 #include "algolib/text/knuth_morris_pratt.hpp"
 

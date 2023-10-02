@@ -1,6 +1,6 @@
 /*!
  * \file longest_increasing_subsequence_test.cpp
- * \brief Tests: Algorithm for longest increasing subsequence
+ * \brief Tests: Algorithm for longest increasing subsequence.
  */
 #include <gtest/gtest.h>
 #include "algolib/sequences/longest_increasing_subsequence.hpp"

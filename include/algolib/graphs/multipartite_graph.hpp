@@ -1,6 +1,6 @@
 /*!
  * \file multipartite_graph.hpp
- * \brief Structure of multipartite graph
+ * \brief Structure of multipartite graph.
  */
 #ifndef MULTIPARTITE_GRAPH_HPP_
 #define MULTIPARTITE_GRAPH_HPP_

@@ -1,6 +1,6 @@
 /*!
  * \file base_words_map.cpp
- * \brief Structure of base words map using Karp-Miller-Rosenberg algorithm
+ * \brief Structure of base words map using Karp-Miller-Rosenberg algorithm.
  */
 #include "algolib/text/base_words_map.hpp"
 #include <exception>
@@ -45,9 +45,8 @@ void alte::base_words_map::create()
                 });
 }
 
-size_t alte::base_words_map::extend(size_t length,
-                                    size_t code_value,
-                                    alte::base_words_map::extend_function_t func)
+size_t alte::base_words_map::extend(
+        size_t length, size_t code_value, alte::base_words_map::extend_function_t func)
 {
     code_t previous_code = {0, 0};
     std::vector<std::tuple<size_t, size_t, size_t, size_t>> codes;

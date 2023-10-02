@@ -1,6 +1,6 @@
 /**!
  * \file searching.hpp
- * \brief Graph searching algorithms
+ * \brief Algorithms for graph searching.
  */
 #ifndef SEARCHING_HPP_
 #define SEARCHING_HPP_
@@ -187,8 +187,9 @@ namespace algolib::graphs
                 ++iteration;
             }
 
-        std::transform(reached.begin(), reached.end(), std::back_inserter(visited),
-                       [](auto && p) { return p.first; });
+        std::transform(
+                reached.begin(), reached.end(), std::back_inserter(visited),
+                [](auto && p) { return p.first; });
 
         return visited;
     }
@@ -221,8 +222,9 @@ namespace algolib::graphs
                 ++state.iteration;
             }
 
-        std::transform(state.reached.begin(), state.reached.end(), std::back_inserter(visited),
-                       [](auto && p) { return p.first; });
+        std::transform(
+                state.reached.begin(), state.reached.end(), std::back_inserter(visited),
+                [](auto && p) { return p.first; });
 
         return visited;
     }

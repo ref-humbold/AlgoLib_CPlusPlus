@@ -1,6 +1,6 @@
 /*!
  * \file pairing_heap.hpp
- * \brief Structure of pairing heap
+ * \brief Structure of pairing heap.
  */
 #ifndef PAIRING_HEAP_HPP_
 #define PAIRING_HEAP_HPP_

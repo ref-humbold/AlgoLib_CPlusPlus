@@ -1,6 +1,6 @@
 /*!
  * \file maximum_subarray_test.cpp
- * \brief Tests: Algorithms for maximum subarray
+ * \brief Tests: Algorithms for maximum subarray.
  */
 #include <gtest/gtest.h>
 #include "algolib/sequences/maximum_subarray.hpp"

@@ -1,6 +1,6 @@
 /*!
  * \file base_words_map.hpp
- * \brief Structure of base words map using Karp-Miller-Rosenberg algorithm
+ * \brief Structure of base words map using Karp-Miller-Rosenberg algorithm.
  */
 #ifndef BASE_WORDS_MAP_HPP_
 #define BASE_WORDS_MAP_HPP_
@@ -40,7 +40,7 @@ namespace algolib::text
         }
 
         /*!
-         * \brief Retrieves code of substring denoted by given starting index and length
+         * \brief Retrieves code of substring denoted by given starting index and length.
          * \param start the starting index, inclusive
          * \param length the length of the substring
          * \return the code of the substring

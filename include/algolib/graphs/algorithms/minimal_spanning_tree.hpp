@@ -1,6 +1,6 @@
 /**!
  * \file minimal_spanning_tree.hpp
- * \brief Algorithms for minimal spanning tree
+ * \brief Algorithms for minimal spanning tree.
  */
 #ifndef MINIMAL_SPANNING_TREE_HPP_
 #define MINIMAL_SPANNING_TREE_HPP_
@@ -26,8 +26,9 @@ namespace internal
         {
         }
 
-        bool operator()(const typename graph_type::edge_type & edge1,
-                        const typename graph_type::edge_type & edge2) const
+        bool operator()(
+                const typename graph_type::edge_type & edge1,
+                const typename graph_type::edge_type & edge2) const
         {
             return graph.properties().at(edge2).weight() < graph.properties().at(edge1).weight();
         }
@@ -71,10 +72,10 @@ namespace algolib::graphs
     {
         using cmp = internal::kruskal_cmp<
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type,
-                typename undirected_graph<VertexId, VertexProperty,
-                                          EdgeProperty>::vertex_property_type,
-                typename undirected_graph<VertexId, VertexProperty,
-                                          EdgeProperty>::edge_property_type>;
+                typename undirected_graph<
+                        VertexId, VertexProperty, EdgeProperty>::vertex_property_type,
+                typename undirected_graph<
+                        VertexId, VertexProperty, EdgeProperty>::edge_property_type>;
 
         std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 vertices = graph.vertices();
@@ -85,14 +86,15 @@ namespace algolib::graphs
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type>
                 vertex_ids;
 
-        std::transform(vertices.begin(), vertices.end(), std::back_inserter(vertex_ids),
-                       [](auto && vertex) { return vertex.id(); });
+        std::transform(
+                vertices.begin(), vertices.end(), std::back_inserter(vertex_ids),
+                [](auto && vertex) { return vertex.id(); });
 
         undirected_simple_graph<VertexId, VertexProperty, EdgeProperty> mst(vertex_ids);
         auto edge_queue = std::priority_queue<
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::edge_type,
-                std::vector<typename undirected_graph<VertexId, VertexProperty,
-                                                      EdgeProperty>::edge_type>,
+                std::vector<typename undirected_graph<
+                        VertexId, VertexProperty, EdgeProperty>::edge_type>,
                 cmp>(cmp(graph));
 
         for(auto && edge : graph.edges())
@@ -129,10 +131,10 @@ namespace algolib::graphs
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>;
         using cmp = internal::prim_cmp<
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type,
-                typename undirected_graph<VertexId, VertexProperty,
-                                          EdgeProperty>::vertex_property_type,
-                typename undirected_graph<VertexId, VertexProperty,
-                                          EdgeProperty>::edge_property_type>;
+                typename undirected_graph<
+                        VertexId, VertexProperty, EdgeProperty>::vertex_property_type,
+                typename undirected_graph<
+                        VertexId, VertexProperty, EdgeProperty>::edge_property_type>;
 
         std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 vertices = graph.vertices();
@@ -140,8 +142,9 @@ namespace algolib::graphs
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type>
                 vertex_ids;
 
-        std::transform(vertices.begin(), vertices.end(), std::back_inserter(vertex_ids),
-                       [](auto && vertex) { return vertex.id(); });
+        std::transform(
+                vertices.begin(), vertices.end(), std::back_inserter(vertex_ids),
+                [](auto && vertex) { return vertex.id(); });
 
         undirected_simple_graph<VertexId, VertexProperty, EdgeProperty> mst(vertex_ids);
         std::unordered_set<

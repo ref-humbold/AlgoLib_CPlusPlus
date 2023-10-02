@@ -1,6 +1,6 @@
 /*!
  * \file primes_test.cpp
- * \brief TEST: Algorithms for prime numbers
+ * \brief Tests: Algorithms for prime numbers.
  */
 #include <gtest/gtest.h>
 #include "algolib/maths/primes.hpp"
@@ -31,9 +31,10 @@ TEST(PrimesTest, findPrimes_WhenMaxIsComposite_ThenAllPrimes)
     // when
     std::vector<size_t> result = alma::find_primes(100);
     // then
-    EXPECT_EQ(std::vector<size_t>({2,  3,  5,  7,  11, 13, 17, 19, 23, 29, 31, 37, 41,
-                                   43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97}),
-              result);
+    EXPECT_EQ(
+            std::vector<size_t>({2,  3,  5,  7,  11, 13, 17, 19, 23, 29, 31, 37, 41,
+                                 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97}),
+            result);
 }
 
 TEST(PrimesTest, findPrimes_WhenMaxIsPrime_ThenMaxExclusive)
@@ -41,9 +42,10 @@ TEST(PrimesTest, findPrimes_WhenMaxIsPrime_ThenMaxExclusive)
     // when
     std::vector<size_t> result = alma::find_primes(67);
     // then
-    EXPECT_EQ(std::vector<size_t>(
-                      {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61}),
-              result);
+    EXPECT_EQ(
+            std::vector<size_t>(
+                    {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61}),
+            result);
 }
 
 TEST(PrimesTest, findPrimes_WhenMaxIsTwo_ThenEmpty)
@@ -75,10 +77,11 @@ TEST(PrimesTest, findPrimes_WhenRange_ThenPrimesBetween)
     // when
     std::vector<size_t> result = alma::find_primes(30, 200);
     // then
-    EXPECT_EQ(std::vector<size_t>({31,  37,  41,  43,  47,  53,  59,  61,  67,  71,  73,  79,
-                                   83,  89,  97,  101, 103, 107, 109, 113, 127, 131, 137, 139,
-                                   149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199}),
-              result);
+    EXPECT_EQ(
+            std::vector<size_t>({31,  37,  41,  43,  47,  53,  59,  61,  67,  71,  73,  79,
+                                 83,  89,  97,  101, 103, 107, 109, 113, 127, 131, 137, 139,
+                                 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199}),
+            result);
 }
 
 TEST(PrimesTest, findPrimes_WhenMinimumIsTwo_ThenTwoIncluded)
@@ -102,9 +105,10 @@ TEST(PrimesTest, findPrimes_WhenMaxIsFourthPowerOfPrime_ThenAllPrimesBetween)
     // when
     std::vector<size_t> result = alma::find_primes(9, 81);
     // then
-    EXPECT_EQ(std::vector<size_t>(
-                      {11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79}),
-              result);
+    EXPECT_EQ(
+            std::vector<size_t>(
+                    {11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79}),
+            result);
 }
 
 TEST(PrimesTest, findPrimes_WhenMinIsLessThanSquareRootOfMax_ThenPrimesBetween)
@@ -112,10 +116,11 @@ TEST(PrimesTest, findPrimes_WhenMinIsLessThanSquareRootOfMax_ThenPrimesBetween)
     // when
     std::vector<size_t> result = alma::find_primes(5, 150);
     // then
-    EXPECT_EQ(std::vector<size_t>({5,  7,   11,  13,  17,  19,  23,  29,  31,  37,  41,
-                                   43, 47,  53,  59,  61,  67,  71,  73,  79,  83,  89,
-                                   97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149}),
-              result);
+    EXPECT_EQ(
+            std::vector<size_t>({5,  7,   11,  13,  17,  19,  23,  29,  31,  37,  41,
+                                 43, 47,  53,  59,  61,  67,  71,  73,  79,  83,  89,
+                                 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149}),
+            result);
 }
 
 TEST(PrimesTest, findPrimes_WhenMinAndMaxArePrimes_ThenMinInclusiveAndMaxExclusive)
@@ -123,10 +128,11 @@ TEST(PrimesTest, findPrimes_WhenMinAndMaxArePrimes_ThenMinInclusiveAndMaxExclusi
     // when
     std::vector<size_t> result = alma::find_primes(137, 317);
     // then
-    EXPECT_EQ(std::vector<size_t>({137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191,
-                                   193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251,
-                                   257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313}),
-              result);
+    EXPECT_EQ(
+            std::vector<size_t>({137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191,
+                                 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251,
+                                 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313}),
+            result);
 }
 
 TEST(PrimesTest, findPrimes_WhenMinEqualsMaxAndPrime_ThenEmpty)

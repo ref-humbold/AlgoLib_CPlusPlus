@@ -1,6 +1,6 @@
 /**!
  * \file edit distance.hpp
- * \brief Algorithms for edit distance
+ * \brief Algorithms for edit distance.
  */
 #ifndef EDIT_DISTANCE_HPP_
 #define EDIT_DISTANCE_HPP_

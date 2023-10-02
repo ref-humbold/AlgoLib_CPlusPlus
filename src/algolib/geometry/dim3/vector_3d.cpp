@@ -1,6 +1,6 @@
 /*!
  * \file vector_3d.cpp
- * \brief Structure of vector in 3D
+ * \brief Structure of vector in 3D.
  */
 #include "algolib/geometry/dim3/vector_3d.hpp"
 

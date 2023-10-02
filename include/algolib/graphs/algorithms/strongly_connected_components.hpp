@@ -1,6 +1,6 @@
 /**!
  * \file strongly_connected_components.hpp
- * \brief Algorithm for strongly connected components
+ * \brief Algorithm for strongly connected components.
  */
 #ifndef STRONGLY_CONNECTED_COMPONENTS_HPP_
 #define STRONGLY_CONNECTED_COMPONENTS_HPP_
@@ -110,12 +110,15 @@ namespace algolib::graphs
         std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 vertices;
 
-        std::copy(post_order_strategy.post_times.begin(), post_order_strategy.post_times.end(),
-                  std::back_inserter(entries));
-        std::sort(entries.begin(), entries.end(),
-                  [](auto && entry1, auto && entry2) { return entry2.second < entry1.second; });
-        std::transform(entries.begin(), entries.end(), std::back_inserter(vertices),
-                       [](auto && entry) { return entry.first; });
+        std::copy(
+                post_order_strategy.post_times.begin(), post_order_strategy.post_times.end(),
+                std::back_inserter(entries));
+        std::sort(
+                entries.begin(), entries.end(),
+                [](auto && entry1, auto && entry2) { return entry2.second < entry1.second; });
+        std::transform(
+                entries.begin(), entries.end(), std::back_inserter(vertices),
+                [](auto && entry) { return entry.first; });
 
         directed_simple_graph<VertexId, VertexProperty, EdgeProperty> reversed_graph =
                 graph.reversed_copy();

@@ -1,6 +1,6 @@
 /**!
  * \file longest_increasing_subsequence.hpp
- * \brief Algorithm for longest increasing subsequence
+ * \brief Algorithm for longest increasing subsequence.
  */
 #ifndef LONGEST_INCREASING_SUBSEQUENCE_HPP_
 #define LONGEST_INCREASING_SUBSEQUENCE_HPP_

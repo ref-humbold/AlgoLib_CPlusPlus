@@ -1,6 +1,6 @@
 /*!
  * \file tree_graph.hpp
- * \brief Structure of tree graph
+ * \brief Structure of tree graph.
  */
 #ifndef TREE_GRAPH_HPP_
 #define TREE_GRAPH_HPP_

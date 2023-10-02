@@ -1,6 +1,6 @@
 /*!
  * \file closest_points.cpp
- * \brief Algorithm for pair of closest points in 2D
+ * \brief Algorithm for searching pair of closest points in 2D.
  */
 #include "algolib/geometry/dim2/closest_points.hpp"
 #include <cmath>
@@ -13,9 +13,10 @@ namespace alge2 = algolib::geometry::dim2;
 namespace internal
 {
     // Finds closest pair of points among three of them.
-    std::pair<alge2::point_2d, alge2::point_2d> search_three(const alge2::point_2d & point1,
-                                                             const alge2::point_2d & point2,
-                                                             const alge2::point_2d & point3)
+    std::pair<alge2::point_2d, alge2::point_2d> search_three(
+            const alge2::point_2d & point1,
+            const alge2::point_2d & point2,
+            const alge2::point_2d & point3)
     {
         double distance12 = distance(point1, point2);
         double distance23 = distance(point2, point3);
@@ -39,9 +40,10 @@ namespace internal
         std::vector<alge2::point_2d> belt_points;
         double min_distance = width;
 
-        std::copy_if(pointsY.begin(), pointsY.end(), std::back_inserter(belt_points),
-                     [&](const alge2::point_2d & pt)
-                     { return pt.x() >= middleX - width && pt.x() <= middleX + width; });
+        std::copy_if(
+                pointsY.begin(), pointsY.end(), std::back_inserter(belt_points),
+                [&](const alge2::point_2d & pt)
+                { return pt.x() >= middleX - width && pt.x() <= middleX + width; });
 
         for(size_t i = 1; i < belt_points.size(); ++i)
             for(size_t j = i + 1; j < belt_points.size(); ++j)
@@ -60,9 +62,9 @@ namespace internal
                     if(points_distance < min_distance)
                     {
                         min_distance = points_distance;
-                        closest_pair =
-                                std::make_optional(pt1.x() <= pt2.x() ? std::make_pair(pt1, pt2)
-                                                                      : std::make_pair(pt2, pt1));
+                        closest_pair = std::make_optional(
+                                pt1.x() <= pt2.x() ? std::make_pair(pt1, pt2)
+                                                   : std::make_pair(pt2, pt1));
                     }
                 }
             }
@@ -72,10 +74,10 @@ namespace internal
 
     // Searches for a pair of closest points in given sublist of points.
     // Points are given sorted by X coordinate and by Y coordinate.
-    std::pair<alge2::point_2d, alge2::point_2d>
-            search_closest(std::vector<alge2::point_2d>::const_iterator pointsX_begin,
-                           std::vector<alge2::point_2d>::const_iterator pointsX_end,
-                           const std::vector<alge2::point_2d> & pointsY)
+    std::pair<alge2::point_2d, alge2::point_2d> search_closest(
+            std::vector<alge2::point_2d>::const_iterator pointsX_begin,
+            std::vector<alge2::point_2d>::const_iterator pointsX_end,
+            const std::vector<alge2::point_2d> & pointsY)
     {
         std::ptrdiff_t diff = pointsX_end - pointsX_begin;
 

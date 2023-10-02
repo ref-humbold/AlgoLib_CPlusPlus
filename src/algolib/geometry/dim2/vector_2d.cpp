@@ -1,6 +1,6 @@
 /*!
  * \file vector_2d.cpp
- * \brief Structure of vector in 2D
+ * \brief Structure of vector in 2D.
  */
 #include "algolib/geometry/dim2/vector_2d.hpp"
 

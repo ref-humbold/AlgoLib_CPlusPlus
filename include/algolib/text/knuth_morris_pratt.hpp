@@ -1,6 +1,6 @@
 /*!
  * \file knuth_morris_pratt.hpp
- * \brief Knuth-Morris-Pratt algorithm for pattern searching
+ * \brief Knuth-Morris-Pratt algorithm for pattern searching.
  */
 #ifndef KNUTH_MORRIS_PRATT_HPP_
 #define KNUTH_MORRIS_PRATT_HPP_

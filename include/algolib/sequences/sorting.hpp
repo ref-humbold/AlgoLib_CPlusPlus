@@ -1,6 +1,6 @@
 /*!
  * \file sorting.hpp
- * \brief Algorithms for sorting vectors
+ * \brief Algorithms for sequence sorting.
  */
 #ifndef SORTING_HPP_
 #define SORTING_HPP_

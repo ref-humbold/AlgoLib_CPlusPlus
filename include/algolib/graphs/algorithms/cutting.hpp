@@ -1,6 +1,6 @@
 /**!
  * \file cutting.hpp
- * \brief Algorithms for graph cutting (edge cut and vertex cut)
+ * \brief Algorithms for graph cutting (edge cut and vertex cut).
  */
 #ifndef CUTTING_HPP_
 #define CUTTING_HPP_
@@ -76,9 +76,10 @@ namespace internal
             if(this->is_dfs_root(vertex))
                 return dfs_children[vertex].size() > 1;
 
-            return std::any_of(this->dfs_children[vertex].begin(), this->dfs_children[vertex].end(),
-                               [&](auto && child)
-                               { return this->low_values[child] >= this->dfs_depths[vertex]; });
+            return std::any_of(
+                    this->dfs_children[vertex].begin(), this->dfs_children[vertex].end(),
+                    [&](auto && child)
+                    { return this->low_values[child] >= this->dfs_depths[vertex]; });
         }
 
         bool is_dfs_root(const Vertex & vertex)
@@ -114,12 +115,15 @@ namespace algolib::graphs
                 vertices = graph.vertices();
 
         dfs_recursive(graph, strategy, vertices);
-        vertices.erase(std::remove_if(vertices.begin(), vertices.end(),
-                                      [&](auto && vertex) { return !strategy.has_bridge(vertex); }),
-                       vertices.end());
-        std::transform(vertices.begin(), vertices.end(), std::back_inserter(bridges),
-                       [&](auto && vertex)
-                       { return graph[std::make_pair(vertex, strategy.dfs_parents.at(vertex))]; });
+        vertices.erase(
+                std::remove_if(
+                        vertices.begin(), vertices.end(),
+                        [&](auto && vertex) { return !strategy.has_bridge(vertex); }),
+                vertices.end());
+        std::transform(
+                vertices.begin(), vertices.end(), std::back_inserter(bridges),
+                [&](auto && vertex)
+                { return graph[std::make_pair(vertex, strategy.dfs_parents.at(vertex))]; });
         return bridges;
     }
 
@@ -141,8 +145,9 @@ namespace algolib::graphs
                 vertices = graph.vertices();
 
         dfs_recursive(graph, strategy, vertices);
-        std::copy_if(vertices.begin(), vertices.end(), std::back_inserter(separators),
-                     [&](auto && vertex) { return strategy.is_separator(vertex); });
+        std::copy_if(
+                vertices.begin(), vertices.end(), std::back_inserter(separators),
+                [&](auto && vertex) { return strategy.is_separator(vertex); });
         return separators;
     }
 }

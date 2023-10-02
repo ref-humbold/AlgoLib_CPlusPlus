@@ -1,6 +1,6 @@
 /*!
  * \file closest_points_test.cpp
- * \brief Tests: Algorithm for pair of closest points in 2D
+ * \brief Tests: Algorithm for searching pair of closest points in 2D.
  */
 #include <gtest/gtest.h>
 #include "algolib/geometry/dim2/closest_points.hpp"

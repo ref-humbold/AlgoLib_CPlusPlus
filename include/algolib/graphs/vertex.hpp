@@ -1,6 +1,6 @@
 /*!
  * \file vertex.hpp
- * \brief Structure of graph vertex
+ * \brief Structure of graph vertex.
  */
 #ifndef VERTEX_HPP_
 #define VERTEX_HPP_

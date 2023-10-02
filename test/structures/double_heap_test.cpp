@@ -1,6 +1,6 @@
 /*!
  * \file double_heap_test.cpp
- * \brief Tests: Structure of double heap
+ * \brief Tests: Structure of double heap.
  */
 #include <gtest/gtest.h>
 #include "algolib/structures/double_heap.hpp"

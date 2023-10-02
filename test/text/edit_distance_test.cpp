@@ -1,6 +1,6 @@
 /**!
  * \file edit distance.cpp
- * \brief Tests: Algorithms for edit distance
+ * \brief Tests: Algorithms for edit distance.
  */
 #include <gtest/gtest.h>
 #include "algolib/text/edit_distance.hpp"

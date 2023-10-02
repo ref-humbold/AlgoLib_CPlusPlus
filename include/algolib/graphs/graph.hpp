@@ -1,6 +1,6 @@
 /*!
  * \file graph.hpp
- * \brief Structure of basic graph
+ * \brief Structure of basic graph.
  */
 #ifndef GRAPH_HPP_
 #define GRAPH_HPP_

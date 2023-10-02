@@ -1,6 +1,6 @@
 /*!
  * \file vector_3d_test.cpp
- * \brief Tests: Structure of vector in 3D
+ * \brief Tests: Structure of vector in 3D.
  */
 #include <gtest/gtest.h>
 #include "algolib/geometry/dim3/vector_3d.hpp"

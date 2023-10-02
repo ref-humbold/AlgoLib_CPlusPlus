@@ -1,6 +1,6 @@
 /**!
  * \file fraction_test.cpp
- * \brief Tests: Structure of fraction
+ * \brief Tests: Structure of fraction.
  */
 #include <sstream>
 #include <gtest/gtest.h>

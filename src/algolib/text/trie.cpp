@@ -1,6 +1,6 @@
 /*!
  * \file trie.cpp
- * \brief Structure of trie tree
+ * \brief Structure of trie tree.
  */
 #include "algolib/text/trie.hpp"
 

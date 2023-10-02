@@ -1,6 +1,6 @@
 /*!
  * \file trie_test.cpp
- * \brief Tests: Structure of trie tree
+ * \brief Tests: Structure of trie tree.
  */
 #include <vector>
 #include <gtest/gtest.h>

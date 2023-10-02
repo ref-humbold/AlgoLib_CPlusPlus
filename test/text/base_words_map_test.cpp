@@ -1,6 +1,6 @@
 /*!
  * \file base_words_map_tests.cpp
- * \brief Tests: Structure of base words map using Karp-Miller-Rosenberg algorithm
+ * \brief Tests: Structure of base words map using Karp-Miller-Rosenberg algorithm.
  */
 #include <gtest/gtest.h>
 #include "algolib/text/base_words_map.hpp"

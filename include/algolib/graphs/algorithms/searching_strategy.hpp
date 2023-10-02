@@ -1,6 +1,6 @@
 /*!
  * \file searching_strategy.hpp
- * \brief Strategies for graph searching
+ * \brief Strategies for algorithms for graph searching.
  */
 #ifndef SEARCHING_STRATEGY_HPP_
 #define SEARCHING_STRATEGY_HPP_

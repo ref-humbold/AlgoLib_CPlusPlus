@@ -1,6 +1,6 @@
 /*!
  * \file geometry_2d_test.cpp
- * \brief Tests: Algorithms for basic geometrical computations in 2D
+ * \brief Tests: Algorithms for basic geometrical operations in 2D.
  */
 #include <gtest/gtest.h>
 #include "algolib/geometry/dim2/geometry_2d.hpp"
@@ -17,12 +17,14 @@ TEST(Geometry2DTest, sortByX_ThenSortedStablyAscending)
     // when
     alge2::sort_by_x(sequence);
     // then
-    EXPECT_EQ(std::vector<alge2::point_2d>({alge2::point_2d(-3.0, 2.0), alge2::point_2d(-3.0, -2.0),
-                                            alge2::point_2d(-2.0, -3.0), alge2::point_2d(-2.0, 3.0),
-                                            alge2::point_2d(0.0, 0.0), alge2::point_2d(2.0, 3.0),
-                                            alge2::point_2d(2.0, -3.0), alge2::point_2d(3.0, -2.0),
-                                            alge2::point_2d(3.0, 2.0)}),
-              sequence);
+    EXPECT_EQ(
+            std::vector<alge2::point_2d>(
+                    {alge2::point_2d(-3.0, 2.0), alge2::point_2d(-3.0, -2.0),
+                     alge2::point_2d(-2.0, -3.0), alge2::point_2d(-2.0, 3.0),
+                     alge2::point_2d(0.0, 0.0), alge2::point_2d(2.0, 3.0),
+                     alge2::point_2d(2.0, -3.0), alge2::point_2d(3.0, -2.0),
+                     alge2::point_2d(3.0, 2.0)}),
+            sequence);
 }
 
 TEST(Geometry2DTest, sortByY_ThenSortedStablyAscending)
@@ -35,12 +37,14 @@ TEST(Geometry2DTest, sortByY_ThenSortedStablyAscending)
     // when
     alge2::sort_by_y(sequence);
     // then
-    EXPECT_EQ(std::vector<alge2::point_2d>({alge2::point_2d(-2.0, -3.0), alge2::point_2d(2.0, -3.0),
-                                            alge2::point_2d(3.0, -2.0), alge2::point_2d(-3.0, -2.0),
-                                            alge2::point_2d(0.0, 0.0), alge2::point_2d(-3.0, 2.0),
-                                            alge2::point_2d(3.0, 2.0), alge2::point_2d(2.0, 3.0),
-                                            alge2::point_2d(-2.0, 3.0)}),
-              sequence);
+    EXPECT_EQ(
+            std::vector<alge2::point_2d>(
+                    {alge2::point_2d(-2.0, -3.0), alge2::point_2d(2.0, -3.0),
+                     alge2::point_2d(3.0, -2.0), alge2::point_2d(-3.0, -2.0),
+                     alge2::point_2d(0.0, 0.0), alge2::point_2d(-3.0, 2.0),
+                     alge2::point_2d(3.0, 2.0), alge2::point_2d(2.0, 3.0),
+                     alge2::point_2d(-2.0, 3.0)}),
+            sequence);
 }
 
 TEST(Geometry2DTest, sortByAngle_ThenSortedAscending)
@@ -53,12 +57,14 @@ TEST(Geometry2DTest, sortByAngle_ThenSortedAscending)
     // when
     alge2::sort_by_angle(sequence);
     // then
-    EXPECT_EQ(std::vector<alge2::point_2d>({alge2::point_2d(0.0, 0.0), alge2::point_2d(3.0, 2.0),
-                                            alge2::point_2d(2.0, 3.0), alge2::point_2d(-2.0, 3.0),
-                                            alge2::point_2d(-3.0, 2.0), alge2::point_2d(-3.0, -2.0),
-                                            alge2::point_2d(-2.0, -3.0), alge2::point_2d(2.0, -3.0),
-                                            alge2::point_2d(3.0, -2.0)}),
-              sequence);
+    EXPECT_EQ(
+            std::vector<alge2::point_2d>(
+                    {alge2::point_2d(0.0, 0.0), alge2::point_2d(3.0, 2.0),
+                     alge2::point_2d(2.0, 3.0), alge2::point_2d(-2.0, 3.0),
+                     alge2::point_2d(-3.0, 2.0), alge2::point_2d(-3.0, -2.0),
+                     alge2::point_2d(-2.0, -3.0), alge2::point_2d(2.0, -3.0),
+                     alge2::point_2d(3.0, -2.0)}),
+            sequence);
 }
 
 TEST(Geometry2DTest, sortByAngle_WhenEqualAngles_ThenCompareRadius)
@@ -70,10 +76,12 @@ TEST(Geometry2DTest, sortByAngle_WhenEqualAngles_ThenCompareRadius)
     // when
     alge2::sort_by_angle(sequence);
     // then
-    EXPECT_EQ(std::vector<alge2::point_2d>({alge2::point_2d(0.0, 0.0), alge2::point_2d(1.0, 1.0),
-                                            alge2::point_2d(4.0, 4.0), alge2::point_2d(-2.0, -2.0),
-                                            alge2::point_2d(-3.0, -3.0)}),
-              sequence);
+    EXPECT_EQ(
+            std::vector<alge2::point_2d>(
+                    {alge2::point_2d(0.0, 0.0), alge2::point_2d(1.0, 1.0),
+                     alge2::point_2d(4.0, 4.0), alge2::point_2d(-2.0, -2.0),
+                     alge2::point_2d(-3.0, -3.0)}),
+            sequence);
 }
 
 TEST(Geometry2DTest, distance_WhenDifferentPoints_ThenDistance)

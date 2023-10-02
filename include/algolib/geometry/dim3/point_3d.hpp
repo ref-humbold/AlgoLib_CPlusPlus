@@ -1,6 +1,6 @@
 /*!
  * \file point_3d.hpp
- * \brief Structure of point in 3D
+ * \brief Structure of point in 3D.
  */
 #ifndef POINT_3D_HPP_
 #define POINT_3D_HPP_

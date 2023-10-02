@@ -1,6 +1,6 @@
 /**!
  * \file fraction.cpp
- * \brief Structure of fraction
+ * \brief Structure of fraction.
  */
 #include "algolib/maths/fraction.hpp"
 

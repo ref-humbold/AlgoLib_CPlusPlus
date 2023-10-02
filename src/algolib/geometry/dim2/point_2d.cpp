@@ -1,6 +1,6 @@
 /*!
  * \file point_2d.cpp
- * \brief Structure of point in 2D
+ * \brief Structure of point in 2D.
  */
 #include "algolib/geometry/dim2/point_2d.hpp"
 

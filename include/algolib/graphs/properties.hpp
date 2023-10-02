@@ -1,6 +1,6 @@
 /*!
  * \file properties.hpp
- * \brief Structure of graph properties
+ * \brief Structure of graph properties.
  */
 #ifndef PROPERTIES_HPP_
 #define PROPERTIES_HPP_

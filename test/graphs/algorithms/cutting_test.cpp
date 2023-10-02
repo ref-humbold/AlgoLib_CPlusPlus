@@ -1,6 +1,6 @@
 /*!
  * \file cutting_test.cpp
- * \brief Tests: Algorithms for graph cutting (edge cut and vertex cut)
+ * \brief Tests: Algorithms for graph cutting (edge cut and vertex cut).
  */
 #include <algorithm>
 #include <vector>
@@ -37,8 +37,9 @@ TEST(CuttingTest, findEdgeCut_WhenPresentBridges_ThenBridges)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(std::vector<graph_e>({graph[std::make_pair(0, 7)], graph[std::make_pair(5, 6)]}),
-              result);
+    EXPECT_EQ(
+            std::vector<graph_e>({graph[std::make_pair(0, 7)], graph[std::make_pair(5, 6)]}),
+            result);
 }
 
 TEST(CuttingTest, findEdgeCut_WhenNoBridges_ThenEmptyVector)

@@ -1,6 +1,6 @@
 /*!
  * \file longest_common_subsequence_test.cpp
- * \brief Tests: Algorithm for longest common subsequence
+ * \brief Tests: Algorithm for longest common subsequence.
  */
 #include <gtest/gtest.h>
 #include "algolib/sequences/longest_common_subsequence.hpp"
@@ -13,8 +13,9 @@ std::vector<int> codes(const std::string & text)
 {
     std::vector<int> sequence;
 
-    std::transform(text.begin(), text.end(), std::back_inserter(sequence),
-                   [](const char c) { return +c; });
+    std::transform(
+            text.begin(), text.end(), std::back_inserter(sequence),
+            [](const char c) { return +c; });
     return sequence;
 }
 

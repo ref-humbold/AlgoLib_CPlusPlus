@@ -1,6 +1,6 @@
 /*!
  * \file undirected_graph_test.cpp
- * \brief Tests: Structure of undirected graph
+ * \brief Tests: Structure of undirected graph.
  */
 #include <gtest/gtest.h>
 #include "algolib/graphs/undirected_graph.hpp"

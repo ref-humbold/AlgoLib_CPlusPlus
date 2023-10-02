@@ -1,6 +1,6 @@
 /**!
  * \file strongly_connected_components_test.cpp
- * \brief Tests: Algorithm for strongly connected components
+ * \brief Tests: Algorithm for strongly connected components.
  */
 #include <algorithm>
 #include <gtest/gtest.h>

@@ -1,6 +1,6 @@
 /**!
  * \file maximum_subarray.hpp
- * \brief Algorithms for maximum subarray
+ * \brief Algorithms for maximum subarray.
  */
 #ifndef MAXIMUM_SUBARRAY_HPP_
 #define MAXIMUM_SUBARRAY_HPP_

@@ -1,6 +1,6 @@
 /*!
  * \file disjoint_sets.hpp
- * \brief Structure of disjoint sets (union-find)
+ * \brief Structure of disjoint sets (union-find).
  */
 #ifndef DISJOINT_SETS_HPP_
 #define DISJOINT_SETS_HPP_

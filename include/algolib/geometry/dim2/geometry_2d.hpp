@@ -1,6 +1,6 @@
 /*!
  * \file geometry_2d.hpp
- * \brief Algorithms for basic geometrical computations in 2D
+ * \brief Algorithms for basic geometrical operations in 2D.
  */
 #ifndef GEOMETRY_2D_HPP_
 #define GEOMETRY_2D_HPP_

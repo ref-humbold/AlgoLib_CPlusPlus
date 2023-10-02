@@ -1,6 +1,6 @@
 /**!
  * \file matching_test.hpp
- * \brief Tests: Hopcroft-Karp algorithm for matching in bipartite graph
+ * \brief Tests: Hopcroft-Karp algorithm for matching in a bipartite graph.
  */
 #include <gtest/gtest.h>
 #include "algolib/graphs/algorithms/matching.hpp"

@@ -1,6 +1,6 @@
 /*!
  * \file trie.hpp
- * \brief Structure of trie tree
+ * \brief Structure of trie tree.
  */
 #ifndef TRIE_HPP_
 #define TRIE_HPP_

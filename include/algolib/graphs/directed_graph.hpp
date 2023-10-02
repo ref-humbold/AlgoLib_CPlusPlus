@@ -1,6 +1,6 @@
 /*!
  * \file directed_graph.hpp
- * \brief Structure of directed graph
+ * \brief Structure of directed graph.
  */
 #ifndef DIRECTED_GRAPH_HPP_
 #define DIRECTED_GRAPH_HPP_
@@ -34,9 +34,10 @@ namespace algolib::graphs
         virtual void reverse() = 0;
     };
 
-    template <typename VertexId = size_t,
-              typename VertexProperty = std::nullptr_t,
-              typename EdgeProperty = std::nullptr_t>
+    template <
+            typename VertexId = size_t,
+            typename VertexProperty = std::nullptr_t,
+            typename EdgeProperty = std::nullptr_t>
     class directed_simple_graph
         : public simple_graph<VertexId, VertexProperty, EdgeProperty>,
           public virtual directed_graph<VertexId, VertexProperty, EdgeProperty>
@@ -71,9 +72,10 @@ namespace algolib::graphs
         {
             auto edges_set = this->representation.edges_set();
 
-            return std::accumulate(edges_set.begin(), edges_set.end(), 0,
-                                   [](size_t acc, const std::unordered_set<edge_type> & edges)
-                                   { return acc + edges.size(); });
+            return std::accumulate(
+                    edges_set.begin(), edges_set.end(), 0,
+                    [](size_t acc, const std::unordered_set<edge_type> & edges)
+                    { return acc + edges.size(); });
         }
 
         std::vector<edge_type> edges() const override
@@ -107,8 +109,9 @@ namespace algolib::graphs
         size_t degree = 0;
 
         for(auto && edges : this->representation.edges_set())
-            degree += std::count_if(edges.begin(), edges.end(),
-                                    [&](auto && edge) { return edge.destination() == vertex; });
+            degree += std::count_if(
+                    edges.begin(), edges.end(),
+                    [&](auto && edge) { return edge.destination() == vertex; });
 
         return degree;
     }
@@ -154,8 +157,9 @@ namespace algolib::graphs
         std::vector<vertex_type> all_vertices = this->vertices();
         std::vector<vertex_id_type> vertex_ids;
 
-        std::transform(std::begin(all_vertices), std::end(all_vertices),
-                       std::back_inserter(vertex_ids), [](auto && vertex) { return vertex.id(); });
+        std::transform(
+                std::begin(all_vertices), std::end(all_vertices), std::back_inserter(vertex_ids),
+                [](auto && vertex) { return vertex.id(); });
 
         repr new_representation(vertex_ids);
 

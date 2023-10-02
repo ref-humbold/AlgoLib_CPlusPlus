@@ -1,6 +1,6 @@
 /*!
  * \file simple_graph.hpp
- * \brief Structure of simple graph
+ * \brief Structure of simple graph.
  */
 #ifndef SIMPLE_GRAPH_HPP_
 #define SIMPLE_GRAPH_HPP_

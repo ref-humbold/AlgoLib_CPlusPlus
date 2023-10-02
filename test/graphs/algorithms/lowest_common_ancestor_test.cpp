@@ -1,6 +1,6 @@
 /*!
  * \file lowest_common_ancestor_test.cpp
- * \brief Tests: Algorithm for lowest common ancestor
+ * \brief Tests: Algorithm for lowest common ancestors in a rooted tree.
  */
 #include <gtest/gtest.h>
 #include "algolib/graphs/algorithms/lowest_common_ancestor.hpp"

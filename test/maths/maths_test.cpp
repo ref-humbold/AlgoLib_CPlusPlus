@@ -1,6 +1,6 @@
 /**!
  * \file maths_test.cpp
- * \brief Tests: Algorithms for basic mathematical computations
+ * \brief Tests: Algorithms for basic mathematical operations.
  */
 #include <gtest/gtest.h>
 #include "algolib/maths/maths.hpp"

@@ -1,6 +1,6 @@
 /*!
  * \file double_heap.hpp
- * \brief Structure of double heap
+ * \brief Structure of double heap.
  */
 #ifndef DOUBLE_HEAP_HPP_
 #define DOUBLE_HEAP_HPP_

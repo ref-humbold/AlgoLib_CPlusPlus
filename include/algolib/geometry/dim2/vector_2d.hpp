@@ -1,6 +1,6 @@
 /*!
  * \file vector_2d.hpp
- * \brief Structure of vector in 2D
+ * \brief Structure of vector in 2D.
  */
 #ifndef VECTOR_2D_HPP_
 #define VECTOR_2D_HPP_

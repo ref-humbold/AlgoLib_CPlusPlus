@@ -1,6 +1,6 @@
 /**!
  * \file longest_common_subsequence.hpp
- * \brief Algorithm for longest common subsequence
+ * \brief Algorithm for longest common subsequence.
  */
 #ifndef LONGEST_COMMON_SUBSEQUENCE_HPP_
 #define LONGEST_COMMON_SUBSEQUENCE_HPP_

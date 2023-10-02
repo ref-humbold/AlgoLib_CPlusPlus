@@ -1,6 +1,6 @@
 /*!
  * \file vector_3d.hpp
- * \brief Structure of vector in 3D
+ * \brief Structure of vector in 3D.
  */
 #ifndef VECTOR_3D_HPP_
 #define VECTOR_3D_HPP_

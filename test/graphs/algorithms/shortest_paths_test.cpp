@@ -1,6 +1,6 @@
 /**!
  * \file shortest_paths_test.cpp
- * \brief Tests: Algorithms for shortest paths in graph
+ * \brief Tests: Algorithms for shortest paths in a graph.
  */
 #include <vector>
 #include <gtest/gtest.h>
@@ -60,30 +60,30 @@ public:
         directed_graph.add_edge_between(directed_graph[8], directed_graph[9], weighted_impl(10.0));
         directed_graph.add_edge_between(directed_graph[9], directed_graph[6], weighted_impl(3.0));
 
-        undirected_graph.add_edge_between(undirected_graph[0], undirected_graph[1],
-                                          weighted_impl(4.0));
-        undirected_graph.add_edge_between(undirected_graph[1], undirected_graph[4],
-                                          weighted_impl(7.0));
-        undirected_graph.add_edge_between(undirected_graph[1], undirected_graph[7],
-                                          weighted_impl(12.0));
-        undirected_graph.add_edge_between(undirected_graph[2], undirected_graph[6],
-                                          weighted_impl(8.0));
-        undirected_graph.add_edge_between(undirected_graph[3], undirected_graph[0],
-                                          weighted_impl(3.0));
-        undirected_graph.add_edge_between(undirected_graph[3], undirected_graph[7],
-                                          weighted_impl(5.0));
-        undirected_graph.add_edge_between(undirected_graph[4], undirected_graph[5],
-                                          weighted_impl(1.0));
-        undirected_graph.add_edge_between(undirected_graph[4], undirected_graph[3],
-                                          weighted_impl(10.0));
-        undirected_graph.add_edge_between(undirected_graph[5], undirected_graph[8],
-                                          weighted_impl(2.0));
-        undirected_graph.add_edge_between(undirected_graph[7], undirected_graph[5],
-                                          weighted_impl(2.0));
-        undirected_graph.add_edge_between(undirected_graph[7], undirected_graph[8],
-                                          weighted_impl(6.0));
-        undirected_graph.add_edge_between(undirected_graph[9], undirected_graph[6],
-                                          weighted_impl(3.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[0], undirected_graph[1], weighted_impl(4.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[1], undirected_graph[4], weighted_impl(7.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[1], undirected_graph[7], weighted_impl(12.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[2], undirected_graph[6], weighted_impl(8.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[3], undirected_graph[0], weighted_impl(3.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[3], undirected_graph[7], weighted_impl(5.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[4], undirected_graph[5], weighted_impl(1.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[4], undirected_graph[3], weighted_impl(10.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[5], undirected_graph[8], weighted_impl(2.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[7], undirected_graph[5], weighted_impl(2.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[7], undirected_graph[8], weighted_impl(6.0));
+        undirected_graph.add_edge_between(
+                undirected_graph[9], undirected_graph[6], weighted_impl(3.0));
     }
 
     ~PathsTest() override = default;
@@ -102,18 +102,20 @@ protected:
     }
 
     template <typename Graph>
-    std::unordered_map<std::pair<typename Graph::vertex_type, typename Graph::vertex_type>,
-                       weight_t>
+    std::unordered_map<
+            std::pair<typename Graph::vertex_type, typename Graph::vertex_type>,
+            weight_t>
             from_matrix(const std::vector<std::vector<weight_t>> & distances, const Graph & graph)
     {
-        std::unordered_map<std::pair<typename Graph::vertex_type, typename Graph::vertex_type>,
-                           weight_t>
+        std::unordered_map<
+                std::pair<typename Graph::vertex_type, typename Graph::vertex_type>, weight_t>
                 map;
 
         for(auto && source : graph.vertices())
             for(auto && destination : graph.vertices())
-                map.emplace(std::make_pair(source, destination),
-                            distances[source.id()][destination.id()]);
+                map.emplace(
+                        std::make_pair(source, destination),
+                        distances[source.id()][destination.id()]);
 
         return map;
     }

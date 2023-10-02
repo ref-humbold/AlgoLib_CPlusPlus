@@ -1,6 +1,6 @@
 /**!
  * \file longest_common_subsequence.cpp
- * \brief Algorithm for longest common subsequence
+ * \brief Algorithm for longest common subsequence.
  */
 #include "algolib/sequences/longest_common_subsequence.hpp"
 

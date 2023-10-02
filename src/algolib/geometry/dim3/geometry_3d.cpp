@@ -1,6 +1,6 @@
 /*!
  * \file geometry.cpp
- * \brief Basic geometric operations in 3D
+ * \brief Algorithms for basic geometrical operations in 3D.
  */
 #include "algolib/geometry/dim3/geometry_3d.hpp"
 
@@ -29,9 +29,10 @@ void alge3::sort_by_z(std::vector<alge3::point_3d> & points)
 
 double alge3::distance(const alge3::point_3d & point1, const alge3::point_3d & point2)
 {
-    return sqrt((point2.x() - point1.x()) * (point2.x() - point1.x())
-                + (point2.y() - point1.y()) * (point2.y() - point1.y())
-                + (point2.z() - point1.z()) * (point2.z() - point1.z()));
+    return sqrt(
+            (point2.x() - point1.x()) * (point2.x() - point1.x())
+            + (point2.y() - point1.y()) * (point2.y() - point1.y())
+            + (point2.z() - point1.z()) * (point2.z() - point1.z()));
 }
 
 alge3::point_3d alge3::translate(const alge3::point_3d & point, const alge3::vector_3d & vector)
@@ -41,6 +42,7 @@ alge3::point_3d alge3::translate(const alge3::point_3d & point, const alge3::vec
 
 alge3::point_3d alge3::reflect(const alge3::point_3d & point, const alge3::point_3d & centre)
 {
-    return point_3d(-point.x() + centre.x() + centre.x(), -point.y() + centre.y() + centre.y(),
-                    -point.z() + centre.z() + centre.z());
+    return point_3d(
+            -point.x() + centre.x() + centre.x(), -point.y() + centre.y() + centre.y(),
+            -point.z() + centre.z() + centre.z());
 }

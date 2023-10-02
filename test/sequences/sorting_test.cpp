@@ -1,6 +1,6 @@
 /*!
  * \file sorting_test.cpp
- * \brief Tests: Algorithms for sorting vectors
+ * \brief Tests: Algorithms for sequence sorting.
  */
 #include <algorithm>
 #include <gtest/gtest.h>

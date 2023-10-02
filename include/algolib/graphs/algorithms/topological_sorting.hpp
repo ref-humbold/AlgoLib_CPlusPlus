@@ -1,6 +1,6 @@
 /*!
  * \file topological_sorting.hpp
- * \brief Algorithms for topological sorting of a directed graph
+ * \brief Algorithms for topological sorting of a graph.
  */
 #ifndef TOPOLOGICAL_SORTING_HPP_
 #define TOPOLOGICAL_SORTING_HPP_
@@ -90,10 +90,10 @@ namespace algolib::graphs
                 input_degrees;
         std::priority_queue<
                 typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
-                std::vector<typename directed_graph<VertexId, VertexProperty,
-                                                    EdgeProperty>::vertex_type>,
-                std::greater<typename directed_graph<VertexId, VertexProperty,
-                                                     EdgeProperty>::vertex_type>>
+                std::vector<typename directed_graph<
+                        VertexId, VertexProperty, EdgeProperty>::vertex_type>,
+                std::greater<typename directed_graph<
+                        VertexId, VertexProperty, EdgeProperty>::vertex_type>>
                 vertex_queue;
 
         for(auto && vertex : graph.vertices())
