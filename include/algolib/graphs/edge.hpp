@@ -90,7 +90,10 @@ namespace algolib::graphs
             throw std::invalid_argument("Edge is not adjacent to the vertex");
         }
 
-        //! \return the edge with reversed direction
+        /*!
+         * \brief Gets the reversed copy of this edge.
+         * \return the edge with reversed direction
+         */
         edge<VertexId> reversed() const
         {
             return edge<VertexId>(destination_, source_);

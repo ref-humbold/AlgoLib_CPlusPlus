@@ -38,51 +38,55 @@ namespace algolib::text
         suffix_array & operator=(const suffix_array &) = default;
         suffix_array & operator=(suffix_array &&) = default;
 
-        //! \return the text for this suffix array
         std::string text() const
         {
             return text_;
         }
 
-        //! \return the length of this suffix array
+        /*!
+         * \brief Gets the length of this suffix array.
+         * \return the length of suffix array
+         */
         size_t size() const
         {
             return size_;
         }
 
         /*!
-         * \param i the index in this suffix array
+         * \brief Gets the text suffix at given index.
+         * \param i the index in suffix array
          * \return the text suffix at the index
          */
         std::string at(size_t i) const;
 
         /*!
-         * \param i the index in this suffix array
+         * \brief Gets the text suffix at given index.
+         * \param i the index in suffix array
          * \return the text suffix at the index
          */
         std::string operator[](size_t i) const;
 
         /*!
-         * \brief Finds suffix in text for given index in this suffix array.
-         * \param i the index in this suffix array
+         * \brief Searches for suffix in text for given index in this suffix array.
+         * \param index the index in suffix array
          * \return the index in text where suffix begins
          */
-        size_t index_at(size_t i) const;
+        size_t index_at(size_t index) const;
 
         /*!
-         * \brief Finds index in this suffix array for given text suffix.
-         * \param suf the index in text where suffix starts
-         * \return the index of suffix in the array
+         * \brief Searches for index in this suffix array for given text suffix.
+         * \param index the index in text where suffix starts
+         * \return the index in suffix array
          */
-        size_t index_of(size_t suf) const;
+        size_t index_of(size_t index) const;
 
         /*!
          * \brief Computes length of longest common prefix of given suffixes.
-         * \param suf1 the index in text where the first suffix begins
-         * \param suf2 the index in text where the second suffix begins
+         * \param index1 the index in text where the first suffix begins
+         * \param index2 the index in text where the second suffix begins
          * \return the length of longest common prefix
          */
-        size_t lcp(size_t suf1, size_t suf2) const;
+        size_t lcp(size_t index1, size_t index2) const;
 
     private:
         void init_array();

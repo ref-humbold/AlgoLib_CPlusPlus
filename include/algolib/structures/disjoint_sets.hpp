@@ -51,13 +51,19 @@ namespace algolib::structures
         disjoint_sets & operator=(const disjoint_sets & ds) = default;
         disjoint_sets & operator=(disjoint_sets && ds) noexcept = default;
 
-        //! \return the number of sets
+        /*!
+         * \brief Gets the number of sets in this structure
+         * \return the number of sets
+         */
         size_type size() const
         {
             return this->size_;
         }
 
-        //! \return \c true if this structure is empty, otherwise \c false
+        /*!
+         * \brief Checks whether this structure is empty.
+         * \return \c true if the structure is empty, otherwise \c false
+         */
         bool empty() const
         {
             return this->size_ == 0;
@@ -66,7 +72,7 @@ namespace algolib::structures
         /*!
          * \brief Checks whether given element belongs to any set.
          * \param element the element
-         * \return \c true if element belongs to the structure, otherwise \c false
+         * \return \c true if the element belongs to the structure, otherwise \c false
          */
         bool contains(const_reference element) const
         {
@@ -85,7 +91,7 @@ namespace algolib::structures
          * \param element the new element
          * \param represent the represent of the set
          * \throw std::invalid_argument if the element is already present
-         * \throw std::out_of_range if represent is not present
+         * \throw std::out_of_range if the represent is not present
          */
         void insert(const_reference element, const_reference represent);
 
@@ -104,7 +110,7 @@ namespace algolib::structures
          * \param last end of new elements range
          * \param represent the represent of the set
          * \throw std::invalid_argument if any of the elements is already present
-         * \throw std::out_of_range if represent is not present
+         * \throw std::out_of_range if the represent is not present
          */
         template <typename InputIterator>
         void insert(InputIterator first, InputIterator last, const_reference represent);
@@ -113,7 +119,7 @@ namespace algolib::structures
          * \brief Finds represent of given element.
          * \param element the element
          * \return the represent of the element
-         * \throw std::out_of_range if element not present
+         * \throw std::out_of_range if the element not present
          */
         const_reference operator[](const_reference element);
 
@@ -121,7 +127,7 @@ namespace algolib::structures
          * \brief Finds represent of given element.
          * \param element the element
          * \return the represent of the element
-         * \throw std::out_of_range if element not present
+         * \throw std::out_of_range if the element not present
          */
         const_reference operator[](const_reference element) const;
 
@@ -159,7 +165,7 @@ namespace algolib::structures
          * \brief Joins two sets together.
          * \param element1 the element from the first set
          * \param element2 the element from the second set
-         * \throw std::out_of_range if element not present
+         * \throw std::out_of_range if either element is not present
          */
         void union_set(const_reference element1, const_reference element2);
 
@@ -167,8 +173,8 @@ namespace algolib::structures
          * \brief Checks whether given elements belong to the same set.
          * \param element1 the element from the first set
          * \param element2 the element from the second set
-         * \return \c true if both element are in the same set, otherwise \c false
-         * \throw std::out_of_range if element not present
+         * \return \c true if the elements are in same set, otherwise \c false
+         * \throw std::out_of_range if either element is not present
          */
         bool is_same_set(const_reference element1, const_reference element2);
 
@@ -176,8 +182,8 @@ namespace algolib::structures
          * \brief Checks whether given elements belong to the same set.
          * \param element1 element from the first set
          * \param element2 element from the second set
-         * \return \c true if both element are in the same set, otherwise \c false
-         * \throw std::out_of_range if element not present
+         * \return \c true if the elements are in same set, otherwise \c false
+         * \throw std::out_of_range if either element is not present
          */
         bool is_same_set(const_reference element1, const_reference element2) const;
 

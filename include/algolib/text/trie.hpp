@@ -47,35 +47,42 @@ namespace algolib::text
         trie & operator=(const trie & t);
         trie & operator=(trie && t) noexcept;
 
-        //! \return the number of texts in this trie
+        /*!
+         * \brief Gets the number of texts in this tree.
+         * \return the number of texts
+         */
+
         size_t size() const
         {
             return size_;
         }
 
-        //! \return \c true if this trie is empty, otherwise \c false
+        /*!
+         * \brief Checks whether this tree is empty.
+         * \return \c true if the tree is empty, otherwise \c false
+         */
         bool empty() const;
 
         /*!
-         * \brief Checks whether given text is present in this trie.
+         * \brief Checks whether given text is present in this tree.
          * \param text the text
          * \return \c true if the text was found in trie, otherwise \c false
          */
         bool contains(const std::string & text) const;
 
         /*!
-         * \brief Adds new text to this trie.
+         * \brief Adds new text to this tree.
          * \param text the new text
          */
         void insert(const std::string & text);
 
         /*!
-         * \brief Removes given text from this trie if present.
+         * \brief Removes given text from this tree, if present.
          * \param text the text
          */
         void erase(const std::string & text);
 
-        //! \brief Removes all texts in this trie.
+        //! \brief Removes all texts from this tree.
         void clear();
 
     private:

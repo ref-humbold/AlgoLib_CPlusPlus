@@ -1,6 +1,6 @@
 /*!
  * \file equation_system.hpp
- * \brief Structure of linear equations system.
+ * \brief Structure of system of linear equations.
  */
 #ifndef EQUATION_SYSTEM_HPP_
 #define EQUATION_SYSTEM_HPP_
@@ -47,8 +47,9 @@ namespace algolib::maths
         equation_system & operator=(equation_system && es) = default;
 
         /*!
-         * \param i the index of equation
-         * \return the equation of this system specified by the index
+         * \brief Gets the equation at given index.
+         * \param i the index
+         * \return the equation specified by the index
          */
         const equation<N> & operator[](size_t i) const
         {
@@ -56,9 +57,10 @@ namespace algolib::maths
         }
 
         /*!
-         * \param i the index of equation
-         * \return the equation of this system specified by the index
-         * \throw std::out_of_range if index is out of range
+         * \brief Gets the equation at given index.
+         * \param i the index
+         * \return the equation specified by the index
+         * \throw std::out_of_range if the index is out of range
          */
         const equation<N> & at(size_t i) const
         {
@@ -68,8 +70,8 @@ namespace algolib::maths
         /*!
          * \brief Computes solution of this equation system.
          * \return the solution
-         * \throw infinite_solutions_error if there are infinitely many solutions
-         * \throw no_solution_error if there is no solution
+         * \throw infinite_solutions_error if infinitely many solutions
+         * \throw no_solution_error if no solution
          */
         std::array<double, N> solve();
 
@@ -86,7 +88,7 @@ namespace algolib::maths
         /*!
          * \brief Checks whether given values solve this equation system.
          * \param solution the values
-         * \return \c true if solution is correct, otherwise \c false
+         * \return \c true if the solution is correct, otherwise \c false
          */
         bool has_solution(const std::array<double, N> & solution) const;
 

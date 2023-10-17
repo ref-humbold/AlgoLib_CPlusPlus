@@ -57,7 +57,7 @@ namespace algolib::maths
      * \param eq the equation
      * \param constant the contant
      * \return the equation with all coefficients multiplied
-     * \throw std::domain_error if constant is equal to zero
+     * \throw std::domain_error if the constant is equal to zero
      */
     template <size_t N>
     equation<N> operator*(equation<N> eq, double constant);
@@ -67,7 +67,7 @@ namespace algolib::maths
      * \param constant the contant
      * \param eq the equation
      * \return the equation with all coefficients multiplied
-     * \throw std::domain_error if constant is equal to zero
+     * \throw std::domain_error if the constant is equal to zero
      */
     template <size_t N>
     equation<N> operator*(double constant, equation<N> eq);
@@ -77,7 +77,7 @@ namespace algolib::maths
      * \param eq the equation
      * \param constant the contant
      * \return the equation with all coefficients divided
-     * \throw std::domain_error if constant is equal to zero
+     * \throw std::domain_error if the constant is equal to zero
      */
     template <size_t N>
     equation<N> operator/(equation<N> eq, double constant);
@@ -111,6 +111,11 @@ namespace algolib::maths
         equation & operator=(const equation & eq) = default;
         equation & operator=(equation && eq) noexcept = default;
 
+        double free_term() const
+        {
+            return this->free_term_;
+        }
+
         /*!
          * Adds another equation to this equation.
          * \param equation the equation
@@ -124,20 +129,21 @@ namespace algolib::maths
         equation & operator-=(const equation<N> & equation);
 
         /*!
-         * Multiplies equation by a constant.
+         * Multiplies this equation by given constant.
          * \param constant the constant
-         * \throw std::domain_error if constant is equal to zero
+         * \throw std::domain_error if the constant is equal to zero
          */
         equation & operator*=(double constant);
 
         /*!
-         * Divides equation by a constant.
+         * Divides this equation by given constant.
          * \param constant the constant
-         * \throw std::domain_error if constant is equal to zero
+         * \throw std::domain_error if the constant is equal to zero
          */
         equation & operator/=(double constant);
 
         /*!
+         * \brief Gets the coefficient by the variable at given index.
          * \param i the index of variable
          * \return the coefficient specified by the index
          */
@@ -147,9 +153,10 @@ namespace algolib::maths
         }
 
         /*!
+         * \brief Gets the coefficient by the variable at given index.
          * \param i the index of variable
          * \return the coefficient specified by the index
-         * \throw std::out_of_range if index is out of range
+         * \throw std::out_of_range if the index is out of range
          */
         const double & at(size_t i) const
         {
@@ -157,17 +164,9 @@ namespace algolib::maths
         }
 
         /*!
-         * \return free term of this equation
-         */
-        double free_term() const
-        {
-            return this->free_term_;
-        }
-
-        /*!
          * \brief Checks whether given values solve this equation.
          * \param solution the values
-         * \return \c true if solution is correct, otherwise \c false
+         * \return \c true if the solution is correct, otherwise \c false
          */
         bool has_solution(const std::array<double, N> & solution) const;
 

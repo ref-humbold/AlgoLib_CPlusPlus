@@ -13,9 +13,10 @@
 
 namespace algolib::structures
 {
-    template <typename E,
-              typename Container = std::vector<E>,
-              typename Compare = std::less<typename Container::value_type>>
+    template <
+            typename E,
+            typename Container = std::vector<E>,
+            typename Compare = std::less<typename Container::value_type>>
     class double_heap
     {
     public:
@@ -26,8 +27,9 @@ namespace algolib::structures
         using const_reference = typename container_type::const_reference;
         using size_type = typename container_type::size_type;
 
-        explicit double_heap(const value_compare & compare = value_compare(),
-                             const container_type & container = container_type())
+        explicit double_heap(
+                const value_compare & compare = value_compare(),
+                const container_type & container = container_type())
             : heap{container_type()}, compare{compare}
         {
             for(auto && element : container)
@@ -35,17 +37,19 @@ namespace algolib::structures
         }
 
         template <typename InputIterator>
-        double_heap(InputIterator first,
-                    InputIterator last,
-                    const value_compare & compare = value_compare())
+        double_heap(
+                InputIterator first,
+                InputIterator last,
+                const value_compare & compare = value_compare())
             : double_heap(compare)
         {
             for(InputIterator it = first; it != last; ++it)
                 this->push(*it);
         }
 
-        double_heap(std::initializer_list<value_type> init,
-                    const value_compare & compare = value_compare())
+        double_heap(
+                std::initializer_list<value_type> init,
+                const value_compare & compare = value_compare())
             : double_heap(init.begin(), init.end(), compare)
         {
         }
@@ -56,16 +60,22 @@ namespace algolib::structures
         double_heap & operator=(const double_heap &) = default;
         double_heap & operator=(double_heap &&) = default;
 
-        //! \return \c true if this double heap is empty, otherwise \c false
-        bool empty() const
-        {
-            return this->heap.empty();
-        }
-
-        //! \return the number of elements in this double heap
+        /*!
+         * \brief Gets the number of elements in this double heap.
+         * \return the number of elements
+         */
         size_type size() const
         {
             return this->heap.size();
+        }
+
+        /*!
+         * \brief Checks whether this double heap is empty.
+         * \return \c true if the double heap is empty, otherwise \c false
+         */
+        bool empty() const
+        {
+            return this->heap.empty();
         }
 
         //! \brief Removes all elements from this double heap.
@@ -77,7 +87,7 @@ namespace algolib::structures
         /*!
          * \brief Retrieves minimal element from this double heap.
          * \return the minimal element
-         * \throw std::out_of_range if this double heap is empty
+         * \throw std::out_of_range if the double heap is empty
          */
         const_reference min() const
         {
@@ -90,7 +100,7 @@ namespace algolib::structures
         /*!
          * \brief Retrieves maximal element from this double heap.
          * \return the maximal element
-         * \throw std::out_of_range if this double heap is empty
+         * \throw std::out_of_range if the double heap is empty
          */
         const_reference max() const
         {
@@ -214,8 +224,9 @@ namespace algolib::structures
 
             if(right_index < this->heap.size())
             {
-                size_type child_index = this->compare(*(this->heap.begin() + right_index),
-                                                      *(this->heap.begin() + left_index))
+                size_type child_index = this->compare(
+                                                *(this->heap.begin() + right_index),
+                                                *(this->heap.begin() + left_index))
                                                 ? left_index
                                                 : right_index;
 
@@ -243,8 +254,9 @@ namespace algolib::structures
 
             if(right_index < this->heap.size())
             {
-                size_type child_index = this->compare(*(this->heap.begin() + left_index),
-                                                      *(this->heap.begin() + right_index))
+                size_type child_index = this->compare(
+                                                *(this->heap.begin() + left_index),
+                                                *(this->heap.begin() + right_index))
                                                 ? left_index
                                                 : right_index;
 

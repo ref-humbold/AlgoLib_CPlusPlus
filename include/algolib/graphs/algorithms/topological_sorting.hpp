@@ -72,7 +72,7 @@ namespace algolib::graphs
      * \brief Topological sorting algorithm using predecessors counting.
      * \param graph the directed graph
      * \return the topological order of vertices
-     * \throw directed_cyclic_graph_error if given graph contains a cycle
+     * \throw directed_cyclic_graph_error if the graph contains a cycle
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
@@ -133,7 +133,7 @@ namespace algolib::graphs
      * \brief Topological sorting algorithm using depth-first search.
      * \param graph the directed graph
      * \return the topological order of vertices
-     * \throw directed_cyclic_graph_error if given graph contains a cycle
+     * \throw directed_cyclic_graph_error if the graph contains a cycle
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>

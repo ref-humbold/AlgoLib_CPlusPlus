@@ -52,17 +52,19 @@ namespace algolib::structures
         }
 
         template <typename InputIterator>
-        avl_tree(InputIterator first,
-                 InputIterator last,
-                 const value_compare & compare = value_compare())
+        avl_tree(
+                InputIterator first,
+                InputIterator last,
+                const value_compare & compare = value_compare())
             : avl_tree(compare)
         {
             for(InputIterator it = first; it != last; ++it)
                 this->insert(*it);
         }
 
-        avl_tree(std::initializer_list<value_type> init,
-                 const value_compare & compare = value_compare())
+        avl_tree(
+                std::initializer_list<value_type> init,
+                const value_compare & compare = value_compare())
             : avl_tree(init.begin(), init.end(), compare)
         {
         }
@@ -146,30 +148,36 @@ namespace algolib::structures
             return this->crend();
         }
 
-        //! \return \c true if the tree is empty, otherwise \c false
-        bool empty() const
-        {
-            return this->get_root() == nullptr;
-        }
-
-        //! \return the number of elements in this tree
+        /*!
+         * \brief Gets the number of elements in this tree.
+         * \return the number of elements
+         */
         size_type size() const
         {
             return this->size_;
         }
 
-        //! \brief Removes all elements in this tree.
+        /*!
+         * \brief Checks whether this tree is empty.
+         * \return \c true if the tree is empty, otherwise \c false
+         */
+        bool empty() const
+        {
+            return this->get_root() == nullptr;
+        }
+
+        //! \brief Removes all elements from this tree.
         void clear();
 
         /*!
-         * \brief Checks whether given element is present in this tree.
+         * \brief Checks whether given element belongs to this tree.
          * \param element the element
          * \return the iterator at the element if found, otherwise iterator at the end
          */
         iterator find(const_reference element);
 
         /*!
-         * \brief Checks whether given element is present in this tree.
+         * \brief Checks whether given element belongs to this tree.
          * \param element the element
          * \return the iterator at the element if found, otherwise iterator at the end
          */
@@ -193,7 +201,7 @@ namespace algolib::structures
         std::pair<iterator, bool> emplace(Args &&... args);
 
         /*!
-         * \brief Removes given element from this tree if present.
+         * \brief Removes given element from this tree, if present.
          * \param element the element
          * \return the number of element removed
          */
@@ -227,8 +235,9 @@ namespace algolib::structures
         inner_ptr search(inner_ptr node, const_reference element) const;
 
         // Searches for node that satisfies given predicate with given value.
-        inner_ptr find_node(const_reference element,
-                            std::function<bool(inner_ptr, const_reference)> predicate) const;
+        inner_ptr find_node(
+                const_reference element,
+                std::function<bool(inner_ptr, const_reference)> predicate) const;
 
         // Inserts inner node to this tree
         std::pair<iterator, bool> insert_node(inner_ptr node);

@@ -33,7 +33,7 @@ namespace algolib::geometry::dim2
     void sort_by_angle(std::vector<point_2d> & points);
 
     /*!
-     * \brief Calculates the distance between given points.
+     * \brief Calculates distance between given points.
     * \param point1 the first point
     * \param point2 the second point
     * \return the distance between the points

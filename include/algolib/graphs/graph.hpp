@@ -56,16 +56,28 @@ namespace algolib::graphs
 
         virtual const graph_properties & properties() const = 0;
 
-        //! \return the number of vertices
+        /*!
+         * \brief Gets the number of vertices in this graph.
+         * \return the number of vertices
+         */
         virtual size_t vertices_count() const = 0;
 
-        //! \return the number of edges
+        /*!
+         * \brief Gets the number of edges in this graph.
+         * \return the number of edges
+         */
         virtual size_t edges_count() const = 0;
 
-        //! \return all vertices
+        /*!
+         * \brief Gets all vertices in this graph.
+         * \return all vertices
+         */
         virtual std::vector<vertex_type> vertices() const = 0;
 
-        //! \return all edges
+        /*!
+         * \brief Gets all edges in this graph.
+         * \return all edges
+         */
         virtual std::vector<edge_type> edges() const = 0;
 
         /*!
