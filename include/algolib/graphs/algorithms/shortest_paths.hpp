@@ -1,6 +1,6 @@
 /**!
  * \file shortest_paths.hpp
- * \brief Algorithms for shortest paths in a graph.
+ * \brief Algorithms for shortest paths in a weighted graph.
  */
 #ifndef SHORTEST_PATHS_HPP_
 #define SHORTEST_PATHS_HPP_

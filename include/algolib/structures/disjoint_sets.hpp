@@ -173,7 +173,7 @@ namespace algolib::structures
          * \brief Checks whether given elements belong to the same set.
          * \param element1 the element from the first set
          * \param element2 the element from the second set
-         * \return \c true if the elements are in same set, otherwise \c false
+         * \return \c true if the elements are in the same set, otherwise \c false
          * \throw std::out_of_range if either element is not present
          */
         bool is_same_set(const_reference element1, const_reference element2);
@@ -182,7 +182,7 @@ namespace algolib::structures
          * \brief Checks whether given elements belong to the same set.
          * \param element1 element from the first set
          * \param element2 element from the second set
-         * \return \c true if the elements are in same set, otherwise \c false
+         * \return \c true if the elements are in the same set, otherwise \c false
          * \throw std::out_of_range if either element is not present
          */
         bool is_same_set(const_reference element1, const_reference element2) const;

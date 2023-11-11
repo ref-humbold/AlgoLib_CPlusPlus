@@ -89,21 +89,21 @@ namespace algolib::graphs
 
         /*!
          * \brief Gets the adjacent edges of given vertex.
-         * \param vertex vertex from this graph
+         * \param vertex the vertex from this graph
          * \return the edges adjacent to the vertex
          */
         virtual std::vector<edge<VertexId>> adjacent_edges(const vertex_type & vertex) const = 0;
 
         /*!
          * \brief Gets the output degree of given vertex.
-         * \param vertex vertex from the graph
+         * \param vertex the vertex from the graph
          * \return the output degree of the vertex
          */
         virtual size_t output_degree(const vertex_type & vertex) const = 0;
 
         /*!
          * \brief Gets the input degree of given vertex.
-         * \param vertex vertex from the graph
+         * \param vertex the vertex from the graph
          * \return the input degree of the vertex
          */
         virtual size_t input_degree(const vertex_type & vertex) const = 0;

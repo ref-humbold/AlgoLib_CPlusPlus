@@ -1,6 +1,6 @@
 /*!
  * \file topological_sorting.hpp
- * \brief Algorithms for topological sorting of a graph.
+ * \brief Algorithms for topological sorting of a directed acyclic graph.
  */
 #ifndef TOPOLOGICAL_SORTING_HPP_
 #define TOPOLOGICAL_SORTING_HPP_
