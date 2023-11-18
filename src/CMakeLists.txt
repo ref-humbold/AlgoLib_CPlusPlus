@@ -49,7 +49,8 @@ set(MATHS_SOURCES
     "${MATHS}/equation_system.cpp"
     "${MATHS}/fraction.cpp"
     "${MATHS}/maths.cpp"
-    "${MATHS}/primes.cpp")
+    "${MATHS}/primes_searching.cpp"
+    "${MATHS}/primes_testing.cpp")
 set(SEQUENCES_SOURCES
     "${SEQUENCES}/longest_common_subsequence.cpp"
     "${SEQUENCES}/longest_increasing_subsequence.cpp"

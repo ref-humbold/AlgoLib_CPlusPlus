@@ -213,7 +213,7 @@ TEST_F(DoubleHeapTest, emplace_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum
 }
 
 #pragma endregion
-#pragma region popMin & popMax
+#pragma region pop_min & pop_max
 
 TEST_F(DoubleHeapTest, popMin_WhenEmpty_ThenOutOfRange)
 {

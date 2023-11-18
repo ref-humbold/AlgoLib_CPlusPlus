@@ -1,9 +1,9 @@
 /**!
- * \file primes.hpp
- * \brief Algorithms for prime numbers.
+ * \file primes_testing.hpp
+ * \brief Algorithms for testing prime numbers.
  */
-#ifndef PRIMES_HPP_
-#define PRIMES_HPP_
+#ifndef PRIMES_TESTING_HPP_
+#define PRIMES_TESTING_HPP_
 
 #include <cstdlib>
 #include <vector>
@@ -11,73 +11,52 @@
 
 namespace algolib::maths
 {
-#pragma region find_primes
+#pragma region test_prime_fermat
 
     /*!
-     * \brief Finds prime numbers inside given range of numbers.
-     * \param minimum the minimal number, inclusive
-     * \param maximum the maximal number, exclusive
-     * \return the prime numbers
+     * \brief Checks whether given number is prime using Fermat prime test.
+     * \param number the number
+     * \return \c true if the number is probably prime, otherwise \c false
      */
-    std::vector<size_t> find_primes(size_t minimum, size_t maximum);
+    bool test_prime_fermat(int number);
 
     /*!
-     * \brief Finds prime numbers less than given number.
-     * \param maximum the maximal number, exclusive
-     * \return the prime numbers
+     * \brief Checks whether given number is prime using Fermat prime test.
+     * \param number the number
+     * \return \c true if the number is probably prime, otherwise \c false
      */
-    inline std::vector<size_t> find_primes(size_t maximum)
-    {
-        return find_primes(0, maximum);
-    }
+    bool test_prime_fermat(long number);
+
+    /*!
+     * \brief Checks whether given number is prime using Fermat prime test.
+     * \param number the number
+     * \return \c true if the number is probably prime, otherwise \c false
+     */
+    bool test_prime_fermat(long long number);
 
 #pragma endregion
-#pragma region test_fermat
-
-    /*!
-     * \brief Checks whether given number is prime using Fermat prime test.
-     * \param number the number
-     * \return \c true if the number is probably prime, otherwise \c false
-     */
-    bool test_fermat(int number);
-
-    /*!
-     * \brief Checks whether given number is prime using Fermat prime test.
-     * \param number the number
-     * \return \c true if the number is probably prime, otherwise \c false
-     */
-    bool test_fermat(long number);
-
-    /*!
-     * \brief Checks whether given number is prime using Fermat prime test.
-     * \param number the number
-     * \return \c true if the number is probably prime, otherwise \c false
-     */
-    bool test_fermat(long long number);
-
-#pragma endregion
-#pragma region test_miller
+#pragma region test_prime_miller
 
     /*!
      * \brief Checks whether given number is prime using Miller-Rabin prime test.
      * \param number the number
      * \return \c true if the number is probably prime, otherwise \c false
      */
-    bool test_miller(int number);
+    bool test_prime_miller(int number);
 
     /*!
      * \brief Checks whether given number is prime using Miller-Rabin prime test.
      * \param number the number
      * \return \c true if the number is probably prime, otherwise \c false
      */
-    bool test_miller(long number);
+    bool test_prime_miller(long number);
 
     /*!
      * \brief Checks whether given number is prime using Miller-Rabin prime test.
      * \param number the number
      * \return \c true if the number is probably prime, otherwise \c false
      */
-    bool test_miller(long long number);
+    bool test_prime_miller(long long number);
 
 #pragma endregion
 }

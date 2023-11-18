@@ -47,7 +47,8 @@ set(MATHS_TEST_SOURCES
     "${MATHS_TEST}/equation_system_test.cpp"
     "${MATHS_TEST}/fraction_test.cpp"
     "${MATHS_TEST}/maths_test.cpp"
-    "${MATHS_TEST}/primes_test.cpp")
+    "${MATHS_TEST}/primes_searching_test.cpp"
+    "${MATHS_TEST}/primes_testing_test.cpp")
 set(SEQUENCES_TEST_SOURCES
     "${SEQUENCES_TEST}/longest_common_subsequence_test.cpp"
     "${SEQUENCES_TEST}/longest_increasing_subsequence_test.cpp"
