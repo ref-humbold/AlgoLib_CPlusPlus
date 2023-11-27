@@ -8,17 +8,6 @@
 
 namespace alma = algolib::maths;
 
-template <size_t N>
-std::array<double, N> coefficients(alma::equation<N> eq)
-{
-    std::array<double, N> result;
-
-    for(size_t i = 0; i < N; ++i)
-        result[i] = eq[i];
-
-    return result;
-}
-
 class EquationTest : public ::testing::Test
 {
 protected:
@@ -37,7 +26,7 @@ TEST_F(EquationTest, operatorUnaryPlus_ThenCopied)
     // when
     alma::equation<4> result = +test_object;
     // then
-    EXPECT_EQ(coefficients(test_object), coefficients(result));
+    EXPECT_EQ(test_object.coefficients(), result.coefficients());
     EXPECT_EQ(test_object.free_term(), result.free_term());
 }
 
@@ -46,7 +35,7 @@ TEST_F(EquationTest, operatorUnaryMinus_ThenNegated)
     // when
     alma::equation<4> result = -test_object;
     // then
-    EXPECT_EQ((std::array<double, 4>{-2, -3, 0, 2.5}), coefficients(result));
+    EXPECT_EQ((std::array<double, 4>{-2, -3, 0, 2.5}), result.coefficients());
     EXPECT_EQ(-15, result.free_term());
 }
 
@@ -55,7 +44,7 @@ TEST_F(EquationTest, operatorPlus_ThenAddingEquations)
     // when
     alma::equation<4> result = test_object + alma::equation<4>({1, -1, 4, 10}, 5);
     // then
-    EXPECT_EQ((std::array<double, 4>{3, 2, 4, 7.5}), coefficients(result));
+    EXPECT_EQ((std::array<double, 4>{3, 2, 4, 7.5}), result.coefficients());
     EXPECT_EQ(20, result.free_term());
 }
 
@@ -64,7 +53,7 @@ TEST_F(EquationTest, operatorMinus_ThenSubtractingEquations)
     // when
     alma::equation<4> result = test_object - alma::equation<4>({1, -1, 4, 10}, 5);
     // then
-    EXPECT_EQ((std::array<double, 4>{1, 4, -4, -12.5}), coefficients(result));
+    EXPECT_EQ((std::array<double, 4>{1, 4, -4, -12.5}), result.coefficients());
     EXPECT_EQ(10, result.free_term());
 }
 
@@ -73,7 +62,7 @@ TEST_F(EquationTest, operatorAsterisk_WhenConstantIsNonZero_ThenMultiplyingEachC
     // when
     alma::equation<4> result = test_object * 2;
     // then
-    EXPECT_EQ((std::array<double, 4>{4, 6, 0, -5}), coefficients(result));
+    EXPECT_EQ((std::array<double, 4>{4, 6, 0, -5}), result.coefficients());
     EXPECT_EQ(30, result.free_term());
 }
 
@@ -90,7 +79,7 @@ TEST_F(EquationTest, operatorSlash_WhenConstantIsNonZero_ThenDividingEachCoeffic
     // when
     alma::equation<4> result = test_object / -2;
     // then
-    EXPECT_EQ((std::array<double, 4>{-1, -1.5, 0, 1.25}), coefficients(result));
+    EXPECT_EQ((std::array<double, 4>{-1, -1.5, 0, 1.25}), result.coefficients());
     EXPECT_EQ(-7.5, result.free_term());
 }
 

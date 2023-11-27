@@ -15,6 +15,14 @@
 
 namespace algolib::maths
 {
+    template <size_t N>
+    class equation_system;
+
+    template <size_t N>
+    std::ostream & operator<<(std::ostream & os, const equation_system<N> & eqs);
+
+#pragma region errors
+
     class infinite_solutions_error : public std::runtime_error
     {
     public:
@@ -30,6 +38,9 @@ namespace algolib::maths
         {
         }
     };
+
+#pragma endregion
+#pragma region equation_system
 
     template <size_t N>
     class equation_system
@@ -92,8 +103,12 @@ namespace algolib::maths
          */
         bool has_solution(const std::array<double, N> & solution) const;
 
+        friend std::ostream & operator<< <N>(std::ostream & os, const equation_system<N> & eqs);
+
     private:
         std::array<equation<N>, N> equations;
+
+        size_t min_coefficient_index(size_t starting_index);
     };
 
     template <size_t N>
@@ -101,24 +116,27 @@ namespace algolib::maths
     {
         gaussian_reduce();
 
-        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free_term() == 0)
+        if(this->equations[N - 1].coefficients()[N - 1] == 0
+           && this->equations[N - 1].free_term() == 0)
             throw infinite_solutions_error("Equation system has an infinite number of solutions");
 
-        if(this->equations[N - 1][N - 1] == 0 && this->equations[N - 1].free_term() != 0)
+        if(this->equations[N - 1].coefficients()[N - 1] == 0
+           && this->equations[N - 1].free_term() != 0)
             throw no_solution_error("Equation system has no solution");
 
         std::array<double, N> solution;
 
-        solution.back() = this->equations[N - 1].free_term() / this->equations[N - 1][N - 1];
+        solution.back() =
+                this->equations[N - 1].free_term() / this->equations[N - 1].coefficients()[N - 1];
 
         for(int i = N - 2; i >= 0; --i)
         {
             double value = this->equations[i].free_term();
 
             for(int j = N - 1; j > i; --j)
-                value -= this->equations[i][j] * solution[j];
+                value -= this->equations[i].coefficients()[j] * solution[j];
 
-            solution[i] = value / this->equations[i][i];
+            solution[i] = value / this->equations[i].coefficients()[i];
         }
 
         return solution;
@@ -133,20 +151,23 @@ namespace algolib::maths
 
             for(size_t j = i + 1; j < N; ++j)
             {
-                double min_coef = this->equations[index_min][i];
-                double act_coef = this->equations[j][i];
+                double min_coefficient = this->equations[index_min].coefficients()[i];
+                double current_coefficient = this->equations[j].coefficients()[i];
 
-                if(act_coef != 0 && (min_coef == 0 || std::abs(act_coef) < std::abs(min_coef)))
+                if(current_coefficient != 0
+                   && (min_coefficient == 0
+                       || std::abs(current_coefficient) < std::abs(min_coefficient)))
                     index_min = j;
             }
 
-            if(this->equations[index_min][i] != 0)
+            if(this->equations[index_min].coefficients()[i] != 0)
             {
                 swap(index_min, i);
 
                 for(size_t j = i + 1; j < N; ++j)
                 {
-                    double param = -this->equations[j][i] / this->equations[i][i];
+                    double param = -this->equations[j].coefficients()[i]
+                                   / this->equations[i].coefficients()[i];
 
                     if(param != 0)
                         this->equations[j] += param * this->equations[i];
@@ -167,6 +188,44 @@ namespace algolib::maths
         return std::all_of(
                 this->equations.begin(), this->equations.end(),
                 [&](auto && eq) { return eq.has_solution(solution); });
+    }
+
+    template <size_t N>
+    size_t equation_system<N>::min_coefficient_index(size_t starting_index)
+    {
+        int index_min = starting_index;
+
+        for(size_t i = starting_index + 1; i < N; ++i)
+        {
+            double min_coefficient = this->equations[index_min].coefficients()[starting_index];
+            double current_coefficient = this->equations[i].coefficients()[starting_index];
+
+            if(current_coefficient != 0
+               && (min_coefficient == 0
+                   || std::abs(current_coefficient) < std::abs(min_coefficient)))
+                index_min = i;
+        }
+
+        return index_min;
+    }
+
+#pragma endregion
+
+    template <size_t N>
+    std::ostream & operator<<(std::ostream & os, const equation_system<N> & eqs)
+    {
+        os << "{ ";
+
+        for(size_t i = 0; i < N; ++i)
+        {
+            if(i > 0)
+                os << " ; ";
+
+            os << eqs[i];
+        }
+
+        os << " }";
+        return os;
     }
 }
 

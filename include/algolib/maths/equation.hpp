@@ -84,16 +84,7 @@ namespace algolib::maths
 
     template <size_t N>
     std::ostream & operator<<(std::ostream & os, const equation<N> & eq);
-}
 
-namespace std
-{
-    template <size_t N>
-    struct hash<algolib::maths::equation<N>>;
-}
-
-namespace algolib::maths
-{
 #pragma region equation
 
     template <size_t N>
@@ -101,7 +92,7 @@ namespace algolib::maths
     {
     public:
         equation(const std::array<double, N> & coefficients, double free_term)
-            : coefficients{coefficients}, free_term_{free_term}
+            : coefficients_{coefficients}, free_term_{free_term}
         {
         }
 
@@ -110,6 +101,11 @@ namespace algolib::maths
         equation(equation && eq) noexcept = default;
         equation & operator=(const equation & eq) = default;
         equation & operator=(equation && eq) noexcept = default;
+
+        const std::array<double, N> & coefficients() const
+        {
+            return this->coefficients_;
+        }
 
         double free_term() const
         {
@@ -143,27 +139,6 @@ namespace algolib::maths
         equation & operator/=(double constant);
 
         /*!
-         * \brief Gets the coefficient by the variable at given index.
-         * \param i the index of variable
-         * \return the coefficient specified by the index
-         */
-        const double & operator[](size_t i) const
-        {
-            return this->coefficients[i];
-        }
-
-        /*!
-         * \brief Gets the coefficient by the variable at given index.
-         * \param i the index of variable
-         * \return the coefficient specified by the index
-         * \throw std::out_of_range if the index is out of range
-         */
-        const double & at(size_t i) const
-        {
-            return this->coefficients.at(i);
-        }
-
-        /*!
          * \brief Checks whether given values solve this equation.
          * \param solution the values
          * \return \c true if the solution is correct, otherwise \c false
@@ -180,7 +155,7 @@ namespace algolib::maths
         friend std::ostream & operator<< <N>(std::ostream & os, const equation<N> & eq);
 
     private:
-        std::array<double, N> coefficients;
+        std::array<double, N> coefficients_;
         double free_term_;
     };
 
@@ -188,7 +163,7 @@ namespace algolib::maths
     equation<N> & equation<N>::operator+=(const equation<N> & equation)
     {
         for(size_t i = 0; i < N; ++i)
-            this->coefficients[i] += equation[i];
+            this->coefficients_[i] += equation.coefficients_[i];
 
         this->free_term_ += equation.free_term_;
         return *this;
@@ -198,7 +173,7 @@ namespace algolib::maths
     equation<N> & equation<N>::operator-=(const equation<N> & equation)
     {
         for(size_t i = 0; i < N; ++i)
-            this->coefficients[i] -= equation[i];
+            this->coefficients_[i] -= equation.coefficients_[i];
 
         this->free_term_ -= equation.free_term_;
         return *this;
@@ -211,7 +186,7 @@ namespace algolib::maths
             throw std::domain_error("Constant cannot be equal to zero");
 
         for(size_t i = 0; i < N; ++i)
-            this->coefficients[i] *= constant;
+            this->coefficients_[i] *= constant;
 
         this->free_term_ *= constant;
         return *this;
@@ -224,7 +199,7 @@ namespace algolib::maths
             throw std::domain_error("Constant cannot be equal to zero");
 
         for(size_t i = 0; i < N; ++i)
-            this->coefficients[i] /= constant;
+            this->coefficients_[i] /= constant;
 
         this->free_term_ /= constant;
         return *this;
@@ -236,7 +211,7 @@ namespace algolib::maths
         double result = 0;
 
         for(size_t i = 0; i < N; ++i)
-            result += solution[i] * this->coefficients[i];
+            result += solution[i] * this->coefficients_[i];
 
         return result == this->free_term_;
     }
@@ -253,7 +228,7 @@ namespace algolib::maths
     equation<N> operator-(equation<N> eq)
     {
         for(size_t i = 0; i < N; ++i)
-            eq.coefficients[i] = -eq.coefficients[i];
+            eq.coefficients_[i] = -eq.coefficients_[i];
 
         eq.free_term_ = -eq.free_term_;
         return eq;
@@ -296,36 +271,18 @@ namespace algolib::maths
     template <size_t N>
     std::ostream & operator<<(std::ostream & os, const equation<N> & eq)
     {
-        for(size_t i = 0; i < eq.coefficients.size(); ++i)
-            if(eq.coefficients[i] != 0)
+        for(size_t i = 0; i < eq.coefficients_.size(); ++i)
+            if(eq.coefficients_[i] != 0)
             {
                 if(i > 0)
                     os << " + ";
 
-                os << eq.coefficients[i] << " x_" << i;
+                os << eq.coefficients_[i] << " x_" << i;
             }
 
         os << " = " << eq.free_term_;
         return os;
     }
-}
-
-namespace std
-{
-    template <size_t N>
-    struct hash<algolib::maths::equation<N>>
-    {
-        using argument_type = algolib::maths::equation<N>;
-        using result_type = size_t;
-
-        result_type operator()(const argument_type & eq)
-        {
-            result_type c_hash = std::hash<std::array<double, N>>()(eq.coefficients);
-            result_type f_hash = std::hash<double>()(eq.free_term_);
-
-            return c_hash ^ (f_hash + 0x9e3779b9 + (c_hash << 6) + (c_hash >> 2));
-        }
-    };
 }
 
 #endif
