@@ -1,18 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
 #SOURCES
-set(ALGOLIB "algolib")
-set(GEOMETRY "${ALGOLIB}/geometry")
-set(GEOMETRY_DIM2 "${GEOMETRY}/dim2")
-set(GEOMETRY_DIM3 "${GEOMETRY}/dim3")
-set(GRAPHS "${ALGOLIB}/graphs")
-set(GRAPHS_ALGORITHMS "${GRAPHS}/algorithms")
-set(MATHS "${ALGOLIB}/maths")
-set(SEQUENCES "${ALGOLIB}/sequences")
-set(STRUCTURES "${ALGOLIB}/structures")
-set(STRUCTURES_HEAPS "${STRUCTURES}/heaps")
-set(TEXT "${ALGOLIB}/text")
-
 set(GEOMETRY_SOURCES
     "${GEOMETRY}/geometry_object.cpp")
 set(GEOMETRY_DIM2_SOURCES
