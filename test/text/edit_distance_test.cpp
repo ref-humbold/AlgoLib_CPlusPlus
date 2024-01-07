@@ -11,6 +11,17 @@ const double offset = 1e-6;
 
 #pragma region count_levenshtein
 
+TEST(EditDistanceTest, countLevenshtein_WhenDifferentText_ThenDistance)
+{
+    // given
+    std::string source = "qwertyuiop";
+    std::string destination = "wertzuiopsx";
+    // when
+    double result = alte::count_levenshtein(source, destination);
+    // then
+    EXPECT_NEAR(4.0, result, offset);
+}
+
 TEST(EditDistanceTest, countLevenshtein_WhenSameText_ThenZero)
 {
     // given
@@ -54,6 +65,17 @@ TEST(EditDistanceTest, countLevenshtein_WhenNegativeCost_ThenInvalidArgument)
 #pragma endregion
 #pragma region count_lcs
 
+TEST(EditDistanceTest, countLcs__WhenDifferentText_ThenDistance)
+{
+    // given
+    std::string source = "qwertyuiop";
+    std::string destination = "wertzuiopsx";
+    // when
+    double result = alte::count_lcs(source, destination);
+    // then
+    EXPECT_NEAR(5.0, result, offset);
+}
+
 TEST(EditDistanceTest, countLcs_WhenSameText_ThenZero)
 {
     // given
@@ -96,6 +118,18 @@ TEST(EditDistanceTest, countLcs_WhenNegativeCost_ThenInvalidArgument)
 
 #pragma endregion
 #pragma region count_hamming
+
+TEST(EditDistanceTest, countHamming_WhenDifferentText_ThenDistance)
+{
+    // given
+    std::string source = "qwertyuiop";
+    std::string destination = "qvertzuimp";
+    double substitutionCost = 2.0;
+    // when
+    double result = alte::count_hamming(source, destination, substitutionCost);
+    // then
+    EXPECT_NEAR(3 * substitutionCost, result, offset);
+}
 
 TEST(EditDistanceTest, countHamming_WhenSameText_ThenZero)
 {

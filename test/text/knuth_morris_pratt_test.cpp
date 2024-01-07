@@ -7,6 +7,15 @@
 
 namespace alte = algolib::text;
 
+TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternFound_ThenAllOccurrences)
+{
+    // when
+    std::vector<size_t> result =
+            alte::kmp_search("abcdecdcdefgcdcdecdcdecdcdehijcdecdcdek", "cdecdcde");
+    // then
+    EXPECT_EQ(std::vector<size_t>({2, 14, 19, 30}), result);
+}
+
 TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternFoundOnce_ThenSingleOccurrence)
 {
     // when
@@ -26,7 +35,7 @@ TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternFoundTwice_ThenTwoOccurrences)
 TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternFoundTwiceAndIntersects_ThenTwoOccurrences)
 {
     // when
-    std::vector<size_t> result = alte::kmp_search("aaabcde", "aa");
+    std::vector<size_t> result = alte::kmp_search("aaaabcde", "aaa");
     // then
     EXPECT_EQ(std::vector<size_t>({0, 1}), result);
 }

@@ -12,17 +12,17 @@ namespace internal
     std::vector<size_t> prefixes(const std::string & pattern)
     {
         std::vector<size_t> pi = {0};
-        size_t pos = 0;
+        size_t position = 0;
 
-        for(const char & ltr : pattern)
+        for(const char & letter : pattern.substr(1))
         {
-            while(pos > 0 && pattern[pos] != ltr)
-                pos = pi[pos - 1];
+            while(position > 0 && pattern[position] != letter)
+                position = pi[position - 1];
 
-            if(pattern[pos] == ltr)
-                ++pos;
+            if(pattern[position] == letter)
+                ++position;
 
-            pi.push_back(pos);
+            pi.push_back(position);
         }
 
         return pi;
@@ -37,20 +37,20 @@ std::vector<size_t> alte::kmp_search(const std::string & text, const std::string
         return places;
 
     std::vector<size_t> pi = internal::prefixes(pattern);
-    size_t pos = 0;
+    size_t position = 0;
 
     for(size_t i = 0; i < text.size(); ++i)
     {
-        while(pos > 0 && pattern[pos] != text[i])
-            pos = pi[pos - 1];
+        while(position > 0 && pattern[position] != text[i])
+            position = pi[position - 1];
 
-        if(pattern[pos] == text[i])
-            ++pos;
+        if(pattern[position] == text[i])
+            ++position;
 
-        if(pos == pattern.size())
+        if(position == pattern.size())
         {
             places.push_back(i - pattern.size() + 1);
-            pos = pi[pos - 1];
+            position = pi[position - 1];
         }
     }
 
