@@ -1,6 +1,6 @@
 /*!
  * \file double_heap.hpp
- * \brief Structure of heap.
+ * \brief Structure of double heap.
  */
 #ifndef DOUBLE_HEAP_HPP_
 #define DOUBLE_HEAP_HPP_
@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace algolib::structures
+namespace algolib::structures::heaps
 {
     template <
             typename E,

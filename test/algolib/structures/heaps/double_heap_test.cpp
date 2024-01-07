@@ -5,14 +5,14 @@
 #include <gtest/gtest.h>
 #include "algolib/structures/heaps/double_heap.hpp"
 
-namespace alst = algolib::structures;
+namespace alsth = algolib::structures::heaps;
 
 class DoubleHeapTest : public ::testing::Test
 {
 protected:
     const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};
     const int minimum, maximum;
-    alst::double_heap<int> test_object;
+    alsth::double_heap<int> test_object;
 
 public:
     DoubleHeapTest()
@@ -36,7 +36,7 @@ TEST_F(DoubleHeapTest, empty_WhenNotEmpty_ThenFalse)
 TEST_F(DoubleHeapTest, empty_WhenEmpty_ThenTrue)
 {
     // given
-    test_object = alst::double_heap<int>();
+    test_object = alsth::double_heap<int>();
     // when
     bool result = test_object.empty();
     // then
@@ -54,7 +54,7 @@ TEST_F(DoubleHeapTest, size_WhenNotEmpty_ThenNumberOfElements)
 TEST_F(DoubleHeapTest, size_WhenEmpty_ThenZero)
 {
     // given
-    test_object = alst::double_heap<int>();
+    test_object = alsth::double_heap<int>();
     // when
     size_t result = test_object.size();
     // then
@@ -74,7 +74,7 @@ TEST_F(DoubleHeapTest, clear_WhenNotEmpty_ThenEmpty)
 TEST_F(DoubleHeapTest, min_WhenEmpty_ThenOutOfRange)
 {
     // given
-    test_object = alst::double_heap<int>();
+    test_object = alsth::double_heap<int>();
     // when
     auto exec = [&]() { test_object.min(); };
     // then
@@ -104,7 +104,7 @@ TEST_F(DoubleHeapTest, min_WhenMultipleElements_ThenMinimalElement)
 TEST_F(DoubleHeapTest, max_WhenEmpty_ThenOutOfRange)
 {
     // given
-    test_object = alst::double_heap<int>();
+    test_object = alsth::double_heap<int>();
     // when
     auto exec = [&]() { test_object.max(); };
     // then
@@ -139,7 +139,7 @@ TEST_F(DoubleHeapTest, push_WhenEmpty_ThenAdded)
     // given
     int element = 19;
 
-    test_object = alst::double_heap<int>();
+    test_object = alsth::double_heap<int>();
     // when
     test_object.push(element);
     // then
@@ -218,7 +218,7 @@ TEST_F(DoubleHeapTest, emplace_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum
 TEST_F(DoubleHeapTest, popMin_WhenEmpty_ThenOutOfRange)
 {
     // given
-    test_object = alst::double_heap<int>();
+    test_object = alsth::double_heap<int>();
     // when
     auto exec = [&]() { test_object.pop_min(); };
     // then
@@ -264,7 +264,7 @@ TEST_F(DoubleHeapTest, popMin_WhenMultipleCalls_ThenSortedAscending)
 TEST_F(DoubleHeapTest, popMax_WhenEmpty_ThenOutOfRange)
 {
     // given
-    test_object = alst::double_heap<int>();
+    test_object = alsth::double_heap<int>();
     // when
     auto exec = [&]() { test_object.pop_max(); };
     // then
