@@ -1,6 +1,6 @@
 /*!
  * \file double_heap.hpp
- * \brief Structure of double heap.
+ * \brief Structure of heap.
  */
 #ifndef DOUBLE_HEAP_HPP_
 #define DOUBLE_HEAP_HPP_
@@ -61,7 +61,7 @@ namespace algolib::structures
         double_heap & operator=(double_heap &&) = default;
 
         /*!
-         * \brief Gets the number of elements in this double heap.
+         * \brief Gets the number of elements in this heap.
          * \return the number of elements
          */
         size_type size() const
@@ -70,37 +70,37 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Checks whether this double heap is empty.
-         * \return \c true if the double heap is empty, otherwise \c false
+         * \brief Checks whether this heap is empty.
+         * \return \c true if the heap is empty, otherwise \c false
          */
         bool empty() const
         {
             return this->heap.empty();
         }
 
-        //! \brief Removes all elements from this double heap.
+        //! \brief Removes all elements from this heap.
         void clear()
         {
             this->heap = container_type();
         }
 
         /*!
-         * \brief Retrieves minimal element from this double heap.
+         * \brief Retrieves minimal element from this heap.
          * \return the minimal element
-         * \throw std::out_of_range if the double heap is empty
+         * \throw std::out_of_range if the heap is empty
          */
         const_reference min() const
         {
             if(this->empty())
-                throw std::out_of_range("Double heap is empty");
+                throw std::out_of_range("Heap is empty");
 
             return *(this->heap.begin() + index_max);
         }
 
         /*!
-         * \brief Retrieves maximal element from this double heap.
+         * \brief Retrieves maximal element from this heap.
          * \return the maximal element
-         * \throw std::out_of_range if the double heap is empty
+         * \throw std::out_of_range if the heap is empty
          */
         const_reference max() const
         {
@@ -108,22 +108,22 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Adds new element to this double heap.
+         * \brief Adds new element to this heap.
          * \param element the new element
          */
         void push(const_reference element);
 
         /*!
-         * \brief Adds new value to this double heap constructed in-place with given arguments.
+         * \brief Adds new value to this heap constructed in-place with given arguments.
          * \param args the arguments to forward to the new element's constructor
          */
         template <typename... Args>
         void emplace(Args &&... args);
 
-        //! \brief Removes minimal element from this double heap.
+        //! \brief Removes minimal element from this heap.
         void pop_min();
 
-        //! \brief Removes maximal element from this double heap.
+        //! \brief Removes maximal element from this heap.
         void pop_max();
 
     private:
@@ -159,7 +159,7 @@ namespace algolib::structures
     void double_heap<E, Container, Compare>::pop_min()
     {
         if(this->empty())
-            throw std::out_of_range("Double heap is empty");
+            throw std::out_of_range("Heap is empty");
 
         *(this->heap.begin() + index_max) = this->heap.back();
         this->heap.pop_back();

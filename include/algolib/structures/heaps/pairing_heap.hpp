@@ -1,6 +1,6 @@
 /*!
  * \file pairing_heap.hpp
- * \brief Structure of pairing heap.
+ * \brief Structure of heap.
  */
 #ifndef PAIRING_HEAP_HPP_
 #define PAIRING_HEAP_HPP_
@@ -19,7 +19,7 @@ namespace algolib::structures
     template <typename E, typename Compare = std::less<E>>
     class pairing_heap;
 
-    //! \brief Merges two pairing heaps.
+    //! \brief Merges two heaps.
     template <typename E, typename Compare>
     pairing_heap<E, Compare>
             operator|(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2);
@@ -70,7 +70,7 @@ namespace algolib::structures
         pairing_heap & operator=(pairing_heap &&) = default;
 
         /*!
-         * \brief Gets the number of elements in this pairing heap
+         * \brief Gets the number of elements in this heap
          * \return the number of elements
          */
         size_type size() const
@@ -79,15 +79,15 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Check whether this pairing heap is empty
-         * \return \c true if the pairing heap is empty, otherwise \c false
+         * \brief Check whether this heap is empty
+         * \return \c true if the heap is empty, otherwise \c false
          */
         bool empty() const
         {
             return !this->heap;
         }
 
-        //! \brief Removes all elements from this pairing heap.
+        //! \brief Removes all elements from this heap.
         void clear()
         {
             this->heap.reset();
@@ -95,35 +95,35 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Retrieves maximal element from this pairing heap.
+         * \brief Retrieves maximal element from this heap.
          * \return the maximal element
-         * \throw std::out_of_range if the pairing heap is empty
+         * \throw std::out_of_range if the heap is empty
          */
         const_reference top() const
         {
             if(this->empty())
-                throw std::out_of_range("Pairing heap is empty");
+                throw std::out_of_range("Heap is empty");
 
             return this->heap->element;
         }
 
         /*!
-         * \brief Adds new element to this pairing heap.
+         * \brief Adds new element to this heap.
          * \param element the new element
          */
         void push(const_reference element);
 
         /*!
-         * \brief Adds new element to this pairing heap constructed in-place with given arguments.
+         * \brief Adds new element to this heap constructed in-place with given arguments.
          * \param args arguments to forward to the new element's constructor
          */
         template <typename... Args>
         void emplace(Args &&... args);
 
-        //! \brief Removes maximal element from this pairing heap.
+        //! \brief Removes maximal element from this heap.
         void pop();
 
-        //! \brief Merges given pairing heap to this heap.
+        //! \brief Merges given heap to this heap.
         pairing_heap & operator|=(const pairing_heap & other);
 
         friend pairing_heap<E, Compare> operator| <E, Compare>(
@@ -169,7 +169,7 @@ namespace algolib::structures
     void pairing_heap<E, Compare>::pop()
     {
         if(this->empty())
-            throw std::out_of_range("Pairing heap is empty");
+            throw std::out_of_range("Heap is empty");
 
         this->heap = this->heap->pop();
         --this->size_;
