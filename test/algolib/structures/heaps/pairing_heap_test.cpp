@@ -221,54 +221,54 @@ TEST_F(PairingHeapTest, pop_WhenMultipleCalls_ThenSortedDescending)
 }
 
 #pragma endregion
-#pragma region operatorPipeEqual
+#pragma region operatorPlusEqual
 
-TEST_F(PairingHeapTest, operatorPipeEqual_WhenEmptyAndNotEmpty_ThenSameAsOther)
+TEST_F(PairingHeapTest, operatorPlusEqual_WhenEmptyAndNotEmpty_ThenSameAsOther)
 {
     // given
     test_object = alsth::pairing_heap<int>();
 
     alsth::pairing_heap<int> other = alsth::pairing_heap<int>(numbers.begin(), numbers.end());
     // when
-    test_object |= other;
+    test_object += other;
     // then
     EXPECT_EQ(other.size(), test_object.size());
     EXPECT_EQ(other.top(), test_object.top());
 }
 
-TEST_F(PairingHeapTest, operatorPipeEqual_WhenNotEmptyAndEmpty_ThenNoChanges)
+TEST_F(PairingHeapTest, operatorPlusEqual_WhenNotEmptyAndEmpty_ThenNoChanges)
 {
     // when
-    test_object |= alsth::pairing_heap<int>();
+    test_object += alsth::pairing_heap<int>();
     // then
     EXPECT_EQ(numbers.size(), test_object.size());
     EXPECT_EQ(maximum, test_object.top());
 }
 
-TEST_F(PairingHeapTest, operatorPipeEqual_WhenOtherHasGreaterMaximum_ThenNewMaximum)
+TEST_F(PairingHeapTest, operatorPlusEqual_WhenOtherHasGreaterMaximum_ThenNewMaximum)
 {
     // given
     int new_maximum = maximum + 4;
     alsth::pairing_heap<int> other = {new_maximum, maximum - 5, maximum - 13, maximum - 20};
     // when
-    test_object |= other;
+    test_object += other;
     // then
     EXPECT_EQ(numbers.size() + other.size(), test_object.size());
     EXPECT_EQ(new_maximum, test_object.top());
 }
 
-TEST_F(PairingHeapTest, operatorPipeEqual_WhenOtherHasLessMaximum_ThenMaximumRemains)
+TEST_F(PairingHeapTest, operatorPlusEqual_WhenOtherHasLessMaximum_ThenMaximumRemains)
 {
     // given
     alsth::pairing_heap<int> other = {maximum - 5, maximum - 13, maximum - 20};
     // when
-    test_object |= other;
+    test_object += other;
     // then
     EXPECT_EQ(numbers.size() + other.size(), test_object.size());
     EXPECT_EQ(maximum, test_object.top());
 }
 
-TEST_F(PairingHeapTest, operatorPipeEqual_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap)
+TEST_F(PairingHeapTest, operatorPlusEqual_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap)
 {
     // given
     test_object = alsth::pairing_heap<int>();
@@ -276,8 +276,8 @@ TEST_F(PairingHeapTest, operatorPipeEqual_WhenSharedInnerHeap_ThenChangedOnlyMer
     alsth::pairing_heap<int> first = {4, 8};
     alsth::pairing_heap<int> second = {10, 20};
     // when
-    test_object |= first;
-    test_object |= second;
+    test_object += first;
+    test_object += second;
     // then
     EXPECT_EQ(20, test_object.top());
     EXPECT_EQ(to_vector(test_object), std::vector<int>({20, 10, 8, 4}));
@@ -286,54 +286,54 @@ TEST_F(PairingHeapTest, operatorPipeEqual_WhenSharedInnerHeap_ThenChangedOnlyMer
 }
 
 #pragma endregion
-#pragma region operatorPipe
+#pragma region operatorPlus
 
-TEST_F(PairingHeapTest, operatorPipe_WhenEmptyAndNotEmpty_ThenSameAsOther)
+TEST_F(PairingHeapTest, operatorPlus_WhenEmptyAndNotEmpty_ThenSameAsOther)
 {
     // given
     test_object = alsth::pairing_heap<int>();
 
     alsth::pairing_heap<int> other = alsth::pairing_heap<int>(numbers.begin(), numbers.end());
     // when
-    alsth::pairing_heap<int> result = test_object | other;
+    alsth::pairing_heap<int> result = test_object + other;
     // then
     EXPECT_EQ(other.size(), result.size());
     EXPECT_EQ(other.top(), result.top());
 }
 
-TEST_F(PairingHeapTest, operatorPipe_WhenNotEmptyAndEmpty_ThenNoChanges)
+TEST_F(PairingHeapTest, operatorPlus_WhenNotEmptyAndEmpty_ThenNoChanges)
 {
     // when
-    alsth::pairing_heap<int> result = test_object | alsth::pairing_heap<int>();
+    alsth::pairing_heap<int> result = test_object + alsth::pairing_heap<int>();
     // then
     EXPECT_EQ(numbers.size(), result.size());
     EXPECT_EQ(maximum, result.top());
 }
 
-TEST_F(PairingHeapTest, operatorPipe_WhenOtherHasGreaterMaximum_ThenNewMaximum)
+TEST_F(PairingHeapTest, operatorPlus_WhenOtherHasGreaterMaximum_ThenNewMaximum)
 {
     // given
     int new_maximum = maximum + 4;
     alsth::pairing_heap<int> other = {new_maximum, maximum - 5, maximum - 13, maximum - 20};
     // when
-    alsth::pairing_heap<int> result = test_object | other;
+    alsth::pairing_heap<int> result = test_object + other;
     // then
     EXPECT_EQ(numbers.size() + other.size(), result.size());
     EXPECT_EQ(new_maximum, result.top());
 }
 
-TEST_F(PairingHeapTest, operatorPipe_WhenOtherHasLessMaximum_ThenMaximumRemains)
+TEST_F(PairingHeapTest, operatorPlus_WhenOtherHasLessMaximum_ThenMaximumRemains)
 {
     // given
     alsth::pairing_heap<int> other = {maximum - 5, maximum - 13, maximum - 20};
     // when
-    alsth::pairing_heap<int> result = test_object | other;
+    alsth::pairing_heap<int> result = test_object + other;
     // then
     EXPECT_EQ(numbers.size() + other.size(), result.size());
     EXPECT_EQ(maximum, result.top());
 }
 
-TEST_F(PairingHeapTest, operatorPipe_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap)
+TEST_F(PairingHeapTest, operatorPlus_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap)
 {
     // given
     test_object = alsth::pairing_heap<int>();
@@ -341,8 +341,8 @@ TEST_F(PairingHeapTest, operatorPipe_WhenSharedInnerHeap_ThenChangedOnlyMergingH
     alsth::pairing_heap<int> first = {4, 8};
     alsth::pairing_heap<int> second = {10, 20};
     // when
-    alsth::pairing_heap<int> result1 = test_object | first;
-    alsth::pairing_heap<int> result2 = result1 | second;
+    alsth::pairing_heap<int> result1 = test_object + first;
+    alsth::pairing_heap<int> result2 = result1 + second;
     // then
     EXPECT_EQ(8, result1.top());
     EXPECT_EQ(to_vector(result1), std::vector<int>({8, 4}));

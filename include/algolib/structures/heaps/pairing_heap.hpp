@@ -21,7 +21,7 @@ namespace algolib::structures::heaps
     //! \brief Merges two heaps.
     template <typename E, typename Compare>
     pairing_heap<E, Compare>
-            operator|(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2);
+            operator+(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2);
 
 #pragma region pairing_heap
 
@@ -122,9 +122,9 @@ namespace algolib::structures::heaps
         void pop();
 
         //! \brief Merges given heap to this heap.
-        pairing_heap & operator|=(const pairing_heap & other);
+        pairing_heap & operator+=(const pairing_heap & other);
 
-        friend pairing_heap<E, Compare> operator| <E, Compare>(
+        friend pairing_heap<E, Compare> operator+ <E, Compare>(
                 pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2);
 
     private:
@@ -181,7 +181,7 @@ namespace algolib::structures::heaps
 
     template <typename E, typename Compare>
     pairing_heap<E, Compare> &
-            pairing_heap<E, Compare>::operator|=(const pairing_heap<E, Compare> & other)
+            pairing_heap<E, Compare>::operator+=(const pairing_heap<E, Compare> & other)
     {
         this->heap = this->empty() ? other.heap : std::make_optional(this->heap->merge(other.heap));
         this->size_ += other.size_;
@@ -192,9 +192,9 @@ namespace algolib::structures::heaps
 
     template <typename E, typename Compare>
     pairing_heap<E, Compare>
-            operator|(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2)
+            operator+(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2)
     {
-        heap1 |= heap2;
+        heap1 += heap2;
         return heap1;
     }
 
