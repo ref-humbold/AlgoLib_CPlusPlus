@@ -233,6 +233,7 @@ TEST_F(DoubleHeapTest, popMin_WhenSingleElement_ThenThisElementRemoved)
     test_object.pop_min();
     // then
     EXPECT_EQ(0, test_object.size());
+    EXPECT_THROW(test_object.min(), std::out_of_range);
 }
 
 TEST_F(DoubleHeapTest, popMin_WhenMultipleElements_ThenMinimalElementRemoved)
@@ -241,6 +242,7 @@ TEST_F(DoubleHeapTest, popMin_WhenMultipleElements_ThenMinimalElementRemoved)
     test_object.pop_min();
     // then
     EXPECT_EQ(numbers.size() - 1, test_object.size());
+    EXPECT_NE(minimum, test_object.max());
 }
 
 TEST_F(DoubleHeapTest, popMin_WhenMultipleCalls_ThenSortedAscending)
@@ -279,6 +281,7 @@ TEST_F(DoubleHeapTest, popMax_WhenSingleElement_ThenThisElementRemoved)
     test_object.pop_max();
     // then
     EXPECT_EQ(0, test_object.size());
+    EXPECT_THROW(test_object.max(), std::out_of_range);
 }
 
 TEST_F(DoubleHeapTest, popMax_WhenMultipleElements_ThenMaximalElementRemoved)
@@ -287,6 +290,7 @@ TEST_F(DoubleHeapTest, popMax_WhenMultipleElements_ThenMaximalElementRemoved)
     test_object.pop_max();
     // then
     EXPECT_EQ(numbers.size() - 1, test_object.size());
+    EXPECT_NE(maximum, test_object.max());
 }
 
 TEST_F(DoubleHeapTest, popMax_WhenMultipleCalls_ThenSortedDescending)

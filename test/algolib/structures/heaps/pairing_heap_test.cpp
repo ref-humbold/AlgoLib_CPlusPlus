@@ -192,6 +192,7 @@ TEST_F(PairingHeapTest, pop_WhenSingleElement_ThenThisElementRemoved)
     test_object.pop();
     // then
     EXPECT_EQ(0, test_object.size());
+    EXPECT_THROW(test_object.top(), std::out_of_range);
 }
 
 TEST_F(PairingHeapTest, pop_WhenMultipleElements_ThenMaximalElementRemoved)
@@ -200,6 +201,7 @@ TEST_F(PairingHeapTest, pop_WhenMultipleElements_ThenMaximalElementRemoved)
     test_object.pop();
     // then
     EXPECT_EQ(numbers.size() - 1, test_object.size());
+    EXPECT_NE(maximum, test_object.top());
 }
 
 TEST_F(PairingHeapTest, pop_WhenMultipleCalls_ThenSortedDescending)
