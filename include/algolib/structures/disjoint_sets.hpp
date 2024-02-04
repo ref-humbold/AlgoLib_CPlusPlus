@@ -70,6 +70,15 @@ namespace algolib::structures
         }
 
         /*!
+         * \brief Removes all sets from this structure.
+         */
+        void clear()
+        {
+            this->represents.clear();
+            this->size_ = 0;
+        }
+
+        /*!
          * \brief Checks whether given element belongs to any set.
          * \param element the element
          * \return \c true if the element belongs to the structure, otherwise \c false
