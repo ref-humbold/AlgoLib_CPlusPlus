@@ -149,9 +149,13 @@ namespace algolib::structures::heaps
     template <typename... Args>
     void pairing_heap<E, Compare>::emplace(Args &&... args)
     {
-        value_type element(std::forward<Args>(args)...);
+        if(this->empty())
+            this->heap.emplace(value_type(std::forward<Args>(args)...), this->compare);
+        else
+            this->heap = this->heap->merge(
+                    heap_node(value_type(std::forward<Args>(args)...), this->compare));
 
-        this->push(element);
+        ++this->size_;
     }
 
     template <typename E, typename Compare>
@@ -168,7 +172,7 @@ namespace algolib::structures::heaps
     pairing_heap<E, Compare> &
             pairing_heap<E, Compare>::operator+=(const pairing_heap<E, Compare> & other)
     {
-        this->heap = this->empty() ? other.heap : std::make_optional(this->heap->merge(other.heap));
+        this->heap = this->empty() ? other.heap : this->heap->merge(other.heap);
         this->size_ += other.size_;
         return *this;
     }
@@ -266,10 +270,9 @@ namespace algolib::structures::heaps
             return std::nullopt;
 
         if(!list->next)
-            return std::make_optional(list->node);
+            return list->node;
 
-        return std::make_optional(
-                list->node.merge(list->next->node).merge(merge_pairs(list->next->next)));
+        return list->node.merge(list->next->node).merge(merge_pairs(list->next->next));
     }
 
 #pragma endregion

@@ -50,6 +50,7 @@ set(STRUCTURES_SOURCES
     "${STRUCTURES}/disjoint_sets.cpp")
 set(STRUCTURES_HEAPS_SOURCES
     "${STRUCTURES_HEAPS}/double_heap.cpp"
+    "${STRUCTURES_HEAPS}/leftist_heap.cpp"
     "${STRUCTURES_HEAPS}/pairing_heap.cpp")
 set(TEXT_SOURCES
     "${TEXT}/base_words_map.cpp"

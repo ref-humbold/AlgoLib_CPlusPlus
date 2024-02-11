@@ -49,6 +49,7 @@ set(STRUCTURES_TEST_SOURCES
     "${STRUCTURES}/disjoint_sets_test.cpp")
 set(STRUCTURES_HEAPS_TEST_SOURCES
     "${STRUCTURES_HEAPS}/double_heap_test.cpp"
+    "${STRUCTURES_HEAPS}/leftist_heap_test.cpp"
     "${STRUCTURES_HEAPS}/pairing_heap_test.cpp")
 set(TEXT_TEST_SOURCES
     "${TEXT}/base_words_map_test.cpp"
