@@ -1,17 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
 #SOURCES
-set(ALGOLIB "algolib")
-set(GEOMETRY "${ALGOLIB}/geometry")
-set(GEOMETRY_DIM2 "${GEOMETRY}/dim2")
-set(GEOMETRY_DIM3 "${GEOMETRY}/dim3")
-set(GRAPHS "${ALGOLIB}/graphs")
-set(GRAPHS_ALGORITHMS "${GRAPHS}/algorithms")
-set(MATHS "${ALGOLIB}/maths")
-set(SEQUENCES "${ALGOLIB}/sequences")
-set(STRUCTURES "${ALGOLIB}/structures")
-set(TEXT "${ALGOLIB}/text")
-
 set(GEOMETRY_SOURCES
     "${GEOMETRY}/geometry_object.cpp")
 set(GEOMETRY_DIM2_SOURCES
@@ -58,9 +47,11 @@ set(SEQUENCES_SOURCES
     "${SEQUENCES}/sorting.cpp")
 set(STRUCTURES_SOURCES
     "${STRUCTURES}/avl_tree.cpp"
-    "${STRUCTURES}/disjoint_sets.cpp"
-    "${STRUCTURES}/double_heap.cpp"
-    "${STRUCTURES}/pairing_heap.cpp")
+    "${STRUCTURES}/disjoint_sets.cpp")
+set(STRUCTURES_HEAPS_SOURCES
+    "${STRUCTURES_HEAPS}/double_heap.cpp"
+    "${STRUCTURES_HEAPS}/leftist_heap.cpp"
+    "${STRUCTURES_HEAPS}/pairing_heap.cpp")
 set(TEXT_SOURCES
     "${TEXT}/base_words_map.cpp"
     "${TEXT}/edit_distance.cpp"
@@ -77,6 +68,7 @@ set(SOURCES
     "${MATHS_SOURCES}"
     "${SEQUENCES_SOURCES}"
     "${STRUCTURES_SOURCES}"
+    "${STRUCTURES_HEAPS_SOURCES}"
     "${TEXT_SOURCES}")
 
 # OUTPUT

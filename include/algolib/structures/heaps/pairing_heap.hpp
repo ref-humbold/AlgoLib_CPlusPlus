@@ -13,16 +13,15 @@
 #include <stdexcept>
 #include <vector>
 
-namespace algolib::structures
+namespace algolib::structures::heaps
 {
-
     template <typename E, typename Compare = std::less<E>>
     class pairing_heap;
 
-    //! \brief Merges two pairing heaps.
+    //! \brief Merges two heaps.
     template <typename E, typename Compare>
     pairing_heap<E, Compare>
-            operator|(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2);
+            operator+(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2);
 
 #pragma region pairing_heap
 
@@ -30,8 +29,8 @@ namespace algolib::structures
     class pairing_heap
     {
     private:
-        class heap_node_list;
         class heap_node;
+        class heap_node_list;
 
     public:
         using value_compare = Compare;
@@ -70,7 +69,7 @@ namespace algolib::structures
         pairing_heap & operator=(pairing_heap &&) = default;
 
         /*!
-         * \brief Gets the number of elements in this pairing heap
+         * \brief Gets the number of elements in this heap
          * \return the number of elements
          */
         size_type size() const
@@ -79,15 +78,15 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Check whether this pairing heap is empty
-         * \return \c true if the pairing heap is empty, otherwise \c false
+         * \brief Check whether this heap is empty
+         * \return \c true if the heap is empty, otherwise \c false
          */
         bool empty() const
         {
             return !this->heap;
         }
 
-        //! \brief Removes all elements from this pairing heap.
+        //! \brief Removes all elements from this heap.
         void clear()
         {
             this->heap.reset();
@@ -95,38 +94,38 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Retrieves maximal element from this pairing heap.
+         * \brief Retrieves maximal element from this heap.
          * \return the maximal element
-         * \throw std::out_of_range if the pairing heap is empty
+         * \throw std::out_of_range if the heap is empty
          */
         const_reference top() const
         {
             if(this->empty())
-                throw std::out_of_range("Pairing heap is empty");
+                throw std::out_of_range("Heap is empty");
 
             return this->heap->element;
         }
 
         /*!
-         * \brief Adds new element to this pairing heap.
+         * \brief Adds new element to this heap.
          * \param element the new element
          */
         void push(const_reference element);
 
         /*!
-         * \brief Adds new element to this pairing heap constructed in-place with given arguments.
+         * \brief Adds new element to this heap constructed in-place with given arguments.
          * \param args arguments to forward to the new element's constructor
          */
         template <typename... Args>
         void emplace(Args &&... args);
 
-        //! \brief Removes maximal element from this pairing heap.
+        //! \brief Removes maximal element from this heap.
         void pop();
 
-        //! \brief Merges given pairing heap to this heap.
-        pairing_heap & operator|=(const pairing_heap & other);
+        //! \brief Merges given heap to this heap.
+        pairing_heap & operator+=(const pairing_heap & other);
 
-        friend pairing_heap<E, Compare> operator| <E, Compare>(
+        friend pairing_heap<E, Compare> operator+ <E, Compare>(
                 pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2);
 
     private:
@@ -141,17 +140,7 @@ namespace algolib::structures
         if(this->empty())
             this->heap.emplace(element, this->compare);
         else
-            this->heap =
-                    this->compare(this->heap->element, element)
-                            ? std::make_optional<heap_node>(
-                                    element, std::make_shared<const heap_node_list>(this->heap),
-                                    this->compare)
-                            : std::make_optional<heap_node>(
-                                    this->heap->element,
-                                    std::make_shared<const heap_node_list>(
-                                            std::make_optional<heap_node>(element, this->compare),
-                                            this->heap->children),
-                                    this->compare);
+            this->heap = this->heap->merge(heap_node(element, this->compare));
 
         ++this->size_;
     }
@@ -160,16 +149,20 @@ namespace algolib::structures
     template <typename... Args>
     void pairing_heap<E, Compare>::emplace(Args &&... args)
     {
-        value_type element(std::forward<Args>(args)...);
+        if(this->empty())
+            this->heap.emplace(value_type(std::forward<Args>(args)...), this->compare);
+        else
+            this->heap = this->heap->merge(
+                    heap_node(value_type(std::forward<Args>(args)...), this->compare));
 
-        this->push(element);
+        ++this->size_;
     }
 
     template <typename E, typename Compare>
     void pairing_heap<E, Compare>::pop()
     {
         if(this->empty())
-            throw std::out_of_range("Pairing heap is empty");
+            throw std::out_of_range("Heap is empty");
 
         this->heap = this->heap->pop();
         --this->size_;
@@ -177,9 +170,9 @@ namespace algolib::structures
 
     template <typename E, typename Compare>
     pairing_heap<E, Compare> &
-            pairing_heap<E, Compare>::operator|=(const pairing_heap<E, Compare> & other)
+            pairing_heap<E, Compare>::operator+=(const pairing_heap<E, Compare> & other)
     {
-        this->heap = this->empty() ? other.heap : std::make_optional(this->heap->merge(other.heap));
+        this->heap = this->empty() ? other.heap : this->heap->merge(other.heap);
         this->size_ += other.size_;
         return *this;
     }
@@ -188,9 +181,9 @@ namespace algolib::structures
 
     template <typename E, typename Compare>
     pairing_heap<E, Compare>
-            operator|(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2)
+            operator+(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2)
     {
-        heap1 |= heap2;
+        heap1 += heap2;
         return heap1;
     }
 
@@ -209,7 +202,7 @@ namespace algolib::structures
         }
 
         heap_node(const value_type & element, const value_compare & compare)
-            : element{element}, children{nullptr}, compare{compare}
+            : heap_node(element, nullptr, compare)
         {
         }
 
@@ -219,57 +212,68 @@ namespace algolib::structures
         heap_node & operator=(const heap_node &) = default;
         heap_node & operator=(heap_node &&) = default;
 
-        heap_node append(const value_type & item) const
-        {
-            if(compare(item, this->element))
-                return std::make_shared<heap_node>(
-                        this->element,
-                        std::make_shared<const heap_node_list>(
-                                std::make_optional<heap_node>(item, this->compare), this->children),
-                        this->compare);
-
-            return heap_node(item, std::make_shared<const heap_node_list>(*this), this->compare);
-        }
+        heap_node append(const value_type & item) const;
 
         std::optional<heap_node> pop() const
         {
             return this->merge_pairs(this->children);
         }
 
-        heap_node merge(const std::optional<heap_node> & node) const
-        {
-            if(!node)
-                return *this;
-
-            if(compare(node->element, this->element))
-                return heap_node(
-                        this->element, std::make_shared<const heap_node_list>(node, this->children),
-                        this->compare);
-
-            return heap_node(
-                    node->element, std::make_shared<const heap_node_list>(*this, node->children),
-                    node->compare);
-        }
+        heap_node merge(const std::optional<heap_node> & node) const;
 
     private:
         std::optional<heap_node>
-                merge_pairs(const std::shared_ptr<const heap_node_list> & list) const
-        {
-            if(!list)
-                return std::nullopt;
-
-            if(!list->next)
-                return list->node;
-
-            return std::make_optional(
-                    list->node->merge(list->next->node).merge(merge_pairs(list->next->next)));
-        }
+                merge_pairs(const std::shared_ptr<const heap_node_list> & list) const;
 
     public:
         value_type element;
         std::shared_ptr<const heap_node_list> children;
         value_compare compare;
     };
+
+    template <typename E, typename Compare>
+    typename pairing_heap<E, Compare>::heap_node
+            pairing_heap<E, Compare>::heap_node::append(const value_type & item) const
+    {
+        return compare(item, this->element)
+                       ? heap_node(
+                               this->element,
+                               std::make_shared<const heap_node_list>(
+                                       heap_node(item, this->compare), this->children),
+                               this->compare)
+                       : heap_node(
+                               item, std::make_shared<const heap_node_list>(*this), this->compare);
+    }
+
+    template <typename E, typename Compare>
+    typename pairing_heap<E, Compare>::heap_node
+            pairing_heap<E, Compare>::heap_node::merge(const std::optional<heap_node> & node) const
+    {
+        return !node ? *this
+               : compare(node->element, this->element)
+                       ? heap_node(
+                               this->element,
+                               std::make_shared<const heap_node_list>(*node, this->children),
+                               this->compare)
+                       : heap_node(
+                               node->element,
+                               std::make_shared<const heap_node_list>(*this, node->children),
+                               node->compare);
+    }
+
+    template <typename E, typename Compare>
+    std::optional<typename pairing_heap<E, Compare>::heap_node>
+            pairing_heap<E, Compare>::heap_node::merge_pairs(
+                    const std::shared_ptr<const heap_node_list> & list) const
+    {
+        if(!list)
+            return std::nullopt;
+
+        if(!list->next)
+            return list->node;
+
+        return list->node.merge(list->next->node).merge(merge_pairs(list->next->next));
+    }
 
 #pragma endregion
 #pragma region heap_node_list
@@ -279,16 +283,9 @@ namespace algolib::structures
     {
     public:
         explicit heap_node_list(
-                const std::optional<heap_node> & node,
-                const std::shared_ptr<const heap_node_list> & next = nullptr)
-            : node{node}, next{next}
-        {
-        }
-
-        explicit heap_node_list(
                 const heap_node & node,
                 const std::shared_ptr<const heap_node_list> & next = nullptr)
-            : heap_node_list(std::make_optional(node), next)
+            : node{node}, next{next}
         {
         }
 
@@ -298,7 +295,7 @@ namespace algolib::structures
         heap_node_list & operator=(const heap_node_list &) = default;
         heap_node_list & operator=(heap_node_list &&) = default;
 
-        std::optional<heap_node> node;
+        heap_node node;
         std::shared_ptr<const heap_node_list> next;
     };
 
