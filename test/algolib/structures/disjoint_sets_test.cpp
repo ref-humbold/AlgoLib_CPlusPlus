@@ -16,8 +16,16 @@ protected:
     alst::disjoint_sets<int> test_object;
 
 public:
-    DisjointSetsTest() : test_object{numbers.begin(), numbers.end()}
+    DisjointSetsTest()
     {
+        std::vector<std::vector<int>> numbers_list;
+
+        std::transform(
+                numbers.begin(), numbers.end(), std::back_inserter(numbers_list),
+                [](int n) { return std::vector<int>({n}); });
+
+        test_object = alst::disjoint_sets<int>(numbers_list);
+
         for(auto && it = numbers.begin() + 2; it < numbers.end(); it += 3)
             present.push_back(*it);
     }
@@ -92,74 +100,9 @@ TEST_F(DisjointSetsTest, contains_WhenAbsentElement_ThenFalse)
 }
 
 #pragma endregion
-#pragma region insert (single)
+#pragma region insert
 
-TEST_F(DisjointSetsTest, insert_WhenEmpty_ThenNewSingletonSet)
-{
-    // given
-    int element = numbers[0];
-
-    test_object = alst::disjoint_sets<int>();
-    // when
-    test_object.insert(element);
-    // then
-    ASSERT_TRUE(test_object.contains(element));
-    EXPECT_EQ(element, test_object[element]);
-    EXPECT_EQ(1, test_object.size());
-}
-
-TEST_F(DisjointSetsTest, insert_WhenNewElement_ThenNewSingletonSet)
-{
-    // given
-    int element = absent[0];
-    // when
-    test_object.insert(element);
-    // then
-    ASSERT_TRUE(test_object.contains(element));
-    EXPECT_EQ(element, test_object[element]);
-    EXPECT_EQ(numbers.size() + 1, test_object.size());
-}
-
-TEST_F(DisjointSetsTest, insert_WhenPresentElement_ThenInvalidArgument)
-{
-    // when
-    auto exec = [&]() { test_object.insert(present[0]); };
-    // then
-    EXPECT_THROW(exec(), std::invalid_argument);
-}
-
-TEST_F(DisjointSetsTest, insert_WhenNewElementToPresentRepresent_ThenAddedToExistingSet)
-{
-    // given
-    int element = absent[0], represent = present[0];
-    // when
-    test_object.insert(element, represent);
-    // then
-    ASSERT_TRUE(test_object.contains(element));
-    EXPECT_EQ(represent, test_object[element]);
-    EXPECT_EQ(numbers.size(), test_object.size());
-}
-
-TEST_F(DisjointSetsTest, insert_WhenNewElementToAbsentRepresent_ThenOutOfRange)
-{
-    // when
-    auto exec = [&]() { test_object.insert(absent[0], absent[1]); };
-    // then
-    EXPECT_THROW(exec(), std::out_of_range);
-}
-
-TEST_F(DisjointSetsTest, insert_WhenPresentElementToAbsentRepresent_ThenInvalidArgument)
-{
-    // when
-    auto exec = [&]() { test_object.insert(present[0], absent[0]); };
-    // then
-    EXPECT_THROW(exec(), std::invalid_argument);
-}
-
-#pragma endregion
-#pragma region insert (range)
-
-TEST_F(DisjointSetsTest, insert_WhenRangeToEmpty_ThenNewSingletonSets)
+TEST_F(DisjointSetsTest, insert_WhenEmpty_ThenNewSet)
 {
     // given
     test_object = alst::disjoint_sets<int>();
@@ -169,74 +112,91 @@ TEST_F(DisjointSetsTest, insert_WhenRangeToEmpty_ThenNewSingletonSets)
     for(auto && element : numbers)
     {
         ASSERT_TRUE(test_object.contains(element));
-        EXPECT_EQ(element, test_object[element]);
+        EXPECT_EQ(numbers[0], test_object[element]);
     }
 
+    EXPECT_EQ(1, test_object.size());
+}
+
+TEST_F(DisjointSetsTest, insert_WhenEmptyNewElements_ThenNoChanges)
+{
+    // when
+    test_object.insert({});
+    // then
     EXPECT_EQ(numbers.size(), test_object.size());
 }
 
-TEST_F(DisjointSetsTest, insert_WhenRangeWithNewElements_ThenNewSingletonSets)
+TEST_F(DisjointSetsTest, insert_WhenNewElements_ThenNewSet)
 {
     // when
     test_object.insert(absent.begin(), absent.end());
     // then
-    for(auto && element : absent)
+    for(int element : absent)
     {
         ASSERT_TRUE(test_object.contains(element));
-        EXPECT_EQ(element, test_object[element]);
+        EXPECT_EQ(absent[0], test_object[element]);
     }
 
-    EXPECT_EQ(numbers.size() + absent.size(), test_object.size());
+    EXPECT_EQ(numbers.size() + 1, test_object.size());
 }
 
-TEST_F(DisjointSetsTest, insert_WhenRangeWithPresentElements_ThenInvalidArgument)
+TEST_F(DisjointSetsTest, insert_WhenPresentElements_ThenInvalidArgument)
 {
     // when
-    auto exec = [&]() { test_object.insert(present.begin(), present.end()); };
+    auto exec = [&]() { return test_object.insert(present.begin(), present.end()); };
     // then
     EXPECT_THROW(exec(), std::invalid_argument);
 }
 
-TEST_F(DisjointSetsTest, insert_WhenRangeWithNewAndPresentElements_ThenInvalidArgument)
+TEST_F(DisjointSetsTest, insert_WhenNewAndPresentElements_ThenInvalidArgument)
 {
     // given
-    std::vector<int> elements = absent;
+    std::vector<int> elements;
 
+    elements.insert(elements.end(), absent.begin(), absent.end());
     elements.insert(elements.end(), present.begin(), present.end());
     // when
-    auto exec = [&]() { test_object.insert(elements.begin(), elements.end()); };
+    auto exec = [&]() { return test_object.insert(elements.begin(), elements.end()); };
     // then
     EXPECT_THROW(exec(), std::invalid_argument);
 }
 
-TEST_F(DisjointSetsTest, insert_WhenRangeWithNewElementsToPresentRepresent_ThenAddedToExistingSet)
+TEST_F(DisjointSetsTest, insert_WhenEmptyNewElementsToPresentRepresent_ThenNoChanges)
+{
+    // when
+    test_object.insert({}, present[0]);
+    // then
+    EXPECT_EQ(numbers.size(), test_object.size());
+}
+
+TEST_F(DisjointSetsTest, insert_WhenNewElementsToPresentRepresent_ThenAddedToExistingSet)
 {
     // given
     int represent = present[0];
     // when
     test_object.insert(absent.begin(), absent.end(), represent);
     // then
-    for(auto && element : absent)
+    for(int element : absent)
     {
         ASSERT_TRUE(test_object.contains(element));
-        EXPECT_EQ(represent, test_object[element]);
+        EXPECT_EQ(test_object[represent], test_object[element]);
     }
 
     EXPECT_EQ(numbers.size(), test_object.size());
 }
 
-TEST_F(DisjointSetsTest, insert_WhenRangeWithNewElementsToAbsentRepresent_ThenOutOfRange)
+TEST_F(DisjointSetsTest, insert_WhenNewElementsToAbsentRepresent_ThenOutOfRange)
 {
     // when
-    auto exec = [&]() { test_object.insert(absent.begin(), absent.end(), absent[0]); };
+    auto exec = [&]() { return test_object.insert(absent.begin(), absent.end(), absent[0]); };
     // then
     EXPECT_THROW(exec(), std::out_of_range);
 }
 
-TEST_F(DisjointSetsTest, insert_WhenRangeWithPresentElementsToAbsentRepresent_ThenInvalidArgument)
+TEST_F(DisjointSetsTest, insert_WhenPresentElementsToAbsentRepresent_ThenInvalidArgument)
 {
     // when
-    auto exec = [&]() { test_object.insert(present.begin(), present.end(), absent[0]); };
+    auto exec = [&]() { return test_object.insert(present.begin(), present.end(), absent[0]); };
     // then
     EXPECT_THROW(exec(), std::invalid_argument);
 }

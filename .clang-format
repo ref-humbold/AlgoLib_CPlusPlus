@@ -60,12 +60,12 @@ IncludeCategories:
   # Standard headers (C style)
   - Regex: '^<[a-z_]+\.(h|hpp)>'
     Priority: 3
-  # All other headers (C style)
-  - Regex: '^<.+\.(h|hpp)>'
-    Priority: 5
   # All other headers (C++ style)
   - Regex: "^<.+>"
     Priority: 4
+  # All other headers (C style)
+  - Regex: '^<.+\.(h|hpp)>'
+    Priority: 5
   # All custom headers
   - Regex: '^".+"'
     Priority: 6

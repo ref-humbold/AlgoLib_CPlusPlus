@@ -12,6 +12,8 @@
 #include <optional>
 #include <stdexcept>
 #include <unordered_map>
+#include <unordered_set>
+#include <vector>
 
 namespace algolib::structures
 {
@@ -30,19 +32,47 @@ namespace algolib::structures
         {
         }
 
-        template <typename InputIterator>
-        disjoint_sets(InputIterator first, InputIterator last) : disjoint_sets()
+        explicit disjoint_sets(std::vector<std::vector<value_type>> sets) : disjoint_sets()
         {
-            for(InputIterator it = first; it != last; ++it)
+            std::vector<std::vector<value_type>> sets_list;
+
+            for(auto && set : sets)
             {
-                this->represents.emplace(*it, *it);
-                ++this->size_;
+                std::unordered_set<value_type, hasher, value_equal> init_set(
+                        set.begin(), set.end());
+
+                sets_list.push_back(std::vector<value_type>(init_set.begin(), init_set.end()));
             }
+
+            this->validate_duplicates(sets_list);
+
+            for(auto && set : sets_list)
+                for(auto && element : set)
+                    this->represents.emplace(element, set[0]);
+
+            this->size_ = sets_list.size();
         }
 
-        disjoint_sets(std::initializer_list<value_type> init)
-            : disjoint_sets(init.begin(), init.end())
+        disjoint_sets(std::initializer_list<std::initializer_list<value_type>> sets)
+            : disjoint_sets()
         {
+            std::vector<std::vector<value_type>> sets_list;
+
+            for(auto && set : sets)
+            {
+                std::unordered_set<value_type, hasher, value_equal> init_set(
+                        set.begin(), set.end());
+
+                sets_list.push_back(std::vector<value_type>(init_set.begin(), init_set.end()));
+            }
+
+            this->validate_duplicates(sets_list);
+
+            for(auto && set : sets_list)
+                for(auto && element : set)
+                    this->represents.emplace(element, set[0]);
+
+            this->size_ = sets_list.size();
         }
 
         ~disjoint_sets() = default;
@@ -89,40 +119,44 @@ namespace algolib::structures
         }
 
         /*!
-         * \brief Adds new element as singleton set.
-         * \param element the new element
-         * \throw std::invalid_argument if the element is already present
-         */
-        void insert(const_reference element);
-
-        /*!
-         * \brief Adds new element to the set represented by another element.
-         * \param element the new element
-         * \param represent the represent of the set
-         * \throw std::invalid_argument if the element is already present
-         * \throw std::out_of_range if the represent is not present
-         */
-        void insert(const_reference element, const_reference represent);
-
-        /*!
-         * \brief Adds new elements as singleton sets.
-         * \param first the beginning of new elements range
-         * \param last the end of new elements range
+         * \brief Adds new elements as a new set.
+         * \param elements the new elements
          * \throw std::invalid_argument if any of the elements is already present
          */
         template <typename InputIterator>
         void insert(InputIterator first, InputIterator last);
 
         /*!
-         * \brief Adds new elements to the set represented by another element.
-         * \param first beginning of new elements range
-         * \param last end of new elements range
+         * \brief Adds new elements to the existing set represented by another element.
+         * \param elements the new elements
          * \param represent the represent of the set
          * \throw std::invalid_argument if any of the elements is already present
          * \throw std::out_of_range if the represent is not present
          */
         template <typename InputIterator>
         void insert(InputIterator first, InputIterator last, const_reference represent);
+
+        /*!
+         * \brief Adds new elements as a new set.
+         * \param elements the new elements
+         * \throw std::invalid_argument if any of the elements is already present
+         */
+        void insert(std::initializer_list<value_type> elements)
+        {
+            insert(elements.begin(), elements.end());
+        }
+
+        /*!
+         * \brief Adds new elements to the existing set represented by another element.
+         * \param elements the new elements
+         * \param represent the represent of the set
+         * \throw std::invalid_argument if any of the elements is already present
+         * \throw std::out_of_range if the represent is not present
+         */
+        void insert(std::initializer_list<value_type> elements, const_reference represent)
+        {
+            insert(elements.begin(), elements.end(), represent);
+        }
 
         /*!
          * \brief Finds represent of given element.
@@ -197,48 +231,27 @@ namespace algolib::structures
         bool is_same_set(const_reference element1, const_reference element2) const;
 
     private:
+        void validate_duplicates(std::vector<std::vector<value_type>> sets_list);
+
         std::unordered_map<value_type, value_type, hasher, value_equal> represents;
         size_type size_;
     };
 
     template <typename E, typename Hash, typename Equal>
-    void disjoint_sets<E, Hash, Equal>::insert(
-            typename disjoint_sets<E, Hash, Equal>::const_reference element,
-            typename disjoint_sets<E, Hash, Equal>::const_reference represent)
-    {
-        if(this->contains(element))
-            throw std::invalid_argument("New value already present");
-
-        if(!this->contains(represent))
-            throw std::out_of_range("Represent value not present");
-
-        this->represents.emplace(element, this->operator[](represent));
-    }
-
-    template <typename E, typename Hash, typename Equal>
-    void disjoint_sets<E, Hash, Equal>::insert(
-            typename disjoint_sets<E, Hash, Equal>::const_reference element)
-    {
-        if(this->contains(element))
-            throw std::invalid_argument("New value already present");
-
-        this->represents.emplace(element, element);
-        ++this->size_;
-    }
-
-    template <typename E, typename Hash, typename Equal>
     template <typename InputIterator>
     void disjoint_sets<E, Hash, Equal>::insert(InputIterator first, InputIterator last)
     {
-        for(InputIterator it = first; it != last; ++it)
-            if(this->contains(*it))
-                throw std::invalid_argument("New value already present");
+        std::vector<value_type> elements(first, last);
 
-        for(InputIterator it = first; it != last; ++it)
-        {
-            this->represents.emplace(*it, *it);
-            ++this->size_;
-        }
+        for(auto && element : elements)
+            if(this->contains(element))
+                throw std::invalid_argument("Value already present.");
+
+        for(auto && element : elements)
+            this->represents.emplace(element, elements[0]);
+
+        if(!elements.empty())
+            ++size_;
     }
 
     template <typename E, typename Hash, typename Equal>
@@ -248,15 +261,17 @@ namespace algolib::structures
             InputIterator last,
             typename disjoint_sets<E, Hash, Equal>::const_reference represent)
     {
-        for(InputIterator it = first; it != last; ++it)
-            if(this->contains(*it))
-                throw std::invalid_argument("New value already present");
+        std::vector<value_type> elements(first, last);
+
+        for(auto && element : elements)
+            if(this->contains(element))
+                throw std::invalid_argument("Value already present.");
 
         if(!this->contains(represent))
             throw std::out_of_range("Represent value not present");
 
-        for(InputIterator it = first; it != last; ++it)
-            this->represents.emplace(*it, this->operator[](represent));
+        for(auto && element : elements)
+            this->represents.emplace(element, this->operator[](represent));
     }
 
     template <typename E, typename Hash, typename Equal>
@@ -306,6 +321,30 @@ namespace algolib::structures
             typename disjoint_sets<E, Hash, Equal>::const_reference element2) const
     {
         return this->operator[](element1) == this->operator[](element2);
+    }
+
+    template <typename E, typename Hash, typename Equal>
+    void disjoint_sets<E, Hash, Equal>::validate_duplicates(
+            std::vector<std::vector<typename disjoint_sets<E, Hash, Equal>::value_type>> sets_list)
+    {
+        std::vector<value_type> flattened;
+
+        for(auto && set : sets_list)
+            flattened.insert(flattened.end(), set.begin(), set.end());
+
+        std::unordered_map<value_type, size_t, hasher, value_equal> counter;
+
+        for(auto && element : flattened)
+            ++counter[element];
+
+        std::vector<value_type> duplicates;
+
+        for(auto && entry : counter)
+            if(entry.second > 1)
+                duplicates.push_back(entry.first);
+
+        if(!duplicates.empty())
+            throw std::invalid_argument("Duplicate elements found");
     }
 }
 

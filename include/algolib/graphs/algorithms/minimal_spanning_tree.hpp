@@ -79,9 +79,21 @@ namespace algolib::graphs
 
         std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 vertices = graph.vertices();
+        std::vector<std::vector<
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>>
+                vertices_init;
+
+        std::transform(
+                vertices.begin(), vertices.end(), std::back_inserter(vertices_init),
+                [](auto && vertex)
+                {
+                    return std::vector<typename undirected_graph<
+                            VertexId, VertexProperty, EdgeProperty>::vertex_type>({vertex});
+                });
+
         alst::disjoint_sets<
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
-                vertex_sets(vertices.begin(), vertices.end());
+                vertex_sets(vertices_init);
         std::vector<
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_id_type>
                 vertex_ids;
