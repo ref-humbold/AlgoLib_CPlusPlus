@@ -23,6 +23,7 @@ TEST(LongestCommonSubsequenceTest, countLcsLength_WhenEmpty_ThenZero)
 {
     // when
     size_t result = alse::count_lcs_length("qwertyuiop", "");
+
     // then
     EXPECT_EQ(0, result);
 }
@@ -31,6 +32,7 @@ TEST(LongestCommonSubsequenceTest, countLcsLength_WhenRepeatedSingleElement_Then
 {
     // when
     size_t result = alse::count_lcs_length("abcde", "eeee");
+
     // then
     EXPECT_EQ(1, result);
 }
@@ -39,8 +41,10 @@ TEST(LongestCommonSubsequenceTest, countLcsLength_WhenSameText_ThenTextLength)
 {
     // given
     std::string text = "qwertyuiop";
+
     // when
     size_t result = alse::count_lcs_length(text, text);
+
     // then
     EXPECT_EQ(text.size(), result);
 }
@@ -49,6 +53,7 @@ TEST(LongestCommonSubsequenceTest, countLcsLength_WhenSubtext_ThenSubtextLength)
 {
     // when
     size_t result = alse::count_lcs_length("qwertyuiop", "zxqwertyasdfuiopcvb");
+
     // then
     EXPECT_EQ("qwertyuiop"s.size(), result);
 }
@@ -57,6 +62,7 @@ TEST(LongestCommonSubsequenceTest, countLcsLength_WhenDifferent_ThenZero)
 {
     // when
     size_t result = alse::count_lcs_length("qwertyuiop", "asdfghjkl");
+
     // then
     EXPECT_EQ(0, result);
 }
@@ -65,6 +71,7 @@ TEST(LongestCommonSubsequenceTest, countLcsLength_WhenCommonSubtext_ThenCommonSu
 {
     // when
     size_t result = alse::count_lcs_length("qwertyuiop", "zxrtyasdfuiopcvb");
+
     // then
     EXPECT_EQ("rtyuiop"s.size(), result);
 }
@@ -73,8 +80,10 @@ TEST(LongestCommonSubsequenceTest, countLcsLength_WhenSameSequence_ThenSequenceL
 {
     // given
     std::vector<int> sequence = codes("qwertyuiop");
+
     // when
     size_t result = alse::count_lcs_length(sequence, sequence);
+
     // then
     EXPECT_EQ(sequence.size(), result);
 }
@@ -83,6 +92,7 @@ TEST(LongestCommonSubsequenceTest, countLcsLength_WhenCommonSubsequence_ThenComm
 {
     // when
     size_t result = alse::count_lcs_length(codes("qwertyuiop"), codes("zxrtyasdfuiopcvb"));
+
     // then
     EXPECT_EQ("rtyuiop"s.size(), result);
 }

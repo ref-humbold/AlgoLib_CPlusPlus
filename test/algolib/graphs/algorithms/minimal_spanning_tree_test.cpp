@@ -53,8 +53,10 @@ TEST_F(MinimalSpanningTreeTest, kruskal_ThenMinimalSpanningTree)
 {
     // given
     std::vector<graph_v> vertices = graph.vertices();
+
     // when
     graph_t result = algr::kruskal(graph);
+
     // then
     std::vector<graph_v> result_vertices = result.vertices();
     std::vector<graph_e> result_edges = result.edges();
@@ -75,8 +77,10 @@ TEST_F(MinimalSpanningTreeTest, prim_ThenMinimalSpanningTree)
 {
     // given
     std::vector<graph_v> vertices = graph.vertices();
+
     // when
     graph_t result = algr::prim(graph, graph[0]);
+
     // then
     std::vector<graph_v> result_vertices = result.vertices();
     std::vector<graph_e> result_edges = result.edges();
@@ -98,6 +102,7 @@ TEST_F(MinimalSpanningTreeTest, prim_WhenDiffrentSources_ThenSameMinimalSpanning
     // when
     graph_t result1 = algr::prim(graph, graph[1]);
     graph_t result4 = algr::prim(graph, graph[4]);
+
     // then
     std::vector<graph_e> result1_edges = result1.edges();
     std::vector<graph_e> result4_edges = result4.edges();

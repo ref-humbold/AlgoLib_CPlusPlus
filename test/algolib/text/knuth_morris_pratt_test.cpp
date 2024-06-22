@@ -12,6 +12,7 @@ TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternFound_ThenAllOccurrences)
     // when
     std::vector<size_t> result =
             alte::kmp_search("abcdecdcdefgcdcdecdcdecdcdehijcdecdcdek", "cdecdcde");
+
     // then
     EXPECT_EQ(std::vector<size_t>({2, 14, 19, 30}), result);
 }
@@ -20,6 +21,7 @@ TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternFoundOnce_ThenSingleOccurrence)
 {
     // when
     std::vector<size_t> result = alte::kmp_search("abcde", "a");
+
     // then
     EXPECT_EQ(std::vector<size_t>({0}), result);
 }
@@ -28,6 +30,7 @@ TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternFoundTwice_ThenTwoOccurrences)
 {
     // when
     std::vector<size_t> result = alte::kmp_search("abcdae", "a");
+
     // then
     EXPECT_EQ(std::vector<size_t>({0, 4}), result);
 }
@@ -36,6 +39,7 @@ TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternFoundTwiceAndIntersects_ThenTwoO
 {
     // when
     std::vector<size_t> result = alte::kmp_search("aaaabcde", "aaa");
+
     // then
     EXPECT_EQ(std::vector<size_t>({0, 1}), result);
 }
@@ -44,6 +48,7 @@ TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternNotFound_ThenEmpty)
 {
     // when
     std::vector<size_t> result = alte::kmp_search("abcde", "x");
+
     // then
     EXPECT_EQ(std::vector<size_t>(), result);
 }
@@ -52,6 +57,7 @@ TEST(KnuthMorrisPrattTest, kmpSearch_WhenPatternIsEmptyString_ThenEmpty)
 {
     // when
     std::vector<size_t> result = alte::kmp_search("abcde", "");
+
     // then
     EXPECT_EQ(std::vector<size_t>(), result);
 }
@@ -60,6 +66,7 @@ TEST(KnuthMorrisPrattTest, kmpSearch_WhenTextIsEmptyString_ThenEmpty)
 {
     // when
     std::vector<size_t> result = alte::kmp_search("", "a");
+
     // then
     EXPECT_EQ(std::vector<size_t>(), result);
 }

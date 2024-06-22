@@ -13,6 +13,7 @@ TEST(PrimesTestingTest, testPrimeFermat_WhenZero_ThenFalse)
 {
     // when
     bool result = alma::test_prime_fermat(0);
+
     // then
     EXPECT_FALSE(result);
 }
@@ -21,6 +22,7 @@ TEST(PrimesTestingTest, testPrimeFermat_WhenOne_ThenFalse)
 {
     // when
     bool result = alma::test_prime_fermat(1);
+
     // then
     EXPECT_FALSE(result);
 }
@@ -29,6 +31,7 @@ TEST(PrimesTestingTest, testPrimeFermat_WhenTwo_ThenTrue)
 {
     // when
     bool result = alma::test_prime_fermat(2);
+
     // then
     EXPECT_TRUE(result);
 }
@@ -37,6 +40,7 @@ TEST(PrimesTestingTest, testPrimeFermat_WhenPrime_ThenTrue)
 {
     // when
     bool result = alma::test_prime_fermat(1013);
+
     // then
     EXPECT_TRUE(result);
 }
@@ -45,6 +49,7 @@ TEST(PrimesTestingTest, testPrimeFermat_WhenPrimeLong_ThenTrue)
 {
     // when
     bool result = alma::test_prime_fermat(2131L);
+
     // then
     EXPECT_TRUE(result);
 }
@@ -53,6 +58,7 @@ TEST(PrimesTestingTest, testPrimeFermat_WhenPrimeLongLong_ThenTrue)
 {
     // when
     bool result = alma::test_prime_fermat(6199LL);
+
     // then
     EXPECT_TRUE(result);
 }
@@ -96,6 +102,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenZero_ThenFalse)
 {
     // when
     bool result = alma::test_prime_miller(0);
+
     // then
     EXPECT_FALSE(result);
 }
@@ -104,6 +111,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenOne_ThenFalse)
 {
     // when
     bool result = alma::test_prime_miller(1);
+
     // then
     EXPECT_FALSE(result);
 }
@@ -112,6 +120,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenTwo_ThenTrue)
 {
     // when
     bool result = alma::test_prime_miller(2);
+
     // then
     EXPECT_TRUE(result);
 }
@@ -120,6 +129,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenPrime_ThenTrue)
 {
     // when
     bool result = alma::test_prime_miller(1013);
+
     // then
     EXPECT_TRUE(result);
 }
@@ -128,6 +138,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenPrimeLong_ThenTrue)
 {
     // when
     bool result = alma::test_prime_miller(2131L);
+
     // then
     EXPECT_TRUE(result);
 }
@@ -136,6 +147,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenPrimeLongLong_ThenTrue)
 {
     // when
     bool result = alma::test_prime_miller(6199LL);
+
     // then
     EXPECT_TRUE(result);
 }
@@ -144,6 +156,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenComposite_ThenFalse)
 {
     // when
     bool result = alma::test_prime_miller(1001L);
+
     // then
     EXPECT_FALSE(result);
 }
@@ -152,6 +165,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenCompositeLong_ThenFalse)
 {
     // when
     bool result = alma::test_prime_miller(41041L);
+
     // then
     EXPECT_FALSE(result);
 }
@@ -160,6 +174,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenCompositeLongLong_ThenFalse)
 {
     // when
     bool result = alma::test_prime_miller(73627LL);
+
     // then
     EXPECT_FALSE(result);
 }
@@ -168,6 +183,7 @@ TEST(PrimesTestingTest, testPrimeMiller_WhenCompositeSquareOfPrime_ThenFalse)
 {
     // when
     bool result = alma::test_prime_miller(3481);
+
     // then
     EXPECT_FALSE(result);
 }

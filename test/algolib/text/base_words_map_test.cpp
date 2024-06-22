@@ -24,6 +24,7 @@ TEST_F(BaseWordsMapTest, code_WhenEmpty_ThenZeroAndZero)
 {
     // when
     alte::base_words_map::code_t result = test_object.code(4, 0);
+
     // then
     EXPECT_EQ(std::make_pair(0UL, 0UL), result);
 }
@@ -72,6 +73,7 @@ TEST_F(BaseWordsMapTest, code_WhenStartExceedsLength_ThenOutOfRange)
 {
     // when
     auto exec = [&]() { return test_object.code(20, 1); };
+
     // then
     EXPECT_THROW(exec(), std::out_of_range);
 }

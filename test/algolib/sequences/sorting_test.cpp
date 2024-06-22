@@ -26,8 +26,10 @@ TEST_F(SortingTest, heapSort_ThenSortedAscending)
 {
     // given
     std::sort(sorted_sequence.begin(), sorted_sequence.end());
+
     // when
     alse::heap_sort(sequence);
+
     // then
     EXPECT_EQ(sorted_sequence, sequence);
 }
@@ -37,8 +39,10 @@ TEST_F(SortingTest, heapSort_WhenIndices_ThenSubsequenceSortedAscending)
     // given
     size_t index_begin = 2, index_end = 7;
     std::sort(sorted_sequence.begin() + index_begin, sorted_sequence.begin() + index_end);
+
     // when
     alse::heap_sort(sequence, index_begin, index_end);
+
     // then
     EXPECT_EQ(sorted_sequence, sequence);
 }
@@ -47,8 +51,10 @@ TEST_F(SortingTest, topDownMergeSort_ThenSortedAscending)
 {
     // given
     std::sort(sorted_sequence.begin(), sorted_sequence.end());
+
     // when
     alse::top_down_merge_sort(sequence);
+
     // then
     EXPECT_EQ(sorted_sequence, sequence);
 }
@@ -58,8 +64,10 @@ TEST_F(SortingTest, topDownMergeSort_WhenIndices_ThenSubsequenceSortedAscending)
     // given
     size_t index_begin = 2, index_end = 7;
     std::sort(sorted_sequence.begin() + index_begin, sorted_sequence.begin() + index_end);
+
     // when
     alse::top_down_merge_sort(sequence, index_begin, index_end);
+
     // then
     EXPECT_EQ(sorted_sequence, sequence);
 }
@@ -68,6 +76,7 @@ TEST_F(SortingTest, topDownMergeSort_WhenInvalidIndex_ThenSubsequenceSortedAscen
 {
     // when
     auto exec = [&]() { alse::top_down_merge_sort(sequence, 0, 20); };
+
     // then
     EXPECT_THROW(exec(), std::out_of_range);
 }
@@ -76,8 +85,10 @@ TEST_F(SortingTest, bottomUpMergeSort_ThenSortedAscending)
 {
     // given
     std::sort(sorted_sequence.begin(), sorted_sequence.end());
+
     // when
     alse::bottom_up_merge_sort(sequence);
+
     // then
     EXPECT_EQ(sorted_sequence, sequence);
 }
@@ -87,8 +98,10 @@ TEST_F(SortingTest, bottomUpMergeSort_WhenIndices_ThenSubsequenceSortedAscending
     // given
     size_t index_begin = 2, index_end = 7;
     std::sort(sorted_sequence.begin() + index_begin, sorted_sequence.begin() + index_end);
+
     // when
     alse::bottom_up_merge_sort(sequence, index_begin, index_end);
+
     // then
     EXPECT_EQ(sorted_sequence, sequence);
 }
@@ -97,6 +110,7 @@ TEST_F(SortingTest, bottomUpMergeSort_WhenInvalidIndex_ThenSubsequenceSortedAsce
 {
     // when
     auto exec = [&]() { alse::bottom_up_merge_sort(sequence, 20); };
+
     // then
     EXPECT_THROW(exec(), std::out_of_range);
 }
@@ -105,8 +119,10 @@ TEST_F(SortingTest, quickSort_ThenSortedAscending)
 {
     // given
     std::sort(sorted_sequence.begin(), sorted_sequence.end());
+
     // when
     alse::quick_sort(sequence);
+
     // then
     EXPECT_EQ(sorted_sequence, sequence);
 }
@@ -116,8 +132,10 @@ TEST_F(SortingTest, quickSort_WhenIndices_ThenSubsequenceSortedAscending)
     // given
     size_t index_begin = 2, index_end = 7;
     std::sort(sorted_sequence.begin() + index_begin, sorted_sequence.begin() + index_end);
+
     // when
     alse::quick_sort(sequence, index_begin, index_end);
+
     // then
     EXPECT_EQ(sorted_sequence, sequence);
 }

@@ -29,8 +29,10 @@ TEST(TreeDiameterTest, countDiameter_WhenOneVertex_ThenZero)
 {
     // given
     algr::tree_graph<size_t, std::nullptr_t, weighted_impl> tree(0);
+
     // when
     double result = algr::count_diameter(tree);
+
     // then
     EXPECT_EQ(0, result);
 }
@@ -49,8 +51,10 @@ TEST(TreeDiameterTest, countDiameter_WhenAllWeightsEqual_ThenDiameterLength)
     tree.add_vertex(7, tree[4], nullptr, weight);
     tree.add_vertex(8, tree[6], nullptr, weight);
     tree.add_vertex(9, tree[6], nullptr, weight);
+
     // when
     double result = algr::count_diameter(tree);
+
     // then
     EXPECT_EQ(6, result);
 }
@@ -64,8 +68,10 @@ TEST(TreeDiameterTest, countDiameter_WhenEdgeWithBigWeight_ThenLongestPath)
     tree.add_vertex(3, tree[1], nullptr, weighted_impl(10));
     tree.add_vertex(4, tree[2], nullptr, weighted_impl(5));
     tree.add_vertex(5, tree[3], nullptr, weighted_impl(5));
+
     // when
     double result = algr::count_diameter(tree);
+
     // then
     EXPECT_EQ(1015, result);
 }

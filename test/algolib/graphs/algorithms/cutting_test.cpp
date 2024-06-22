@@ -32,8 +32,10 @@ TEST(CuttingTest, findEdgeCut_WhenPresentBridges_ThenBridges)
     graph.add_edge_between(graph[9], graph[10]);
     graph.add_edge_between(graph[9], graph[11]);
     graph.add_edge_between(graph[10], graph[11]);
+
     // when
     std::vector<graph_e> result = find_edge_cut(graph);
+
     // then
     std::sort(result.begin(), result.end());
 
@@ -53,8 +55,10 @@ TEST(CuttingTest, findEdgeCut_WhenNoBridges_ThenEmptyVector)
     graph.add_edge_between(graph[1], graph[4]);
     graph.add_edge_between(graph[3], graph[5]);
     graph.add_edge_between(graph[4], graph[5]);
+
     // when
     std::vector<graph_e> result = find_edge_cut(graph);
+
     // then
     EXPECT_EQ(std::vector<graph_e>(), result);
 }
@@ -79,8 +83,10 @@ TEST(CuttingTest, findVertexSeparators_WhenPresentSeparators_ThenSeparators)
     graph.add_edge_between(graph[9], graph[10]);
     graph.add_edge_between(graph[9], graph[11]);
     graph.add_edge_between(graph[10], graph[11]);
+
     // when
     std::vector<graph_v> result = find_vertex_cut(graph);
+
     // then
     std::sort(result.begin(), result.end());
 
@@ -99,8 +105,10 @@ TEST(CuttingTest, findVertexSeparators_WhenNoSeparators_ThenEmptyVector)
     graph.add_edge_between(graph[2], graph[3]);
     graph.add_edge_between(graph[3], graph[5]);
     graph.add_edge_between(graph[4], graph[5]);
+
     // when
     std::vector<graph_v> result = find_vertex_cut(graph);
+
     // then
     EXPECT_EQ(std::vector<graph_v>(), result);
 }

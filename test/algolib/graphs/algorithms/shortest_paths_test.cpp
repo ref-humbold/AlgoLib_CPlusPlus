@@ -135,8 +135,10 @@ TEST_F(PathsTest, bellmanFord__WhenDirectedGraph)
     auto expected = from_list(distances, directed_graph);
 
     directed_graph.add_edge_between(directed_graph[2], directed_graph[1], weighted_impl(-2));
+
     // when
     auto result = algr::bellman_ford(directed_graph, directed_graph[1]);
+
     // then
     EXPECT_EQ(expected, result);
 }
@@ -146,8 +148,10 @@ TEST_F(PathsTest, bellmanFord__WhenUndirectedGraph)
     // given
     std::vector<weight_t> distances = {4, 0, inf, 7, 7, 8, inf, 10, 10, inf};
     auto expected = from_list(distances, undirected_graph);
+
     // when
     auto result = algr::bellman_ford(undirected_graph.as_directed(), undirected_graph[1]);
+
     // then
     EXPECT_EQ(expected, result);
 }
@@ -156,8 +160,10 @@ TEST_F(PathsTest, bellmanFord__WhenNegativeCycle_ThenLogicError)
 {
     // given
     directed_graph.add_edge_between(directed_graph[8], directed_graph[3], weighted_impl(-20.0));
+
     // when
     auto exec = [&]() { return algr::bellman_ford(directed_graph, directed_graph[1]); };
+
     // then
     EXPECT_THROW(exec(), std::logic_error);
 }
@@ -170,8 +176,10 @@ TEST_F(PathsTest, dijkstra__WhenDirectedGraph)
     // given
     std::vector<weight_t> distances = {20, 0, inf, 17, 7, 8, 12, 12, 10, 20};
     auto expected = from_list(distances, directed_graph);
+
     // when
     auto result = algr::dijkstra(directed_graph, directed_graph[1]);
+
     // then
     EXPECT_EQ(expected, result);
 }
@@ -181,8 +189,10 @@ TEST_F(PathsTest, dijkstra__WhenUndirectedGraph)
     // given
     std::vector<weight_t> distances = {4, 0, inf, 7, 7, 8, inf, 10, 10, inf};
     auto expected = from_list(distances, undirected_graph);
+
     // when
     auto result = algr::dijkstra(undirected_graph, undirected_graph[1]);
+
     // then
     EXPECT_EQ(expected, result);
 }
@@ -191,8 +201,10 @@ TEST_F(PathsTest, dijkstra__WhenNegativeEdge__ThenLogicError)
 {
     // given
     directed_graph.add_edge_between(directed_graph[2], directed_graph[1], weighted_impl(-2));
+
     // when
     auto exec = [&]() { return algr::dijkstra(directed_graph, directed_graph[1]); };
+
     // then
     EXPECT_THROW(exec(), std::logic_error);
 }
@@ -218,8 +230,10 @@ TEST_F(PathsTest, floydWarshall__WhenDirectedGraph)
     auto expected = from_matrix(distances, directed_graph);
 
     directed_graph.add_edge_between(directed_graph[2], directed_graph[1], weighted_impl(-2));
+
     // when
     auto result = algr::floyd_warshall(directed_graph);
+
     // then
     EXPECT_EQ(expected, result);
 }
@@ -238,8 +252,10 @@ TEST_F(PathsTest, floyd_warshall__WhenUndirectedGraph)
                                                     {12, 10, inf, 9, 3, 2, inf, 4, 0, inf},
                                                     {inf, inf, 11, inf, inf, inf, 3, inf, inf, 0}};
     auto expected = from_matrix(distances, undirected_graph);
+
     // when
     auto result = algr::floyd_warshall(undirected_graph.as_directed());
+
     // then
     EXPECT_EQ(expected, result);
 }

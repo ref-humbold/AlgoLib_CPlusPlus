@@ -38,8 +38,10 @@ TEST_F(LowestCommonAncestorTest, findLca_WhenSameVertex_ThenVertexIsLowestCommon
 {
     // given
     vertex_t vertex = tree[6];
+
     // when
     vertex_t result = test_object.find_lca(vertex, vertex);
+
     // then
     EXPECT_EQ(vertex, result);
 }
@@ -48,6 +50,7 @@ TEST_F(LowestCommonAncestorTest, findLca_WhenVerticesInDifferentSubtrees_ThenLow
 {
     // when
     vertex_t result = test_object.find_lca(tree[5], tree[7]);
+
     // then
     EXPECT_EQ(tree[1], result);
 }
@@ -57,6 +60,7 @@ TEST_F(LowestCommonAncestorTest, findLca_WhenVerticesSwapped_ThenSameLowestCommo
     // when
     vertex_t result1 = test_object.find_lca(tree[5], tree[7]);
     vertex_t result2 = test_object.find_lca(tree[7], tree[5]);
+
     // then
     EXPECT_EQ(tree[1], result1);
     EXPECT_EQ(result1, result2);
@@ -66,6 +70,7 @@ TEST_F(LowestCommonAncestorTest, findLca_WhenRootIsCommonAncestor_ThenRoot)
 {
     // when
     vertex_t result = test_object.find_lca(tree[3], tree[9]);
+
     // then
     EXPECT_EQ(test_object.root(), result);
 }
@@ -74,8 +79,10 @@ TEST_F(LowestCommonAncestorTest, findLca_WhenVerticesAreOnSamePathFromRoot_ThenC
 {
     // given
     vertex_t vertex1 = tree[8], vertex2 = tree[2];
+
     // when
     vertex_t result = test_object.find_lca(vertex1, vertex2);
+
     // then
     EXPECT_EQ(vertex2, result);
 }
@@ -84,6 +91,7 @@ TEST_F(LowestCommonAncestorTest, findLca_WhenRootIsOneOfVertices_ThenRoot)
 {
     // when
     vertex_t result = test_object.find_lca(tree[4], test_object.root());
+
     // then
     EXPECT_EQ(test_object.root(), result);
 }
