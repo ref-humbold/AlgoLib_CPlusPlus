@@ -21,7 +21,7 @@ std::vector<size_t> get_base_primes(size_t base_maximum)
         {
             size_t prime_value = 2 * i + 3;
 
-            for(size_t j = prime_value * prime_value; j < base_maximum; j += 2 * prime_value)
+            for(size_t j = prime_value * prime_value; j <= base_maximum; j += 2 * prime_value)
                 is_prime[(j - 3) / 2] = false;
         }
 

@@ -7,185 +7,191 @@
 
 namespace alma = algolib::maths;
 
+class PrimesTestingTest_IntNotPrime : public testing::TestWithParam<int>
+{
+};
+
+// 1001 = 7 * 11 * 13 ; 3481 = 59 ^ 2
+INSTANTIATE_TEST_SUITE_P(, PrimesTestingTest_IntNotPrime, testing::Values(0, 1, 77, 1001, 3481));
+
+class PrimesTestingTest_LongNotPrime : public testing::TestWithParam<long>
+{
+};
+
+// 41041 = 7 * 11 * 13 * 41 ; 73627 = 17 * 61 * 71
+INSTANTIATE_TEST_SUITE_P(, PrimesTestingTest_LongNotPrime, testing::Values(41041L, 73627L));
+
+class PrimesTestingTest_LongLongNotPrime : public testing::TestWithParam<long long>
+{
+};
+
+INSTANTIATE_TEST_SUITE_P(, PrimesTestingTest_LongLongNotPrime, testing::Values(41041LL, 73627LL));
+
+class PrimesTestingTest_IntPrime : public testing::TestWithParam<int>
+{
+};
+
+INSTANTIATE_TEST_SUITE_P(, PrimesTestingTest_IntPrime, testing::Values(2, 107, 1013));
+
+class PrimesTestingTest_LongPrime : public testing::TestWithParam<long>
+{
+};
+
+INSTANTIATE_TEST_SUITE_P(, PrimesTestingTest_LongPrime, testing::Values(2131L, 6199L));
+
+class PrimesTestingTest_LongLongPrime : public testing::TestWithParam<long long>
+{
+};
+
+INSTANTIATE_TEST_SUITE_P(, PrimesTestingTest_LongLongPrime, testing::Values(2131LL, 6199LL));
+
 #pragma region test_prime_fermat
 
-TEST(PrimesTestingTest, testPrimeFermat_WhenZero_ThenFalse)
+TEST_P(PrimesTestingTest_IntNotPrime, testPrimeFermat_WhenIntNotPrime_ThenFalse)
 {
+    // given
+    int number = GetParam();
+
     // when
-    bool result = alma::test_prime_fermat(0);
+    bool result = alma::test_prime_fermat(number);
 
     // then
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTestingTest, testPrimeFermat_WhenOne_ThenFalse)
+TEST_P(PrimesTestingTest_LongNotPrime, testPrimeFermat_WhenLongNotPrime_ThenFalse)
 {
+    // given
+    long number = GetParam();
+
     // when
-    bool result = alma::test_prime_fermat(1);
+    bool result = alma::test_prime_fermat(number);
 
     // then
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTestingTest, testPrimeFermat_WhenTwo_ThenTrue)
+TEST_P(PrimesTestingTest_LongLongNotPrime, testPrimeFermat_WhenLongLongNotPrime_ThenFalse)
 {
+    // given
+    long long number = GetParam();
+
     // when
-    bool result = alma::test_prime_fermat(2);
+    bool result = alma::test_prime_fermat(number);
+
+    // then
+    EXPECT_FALSE(result);
+}
+
+TEST_P(PrimesTestingTest_IntPrime, testPrimeFermat_WhenIntIsPrime_ThenTrue)
+{
+    // given
+    int number = GetParam();
+
+    // when
+    bool result = alma::test_prime_fermat(number);
 
     // then
     EXPECT_TRUE(result);
 }
 
-TEST(PrimesTestingTest, testPrimeFermat_WhenPrime_ThenTrue)
+TEST_P(PrimesTestingTest_LongPrime, testPrimeFermat_WhenLongIsPrime_ThenTrue)
 {
+    // given
+    long number = GetParam();
+
     // when
-    bool result = alma::test_prime_fermat(1013);
+    bool result = alma::test_prime_fermat(number);
 
     // then
     EXPECT_TRUE(result);
 }
 
-TEST(PrimesTestingTest, testPrimeFermat_WhenPrimeLong_ThenTrue)
+TEST_P(PrimesTestingTest_LongLongPrime, testPrimeFermat_WhenLongLongIsPrime_ThenTrue)
 {
+    // given
+    long long number = GetParam();
+
     // when
-    bool result = alma::test_prime_fermat(2131L);
+    bool result = alma::test_prime_fermat(number);
 
     // then
     EXPECT_TRUE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeFermat_WhenPrimeLongLong_ThenTrue)
-{
-    // when
-    bool result = alma::test_prime_fermat(6199LL);
-
-    // then
-    EXPECT_TRUE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeFermat_WhenComposite_ThenFalse)
-{
-    // when
-    bool result = alma::test_prime_fermat(1001L);  // 1001 = 7 * 11 * 13
-    // then
-    EXPECT_FALSE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeFermat_WhenCompositeLong_ThenFalse)
-{
-    // when
-    bool result = alma::test_prime_fermat(41041L);  // 41041 = 7 * 11 * 13 * 41
-    // then
-    EXPECT_FALSE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeFermat_WhenCompositeLongLong_ThenFalse)
-{
-    // when
-    bool result = alma::test_prime_fermat(73627LL);  // 73627 = 17 * 61 * 71
-    // then
-    EXPECT_FALSE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeFermat_WhenCompositeSquareOfPrime_ThenFalse)
-{
-    // when
-    bool result = alma::test_prime_fermat(3481);  // 3481 = 59 ^ 2
-    // then
-    EXPECT_FALSE(result);
 }
 
 #pragma endregion
 #pragma region test_prime_miller
 
-TEST(PrimesTestingTest, testPrimeMiller_WhenZero_ThenFalse)
+TEST_P(PrimesTestingTest_IntNotPrime, testPrimeMiller_WhenIntNotPrime_ThenFalse)
 {
+    // given
+    int number = GetParam();
+
     // when
-    bool result = alma::test_prime_miller(0);
+    bool result = alma::test_prime_miller(number);
 
     // then
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTestingTest, testPrimeMiller_WhenOne_ThenFalse)
+TEST_P(PrimesTestingTest_LongNotPrime, testPrimeMiller_WhenLongNotPrime_ThenFalse)
 {
+    // given
+    long number = GetParam();
+
     // when
-    bool result = alma::test_prime_miller(1);
+    bool result = alma::test_prime_miller(number);
 
     // then
     EXPECT_FALSE(result);
 }
 
-TEST(PrimesTestingTest, testPrimeMiller_WhenTwo_ThenTrue)
+TEST_P(PrimesTestingTest_LongLongNotPrime, testPrimeMiller_WhenLongLongNotPrime_ThenFalse)
 {
+    // given
+    long long number = GetParam();
+
     // when
-    bool result = alma::test_prime_miller(2);
+    bool result = alma::test_prime_miller(number);
+
+    // then
+    EXPECT_FALSE(result);
+}
+
+TEST_P(PrimesTestingTest_IntPrime, testPrimeMiller_WhenIntIsPrime_ThenTrue)
+{
+    // given
+    int number = GetParam();
+
+    // when
+    bool result = alma::test_prime_miller(number);
 
     // then
     EXPECT_TRUE(result);
 }
 
-TEST(PrimesTestingTest, testPrimeMiller_WhenPrime_ThenTrue)
+TEST_P(PrimesTestingTest_LongPrime, testPrimeMiller_WhenLongIsPrime_ThenTrue)
 {
+    // given
+    long number = GetParam();
+
     // when
-    bool result = alma::test_prime_miller(1013);
+    bool result = alma::test_prime_miller(number);
 
     // then
     EXPECT_TRUE(result);
 }
 
-TEST(PrimesTestingTest, testPrimeMiller_WhenPrimeLong_ThenTrue)
+TEST_P(PrimesTestingTest_LongLongPrime, testPrimeMiller_WhenLongLongIsPrime_ThenTrue)
 {
+    // given
+    long long number = GetParam();
+
     // when
-    bool result = alma::test_prime_miller(2131L);
+    bool result = alma::test_prime_miller(number);
 
     // then
     EXPECT_TRUE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeMiller_WhenPrimeLongLong_ThenTrue)
-{
-    // when
-    bool result = alma::test_prime_miller(6199LL);
-
-    // then
-    EXPECT_TRUE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeMiller_WhenComposite_ThenFalse)
-{
-    // when
-    bool result = alma::test_prime_miller(1001L);
-
-    // then
-    EXPECT_FALSE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeMiller_WhenCompositeLong_ThenFalse)
-{
-    // when
-    bool result = alma::test_prime_miller(41041L);
-
-    // then
-    EXPECT_FALSE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeMiller_WhenCompositeLongLong_ThenFalse)
-{
-    // when
-    bool result = alma::test_prime_miller(73627LL);
-
-    // then
-    EXPECT_FALSE(result);
-}
-
-TEST(PrimesTestingTest, testPrimeMiller_WhenCompositeSquareOfPrime_ThenFalse)
-{
-    // when
-    bool result = alma::test_prime_miller(3481);
-
-    // then
-    EXPECT_FALSE(result);
 }
 
 #pragma endregion

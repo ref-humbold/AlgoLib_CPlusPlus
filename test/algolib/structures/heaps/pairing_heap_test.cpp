@@ -2,6 +2,7 @@
  * \file pairing_heap_test.cpp
  * \brief Tests: Structure of pairing heap.
  */
+#include <algorithm>
 #include <array>
 #include <gtest/gtest.h>
 #include "algolib/structures/heaps/pairing_heap.hpp"

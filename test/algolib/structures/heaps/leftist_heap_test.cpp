@@ -2,6 +2,7 @@
  * \file leftist_heap_test.cpp
  * \brief Tests: Structure of leftist heap.
  */
+#include <algorithm>
 #include <array>
 #include <gtest/gtest.h>
 #include "algolib/structures/heaps/leftist_heap.hpp"

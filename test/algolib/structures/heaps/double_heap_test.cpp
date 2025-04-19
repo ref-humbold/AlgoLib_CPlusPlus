@@ -2,6 +2,7 @@
  * \file double_heap_test.cpp
  * \brief Tests: Structure of double heap.
  */
+#include <algorithm>
 #include <gtest/gtest.h>
 #include "algolib/structures/heaps/double_heap.hpp"
 
