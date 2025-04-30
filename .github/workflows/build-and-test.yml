@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         include:
@@ -12,22 +13,31 @@ jobs:
             cxx: g++
           - cc: clang
             cxx: clang++
+
     steps:
-      - uses: actions/checkout@v2
-      - name: APT Install Compilers
-        run: sudo apt-get update && sudo apt-get install build-essential clang
-      - name: APT Install CMake + GTest
-        run: sudo apt-get update && sudo apt-get install cmake libgtest-dev
+      - uses: actions/checkout@v4
+
+      - name: APT Install Development Tools
+        run: sudo apt-get update && sudo apt-get install build-essential cmake libgtest-dev
+
+      - name: APT Install Clang
+        run: sudo apt-get update && sudo apt-get install clang
+        if: ${{ matrix.cc == 'clang' }}
+
       - name: Install GTest
         run: $GITHUB_WORKSPACE/ci/install_gtest.sh
+
       - name: Create Build Environment
-        run: cmake -E make_directory ${{github.workspace}}/build
+        run: cmake -E make_directory ${{ github.workspace }}/build
+
       - name: Configure CMake
-        working-directory: ${{github.workspace}}/build
+        working-directory: ${{ github.workspace }}/build
         run: cmake $GITHUB_WORKSPACE -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+
       - name: Build
-        working-directory: ${{github.workspace}}/build
+        working-directory: ${{ github.workspace }}/build
         run: make -s
+
       - name: Test
-        working-directory: ${{github.workspace}}/build
+        working-directory: ${{ github.workspace }}/build
         run: ctest -V --no-compress-output -T test
