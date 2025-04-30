@@ -12,7 +12,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include "algolib/maths/maths.hpp"
+#include "algolib/maths/integers.hpp"
 
 namespace algolib::maths
 {

@@ -7,7 +7,6 @@
 
 #include <cstdlib>
 #include <vector>
-#include "algolib/maths/maths.hpp"
 
 namespace algolib::maths
 {

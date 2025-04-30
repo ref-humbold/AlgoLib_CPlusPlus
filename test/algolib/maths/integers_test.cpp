@@ -1,9 +1,9 @@
 /**!
- * \file maths_test.cpp
- * \brief Tests: Algorithms for basic mathematical operations.
+ * \file integers_test.cpp
+ * \brief Tests: Algorithms for basic computations on integers.
  */
 #include <gtest/gtest.h>
-#include "algolib/maths/maths.hpp"
+#include "algolib/maths/integers.hpp"
 
 namespace alma = algolib::maths;
 

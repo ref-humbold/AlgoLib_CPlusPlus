@@ -1,8 +1,8 @@
 /**!
- * \file maths.cpp
- * \brief Algorithms for basic mathematical operations.
+ * \file integers.cpp
+ * \brief Algorithms for basic computations on integers.
  */
-#include "algolib/maths/maths.hpp"
+#include "algolib/maths/integers.hpp"
 
 namespace alma = algolib::maths;
 
@@ -10,8 +10,7 @@ namespace alma = algolib::maths;
 
 int alma::gcd(int number1, int number2)
 {
-    std::pair<int, int> number_pair = std::make_pair(
-            std::min(std::abs(number1), std::abs(number2)),
+    std::pair<int, int> number_pair = std::make_pair(std::min(std::abs(number1), std::abs(number2)),
             std::max(std::abs(number1), std::abs(number2)));
 
     while(number_pair.first > 0)
@@ -22,9 +21,9 @@ int alma::gcd(int number1, int number2)
 
 long alma::gcd(long number1, long number2)
 {
-    std::pair<long, long> number_pair = std::make_pair(
-            std::min(std::abs(number1), std::abs(number2)),
-            std::max(std::abs(number1), std::abs(number2)));
+    std::pair<long, long> number_pair =
+            std::make_pair(std::min(std::abs(number1), std::abs(number2)),
+                    std::max(std::abs(number1), std::abs(number2)));
 
     while(number_pair.first > 0)
         number_pair = std::make_pair(number_pair.second % number_pair.first, number_pair.first);
@@ -34,9 +33,9 @@ long alma::gcd(long number1, long number2)
 
 long long alma::gcd(long long number1, long long number2)
 {
-    std::pair<long long, long long> number_pair = std::make_pair(
-            std::min(std::abs(number1), std::abs(number2)),
-            std::max(std::abs(number1), std::abs(number2)));
+    std::pair<long long, long long> number_pair =
+            std::make_pair(std::min(std::abs(number1), std::abs(number2)),
+                    std::max(std::abs(number1), std::abs(number2)));
 
     while(number_pair.first > 0)
         number_pair = std::make_pair(number_pair.second % number_pair.first, number_pair.first);

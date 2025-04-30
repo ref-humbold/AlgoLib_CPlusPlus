@@ -1,9 +1,9 @@
 /*!
- * \file maths.hpp
- * \brief Algorithms for basic mathematical operations.
+ * \file integers.hpp
+ * \brief Algorithms for basic computations on integers.
  */
-#ifndef MATHS_HPP_
-#define MATHS_HPP_
+#ifndef INTEGERS_HPP_
+#define INTEGERS_HPP_
 
 #include <cmath>
 #include <cstdlib>

@@ -37,7 +37,7 @@ set(MATHS_SOURCES
     "${MATHS}/equation.cpp"
     "${MATHS}/equation_system.cpp"
     "${MATHS}/fraction.cpp"
-    "${MATHS}/maths.cpp"
+    "${MATHS}/integers.cpp"
     "${MATHS}/primes_searching.cpp"
     "${MATHS}/primes_testing.cpp")
 set(SEQUENCES_SOURCES
