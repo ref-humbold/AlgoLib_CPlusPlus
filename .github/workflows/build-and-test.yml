@@ -1,6 +1,8 @@
 name: GitHub Actions
 
-on: [push, pull_request]
+on:
+  - push
+  - pull_request
 
 jobs:
   build-and-test:
@@ -8,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        include:
+        compiler:
           - cc: gcc
             cxx: g++
           - cc: clang
@@ -32,7 +34,7 @@ jobs:
 
       - name: Configure CMake
         working-directory: ${{ github.workspace }}/build
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }}
 
       - name: Build
         working-directory: ${{ github.workspace }}/build
