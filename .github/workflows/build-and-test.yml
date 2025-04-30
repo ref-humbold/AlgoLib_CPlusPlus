@@ -23,8 +23,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install build-essential cmake libgtest-dev
 
       - name: APT Install Clang
+        if: ${{ matrix.compiler.cc == 'clang' }}
         run: sudo apt-get update && sudo apt-get install clang
-        if: ${{ matrix.cc == 'clang' }}
 
       - name: Install GTest
         run: $GITHUB_WORKSPACE/ci/install_gtest.sh
@@ -43,3 +43,15 @@ jobs:
       - name: Test
         working-directory: ${{ github.workspace }}/build
         run: ctest -V --no-compress-output -T test
+
+  build-and-test-all:
+    if: ${{ always() }}
+    needs:
+      - build-and-test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check matrix status
+        if: ${{ needs.build-and-test.result != 'success' }}
+        run: exit 1
