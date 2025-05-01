@@ -1,7 +1,8 @@
 # AlgoLib_CPlusPlus
 
-![GitHub Actions](https://github.com/ref-humbold/AlgoLib_CPlusPlus/workflows/GitHub%20Actions/badge.svg?branch=master)
-[![CircleCI](https://circleci.com/gh/ref-humbold/AlgoLib_CPlusPlus/tree/master.svg?style=shield)](https://circleci.com/gh/ref-humbold/AlgoLib_CPlusPlus/tree/master)
+[![GitHub Actions](https://github.com/ref-humbold/AlgoLib_CPlusPlus/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/ref-humbold/AlgoLib_CPlusPlus/actions/workflows/build-and-test.yml)
+
+![License](https://img.shields.io/github/license/ref-humbold/AlgoLib_CPlusPlus?style=plastic)
 
 ALGOrithms LIBrary - C++ version
 
