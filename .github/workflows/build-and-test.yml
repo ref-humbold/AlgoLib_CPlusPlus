@@ -4,6 +4,9 @@ on:
   - push
   - pull_request
 
+env:
+  BUILD_DIR: ${{ github.workspace }}/build
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -30,18 +33,18 @@ jobs:
         run: $GITHUB_WORKSPACE/ci/install_gtest.sh
 
       - name: Create Build Environment
-        run: cmake -E make_directory ${{ github.workspace }}/build
+        run: cmake -E make_directory $BUILD_DIR
 
       - name: Configure CMake
-        working-directory: ${{ github.workspace }}/build
+        working-directory: ${{ env.BUILD_DIR }}
         run: cmake $GITHUB_WORKSPACE -DCMAKE_C_COMPILER=${{ matrix.compiler.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }}
 
       - name: Build
-        working-directory: ${{ github.workspace }}/build
+        working-directory: ${{ env.BUILD_DIR }}
         run: make -s
 
       - name: Test
-        working-directory: ${{ github.workspace }}/build
+        working-directory: ${{ env.BUILD_DIR }}
         run: ctest -V --no-compress-output -T test
 
   build-and-test-all:
