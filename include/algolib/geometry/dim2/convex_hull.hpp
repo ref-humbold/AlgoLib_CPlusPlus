@@ -1,6 +1,6 @@
 /*!
  * \file convex_hull.hpp
- * \brief Algorithm for convex hull in 2D (monotone chain).
+ * \brief Algorithm for convex hull in 2D (Graham's scan).
  */
 #ifndef CONVEX_HULL_HPP_
 #define CONVEX_HULL_HPP_
@@ -16,7 +16,7 @@ namespace algolib::geometry::dim2
      * \param points the points
      * \return the points in the convex hull
      */
-    std::vector<point_2d> find_convex_hull(std::vector<point_2d> points);
+    std::vector<point_2d> find_convex_hull(const std::vector<point_2d> & points);
 }
 
 #endif
