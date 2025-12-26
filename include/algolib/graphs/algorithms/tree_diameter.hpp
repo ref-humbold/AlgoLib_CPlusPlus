@@ -57,10 +57,9 @@ namespace algolib::graphs
     {
         std::vector<typename tree_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 vertices = tree.vertices();
-        auto root_it = std::max_element(
-                vertices.begin(), vertices.end(),
-                [&](auto && v1, auto && v2)
-                { return tree.output_degree(v1) < tree.output_degree(v2); });
+        auto root_it =
+                std::max_element(vertices.begin(), vertices.end(), [&](auto && v1, auto && v2)
+                        { return tree.output_degree(v1) < tree.output_degree(v2); });
 
         return root_it == vertices.end() ? 0.0 : internal::dfs(tree, *root_it, *root_it).second;
     }

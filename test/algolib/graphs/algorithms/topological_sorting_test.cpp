@@ -31,8 +31,7 @@ TEST(TopologicalSortingTest, inputsTopologicalSort_WhenAcyclicGraph_ThenTopologi
     std::vector<graph_v> result = algr::inputs_topological_sort(graph);
 
     // then
-    EXPECT_EQ(
-            std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
+    EXPECT_EQ(std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
             result);
 }
 
@@ -90,17 +89,16 @@ TEST(TopologicalSortingTest, dfsTopologicalSort_WhenAcyclicGraph_ThenTopological
     graph.add_edge_between(graph[5], graph[4]);
 
     std::vector<std::vector<graph_v>> expecteds = {
-            std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
-            std::vector<graph_v>({graph[5], graph[3], graph[1], graph[0], graph[2], graph[4]}),
-            std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[4], graph[2]}),
-            std::vector<graph_v>({graph[5], graph[3], graph[1], graph[0], graph[4], graph[2]})};
+        std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
+        std::vector<graph_v>({graph[5], graph[3], graph[1], graph[0], graph[2], graph[4]}),
+        std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[4], graph[2]}),
+        std::vector<graph_v>({graph[5], graph[3], graph[1], graph[0], graph[4], graph[2]})};
 
     // when
     std::vector<graph_v> result = algr::dfs_topological_sort(graph);
 
     // then
-    EXPECT_TRUE(std::any_of(
-            expecteds.begin(), expecteds.end(),
+    EXPECT_TRUE(std::any_of(expecteds.begin(), expecteds.end(),
             [&](auto && expected) { return expected == result; }));
 }
 

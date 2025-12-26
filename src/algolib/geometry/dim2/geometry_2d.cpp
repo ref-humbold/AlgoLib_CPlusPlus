@@ -34,9 +34,8 @@ void alge2::sort_by_angle(std::vector<alge2::point_2d> & points)
 
 double alge2::distance(const alge2::point_2d & point1, const alge2::point_2d & point2)
 {
-    return sqrt(
-            (point2.x() - point1.x()) * (point2.x() - point1.x())
-            + (point2.y() - point1.y()) * (point2.y() - point1.y()));
+    return sqrt((point2.x() - point1.x()) * (point2.x() - point1.x())
+                + (point2.y() - point1.y()) * (point2.y() - point1.y()));
 }
 
 alge2::point_2d alge2::translate(const alge2::point_2d & point, const alge2::vector_2d & vector)

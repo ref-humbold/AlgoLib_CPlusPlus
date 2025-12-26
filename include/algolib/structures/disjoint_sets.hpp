@@ -38,8 +38,8 @@ namespace algolib::structures
 
             for(auto && set : sets)
             {
-                std::unordered_set<value_type, hasher, value_equal> init_set(
-                        set.begin(), set.end());
+                std::unordered_set<value_type, hasher, value_equal> init_set(set.begin(),
+                        set.end());
 
                 sets_list.push_back(std::vector<value_type>(init_set.begin(), init_set.end()));
             }
@@ -60,8 +60,8 @@ namespace algolib::structures
 
             for(auto && set : sets)
             {
-                std::unordered_set<value_type, hasher, value_equal> init_set(
-                        set.begin(), set.end());
+                std::unordered_set<value_type, hasher, value_equal> init_set(set.begin(),
+                        set.end());
 
                 sets_list.push_back(std::vector<value_type>(init_set.begin(), init_set.end()));
             }
@@ -256,8 +256,7 @@ namespace algolib::structures
 
     template <typename E, typename Hash, typename Equal>
     template <typename InputIterator>
-    void disjoint_sets<E, Hash, Equal>::insert(
-            InputIterator first,
+    void disjoint_sets<E, Hash, Equal>::insert(InputIterator first,
             InputIterator last,
             typename disjoint_sets<E, Hash, Equal>::const_reference represent)
     {

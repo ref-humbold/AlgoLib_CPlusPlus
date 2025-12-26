@@ -106,10 +106,8 @@ TEST_F(TreeGraphTest, vertices_ThenAllVertices)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_v>(
-                    {graph_v(0), graph_v(1), graph_v(2), graph_v(3), graph_v(4), graph_v(5),
-                     graph_v(6), graph_v(7)}),
+    EXPECT_EQ(std::vector<graph_v>({graph_v(0), graph_v(1), graph_v(2), graph_v(3), graph_v(4),
+                  graph_v(5), graph_v(6), graph_v(7)}),
             result);
 }
 
@@ -121,12 +119,10 @@ TEST_F(TreeGraphTest, edges_ThenAllEdges)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_e>(
-                    {graph_e(graph_v(1), graph_v(0)), graph_e(graph_v(2), graph_v(0)),
-                     graph_e(graph_v(3), graph_v(0)), graph_e(graph_v(4), graph_v(1)),
-                     graph_e(graph_v(5), graph_v(1)), graph_e(graph_v(6), graph_v(2)),
-                     graph_e(graph_v(7), graph_v(2))}),
+    EXPECT_EQ(std::vector<graph_e>({graph_e(graph_v(1), graph_v(0)),
+                  graph_e(graph_v(2), graph_v(0)), graph_e(graph_v(3), graph_v(0)),
+                  graph_e(graph_v(4), graph_v(1)), graph_e(graph_v(5), graph_v(1)),
+                  graph_e(graph_v(6), graph_v(2)), graph_e(graph_v(7), graph_v(2))}),
             result);
 }
 
@@ -149,10 +145,8 @@ TEST_F(TreeGraphTest, adjacentEdges_ThenOutgoingEdges)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_e>(
-                    {graph_e(graph_v(1), graph_v(0)), graph_e(graph_v(4), graph_v(1)),
-                     graph_e(graph_v(5), graph_v(1))}),
+    EXPECT_EQ(std::vector<graph_e>({graph_e(graph_v(1), graph_v(0)),
+                  graph_e(graph_v(4), graph_v(1)), graph_e(graph_v(5), graph_v(1))}),
             result);
 }
 

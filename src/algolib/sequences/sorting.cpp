@@ -7,11 +7,11 @@
 #include <exception>
 #include <stdexcept>
 
-size_t internal::choose_pivot(
-        std::uniform_int_distribution<size_t> & distribution, std::default_random_engine & rand_eng)
+size_t internal::choose_pivot(std::uniform_int_distribution<size_t> & distribution,
+        std::default_random_engine & rand_eng)
 {
-    std::vector<size_t> candidates = {
-            distribution(rand_eng), distribution(rand_eng), distribution(rand_eng)};
+    std::vector<size_t> candidates = {distribution(rand_eng), distribution(rand_eng),
+        distribution(rand_eng)};
 
     std::sort(candidates.begin(), candidates.end());
     return candidates[1];

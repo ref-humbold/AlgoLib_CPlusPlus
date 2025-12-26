@@ -40,8 +40,8 @@ namespace algolib::graphs
          * \return the edge between the vertices
          * \throw std::out_of_range if no such edge exists
          */
-        virtual const edge_type &
-                operator[](const std::pair<vertex_id_type, vertex_id_type> & vertex_ids) const = 0;
+        virtual const edge_type & operator[](
+                const std::pair<vertex_id_type, vertex_id_type> & vertex_ids) const = 0;
 
         /*!
          * Gets the edge between given vertices.
@@ -49,8 +49,8 @@ namespace algolib::graphs
          * \return the edge between the vertices
          * \throw std::out_of_range if no such edge exists
          */
-        virtual const edge_type &
-                operator[](const std::pair<vertex_type, vertex_type> & vertices) const = 0;
+        virtual const edge_type & operator[](
+                const std::pair<vertex_type, vertex_type> & vertices) const = 0;
 
         virtual graph_properties & properties() = 0;
 
@@ -126,8 +126,8 @@ namespace algolib::graphs
          * \return the property of the vertex
          * \throw std::out_of_range if no such property
          */
-        virtual graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
-                at(const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex) = 0;
+        virtual graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & at(
+                const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex) = 0;
 
         /*!
          * \brief Gets the property of given vertex.
@@ -135,9 +135,9 @@ namespace algolib::graphs
          * \return the property of the vertex
          * \throw std::out_of_range if no such property
          */
-        virtual const graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
-                at(const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex)
-                        const = 0;
+        virtual const graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & at(
+                const graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex)
+                const = 0;
 
         /*!
          * \brief Gets or sets the property of given edge.
@@ -153,8 +153,8 @@ namespace algolib::graphs
          * \return the property of the edge
          * \throw std::out_of_range if no such property
          */
-        virtual graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
-                at(const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge) = 0;
+        virtual graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & at(
+                const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge) = 0;
 
         /*!
          * \brief Gets the property of given edge.
@@ -162,8 +162,8 @@ namespace algolib::graphs
          * \return the property of the edge
          * \throw std::out_of_range if no such property
          */
-        virtual const graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
-                at(const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge) const = 0;
+        virtual const graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & at(
+                const graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge) const = 0;
     };
 }
 

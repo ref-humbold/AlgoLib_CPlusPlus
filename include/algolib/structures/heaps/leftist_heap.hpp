@@ -20,8 +20,8 @@ namespace algolib::structures::heaps
 
     //! \brief Merges two heaps.
     template <typename E, typename Compare>
-    leftist_heap<E, Compare>
-            operator+(leftist_heap<E, Compare> heap1, const leftist_heap<E, Compare> & heap2);
+    leftist_heap<E, Compare> operator+(leftist_heap<E, Compare> heap1,
+            const leftist_heap<E, Compare> & heap2);
 
 #pragma region leftist_heap
 
@@ -44,8 +44,7 @@ namespace algolib::structures::heaps
         }
 
         template <typename InputIterator>
-        leftist_heap(
-                InputIterator first,
+        leftist_heap(InputIterator first,
                 InputIterator last,
                 const value_compare & compare = value_compare())
             : leftist_heap(compare)
@@ -54,8 +53,7 @@ namespace algolib::structures::heaps
                 this->push(*it);
         }
 
-        leftist_heap(
-                std::initializer_list<value_type> init,
+        leftist_heap(std::initializer_list<value_type> init,
                 const value_compare & compare = value_compare())
             : leftist_heap(init.begin(), init.end(), compare)
         {
@@ -124,8 +122,8 @@ namespace algolib::structures::heaps
         //! \brief Merges given heap to this heap.
         leftist_heap & operator+=(const leftist_heap & other);
 
-        friend leftist_heap<E, Compare> operator+ <E, Compare>(
-                leftist_heap<E, Compare> heap1, const leftist_heap<E, Compare> & heap2);
+        friend leftist_heap<E, Compare> operator+ <E, Compare>(leftist_heap<E, Compare> heap1,
+                const leftist_heap<E, Compare> & heap2);
 
     private:
         typename heap_node::heap_node_ptr heap;
@@ -165,8 +163,8 @@ namespace algolib::structures::heaps
     }
 
     template <typename E, typename Compare>
-    leftist_heap<E, Compare> &
-            leftist_heap<E, Compare>::operator+=(const leftist_heap<E, Compare> & other)
+    leftist_heap<E, Compare> & leftist_heap<E, Compare>::operator+=(
+            const leftist_heap<E, Compare> & other)
     {
         this->heap = this->empty() ? other.heap : this->heap->merge(other.heap);
         this->size_ += other.size_;
@@ -176,8 +174,8 @@ namespace algolib::structures::heaps
 #pragma endregion
 
     template <typename E, typename Compare>
-    leftist_heap<E, Compare>
-            operator+(leftist_heap<E, Compare> heap1, const leftist_heap<E, Compare> & heap2)
+    leftist_heap<E, Compare> operator+(leftist_heap<E, Compare> heap1,
+            const leftist_heap<E, Compare> & heap2)
     {
         heap1 += heap2;
         return heap1;
@@ -192,8 +190,7 @@ namespace algolib::structures::heaps
     public:
         using heap_node_ptr = std::shared_ptr<const heap_node>;
 
-        heap_node(
-                const value_type & element,
+        heap_node(const value_type & element,
                 const heap_node_ptr & node1,
                 const heap_node_ptr & node2,
                 const value_compare & compare)
@@ -248,14 +245,12 @@ namespace algolib::structures::heaps
     {
         return !node ? this->shared_from_this()
                : compare(node->element, this->element)
-                       ? std::make_shared<heap_node>(
-                               this->element, this->left,
-                               this->right ? this->right->merge(node) : node, this->compare)
-                       : std::make_shared<heap_node>(
-                               node->element, node->left,
-                               node->right ? node->right->merge(this->shared_from_this())
-                                           : this->shared_from_this(),
-                               node->compare);
+                       ? std::make_shared<heap_node>(this->element, this->left,
+                                 this->right ? this->right->merge(node) : node, this->compare)
+                       : std::make_shared<heap_node>(node->element, node->left,
+                                 node->right ? node->right->merge(this->shared_from_this())
+                                             : this->shared_from_this(),
+                                 node->compare);
     }
 
 #pragma endregion

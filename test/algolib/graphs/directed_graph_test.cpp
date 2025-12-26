@@ -186,10 +186,8 @@ TEST_F(DirectedSimpleGraphTest, vertices_ThenAllVertices)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_v>(
-                    {graph_v(0), graph_v(1), graph_v(2), graph_v(3), graph_v(4), graph_v(5),
-                     graph_v(6), graph_v(7), graph_v(8), graph_v(9)}),
+    EXPECT_EQ(std::vector<graph_v>({graph_v(0), graph_v(1), graph_v(2), graph_v(3), graph_v(4),
+                  graph_v(5), graph_v(6), graph_v(7), graph_v(8), graph_v(9)}),
             result);
 }
 
@@ -210,12 +208,10 @@ TEST_F(DirectedSimpleGraphTest, edges_ThenAllEdges)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_e>(
-                    {graph_e(graph_v(1), graph_v(5)), graph_e(graph_v(2), graph_v(4)),
-                     graph_e(graph_v(3), graph_v(6)), graph_e(graph_v(6), graph_v(3)),
-                     graph_e(graph_v(7), graph_v(7)), graph_e(graph_v(8), graph_v(0)),
-                     graph_e(graph_v(9), graph_v(3))}),
+    EXPECT_EQ(std::vector<graph_e>({graph_e(graph_v(1), graph_v(5)),
+                  graph_e(graph_v(2), graph_v(4)), graph_e(graph_v(3), graph_v(6)),
+                  graph_e(graph_v(6), graph_v(3)), graph_e(graph_v(7), graph_v(7)),
+                  graph_e(graph_v(8), graph_v(0)), graph_e(graph_v(9), graph_v(3))}),
             result);
 }
 
@@ -236,11 +232,9 @@ TEST_F(DirectedSimpleGraphTest, adjacentEdges_ThenOutgoingEdges)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_e>(
-                    {graph_e(graph_v(1), graph_v(1)), graph_e(graph_v(1), graph_v(3)),
-                     graph_e(graph_v(1), graph_v(4)), graph_e(graph_v(1), graph_v(7)),
-                     graph_e(graph_v(1), graph_v(9))}),
+    EXPECT_EQ(std::vector<graph_e>({graph_e(graph_v(1), graph_v(1)),
+                  graph_e(graph_v(1), graph_v(3)), graph_e(graph_v(1), graph_v(4)),
+                  graph_e(graph_v(1), graph_v(7)), graph_e(graph_v(1), graph_v(9))}),
             result);
 }
 
@@ -261,8 +255,7 @@ TEST_F(DirectedSimpleGraphTest, neighbours_ThenDestinationVerticesOfOutgoingEdge
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_v>({graph_v(1), graph_v(3), graph_v(4), graph_v(7), graph_v(9)}),
+    EXPECT_EQ(std::vector<graph_v>({graph_v(1), graph_v(3), graph_v(4), graph_v(7), graph_v(9)}),
             result);
 }
 
@@ -401,12 +394,11 @@ TEST_F(DirectedSimpleGraphTest, reverse_ThenAllEdgesHaveReversedDirection)
     std::sort(result_edges.begin(), result_edges.end());
 
     ASSERT_EQ(
-            std::vector<graph_e>(
-                    {graph_e(graph_v(1), graph_v(9)), graph_e(graph_v(2), graph_v(1)),
-                     graph_e(graph_v(2), graph_v(6)), graph_e(graph_v(4), graph_v(5)),
-                     graph_e(graph_v(5), graph_v(3)), graph_e(graph_v(6), graph_v(6)),
-                     graph_e(graph_v(6), graph_v(9)), graph_e(graph_v(7), graph_v(5)),
-                     graph_e(graph_v(8), graph_v(7)), graph_e(graph_v(9), graph_v(4))}),
+            std::vector<graph_e>({graph_e(graph_v(1), graph_v(9)), graph_e(graph_v(2), graph_v(1)),
+                graph_e(graph_v(2), graph_v(6)), graph_e(graph_v(4), graph_v(5)),
+                graph_e(graph_v(5), graph_v(3)), graph_e(graph_v(6), graph_v(6)),
+                graph_e(graph_v(6), graph_v(9)), graph_e(graph_v(7), graph_v(5)),
+                graph_e(graph_v(8), graph_v(7)), graph_e(graph_v(9), graph_v(4))}),
             result_edges);
     EXPECT_EQ(vertex_property, test_object.properties()[vertex]);
     EXPECT_EQ("", test_object.properties()[graph_v(9)]);
@@ -452,12 +444,11 @@ TEST_F(DirectedSimpleGraphTest, reversedCopy_ThenNewGraphWithReversedEdges)
 
     ASSERT_EQ(expected_vertices, result_vertices);
     ASSERT_EQ(
-            std::vector<graph_e>(
-                    {graph_e(graph_v(1), graph_v(9)), graph_e(graph_v(2), graph_v(1)),
-                     graph_e(graph_v(2), graph_v(6)), graph_e(graph_v(4), graph_v(5)),
-                     graph_e(graph_v(5), graph_v(3)), graph_e(graph_v(6), graph_v(6)),
-                     graph_e(graph_v(6), graph_v(9)), graph_e(graph_v(7), graph_v(5)),
-                     graph_e(graph_v(8), graph_v(7)), graph_e(graph_v(9), graph_v(4))}),
+            std::vector<graph_e>({graph_e(graph_v(1), graph_v(9)), graph_e(graph_v(2), graph_v(1)),
+                graph_e(graph_v(2), graph_v(6)), graph_e(graph_v(4), graph_v(5)),
+                graph_e(graph_v(5), graph_v(3)), graph_e(graph_v(6), graph_v(6)),
+                graph_e(graph_v(6), graph_v(9)), graph_e(graph_v(7), graph_v(5)),
+                graph_e(graph_v(8), graph_v(7)), graph_e(graph_v(9), graph_v(4))}),
             result_edges);
     EXPECT_EQ(vertex_property, result.properties()[vertex]);
     EXPECT_EQ("", result.properties()[graph_v(9)]);

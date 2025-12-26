@@ -20,8 +20,7 @@ public:
     {
         std::vector<std::vector<int>> numbers_list;
 
-        std::transform(
-                numbers.begin(), numbers.end(), std::back_inserter(numbers_list),
+        std::transform(numbers.begin(), numbers.end(), std::back_inserter(numbers_list),
                 [](int n) { return std::vector<int>({n}); });
 
         test_object = alst::disjoint_sets<int>(numbers_list);

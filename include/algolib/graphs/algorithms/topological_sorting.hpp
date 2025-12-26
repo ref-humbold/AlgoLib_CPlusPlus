@@ -86,14 +86,15 @@ namespace algolib::graphs
             return graph.vertices();
 
         std::unordered_map<
-                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type, int>
+                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type, int
+        >
                 input_degrees;
-        std::priority_queue<
-                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type,
-                std::vector<typename directed_graph<
-                        VertexId, VertexProperty, EdgeProperty>::vertex_type>,
-                std::greater<typename directed_graph<
-                        VertexId, VertexProperty, EdgeProperty>::vertex_type>>
+        std::priority_queue<typename directed_graph<VertexId, VertexProperty,
+                                    EdgeProperty>::vertex_type,
+                std::vector<typename directed_graph<VertexId, VertexProperty,
+                        EdgeProperty>::vertex_type>,
+                std::greater<typename directed_graph<VertexId, VertexProperty,
+                        EdgeProperty>::vertex_type>>
                 vertex_queue;
 
         for(auto && vertex : graph.vertices())
@@ -143,8 +144,8 @@ namespace algolib::graphs
         if(graph.edges_count() == 0)
             return graph.vertices();
 
-        internal::topological_strategy<
-                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+        internal::topological_strategy<typename directed_graph<VertexId, VertexProperty,
+                EdgeProperty>::vertex_type>
                 strategy;
         dfs_recursive(graph, strategy, graph.vertices());
 

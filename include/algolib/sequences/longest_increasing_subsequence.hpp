@@ -15,8 +15,7 @@ namespace internal
 {
     // Searches for place of element in list of subsequences.
     template <typename T, typename C = std::less<T>>
-    size_t search_index(
-            const std::vector<T> & sequence,
+    size_t search_index(const std::vector<T> & sequence,
             const C & compare,
             const std::vector<size_t> & subsequence,
             size_t index_elem,
@@ -29,12 +28,10 @@ namespace internal
         size_t index_middle = (index_begin + index_end - 1) / 2;
 
         return compare(sequence[subsequence[index_middle]], sequence[index_elem])
-                       ? search_index(
-                               sequence, compare, subsequence, index_elem, index_middle + 1,
-                               index_end)
-                       : search_index(
-                               sequence, compare, subsequence, index_elem, index_begin,
-                               index_middle + 1);
+                       ? search_index(sequence, compare, subsequence, index_elem, index_middle + 1,
+                                 index_end)
+                       : search_index(sequence, compare, subsequence, index_elem, index_begin,
+                                 index_middle + 1);
     }
 }
 
@@ -62,8 +59,8 @@ namespace algolib::sequences
             }
             else
             {
-                size_t index = internal::search_index<T>(
-                        sequence, compare, subsequence, i, 0, subsequence.size());
+                size_t index = internal::search_index<T>(sequence, compare, subsequence, i, 0,
+                        subsequence.size());
 
                 subsequence[index] = i;
                 previous_elems.push_back(
@@ -71,7 +68,7 @@ namespace algolib::sequences
             }
 
         for(std::optional<size_t> j = std::make_optional(subsequence.back()); j.has_value();
-            j = previous_elems[*j])
+                j = previous_elems[*j])
             longest_subsequence.push_back(sequence[j.value()]);
 
         std::reverse(longest_subsequence.begin(), longest_subsequence.end());

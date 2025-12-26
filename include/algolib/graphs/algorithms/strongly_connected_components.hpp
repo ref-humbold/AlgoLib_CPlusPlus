@@ -94,36 +94,34 @@ namespace algolib::graphs
      * \return the vertices in strongly connected components
      */
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
-    std::vector<std::unordered_set<
-            typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>>
+    std::vector<std::unordered_set<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::
+                    vertex_type>>
             find_scc(const directed_simple_graph<VertexId, VertexProperty, EdgeProperty> & graph)
     {
-        internal::post_order_strategy<
-                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+        internal::post_order_strategy<typename directed_graph<VertexId, VertexProperty,
+                EdgeProperty>::vertex_type>
                 post_order_strategy;
 
         dfs_recursive(graph, post_order_strategy, graph.vertices());
 
         std::vector<std::pair<
-                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type, int>>
+                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type, int
+        >>
                 entries;
         std::vector<typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 vertices;
 
-        std::copy(
-                post_order_strategy.post_times.begin(), post_order_strategy.post_times.end(),
+        std::copy(post_order_strategy.post_times.begin(), post_order_strategy.post_times.end(),
                 std::back_inserter(entries));
-        std::sort(
-                entries.begin(), entries.end(),
+        std::sort(entries.begin(), entries.end(),
                 [](auto && entry1, auto && entry2) { return entry2.second < entry1.second; });
-        std::transform(
-                entries.begin(), entries.end(), std::back_inserter(vertices),
+        std::transform(entries.begin(), entries.end(), std::back_inserter(vertices),
                 [](auto && entry) { return entry.first; });
 
         directed_simple_graph<VertexId, VertexProperty, EdgeProperty> reversed_graph =
                 graph.reversed_copy();
-        internal::scc_strategy<
-                typename directed_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+        internal::scc_strategy<typename directed_graph<VertexId, VertexProperty,
+                EdgeProperty>::vertex_type>
                 scc_strategy;
 
         dfs_recursive(reversed_graph, scc_strategy, vertices);

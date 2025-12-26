@@ -10,7 +10,6 @@
 
 namespace algolib::maths
 {
-
     /*!
      * \brief Finds prime numbers inside given range of numbers.
      * \param minimum the minimal number, inclusive

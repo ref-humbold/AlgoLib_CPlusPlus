@@ -103,14 +103,13 @@ std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> &
 
     size_t code = 0;
     std::tuple<size_t, size_t, size_t> last = {std::numeric_limits<size_t>::max(),
-                                               std::numeric_limits<size_t>::max(),
-                                               std::numeric_limits<size_t>::max()};
+        std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max()};
     std::vector<size_t> text12(length02, 0);
 
     for(size_t i : indices12)
     {
         std::tuple<size_t, size_t, size_t> elems = {get_elem(txt, i), get_elem(txt, i + 1),
-                                                    get_elem(txt, i + 2)};
+            get_elem(txt, i + 2)};
 
         if(last != elems)
         {
@@ -151,9 +150,9 @@ std::vector<size_t> alte::suffix_array::create_array(const std::vector<size_t> &
 }
 
 std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
-                                              const std::vector<size_t> & sa0,
-                                              const std::vector<size_t> & t12,
-                                              const std::vector<size_t> & sa12)
+        const std::vector<size_t> & sa0,
+        const std::vector<size_t> & t12,
+        const std::vector<size_t> & sa12)
 {
     std::vector<size_t> sa_merged;
     size_t length2 = (t0.size() + 2) / 3, length1 = (t0.size() + 1) / 3;
@@ -168,12 +167,12 @@ std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
         bool cond =
                 sa12[index12] < length2
                         ? std::make_tuple(get_elem(t0, pos12),
-                                          get_elem(t12, sa12[index12] + length2))
+                                  get_elem(t12, sa12[index12] + length2))
                                   <= std::make_tuple(get_elem(t0, pos0), get_elem(t12, pos0 / 3))
                         : std::make_tuple(get_elem(t0, pos12), get_elem(t0, pos12 + 1),
-                                          get_elem(t12, sa12[index12] - length2 + 1))
+                                  get_elem(t12, sa12[index12] - length2 + 1))
                                   <= std::make_tuple(get_elem(t0, pos0), get_elem(t0, pos0 + 1),
-                                                     get_elem(t12, pos0 / 3 + length2));
+                                          get_elem(t12, pos0 / 3 + length2));
 
         if(cond)
         {
@@ -203,9 +202,8 @@ std::vector<size_t> alte::suffix_array::merge(const std::vector<size_t> & t0,
     return sa_merged;
 }
 
-void alte::suffix_array::sort_indices(std::vector<size_t> & indices,
-                                      const std::vector<size_t> & values,
-                                      size_t shift)
+void alte::suffix_array::sort_indices(
+        std::vector<size_t> & indices, const std::vector<size_t> & values, size_t shift)
 {
     std::map<size_t, std::queue<size_t>> buckets;
     size_t j = 0;
@@ -221,7 +219,7 @@ void alte::suffix_array::sort_indices(std::vector<size_t> & indices,
     std::vector<std::queue<size_t>> queues;
 
     std::transform(buckets.begin(), buckets.end(), std::back_inserter(queues),
-                   [](std::pair<size_t, std::queue<size_t>> p) { return p.second; });
+            [](std::pair<size_t, std::queue<size_t>> p) { return p.second; });
 
     for(std::queue<size_t> & e : queues)
         while(!e.empty())

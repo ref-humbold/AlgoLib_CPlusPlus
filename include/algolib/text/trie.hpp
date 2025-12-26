@@ -108,8 +108,8 @@ namespace algolib::text
 
         bool empty() const
         {
-            return std::all_of(
-                    children.begin(), children.end(), [](auto && child) { return !child; });
+            return std::all_of(children.begin(), children.end(),
+                    [](auto && child) { return !child; });
         }
 
         node_ptr at(char character) const

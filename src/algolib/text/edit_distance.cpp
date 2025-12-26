@@ -6,8 +6,7 @@
 
 namespace alte = algolib::text;
 
-double alte::count_levenshtein(
-        const std::string & source,
+double alte::count_levenshtein(const std::string & source,
         const std::string & destination,
         double insertion_cost,
         double deletion_cost,
@@ -34,19 +33,16 @@ double alte::count_levenshtein(
             previous_above = distance[i + 1];
             distance[i + 1] = element == destination[i]
                                       ? previous_diagonal
-                                      : std::min(
-                                              std::min(
-                                                      previous_above + deletion_cost,
-                                                      distance[i] + insertion_cost),
-                                              previous_diagonal + substitution_cost);
+                                      : std::min(std::min(previous_above + deletion_cost,
+                                                         distance[i] + insertion_cost),
+                                                previous_diagonal + substitution_cost);
         }
     }
 
     return distance.back();
 }
 
-double alte::count_lcs(
-        const std::string & source,
+double alte::count_lcs(const std::string & source,
         const std::string & destination,
         double insertion_cost,
         double deletion_cost)
@@ -71,9 +67,8 @@ double alte::count_lcs(
 
             previous_above = distance[i + 1];
             distance[i + 1] = element == destination[i] ? previous_diagonal
-                                                        : std::min(
-                                                                previous_above + deletion_cost,
-                                                                distance[i] + insertion_cost);
+                                                        : std::min(previous_above + deletion_cost,
+                                                                  distance[i] + insertion_cost);
         }
     }
 

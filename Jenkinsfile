@@ -79,10 +79,6 @@ pipeline {
   }
 
   post {
-    always {
-      chuckNorris()
-    }
-
     cleanup {
       cleanWs()
     }

@@ -39,8 +39,7 @@ TEST(CuttingTest, findEdgeCut_WhenPresentBridges_ThenBridges)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_e>({graph[std::make_pair(0, 7)], graph[std::make_pair(5, 6)]}),
+    EXPECT_EQ(std::vector<graph_e>({graph[std::make_pair(0, 7)], graph[std::make_pair(5, 6)]}),
             result);
 }
 
