@@ -10,66 +10,57 @@ namespace alge3 = algolib::geometry::dim3;
 TEST(Geometry3DTest, sortByX_ThenSortedStablyAscending)
 {
     // given
-    std::vector<alge3::point_3d> sequence = {
-            alge3::point_3d(0.0, 0.0, 0.0),    alge3::point_3d(2.0, 3.0, -5.0),
-            alge3::point_3d(-2.0, -3.0, 5.0),  alge3::point_3d(2.0, -3.0, -5.0),
-            alge3::point_3d(-2.0, -3.0, -5.0), alge3::point_3d(3.0, 2.0, 5.0),
-            alge3::point_3d(-3.0, 2.0, 5.0)};
+    std::vector<alge3::point_3d> sequence = {alge3::point_3d(0.0, 0.0, 0.0),
+        alge3::point_3d(2.0, 3.0, -5.0), alge3::point_3d(-2.0, -3.0, 5.0),
+        alge3::point_3d(2.0, -3.0, -5.0), alge3::point_3d(-2.0, -3.0, -5.0),
+        alge3::point_3d(3.0, 2.0, 5.0), alge3::point_3d(-3.0, 2.0, 5.0)};
 
     // when
     alge3::sort_by_x(sequence);
 
     // then
-    EXPECT_EQ(
-            std::vector<alge3::point_3d>(
-                    {alge3::point_3d(-3.0, 2.0, 5.0), alge3::point_3d(-2.0, -3.0, 5.0),
-                     alge3::point_3d(-2.0, -3.0, -5.0), alge3::point_3d(0.0, 0.0, 0.0),
-                     alge3::point_3d(2.0, 3.0, -5.0), alge3::point_3d(2.0, -3.0, -5.0),
-                     alge3::point_3d(3.0, 2.0, 5.0)}),
+    EXPECT_EQ(std::vector<alge3::point_3d>({alge3::point_3d(-3.0, 2.0, 5.0),
+                  alge3::point_3d(-2.0, -3.0, 5.0), alge3::point_3d(-2.0, -3.0, -5.0),
+                  alge3::point_3d(0.0, 0.0, 0.0), alge3::point_3d(2.0, 3.0, -5.0),
+                  alge3::point_3d(2.0, -3.0, -5.0), alge3::point_3d(3.0, 2.0, 5.0)}),
             sequence);
 }
 
 TEST(Geometry3DTest, sortByY_ThenSortedStablyAscending)
 {
     // given
-    std::vector<alge3::point_3d> sequence = {
-            alge3::point_3d(0.0, 0.0, 0.0),    alge3::point_3d(2.0, 3.0, -5.0),
-            alge3::point_3d(-2.0, -3.0, 5.0),  alge3::point_3d(2.0, -3.0, -5.0),
-            alge3::point_3d(-2.0, -3.0, -5.0), alge3::point_3d(3.0, 2.0, 5.0),
-            alge3::point_3d(-3.0, 2.0, 5.0)};
+    std::vector<alge3::point_3d> sequence = {alge3::point_3d(0.0, 0.0, 0.0),
+        alge3::point_3d(2.0, 3.0, -5.0), alge3::point_3d(-2.0, -3.0, 5.0),
+        alge3::point_3d(2.0, -3.0, -5.0), alge3::point_3d(-2.0, -3.0, -5.0),
+        alge3::point_3d(3.0, 2.0, 5.0), alge3::point_3d(-3.0, 2.0, 5.0)};
 
     // when
     alge3::sort_by_y(sequence);
 
     // then
-    EXPECT_EQ(
-            std::vector<alge3::point_3d>(
-                    {alge3::point_3d(-2.0, -3.0, 5.0), alge3::point_3d(2.0, -3.0, -5.0),
-                     alge3::point_3d(-2.0, -3.0, -5.0), alge3::point_3d(0.0, 0.0, 0.0),
-                     alge3::point_3d(3.0, 2.0, 5.0), alge3::point_3d(-3.0, 2.0, 5.0),
-                     alge3::point_3d(2.0, 3.0, -5.0)}),
+    EXPECT_EQ(std::vector<alge3::point_3d>({alge3::point_3d(-2.0, -3.0, 5.0),
+                  alge3::point_3d(2.0, -3.0, -5.0), alge3::point_3d(-2.0, -3.0, -5.0),
+                  alge3::point_3d(0.0, 0.0, 0.0), alge3::point_3d(3.0, 2.0, 5.0),
+                  alge3::point_3d(-3.0, 2.0, 5.0), alge3::point_3d(2.0, 3.0, -5.0)}),
             sequence);
 }
 
 TEST(Geometry3DTest, sortByZ_ThenSortedStablyAscending)
 {
     // given
-    std::vector<alge3::point_3d> sequence = {
-            alge3::point_3d(0.0, 0.0, 0.0),    alge3::point_3d(2.0, 3.0, -5.0),
-            alge3::point_3d(-2.0, -3.0, 5.0),  alge3::point_3d(2.0, -3.0, -5.0),
-            alge3::point_3d(-2.0, -3.0, -5.0), alge3::point_3d(3.0, 2.0, 5.0),
-            alge3::point_3d(-3.0, 2.0, 5.0)};
+    std::vector<alge3::point_3d> sequence = {alge3::point_3d(0.0, 0.0, 0.0),
+        alge3::point_3d(2.0, 3.0, -5.0), alge3::point_3d(-2.0, -3.0, 5.0),
+        alge3::point_3d(2.0, -3.0, -5.0), alge3::point_3d(-2.0, -3.0, -5.0),
+        alge3::point_3d(3.0, 2.0, 5.0), alge3::point_3d(-3.0, 2.0, 5.0)};
 
     // when
     alge3::sort_by_z(sequence);
 
     // then
-    EXPECT_EQ(
-            std::vector<alge3::point_3d>(
-                    {alge3::point_3d(2.0, 3.0, -5.0), alge3::point_3d(2.0, -3.0, -5.0),
-                     alge3::point_3d(-2.0, -3.0, -5.0), alge3::point_3d(0.0, 0.0, 0.0),
-                     alge3::point_3d(-2.0, -3.0, 5.0), alge3::point_3d(3.0, 2.0, 5.0),
-                     alge3::point_3d(-3.0, 2.0, 5.0)}),
+    EXPECT_EQ(std::vector<alge3::point_3d>({alge3::point_3d(2.0, 3.0, -5.0),
+                  alge3::point_3d(2.0, -3.0, -5.0), alge3::point_3d(-2.0, -3.0, -5.0),
+                  alge3::point_3d(0.0, 0.0, 0.0), alge3::point_3d(-2.0, -3.0, 5.0),
+                  alge3::point_3d(3.0, 2.0, 5.0), alge3::point_3d(-3.0, 2.0, 5.0)}),
             sequence);
 }
 

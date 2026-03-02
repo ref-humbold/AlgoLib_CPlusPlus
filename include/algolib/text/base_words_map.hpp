@@ -55,7 +55,6 @@ namespace algolib::text
         std::string text_;
         std::map<std::pair<size_t, size_t>, size_t> factors;
     };
-
 }
 
 #endif

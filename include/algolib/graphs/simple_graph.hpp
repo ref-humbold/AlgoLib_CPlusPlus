@@ -19,10 +19,10 @@ namespace internal
     namespace algr = algolib::graphs;
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     class graph_representation
     {
     public:
@@ -50,8 +50,8 @@ namespace internal
         }
 
         const vertex_type & operator[](const vertex_id_type & vertex_id) const;
-        const edge_type &
-                operator[](const std::pair<vertex_id_type, vertex_id_type> & vertex_ids) const;
+        const edge_type & operator[](
+                const std::pair<vertex_id_type, vertex_id_type> & vertex_ids) const;
 
         std::vector<vertex_type> vertices() const;
         std::vector<edge_type> edges() const;
@@ -77,22 +77,21 @@ namespace internal
     };
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     const typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
             vertex_type &
             graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::operator[](
                     const typename graph_representation<VertexId,
-                                                        Vertex,
-                                                        Edge,
-                                                        VertexProperty,
-                                                        EdgeProperty>::vertex_id_type & vertex_id)
-                    const
+                            Vertex,
+                            Edge,
+                            VertexProperty,
+                            EdgeProperty>::vertex_id_type & vertex_id) const
     {
         auto && it = std::find_if(this->graph_map.begin(), this->graph_map.end(),
-                                  [&](auto && entry) { return entry.first.id() == vertex_id; });
+                [&](auto && entry) { return entry.first.id() == vertex_id; });
 
         if(it != this->graph_map.end())
             return it->first;
@@ -101,35 +100,32 @@ namespace internal
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     const typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
             edge_type &
             graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::operator[](
                     const std::pair<typename graph_representation<VertexId,
-                                                                  Vertex,
-                                                                  Edge,
-                                                                  VertexProperty,
-                                                                  EdgeProperty>::vertex_id_type,
-                                    typename graph_representation<VertexId,
-                                                                  Vertex,
-                                                                  Edge,
-                                                                  VertexProperty,
-                                                                  EdgeProperty>::vertex_id_type> &
-                            vertex_ids) const
+                                            Vertex,
+                                            Edge,
+                                            VertexProperty,
+                                            EdgeProperty>::vertex_id_type,
+                            typename graph_representation<VertexId,
+                                    Vertex,
+                                    Edge,
+                                    VertexProperty,
+                                    EdgeProperty>::vertex_id_type> & vertex_ids) const
     {
         vertex_id_type source_id = vertex_ids.first, destination_id = vertex_ids.second;
 
-        auto && entry_it =
-                std::find_if(this->graph_map.begin(), this->graph_map.end(),
-                             [&](auto && entry) { return entry.first.id() == source_id; });
+        auto && entry_it = std::find_if(this->graph_map.begin(), this->graph_map.end(),
+                [&](auto && entry) { return entry.first.id() == source_id; });
 
         if(entry_it != this->graph_map.end())
         {
-            auto && edge_it = std::find_if(
-                    std::begin(entry_it->second), std::end(entry_it->second),
+            auto && edge_it = std::find_if(std::begin(entry_it->second), std::end(entry_it->second),
                     [&](auto && edge)
                     { return edge.get_neighbour(entry_it->first).id() == destination_id; });
 
@@ -141,117 +137,113 @@ namespace internal
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     std::vector<
             typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
-                    vertex_type>
-            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::vertices()
-                    const
+                    vertex_type
+    > graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::vertices() const
     {
         std::vector<vertex_type> result;
 
         std::transform(this->graph_map.begin(), this->graph_map.end(), std::back_inserter(result),
-                       [](auto && entry) { return entry.first; });
+                [](auto && entry) { return entry.first; });
         return result;
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     std::vector<
             typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
-                    edge_type>
-            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::edges()
-                    const
+                    edge_type
+    > graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::edges() const
     {
         std::vector<edge_type> result;
 
         std::for_each(this->graph_map.begin(), this->graph_map.end(),
-                      [&](auto && entry) {
-                          std::copy(entry.second.begin(), entry.second.end(),
-                                    std::back_inserter(result));
-                      });
+                [&](auto && entry)
+                {
+                    std::copy(entry.second.begin(), entry.second.end(), std::back_inserter(result));
+                });
         return result;
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     std::vector<std::unordered_set<
             typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
-                    edge_type>>
-            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::edges_set()
-                    const
+                    edge_type
+    >> graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::edges_set() const
     {
-        std::vector<std::unordered_set<typename graph_representation<
-                VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::edge_type>>
+        std::vector<std::unordered_set<typename graph_representation<VertexId, Vertex, Edge,
+                VertexProperty, EdgeProperty>::edge_type>>
                 result;
 
         std::transform(this->graph_map.begin(), this->graph_map.end(), std::back_inserter(result),
-                       [](auto && entry) { return entry.second; });
+                [](auto && entry) { return entry.second; });
         return result;
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     std::vector<
             typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
-                    edge_type>
-            graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
-                    adjacent_edges(const typename graph_representation<VertexId,
-                                                                       Vertex,
-                                                                       Edge,
-                                                                       VertexProperty,
-                                                                       EdgeProperty>::vertex_type &
-                                           vertex) const
+                    edge_type
+    > graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
+            adjacent_edges(const typename graph_representation<VertexId,
+                    Vertex,
+                    Edge,
+                    VertexProperty,
+                    EdgeProperty>::vertex_type & vertex) const
     {
         this->validate(vertex);
         return std::vector<typename graph_representation<VertexId, Vertex, Edge, VertexProperty,
-                                                         EdgeProperty>::edge_type>(
-                this->graph_map.at(vertex).begin(), this->graph_map.at(vertex).end());
+                EdgeProperty>::edge_type>(this->graph_map.at(vertex).begin(),
+                this->graph_map.at(vertex).end());
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
             vertex_property_type &
             graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property(
                     const typename graph_representation<VertexId,
-                                                        Vertex,
-                                                        Edge,
-                                                        VertexProperty,
-                                                        EdgeProperty>::vertex_type & vertex)
+                            Vertex,
+                            Edge,
+                            VertexProperty,
+                            EdgeProperty>::vertex_type & vertex)
     {
         this->validate(vertex);
         return this->vertex_properties[vertex];
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
             vertex_property_type &
             graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property_at(
                     const typename graph_representation<VertexId,
-                                                        Vertex,
-                                                        Edge,
-                                                        VertexProperty,
-                                                        EdgeProperty>::vertex_type & vertex)
+                            Vertex,
+                            Edge,
+                            VertexProperty,
+                            EdgeProperty>::vertex_type & vertex)
     {
         this->validate(vertex);
 
@@ -266,18 +258,18 @@ namespace internal
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     const typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
             vertex_property_type &
             graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property_at(
                     const typename graph_representation<VertexId,
-                                                        Vertex,
-                                                        Edge,
-                                                        VertexProperty,
-                                                        EdgeProperty>::vertex_type & vertex) const
+                            Vertex,
+                            Edge,
+                            VertexProperty,
+                            EdgeProperty>::vertex_type & vertex) const
     {
         this->validate(vertex);
 
@@ -292,36 +284,36 @@ namespace internal
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
             edge_property_type &
             graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property(
                     const typename graph_representation<VertexId,
-                                                        Vertex,
-                                                        Edge,
-                                                        VertexProperty,
-                                                        EdgeProperty>::edge_type & edge)
+                            Vertex,
+                            Edge,
+                            VertexProperty,
+                            EdgeProperty>::edge_type & edge)
     {
         this->validate(edge, true);
         return this->edge_properties[edge];
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
             edge_property_type &
             graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property_at(
                     const typename graph_representation<VertexId,
-                                                        Vertex,
-                                                        Edge,
-                                                        VertexProperty,
-                                                        EdgeProperty>::edge_type & edge)
+                            Vertex,
+                            Edge,
+                            VertexProperty,
+                            EdgeProperty>::edge_type & edge)
     {
         this->validate(edge, true);
 
@@ -336,18 +328,18 @@ namespace internal
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     const typename graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
             edge_property_type &
             graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::property_at(
                     const typename graph_representation<VertexId,
-                                                        Vertex,
-                                                        Edge,
-                                                        VertexProperty,
-                                                        EdgeProperty>::edge_type & edge) const
+                            Vertex,
+                            Edge,
+                            VertexProperty,
+                            EdgeProperty>::edge_type & edge) const
     {
         this->validate(edge, true);
 
@@ -362,91 +354,90 @@ namespace internal
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     bool graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::add_vertex(
             const typename graph_representation<VertexId,
-                                                Vertex,
-                                                Edge,
-                                                VertexProperty,
-                                                EdgeProperty>::vertex_type & vertex)
+                    Vertex,
+                    Edge,
+                    VertexProperty,
+                    EdgeProperty>::vertex_type & vertex)
     {
         return graph_map.emplace(vertex, std::unordered_set<edge_type>()).second;
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     void graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
             add_edge_to_source(const typename graph_representation<VertexId,
-                                                                   Vertex,
-                                                                   Edge,
-                                                                   VertexProperty,
-                                                                   EdgeProperty>::edge_type & edge)
+                    Vertex,
+                    Edge,
+                    VertexProperty,
+                    EdgeProperty>::edge_type & edge)
     {
         this->validate(edge, false);
         this->graph_map.at(edge.source()).insert(edge);
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     void graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::
-            add_edge_to_destination(
-                    const typename graph_representation<VertexId,
-                                                        Vertex,
-                                                        Edge,
-                                                        VertexProperty,
-                                                        EdgeProperty>::edge_type & edge)
+            add_edge_to_destination(const typename graph_representation<VertexId,
+                    Vertex,
+                    Edge,
+                    VertexProperty,
+                    EdgeProperty>::edge_type & edge)
     {
         this->validate(edge, false);
         this->graph_map.at(edge.destination()).insert(edge);
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     void graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::validate(
             const typename graph_representation<VertexId,
-                                                Vertex,
-                                                Edge,
-                                                VertexProperty,
-                                                EdgeProperty>::vertex_type & vertex) const
+                    Vertex,
+                    Edge,
+                    VertexProperty,
+                    EdgeProperty>::vertex_type & vertex) const
     {
         if(this->graph_map.find(vertex) == this->graph_map.end())
             throw std::invalid_argument("Vertex does not belong to the graph");
     }
 
     template <typename VertexId,
-              typename Vertex,
-              typename Edge,
-              typename VertexProperty,
-              typename EdgeProperty>
+            typename Vertex,
+            typename Edge,
+            typename VertexProperty,
+            typename EdgeProperty>
     void graph_representation<VertexId, Vertex, Edge, VertexProperty, EdgeProperty>::validate(
             const typename graph_representation<VertexId,
-                                                Vertex,
-                                                Edge,
-                                                VertexProperty,
-                                                EdgeProperty>::edge_type & edge,
+                    Vertex,
+                    Edge,
+                    VertexProperty,
+                    EdgeProperty>::edge_type & edge,
             bool existing) const
     {
         if(this->graph_map.find(edge.source()) == this->graph_map.end()
-           || this->graph_map.find(edge.destination()) == this->graph_map.end())
+                || this->graph_map.find(edge.destination()) == this->graph_map.end())
             throw std::invalid_argument("Edge does not belong to the graph");
 
         if(existing
-           && this->graph_map.at(edge.source()).find(edge)
-                      == this->graph_map.at(edge.source()).end()
-           && this->graph_map.at(edge.destination()).find(edge)
-                      == this->graph_map.at(edge.destination()).end())
+                && this->graph_map.at(edge.source()).find(edge)
+                           == this->graph_map.at(edge.source()).end()
+                && this->graph_map.at(edge.destination()).find(edge)
+                           == this->graph_map.at(edge.destination()).end())
             throw std::invalid_argument("Edge does not belong to the graph");
     }
 }
@@ -468,10 +459,10 @@ namespace algolib::graphs
 
     protected:
         using repr = internal::graph_representation<vertex_id_type,
-                                                    vertex_type,
-                                                    edge_type,
-                                                    vertex_property_type,
-                                                    edge_property_type>;
+                vertex_type,
+                edge_type,
+                vertex_property_type,
+                edge_property_type>;
 
     private:
         class graph_properties_impl;
@@ -531,8 +522,8 @@ namespace algolib::graphs
             return this->representation[vertices];
         }
 
-        const edge_type &
-                operator[](const std::pair<vertex_type, vertex_type> & vertices) const override
+        const edge_type & operator[](
+                const std::pair<vertex_type, vertex_type> & vertices) const override
         {
             return this->representation[std::make_pair(vertices.first.id(), vertices.second.id())];
         }
@@ -556,14 +547,14 @@ namespace algolib::graphs
 
         vertex_type add_vertex(const vertex_id_type & vertex_id);
         vertex_type add_vertex(const vertex_id_type & vertex_id,
-                               const vertex_property_type & property);
+                const vertex_property_type & property);
         vertex_type add_vertex(const vertex_type & vertex);
         vertex_type add_vertex(const vertex_type & vertex, const vertex_property_type & property);
 
         edge_type add_edge_between(const vertex_type & source, const vertex_type & destination);
         edge_type add_edge_between(const vertex_type & source,
-                                   const vertex_type & destination,
-                                   const edge_property_type & property);
+                const vertex_type & destination,
+                const edge_property_type & property);
 
         virtual edge_type add_edge(const edge_type & edge) = 0;
         virtual edge_type add_edge(const edge_type & edge, const edge_property_type & property) = 0;
@@ -585,7 +576,7 @@ namespace algolib::graphs
         auto adjacent = this->representation.adjacent_edges(vertex);
 
         std::transform(adjacent.begin(), adjacent.end(), std::back_inserter(result),
-                       [&](auto && edge) { return edge.get_neighbour(vertex); });
+                [&](auto && edge) { return edge.get_neighbour(vertex); });
         return result;
     }
 
@@ -683,16 +674,16 @@ namespace algolib::graphs
             return graph.representation.property(vertex);
         }
 
-        simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
-                at(const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex)
-                        override
+        simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & at(
+                const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex)
+                override
         {
             return graph.representation.property_at(vertex);
         }
 
-        const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type &
-                at(const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex)
-                        const override
+        const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_property_type & at(
+                const simple_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type & vertex)
+                const override
         {
             return graph.representation.property_at(vertex);
         }
@@ -704,16 +695,16 @@ namespace algolib::graphs
             return graph.representation.property(edge);
         }
 
-        simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
-                at(const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge)
-                        override
+        simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & at(
+                const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge)
+                override
         {
             return graph.representation.property_at(edge);
         }
 
-        const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type &
-                at(const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge)
-                        const override
+        const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_property_type & at(
+                const simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type & edge)
+                const override
         {
             return graph.representation.property_at(edge);
         }

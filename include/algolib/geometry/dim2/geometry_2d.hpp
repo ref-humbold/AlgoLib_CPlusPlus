@@ -34,10 +34,10 @@ namespace algolib::geometry::dim2
 
     /*!
      * \brief Calculates distance between given points.
-    * \param point1 the first point
-    * \param point2 the second point
-    * \return the distance between the points
-    */
+     * \param point1 the first point
+     * \param point2 the second point
+     * \return the distance between the points
+     */
     double distance(const point_2d & point1, const point_2d & point2);
 
     /*!

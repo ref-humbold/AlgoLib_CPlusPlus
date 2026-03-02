@@ -20,8 +20,8 @@ namespace algolib::structures::heaps
 
     //! \brief Merges two heaps.
     template <typename E, typename Compare>
-    pairing_heap<E, Compare>
-            operator+(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2);
+    pairing_heap<E, Compare> operator+(pairing_heap<E, Compare> heap1,
+            const pairing_heap<E, Compare> & heap2);
 
 #pragma region pairing_heap
 
@@ -45,8 +45,7 @@ namespace algolib::structures::heaps
         }
 
         template <typename InputIterator>
-        pairing_heap(
-                InputIterator first,
+        pairing_heap(InputIterator first,
                 InputIterator last,
                 const value_compare & compare = value_compare())
             : pairing_heap(compare)
@@ -55,8 +54,7 @@ namespace algolib::structures::heaps
                 this->push(*it);
         }
 
-        pairing_heap(
-                std::initializer_list<value_type> init,
+        pairing_heap(std::initializer_list<value_type> init,
                 const value_compare & compare = value_compare())
             : pairing_heap(init.begin(), init.end(), compare)
         {
@@ -125,8 +123,8 @@ namespace algolib::structures::heaps
         //! \brief Merges given heap to this heap.
         pairing_heap & operator+=(const pairing_heap & other);
 
-        friend pairing_heap<E, Compare> operator+ <E, Compare>(
-                pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2);
+        friend pairing_heap<E, Compare> operator+ <E, Compare>(pairing_heap<E, Compare> heap1,
+                const pairing_heap<E, Compare> & heap2);
 
     private:
         std::optional<heap_node> heap;
@@ -169,8 +167,8 @@ namespace algolib::structures::heaps
     }
 
     template <typename E, typename Compare>
-    pairing_heap<E, Compare> &
-            pairing_heap<E, Compare>::operator+=(const pairing_heap<E, Compare> & other)
+    pairing_heap<E, Compare> & pairing_heap<E, Compare>::operator+=(
+            const pairing_heap<E, Compare> & other)
     {
         this->heap = this->empty() ? other.heap : this->heap->merge(other.heap);
         this->size_ += other.size_;
@@ -180,8 +178,8 @@ namespace algolib::structures::heaps
 #pragma endregion
 
     template <typename E, typename Compare>
-    pairing_heap<E, Compare>
-            operator+(pairing_heap<E, Compare> heap1, const pairing_heap<E, Compare> & heap2)
+    pairing_heap<E, Compare> operator+(pairing_heap<E, Compare> heap1,
+            const pairing_heap<E, Compare> & heap2)
     {
         heap1 += heap2;
         return heap1;
@@ -193,8 +191,7 @@ namespace algolib::structures::heaps
     class pairing_heap<E, Compare>::heap_node
     {
     public:
-        heap_node(
-                const value_type & element,
+        heap_node(const value_type & element,
                 const std::shared_ptr<const heap_node_list> & children,
                 const value_compare & compare)
             : element{element}, children{children}, compare{compare}
@@ -222,8 +219,8 @@ namespace algolib::structures::heaps
         heap_node merge(const std::optional<heap_node> & node) const;
 
     private:
-        std::optional<heap_node>
-                merge_pairs(const std::shared_ptr<const heap_node_list> & list) const;
+        std::optional<heap_node> merge_pairs(
+                const std::shared_ptr<const heap_node_list> & list) const;
 
     public:
         value_type element;
@@ -232,33 +229,30 @@ namespace algolib::structures::heaps
     };
 
     template <typename E, typename Compare>
-    typename pairing_heap<E, Compare>::heap_node
-            pairing_heap<E, Compare>::heap_node::append(const value_type & item) const
+    typename pairing_heap<E, Compare>::heap_node pairing_heap<E, Compare>::heap_node::append(
+            const value_type & item) const
     {
         return compare(item, this->element)
-                       ? heap_node(
-                               this->element,
-                               std::make_shared<const heap_node_list>(
-                                       heap_node(item, this->compare), this->children),
-                               this->compare)
-                       : heap_node(
-                               item, std::make_shared<const heap_node_list>(*this), this->compare);
+                       ? heap_node(this->element,
+                                 std::make_shared<const heap_node_list>(
+                                         heap_node(item, this->compare), this->children),
+                                 this->compare)
+                       : heap_node(item, std::make_shared<const heap_node_list>(*this),
+                                 this->compare);
     }
 
     template <typename E, typename Compare>
-    typename pairing_heap<E, Compare>::heap_node
-            pairing_heap<E, Compare>::heap_node::merge(const std::optional<heap_node> & node) const
+    typename pairing_heap<E, Compare>::heap_node pairing_heap<E, Compare>::heap_node::merge(
+            const std::optional<heap_node> & node) const
     {
         return !node ? *this
                : compare(node->element, this->element)
-                       ? heap_node(
-                               this->element,
-                               std::make_shared<const heap_node_list>(*node, this->children),
-                               this->compare)
-                       : heap_node(
-                               node->element,
-                               std::make_shared<const heap_node_list>(*this, node->children),
-                               node->compare);
+                       ? heap_node(this->element,
+                                 std::make_shared<const heap_node_list>(*node, this->children),
+                                 this->compare)
+                       : heap_node(node->element,
+                                 std::make_shared<const heap_node_list>(*this, node->children),
+                                 node->compare);
     }
 
     template <typename E, typename Compare>
@@ -282,8 +276,7 @@ namespace algolib::structures::heaps
     class pairing_heap<E, Compare>::heap_node_list
     {
     public:
-        explicit heap_node_list(
-                const heap_node & node,
+        explicit heap_node_list(const heap_node & node,
                 const std::shared_ptr<const heap_node_list> & next = nullptr)
             : node{node}, next{next}
         {

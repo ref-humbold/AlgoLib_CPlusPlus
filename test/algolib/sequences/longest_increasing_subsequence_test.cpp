@@ -47,7 +47,7 @@ TEST(LongestIncreasingSubsequenceTest, findLis_WhenSearchInMiddle_ThenLeastLexic
 }
 
 TEST(LongestIncreasingSubsequenceTest,
-     findLis_WhenIncreasingAndReversedComparator_ThenLastElementOnly)
+        findLis_WhenIncreasingAndReversedComparator_ThenLastElementOnly)
 {
     // when
     std::vector<int> result =

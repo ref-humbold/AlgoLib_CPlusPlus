@@ -22,10 +22,9 @@ protected:
 
 public:
     MultipartiteGraphTest()
-        : test_object{graph_t(
-                {std::vector<graph_vi>({0, 1, 2}), std::vector<graph_vi>({3, 4}),
-                 std::vector<graph_vi>({5, 6, 7, 8}), std::vector<graph_vi>({9}),
-                 std::vector<graph_vi>()})}
+        : test_object{graph_t({std::vector<graph_vi>({0, 1, 2}), std::vector<graph_vi>({3, 4}),
+              std::vector<graph_vi>({5, 6, 7, 8}), std::vector<graph_vi>({9}),
+              std::vector<graph_vi>()})}
     {
         test_object.add_edge_between(graph_v(0), graph_v(3));
         test_object.add_edge_between(graph_v(1), graph_v(5));
@@ -108,10 +107,8 @@ TEST_F(MultipartiteGraphTest, vertices_ThenAllVertices)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_v>(
-                    {graph_v(0), graph_v(1), graph_v(2), graph_v(3), graph_v(4), graph_v(5),
-                     graph_v(6), graph_v(7), graph_v(8), graph_v(9)}),
+    EXPECT_EQ(std::vector<graph_v>({graph_v(0), graph_v(1), graph_v(2), graph_v(3), graph_v(4),
+                  graph_v(5), graph_v(6), graph_v(7), graph_v(8), graph_v(9)}),
             result);
 }
 
@@ -123,11 +120,9 @@ TEST_F(MultipartiteGraphTest, edges_ThenAllEdges)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_e>(
-                    {graph_e(graph_v(0), graph_v(3)), graph_e(graph_v(1), graph_v(5)),
-                     graph_e(graph_v(2), graph_v(9)), graph_e(graph_v(4), graph_v(6)),
-                     graph_e(graph_v(7), graph_v(9))}),
+    EXPECT_EQ(std::vector<graph_e>({graph_e(graph_v(0), graph_v(3)),
+                  graph_e(graph_v(1), graph_v(5)), graph_e(graph_v(2), graph_v(9)),
+                  graph_e(graph_v(4), graph_v(6)), graph_e(graph_v(7), graph_v(9))}),
             result);
 }
 
@@ -150,9 +145,8 @@ TEST_F(MultipartiteGraphTest, adjacentEdges_ThenOutgoingEdges)
     // then
     std::sort(result.begin(), result.end());
 
-    EXPECT_EQ(
-            std::vector<graph_e>(
-                    {graph_e(graph_v(2), graph_v(9)), graph_e(graph_v(7), graph_v(9))}),
+    EXPECT_EQ(std::vector<graph_e>(
+                      {graph_e(graph_v(2), graph_v(9)), graph_e(graph_v(7), graph_v(9))}),
             result);
 }
 

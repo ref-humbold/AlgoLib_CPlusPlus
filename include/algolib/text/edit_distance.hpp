@@ -23,8 +23,7 @@ namespace algolib::text
      * \param substitution_cost the cost of substitution operation
      * \return the cost of edit distance
      */
-    double count_levenshtein(
-            const std::string & source,
+    double count_levenshtein(const std::string & source,
             const std::string & destination,
             double insertion_cost = 1.0,
             double deletion_cost = 1.0,
@@ -38,8 +37,7 @@ namespace algolib::text
      * \param deletion_cost the cost of deletion operation
      * \return the cost of edit distance
      */
-    double count_lcs(
-            const std::string & source,
+    double count_lcs(const std::string & source,
             const std::string & destination,
             double insertion_cost = 1.0,
             double deletion_cost = 1.0);
@@ -51,8 +49,7 @@ namespace algolib::text
      * \param substitution_cost the cost of substitution operation
      * \return the cost of edit distance
      */
-    double count_hamming(
-            const std::string & source,
+    double count_hamming(const std::string & source,
             const std::string & destination,
             double substitution_cost = 1.0);
 }

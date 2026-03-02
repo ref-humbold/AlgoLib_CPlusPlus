@@ -48,9 +48,8 @@ namespace internal
 
         void on_exit(const Vertex & vertex) override
         {
-            int minimal_low_value = std::accumulate(
-                    this->dfs_children[vertex].begin(), this->dfs_children[vertex].end(),
-                    std::numeric_limits<int>::max(),
+            int minimal_low_value = std::accumulate(this->dfs_children[vertex].begin(),
+                    this->dfs_children[vertex].end(), std::numeric_limits<int>::max(),
                     [&](int acc, const Vertex & child)
                     { return std::min(this->low_values[child], acc); });
 
@@ -76,8 +75,7 @@ namespace internal
             if(this->is_dfs_root(vertex))
                 return dfs_children[vertex].size() > 1;
 
-            return std::any_of(
-                    this->dfs_children[vertex].begin(), this->dfs_children[vertex].end(),
+            return std::any_of(this->dfs_children[vertex].begin(), this->dfs_children[vertex].end(),
                     [&](auto && child)
                     { return this->low_values[child] >= this->dfs_depths[vertex]; });
         }
@@ -108,20 +106,17 @@ namespace algolib::graphs
     {
         std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::edge_type>
                 bridges;
-        internal::cutting_strategy<
-                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+        internal::cutting_strategy<typename undirected_graph<VertexId, VertexProperty,
+                EdgeProperty>::vertex_type>
                 strategy;
         std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 vertices = graph.vertices();
 
         dfs_recursive(graph, strategy, vertices);
-        vertices.erase(
-                std::remove_if(
-                        vertices.begin(), vertices.end(),
-                        [&](auto && vertex) { return !strategy.has_bridge(vertex); }),
+        vertices.erase(std::remove_if(vertices.begin(), vertices.end(),
+                               [&](auto && vertex) { return !strategy.has_bridge(vertex); }),
                 vertices.end());
-        std::transform(
-                vertices.begin(), vertices.end(), std::back_inserter(bridges),
+        std::transform(vertices.begin(), vertices.end(), std::back_inserter(bridges),
                 [&](auto && vertex)
                 { return graph[std::make_pair(vertex, strategy.dfs_parents.at(vertex))]; });
         return bridges;
@@ -138,15 +133,14 @@ namespace algolib::graphs
     {
         std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 separators;
-        internal::cutting_strategy<
-                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+        internal::cutting_strategy<typename undirected_graph<VertexId, VertexProperty,
+                EdgeProperty>::vertex_type>
                 strategy;
         std::vector<typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
                 vertices = graph.vertices();
 
         dfs_recursive(graph, strategy, vertices);
-        std::copy_if(
-                vertices.begin(), vertices.end(), std::back_inserter(separators),
+        std::copy_if(vertices.begin(), vertices.end(), std::back_inserter(separators),
                 [&](auto && vertex) { return strategy.is_separator(vertex); });
         return separators;
     }

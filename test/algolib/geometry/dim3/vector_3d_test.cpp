@@ -31,8 +31,8 @@ TEST(Vector3DTest, coordinates_ThenArray)
 TEST(Vector3DTest, dot_ThenScalarProduct)
 {
     // when
-    double result = alge3::vector_3d::dot(
-            alge3::vector_3d(1.5, -4.0, -3.5), alge3::vector_3d(9.0, -2.5, 8.5));
+    double result = alge3::vector_3d::dot(alge3::vector_3d(1.5, -4.0, -3.5),
+            alge3::vector_3d(9.0, -2.5, 8.5));
 
     // then
     EXPECT_NEAR(-6.25, result, offset);
@@ -41,8 +41,8 @@ TEST(Vector3DTest, dot_ThenScalarProduct)
 TEST(Vector3DTest, dot_WhenOrthogonal_ThenZero)
 {
     // when
-    double result = alge3::vector_3d::dot(
-            alge3::vector_3d(1.0, 0.0, 1.0), alge3::vector_3d(0.0, -2.0, 0.0));
+    double result = alge3::vector_3d::dot(alge3::vector_3d(1.0, 0.0, 1.0),
+            alge3::vector_3d(0.0, -2.0, 0.0));
 
     // then
     EXPECT_NEAR(0.0, result, offset);
@@ -51,8 +51,8 @@ TEST(Vector3DTest, dot_WhenOrthogonal_ThenZero)
 TEST(Vector3DTest, cross_ThenCrossProduct)
 {
     // when
-    alge3::vector_3d result = alge3::vector_3d::cross(
-            alge3::vector_3d(1.5, -4.0, -3.5), alge3::vector_3d(9.0, -2.5, 8.5));
+    alge3::vector_3d result = alge3::vector_3d::cross(alge3::vector_3d(1.5, -4.0, -3.5),
+            alge3::vector_3d(9.0, -2.5, 8.5));
 
     // then
     EXPECT_EQ(alge3::vector_3d(-42.75, -44.25, 32.25), result);
@@ -61,8 +61,8 @@ TEST(Vector3DTest, cross_ThenCrossProduct)
 TEST(Vector3DTest, cross_WhenParallel_ThenZero)
 {
     // when
-    alge3::vector_3d result = alge3::vector_3d::cross(
-            alge3::vector_3d(3.0, 3.0, 3.0), alge3::vector_3d(-8.0, -8.0, -8.0));
+    alge3::vector_3d result = alge3::vector_3d::cross(alge3::vector_3d(3.0, 3.0, 3.0),
+            alge3::vector_3d(-8.0, -8.0, -8.0));
 
     // then
     EXPECT_EQ(alge3::vector_3d(0.0, 0.0, 0.0), result);
@@ -71,8 +71,8 @@ TEST(Vector3DTest, cross_WhenParallel_ThenZero)
 TEST(Vector3DTest, area_ThenLengthOfCrossProduct)
 {
     // when
-    double result = alge3::vector_3d::area(
-            alge3::vector_3d(1.5, -4.0, -3.5), alge3::vector_3d(9.0, -2.5, 8.5));
+    double result = alge3::vector_3d::area(alge3::vector_3d(1.5, -4.0, -3.5),
+            alge3::vector_3d(9.0, -2.5, 8.5));
 
     // then
     EXPECT_NEAR(69.46716850426538, result, offset);
@@ -81,8 +81,8 @@ TEST(Vector3DTest, area_ThenLengthOfCrossProduct)
 TEST(Vector3DTest, area_WhenParallel_ThenZero)
 {
     // when
-    double result = alge3::vector_3d::area(
-            alge3::vector_3d(3.0, 3.0, 3.0), alge3::vector_3d(-8.0, -8.0, -8.0));
+    double result = alge3::vector_3d::area(alge3::vector_3d(3.0, 3.0, 3.0),
+            alge3::vector_3d(-8.0, -8.0, -8.0));
 
     // then
     EXPECT_NEAR(0.0, result, offset);
@@ -91,9 +91,8 @@ TEST(Vector3DTest, area_WhenParallel_ThenZero)
 TEST(Vector3DTest, volume_ThenScalarTripleProduct)
 {
     // when
-    double result = alge3::vector_3d::volume(
-            alge3::vector_3d(1.5, -4.0, -3.5), alge3::vector_3d(9.0, -2.5, 8.5),
-            alge3::vector_3d(1.0, -1.0, 1.0));
+    double result = alge3::vector_3d::volume(alge3::vector_3d(1.5, -4.0, -3.5),
+            alge3::vector_3d(9.0, -2.5, 8.5), alge3::vector_3d(1.0, -1.0, 1.0));
 
     // then
     EXPECT_NEAR(33.75, result, offset);
@@ -102,9 +101,8 @@ TEST(Vector3DTest, volume_ThenScalarTripleProduct)
 TEST(Vector3DTest, volume_WhenParallel_ThenZero)
 {
     // when
-    double result = alge3::vector_3d::volume(
-            alge3::vector_3d(3.0, 3.0, 3.0), alge3::vector_3d(-8.0, -8.0, -8.0),
-            alge3::vector_3d(2.0, -2.0, 2.0));
+    double result = alge3::vector_3d::volume(alge3::vector_3d(3.0, 3.0, 3.0),
+            alge3::vector_3d(-8.0, -8.0, -8.0), alge3::vector_3d(2.0, -2.0, 2.0));
 
     // then
     EXPECT_NEAR(0.0, result, offset);
@@ -113,9 +111,8 @@ TEST(Vector3DTest, volume_WhenParallel_ThenZero)
 TEST(Vector3DTest, volume_WhenOrthogonal_ThenZero)
 {
     // when
-    double result = alge3::vector_3d::volume(
-            alge3::vector_3d(3.0, 3.0, 3.0), alge3::vector_3d(1.0, 0.0, 1.0),
-            alge3::vector_3d(0.0, -2.0, 0.0));
+    double result = alge3::vector_3d::volume(alge3::vector_3d(3.0, 3.0, 3.0),
+            alge3::vector_3d(1.0, 0.0, 1.0), alge3::vector_3d(0.0, -2.0, 0.0));
 
     // then
     EXPECT_NEAR(0.0, result, offset);

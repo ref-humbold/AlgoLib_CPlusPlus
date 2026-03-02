@@ -33,8 +33,8 @@ namespace algolib::graphs
     };
 
     template <typename VertexId = size_t,
-              typename VertexProperty = std::nullptr_t,
-              typename EdgeProperty = std::nullptr_t>
+            typename VertexProperty = std::nullptr_t,
+            typename EdgeProperty = std::nullptr_t>
     class undirected_simple_graph
         : public simple_graph<VertexId, VertexProperty, EdgeProperty>,
           public virtual undirected_graph<VertexId, VertexProperty, EdgeProperty>
@@ -90,10 +90,11 @@ namespace algolib::graphs
         std::unordered_set<edge_type> all_edges;
 
         std::for_each(edges_set.begin(), edges_set.end(),
-                      [&](auto && edge_set) {
-                          std::copy(edge_set.begin(), edge_set.end(),
-                                    std::inserter(all_edges, all_edges.end()));
-                      });
+                [&](auto && edge_set)
+                {
+                    std::copy(edge_set.begin(), edge_set.end(),
+                            std::inserter(all_edges, all_edges.end()));
+                });
 
         return all_edges.size();
     }
@@ -106,10 +107,11 @@ namespace algolib::graphs
         std::unordered_set<edge_type> all_edges;
 
         std::for_each(edges_set.begin(), edges_set.end(),
-                      [&](auto && edge_set) {
-                          std::copy(edge_set.begin(), edge_set.end(),
-                                    std::inserter(all_edges, all_edges.end()));
-                      });
+                [&](auto && edge_set)
+                {
+                    std::copy(edge_set.begin(), edge_set.end(),
+                            std::inserter(all_edges, all_edges.end()));
+                });
 
         return std::vector<edge_type>(all_edges.begin(), all_edges.end());
     }
@@ -154,17 +156,17 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     directed_simple_graph<typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
                                   vertex_id_type,
-                          typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
-                                  vertex_property_type,
-                          typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
-                                  edge_property_type>
+            typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                    vertex_property_type,
+            typename undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::
+                    edge_property_type>
             undirected_simple_graph<VertexId, VertexProperty, EdgeProperty>::as_directed() const
     {
         std::vector<vertex_type> all_vertices = this->vertices();
         std::vector<vertex_id_type> vertex_ids;
 
         std::transform(all_vertices.begin(), all_vertices.end(), std::back_inserter(vertex_ids),
-                       [](auto && vertex) { return vertex.id(); });
+                [](auto && vertex) { return vertex.id(); });
 
         directed_simple_graph<vertex_id_type, vertex_property_type, edge_property_type> graph(
                 vertex_ids);

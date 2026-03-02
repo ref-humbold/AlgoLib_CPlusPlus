@@ -14,8 +14,7 @@
 namespace internal
 {
     // Randomly chooses pivot for quick-sort algorithm.
-    size_t choose_pivot(
-            std::uniform_int_distribution<size_t> & distribution,
+    size_t choose_pivot(std::uniform_int_distribution<size_t> & distribution,
             std::default_random_engine & rand_eng);
 
     void validate_indices(size_t size, size_t index_begin, size_t index_end);
@@ -88,8 +87,7 @@ namespace internal
 
     // Mutably sorts given sequence using quick-sort algorithm.
     template <typename T>
-    void do_quick_sort(
-            std::default_random_engine & rand_eng,
+    void do_quick_sort(std::default_random_engine & rand_eng,
             std::vector<T> & sequence,
             size_t index_begin,
             size_t index_end)
@@ -131,8 +129,7 @@ namespace algolib::sequences
      * \param index_end the index of sequence end
      */
     template <typename T>
-    void heap_sort(
-            std::vector<T> & sequence,
+    void heap_sort(std::vector<T> & sequence,
             size_t index_begin = 0,
             size_t index_end = std::numeric_limits<size_t>::max())
     {
@@ -167,8 +164,7 @@ namespace algolib::sequences
      * \param index_end the index of sequence end
      */
     template <typename T>
-    void top_down_merge_sort(
-            std::vector<T> & sequence,
+    void top_down_merge_sort(std::vector<T> & sequence,
             size_t index_begin = 0,
             size_t index_end = std::numeric_limits<size_t>::max())
     {
@@ -187,8 +183,7 @@ namespace algolib::sequences
      * \param index_end the index of sequence end
      */
     template <typename T>
-    void bottom_up_merge_sort(
-            std::vector<T> & sequence,
+    void bottom_up_merge_sort(std::vector<T> & sequence,
             size_t index_begin = 0,
             size_t index_end = std::numeric_limits<size_t>::max())
     {
@@ -202,8 +197,7 @@ namespace algolib::sequences
 
         for(size_t half_step = 2; half_step < 2 * (index_end - index_begin); half_step *= 2)
             for(size_t i = index_begin; i < index_end; i += half_step)
-                internal::merge(
-                        sequence, i, std::min(i + half_step / 2, index_end),
+                internal::merge(sequence, i, std::min(i + half_step / 2, index_end),
                         std::min(i + half_step, index_end));
     }
 
@@ -215,8 +209,7 @@ namespace algolib::sequences
      * \param index_end the index of sequence end
      */
     template <typename T>
-    void quick_sort(
-            std::vector<T> & sequence,
+    void quick_sort(std::vector<T> & sequence,
             size_t index_begin = 0,
             size_t index_end = std::numeric_limits<size_t>::max())
     {

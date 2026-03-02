@@ -52,8 +52,7 @@ namespace algolib::structures
         }
 
         template <typename InputIterator>
-        avl_tree(
-                InputIterator first,
+        avl_tree(InputIterator first,
                 InputIterator last,
                 const value_compare & compare = value_compare())
             : avl_tree(compare)
@@ -62,8 +61,7 @@ namespace algolib::structures
                 this->insert(*it);
         }
 
-        avl_tree(
-                std::initializer_list<value_type> init,
+        avl_tree(std::initializer_list<value_type> init,
                 const value_compare & compare = value_compare())
             : avl_tree(init.begin(), init.end(), compare)
         {
@@ -235,8 +233,7 @@ namespace algolib::structures
         inner_ptr search(inner_ptr node, const_reference element) const;
 
         // Searches for node that satisfies given predicate with given value.
-        inner_ptr find_node(
-                const_reference element,
+        inner_ptr find_node(const_reference element,
                 std::function<bool(inner_ptr, const_reference)> predicate) const;
 
         // Inserts inner node to this tree
@@ -308,8 +305,8 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    typename avl_tree<E, Compare>::const_iterator
-            avl_tree<E, Compare>::find(const_reference element) const
+    typename avl_tree<E, Compare>::const_iterator avl_tree<E, Compare>::find(
+            const_reference element) const
     {
         if(this->empty())
             return this->cend();
@@ -323,16 +320,16 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    std::pair<typename avl_tree<E, Compare>::iterator, bool>
-            avl_tree<E, Compare>::insert(const_reference element)
+    std::pair<typename avl_tree<E, Compare>::iterator, bool> avl_tree<E, Compare>::insert(
+            const_reference element)
     {
         return this->insert_node(new avl_inner_node(element));
     }
 
     template <typename E, typename Compare>
     template <typename... Args>
-    std::pair<typename avl_tree<E, Compare>::iterator, bool>
-            avl_tree<E, Compare>::emplace(Args &&... args)
+    std::pair<typename avl_tree<E, Compare>::iterator, bool> avl_tree<E, Compare>::emplace(
+            Args &&... args)
     {
         return this->insert_node(new avl_inner_node(value_type(std::forward<Args>(args)...)));
     }
@@ -354,8 +351,8 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    typename avl_tree<E, Compare>::inner_ptr
-            avl_tree<E, Compare>::search(inner_ptr node, const_reference element) const
+    typename avl_tree<E, Compare>::inner_ptr avl_tree<E, Compare>::search(inner_ptr node,
+            const_reference element) const
     {
         if(this->compare(element, node->element))
             return node->left();
@@ -380,8 +377,8 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    std::pair<typename avl_tree<E, Compare>::iterator, bool>
-            avl_tree<E, Compare>::insert_node(typename avl_tree<E, Compare>::inner_ptr node)
+    std::pair<typename avl_tree<E, Compare>::iterator, bool> avl_tree<E, Compare>::insert_node(
+            typename avl_tree<E, Compare>::inner_ptr node)
     {
         std::function<bool(inner_ptr, const_reference)> child_equal =
                 [this](inner_ptr n, const_reference e)
@@ -882,7 +879,7 @@ namespace algolib::structures
             else
             {
                 while(this->current_node->parent()->height() > 0
-                      && this->current_node->parent()->left() != this->current_node)
+                        && this->current_node->parent()->left() != this->current_node)
                     this->current_node = this->current_node->parent();
 
                 this->current_node = this->current_node->parent();
@@ -893,8 +890,8 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    typename avl_tree<E, Compare>::avl_iterator
-            avl_tree<E, Compare>::avl_iterator::operator++(int) &
+    typename avl_tree<E, Compare>::avl_iterator avl_tree<E, Compare>::avl_iterator::operator++(
+            int) &
     {
         avl_tree<E, Compare>::avl_const_iterator result = *this;
 
@@ -912,7 +909,7 @@ namespace algolib::structures
             else
             {
                 while(this->current_node->parent()->height() > 0
-                      && this->current_node->parent()->right() != this->current_node)
+                        && this->current_node->parent()->right() != this->current_node)
                     this->current_node = this->current_node->parent();
 
                 this->current_node = this->current_node->parent();
@@ -925,8 +922,8 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    typename avl_tree<E, Compare>::avl_iterator
-            avl_tree<E, Compare>::avl_iterator::operator--(int) &
+    typename avl_tree<E, Compare>::avl_iterator avl_tree<E, Compare>::avl_iterator::operator--(
+            int) &
     {
         avl_tree<E, Compare>::avl_const_iterator result = *this;
 
@@ -1028,7 +1025,7 @@ namespace algolib::structures
             else
             {
                 while(this->current_node->parent()->height() > 0
-                      && this->current_node->parent()->left() != this->current_node)
+                        && this->current_node->parent()->left() != this->current_node)
                     this->current_node = this->current_node->parent();
 
                 this->current_node = this->current_node->parent();
@@ -1059,7 +1056,7 @@ namespace algolib::structures
             else
             {
                 while(this->current_node->parent()->height() > 0
-                      && this->current_node->parent()->right() != this->current_node)
+                        && this->current_node->parent()->right() != this->current_node)
                     this->current_node = this->current_node->parent();
 
                 this->current_node = this->current_node->parent();

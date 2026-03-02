@@ -2,8 +2,8 @@
 
 [![GitHub Actions](https://github.com/ref-humbold/AlgoLib_CPlusPlus/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/ref-humbold/AlgoLib_CPlusPlus/actions/workflows/build-and-test.yml)
 
-![License](https://img.shields.io/github/license/ref-humbold/AlgoLib_CPlusPlus?style=plastic)
+[![License](https://img.shields.io/github/license/ref-humbold/AlgoLib_CPlusPlus?style=plastic)](./LICENSE)
 
-ALGOrithms LIBrary - C++ version
+**Algo**rithms **Lib**rary - C++ version
 
 Library of various algorithms and data structures.

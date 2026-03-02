@@ -17,8 +17,7 @@ namespace algolib::graphs
 {
 #pragma region lowest_common_ancestor
 
-    template <
-            typename VertexId = size_t,
+    template <typename VertexId = size_t,
             typename VertexProperty = std::nullptr_t,
             typename EdgeProperty = std::nullptr_t>
     class lowest_common_ancestor
@@ -84,8 +83,7 @@ namespace algolib::graphs
 
         std::vector<vertex_type> candidates = paths[vertex1];
 
-        auto it = std::find_if(
-                candidates.rbegin(), candidates.rend(),
+        auto it = std::find_if(candidates.rbegin(), candidates.rend(),
                 [&](auto && candidate) { return !this->is_offspring(vertex2, candidate); });
 
         return it != candidates.rend() ? find(*it, vertex2) : find(paths[vertex1][0], vertex2);
@@ -97,8 +95,8 @@ namespace algolib::graphs
         dfs_recursive(this->graph, this->strategy, {this->root_});
 
         for(auto && vertex : this->graph.vertices())
-            this->paths.emplace(
-                    vertex, std::vector<vertex_type>({this->strategy.parents.at(vertex)}));
+            this->paths.emplace(vertex,
+                    std::vector<vertex_type>({this->strategy.parents.at(vertex)}));
 
         for(int i = 0; i < std::log2(this->graph.vertices_count()) + 3; ++i)
             for(auto && vertex : this->graph.vertices())
@@ -123,13 +121,13 @@ namespace algolib::graphs
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     struct lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::lca_strategy
-        : public dfs_strategy<
-                  typename lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::
-                          vertex_type>
+        : public dfs_strategy<typename lowest_common_ancestor<VertexId,
+                  VertexProperty,
+                  EdgeProperty>::vertex_type>
     {
-        using vertex_type =
-                typename lowest_common_ancestor<VertexId, VertexProperty, EdgeProperty>::
-                        vertex_type;
+        using vertex_type = typename lowest_common_ancestor<VertexId,
+                VertexProperty,
+                EdgeProperty>::vertex_type;
 
         lca_strategy() : timer{0}
         {

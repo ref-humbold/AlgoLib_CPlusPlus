@@ -40,14 +40,13 @@ namespace internal
 
     // Single step of recursive DFS.
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
-    void dfs_recursive_step(
-            const algr::graph<VertexId, VertexProperty, EdgeProperty> & graph_,
+    void dfs_recursive_step(const algr::graph<VertexId, VertexProperty, EdgeProperty> & graph_,
             algr::dfs_strategy<
-                    typename algr::graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> &
-                    strategy,
+                    typename algr::graph<VertexId, VertexProperty, EdgeProperty>::vertex_type
+            > & strategy,
             dfs_recursive_state<
-                    typename algr::graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> &
-                    state)
+                    typename algr::graph<VertexId, VertexProperty, EdgeProperty>::vertex_type
+            > & state)
     {
         typename algr::graph<VertexId, VertexProperty, EdgeProperty>::vertex_type vertex =
                 state.vertex.value();
@@ -187,8 +186,7 @@ namespace algolib::graphs
                 ++iteration;
             }
 
-        std::transform(
-                reached.begin(), reached.end(), std::back_inserter(visited),
+        std::transform(reached.begin(), reached.end(), std::back_inserter(visited),
                 [](auto && p) { return p.first; });
 
         return visited;
@@ -209,8 +207,8 @@ namespace algolib::graphs
             std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> roots)
     {
         std::vector<typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type> visited;
-        internal::dfs_recursive_state<
-                typename graph<VertexId, VertexProperty, EdgeProperty>::vertex_type>
+        internal::dfs_recursive_state<typename graph<VertexId, VertexProperty,
+                EdgeProperty>::vertex_type>
                 state;
 
         for(auto && root : roots)
@@ -222,8 +220,7 @@ namespace algolib::graphs
                 ++state.iteration;
             }
 
-        std::transform(
-                state.reached.begin(), state.reached.end(), std::back_inserter(visited),
+        std::transform(state.reached.begin(), state.reached.end(), std::back_inserter(visited),
                 [](auto && p) { return p.first; });
 
         return visited;

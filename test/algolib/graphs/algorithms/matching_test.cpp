@@ -22,9 +22,9 @@ TEST(MatchingTest, match_WhenMatchingExists_ThenMaximalMatching)
     graph.add_edge_between(graph[3], graph[6]);
     graph.add_edge_between(graph[6], graph[7]);
 
-    std::unordered_map<graph_v, graph_v> expected = {
-            {graph[0], graph[5]}, {graph[1], graph[2]}, {graph[2], graph[1]}, {graph[3], graph[4]},
-            {graph[4], graph[3]}, {graph[5], graph[0]}, {graph[6], graph[7]}, {graph[7], graph[6]}};
+    std::unordered_map<graph_v, graph_v> expected = {{graph[0], graph[5]}, {graph[1], graph[2]},
+        {graph[2], graph[1]}, {graph[3], graph[4]}, {graph[4], graph[3]}, {graph[5], graph[0]},
+        {graph[6], graph[7]}, {graph[7], graph[6]}};
 
     // when
     std::unordered_map<graph_v, graph_v> result = algr::match(graph);

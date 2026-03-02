@@ -117,11 +117,11 @@ namespace algolib::maths
         gaussian_reduce();
 
         if(this->equations[N - 1].coefficients()[N - 1] == 0
-           && this->equations[N - 1].free_term() == 0)
+                && this->equations[N - 1].free_term() == 0)
             throw infinite_solutions_error("Equation system has an infinite number of solutions");
 
         if(this->equations[N - 1].coefficients()[N - 1] == 0
-           && this->equations[N - 1].free_term() != 0)
+                && this->equations[N - 1].free_term() != 0)
             throw no_solution_error("Equation system has no solution");
 
         std::array<double, N> solution;
@@ -155,8 +155,8 @@ namespace algolib::maths
                 double current_coefficient = this->equations[j].coefficients()[i];
 
                 if(current_coefficient != 0
-                   && (min_coefficient == 0
-                       || std::abs(current_coefficient) < std::abs(min_coefficient)))
+                        && (min_coefficient == 0
+                                || std::abs(current_coefficient) < std::abs(min_coefficient)))
                     index_min = j;
             }
 
@@ -185,8 +185,7 @@ namespace algolib::maths
     template <size_t N>
     bool equation_system<N>::has_solution(const std::array<double, N> & solution) const
     {
-        return std::all_of(
-                this->equations.begin(), this->equations.end(),
+        return std::all_of(this->equations.begin(), this->equations.end(),
                 [&](auto && eq) { return eq.has_solution(solution); });
     }
 
@@ -201,8 +200,8 @@ namespace algolib::maths
             double current_coefficient = this->equations[i].coefficients()[starting_index];
 
             if(current_coefficient != 0
-               && (min_coefficient == 0
-                   || std::abs(current_coefficient) < std::abs(min_coefficient)))
+                    && (min_coefficient == 0
+                            || std::abs(current_coefficient) < std::abs(min_coefficient)))
                 index_min = i;
         }
 

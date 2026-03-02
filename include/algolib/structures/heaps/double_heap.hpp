@@ -13,8 +13,7 @@
 
 namespace algolib::structures::heaps
 {
-    template <
-            typename E,
+    template <typename E,
             typename Container = std::vector<E>,
             typename Compare = std::less<typename Container::value_type>>
     class double_heap
@@ -27,8 +26,7 @@ namespace algolib::structures::heaps
         using const_reference = typename container_type::const_reference;
         using size_type = typename container_type::size_type;
 
-        explicit double_heap(
-                const value_compare & compare = value_compare(),
+        explicit double_heap(const value_compare & compare = value_compare(),
                 const container_type & container = container_type())
             : heap{container_type()}, compare{compare}
         {
@@ -37,8 +35,7 @@ namespace algolib::structures::heaps
         }
 
         template <typename InputIterator>
-        double_heap(
-                InputIterator first,
+        double_heap(InputIterator first,
                 InputIterator last,
                 const value_compare & compare = value_compare())
             : double_heap(compare)
@@ -47,8 +44,7 @@ namespace algolib::structures::heaps
                 this->push(*it);
         }
 
-        double_heap(
-                std::initializer_list<value_type> init,
+        double_heap(std::initializer_list<value_type> init,
                 const value_compare & compare = value_compare())
             : double_heap(init.begin(), init.end(), compare)
         {
@@ -224,8 +220,7 @@ namespace algolib::structures::heaps
 
             if(right_index < this->heap.size())
             {
-                size_type child_index = this->compare(
-                                                *(this->heap.begin() + right_index),
+                size_type child_index = this->compare(*(this->heap.begin() + right_index),
                                                 *(this->heap.begin() + left_index))
                                                 ? left_index
                                                 : right_index;
@@ -254,8 +249,7 @@ namespace algolib::structures::heaps
 
             if(right_index < this->heap.size())
             {
-                size_type child_index = this->compare(
-                                                *(this->heap.begin() + left_index),
+                size_type child_index = this->compare(*(this->heap.begin() + left_index),
                                                 *(this->heap.begin() + right_index))
                                                 ? left_index
                                                 : right_index;
