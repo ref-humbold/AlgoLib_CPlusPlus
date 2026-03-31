@@ -19,11 +19,8 @@ namespace algolib::maths
     class fraction;
 }
 
-namespace std
-{
-    template <>
-    struct hash<algolib::maths::fraction>;
-}
+template <>
+struct std::hash<algolib::maths::fraction>;
 
 namespace algolib::maths
 {
@@ -39,17 +36,17 @@ namespace algolib::maths
 
         explicit operator float() const
         {
-            return (1.0f * numerator) / denominator;
+            return 1.0f * numerator / denominator;
         }
 
         explicit operator double() const
         {
-            return (1.0 * numerator) / denominator;
+            return 1.0 * numerator / denominator;
         }
 
         explicit operator long double() const
         {
-            return (1.0L * numerator) / denominator;
+            return 1.0L * numerator / denominator;
         }
 
         explicit operator int() const
@@ -189,22 +186,19 @@ namespace algolib::maths
     std::ostream & operator<<(std::ostream & os, const fraction & f);
 }
 
-namespace std
+template <>
+struct std::hash<algolib::maths::fraction>
 {
-    template <>
-    struct hash<algolib::maths::fraction>
+    using argument_type = algolib::maths::fraction;
+    using result_type = size_t;
+
+    result_type operator()(const argument_type & f) const noexcept
     {
-        using argument_type = algolib::maths::fraction;
-        using result_type = size_t;
+        result_type n_hash = std::hash<intmax_t>()(f.numerator);
+        result_type d_hash = std::hash<intmax_t>()(f.denominator);
 
-        result_type operator()(const argument_type & f)
-        {
-            result_type n_hash = std::hash<intmax_t>()(f.numerator);
-            result_type d_hash = std::hash<intmax_t>()(f.denominator);
-
-            return n_hash ^ (d_hash + 0x9e3779b9 + (n_hash << 6) + (n_hash >> 2));
-        }
-    };
-}
+        return n_hash ^ (d_hash + 0x9e3779b9 + (n_hash << 6) + (n_hash >> 2));
+    }
+};
 
 #endif

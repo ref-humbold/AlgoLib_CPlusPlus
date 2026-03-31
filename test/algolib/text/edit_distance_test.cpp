@@ -1,5 +1,5 @@
 /**!
- * \file edit distance.cpp
+ * \file edit_distance_test.cpp
  * \brief Tests: Algorithms for edit distance.
  */
 #include <gtest/gtest.h>
@@ -7,7 +7,7 @@
 
 namespace alte = algolib::text;
 
-const double offset = 1e-6;
+constexpr double offset = 1e-6;
 
 #pragma region count_levenshtein
 
