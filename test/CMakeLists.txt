@@ -52,7 +52,7 @@ set(STRUCTURES_HEAPS_TEST_SOURCES
     "${STRUCTURES_HEAPS}/leftist_heap_test.cpp"
     "${STRUCTURES_HEAPS}/pairing_heap_test.cpp")
 set(TEXT_TEST_SOURCES
-    "${TEXT}/base_words_map_test.cpp"
+    "${TEXT}/basic_factors_map_test.cpp"
     "${TEXT}/edit_distance_test.cpp"
     "${TEXT}/knuth_morris_pratt_test.cpp"
     "${TEXT}/suffix_array_test.cpp"

@@ -4,7 +4,7 @@ Standard: c++17
 LineEnding: DeriveLF
 
 AccessModifierOffset: -4
-AlignAfterOpenBracket: DontAlign #22 false
+AlignAfterOpenBracket: AlwaysBreak #22 false
 AlignArrayOfStructures: None
 AlignConsecutiveAssignments: None
 AlignConsecutiveBitFields: None
@@ -17,8 +17,8 @@ AlignOperands: Align
 AlignTrailingComments:
   Kind: Never
   OverEmptyLines: 0
-AllowAllArgumentsOnNextLine: false
-AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: false
 AllowBreakBeforeNoexceptSpecifier: OnlyWithParen
 AllowShortBlocksOnASingleLine: Never
 AllowShortCaseExpressionOnASingleLine: true
@@ -38,15 +38,15 @@ BitFieldColonSpacing: Both
 BracedInitializerIndentWidth: 4
 BreakAdjacentStringLiterals: false
 BreakAfterAttributes: Always
-#22 BreakAfterOpenBracketBracedList: false
-#22 BreakAfterOpenBracketFunction: false
+#22 BreakAfterOpenBracketBracedList: true
+#22 BreakAfterOpenBracketFunction: true
 #22 BreakAfterOpenBracketIf: false
 #22 BreakAfterOpenBracketLoop: false
 #22 BreakAfterOpenBracketSwitch: false
 BreakAfterReturnType: ExceptShortType
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeBraces: Allman
-#22 BreakBeforeCloseBracketBracedList: false
+#22 BreakBeforeCloseBracketBracedList: true
 #22 BreakBeforeCloseBracketFunction: false
 #22 BreakBeforeCloseBracketIf: false
 #22 BreakBeforeCloseBracketLoop: false
@@ -65,7 +65,7 @@ ColumnLimit: 100
 CompactNamespaces: false
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 8
-Cpp11BracedListStyle: true
+Cpp11BracedListStyle: true #22 FunctionCall
 DerivePointerAlignment: false
 EmptyLineAfterAccessModifier: Never
 EmptyLineBeforeAccessModifier: Always

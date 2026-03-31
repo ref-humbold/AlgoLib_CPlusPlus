@@ -53,7 +53,7 @@ set(STRUCTURES_HEAPS_SOURCES
     "${STRUCTURES_HEAPS}/leftist_heap.cpp"
     "${STRUCTURES_HEAPS}/pairing_heap.cpp")
 set(TEXT_SOURCES
-    "${TEXT}/base_words_map.cpp"
+    "${TEXT}/basic_factors_map.cpp"
     "${TEXT}/edit_distance.cpp"
     "${TEXT}/knuth_morris_pratt.cpp"
     "${TEXT}/suffix_array.cpp"
