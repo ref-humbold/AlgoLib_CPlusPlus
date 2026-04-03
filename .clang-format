@@ -55,7 +55,8 @@ BreakBeforeConceptDeclarations: Always
 BreakBeforeTemplateCloser: true
 BreakBeforeTernaryOperators: true
 BreakBinaryOperations: Never
-#23  Default: Never
+#23 BreakBinaryOperations:
+#23   Default: Never
 BreakConstructorInitializers: BeforeColon
 BreakFunctionDefinitionParameters: false
 BreakInheritanceList: BeforeColon
