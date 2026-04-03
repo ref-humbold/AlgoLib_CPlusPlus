@@ -6,9 +6,7 @@
 #define VERTEX_HPP_
 
 #include <cstdlib>
-#include <exception>
 #include <iostream>
-#include <stdexcept>
 
 namespace algolib::graphs
 {

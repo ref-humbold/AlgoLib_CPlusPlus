@@ -7,12 +7,8 @@
 
 #include <cmath>
 #include <cstdint>
-#include <cstdlib>
-#include <exception>
 #include <iostream>
-#include <stdexcept>
 #include <string>
-#include "algolib/maths/integers.hpp"
 
 namespace algolib::maths
 {

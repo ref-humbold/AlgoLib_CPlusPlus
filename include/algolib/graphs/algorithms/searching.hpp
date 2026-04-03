@@ -5,7 +5,6 @@
 #ifndef SEARCHING_HPP_
 #define SEARCHING_HPP_
 
-#include <cstdlib>
 #include <algorithm>
 #include <optional>
 #include <queue>

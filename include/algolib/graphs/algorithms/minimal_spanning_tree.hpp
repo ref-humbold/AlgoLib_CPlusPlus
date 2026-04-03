@@ -5,7 +5,6 @@
 #ifndef MINIMAL_SPANNING_TREE_HPP_
 #define MINIMAL_SPANNING_TREE_HPP_
 
-#include <cstdlib>
 #include <algorithm>
 #include <queue>
 #include <unordered_set>
@@ -58,7 +57,7 @@ namespace internal
 
 namespace algolib::graphs
 {
-    namespace alst = algolib::structures;
+    namespace alst = structures;
 
     /*!
      * \brief Computes minimal spanning tree of given undirected graph using Kruskal algorithm.

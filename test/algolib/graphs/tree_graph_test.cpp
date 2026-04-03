@@ -7,7 +7,7 @@
 
 namespace algr = algolib::graphs;
 
-class TreeGraphTest : public ::testing::Test
+class TreeGraphTest : public testing::Test
 {
 public:
     using graph_t = algr::tree_graph<int, std::string, std::string>;

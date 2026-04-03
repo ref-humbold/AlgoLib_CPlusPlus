@@ -5,9 +5,6 @@
 #ifndef DISJOINT_SETS_HPP_
 #define DISJOINT_SETS_HPP_
 
-#include <cstdlib>
-#include <algorithm>
-#include <exception>
 #include <initializer_list>
 #include <optional>
 #include <stdexcept>
@@ -258,7 +255,7 @@ namespace algolib::structures
     template <typename InputIterator>
     void disjoint_sets<E, Hash, Equal>::insert(InputIterator first,
             InputIterator last,
-            typename disjoint_sets<E, Hash, Equal>::const_reference represent)
+            const_reference represent)
     {
         std::vector<value_type> elements(first, last);
 
@@ -275,8 +272,7 @@ namespace algolib::structures
 
     template <typename E, typename Hash, typename Equal>
     typename disjoint_sets<E, Hash, Equal>::const_reference
-            disjoint_sets<E, Hash, Equal>::operator[](
-                    typename disjoint_sets<E, Hash, Equal>::const_reference element)
+            disjoint_sets<E, Hash, Equal>::operator[](const_reference element)
     {
         if(this->represents.at(element) != element)
             this->represents.at(element) = this->operator[](this->represents.at(element));
@@ -286,8 +282,7 @@ namespace algolib::structures
 
     template <typename E, typename Hash, typename Equal>
     typename disjoint_sets<E, Hash, Equal>::const_reference
-            disjoint_sets<E, Hash, Equal>::operator[](
-                    typename disjoint_sets<E, Hash, Equal>::const_reference element) const
+            disjoint_sets<E, Hash, Equal>::operator[](const_reference element) const
     {
         return this->represents.at(element) == element
                        ? element
@@ -296,8 +291,8 @@ namespace algolib::structures
 
     template <typename E, typename Hash, typename Equal>
     void disjoint_sets<E, Hash, Equal>::union_set(
-            typename disjoint_sets<E, Hash, Equal>::const_reference element1,
-            typename disjoint_sets<E, Hash, Equal>::const_reference element2)
+            const_reference element1,
+            const_reference element2)
     {
         if(this->is_same_set(element1, element2))
             return;
@@ -308,23 +303,23 @@ namespace algolib::structures
 
     template <typename E, typename Hash, typename Equal>
     bool disjoint_sets<E, Hash, Equal>::is_same_set(
-            typename disjoint_sets<E, Hash, Equal>::const_reference element1,
-            typename disjoint_sets<E, Hash, Equal>::const_reference element2)
+            const_reference element1,
+            const_reference element2)
     {
         return this->operator[](element1) == this->operator[](element2);
     }
 
     template <typename E, typename Hash, typename Equal>
     bool disjoint_sets<E, Hash, Equal>::is_same_set(
-            typename disjoint_sets<E, Hash, Equal>::const_reference element1,
-            typename disjoint_sets<E, Hash, Equal>::const_reference element2) const
+            const_reference element1,
+            const_reference element2) const
     {
         return this->operator[](element1) == this->operator[](element2);
     }
 
     template <typename E, typename Hash, typename Equal>
     void disjoint_sets<E, Hash, Equal>::validate_duplicates(
-            std::vector<std::vector<typename disjoint_sets<E, Hash, Equal>::value_type>> sets_list)
+            std::vector<std::vector<value_type>> sets_list)
     {
         std::vector<value_type> flattened;
 

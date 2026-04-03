@@ -6,7 +6,6 @@
 #define AVL_TREE_HPP_
 
 #include <cmath>
-#include <cstdlib>
 #include <algorithm>
 #include <exception>
 #include <functional>
@@ -377,8 +376,7 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    std::pair<typename avl_tree<E, Compare>::iterator, bool> avl_tree<E, Compare>::insert_node(
-            typename avl_tree<E, Compare>::inner_ptr node)
+    std::pair<typename avl_tree<E, Compare>::iterator, bool> avl_tree<E, Compare>::insert_node(inner_ptr node)
     {
         std::function<bool(inner_ptr, const_reference)> child_equal =
                 [this](inner_ptr n, const_reference e)
@@ -516,7 +514,7 @@ namespace algolib::structures
     }
 
     template <typename E, typename Compare>
-    int avl_tree<E, Compare>::count_balance(avl_tree<E, Compare>::inner_ptr node)
+    int avl_tree<E, Compare>::count_balance(inner_ptr node)
     {
         int left_height = node->left() == nullptr ? 0 : node->left()->height();
         int right_height = node->right() == nullptr ? 0 : node->right()->height();
@@ -557,11 +555,11 @@ namespace algolib::structures
 #pragma region avl_inner_node
 
     template <typename E, typename Compare>
-    class avl_tree<E, Compare>::avl_inner_node : public avl_tree<E, Compare>::avl_node
+    class avl_tree<E, Compare>::avl_inner_node : public avl_node
     {
     public:
         explicit avl_inner_node(const_reference element)
-            : avl_tree<E, Compare>::avl_node(),
+            : avl_node(),
               element{element},
               height_{1},
               left_{nullptr},
@@ -643,8 +641,8 @@ namespace algolib::structures
 
     template <typename E, typename Compare>
     avl_tree<E, Compare>::avl_inner_node::avl_inner_node(
-            const avl_tree<E, Compare>::avl_inner_node & node)
-        : avl_tree<E, Compare>::avl_node(),
+            const avl_inner_node & node)
+        : avl_node(),
           element{node.element},
           height_{node.height_},
           left_{nullptr},
@@ -660,7 +658,7 @@ namespace algolib::structures
 
     template <typename E, typename Compare>
     typename avl_tree<E, Compare>::avl_inner_node & avl_tree<E, Compare>::avl_inner_node::operator=(
-            const avl_tree<E, Compare>::avl_inner_node & node)
+            const avl_inner_node & node)
     {
         node_ptr left_orig = this->left_;
         node_ptr right_orig = this->right_;
@@ -709,10 +707,10 @@ namespace algolib::structures
 #pragma region avl_header_node
 
     template <typename E, typename Compare>
-    class avl_tree<E, Compare>::avl_header_node : public avl_tree<E, Compare>::avl_node
+    class avl_tree<E, Compare>::avl_header_node : public avl_node
     {
     public:
-        avl_header_node() : avl_tree<E, Compare>::avl_node(), inner{nullptr}
+        avl_header_node() : avl_node(), inner{nullptr}
         {
         }
 
@@ -722,7 +720,7 @@ namespace algolib::structures
         }
 
         avl_header_node(const avl_header_node & node)
-            : avl_tree<E, Compare>::avl_node(), inner{nullptr}
+            : avl_node(), inner{nullptr}
         {
             if(node.inner != nullptr)
                 this->set_parent(new avl_inner_node(*node.inner));
@@ -792,7 +790,7 @@ namespace algolib::structures
     template <typename E, typename Compare>
     typename avl_tree<E, Compare>::avl_header_node &
             avl_tree<E, Compare>::avl_header_node::operator=(
-                    const avl_tree<E, Compare>::avl_header_node & node)
+                    const avl_header_node & node)
     {
         node_ptr inner_orig = this->inner;
 
@@ -893,7 +891,7 @@ namespace algolib::structures
     typename avl_tree<E, Compare>::avl_iterator avl_tree<E, Compare>::avl_iterator::operator++(
             int) &
     {
-        avl_tree<E, Compare>::avl_const_iterator result = *this;
+        avl_const_iterator result = *this;
 
         ++(*this);
         return result;
@@ -925,7 +923,7 @@ namespace algolib::structures
     typename avl_tree<E, Compare>::avl_iterator avl_tree<E, Compare>::avl_iterator::operator--(
             int) &
     {
-        avl_tree<E, Compare>::avl_const_iterator result = *this;
+        avl_const_iterator result = *this;
 
         --(*this);
         return result;
@@ -933,14 +931,14 @@ namespace algolib::structures
 
     template <typename E, typename Compare>
     bool avl_tree<E, Compare>::avl_iterator::operator==(
-            const avl_tree<E, Compare>::avl_iterator & it) const
+            const avl_iterator & it) const
     {
         return this->current_node == it.current_node;
     }
 
     template <typename E, typename Compare>
     bool avl_tree<E, Compare>::avl_iterator::operator!=(
-            const avl_tree<E, Compare>::avl_iterator & it) const
+            const avl_iterator & it) const
     {
         return this->current_node != it.current_node;
     }
@@ -1039,7 +1037,7 @@ namespace algolib::structures
     typename avl_tree<E, Compare>::avl_const_iterator
             avl_tree<E, Compare>::avl_const_iterator::operator++(int) &
     {
-        avl_tree<E, Compare>::avl_const_iterator result = *this;
+        avl_const_iterator result = *this;
 
         ++(*this);
         return result;
@@ -1072,7 +1070,7 @@ namespace algolib::structures
     typename avl_tree<E, Compare>::avl_const_iterator
             avl_tree<E, Compare>::avl_const_iterator::operator--(int) &
     {
-        avl_tree<E, Compare>::avl_const_iterator result = *this;
+        avl_const_iterator result = *this;
 
         --(*this);
         return result;
@@ -1080,14 +1078,14 @@ namespace algolib::structures
 
     template <typename E, typename Compare>
     bool avl_tree<E, Compare>::avl_const_iterator::operator==(
-            const avl_tree<E, Compare>::avl_const_iterator & it) const
+            const avl_const_iterator & it) const
     {
         return this->current_node == it.current_node;
     }
 
     template <typename E, typename Compare>
     bool avl_tree<E, Compare>::avl_const_iterator::operator!=(
-            const avl_tree<E, Compare>::avl_const_iterator & it) const
+            const avl_const_iterator & it) const
     {
         return this->current_node != it.current_node;
     }

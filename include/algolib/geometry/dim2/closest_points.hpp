@@ -5,7 +5,6 @@
 #ifndef CLOSEST_POINTS_HPP_
 #define CLOSEST_POINTS_HPP_
 
-#include <cstdlib>
 #include <vector>
 #include "algolib/geometry/dim2/point_2d.hpp"
 

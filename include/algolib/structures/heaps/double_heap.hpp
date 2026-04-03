@@ -5,7 +5,6 @@
 #ifndef DOUBLE_HEAP_HPP_
 #define DOUBLE_HEAP_HPP_
 
-#include <cstdlib>
 #include <exception>
 #include <initializer_list>
 #include <stdexcept>

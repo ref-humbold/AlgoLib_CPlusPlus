@@ -5,9 +5,7 @@
 #ifndef TOPOLOGICAL_SORTING_HPP_
 #define TOPOLOGICAL_SORTING_HPP_
 
-#include <cstdlib>
 #include <algorithm>
-#include <exception>
 #include <queue>
 #include <stdexcept>
 #include <string>

@@ -7,16 +7,14 @@
 
 #include <cmath>
 #include <cstdlib>
-#include <algorithm>
 #include <array>
 #include <iostream>
-#include <numeric>
 #include "algolib/geometry/dim2/point_2d.hpp"
 #include "algolib/geometry/geometry_object.hpp"
 
 namespace algolib::geometry::dim2
 {
-    class vector_2d : public algolib::geometry::geometry_object<2>
+    class vector_2d : public geometry_object<2>
     {
     public:
         vector_2d(double x, double y) : x_{x}, y_{y}

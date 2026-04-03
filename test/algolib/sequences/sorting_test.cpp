@@ -8,7 +8,7 @@
 
 namespace alse = algolib::sequences;
 
-class SortingTest : public ::testing::Test
+class SortingTest : public testing::Test
 {
 protected:
     std::vector<int> sequence;

@@ -7,7 +7,7 @@
 
 namespace algr = algolib::graphs;
 
-class MultipartiteGraphTest : public ::testing::Test
+class MultipartiteGraphTest : public testing::Test
 {
 public:
     using graph_t = algr::multipartite_graph<5, int, std::string, std::string>;

@@ -8,7 +8,7 @@
 
 namespace alte = algolib::text;
 
-class TrieTest : public ::testing::Test
+class TrieTest : public testing::Test
 {
 protected:
     const std::vector<std::string> texts = {"abcd", "ab", "xyz"};

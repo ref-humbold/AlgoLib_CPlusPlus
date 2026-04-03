@@ -2,12 +2,13 @@
  * \file disjoint_sets_test.cpp
  * \brief Tests: Structure of disjoint sets (union-find).
  */
+#include <algorithm>
 #include <gtest/gtest.h>
 #include "algolib/structures/disjoint_sets.hpp"
 
 namespace alst = algolib::structures;
 
-class DisjointSetsTest : public ::testing::Test
+class DisjointSetsTest : public testing::Test
 {
 protected:
     const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};
@@ -20,7 +21,8 @@ public:
     {
         std::vector<std::vector<int>> numbers_list;
 
-        std::transform(numbers.begin(), numbers.end(), std::back_inserter(numbers_list),
+        std::transform(
+                numbers.begin(), numbers.end(), std::back_inserter(numbers_list),
                 [](int n) { return std::vector<int>({n}); });
 
         test_object = alst::disjoint_sets<int>(numbers_list);

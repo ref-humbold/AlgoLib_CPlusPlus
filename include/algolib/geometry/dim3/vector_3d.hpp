@@ -7,16 +7,14 @@
 
 #include <cmath>
 #include <cstdlib>
-#include <algorithm>
 #include <array>
 #include <iostream>
-#include <numeric>
 #include "algolib/geometry/dim3/point_3d.hpp"
 #include "algolib/geometry/geometry_object.hpp"
 
 namespace algolib::geometry::dim3
 {
-    class vector_3d : public algolib::geometry::geometry_object<3>
+    class vector_3d : public geometry_object<3>
     {
     public:
         vector_3d(double x, double y, double z) : x_{x}, y_{y}, z_{z}

@@ -5,10 +5,8 @@
 #ifndef TRIE_HPP_
 #define TRIE_HPP_
 
-#include <cstdlib>
 #include <algorithm>
 #include <array>
-#include <exception>
 #include <initializer_list>
 #include <memory>
 #include <stdexcept>

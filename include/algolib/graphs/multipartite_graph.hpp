@@ -5,7 +5,6 @@
 #ifndef MULTIPARTITE_GRAPH_HPP_
 #define MULTIPARTITE_GRAPH_HPP_
 
-#include <cstdlib>
 #include <algorithm>
 #include <exception>
 #include <stdexcept>
@@ -266,8 +265,7 @@ namespace algolib::graphs
     typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::vertex_type
             multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::add_vertex(
                     size_t group_number,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_id_type & vertex_id)
+                    const vertex_id_type & vertex_id)
     {
         return this->add_vertex(group_number, vertex_type(vertex_id));
     }
@@ -276,10 +274,8 @@ namespace algolib::graphs
     typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::vertex_type
             multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::add_vertex(
                     size_t group_number,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_id_type & vertex_id,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_property_type & property)
+                    const vertex_id_type & vertex_id,
+                    const vertex_property_type & property)
     {
         return this->add_vertex(group_number, vertex_type(vertex_id), property);
     }
@@ -288,8 +284,7 @@ namespace algolib::graphs
     typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::vertex_type
             multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::add_vertex(
                     size_t group_number,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_type & vertex)
+                    const vertex_type & vertex)
     {
         this->validate_group(group_number);
 
@@ -303,10 +298,8 @@ namespace algolib::graphs
     typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::vertex_type
             multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::add_vertex(
                     size_t group_number,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_type & vertex,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_property_type & property)
+                    const vertex_type & vertex,
+                    const vertex_property_type & property)
     {
         this->validate_group(group_number);
 
@@ -319,10 +312,8 @@ namespace algolib::graphs
     template <size_t N, typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::edge_type
             multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::add_edge_between(
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_type & source,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_type & destination)
+                    const vertex_type & source,
+                    const vertex_type & destination)
     {
         return this->add_edge(edge_type(source, destination));
     }
@@ -330,12 +321,9 @@ namespace algolib::graphs
     template <size_t N, typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::edge_type
             multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::add_edge_between(
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_type & source,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            vertex_type & destination,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            edge_property_type & property)
+                    const vertex_type & source,
+                    const vertex_type & destination,
+                    const edge_property_type & property)
     {
         return this->add_edge(edge_type(source, destination), property);
     }
@@ -343,8 +331,7 @@ namespace algolib::graphs
     template <size_t N, typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::edge_type
             multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::add_edge(
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            edge_type & edge)
+                    const edge_type & edge)
     {
         if(this->are_in_same_group(edge.source(), edge.destination()))
             throw graph_partition_error(
@@ -356,10 +343,8 @@ namespace algolib::graphs
     template <size_t N, typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::edge_type
             multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::add_edge(
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            edge_type & edge,
-                    const typename multipartite_graph<N, VertexId, VertexProperty, EdgeProperty>::
-                            edge_property_type & property)
+                    const edge_type & edge,
+                    const edge_property_type & property)
     {
         if(this->are_in_same_group(edge.source(), edge.destination()))
             throw graph_partition_error(

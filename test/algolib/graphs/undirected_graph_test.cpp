@@ -7,7 +7,7 @@
 
 namespace algr = algolib::graphs;
 
-class UndirectedSimpleGraphTest : public ::testing::Test
+class UndirectedSimpleGraphTest : public testing::Test
 {
 public:
     using graph_t = algr::undirected_simple_graph<int, std::string, std::string>;

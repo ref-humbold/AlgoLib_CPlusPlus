@@ -6,7 +6,6 @@
 #define CUTTING_HPP_
 
 #include <cmath>
-#include <cstdlib>
 #include <algorithm>
 #include <limits>
 #include <numeric>

@@ -7,7 +7,7 @@
 
 namespace alte = algolib::text;
 
-class SuffixArrayTest : public ::testing::Test
+class SuffixArrayTest : public testing::Test
 {
 protected:
     alte::suffix_array test_object;

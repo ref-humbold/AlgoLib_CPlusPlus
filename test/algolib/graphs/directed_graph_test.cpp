@@ -8,7 +8,7 @@
 
 namespace algr = algolib::graphs;
 
-class DirectedSimpleGraphTest : public ::testing::Test
+class DirectedSimpleGraphTest : public testing::Test
 {
 public:
     using graph_t = algr::directed_simple_graph<int, std::string, std::string>;

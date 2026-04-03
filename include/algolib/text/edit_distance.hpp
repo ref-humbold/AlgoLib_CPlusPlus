@@ -5,12 +5,7 @@
 #ifndef EDIT_DISTANCE_HPP_
 #define EDIT_DISTANCE_HPP_
 
-#include <cmath>
-#include <cstdlib>
-#include <exception>
-#include <stdexcept>
 #include <string>
-#include <vector>
 
 namespace algolib::text
 {

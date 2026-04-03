@@ -5,11 +5,7 @@
 #ifndef EQUATION_HPP_
 #define EQUATION_HPP_
 
-#include <cmath>
-#include <cstdlib>
-#include <algorithm>
 #include <array>
-#include <exception>
 #include <iostream>
 #include <stdexcept>
 

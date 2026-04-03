@@ -5,7 +5,6 @@
 #ifndef MATCHING_HPP_
 #define MATCHING_HPP_
 
-#include <cstdlib>
 #include <limits>
 #include <numeric>
 #include <optional>
@@ -38,7 +37,7 @@ namespace internal
     private:
         std::vector<typename graph_t::vertex_type> unmatched_vertices();
         void bfs(std::unordered_map<typename graph_t::vertex_type, double> & distances);
-        bool dfs(const typename match_augmenter<VertexId, VertexProperty, EdgeProperty>::graph_t::
+        bool dfs(const typename graph_t::
                          vertex_type & vertex,
                 std::unordered_set<typename graph_t::vertex_type> & visited,
                 const std::unordered_map<typename graph_t::vertex_type, double> & distances);
@@ -83,7 +82,7 @@ namespace internal
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     void match_augmenter<VertexId, VertexProperty, EdgeProperty>::bfs(std::unordered_map<
-            typename match_augmenter<VertexId, VertexProperty, EdgeProperty>::graph_t::vertex_type,
+            typename graph_t::vertex_type,
             double
     > & distances)
     {
@@ -116,13 +115,10 @@ namespace internal
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     bool match_augmenter<VertexId, VertexProperty, EdgeProperty>::dfs(
-            const typename match_augmenter<VertexId, VertexProperty, EdgeProperty>::graph_t::
+            const typename graph_t::
                     vertex_type & vertex,
-            std::unordered_set<typename match_augmenter<VertexId, VertexProperty, EdgeProperty>::
-                            graph_t::vertex_type> & visited,
-            const std::unordered_map<typename match_augmenter<VertexId,
-                                             VertexProperty,
-                                             EdgeProperty>::graph_t::vertex_type,
+            std::unordered_set<typename graph_t::vertex_type> & visited,
+            const std::unordered_map<typename graph_t::vertex_type,
                     double> & distances)
     {
         visited.insert(vertex);

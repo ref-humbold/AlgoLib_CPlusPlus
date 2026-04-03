@@ -8,18 +8,18 @@ namespace alte = algolib::text;
 
 #pragma region trie
 
-alte::trie::trie(const alte::trie & t) : tree{new alte::trie::trie_node(*t.tree)}, size_{t.size_}
+alte::trie::trie(const trie & t) : tree{new trie_node(*t.tree)}, size_{t.size_}
 {
 }
 
-alte::trie & alte::trie::operator=(const alte::trie & t)
+alte::trie & alte::trie::operator=(const trie & t)
 {
-    tree.reset(new alte::trie::trie_node(*t.tree));
+    tree.reset(new trie_node(*t.tree));
     size_ = t.size_;
     return *this;
 }
 
-alte::trie & alte::trie::operator=(alte::trie && t) noexcept
+alte::trie & alte::trie::operator=(trie && t) noexcept
 {
     std::swap(tree, t.tree);
     std::swap(size_, t.size_);
@@ -75,7 +75,7 @@ void alte::trie::clear()
     size_ = 0;
 }
 
-bool alte::trie::remove_node(const std::string & text, alte::trie::node_ptr node, size_t i)
+bool alte::trie::remove_node(const std::string & text, node_ptr node, size_t i)
 {
     if(i == text.length() && node->terminus)
     {
@@ -96,14 +96,14 @@ bool alte::trie::remove_node(const std::string & text, alte::trie::node_ptr node
 #pragma endregion
 #pragma region trie_node
 
-alte::trie::trie_node::trie_node(const alte::trie::trie_node & node) : terminus{node.terminus}
+alte::trie::trie_node::trie_node(const trie_node & node) : terminus{node.terminus}
 {
     for(size_t i = 0; i < node.children.size(); ++i)
         if(node.children[i])
             children[i].reset(new trie_node(*node.children[i]));
 }
 
-typename alte::trie::trie_node & alte::trie::trie_node::operator=(const trie::trie_node & node)
+typename alte::trie::trie_node & alte::trie::trie_node::operator=(const trie_node & node)
 {
     for(size_t i = 0; i < node.children.size(); ++i)
         if(node.children[i])

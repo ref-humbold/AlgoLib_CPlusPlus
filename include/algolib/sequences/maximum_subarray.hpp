@@ -5,10 +5,6 @@
 #ifndef MAXIMUM_SUBARRAY_HPP_
 #define MAXIMUM_SUBARRAY_HPP_
 
-#include <cstdlib>
-#include <algorithm>
-#include <functional>
-#include <optional>
 #include <vector>
 
 namespace algolib::sequences

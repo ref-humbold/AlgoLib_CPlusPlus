@@ -3,6 +3,7 @@
  * \brief Structure of fraction.
  */
 #include "algolib/maths/fraction.hpp"
+#include "algolib/maths/integers.hpp"
 
 namespace alma = algolib::maths;
 

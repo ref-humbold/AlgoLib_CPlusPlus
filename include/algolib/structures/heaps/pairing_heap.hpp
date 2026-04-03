@@ -5,7 +5,6 @@
 #ifndef PAIRING_HEAP_HPP_
 #define PAIRING_HEAP_HPP_
 
-#include <cstdlib>
 #include <exception>
 #include <initializer_list>
 #include <memory>
@@ -133,7 +132,7 @@ namespace algolib::structures::heaps
     };
 
     template <typename E, typename Compare>
-    void pairing_heap<E, Compare>::push(typename pairing_heap<E, Compare>::const_reference element)
+    void pairing_heap<E, Compare>::push(const_reference element)
     {
         if(this->empty())
             this->heap.emplace(element, this->compare);

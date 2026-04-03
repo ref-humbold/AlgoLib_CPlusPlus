@@ -36,7 +36,7 @@ struct RangeExpectedParams : public RangeParams
     const alte::basic_factors_map::code_t expected;
 };
 
-class BasicFactorsMapTest : public ::testing::Test
+class BasicFactorsMapTest : public testing::Test
 
 {
 protected:

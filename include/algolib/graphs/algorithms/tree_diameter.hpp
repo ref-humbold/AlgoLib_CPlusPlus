@@ -6,7 +6,6 @@
 #define TREE_DIAMETER_HPP_
 
 #include <cmath>
-#include <cstdlib>
 #include <algorithm>
 #include <vector>
 #include "algolib/graphs/tree_graph.hpp"

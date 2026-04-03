@@ -9,10 +9,10 @@
 
 namespace alge2 = algolib::geometry::dim2;
 
-std::vector<alge2::point_2d> alge2::find_convex_hull(const std::vector<alge2::point_2d> & points)
+std::vector<alge2::point_2d> alge2::find_convex_hull(const std::vector<point_2d> & points)
 {
     if(points.size() < 3)
-        return std::vector<alge2::point_2d>();
+        return std::vector<point_2d>();
 
     point_2d min_point = *std::min_element(points.begin(), points.end(),
             [](const point_2d & p1, const point_2d & p2)
@@ -25,10 +25,10 @@ std::vector<alge2::point_2d> alge2::find_convex_hull(const std::vector<alge2::po
 
     sort_by_angle(angle_points);
 
-    std::vector<alge2::point_2d> hull;
-    auto cross_product = [](const alge2::point_2d & pt1, const alge2::point_2d & pt2,
-                                 const alge2::point_2d & pt3)
-    { return alge2::vector_2d::area(alge2::vector_2d(pt2, pt1), alge2::vector_2d(pt2, pt3)); };
+    std::vector<point_2d> hull;
+    auto cross_product = [](const point_2d & pt1, const point_2d & pt2,
+                                 const point_2d & pt3)
+    { return vector_2d::area(vector_2d(pt2, pt1), vector_2d(pt2, pt3)); };
 
     for(auto && pt : angle_points)
     {
@@ -38,10 +38,10 @@ std::vector<alge2::point_2d> alge2::find_convex_hull(const std::vector<alge2::po
         hull.push_back(pt);
     }
 
-    std::vector<alge2::point_2d> hull_points;
+    std::vector<point_2d> hull_points;
 
     std::transform(hull.begin(), hull.end(), std::back_inserter(hull_points),
-            [&](const alge2::point_2d & p) { return translate(p, moving); });
+            [&](const point_2d & p) { return translate(p, moving); });
 
     return hull_points;
 }

@@ -7,7 +7,7 @@
 
 namespace algr = algolib::graphs;
 
-class LowestCommonAncestorTest : public ::testing::Test
+class LowestCommonAncestorTest : public testing::Test
 {
 public:
     using vertex_t = algr::lowest_common_ancestor<>::vertex_type;

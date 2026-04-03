@@ -5,7 +5,6 @@
 #ifndef CONVEX_HULL_HPP_
 #define CONVEX_HULL_HPP_
 
-#include <cstdlib>
 #include <vector>
 #include "algolib/geometry/dim2/point_2d.hpp"
 

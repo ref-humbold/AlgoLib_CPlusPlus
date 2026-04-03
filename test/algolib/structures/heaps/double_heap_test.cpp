@@ -8,7 +8,7 @@
 
 namespace alsth = algolib::structures::heaps;
 
-class DoubleHeapTest : public ::testing::Test
+class DoubleHeapTest : public testing::Test
 {
 protected:
     const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};

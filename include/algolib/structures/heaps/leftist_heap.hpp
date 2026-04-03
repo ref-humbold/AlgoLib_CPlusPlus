@@ -5,11 +5,9 @@
 #ifndef LEFTIST_HEAP_HPP_
 #define LEFTIST_HEAP_HPP_
 
-#include <cstdlib>
 #include <exception>
 #include <initializer_list>
 #include <memory>
-#include <optional>
 #include <stdexcept>
 #include <vector>
 
@@ -132,7 +130,7 @@ namespace algolib::structures::heaps
     };
 
     template <typename E, typename Compare>
-    void leftist_heap<E, Compare>::push(typename leftist_heap<E, Compare>::const_reference element)
+    void leftist_heap<E, Compare>::push(const_reference element)
     {
         typename heap_node::heap_node_ptr new_node =
                 std::make_shared<const heap_node>(element, this->compare);
@@ -185,7 +183,7 @@ namespace algolib::structures::heaps
 
     template <typename E, typename Compare>
     class leftist_heap<E, Compare>::heap_node
-        : public std::enable_shared_from_this<typename leftist_heap<E, Compare>::heap_node>
+        : public std::enable_shared_from_this<heap_node>
     {
     public:
         using heap_node_ptr = std::shared_ptr<const heap_node>;

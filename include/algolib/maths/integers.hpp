@@ -5,12 +5,6 @@
 #ifndef INTEGERS_HPP_
 #define INTEGERS_HPP_
 
-#include <cmath>
-#include <cstdlib>
-#include <algorithm>
-#include <exception>
-#include <stdexcept>
-
 namespace algolib::maths
 {
 #pragma region greatest common divisor

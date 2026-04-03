@@ -5,8 +5,6 @@
 #ifndef GEOMETRY_3D_HPP_
 #define GEOMETRY_3D_HPP_
 
-#include <cmath>
-#include <cstdlib>
 #include <vector>
 #include "algolib/geometry/dim3/point_3d.hpp"
 #include "algolib/geometry/dim3/vector_3d.hpp"

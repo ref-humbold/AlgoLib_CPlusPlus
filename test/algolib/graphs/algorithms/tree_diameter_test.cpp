@@ -4,6 +4,7 @@
  */
 #include <gtest/gtest.h>
 #include "algolib/graphs/algorithms/tree_diameter.hpp"
+#include "algolib/graphs/properties.hpp"
 
 namespace algr = algolib::graphs;
 

@@ -5,15 +5,7 @@
 #ifndef SUFFIX_ARRAY_HPP_
 #define SUFFIX_ARRAY_HPP_
 
-#include <cstdlib>
-#include <algorithm>
-#include <exception>
-#include <limits>
-#include <map>
-#include <queue>
-#include <stdexcept>
 #include <string>
-#include <tuple>
 #include <vector>
 
 namespace algolib::text
@@ -89,17 +81,20 @@ namespace algolib::text
         size_t lcp(size_t index1, size_t index2) const;
 
     private:
+        static size_t get_elem(const std::vector<size_t> & v, size_t i);
         void init_array();
         void init_inv();
         void init_lcp();
         std::vector<size_t> create_array(const std::vector<size_t> & t);
-        std::vector<size_t> merge(const std::vector<size_t> & t0,
-                const std::vector<size_t> & sa0,
-                const std::vector<size_t> & tn12,
-                const std::vector<size_t> & sa12);
+        std::vector<size_t>
+                merge(const std::vector<size_t> & t0,
+                      const std::vector<size_t> & sa0,
+                      const std::vector<size_t> & tn12,
+                      const std::vector<size_t> & sa12);
         void sort_indices(
-                std::vector<size_t> & indices, const std::vector<size_t> & values, size_t shift);
-        size_t get_elem(const std::vector<size_t> & v, size_t i);
+                std::vector<size_t> & indices,
+                const std::vector<size_t> & values,
+                size_t shift);
 
         size_t size_;
         std::string text_;

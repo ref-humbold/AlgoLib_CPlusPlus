@@ -5,8 +5,6 @@
 #ifndef GEOMETRY_2D_HPP_
 #define GEOMETRY_2D_HPP_
 
-#include <cmath>
-#include <cstdlib>
 #include <vector>
 #include "algolib/geometry/dim2/point_2d.hpp"
 #include "algolib/geometry/dim2/vector_2d.hpp"

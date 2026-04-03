@@ -6,6 +6,7 @@
 #include <vector>
 #include <gtest/gtest.h>
 #include "algolib/graphs/algorithms/minimal_spanning_tree.hpp"
+#include "algolib/graphs/properties.hpp"
 
 namespace algr = algolib::graphs;
 
@@ -25,7 +26,7 @@ private:
     weight_type weight_;
 };
 
-class MinimalSpanningTreeTest : public ::testing::Test
+class MinimalSpanningTreeTest : public testing::Test
 {
 public:
     using graph_t = algr::undirected_simple_graph<size_t, std::nullptr_t, weighted_impl>;
@@ -66,8 +67,10 @@ TEST_F(MinimalSpanningTreeTest, kruskal_ThenMinimalSpanningTree)
     std::sort(result_edges.begin(), result_edges.end());
 
     EXPECT_EQ(vertices, result_vertices);
-    EXPECT_EQ(std::vector<graph_e>({graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
-                  graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
+    EXPECT_EQ(
+            std::vector<graph_e>(
+                    {graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
+                     graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
             result_edges);
 }
 
@@ -88,8 +91,10 @@ TEST_F(MinimalSpanningTreeTest, prim_ThenMinimalSpanningTree)
     std::sort(result_edges.begin(), result_edges.end());
 
     EXPECT_EQ(vertices, result_vertices);
-    EXPECT_EQ(std::vector<graph_e>({graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
-                  graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
+    EXPECT_EQ(
+            std::vector<graph_e>(
+                    {graph[std::make_pair(0, 1)], graph[std::make_pair(0, 2)],
+                     graph[std::make_pair(2, 4)], graph[std::make_pair(3, 4)]}),
             result_edges);
 }
 

@@ -5,7 +5,6 @@
 #ifndef DIRECTED_GRAPH_HPP_
 #define DIRECTED_GRAPH_HPP_
 
-#include <cstdlib>
 #include <algorithm>
 #include <exception>
 #include <numeric>
@@ -101,8 +100,7 @@ namespace algolib::graphs
 
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     size_t directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::input_degree(
-            const typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
-                    vertex_type & vertex) const
+            const vertex_type & vertex) const
     {
         size_t degree = 0;
 
@@ -116,8 +114,7 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
             directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::add_edge(
-                    const typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
-                            edge_type & edge)
+                    const edge_type & edge)
     try
     {
         this->operator[](std::make_pair(edge.source(), edge.destination()));
@@ -132,10 +129,8 @@ namespace algolib::graphs
     template <typename VertexId, typename VertexProperty, typename EdgeProperty>
     typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::edge_type
             directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::add_edge(
-                    const typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
-                            edge_type & edge,
-                    const typename directed_simple_graph<VertexId, VertexProperty, EdgeProperty>::
-                            edge_property_type & property)
+                    const edge_type & edge,
+                    const edge_property_type & property)
     try
     {
         this->operator[](std::make_pair(edge.source(), edge.destination()));

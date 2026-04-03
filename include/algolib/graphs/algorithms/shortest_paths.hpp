@@ -6,9 +6,7 @@
 #define SHORTEST_PATHS_HPP_
 
 #include <cmath>
-#include <cstdlib>
 #include <algorithm>
-#include <exception>
 #include <queue>
 #include <stdexcept>
 #include <unordered_map>

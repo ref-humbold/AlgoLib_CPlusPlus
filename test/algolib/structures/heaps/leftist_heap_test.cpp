@@ -22,7 +22,7 @@ std::vector<int> to_vector(alsth::leftist_heap<int> heap)
     return result;
 }
 
-class LeftistHeapTest : public ::testing::Test
+class LeftistHeapTest : public testing::Test
 {
 protected:
     const std::vector<int> numbers = {10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26};

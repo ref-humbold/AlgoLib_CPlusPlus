@@ -5,10 +5,6 @@
 #ifndef PRIMES_TESTING_HPP_
 #define PRIMES_TESTING_HPP_
 
-#include <cstdlib>
-#include <vector>
-#include "algolib/maths/integers.hpp"
-
 namespace algolib::maths
 {
 #pragma region test_prime_fermat

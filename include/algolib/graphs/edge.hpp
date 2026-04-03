@@ -5,7 +5,6 @@
 #ifndef EDGE_HPP_
 #define EDGE_HPP_
 
-#include <cstdlib>
 #include <exception>
 #include <iostream>
 #include <stdexcept>

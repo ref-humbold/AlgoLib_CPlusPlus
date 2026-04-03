@@ -6,27 +6,24 @@
 
 namespace alte = algolib::text;
 
-namespace internal
+// Computes Knuth's PI prefix function values for given pattern.
+std::vector<size_t> prefixes(const std::string & pattern)
 {
-    // Computes Knuth's PI prefix function values for given pattern.
-    std::vector<size_t> prefixes(const std::string & pattern)
+    std::vector<size_t> pi = {0};
+    size_t position = 0;
+
+    for(const char & letter : pattern.substr(1))
     {
-        std::vector<size_t> pi = {0};
-        size_t position = 0;
+        while(position > 0 && pattern[position] != letter)
+            position = pi[position - 1];
 
-        for(const char & letter : pattern.substr(1))
-        {
-            while(position > 0 && pattern[position] != letter)
-                position = pi[position - 1];
+        if(pattern[position] == letter)
+            ++position;
 
-            if(pattern[position] == letter)
-                ++position;
-
-            pi.push_back(position);
-        }
-
-        return pi;
+        pi.push_back(position);
     }
+
+    return pi;
 }
 
 std::vector<size_t> alte::kmp_search(const std::string & text, const std::string & pattern)
@@ -36,7 +33,7 @@ std::vector<size_t> alte::kmp_search(const std::string & text, const std::string
     if(pattern == "")
         return places;
 
-    std::vector<size_t> pi = internal::prefixes(pattern);
+    std::vector<size_t> pi = prefixes(pattern);
     size_t position = 0;
 
     for(size_t i = 0; i < text.size(); ++i)

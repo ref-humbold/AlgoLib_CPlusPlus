@@ -39,7 +39,7 @@ struct test_strategy : public algr::dfs_strategy<Vertex>
     std::vector<Vertex> exits;
 };
 
-class SearchingTest : public ::testing::Test
+class SearchingTest : public testing::Test
 {
 public:
     using dgraph_t = algr::directed_simple_graph<>;

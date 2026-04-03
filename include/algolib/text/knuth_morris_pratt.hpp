@@ -6,7 +6,6 @@
 #define KNUTH_MORRIS_PRATT_HPP_
 
 #include <cstdlib>
-#include <algorithm>
 #include <string>
 #include <vector>
 

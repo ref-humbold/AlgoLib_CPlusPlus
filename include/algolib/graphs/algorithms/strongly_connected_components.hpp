@@ -5,7 +5,6 @@
 #ifndef STRONGLY_CONNECTED_COMPONENTS_HPP_
 #define STRONGLY_CONNECTED_COMPONENTS_HPP_
 
-#include <cstdlib>
 #include <algorithm>
 #include <unordered_map>
 #include <unordered_set>

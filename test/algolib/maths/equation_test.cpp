@@ -8,7 +8,7 @@
 
 namespace alma = algolib::maths;
 
-class EquationTest : public ::testing::Test
+class EquationTest : public testing::Test
 {
 protected:
     alma::equation<4> test_object;
