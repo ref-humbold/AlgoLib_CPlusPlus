@@ -1,5 +1,5 @@
 /*!
- * \file point.cpp
+ * \file point_3d.cpp
  * \brief Structure of point in 3D.
  */
 #include "algolib/geometry/dim3/point_3d.hpp"
@@ -8,8 +8,9 @@ namespace alge3 = algolib::geometry::dim3;
 
 bool alge3::operator==(const point_3d & p1, const point_3d & p2)
 {
-    return point_3d::equal(p1.x_, p2.x_) && point_3d::equal(p1.y_, p2.y_)
-           && point_3d::equal(p1.z_, p2.z_);
+    return point_3d::comparator.compare(p1.x_, p2.x_) == 0
+           && point_3d::comparator.compare(p1.y_, p2.y_) == 0
+           && point_3d::comparator.compare(p1.z_, p2.z_) == 0;
 }
 
 bool alge3::operator!=(const point_3d & p1, const point_3d & p2)

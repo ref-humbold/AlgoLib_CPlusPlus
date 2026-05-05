@@ -10,11 +10,11 @@
 #include <array>
 #include <iostream>
 #include "algolib/geometry/dim3/point_3d.hpp"
-#include "algolib/geometry/geometry_object.hpp"
+#include "algolib/geometry/geometry_comparator.hpp"
 
 namespace algolib::geometry::dim3
 {
-    class vector_3d : public geometry_object<3>
+    class vector_3d
     {
     public:
         vector_3d(double x, double y, double z) : x_{x}, y_{y}, z_{z}
@@ -26,7 +26,7 @@ namespace algolib::geometry::dim3
         {
         }
 
-        ~vector_3d() override = default;
+        ~vector_3d() = default;
         vector_3d(const vector_3d &) = default;
         vector_3d(vector_3d &&) = default;
         vector_3d & operator=(const vector_3d &) = default;
@@ -52,7 +52,7 @@ namespace algolib::geometry::dim3
             return z_;
         }
 
-        std::array<double, 3> coordinates() const override
+        std::array<double, 3> coordinates() const
         {
             return {x_, y_, z_};
         }
@@ -83,6 +83,7 @@ namespace algolib::geometry::dim3
         friend struct std::hash<vector_3d>;
 
     private:
+        static const geometry_comparator comparator;
         double x_, y_, z_;
     };
 
@@ -106,7 +107,7 @@ namespace std
         using argument_type = algolib::geometry::dim3::vector_3d;
         using result_type = size_t;
 
-        result_type operator()(const argument_type & v)
+        result_type operator()(const argument_type & v) const noexcept
         {
             result_type x_hash = std::hash<double>()(v.x_);
             result_type y_hash = std::hash<double>()(v.y_);

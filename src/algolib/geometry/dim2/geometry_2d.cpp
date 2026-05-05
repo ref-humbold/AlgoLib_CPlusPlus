@@ -25,7 +25,7 @@ void alge2::sort_by_angle(std::vector<point_2d> & points)
 {
     auto comparator = [&](const point_2d & pt1, const point_2d & pt2)
     {
-        double angle1 = pt1.angle_deg(), angle2 = pt2.angle_deg();
+        angle_2d angle1 = pt1.angle(), angle2 = pt2.angle();
 
         return angle1 != angle2 ? angle1 < angle2 : pt1.radius() < pt2.radius();
     };

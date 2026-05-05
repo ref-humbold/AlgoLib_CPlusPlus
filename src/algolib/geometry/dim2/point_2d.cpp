@@ -8,7 +8,8 @@ namespace alge2 = algolib::geometry::dim2;
 
 bool alge2::operator==(const point_2d & p1, const point_2d & p2)
 {
-    return point_2d::equal(p1.x_, p2.x_) && point_2d::equal(p1.y_, p2.y_);
+    return point_2d::comparator.compare(p1.x_, p2.x_) == 0
+           && point_2d::comparator.compare(p1.y_, p2.y_) == 0;
 }
 
 bool alge2::operator!=(const point_2d & p1, const point_2d & p2)

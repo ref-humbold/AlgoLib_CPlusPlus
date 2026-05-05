@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 
 #SOURCES
 set(GEOMETRY_SOURCES
-    "${GEOMETRY}/geometry_object.cpp")
+    "${GEOMETRY}/geometry_comparator.cpp")
 set(GEOMETRY_DIM2_SOURCES
+    "${GEOMETRY_DIM2}/angle_2d.cpp"
     "${GEOMETRY_DIM2}/closest_points.cpp"
     "${GEOMETRY_DIM2}/convex_hull.cpp"
     "${GEOMETRY_DIM2}/geometry_2d.cpp"

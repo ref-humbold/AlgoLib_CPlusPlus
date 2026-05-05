@@ -13,7 +13,8 @@ double alge3::vector_3d::dot(const vector_3d & v1, const vector_3d & v2)
 
 alge3::vector_3d alge3::vector_3d::cross(const vector_3d & v1, const vector_3d & v2)
 {
-    return vector_3d(v1.y_ * v2.z_ - v1.z_ * v2.y_, v1.z_ * v2.x_ - v1.x_ * v2.z_,
+    return vector_3d(
+            v1.y_ * v2.z_ - v1.z_ * v2.y_, v1.z_ * v2.x_ - v1.x_ * v2.z_,
             v1.x_ * v2.y_ - v1.y_ * v2.x_);
 }
 
@@ -22,8 +23,7 @@ double alge3::vector_3d::area(const vector_3d & v1, const vector_3d & v2)
     return cross(v1, v2).length();
 }
 
-double alge3::vector_3d::volume(
-        const vector_3d & v1, const vector_3d & v2, const vector_3d & v3)
+double alge3::vector_3d::volume(const vector_3d & v1, const vector_3d & v2, const vector_3d & v3)
 {
     return dot(v1, cross(v2, v3));
 }
@@ -65,8 +65,9 @@ alge3::vector_3d & alge3::vector_3d::operator/=(double c)
 
 bool alge3::operator==(const vector_3d & v1, const vector_3d & v2)
 {
-    return vector_3d::equal(v1.x_, v2.x_) && vector_3d::equal(v1.y_, v2.y_)
-           && vector_3d::equal(v1.z_, v2.z_);
+    return vector_3d::comparator.compare(v1.x_, v2.x_) == 0
+           && vector_3d::comparator.compare(v1.y_, v2.y_) == 0
+           && vector_3d::comparator.compare(v1.z_, v2.z_) == 0;
 }
 
 bool alge3::operator!=(const vector_3d & v1, const vector_3d & v2)

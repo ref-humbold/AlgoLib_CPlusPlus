@@ -10,11 +10,11 @@
 #include <array>
 #include <iostream>
 #include "algolib/geometry/dim2/point_2d.hpp"
-#include "algolib/geometry/geometry_object.hpp"
+#include "algolib/geometry/geometry_comparator.hpp"
 
 namespace algolib::geometry::dim2
 {
-    class vector_2d : public geometry_object<2>
+    class vector_2d
     {
     public:
         vector_2d(double x, double y) : x_{x}, y_{y}
@@ -26,7 +26,7 @@ namespace algolib::geometry::dim2
         {
         }
 
-        ~vector_2d() override = default;
+        ~vector_2d() = default;
         vector_2d(const vector_2d &) = default;
         vector_2d(vector_2d &&) = default;
         vector_2d & operator=(const vector_2d &) = default;
@@ -45,7 +45,7 @@ namespace algolib::geometry::dim2
             return y_;
         }
 
-        std::array<double, 2> coordinates() const override
+        std::array<double, 2> coordinates() const
         {
             return {x_, y_};
         }
@@ -76,6 +76,7 @@ namespace algolib::geometry::dim2
         friend struct std::hash<vector_2d>;
 
     private:
+        static const geometry_comparator comparator;
         double x_, y_;
     };
 
@@ -99,7 +100,7 @@ namespace std
         using argument_type = algolib::geometry::dim2::vector_2d;
         using result_type = size_t;
 
-        result_type operator()(const argument_type & v)
+        result_type operator()(const argument_type & v) const noexcept
         {
             result_type x_hash = std::hash<double>()(v.x_);
             result_type y_hash = std::hash<double>()(v.y_);

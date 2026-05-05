@@ -10,18 +10,19 @@
 #include <array>
 #include <iostream>
 #include <stdexcept>
-#include "algolib/geometry/geometry_object.hpp"
+#include "algolib/geometry/geometry_comparator.hpp"
+#include "angle_2d.hpp"
 
 namespace algolib::geometry::dim2
 {
-    class point_2d : public geometry_object<2>
+    class point_2d
     {
     public:
         point_2d(double x, double y) : x_{x}, y_{y}
         {
         }
 
-        ~point_2d() override = default;
+        ~point_2d() = default;
         point_2d(const point_2d &) = default;
         point_2d(point_2d &&) = default;
         point_2d & operator=(const point_2d &) = default;
@@ -37,26 +38,19 @@ namespace algolib::geometry::dim2
             return y_;
         }
 
-        std::array<double, 2> coordinates() const override
+        std::array<double, 2> coordinates() const
         {
             return {x_, y_};
         }
 
         double radius() const
         {
-            return sqrt(x_ * x_ + y_ * y_);
+            return std::sqrt(x_ * x_ + y_ * y_);
         }
 
-        double angle_rad() const
+        angle_2d angle() const
         {
-            return atan2(y_, x_);
-        }
-
-        double angle_deg() const
-        {
-            double ang = angle_rad() * 180.0 / M_PI;
-
-            return y_ >= 0.0 ? ang : ang + 360.0;
+            return angle_2d(atan2(y_, x_), RADIANS);
         }
 
         friend bool operator==(const point_2d & p1, const point_2d & p2);
@@ -66,14 +60,13 @@ namespace algolib::geometry::dim2
         friend struct std::hash<point_2d>;
 
     private:
+        static const geometry_comparator comparator;
         double x_, y_;
     };
 
     bool operator==(const point_2d & p1, const point_2d & p2);
     bool operator!=(const point_2d & p1, const point_2d & p2);
     std::ostream & operator<<(std::ostream & os, const point_2d & p);
-
-#pragma endregion
 }
 
 namespace std
@@ -84,7 +77,7 @@ namespace std
         using argument_type = algolib::geometry::dim2::point_2d;
         using result_type = size_t;
 
-        result_type operator()(const argument_type & p)
+        result_type operator()(const argument_type & p) const noexcept
         {
             result_type x_hash = std::hash<double>()(p.x_);
             result_type y_hash = std::hash<double>()(p.y_);

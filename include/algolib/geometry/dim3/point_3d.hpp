@@ -10,18 +10,18 @@
 #include <array>
 #include <iostream>
 #include <stdexcept>
-#include "algolib/geometry/geometry_object.hpp"
+#include "algolib/geometry/geometry_comparator.hpp"
 
 namespace algolib::geometry::dim3
 {
-    class point_3d : public geometry_object<3>
+    class point_3d
     {
     public:
         point_3d(double x, double y, double z) : x_{x}, y_{y}, z_{z}
         {
         }
 
-        ~point_3d() override = default;
+        ~point_3d() = default;
         point_3d(const point_3d &) = default;
         point_3d(point_3d &&) = default;
         point_3d & operator=(const point_3d &) = default;
@@ -42,14 +42,14 @@ namespace algolib::geometry::dim3
             return z_;
         }
 
-        std::array<double, 3> coordinates() const override
+        std::array<double, 3> coordinates() const
         {
             return {x_, y_, z_};
         }
 
         double radius() const
         {
-            return sqrt(x_ * x_ + y_ * y_ + z_ * z_);
+            return std::sqrt(x_ * x_ + y_ * y_ + z_ * z_);
         }
 
         friend bool operator==(const point_3d & p1, const point_3d & p2);
@@ -59,14 +59,13 @@ namespace algolib::geometry::dim3
         friend struct std::hash<point_3d>;
 
     private:
+        static const geometry_comparator comparator;
         double x_, y_, z_;
     };
 
     bool operator==(const point_3d & p1, const point_3d & p2);
     bool operator!=(const point_3d & p1, const point_3d & p2);
     std::ostream & operator<<(std::ostream & os, const point_3d & p);
-
-#pragma endregion
 }
 
 namespace std
@@ -77,7 +76,7 @@ namespace std
         using argument_type = algolib::geometry::dim3::point_3d;
         using result_type = size_t;
 
-        result_type operator()(const argument_type & p)
+        result_type operator()(const argument_type & p) const noexcept
         {
             result_type x_hash = std::hash<double>()(p.x_);
             result_type y_hash = std::hash<double>()(p.y_);
