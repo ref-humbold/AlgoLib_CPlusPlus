@@ -7,13 +7,12 @@
 
 namespace alge2 = algolib::geometry::dim2;
 
-const double offset = alge2::vector_2d::epsilon;
+constexpr double offset = 1e-12;
 
 TEST(Vector2DTest, constructor_WhenArgumentsArePoints_ThenVectorFromBeginToEnd)
 {
     // when
-    alge2::vector_2d result =
-            alge2::vector_2d(alge2::point_2d(2.4, 7.8), alge2::point_2d(-1.5, 13.2));
+    auto result = alge2::vector_2d(alge2::point_2d(2.4, 7.8), alge2::point_2d(-1.5, 13.2));
 
     // then
     EXPECT_EQ(alge2::vector_2d(-3.9, 5.4), result);
@@ -22,10 +21,10 @@ TEST(Vector2DTest, constructor_WhenArgumentsArePoints_ThenVectorFromBeginToEnd)
 TEST(Vector2DTest, coordinates_ThenArray)
 {
     // when
-    std::array<double, 2> result = alge2::vector_2d(5.0, -19.0).coordinates();
+    std::array<double, 2> result = alge2::vector_2d(150.123456789, -3700.987654321).coordinates();
 
     // then
-    EXPECT_EQ((std::array<double, 2>{5.0, -19.0}), result);
+    EXPECT_EQ((std::array<double, 2>{150.123456789, -3700.987654321}), result);
 }
 
 TEST(Vector2DTest, dot_ThenScalarProduct)
@@ -148,4 +147,17 @@ TEST(Vector2DTest, divide_WhenDivisionByZero_ThenDomainError)
 
     // then
     EXPECT_THROW(exec(), std::domain_error);
+}
+
+TEST(Vector2DTest, ostream_operatorShiftLeft_ThenStringRepresentation)
+{
+    // given
+    alge2::vector_2d vector(150.123456789, -3700.987654321);
+    std::ostringstream stream;
+
+    // when
+    stream << vector;
+
+    // then
+    EXPECT_EQ("[150.123456789, -3700.987654321]", stream.str());
 }

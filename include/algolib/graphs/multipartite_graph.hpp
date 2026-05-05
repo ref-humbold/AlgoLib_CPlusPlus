@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <exception>
+#include <format>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -24,10 +25,12 @@ namespace algolib::graphs
         }
     };
 
-    template <size_t N,
+    template <
+            size_t N,
             typename VertexId = size_t,
             typename VertexProperty = std::nullptr_t,
-            typename EdgeProperty = std::nullptr_t>
+            typename EdgeProperty = std::nullptr_t
+    >
     class multipartite_graph
         : public virtual undirected_graph<VertexId, VertexProperty, EdgeProperty>
     {
@@ -38,12 +41,12 @@ namespace algolib::graphs
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::vertex_type;
         using edge_type =
                 typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::edge_type;
-        using vertex_property_type = typename undirected_graph<VertexId,
-                VertexProperty,
-                EdgeProperty>::vertex_property_type;
-        using edge_property_type = typename undirected_graph<VertexId,
-                VertexProperty,
-                EdgeProperty>::edge_property_type;
+        using vertex_property_type =
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::
+                        vertex_property_type;
+        using edge_property_type =
+                typename undirected_graph<VertexId, VertexProperty, EdgeProperty>::
+                        edge_property_type;
 
     protected:
         using graph_t =
@@ -80,8 +83,8 @@ namespace algolib::graphs
             return this->graph[vertex_ids];
         }
 
-        const edge_type & operator[](
-                const std::pair<vertex_type, vertex_type> & vertices) const override
+        const edge_type &
+                operator[](const std::pair<vertex_type, vertex_type> & vertices) const override
         {
             return this->graph[vertices];
         }
@@ -162,7 +165,8 @@ namespace algolib::graphs
          * \param property te vertex property
          * \return the created vertex
          */
-        vertex_type add_vertex(size_t group_number,
+        vertex_type add_vertex(
+                size_t group_number,
                 const vertex_id_type & vertex_id,
                 const vertex_property_type & property);
 
@@ -181,7 +185,8 @@ namespace algolib::graphs
          * \param property the vertex property
          * \return the created vertex
          */
-        vertex_type add_vertex(size_t group_number,
+        vertex_type add_vertex(
+                size_t group_number,
                 const vertex_type & vertex,
                 const vertex_property_type & property);
 
@@ -202,7 +207,8 @@ namespace algolib::graphs
          * \return the created edge
          * \throw graph_partition_error if the vertices belong to the same group
          */
-        edge_type add_edge_between(const vertex_type & source,
+        edge_type add_edge_between(
+                const vertex_type & source,
                 const vertex_type & destination,
                 const edge_property_type & property);
 
@@ -229,12 +235,13 @@ namespace algolib::graphs
             return this->vertex_group_map.at(vertex1) == this->vertex_group_map.at(vertex2);
         }
 
-        void validate_group(size_t group_number) const
+        static void validate_group(size_t group_number)
         {
             if(group_number >= N)
-                throw std::out_of_range("Invalid group number "s + std::to_string(group_number)
-                                        + ", graph contains only " + std::to_string(N)
-                                        + " groups"s);
+                throw std::out_of_range(
+                        std::format(
+                                "Invalid group number {}, graph contains only {} groups",
+                                group_number, N));
         }
 
         graph_t graph;
@@ -251,12 +258,16 @@ namespace algolib::graphs
 
         this->validate_group(group_number);
 
-        std::copy(this->vertex_group_map.begin(), this->vertex_group_map.end(),
+        std::copy(
+                this->vertex_group_map.begin(), this->vertex_group_map.end(),
                 std::back_inserter(group_vertices));
-        group_vertices.erase(std::remove_if(group_vertices.begin(), group_vertices.end(),
-                                     [&](auto && p) { return p.second != group_number; }),
+        group_vertices.erase(
+                std::remove_if(
+                        group_vertices.begin(), group_vertices.end(),
+                        [&](auto && p) { return p.second != group_number; }),
                 group_vertices.end());
-        std::transform(group_vertices.begin(), group_vertices.end(), std::back_inserter(result),
+        std::transform(
+                group_vertices.begin(), group_vertices.end(), std::back_inserter(result),
                 [](auto && p) { return p.first; });
         return result;
     }

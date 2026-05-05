@@ -6,6 +6,7 @@
 #define EQUATION_HPP_
 
 #include <array>
+#include <format>
 #include <iostream>
 #include <stdexcept>
 
@@ -273,10 +274,10 @@ namespace algolib::maths
                 if(i > 0)
                     os << " + ";
 
-                os << eq.coefficients_[i] << " x_" << i;
+                os << std::format("{} x_{}", eq.coefficients_[i], i);
             }
 
-        os << " = " << eq.free_term_;
+        os << std::format(" = {}", eq.free_term_);
         return os;
     }
 }

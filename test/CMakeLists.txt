@@ -10,12 +10,15 @@ find_package(Threads REQUIRED)
 
 # SOURCES
 set(GEOMETRY_DIM2_TEST_SOURCES
+    "${GEOMETRY_DIM2}/angle_2d_test.cpp"
     "${GEOMETRY_DIM2}/closest_points_test.cpp"
     "${GEOMETRY_DIM2}/convex_hull_test.cpp"
     "${GEOMETRY_DIM2}/geometry_2d_test.cpp"
+    "${GEOMETRY_DIM2}/point_2d_test.cpp"
     "${GEOMETRY_DIM2}/vector_2d_test.cpp")
 set(GEOMETRY_DIM3_TEST_SOURCES
     "${GEOMETRY_DIM3}/geometry_3d_test.cpp"
+    "${GEOMETRY_DIM3}/point_3d_test.cpp"
     "${GEOMETRY_DIM3}/vector_3d_test.cpp")
 set(GRAPHS_TEST_SOURCES
     "${GRAPHS}/directed_graph_test.cpp"

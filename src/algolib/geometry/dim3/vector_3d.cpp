@@ -3,6 +3,7 @@
  * \brief Structure of vector in 3D.
  */
 #include "algolib/geometry/dim3/vector_3d.hpp"
+#include <format>
 
 namespace alge3 = algolib::geometry::dim3;
 
@@ -123,6 +124,6 @@ alge3::vector_3d alge3::operator/(vector_3d v, double c)
 
 std::ostream & alge3::operator<<(std::ostream & os, const vector_3d & v)
 {
-    os << "[" << v.x_ << ", " << v.y_ << ", " << v.z_ << "]";
+    os << std::format("[{}, {}, {}]", v.x_, v.y_, v.z_);
     return os;
 }

@@ -3,6 +3,7 @@
  * \brief Structure of point in 3D.
  */
 #include "algolib/geometry/dim3/point_3d.hpp"
+#include <format>
 
 namespace alge3 = algolib::geometry::dim3;
 
@@ -20,6 +21,6 @@ bool alge3::operator!=(const point_3d & p1, const point_3d & p2)
 
 std::ostream & alge3::operator<<(std::ostream & os, const point_3d & p)
 {
-    os << "(" << p.x_ << ", " << p.y_ << ", " << p.z_ << ")";
+    os << std::format("({}, {}, {})", p.x_, p.y_, p.z_);
     return os;
 }

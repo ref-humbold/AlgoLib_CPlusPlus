@@ -3,6 +3,7 @@
  * \brief Structure of fraction.
  */
 #include "algolib/maths/fraction.hpp"
+#include <format>
 #include "algolib/maths/integers.hpp"
 
 namespace alma = algolib::maths;
@@ -486,6 +487,6 @@ alma::fraction alma::operator/(long long i, const fraction & f)
 
 std::ostream & alma::operator<<(std::ostream & os, const fraction & f)
 {
-    os << f.numerator << "/" << f.denominator;
+    os << std::format("{}/{}", f.numerator, f.denominator);
     return os;
 }

@@ -3,6 +3,7 @@
  * \brief Structure of vector in 2D.
  */
 #include "algolib/geometry/dim2/vector_2d.hpp"
+#include <format>
 
 namespace alge2 = algolib::geometry::dim2;
 
@@ -104,6 +105,6 @@ alge2::vector_2d alge2::operator/(vector_2d v, double c)
 
 std::ostream & alge2::operator<<(std::ostream & os, const vector_2d & v)
 {
-    os << "[" << v.x_ << ", " << v.y_ << "]";
+    os << std::format("[{}, {}]", v.x_, v.y_);
     return os;
 }

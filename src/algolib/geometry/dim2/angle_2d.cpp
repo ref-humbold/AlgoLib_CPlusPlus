@@ -3,6 +3,7 @@
  * \brief Structure of angle in 2D.
  */
 #include "algolib/geometry/dim2/angle_2d.hpp"
+#include <format>
 
 namespace alge2 = algolib::geometry::dim2;
 
@@ -51,7 +52,7 @@ bool alge2::operator>=(const angle_2d & a1, const angle_2d & a2)
 
 std::ostream & alge2::operator<<(std::ostream & os, const angle_2d & a)
 {
-    os << "Angle<" << a.degrees_ << " deg>";
+    os << std::format("Angle<{} deg>", a.degrees_);
     return os;
 }
 

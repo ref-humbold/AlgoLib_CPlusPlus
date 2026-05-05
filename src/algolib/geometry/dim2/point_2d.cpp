@@ -3,6 +3,7 @@
  * \brief Structure of point in 2D.
  */
 #include "algolib/geometry/dim2/point_2d.hpp"
+#include <format>
 
 namespace alge2 = algolib::geometry::dim2;
 
@@ -19,6 +20,6 @@ bool alge2::operator!=(const point_2d & p1, const point_2d & p2)
 
 std::ostream & alge2::operator<<(std::ostream & os, const point_2d & p)
 {
-    os << "(" << p.x_ << ", " << p.y_ << ")";
+    os << std::format("({}, {})", p.x_, p.y_);
     return os;
 }
