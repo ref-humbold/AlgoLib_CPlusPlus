@@ -59,6 +59,8 @@ namespace algolib::geometry::dim2
 
         friend struct std::hash<point_2d>;
 
+        static const point_2d zero;
+
     private:
         static const geometry_comparator comparator;
         double x_, y_;

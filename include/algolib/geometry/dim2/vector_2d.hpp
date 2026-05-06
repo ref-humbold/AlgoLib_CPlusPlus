@@ -31,7 +31,6 @@ namespace algolib::geometry::dim2
         vector_2d(vector_2d &&) = default;
         vector_2d & operator=(const vector_2d &) = default;
         vector_2d & operator=(vector_2d &&) = default;
-
         static double dot(const vector_2d & v1, const vector_2d & v2);
         static double area(const vector_2d & v1, const vector_2d & v2);
 
@@ -74,6 +73,8 @@ namespace algolib::geometry::dim2
         friend std::ostream & operator<<(std::ostream & os, const vector_2d & v);
 
         friend struct std::hash<vector_2d>;
+
+        static const vector_2d zero;
 
     private:
         static const geometry_comparator comparator;

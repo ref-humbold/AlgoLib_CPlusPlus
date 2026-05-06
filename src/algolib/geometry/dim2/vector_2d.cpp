@@ -7,6 +7,8 @@
 
 namespace alge2 = algolib::geometry::dim2;
 
+const alge2::vector_2d alge2::vector_2d::zero = vector_2d(0.0, 0.0);
+
 double alge2::vector_2d::dot(const vector_2d & v1, const vector_2d & v2)
 {
     return v1.x_ * v2.x_ + v1.y_ * v2.y_;

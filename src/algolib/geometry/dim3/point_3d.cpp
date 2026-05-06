@@ -7,6 +7,8 @@
 
 namespace alge3 = algolib::geometry::dim3;
 
+const alge3::point_3d alge3::point_3d::zero = point_3d(0.0, 0.0, 0.0);
+
 bool alge3::operator==(const point_3d & p1, const point_3d & p2)
 {
     return point_3d::comparator.compare(p1.x_, p2.x_) == 0

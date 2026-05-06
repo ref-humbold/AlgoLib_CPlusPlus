@@ -9,6 +9,35 @@ namespace alge2 = algolib::geometry::dim2;
 
 constexpr double offset = 1e-12;
 
+struct VectorExpectedParams
+{
+    VectorExpectedParams(const alge2::vector_2d & vector, double expected)
+        : vector{vector}, expected{expected}
+    {
+    }
+
+    const alge2::vector_2d vector;
+    const double expected;
+};
+
+class Vector2DTest_Length : public testing::TestWithParam<VectorExpectedParams>
+{
+};
+
+INSTANTIATE_TEST_SUITE_P(
+        ,
+        Vector2DTest_Length,
+        testing::Values(
+                VectorExpectedParams(alge2::vector_2d::zero, 0.0),
+                VectorExpectedParams(alge2::vector_2d(14.0, 0.0), 14.0),
+                VectorExpectedParams(alge2::vector_2d(-14.0, 0.0), 14.0),
+                VectorExpectedParams(alge2::vector_2d(0.0, 14.0), 14.0),
+                VectorExpectedParams(alge2::vector_2d(0.0, -14.0), 14.0),
+                VectorExpectedParams(alge2::vector_2d(8.0, 6.0), 10.0),
+                VectorExpectedParams(alge2::vector_2d(8.0, -6.0), 10.0),
+                VectorExpectedParams(alge2::vector_2d(-8.0, 6.0), 10.0),
+                VectorExpectedParams(alge2::vector_2d(-8.0, -6.0), 10.0)));
+
 TEST(Vector2DTest, constructor_WhenArgumentsArePoints_ThenVectorFromBeginToEnd)
 {
     // when
@@ -65,13 +94,16 @@ TEST(Vector2DTest, area_WhenParallel_ThenZero)
     EXPECT_NEAR(0.0, result, offset);
 }
 
-TEST(Vector2DTest, length_ThenLengthOfVector)
+TEST_P(Vector2DTest_Length, length_ThenLengthOfVector)
 {
+    // given
+    auto params = GetParam();
+
     // when
-    double result = alge2::vector_2d(8.0, -6.0).length();
+    double result = params.vector.length();
 
     // then
-    EXPECT_NEAR(10.0, result, offset);
+    EXPECT_NEAR(params.expected, result, offset);
 }
 
 TEST(Vector2DTest, plus_ThenCopy)

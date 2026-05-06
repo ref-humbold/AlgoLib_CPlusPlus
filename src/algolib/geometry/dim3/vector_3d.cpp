@@ -7,6 +7,8 @@
 
 namespace alge3 = algolib::geometry::dim3;
 
+const alge3::vector_3d alge3::vector_3d::zero = vector_3d(0.0, 0.0, 0.0);
+
 double alge3::vector_3d::dot(const vector_3d & v1, const vector_3d & v2)
 {
     return v1.x_ * v2.x_ + v1.y_ * v2.y_ + v1.z_ * v2.z_;

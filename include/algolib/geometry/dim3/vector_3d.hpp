@@ -82,6 +82,8 @@ namespace algolib::geometry::dim3
 
         friend struct std::hash<vector_3d>;
 
+        static const vector_3d zero;
+
     private:
         static const geometry_comparator comparator;
         double x_, y_, z_;

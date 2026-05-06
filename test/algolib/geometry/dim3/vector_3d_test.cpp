@@ -2,12 +2,60 @@
  * \file vector_3d_test.cpp
  * \brief Tests: Structure of vector in 3D.
  */
+#include <format>
 #include <gtest/gtest.h>
 #include "algolib/geometry/dim3/vector_3d.hpp"
 
 namespace alge3 = algolib::geometry::dim3;
 
 constexpr double offset = 1e-12;
+
+struct VectorExpectedParams
+{
+    VectorExpectedParams(const alge3::vector_3d & vector, double expected)
+        : vector{vector}, expected{expected}
+    {
+    }
+
+    const alge3::vector_3d vector;
+    const double expected;
+};
+
+class Vector3DTest_Length : public testing::TestWithParam<VectorExpectedParams>
+{
+};
+
+INSTANTIATE_TEST_SUITE_P(
+        ,
+        Vector3DTest_Length,
+        testing::Values(
+                VectorExpectedParams(alge3::vector_3d::zero, 0.0),
+                VectorExpectedParams(alge3::vector_3d(14.0, 0.0, 0.0), 14.0),
+                VectorExpectedParams(alge3::vector_3d(-14.0, 0.0, 0.0), 14.0),
+                VectorExpectedParams(alge3::vector_3d(0.0, 14.0, 0.0), 14.0),
+                VectorExpectedParams(alge3::vector_3d(0.0, -14.0, 0.0), 14.0),
+                VectorExpectedParams(alge3::vector_3d(0.0, 0.0, 14.0), 14.0),
+                VectorExpectedParams(alge3::vector_3d(0.0, 0.0, -14.0), 14.0),
+                VectorExpectedParams(alge3::vector_3d(8.0, 6.0, 0.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(8.0, -6.0, 0.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(-8.0, 6.0, 0.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(-8.0, -6.0, 0.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(8.0, 0.0, 6.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(8.0, 0.0, -6.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(-8.0, 0.0, 6.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(-8.0, 0.0, -6.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(0.0, 8.0, 6.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(0.0, 8.0, -6.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(0.0, -8.0, 6.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(0.0, -8.0, -6.0), 10.0),
+                VectorExpectedParams(alge3::vector_3d(18.0, 6.0, 13.0), 23.0),
+                VectorExpectedParams(alge3::vector_3d(18.0, 6.0, -13.0), 23.0),
+                VectorExpectedParams(alge3::vector_3d(18.0, -6.0, 13.0), 23.0),
+                VectorExpectedParams(alge3::vector_3d(18.0, -6.0, -13.0), 23.0),
+                VectorExpectedParams(alge3::vector_3d(-18.0, 6.0, 13.0), 23.0),
+                VectorExpectedParams(alge3::vector_3d(-18.0, 6.0, -13.0), 23.0),
+                VectorExpectedParams(alge3::vector_3d(-18.0, -6.0, 13.0), 23.0),
+                VectorExpectedParams(alge3::vector_3d(-18.0, -6.0, -13.0), 23.0)));
 
 TEST(Vector3DTest, constructor_WhenArgumentsArePoints_ThenVectorFromBeginToEnd)
 {
@@ -122,13 +170,16 @@ TEST(Vector3DTest, volume_WhenOrthogonal_ThenZero)
     EXPECT_NEAR(0.0, result, offset);
 }
 
-TEST(Vector3DTest, length_ThenLengthOfVector)
+TEST_P(Vector3DTest_Length, length_ThenLengthOfVector)
 {
+    // given
+    auto params = GetParam();
+
     // when
-    double result = alge3::vector_3d(18.0, -6.0, 13.0).length();
+    double result = params.vector.length();
 
     // then
-    EXPECT_NEAR(23.0, result, offset);
+    EXPECT_NEAR(params.expected, result, offset);
 }
 
 TEST(Vector3DTest, plus_ThenCopy)

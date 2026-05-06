@@ -5,8 +5,8 @@
 #ifndef ANGLE_2D_HPP_
 #define ANGLE_2D_HPP_
 
-#include <cmath>
 #include <iostream>
+#include <numbers>
 #include "algolib/geometry/geometry_comparator.hpp"
 
 namespace algolib::geometry::dim2
@@ -50,7 +50,7 @@ namespace algolib::geometry::dim2
     private:
         static double normalize(double degrees);
         static constexpr double full_angle_deg = 360.0;
-        static constexpr double full_angle_rad = 2 * M_PI;
+        static constexpr double full_angle_rad = 2 * std::numbers::pi;
         static const geometry_comparator comparator;
         double degrees_;
     };
