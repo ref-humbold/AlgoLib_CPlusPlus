@@ -25,29 +25,9 @@ bool alge2::operator==(const angle_2d & a1, const angle_2d & a2)
     return angle_2d::comparator.compare(a1.degrees_, a2.degrees_) == 0;
 }
 
-bool alge2::operator!=(const angle_2d & a1, const angle_2d & a2)
+std::weak_ordering alge2::operator<=>(const angle_2d & a1, const angle_2d & a2)
 {
-    return angle_2d::comparator.compare(a1.degrees_, a2.degrees_) != 0;
-}
-
-bool alge2::operator<(const angle_2d & a1, const angle_2d & a2)
-{
-    return angle_2d::comparator.compare(a1.degrees_, a2.degrees_) < 0;
-}
-
-bool alge2::operator<=(const angle_2d & a1, const angle_2d & a2)
-{
-    return angle_2d::comparator.compare(a1.degrees_, a2.degrees_) <= 0;
-}
-
-bool alge2::operator>(const angle_2d & a1, const angle_2d & a2)
-{
-    return angle_2d::comparator.compare(a1.degrees_, a2.degrees_) > 0;
-}
-
-bool alge2::operator>=(const angle_2d & a1, const angle_2d & a2)
-{
-    return angle_2d::comparator.compare(a1.degrees_, a2.degrees_) >= 0;
+    return angle_2d::comparator.compare(a1.degrees_, a2.degrees_);
 }
 
 std::ostream & alge2::operator<<(std::ostream & os, const angle_2d & a)

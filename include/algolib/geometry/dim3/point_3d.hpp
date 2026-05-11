@@ -53,7 +53,7 @@ namespace algolib::geometry::dim3
         }
 
         friend bool operator==(const point_3d & p1, const point_3d & p2);
-        friend bool operator!=(const point_3d & p1, const point_3d & p2);
+
         friend std::ostream & operator<<(std::ostream & os, const point_3d & p);
 
         friend struct std::hash<point_3d>;
@@ -66,7 +66,7 @@ namespace algolib::geometry::dim3
     };
 
     bool operator==(const point_3d & p1, const point_3d & p2);
-    bool operator!=(const point_3d & p1, const point_3d & p2);
+
     std::ostream & operator<<(std::ostream & os, const point_3d & p);
 }
 

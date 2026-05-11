@@ -69,13 +69,8 @@ alge3::vector_3d & alge3::vector_3d::operator/=(double c)
 bool alge3::operator==(const vector_3d & v1, const vector_3d & v2)
 {
     return vector_3d::comparator.compare(v1.x_, v2.x_) == 0
-           && vector_3d::comparator.compare(v1.y_, v2.y_) == 0
-           && vector_3d::comparator.compare(v1.z_, v2.z_) == 0;
-}
-
-bool alge3::operator!=(const vector_3d & v1, const vector_3d & v2)
-{
-    return !(v1 == v2);
+            && vector_3d::comparator.compare(v1.y_, v2.y_) == 0
+            && vector_3d::comparator.compare(v1.z_, v2.z_) == 0;
 }
 
 alge3::vector_3d alge3::operator+(vector_3d v)

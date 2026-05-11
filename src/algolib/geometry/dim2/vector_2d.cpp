@@ -53,12 +53,7 @@ alge2::vector_2d & alge2::vector_2d::operator/=(double c)
 bool alge2::operator==(const vector_2d & v1, const vector_2d & v2)
 {
     return vector_2d::comparator.compare(v1.x_, v2.x_) == 0
-           && vector_2d::comparator.compare(v1.y_, v2.y_) == 0;
-}
-
-bool alge2::operator!=(const vector_2d & v1, const vector_2d & v2)
-{
-    return !(v1 == v2);
+            && vector_2d::comparator.compare(v1.y_, v2.y_) == 0;
 }
 
 alge2::vector_2d alge2::operator+(vector_2d v)

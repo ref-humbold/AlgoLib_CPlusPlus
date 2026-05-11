@@ -65,15 +65,15 @@ namespace algolib::graphs
             return id_;
         }
 
-        // clang-format off
-            friend bool operator== <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
-            friend bool operator!= <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
-            friend bool operator< <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
-            friend bool operator<= <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
-            friend bool operator> <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
-            friend bool operator>= <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
-            friend std::ostream & operator<< <VertexId>(std::ostream & os, const vertex<VertexId> & vertex);
-        // clang-format on
+        friend bool operator== <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
+        friend bool operator!= <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
+        friend bool operator< <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
+        friend bool operator<= <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
+        friend bool operator><VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
+        friend bool operator>= <VertexId>(const vertex<VertexId> & e1, const vertex<VertexId> & e2);
+
+        friend std::ostream &
+                operator<< <VertexId>(std::ostream & os, const vertex<VertexId> & vertex);
 
         friend struct std::hash<vertex<VertexId>>;
 

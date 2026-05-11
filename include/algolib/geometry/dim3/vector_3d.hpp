@@ -68,7 +68,6 @@ namespace algolib::geometry::dim3
         vector_3d & operator/=(double c);
 
         friend bool operator==(const vector_3d & v1, const vector_3d & v2);
-        friend bool operator!=(const vector_3d & v1, const vector_3d & v2);
 
         friend vector_3d operator+(vector_3d v);
         friend vector_3d operator-(vector_3d v);
@@ -90,7 +89,7 @@ namespace algolib::geometry::dim3
     };
 
     bool operator==(const vector_3d & v1, const vector_3d & v2);
-    bool operator!=(const vector_3d & v1, const vector_3d & v2);
+
     vector_3d operator+(vector_3d v);
     vector_3d operator-(vector_3d v);
     vector_3d operator+(vector_3d v1, const vector_3d & v2);
@@ -98,6 +97,7 @@ namespace algolib::geometry::dim3
     vector_3d operator*(vector_3d v, double c);
     vector_3d operator*(double c, vector_3d v);
     vector_3d operator/(vector_3d v, double c);
+
     std::ostream & operator<<(std::ostream & os, const vector_3d & v);
 }
 

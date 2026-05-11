@@ -71,11 +71,7 @@ namespace algolib::maths
         fraction & operator/=(const fraction & f);
 
         friend bool operator==(const fraction & f1, const fraction & f2);
-        friend bool operator!=(const fraction & f1, const fraction & f2);
-        friend bool operator<(const fraction & f1, const fraction & f2);
-        friend bool operator<=(const fraction & f1, const fraction & f2);
-        friend bool operator>(const fraction & f1, const fraction & f2);
-        friend bool operator>=(const fraction & f1, const fraction & f2);
+        friend std::strong_ordering operator<=>(const fraction & f1, const fraction & f2);
 
         friend fraction operator+(fraction f);
         friend fraction operator-(fraction f);
@@ -98,11 +94,7 @@ namespace algolib::maths
     };
 
     bool operator==(const fraction & f1, const fraction & f2);
-    bool operator!=(const fraction & f1, const fraction & f2);
-    bool operator<(const fraction & f1, const fraction & f2);
-    bool operator<=(const fraction & f1, const fraction & f2);
-    bool operator>(const fraction & f1, const fraction & f2);
-    bool operator>=(const fraction & f1, const fraction & f2);
+    std::strong_ordering operator<=>(const fraction & f1, const fraction & f2);
 
     bool operator==(const fraction & f, int i);
     bool operator==(int i, const fraction & f);
@@ -116,6 +108,8 @@ namespace algolib::maths
     bool operator>(int i, const fraction & f);
     bool operator>=(const fraction & f, int i);
     bool operator>=(int i, const fraction & f);
+    std::strong_ordering operator<=>(const fraction & f, int i);
+    std::strong_ordering operator<=>(int i, const fraction & f);
 
     bool operator==(const fraction & f, long i);
     bool operator==(long i, const fraction & f);
@@ -129,6 +123,8 @@ namespace algolib::maths
     bool operator>(long i, const fraction & f);
     bool operator>=(const fraction & f, long i);
     bool operator>=(long i, const fraction & f);
+    std::strong_ordering operator<=>(const fraction & f, long i);
+    std::strong_ordering operator<=>(long i, const fraction & f);
 
     bool operator==(const fraction & f, long long i);
     bool operator==(long long i, const fraction & f);
@@ -142,6 +138,8 @@ namespace algolib::maths
     bool operator>(long long i, const fraction & f);
     bool operator>=(const fraction & f, long long i);
     bool operator>=(long long i, const fraction & f);
+    std::strong_ordering operator<=>(const fraction & f, long long i);
+    std::strong_ordering operator<=>(long long i, const fraction & f);
 
     fraction operator+(fraction f);
     fraction operator-(fraction f);

@@ -60,7 +60,6 @@ namespace algolib::geometry::dim2
         vector_2d & operator/=(double c);
 
         friend bool operator==(const vector_2d & v1, const vector_2d & v2);
-        friend bool operator!=(const vector_2d & v1, const vector_2d & v2);
 
         friend vector_2d operator+(vector_2d v);
         friend vector_2d operator-(vector_2d v);
@@ -82,7 +81,7 @@ namespace algolib::geometry::dim2
     };
 
     bool operator==(const vector_2d & v1, const vector_2d & v2);
-    bool operator!=(const vector_2d & v1, const vector_2d & v2);
+
     vector_2d operator+(vector_2d v);
     vector_2d operator-(vector_2d v);
     vector_2d operator+(vector_2d v1, const vector_2d & v2);
@@ -90,6 +89,7 @@ namespace algolib::geometry::dim2
     vector_2d operator*(vector_2d v, double c);
     vector_2d operator*(double c, vector_2d v);
     vector_2d operator/(vector_2d v, double c);
+
     std::ostream & operator<<(std::ostream & os, const vector_2d & v);
 }
 

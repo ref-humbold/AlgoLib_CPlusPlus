@@ -38,11 +38,8 @@ namespace algolib::geometry::dim2
         }
 
         friend bool operator==(const angle_2d & a1, const angle_2d & a2);
-        friend bool operator!=(const angle_2d & a1, const angle_2d & a2);
-        friend bool operator<(const angle_2d & a1, const angle_2d & a2);
-        friend bool operator<=(const angle_2d & a1, const angle_2d & a2);
-        friend bool operator>(const angle_2d & a1, const angle_2d & a2);
-        friend bool operator>=(const angle_2d & a1, const angle_2d & a2);
+        friend std::weak_ordering operator<=>(const angle_2d & a1, const angle_2d & a2);
+
         friend std::ostream & operator<<(std::ostream & os, const angle_2d & a);
 
         friend struct std::hash<angle_2d>;
@@ -56,11 +53,8 @@ namespace algolib::geometry::dim2
     };
 
     bool operator==(const angle_2d & a1, const angle_2d & a2);
-    bool operator!=(const angle_2d & a1, const angle_2d & a2);
-    bool operator<(const angle_2d & a1, const angle_2d & a2);
-    bool operator<=(const angle_2d & a1, const angle_2d & a2);
-    bool operator>(const angle_2d & a1, const angle_2d & a2);
-    bool operator>=(const angle_2d & a1, const angle_2d & a2);
+    std::weak_ordering operator<=>(const angle_2d & a1, const angle_2d & a2);
+
     std::ostream & operator<<(std::ostream & os, const angle_2d & a);
 }
 

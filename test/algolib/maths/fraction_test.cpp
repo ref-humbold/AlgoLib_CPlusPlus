@@ -76,17 +76,19 @@ TEST(FractionTest, operatorBool_WhenNegative_ThenTrue)
 TEST(FractionTest, operatorEqual_WhenSameNormalizedFraction_ThenTrue)
 {
     // when
-    bool result = alma::fraction(9, 15) == alma::fraction(3, 5);
+    bool result1 = alma::fraction(9, 15) == alma::fraction(-3, -5);
+    bool result2 = alma::fraction(-9, 15) == alma::fraction(3, -5);
 
     // then
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result1);
+    EXPECT_TRUE(result2);
 }
 
 TEST(FractionTest, operatorEqual_WhenEqualToInt_ThenTrue)
 {
     // when
     bool result1 = alma::fraction(125, 5) == 25;
-    bool result2 = 25 == alma::fraction(125, 5);
+    bool result2 = 21 == alma::fraction(126, 6);
 
     // then
     EXPECT_TRUE(result1);
@@ -96,46 +98,85 @@ TEST(FractionTest, operatorEqual_WhenEqualToInt_ThenTrue)
 TEST(FractionTest, operatorNotEqual_WhenDifferentFraction_ThenTrue)
 {
     // when
-    bool result = alma::fraction(9, 14) != alma::fraction(3, 5);
+    bool result1 = alma::fraction(9, 14) != alma::fraction(3, 5);
+    bool result2 = alma::fraction(1, 2) != alma::fraction(7, 10);
+
+    // then
+    EXPECT_TRUE(result1);
+    EXPECT_TRUE(result2);
+}
+
+TEST(FractionTest, operatorLess_WhenFraction_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(1, 2) < alma::fraction(7, 10);
 
     // then
     EXPECT_TRUE(result);
 }
 
-TEST(FractionTest, operatorLess_WhenSameDenominatorAndGreaterNumerator_ThenTrue)
+TEST(FractionTest, operatorLess_WhenCompareToLong_ThenTrue)
 {
     // when
-    bool result = alma::fraction(9, 14) < alma::fraction(17, 14);
+    bool result1 = alma::fraction(-31, 6) < -4L;
+    bool result2 = 10L < alma::fraction(55, 4);
+
+    // then
+    EXPECT_TRUE(result1);
+    EXPECT_TRUE(result2);
+}
+
+TEST(FractionTest, operatorGreater_WhenFraction_ThenTrue)
+{
+    // when
+    bool result = alma::fraction(1, 2) > alma::fraction(4, 10);
 
     // then
     EXPECT_TRUE(result);
 }
 
-TEST(FractionTest, operatorLess_WhenLessThanInt_ThenTrue)
+TEST(FractionTest, operatorGreater_WhenCompareToLongLong_ThenTrue)
 {
     // when
-    bool result = alma::fraction(-31, 6) < -4;
+    bool result1 = alma::fraction(11, 3) > 2LL;
+    int result2 = 1LL > alma::fraction(1, 4);
 
     // then
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result1);
+    EXPECT_TRUE(result2);
 }
 
-TEST(FractionTest, operatorGreater_WhenSameNumeratorAndGreaterDenominator_ThenTrue)
+TEST(FractionTest, operatorSpaceship_WhenSameNormalizedFraction_ThenEqualToZero)
 {
     // when
-    bool result = alma::fraction(9, 14) > alma::fraction(9, 26);
+    auto result1 = alma::fraction(9, 15) <=> alma::fraction(-3, -5);
+    auto result2 = alma::fraction(-9, 15) <=> alma::fraction(3, -5);
 
     // then
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result1 == 0);
+    EXPECT_TRUE(result2 == 0);
 }
 
-TEST(FractionTest, operatorGreater_WhenGreaterThanLongLong_ThenTrue)
+TEST(FractionTest, operatorSpaceship_WhenSameDenominator_ThenCompare)
 {
     // when
-    bool result = alma::fraction(11, 3) > 2LL;
+    auto result1 = alma::fraction(9, 14) <=> alma::fraction(17, 14);
+    auto result2 = alma::fraction(17, 14) <=> alma::fraction(9, 14);
 
     // then
-    EXPECT_TRUE(result);
+    EXPECT_TRUE(result1 < 0);
+    EXPECT_TRUE(result2 > 0);
+}
+
+TEST(FractionTest, operatorSpaceship_WhenSameNumerator_ThenCompare)
+{
+    // when
+    auto result1 = alma::fraction(9, 14) <=> alma::fraction(9, 26);
+    auto result2 = alma::fraction(9, 26) <=> alma::fraction(9, 14);
+
+    // then
+    EXPECT_TRUE(result1 > 0);
+    EXPECT_TRUE(result2 < 0);
 }
 
 #pragma endregion

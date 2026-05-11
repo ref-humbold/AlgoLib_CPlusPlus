@@ -12,12 +12,7 @@ const alge2::point_2d alge2::point_2d::zero = point_2d(0.0, 0.0);
 bool alge2::operator==(const point_2d & p1, const point_2d & p2)
 {
     return point_2d::comparator.compare(p1.x_, p2.x_) == 0
-           && point_2d::comparator.compare(p1.y_, p2.y_) == 0;
-}
-
-bool alge2::operator!=(const point_2d & p1, const point_2d & p2)
-{
-    return !(p1 == p2);
+            && point_2d::comparator.compare(p1.y_, p2.y_) == 0;
 }
 
 std::ostream & alge2::operator<<(std::ostream & os, const point_2d & p)

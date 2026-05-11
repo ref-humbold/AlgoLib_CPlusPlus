@@ -13,7 +13,7 @@ AlignConsecutiveMacros: None
 AlignConsecutiveShortCaseStatements:
   Enabled: false
 AlignEscapedNewlines: DontAlign
-AlignOperands: Align
+AlignOperands: DontAlign
 AlignTrailingComments:
   Kind: Never
   OverEmptyLines: 0

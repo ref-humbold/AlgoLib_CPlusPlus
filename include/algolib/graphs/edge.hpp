@@ -5,7 +5,6 @@
 #ifndef EDGE_HPP_
 #define EDGE_HPP_
 
-#include <exception>
 #include <iostream>
 #include <stdexcept>
 #include "algolib/graphs/vertex.hpp"
@@ -104,6 +103,7 @@ namespace algolib::graphs
         friend bool operator<= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
         friend bool operator><VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
         friend bool operator>= <VertexId>(const edge<VertexId> & e1, const edge<VertexId> & e2);
+
         friend std::ostream & operator<< <VertexId>(std::ostream & os, const edge<VertexId> & edge);
 
         friend struct std::hash<edge<VertexId>>;
@@ -128,7 +128,7 @@ namespace algolib::graphs
     bool operator<(const edge<VertexId> & e1, const edge<VertexId> & e2)
     {
         return e1.source_ < e2.source_
-               || (!(e2.source_ < e1.source_) && e1.destination_ < e2.destination_);
+                || (!(e2.source_ < e1.source_) && e1.destination_ < e2.destination_);
     }
 
     template <typename VertexId>
@@ -173,7 +173,7 @@ namespace std
                     std::hash<typename argument_type::vertex_type>()(edge.destination_);
 
             return source_hash
-                   ^ (destination_hash + 0x9e3779b9 + (source_hash << 6) + (source_hash >> 2));
+                    ^ (destination_hash + 0x9e3779b9 + (source_hash << 6) + (source_hash >> 2));
         }
     };
 }

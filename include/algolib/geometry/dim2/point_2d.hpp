@@ -54,7 +54,7 @@ namespace algolib::geometry::dim2
         }
 
         friend bool operator==(const point_2d & p1, const point_2d & p2);
-        friend bool operator!=(const point_2d & p1, const point_2d & p2);
+
         friend std::ostream & operator<<(std::ostream & os, const point_2d & p);
 
         friend struct std::hash<point_2d>;
@@ -67,7 +67,7 @@ namespace algolib::geometry::dim2
     };
 
     bool operator==(const point_2d & p1, const point_2d & p2);
-    bool operator!=(const point_2d & p1, const point_2d & p2);
+
     std::ostream & operator<<(std::ostream & os, const point_2d & p);
 }
 

@@ -78,45 +78,22 @@ std::pair<intmax_t, intmax_t> alma::fraction::common(const fraction & f) const
 }
 
 #pragma endregion
-#pragma region comparison operators
+#pragma region comparison operators (fraction + fraction)
 
 bool alma::operator==(const fraction & f1, const fraction & f2)
 {
     return f1.numerator == f2.numerator && f1.denominator == f2.denominator;
 }
 
-bool alma::operator!=(const fraction & f1, const fraction & f2)
+std::strong_ordering alma::operator<=>(const fraction & f1, const fraction & f2)
 {
-    return !(f1 == f2);
+    auto [this_numerator, other_numerator] = f1.common(f2);
+
+    return this_numerator <=> other_numerator;
 }
 
-bool alma::operator<(const fraction & f1, const fraction & f2)
-{
-    std::pair<intmax_t, intmax_t> numerators = f1.common(f2);
-
-    return numerators.first < numerators.second;
-}
-
-bool alma::operator<=(const fraction & f1, const fraction & f2)
-{
-    std::pair<intmax_t, intmax_t> numerators = f1.common(f2);
-
-    return numerators.first <= numerators.second;
-}
-
-bool alma::operator>(const fraction & f1, const fraction & f2)
-{
-    std::pair<intmax_t, intmax_t> numerators = f1.common(f2);
-
-    return numerators.first > numerators.second;
-}
-
-bool alma::operator>=(const fraction & f1, const fraction & f2)
-{
-    std::pair<intmax_t, intmax_t> numerators = f1.common(f2);
-
-    return numerators.first >= numerators.second;
-}
+#pragma endregion
+#pragma region comparison operators (fraction + int)
 
 bool alma::operator==(const fraction & f, int i)
 {
@@ -178,6 +155,19 @@ bool alma::operator>=(int i, const fraction & f)
     return static_cast<fraction>(i) >= f;
 }
 
+std::strong_ordering alma::operator<=>(const fraction & f, int i)
+{
+    return f <=> static_cast<fraction>(i);
+}
+
+std::strong_ordering alma::operator<=>(int i, const fraction & f)
+{
+    return static_cast<fraction>(i) <=> f;
+}
+
+#pragma endregion
+#pragma region comparison operators (fraction + long)
+
 bool alma::operator==(const fraction & f, long i)
 {
     return f == static_cast<fraction>(i);
@@ -237,6 +227,19 @@ bool alma::operator>=(long i, const fraction & f)
 {
     return static_cast<fraction>(i) >= f;
 }
+
+std::strong_ordering alma::operator<=>(const fraction & f, long i)
+{
+    return f <=> static_cast<fraction>(i);
+}
+
+std::strong_ordering alma::operator<=>(long i, const fraction & f)
+{
+    return static_cast<fraction>(i) <=> f;
+}
+
+#pragma endregion
+#pragma region comparison operators (fraction + long long)
 
 bool alma::operator==(const fraction & f, long long i)
 {
@@ -298,6 +301,16 @@ bool alma::operator>=(long long i, const fraction & f)
     return static_cast<fraction>(i) >= f;
 }
 
+std::strong_ordering alma::operator<=>(const fraction & f, long long i)
+{
+    return f <=> static_cast<fraction>(i);
+}
+
+std::strong_ordering alma::operator<=>(long long i, const fraction & f)
+{
+    return static_cast<fraction>(i) <=> f;
+}
+
 #pragma endregion
 #pragma region unary operators
 
@@ -325,7 +338,7 @@ alma::fraction alma::operator~(fraction f)
 }
 
 #pragma endregion
-#pragma region binary operators
+#pragma region binary operators (fraction + fraction)
 
 alma::fraction alma::operator+(fraction f1, const fraction & f2)
 {
@@ -350,6 +363,9 @@ alma::fraction alma::operator/(fraction f1, const fraction & f2)
     f1 /= f2;
     return f1;
 }
+
+#pragma endregion
+#pragma region binary operators (fraction + int)
 
 alma::fraction alma::operator+(fraction f, int i)
 {
@@ -401,6 +417,9 @@ alma::fraction alma::operator+(fraction f, long i)
     return f;
 }
 
+#pragma endregion
+#pragma region binary operators (fraction + long)
+
 alma::fraction alma::operator+(long i, const fraction & f)
 {
     return static_cast<fraction>(i) + f;
@@ -438,6 +457,9 @@ alma::fraction alma::operator/(long i, const fraction & f)
 {
     return static_cast<fraction>(i) / f;
 }
+
+#pragma endregion
+#pragma region binary operators (fraction + long long)
 
 alma::fraction alma::operator+(fraction f, long long i)
 {
