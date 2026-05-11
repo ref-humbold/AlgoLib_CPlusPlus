@@ -11,21 +11,21 @@ void alge3::sort_by_x(std::vector<point_3d> & points)
 {
     auto comparator = [&](const point_3d & pt1, const point_3d & pt2) { return pt1.x() < pt2.x(); };
 
-    std::stable_sort(points.begin(), points.end(), comparator);
+    std::ranges::stable_sort(points, comparator);
 }
 
 void alge3::sort_by_y(std::vector<point_3d> & points)
 {
     auto comparator = [&](const point_3d & pt1, const point_3d & pt2) { return pt1.y() < pt2.y(); };
 
-    std::stable_sort(points.begin(), points.end(), comparator);
+    std::ranges::stable_sort(points, comparator);
 }
 
 void alge3::sort_by_z(std::vector<point_3d> & points)
 {
     auto comparator = [&](const point_3d & pt1, const point_3d & pt2) { return pt1.z() < pt2.z(); };
 
-    std::stable_sort(points.begin(), points.end(), comparator);
+    std::ranges::stable_sort(points, comparator);
 }
 
 double alge3::distance(const point_3d & point1, const point_3d & point2)

@@ -106,9 +106,8 @@ bool alma::test_prime_miller(int number)
             for(int d = multiplicand; d <= number / 2; d *= 2)
                 exponents.push_back(d);
 
-            if(std::all_of(
-                       exponents.begin(), exponents.end(),
-                       [&](int d) { return power(witness, d, number) != number - 1; }))
+            if(std::ranges::all_of(
+                       exponents, [&](int d) { return power(witness, d, number) != number - 1; }))
                 return false;
         }
     }
@@ -142,9 +141,8 @@ bool alma::test_prime_miller(long number)
             for(long d = multiplicand; d <= number / 2; d *= 2)
                 exponents.push_back(d);
 
-            if(std::all_of(
-                       exponents.begin(), exponents.end(),
-                       [&](long d) { return power(witness, d, number) != number - 1; }))
+            if(std::ranges::all_of(
+                       exponents, [&](long d) { return power(witness, d, number) != number - 1; }))
                 return false;
         }
     }
@@ -178,8 +176,8 @@ bool alma::test_prime_miller(long long number)
             for(long long d = multiplicand; d <= number / 2; d *= 2)
                 exponents.push_back(d);
 
-            if(std::all_of(
-                       exponents.begin(), exponents.end(),
+            if(std::ranges::all_of(
+                       exponents,
                        [&](long long d) { return power(witness, d, number) != number - 1; }))
                 return false;
         }

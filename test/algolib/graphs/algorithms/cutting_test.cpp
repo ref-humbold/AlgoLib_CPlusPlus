@@ -37,7 +37,7 @@ TEST(CuttingTest, findEdgeCut_WhenPresentBridges_ThenBridges)
     std::vector<graph_e> result = find_edge_cut(graph);
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_e>({graph[std::make_pair(0, 7)], graph[std::make_pair(5, 6)]}),
             result);
@@ -87,7 +87,7 @@ TEST(CuttingTest, findVertexSeparators_WhenPresentSeparators_ThenSeparators)
     std::vector<graph_v> result = find_vertex_cut(graph);
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_v>({graph[0], graph[1], graph[5], graph[7]}), result);
 }

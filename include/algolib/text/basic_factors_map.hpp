@@ -62,11 +62,12 @@ namespace algolib::text
         {
         }
 
-        bool operator==(const extension_code & code) const;
+        bool operator==(const extension_code & code) const
+        {
+            return *this <=> code == 0;
+        }
 
-        bool operator!=(const extension_code & code) const;
-
-        bool operator<(const extension_code & code) const;
+        std::strong_ordering operator<=>(const extension_code & code) const;
 
         size_t prefix_code;
         size_t suffix_code;

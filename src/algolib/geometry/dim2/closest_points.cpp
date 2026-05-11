@@ -37,9 +37,8 @@ std::optional<std::pair<alge2::point_2d, alge2::point_2d>>
     std::vector<alge2::point_2d> belt_points;
     double min_distance = width;
 
-    std::copy_if(
-            pointsY.begin(), pointsY.end(), std::back_inserter(belt_points),
-            [&](const alge2::point_2d & pt)
+    std::ranges::copy_if(
+            pointsY, std::back_inserter(belt_points), [&](const alge2::point_2d & pt)
             { return pt.x() >= middleX - width && pt.x() <= middleX + width; });
 
     for(size_t i = 1; i < belt_points.size(); ++i)
@@ -84,7 +83,7 @@ std::pair<alge2::point_2d, alge2::point_2d> search_closest(
     if(diff == 3)
         return search_three(*pointsX_begin, *(pointsX_begin + 1), *(pointsX_begin + 2));
 
-    std::vector<alge2::point_2d>::const_iterator pointsX_middle = pointsX_begin + diff / 2;
+    auto pointsX_middle = pointsX_begin + diff / 2;
     std::vector<alge2::point_2d> pointsYL, pointsYR;
 
     for(auto & pt : pointsY)

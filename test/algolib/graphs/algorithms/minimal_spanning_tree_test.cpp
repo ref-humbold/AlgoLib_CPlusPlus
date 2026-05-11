@@ -62,9 +62,9 @@ TEST_F(MinimalSpanningTreeTest, kruskal_ThenMinimalSpanningTree)
     std::vector<graph_v> result_vertices = result.vertices();
     std::vector<graph_e> result_edges = result.edges();
 
-    std::sort(vertices.begin(), vertices.end());
-    std::sort(result_vertices.begin(), result_vertices.end());
-    std::sort(result_edges.begin(), result_edges.end());
+    std::ranges::sort(vertices);
+    std::ranges::sort(result_vertices);
+    std::ranges::sort(result_edges);
 
     EXPECT_EQ(vertices, result_vertices);
     EXPECT_EQ(
@@ -86,9 +86,9 @@ TEST_F(MinimalSpanningTreeTest, prim_ThenMinimalSpanningTree)
     std::vector<graph_v> result_vertices = result.vertices();
     std::vector<graph_e> result_edges = result.edges();
 
-    std::sort(vertices.begin(), vertices.end());
-    std::sort(result_vertices.begin(), result_vertices.end());
-    std::sort(result_edges.begin(), result_edges.end());
+    std::ranges::sort(vertices);
+    std::ranges::sort(result_vertices);
+    std::ranges::sort(result_edges);
 
     EXPECT_EQ(vertices, result_vertices);
     EXPECT_EQ(
@@ -108,8 +108,8 @@ TEST_F(MinimalSpanningTreeTest, prim_WhenDiffrentSources_ThenSameMinimalSpanning
     std::vector<graph_e> result1_edges = result1.edges();
     std::vector<graph_e> result4_edges = result4.edges();
 
-    std::sort(result1_edges.begin(), result1_edges.end());
-    std::sort(result4_edges.begin(), result4_edges.end());
+    std::ranges::sort(result1_edges);
+    std::ranges::sort(result4_edges);
 
     EXPECT_EQ(result1.edges_count(), result4.edges_count());
     EXPECT_EQ(result1_edges, result4_edges);

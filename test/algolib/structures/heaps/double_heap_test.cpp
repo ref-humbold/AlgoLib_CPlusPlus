@@ -270,7 +270,7 @@ TEST_F(DoubleHeapTest, popMin_WhenMultipleCalls_ThenSortedAscending)
     // given
     std::vector<int> expected = numbers;
 
-    std::sort(expected.begin(), expected.end());
+    std::ranges::sort(expected);
 
     // when
     std::vector<int> result;

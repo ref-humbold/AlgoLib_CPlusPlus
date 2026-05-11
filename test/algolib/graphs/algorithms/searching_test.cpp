@@ -94,7 +94,7 @@ TEST_F(SearchingTest, bfs_WhenUndirectedGraphAndSingleRoot_ThenVisitedVertices)
     std::vector<ugraph_v> result = algr::bfs(undirected_graph, eu_strategy, {undirected_graph[0]});
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<ugraph_v>({undirected_graph[0], undirected_graph[1], undirected_graph[3],
                   undirected_graph[4], undirected_graph[5], undirected_graph[7],
@@ -112,10 +112,10 @@ TEST_F(SearchingTest, bfs_WhenUndirectedGraphAndManyRoots_ThenAllVisited)
             algr::bfs(undirected_graph, u_strategy, {undirected_graph[0], undirected_graph[6]});
 
     // then
-    std::sort(vertices.begin(), vertices.end());
-    std::sort(u_strategy.entries.begin(), u_strategy.entries.end());
-    std::sort(u_strategy.exits.begin(), u_strategy.exits.end());
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(vertices);
+    std::ranges::sort(u_strategy.entries);
+    std::ranges::sort(u_strategy.exits);
+    std::ranges::sort(result);
 
     ASSERT_EQ(vertices, result);
     EXPECT_EQ(vertices, u_strategy.entries);
@@ -137,7 +137,7 @@ TEST_F(SearchingTest, bfs_WhenDirectedGraphAndSingleRoot_ThenVisitedVertices)
     std::vector<dgraph_v> result = algr::bfs(directed_graph, ed_strategy, {directed_graph[1]});
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<dgraph_v>({directed_graph[0], directed_graph[1], directed_graph[3],
                   directed_graph[4], directed_graph[7]}),
@@ -154,10 +154,10 @@ TEST_F(SearchingTest, bfs_WhenDirectedGraphAndManyRoots_ThenAllVisited)
             algr::bfs(directed_graph, d_strategy, {directed_graph[8], directed_graph[6]});
 
     // then
-    std::sort(vertices.begin(), vertices.end());
-    std::sort(d_strategy.entries.begin(), d_strategy.entries.end());
-    std::sort(d_strategy.exits.begin(), d_strategy.exits.end());
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(vertices);
+    std::ranges::sort(d_strategy.entries);
+    std::ranges::sort(d_strategy.exits);
+    std::ranges::sort(result);
 
     ASSERT_EQ(vertices, result);
     EXPECT_EQ(vertices, d_strategy.entries);
@@ -174,7 +174,7 @@ TEST_F(SearchingTest, dfsIterative_WhenUndirectedGraphAndSingleRoot_ThenVisitedV
             algr::dfs_iterative(undirected_graph, eu_strategy, {undirected_graph[0]});
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<ugraph_v>({undirected_graph[0], undirected_graph[1], undirected_graph[3],
                   undirected_graph[4], undirected_graph[5], undirected_graph[7],
@@ -192,10 +192,10 @@ TEST_F(SearchingTest, dfsIterative_WhenUndirectedGraphAndManyRoots_ThenAllVisite
             {undirected_graph[0], undirected_graph[6]});
 
     // then
-    std::sort(vertices.begin(), vertices.end());
-    std::sort(u_strategy.entries.begin(), u_strategy.entries.end());
-    std::sort(u_strategy.exits.begin(), u_strategy.exits.end());
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(vertices);
+    std::ranges::sort(u_strategy.entries);
+    std::ranges::sort(u_strategy.exits);
+    std::ranges::sort(result);
 
     ASSERT_EQ(vertices, result);
     EXPECT_EQ(vertices, u_strategy.entries);
@@ -218,7 +218,7 @@ TEST_F(SearchingTest, dfsIterative_WhenDirectedGraphAndSingleRoot_ThenVisitedVis
             algr::dfs_iterative(directed_graph, ed_strategy, {directed_graph[1]});
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<dgraph_v>({directed_graph[0], directed_graph[1], directed_graph[3],
                   directed_graph[4], directed_graph[7]}),
@@ -235,10 +235,10 @@ TEST_F(SearchingTest, dfsIterative_WhenDirectedGraphAndManyRoots_ThenAllVisited)
             algr::dfs_iterative(directed_graph, d_strategy, {directed_graph[8], directed_graph[6]});
 
     // then
-    std::sort(vertices.begin(), vertices.end());
-    std::sort(d_strategy.entries.begin(), d_strategy.entries.end());
-    std::sort(d_strategy.exits.begin(), d_strategy.exits.end());
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(vertices);
+    std::ranges::sort(d_strategy.entries);
+    std::ranges::sort(d_strategy.exits);
+    std::ranges::sort(result);
 
     ASSERT_EQ(vertices, result);
     EXPECT_EQ(vertices, d_strategy.entries);
@@ -255,7 +255,7 @@ TEST_F(SearchingTest, dfsRecursive_WhenUndirectedGraphAndSingleRoot_ThenVisitedV
             algr::dfs_recursive(undirected_graph, eu_strategy, {undirected_graph[0]});
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<ugraph_v>({undirected_graph[0], undirected_graph[1], undirected_graph[3],
                   undirected_graph[4], undirected_graph[5], undirected_graph[7],
@@ -273,10 +273,10 @@ TEST_F(SearchingTest, dfsRecursive_WhenUndirectedGraphAndManyRoots_ThenAllVisite
             {undirected_graph[0], undirected_graph[6]});
 
     // then
-    std::sort(vertices.begin(), vertices.end());
-    std::sort(u_strategy.entries.begin(), u_strategy.entries.end());
-    std::sort(u_strategy.exits.begin(), u_strategy.exits.end());
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(vertices);
+    std::ranges::sort(u_strategy.entries);
+    std::ranges::sort(u_strategy.exits);
+    std::ranges::sort(result);
 
     ASSERT_EQ(vertices, result);
     EXPECT_EQ(vertices, u_strategy.entries);
@@ -299,7 +299,7 @@ TEST_F(SearchingTest, dfsRecursive_WhenDirectedGraphAndSingleRoot_ThenVisitedVis
             algr::dfs_recursive(directed_graph, ed_strategy, {directed_graph[1]});
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<dgraph_v>({directed_graph[0], directed_graph[1], directed_graph[3],
                   directed_graph[4], directed_graph[7]}),
@@ -316,10 +316,10 @@ TEST_F(SearchingTest, dfsRecursive_WhenDirectedGraphAndManyRoots_ThenAllVisited)
             algr::dfs_recursive(directed_graph, d_strategy, {directed_graph[8], directed_graph[6]});
 
     // then
-    std::sort(vertices.begin(), vertices.end());
-    std::sort(d_strategy.entries.begin(), d_strategy.entries.end());
-    std::sort(d_strategy.exits.begin(), d_strategy.exits.end());
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(vertices);
+    std::ranges::sort(d_strategy.entries);
+    std::ranges::sort(d_strategy.exits);
+    std::ranges::sort(result);
 
     ASSERT_EQ(vertices, result);
     EXPECT_EQ(vertices, d_strategy.entries);

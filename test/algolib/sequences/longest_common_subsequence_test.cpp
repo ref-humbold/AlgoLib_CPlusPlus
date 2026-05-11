@@ -14,8 +14,7 @@ std::vector<int> codes(const std::string & text)
 {
     std::vector<int> sequence;
 
-    std::transform(text.begin(), text.end(), std::back_inserter(sequence),
-            [](const char c) { return +c; });
+    std::ranges::transform(text, std::back_inserter(sequence), [](const char c) { return +c; });
     return sequence;
 }
 

@@ -72,7 +72,7 @@ size_t alte::basic_factors_map::extend(
     for(size_t i = 0; i <= text_.size() - length; ++i)
         codes.emplace_back(func(i, length));
 
-    std::sort(codes.begin(), codes.end());
+    std::ranges::sort(codes);
 
     for(size_t i = 1; i < codes.size(); ++i)
     {
@@ -85,23 +85,10 @@ size_t alte::basic_factors_map::extend(
     return code_value;
 }
 
-bool alte::basic_factors_map::extension_code::operator==(const extension_code & code) const
+std::strong_ordering
+        alte::basic_factors_map::extension_code::operator<=>(const extension_code & code) const
 {
-    return prefix_code == code.prefix_code && suffix_code == code.suffix_code;
-}
+    auto compare_prefix = prefix_code <=> code.prefix_code;
 
-bool alte::basic_factors_map::extension_code::operator!=(const extension_code & code) const
-{
-    return !(*this == code);
-}
-
-bool alte::basic_factors_map::extension_code::operator<(const extension_code & code) const
-{
-    if(prefix_code < code.prefix_code)
-        return true;
-
-    if(prefix_code == code.prefix_code)
-        return suffix_code < code.suffix_code;
-
-    return false;
+    return compare_prefix != 0 ? compare_prefix : suffix_code <=> code.suffix_code;
 }

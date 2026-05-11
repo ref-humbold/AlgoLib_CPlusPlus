@@ -104,7 +104,7 @@ TEST_F(TreeGraphTest, vertices_ThenAllVertices)
     std::vector<graph_v> result = test_object.vertices();
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_v>({graph_v(0), graph_v(1), graph_v(2), graph_v(3), graph_v(4),
                   graph_v(5), graph_v(6), graph_v(7)}),
@@ -117,7 +117,7 @@ TEST_F(TreeGraphTest, edges_ThenAllEdges)
     std::vector<graph_e> result = test_object.edges();
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_e>({graph_e(graph_v(1), graph_v(0)),
                   graph_e(graph_v(2), graph_v(0)), graph_e(graph_v(3), graph_v(0)),
@@ -132,7 +132,7 @@ TEST_F(TreeGraphTest, neighbours_ThenDestinationVerticesOfOutgoingEdges)
     std::vector<graph_v> result = test_object.neighbours(graph_v(1));
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_v>({graph_v(0), graph_v(4), graph_v(5)}), result);
 }
@@ -143,7 +143,7 @@ TEST_F(TreeGraphTest, adjacentEdges_ThenOutgoingEdges)
     std::vector<graph_e> result = test_object.adjacent_edges(graph_v(1));
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_e>({graph_e(graph_v(1), graph_v(0)),
                   graph_e(graph_v(4), graph_v(1)), graph_e(graph_v(5), graph_v(1))}),

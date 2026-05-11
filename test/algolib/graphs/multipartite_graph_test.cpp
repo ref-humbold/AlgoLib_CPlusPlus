@@ -105,7 +105,7 @@ TEST_F(MultipartiteGraphTest, vertices_ThenAllVertices)
     std::vector<graph_v> result = test_object.vertices();
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_v>({graph_v(0), graph_v(1), graph_v(2), graph_v(3), graph_v(4),
                   graph_v(5), graph_v(6), graph_v(7), graph_v(8), graph_v(9)}),
@@ -118,7 +118,7 @@ TEST_F(MultipartiteGraphTest, edges_ThenAllEdges)
     std::vector<graph_e> result = test_object.edges();
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_e>({graph_e(graph_v(0), graph_v(3)),
                   graph_e(graph_v(1), graph_v(5)), graph_e(graph_v(2), graph_v(9)),
@@ -132,7 +132,7 @@ TEST_F(MultipartiteGraphTest, neighbours_ThenDestinationVerticesOfOutgoingEdges)
     std::vector<graph_v> result = test_object.neighbours(graph_v(9));
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_v>({graph_v(2), graph_v(7)}), result);
 }
@@ -143,7 +143,7 @@ TEST_F(MultipartiteGraphTest, adjacentEdges_ThenOutgoingEdges)
     std::vector<graph_e> result = test_object.adjacent_edges(graph_v(9));
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_e>(
                       {graph_e(graph_v(2), graph_v(9)), graph_e(graph_v(7), graph_v(9))}),
@@ -190,7 +190,7 @@ TEST_F(MultipartiteGraphTest, verticesFromGroup_WhenValidGroup_ThenVertices)
     std::vector<graph_v> result = test_object.vertices_from_group(2);
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_v>({graph_v(5), graph_v(6), graph_v(7), graph_v(8)}), result);
 }

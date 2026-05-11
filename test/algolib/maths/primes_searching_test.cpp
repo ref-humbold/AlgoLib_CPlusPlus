@@ -9,8 +9,9 @@
 
 namespace alma = algolib::maths;
 
-std::vector<size_t> primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
-    67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163,
+std::vector<size_t> primes = {
+    2,   3,   5,   7,   11,  13,  17,  19,  23,  29,  31,  37,  41,  43,  47,  53,  59,  61,  67,
+    71,  73,  79,  83,  89,  97,  101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163,
     167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269,
     271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383,
     389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499,
@@ -24,15 +25,19 @@ class PrimesSearchingTest_Max : public testing::TestWithParam<size_t>
 };
 
 INSTANTIATE_TEST_SUITE_P(
-        , PrimesSearchingTest_Max, testing::Values(2, 3, 4, 67, 100, 155, 400, 499, 701, 911));
+        ,
+        PrimesSearchingTest_Max,
+        testing::Values(2, 3, 4, 67, 100, 155, 400, 499, 701, 911));
 
 class PrimesSearchingTest_MinMax : public testing::TestWithParam<std::tuple<size_t, size_t>>
 {
 };
 
-INSTANTIATE_TEST_SUITE_P(,
+INSTANTIATE_TEST_SUITE_P(
+        ,
         PrimesSearchingTest_MinMax,
-        testing::Combine(testing::Values(2, 3, 8, 25, 54, 71, 101, 243),
+        testing::Combine(
+                testing::Values(2, 3, 8, 25, 54, 71, 101, 243),
                 testing::Values(54, 150, 243, 481, 625, 827, 1000)));
 
 TEST(PrimesSearchingTest, findPrimes_WhenSingleArgument_ThenMinIsZero)
@@ -50,7 +55,6 @@ TEST_P(PrimesSearchingTest_Max, findPrimes_WhenMaximalNumber_ThenMaxExclusive)
 {
     // given
     size_t number = GetParam();
-    std::cout << "NUMBER: " << number << "\n";
 
     // when
     std::vector<size_t> result = alma::find_primes(number);
@@ -58,8 +62,8 @@ TEST_P(PrimesSearchingTest_Max, findPrimes_WhenMaximalNumber_ThenMaxExclusive)
     // then
     std::vector<size_t> expected;
 
-    std::copy_if(primes.begin(), primes.end(), std::back_inserter(expected),
-            [&](auto && p) { return p < number; });
+    std::ranges::copy_if(
+            primes, std::back_inserter(expected), [&](auto && p) { return p < number; });
 
     EXPECT_EQ(expected, result);
 }
@@ -67,9 +71,7 @@ TEST_P(PrimesSearchingTest_Max, findPrimes_WhenMaximalNumber_ThenMaxExclusive)
 TEST_P(PrimesSearchingTest_MinMax, findPrimes_WhenRange_ThenMinInclusiveAndMaxExclusive)
 {
     // given
-    size_t minimum, maximum;
-
-    std::tie(minimum, maximum) = GetParam();
+    auto [minimum, maximum] = GetParam();
 
     // when
     std::vector<size_t> result = alma::find_primes(minimum, maximum);
@@ -77,7 +79,8 @@ TEST_P(PrimesSearchingTest_MinMax, findPrimes_WhenRange_ThenMinInclusiveAndMaxEx
     // then
     std::vector<size_t> expected;
 
-    std::copy_if(primes.begin(), primes.end(), std::back_inserter(expected),
+    std::ranges::copy_if(
+            primes, std::back_inserter(expected),
             [&](auto && p) { return p >= minimum && p < maximum; });
 
     EXPECT_EQ(expected, result);

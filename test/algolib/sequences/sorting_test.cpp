@@ -25,7 +25,7 @@ public:
 TEST_F(SortingTest, heapSort_ThenSortedAscending)
 {
     // given
-    std::sort(sorted_sequence.begin(), sorted_sequence.end());
+    std::ranges::sort(sorted_sequence);
 
     // when
     alse::heap_sort(sequence);
@@ -50,7 +50,7 @@ TEST_F(SortingTest, heapSort_WhenIndices_ThenSubsequenceSortedAscending)
 TEST_F(SortingTest, topDownMergeSort_ThenSortedAscending)
 {
     // given
-    std::sort(sorted_sequence.begin(), sorted_sequence.end());
+    std::ranges::sort(sorted_sequence);
 
     // when
     alse::top_down_merge_sort(sequence);
@@ -84,7 +84,7 @@ TEST_F(SortingTest, topDownMergeSort_WhenInvalidIndex_ThenSubsequenceSortedAscen
 TEST_F(SortingTest, bottomUpMergeSort_ThenSortedAscending)
 {
     // given
-    std::sort(sorted_sequence.begin(), sorted_sequence.end());
+    std::ranges::sort(sorted_sequence);
 
     // when
     alse::bottom_up_merge_sort(sequence);
@@ -118,7 +118,7 @@ TEST_F(SortingTest, bottomUpMergeSort_WhenInvalidIndex_ThenSubsequenceSortedAsce
 TEST_F(SortingTest, quickSort_ThenSortedAscending)
 {
     // given
-    std::sort(sorted_sequence.begin(), sorted_sequence.end());
+    std::ranges::sort(sorted_sequence);
 
     // when
     alse::quick_sort(sequence);

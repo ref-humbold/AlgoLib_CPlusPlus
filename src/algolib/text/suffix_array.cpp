@@ -235,8 +235,8 @@ void alte::suffix_array::sort_indices(
 
     std::vector<std::queue<size_t>> queues;
 
-    std::transform(
-            buckets.begin(), buckets.end(), std::back_inserter(queues),
+    std::ranges::transform(
+            buckets, std::back_inserter(queues),
             [](std::pair<size_t, std::queue<size_t>> p) { return p.second; });
 
     for(std::queue<size_t> & e : queues)

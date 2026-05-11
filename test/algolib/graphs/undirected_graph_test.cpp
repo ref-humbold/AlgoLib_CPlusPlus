@@ -183,7 +183,7 @@ TEST_F(UndirectedSimpleGraphTest, vertices_ThenAllVertices)
     std::vector<graph_v> result = test_object.vertices();
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_v>({graph_v(0), graph_v(1), graph_v(2), graph_v(3), graph_v(4),
                   graph_v(5), graph_v(6), graph_v(7), graph_v(8), graph_v(9)}),
@@ -204,7 +204,7 @@ TEST_F(UndirectedSimpleGraphTest, edges_ThenAllEdges)
     std::vector<graph_e> result = test_object.edges();
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(
             std::vector<graph_e>({graph_e(graph_v(1), graph_v(5)), graph_e(graph_v(2), graph_v(4)),
@@ -228,7 +228,7 @@ TEST_F(UndirectedSimpleGraphTest, adjacentEdges_ThenOutgoingEdges)
     std::vector<graph_e> result = test_object.adjacent_edges(graph_v(1));
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_e>({graph_e(graph_v(1), graph_v(1)),
                   graph_e(graph_v(1), graph_v(3)), graph_e(graph_v(1), graph_v(4)),
@@ -252,7 +252,7 @@ TEST_F(UndirectedSimpleGraphTest, neighbours_ThenDestinationVerticesOfOutgoingEd
     std::vector<graph_v> result = test_object.neighbours(graph_v(1));
 
     // then
-    std::sort(result.begin(), result.end());
+    std::ranges::sort(result);
 
     EXPECT_EQ(std::vector<graph_v>({graph_v(1), graph_v(2), graph_v(3), graph_v(4), graph_v(6),
                   graph_v(7), graph_v(9)}),
@@ -342,7 +342,7 @@ TEST_F(UndirectedSimpleGraphTest, addEdgeBetween_WhenNewEdge_ThenCreatedEdge)
     // then
     std::vector<graph_v> result_neighbours = test_object.neighbours(source);
 
-    std::sort(result_neighbours.begin(), result_neighbours.end());
+    std::ranges::sort(result_neighbours);
 
     ASSERT_EQ(source, result.source());
     ASSERT_EQ(destination, result.destination());
@@ -389,9 +389,9 @@ TEST_F(UndirectedSimpleGraphTest, asDirected_ThenDirectedGraph)
     std::vector<graph_v> result_vertices = result.vertices();
     std::vector<graph_e> result_edges = result.edges();
 
-    std::sort(expected_vertices.begin(), expected_vertices.end());
-    std::sort(result_vertices.begin(), result_vertices.end());
-    std::sort(result_edges.begin(), result_edges.end());
+    std::ranges::sort(expected_vertices);
+    std::ranges::sort(result_vertices);
+    std::ranges::sort(result_edges);
 
     ASSERT_EQ(expected_vertices, result_vertices);
     ASSERT_EQ(std::vector<graph_e>({graph_e(graph_v(0), graph_v(8)),

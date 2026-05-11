@@ -208,7 +208,7 @@ TEST_F(AvlTreeTest, iterator_WhenMultipleElements_ThenSortedElements)
     // given
     std::vector<int> sorted_numbers = numbers;
 
-    std::sort(sorted_numbers.begin(), sorted_numbers.end());
+    std::ranges::sort(sorted_numbers);
 
     // when
     std::vector<int> result;
@@ -239,7 +239,7 @@ TEST_F(AvlTreeTest, iterator_WhenMultipleElementsForConstObject_ThenSortedElemen
     // given
     std::vector<int> sorted_numbers = numbers;
 
-    std::sort(sorted_numbers.begin(), sorted_numbers.end());
+    std::ranges::sort(sorted_numbers);
 
     // when
     std::vector<int> result;
@@ -284,7 +284,7 @@ TEST_F(AvlTreeTest, constIterator_WhenMultipleElements_ThenSortedElements)
     // given
     std::vector<int> sorted_numbers = numbers;
 
-    std::sort(sorted_numbers.begin(), sorted_numbers.end());
+    std::ranges::sort(sorted_numbers);
 
     // when
     std::vector<int> result;

@@ -31,7 +31,8 @@ TEST(TopologicalSortingTest, inputsTopologicalSort_WhenAcyclicGraph_ThenTopologi
     std::vector<graph_v> result = algr::inputs_topological_sort(graph);
 
     // then
-    EXPECT_EQ(std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
+    EXPECT_EQ(
+            std::vector<graph_v>({graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]}),
             result);
 }
 
@@ -98,8 +99,8 @@ TEST(TopologicalSortingTest, dfsTopologicalSort_WhenAcyclicGraph_ThenTopological
     std::vector<graph_v> result = algr::dfs_topological_sort(graph);
 
     // then
-    EXPECT_TRUE(std::any_of(expecteds.begin(), expecteds.end(),
-            [&](auto && expected) { return expected == result; }));
+    EXPECT_TRUE(
+            std::ranges::any_of(expecteds, [&](auto && expected) { return expected == result; }));
 }
 
 TEST(TopologicalSortingTest, dfsTopologicalSort_WhenCyclicGraph_ThenDirectedCyclicGraphError)
